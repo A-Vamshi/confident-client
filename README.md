@@ -2,7 +2,7 @@
 
 Official SDKs for the [Confident AI](https://www.confident-ai.com) platform
 **management API** — programmatically manage organizations, projects, API keys,
-members, invitations, roles, and policies.
+members, invitations, roles, policies, and governance policies.
 
 | Language | Package | Location |
 | --- | --- | --- |
@@ -44,7 +44,7 @@ Scoped clients expose resources with consistent `list` / `get` / `create` /
 
 ```python
 client.organization().members.list()
-client.organization().roles.create("Analyst", policy_ids=[...])
+client.organization().iam.roles.create("Analyst", policy_ids=[...])
 client.project("id").api_keys.create(name="agent key")
 ```
 

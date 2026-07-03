@@ -1,0 +1,26 @@
+{
+  "name": "confident-ai-plugins",
+  "owner": {
+    "name": "Confident AI",
+    "email": "open-source@confident-ai.com"
+  },
+  "description": "Confident AI plugins for managing organizations, projects, members, roles, governance policies, and API keys in Claude Code.",
+  "plugins": [
+    {
+      "name": "confident-client",
+      "source": "./",
+      "description": "Skills for managing Confident AI organizations, projects, members, roles, governance policies, and API keys programmatically with the Confident AI Admin SDK (confidentai).",
+      "category": "developer-tools",
+      "keywords": [
+        "confident-ai",
+        "confidentai",
+        "admin-sdk",
+        "organizations",
+        "projects",
+        "rbac",
+        "governance",
+        "api-keys"
+      ]
+    }
+  ]
+}
