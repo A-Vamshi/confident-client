@@ -44,6 +44,9 @@ Project names must be unique within the organization. Creating a project also
 generates its first project API key, so the call returns both the `project` and
 that API key — and the full secret is only available here.
 
+If the request doesn't say who should own the project, **ask whether to assign
+an owner (`email`) before creating** rather than silently omitting it.
+
 ```python
 created = client.projects.create(
     "Customer Support Bot",

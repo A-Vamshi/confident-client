@@ -149,7 +149,10 @@ const projectInvitations = await project.invitations.list();
 ### Create Invitations
 
 Invite one or more emails at once; the optional role ID assigns a role to
-invitees when they join.
+invitees when they join. If the request doesn't specify a role, **ask which role
+invitees should receive before sending** — only invite without a role if the
+user confirms that's intended. (See `references/roles-policies-permissions.md`
+to list available roles and their ids.)
 
 ```python
 org = client.organization()

@@ -79,12 +79,17 @@ reference.
 
 1. **Honor an explicit request first** — if the user names a language or shows a
    snippet, use that regardless of the project files.
-2. **Otherwise infer from the project**:
-   - `*.py`, `requirements.txt`, `pyproject.toml`, `setup.py`, `Pipfile` → **Python**
-   - `*.ts`, `*.tsx`, `package.json`, `tsconfig.json` → **TypeScript**
-   - `*.js`, `*.jsx` (no TypeScript files) → **TypeScript** — JavaScript uses the same `confidentai` package
-3. **If ambiguous** (both languages present, or none) — ask which language to
-   use; if it still can't be resolved, default to Python and say so.
+2. **Otherwise infer from the project — but only for a _clean single-language_
+   project** (markers from one ecosystem and none from the other):
+   - Python markers: `*.py`, `pyproject.toml`, `requirements.txt`, `setup.py`, `Pipfile`, a `.venv`/`venv`
+   - TypeScript/Node markers: `*.ts`, `*.tsx`, `package.json`, `tsconfig.json`, `node_modules` (JavaScript-only counts as TypeScript — same `confidentai` package)
+3. **If markers from BOTH ecosystems are present — even if one side has more
+   code — or the project is empty/unclear, it is AMBIGUOUS: STOP and ask which
+   language before writing any code.** Do not rationalize a "dominant" or
+   "obvious" language from which files happen to have more content (e.g. a
+   populated `ts/` next to a bare `.venv` is still ambiguous). Fall back to
+   **Python** (never TypeScript) only after asking and getting no answer, and say
+   you're defaulting.
 
 Within each reference, the code block for the target language is authoritative
 for exact method names, argument shapes (keyword arguments vs an options
@@ -138,6 +143,11 @@ other language's examples.
    the SDK — list them and assign/unassign them to projects, but do not expect
    create/update/delete. (Python only: every method also has an async `a_*`
    variant.)
+9. **Clarify before mutating.** For create/update calls, confirm the required
+   inputs and ask about consequential optional ones the user hasn't specified
+   rather than silently omitting them or guessing. In particular: whether a new
+   project should have an **owner** (`email`), and which **role** (`role_id`) to
+   grant when inviting members or adding them to a project. Ask first, then act.
 
 ## References
 
