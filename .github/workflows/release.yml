@@ -1,0 +1,106 @@
+name: Release
+
+# confident-client ships two independently-versioned SDKs from one monorepo:
+#   python/       tagged  python-v*
+#   typescript/   tagged  typescript-v*
+# On each tag push we generate a minimal changelog for that SDK from the commit
+# range since its previous release, and open a PR to confident-docs.
+
+on:
+  push:
+    tags:
+      - 'python-v*'
+      - 'typescript-v*'
+
+jobs:
+  changelog:
+    name: SDK changelog to docs PR
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout confident-client
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Resolve SDK and tags
+        id: meta
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          SDK=${TAG%%-v*}                 # python-v0.3.0 -> python
+          DISPLAY_VERSION=v${TAG#*-v}      # python-v0.3.0 -> v0.3.0
+
+          case "$SDK" in
+            python|typescript) ;;
+            *) echo "release: unrecognized tag '$TAG'; skipping." && exit 1 ;;
+          esac
+
+          # Nearest previous release tag for THIS SDK, skipping pre-releases
+          # (e.g. python-v0.3.0-rc1 has two dashes and is excluded).
+          PREV_TAG=$(git describe --tags --abbrev=0 \
+            --match "${SDK}-v*" --exclude "*-*-*" "${TAG}^" 2>/dev/null || echo "")
+
+          if [ -n "$PREV_TAG" ]; then RANGE="$PREV_TAG..$TAG"; else RANGE="$TAG"; fi
+
+          # Commit subjects in the range that touched this SDK's directory only.
+          RAW_NOTES_FILE="$RUNNER_TEMP/raw-notes.txt"
+          git log --no-merges --pretty=format:'- %s' "$RANGE" -- "$SDK/" \
+            | head -n 200 > "$RAW_NOTES_FILE"
+
+          {
+            echo "tag=$TAG"
+            echo "sdk=$SDK"
+            echo "display_version=$DISPLAY_VERSION"
+            echo "prev_tag=$PREV_TAG"
+            echo "raw_notes_file=$RAW_NOTES_FILE"
+            echo "date=$(date -u +%Y-%m-%d)"
+          } >> "$GITHUB_OUTPUT"
+
+          echo "Resolved $SDK $DISPLAY_VERSION (range: $RANGE)"
+          cat "$RAW_NOTES_FILE"
+
+      - name: Checkout confident-docs
+        uses: actions/checkout@v5
+        with:
+          repository: confident-ai/confident-docs
+          token: ${{ secrets.DOCS_PUSH_TOKEN }}
+          path: confident-docs
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          package-manager-cache: false # dependency-free Node script
+
+      - name: Generate SDK changelog entry
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-5.4-mini
+          SDK: ${{ steps.meta.outputs.sdk }}
+          TAG: ${{ steps.meta.outputs.tag }}
+          DISPLAY_VERSION: ${{ steps.meta.outputs.display_version }}
+          PREV_TAG: ${{ steps.meta.outputs.prev_tag }}
+          RELEASE_DATE: ${{ steps.meta.outputs.date }}
+          RAW_NOTES_FILE: ${{ steps.meta.outputs.raw_notes_file }}
+          CHANGELOG_DIR: confident-docs/fern/changelog-client
+        run: node .github/scripts/release-notes.mjs
+
+      - name: Open docs PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.DOCS_PUSH_TOKEN }}
+          path: confident-docs
+          base: main
+          branch: changelog/${{ steps.meta.outputs.tag }}
+          delete-branch: true
+          commit-message: "docs(changelog): ${{ steps.meta.outputs.sdk }} SDK ${{ steps.meta.outputs.display_version }}"
+          title: "SDK changelog: ${{ steps.meta.outputs.tag }}"
+          body: |
+            Auto-generated changelog for the **${{ steps.meta.outputs.sdk }} SDK ${{ steps.meta.outputs.display_version }}**
+            (range `${{ steps.meta.outputs.prev_tag }}` → `${{ steps.meta.outputs.tag }}`).
+
+            Summarized from commit subjects touching `${{ steps.meta.outputs.sdk }}/` via OpenAI structured output.
+            **Please review the AI-generated copy before merging.**
