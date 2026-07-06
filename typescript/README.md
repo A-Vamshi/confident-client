@@ -8,6 +8,8 @@ invitations, roles, and policies.
 > [`deepeval`](https://www.npmjs.com/package/deepeval). This SDK focuses on
 > platform/administration APIs.
 
+**Documentation:** [Admin SDK docs](https://www.confident-ai.com/docs/settings/project/management/introduction)
+
 ## Installation
 
 ```bash
@@ -51,12 +53,12 @@ const client = new ConfidentAI(); // reads process.env.CONFIDENT_ORG_API_KEY
 
 `new ConfidentAI({ apiKey?, baseUrl?, timeout? })`
 
-| Setting | Resolution order |
-| --- | --- |
-| `apiKey` | `apiKey` option → `CONFIDENT_ORG_API_KEY` |
+| Setting   | Resolution order                                           |
+| --------- | ---------------------------------------------------------- |
+| `apiKey`  | `apiKey` option → `CONFIDENT_ORG_API_KEY`                  |
 | `baseUrl` | `baseUrl` option → `CONFIDENT_BASE_URL` → regional default |
-| region | `CONFIDENT_REGION` (`US` / `EU`) → API key prefix → `US` |
-| `timeout` | milliseconds (default `30000`) |
+| region    | `CONFIDENT_REGION` (`US` / `EU`) → API key prefix → `US`   |
+| `timeout` | milliseconds (default `30000`)                             |
 
 Regional defaults: `https://api.confident-ai.com` (US),
 `https://eu.api.confident-ai.com` (EU).
@@ -78,7 +80,10 @@ await org.apiKeys.delete(created.id);
 // Members & invitations
 const members = await org.members.list({ page: 1, pageSize: 25 });
 await org.members.updateRole(members[0].id, { roleId: "role_id" });
-await org.invitations.create({ emails: ["teammate@acme.com"], roleId: "role_id" });
+await org.invitations.create({
+  emails: ["teammate@acme.com"],
+  roleId: "role_id",
+});
 
 // IAM: roles, policies & permissions
 const permissions = await org.iam.permissions.list();

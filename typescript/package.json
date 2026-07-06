@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "The official TypeScript SDK for the Confident AI platform management API.",
   "license": "Apache-2.0",
-  "author": "Confident AI <jeffreyip@confident-ai.com>",
+  "author": "Jeffrey Ip <jeffreyip@confident-ai.com>",
   "homepage": "https://www.confident-ai.com",
   "repository": {
     "type": "git",
