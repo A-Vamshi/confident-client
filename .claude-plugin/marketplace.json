@@ -2,7 +2,7 @@
   "name": "confident-ai-plugins",
   "owner": {
     "name": "Confident AI",
-    "email": "open-source@confident-ai.com"
+    "email": "support@confident-ai.com"
   },
   "description": "Confident AI plugins for managing organizations, projects, members, roles, governance policies, and API keys in Claude Code.",
   "plugins": [
