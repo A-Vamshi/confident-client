@@ -10,6 +10,8 @@ This SDK wraps the **management API** — organizations, projects, their IAM
 sub-resources (API keys, members, invitations, roles, policies, permissions),
 and governance policies.
 
+* **Docs:** [Admin SDK docs](https://www.confident-ai.com/docs/settings/project/management/introduction)
+  (narrative guide for the management SDK).
 * **Source:** `confident-docs/fern/openapi.yaml` (the published OpenAPI 3.1
   spec that drives the API reference at
   `https://www.confident-ai.com/docs/api-reference`).

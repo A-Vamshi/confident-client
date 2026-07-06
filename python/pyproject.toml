@@ -7,7 +7,7 @@ license = "Apache-2.0"
 readme = "README.md"
 homepage = "https://www.confident-ai.com"
 repository = "https://github.com/confident-ai/confident-client"
-documentation = "https://www.confident-ai.com/docs/api-reference"
+documentation = "https://www.confident-ai.com/docs/settings/project/management/introduction"
 keywords = ["confident-ai", "confident", "llm", "sdk", "management-api"]
 classifiers = [
     "Development Status :: 4 - Beta",

@@ -8,6 +8,8 @@ invitations, roles, and policies.
 > [`deepeval`](https://github.com/confident-ai/deepeval). This SDK focuses on
 > platform/administration APIs.
 
+**Documentation:** [Admin SDK docs](https://www.confident-ai.com/docs/settings/project/management/introduction)
+
 ## Installation
 
 ```bash
