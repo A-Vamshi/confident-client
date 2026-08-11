@@ -90,8 +90,10 @@ describe("OrganizationClient", () => {
           id: "gp1",
           name: "Production Gate",
           projectsCount: 5,
+          isBasePolicy: false,
           controls: [
             { id: "c1", name: "Logs traces", type: "PRE_DEPLOYMENT_EVALS" },
+            { id: "c0", name: "Has alert integrations", type: "OPERATIONAL" },
           ],
         },
       ],
@@ -101,7 +103,9 @@ describe("OrganizationClient", () => {
       .governance.policies.list();
     expect(policies[0].id).toBe("gp1");
     expect(policies[0].projectsCount).toBe(5);
+    expect(policies[0].isBasePolicy).toBe(false);
     expect(policies[0].controls[0].type).toBe("PRE_DEPLOYMENT_EVALS");
+    expect(policies[0].controls[1].id).toBe("c0");
     expect(lastCall().url).toContain("/v1/organization/governance-policies");
   });
 

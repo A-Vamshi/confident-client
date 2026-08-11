@@ -135,12 +135,18 @@ def test_governance_policies_list(client, http):
                     "name": "Production Gate",
                     "description": None,
                     "projectsCount": 5,
+                    "isBasePolicy": False,
                     "controls": [
                         {
                             "id": "c1",
                             "name": "Logs traces",
                             "type": "PRE_DEPLOYMENT_EVALS",
-                        }
+                        },
+                        {
+                            "id": "c0",
+                            "name": "Has alert integrations",
+                            "type": "OPERATIONAL",
+                        },
                     ],
                 }
             ]
@@ -149,7 +155,9 @@ def test_governance_policies_list(client, http):
     policies = client.organization().governance.policies.list()
     assert policies[0].id == "gp1"
     assert policies[0].projects_count == 5
+    assert policies[0].is_base_policy is False
     assert policies[0].controls[0].type == "PRE_DEPLOYMENT_EVALS"
+    assert policies[0].controls[1].id == "c0"
     assert http.last["method"] == "GET"
     assert http.last["url"].endswith("/v1/organization/governance-policies")
 

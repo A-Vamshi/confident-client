@@ -121,6 +121,7 @@ class GovernancePolicy(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     projects_count: int = Field(default=0, alias="projectsCount")
+    is_base_policy: bool = Field(default=False, alias="isBasePolicy")
     controls: List[GovernanceControl] = Field(default_factory=list)
 
 
