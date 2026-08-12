@@ -98,6 +98,7 @@ export interface GovernancePolicy {
   name: string;
   description?: string | null;
   projectsCount: number;
+  isBasePolicy: boolean;
   controls: GovernanceControl[];
 }
 
