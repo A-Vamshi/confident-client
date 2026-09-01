@@ -2,10 +2,10 @@ import axios from "axios";
 
 export const SDK_VERSION = "0.2.0";
 
-// Organization-scoped API key env var. Named CONFIDENT_ORG_API_KEY (not
-// CONFIDENT_API_KEY) to avoid clashing with deepeval's CONFIDENT_API_KEY, which
-// holds a project key for a different SDK.
+// One credential env var per ApiKeyKind. Both are namespaced (ORG / PROJ)
+// rather than reusing deepeval's CONFIDENT_API_KEY, which this SDK never reads.
 export const CONFIDENT_ORG_API_KEY_ENV_VAR = "CONFIDENT_ORG_API_KEY";
+export const CONFIDENT_PROJ_API_KEY_ENV_VAR = "CONFIDENT_PROJ_API_KEY";
 export const CONFIDENT_BASE_URL_ENV_VAR = "CONFIDENT_BASE_URL";
 export const CONFIDENT_REGION_ENV_VAR = "CONFIDENT_REGION";
 
@@ -34,6 +34,29 @@ function logRetryError(error: unknown, attempt: number): void {
 
 function wait(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export enum ApiKeyKind {
+  ORGANIZATION = "organization",
+  PROJECT = "project",
+}
+
+const API_KEY_ENV_VARS: Record<ApiKeyKind, string> = {
+  [ApiKeyKind.ORGANIZATION]: CONFIDENT_ORG_API_KEY_ENV_VAR,
+  [ApiKeyKind.PROJECT]: CONFIDENT_PROJ_API_KEY_ENV_VAR,
+};
+
+const API_KEY_CLIENT_OPTIONS: Record<ApiKeyKind, string> = {
+  [ApiKeyKind.ORGANIZATION]: "apiKey",
+  [ApiKeyKind.PROJECT]: "projectApiKey",
+};
+
+export function apiKeyEnvVar(keyKind: ApiKeyKind): string {
+  return API_KEY_ENV_VARS[keyKind];
+}
+
+export function apiKeyClientOption(keyKind: ApiKeyKind): string {
+  return API_KEY_CLIENT_OPTIONS[keyKind];
 }
 
 export enum HttpMethods {
@@ -108,8 +131,11 @@ function inferRegionFromApiKey(apiKey?: string): string | undefined {
   return undefined;
 }
 
-export function getConfidentApiKey(apiKey?: string): string | undefined {
-  return apiKey || process.env[CONFIDENT_ORG_API_KEY_ENV_VAR] || undefined;
+export function getConfidentApiKey(
+  apiKey?: string,
+  keyKind: ApiKeyKind = ApiKeyKind.ORGANIZATION,
+): string | undefined {
+  return apiKey || process.env[apiKeyEnvVar(keyKind)] || undefined;
 }
 
 export function getBaseApiUrl(apiKey?: string, baseUrl?: string): string {
@@ -143,6 +169,7 @@ function dropUndefined(
 }
 
 export class Api {
+  readonly keyKind: ApiKeyKind;
   readonly apiKey: string;
   readonly baseUrl: string;
   readonly timeout: number;
@@ -152,14 +179,17 @@ export class Api {
     apiKey?: string;
     baseUrl?: string;
     timeout?: number;
+    keyKind?: ApiKeyKind;
   }) {
-    const apiKey = getConfidentApiKey(options.apiKey);
+    const keyKind = options.keyKind ?? ApiKeyKind.ORGANIZATION;
+    const apiKey = getConfidentApiKey(options.apiKey, keyKind);
     if (!apiKey) {
       throw new Error(
-        `No Confident AI API key found. Pass { apiKey } or set the ${CONFIDENT_ORG_API_KEY_ENV_VAR} environment variable.`,
+        `No Confident AI ${keyKind} API key found. Pass { ${apiKeyClientOption(keyKind)} } or set the ${apiKeyEnvVar(keyKind)} environment variable.`,
       );
     }
 
+    this.keyKind = keyKind;
     this.apiKey = apiKey;
     this.baseUrl = getBaseApiUrl(apiKey, options.baseUrl);
     this.timeout = options.timeout ?? DEFAULT_TIMEOUT_MS;
