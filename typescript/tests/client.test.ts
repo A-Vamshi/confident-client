@@ -1,9 +1,6 @@
 import { ConfidentAI } from "../src";
-import {
-  API_BASE_URL,
-  API_BASE_URL_EU,
-} from "../src/api";
-import { mockData, lastCall, resetAxios } from "./helpers";
+import { API_BASE_URL, API_BASE_URL_EU } from "../src/api";
+import { clearConfidentEnv, lastCall, mockData, resetAxios } from "./helpers";
 
 jest.mock("axios");
 
@@ -12,9 +9,7 @@ describe("ConfidentAI", () => {
 
   beforeEach(() => {
     resetAxios();
-    delete process.env.CONFIDENT_ORG_API_KEY;
-    delete process.env.CONFIDENT_BASE_URL;
-    delete process.env.CONFIDENT_REGION;
+    clearConfidentEnv();
   });
 
   afterAll(() => {
@@ -54,6 +49,11 @@ describe("ConfidentAI", () => {
   it("infers the region from the API key prefix", () => {
     const client = new ConfidentAI({ apiKey: "confident_eu_org_xyz" });
     expect(client.baseUrl).toBe(API_BASE_URL_EU);
+  });
+
+  it("honors an explicit timeout", () => {
+    const client = new ConfidentAI({ apiKey: "k", timeout: 5000 });
+    expect(client.timeout).toBe(5000);
   });
 
   it("scopes a project client by id", () => {
