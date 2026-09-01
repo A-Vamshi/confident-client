@@ -19,6 +19,7 @@ from .types import ApiResponse, ConfidentApiError
 from .utils.request import drop_none, join_url
 
 CONFIDENT_ORG_API_KEY_ENV_VAR = "CONFIDENT_ORG_API_KEY"
+CONFIDENT_PROJ_API_KEY_ENV_VAR = "CONFIDENT_PROJ_API_KEY"
 CONFIDENT_BASE_URL_ENV_VAR = "CONFIDENT_BASE_URL"
 CONFIDENT_REGION_ENV_VAR = "CONFIDENT_REGION"
 
@@ -37,6 +38,30 @@ async_retryable_exceptions = (
 )
 
 
+class ApiKeyKind(Enum):
+    ORGANIZATION = "organization"
+    PROJECT = "project"
+
+    @property
+    def env_var(self) -> str:
+        return _API_KEY_ENV_VARS[self]
+
+    @property
+    def client_argument(self) -> str:
+        return _API_KEY_CLIENT_ARGUMENTS[self]
+
+
+_API_KEY_ENV_VARS = {
+    ApiKeyKind.ORGANIZATION: CONFIDENT_ORG_API_KEY_ENV_VAR,
+    ApiKeyKind.PROJECT: CONFIDENT_PROJ_API_KEY_ENV_VAR,
+}
+
+_API_KEY_CLIENT_ARGUMENTS = {
+    ApiKeyKind.ORGANIZATION: "api_key",
+    ApiKeyKind.PROJECT: "project_api_key",
+}
+
+
 def _infer_region_from_api_key(api_key: Optional[str]) -> Optional[str]:
     if not api_key:
         return None
@@ -48,10 +73,13 @@ def _infer_region_from_api_key(api_key: Optional[str]) -> Optional[str]:
     return None
 
 
-def get_confident_api_key(api_key: Optional[str] = None) -> Optional[str]:
+def get_confident_api_key(
+    api_key: Optional[str] = None,
+    key_kind: ApiKeyKind = ApiKeyKind.ORGANIZATION,
+) -> Optional[str]:
     if api_key:
         return api_key
-    return os.getenv(CONFIDENT_ORG_API_KEY_ENV_VAR) or None
+    return os.getenv(key_kind.env_var) or None
 
 
 def get_base_api_url(
@@ -168,13 +196,17 @@ class Api:
         api_key: Optional[str] = None,
         base_url: Optional[str] = None,
         timeout: Optional[float] = None,
+        key_kind: ApiKeyKind = ApiKeyKind.ORGANIZATION,
     ) -> None:
-        api_key = get_confident_api_key(api_key)
+        api_key = get_confident_api_key(api_key, key_kind)
         if not api_key:
             raise ValueError(
-                f"No Confident API key found. Please set the {CONFIDENT_ORG_API_KEY_ENV_VAR} environment variable or pass api_key."
+                f"No Confident AI {key_kind.value} API key found. Please set the "
+                f"{key_kind.env_var} environment variable or pass "
+                f"{key_kind.client_argument}."
             )
 
+        self.key_kind = key_kind
         self.api_key = api_key
         self.base_url = get_base_api_url(api_key, base_url)
         self.timeout = timeout if timeout is not None else DEFAULT_TIMEOUT
