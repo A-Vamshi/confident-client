@@ -4,6 +4,7 @@ from confidentai import ConfidentAI
 from confidentai.api import (
     API_BASE_URL,
     API_BASE_URL_EU,
+    ApiKeyKind,
 )
 
 
@@ -19,8 +20,7 @@ def test_initializes_from_env_var(monkeypatch):
     assert client.api_key == "confident_us_org_fromenv"
 
 
-def test_missing_api_key_raises(monkeypatch):
-    monkeypatch.delenv("CONFIDENT_ORG_API_KEY", raising=False)
+def test_missing_api_key_raises(clean_env):
     with pytest.raises(ValueError):
         ConfidentAI()
 
@@ -52,7 +52,8 @@ def test_region_inferred_from_api_key_prefix(monkeypatch):
 
 def test_timeout_override():
     client = ConfidentAI(api_key="k", timeout=5.0)
-    assert client._api.timeout == 5.0
+    assert client.timeout == 5.0
+    assert client._api(ApiKeyKind.ORGANIZATION).timeout == 5.0
 
 
 def test_organization_and_project_factories(client):
