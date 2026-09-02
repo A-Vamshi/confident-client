@@ -162,6 +162,16 @@ class Endpoints(Enum):
     PROJECT_API_KEYS_ENDPOINT = "/v1/projects/:projectId/api-keys"
     PROJECT_API_KEY_ENDPOINT = "/v1/projects/:projectId/api-keys/:apiKeyId"
 
+    # Project resources
+    PROMPTS_ENDPOINT = "/v1/prompts"
+    PROMPT_LABEL_ENDPOINT = "/v1/prompts/:alias/labels/:label"
+    PROMPT_VERSIONS_ENDPOINT = "/v1/prompts/:alias/versions"
+    PROMPT_VERSION_ENDPOINT = "/v1/prompts/:alias/versions/:version"
+    PROMPT_COMMITS_ENDPOINT = "/v1/prompts/:alias/commits"
+    PROMPT_COMMIT_ENDPOINT = "/v1/prompts/:alias/commits/:hash"
+    PROMPT_BRANCHES_ENDPOINT = "/v1/prompts/:alias/branches"
+    PROMPT_BRANCH_ENDPOINT = "/v1/prompts/:alias/branches/:name"
+
 
 def _sanitize_body(obj):
     """Recursively replace non-finite floats (NaN, Inf, -Inf) with None."""

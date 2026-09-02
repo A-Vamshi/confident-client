@@ -41,6 +41,10 @@ aiohttp = "^3.9.0"
 pytest = "^8.0.0"
 ruff = "^0.13.0"
 black = "^25.1.0"
+# Used by packages/shared/generate_types.py to read the per-type OpenAPI specs.
+PyYAML = "^6.0"
+# Loads .env when running scratch scripts against the live API.
+python-dotenv = "^1.0"
 
 [build-system]
 requires = ["poetry-core"]
