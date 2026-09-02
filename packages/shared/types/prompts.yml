@@ -1,0 +1,677 @@
+# Confident AI — Prompts
+#
+# Source of truth for the prompt types in both SDKs. `scripts/generate_types.py` reads
+# this file and writes python/confidentai/prompt/types.py and
+# typescript/src/prompt/types.ts; neither is edited by hand.
+#
+# Three conventions make this file codegen-shaped rather than renderer-shaped:
+#
+#   1. Response schemas describe the `data` payload only. Every Confident AI
+#      response is wrapped in `{ success, data, deprecated, link }`, which the
+#      SDK transport already unwraps. Operations whose envelope carries a `link`
+#      are marked `x-returns-link: true`.
+#   2. Enums are `$ref` components, declared once. The public reference renderer
+#      drops `$ref`ed enum values, so the docs build inlines them at each use
+#      site; that flattening belongs to the docs assembler, not here.
+#   3. `operationId` values are frozen. Each one is kebab-cased into a published
+#      docs URL (`createVersion` -> /docs/api-reference/prompts/versions/create-version),
+#      so they are renamed only alongside a docs redirect. SDK method names are
+#      chosen separately and deliberately do not derive from them.
+
+openapi: 3.1.0
+
+info:
+  title: Confident AI — Prompts
+  version: 1.0.0
+  description: Prompt versioning, commits, branches, and labels.
+
+servers:
+  - url: https://api.confident-ai.com/
+    description: US
+  - url: https://eu.api.confident-ai.com/
+    description: EU
+
+tags:
+  - name: Prompt
+    description: Prompts API
+
+paths:
+  /v1/prompts:
+    get:
+      tags: [Prompt]
+      summary: List Prompts
+      operationId: listPrompts
+      description: Lists all the available prompts in your Confident AI project.
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PromptList"
+
+    post:
+      tags: [Prompt]
+      summary: Push Prompts
+      operationId: pushPrompt
+      description: Creates a new commit for an existing prompt, or creates a new prompt with the given `alias` otherwise.
+      x-returns-link: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PushPromptRequest"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PushPromptResult"
+
+  /v1/prompts/{alias}/labels/{label}:
+    get:
+      tags: [Prompt]
+      summary: Pull Prompts By Label
+      operationId: getPromptByLabel
+      description: Retrieves a prompt with `alias` and `label` from your Confident AI account.
+      parameters:
+        - $ref: "#/components/parameters/PromptAlias"
+        - name: label
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The label name of the prompt.
+          example: PROMPT-LABEL
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Prompt"
+
+  /v1/prompts/{alias}/versions/{version}:
+    get:
+      tags: [Prompt]
+      summary: Pull Prompts By Version
+      operationId: getPromptByVersion
+      description: Retrieves a prompt with `alias` and `version` from your Confident AI account.
+      parameters:
+        - $ref: "#/components/parameters/PromptAlias"
+        - name: version
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The version number of the prompt.
+          example: PROMPT-VERSION
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Prompt"
+
+  /v1/prompts/{alias}/commits/{hash}:
+    get:
+      tags: [Prompt]
+      summary: Pull Prompts By Commit
+      operationId: getPromptByCommit
+      description: Retrieves a prompt with `alias` and the specific `hash` from your Confident AI account.
+      parameters:
+        - $ref: "#/components/parameters/PromptAlias"
+        - name: hash
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The unique hash of the commit.
+          example: bab04ce
+        - $ref: "#/components/parameters/PromptBranchQuery"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Prompt"
+
+  /v1/prompts/{alias}/versions:
+    get:
+      tags: [Prompt]
+      summary: List Versions
+      operationId: getPromptVersions
+      description: Retrieves a list of all versions associated with a given prompt `alias`.
+      parameters:
+        - $ref: "#/components/parameters/PromptAlias"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PromptVersions"
+
+    post:
+      tags: [Prompt]
+      summary: Create Version
+      operationId: createVersion
+      description: Creates a new version of the specified or latest commit on your Confident AI project.
+      parameters:
+        - $ref: "#/components/parameters/PromptAlias"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePromptVersionRequest"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreatePromptVersionResult"
+
+  /v1/prompts/{alias}/commits:
+    get:
+      tags: [Prompt]
+      summary: List Commits
+      operationId: getPromptCommits
+      description: Retrieves a list of all the commits associated with a prompt.
+      parameters:
+        - $ref: "#/components/parameters/PromptAlias"
+        - $ref: "#/components/parameters/PromptBranchQuery"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PromptCommitList"
+
+  /v1/prompts/{alias}/branches:
+    get:
+      tags: [Prompt]
+      summary: List Branches
+      operationId: getPromptBranches
+      description: Retrieves a list of all the branches associated with a prompt.
+      parameters:
+        - $ref: "#/components/parameters/PromptAlias"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PromptBranchList"
+
+    post:
+      tags: [Prompt]
+      summary: Create Branch
+      operationId: createPromptBranch
+      description: Creates a new branch with the specified name diverging from the main branch's head commit of your prompt.
+      x-returns-link: true
+      parameters:
+        - $ref: "#/components/parameters/PromptAlias"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePromptBranchRequest"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PromptBranch"
+
+  /v1/prompts/{alias}/branches/{name}:
+    put:
+      tags: [Prompt]
+      summary: Update Branch
+      operationId: updatePromptBranch
+      description: Updates the name of an existing branch in your prompt on Confident AI.
+      parameters:
+        - $ref: "#/components/parameters/PromptAlias"
+        - $ref: "#/components/parameters/PromptBranchName"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePromptBranchRequest"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PromptBranchRef"
+
+    delete:
+      tags: [Prompt]
+      summary: Delete Branch
+      operationId: deletePromptBranch
+      description: Deletes an existing branch from your prompt on Confident AI.
+      parameters:
+        - $ref: "#/components/parameters/PromptAlias"
+        - $ref: "#/components/parameters/PromptBranchName"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PromptBranchRef"
+
+components:
+  parameters:
+    PromptAlias:
+      name: alias
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique alias of the prompt.
+      example: PROMPT-ALIAS
+
+    PromptBranchName:
+      name: name
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique name of the branch you're trying to update.
+      example: BRANCH-NAME
+
+    PromptBranchQuery:
+      name: branch
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The unique name of a branch.
+      example: MY-BRANCH
+
+  schemas:
+    PromptType:
+      type: string
+      enum: [TEXT, LIST]
+      description: This is the type of the prompt, which can be either simple text or a list of messages.
+
+    PromptInterpolationType:
+      type: string
+      enum: [MUSTACHE, MUSTACHE_WITH_SPACE, FSTRING, DOLLAR_BRACKETS]
+      description: The type of interpolation format used in the prompt to insert dynamic variables.
+
+    PromptOutputType:
+      type: string
+      enum: [TEXT, JSON, SCHEMA]
+      description: The type of output expected from the prompt.
+
+    ModelProvider:
+      type: string
+      enum: [OPEN_AI, ANTHROPIC]
+      description: This is the provider of the model.
+
+    ReasoningEffort:
+      type: string
+      enum: [MINIMAL, LOW, MEDIUM, HIGH]
+      description: This is the level of reasoning effort for the model.
+
+    Verbosity:
+      type: string
+      enum: [LOW, MEDIUM, HIGH]
+      description: This is the verbosity level for model output.
+
+    OutputSchemaFieldType:
+      type: string
+      enum: [OBJECT, ARRAY, STRING, FLOAT, INTEGER, BOOLEAN]
+      description: This is the data type for schema fields.
+
+    ToolMode:
+      type: string
+      enum: [STRICT, ADDITIONAL, NO_ADDITIONAL]
+      description: This is the mode for your tool input fields.
+
+    PromptMessageRole:
+      type: string
+      enum: [assistant, developer, system, user]
+      description: This is the role of the message.
+
+    PromptMessage:
+      type: object
+      properties:
+        role:
+          $ref: "#/components/schemas/PromptMessageRole"
+        content:
+          type: string
+          description: This is the text content of the message.
+      required: [role, content]
+
+    ModelSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          $ref: "#/components/schemas/ModelProvider"
+        name:
+          type: string
+          description: This is the name of the model.
+        temperature:
+          type: number
+          format: float
+          description: This controls randomness in the model's output. Higher values make output more random.
+        maxTokens:
+          type: integer
+          description: This is the maximum number of tokens to generate.
+        topP:
+          type: number
+          format: float
+          description: This controls diversity via nucleus sampling. Lower values focus on more likely tokens.
+        frequencyPenalty:
+          type: number
+          format: float
+          description: This is the penalty for tokens based on their frequency in the text so far.
+        presencePenalty:
+          type: number
+          format: float
+          description: This is the penalty for tokens based on whether they appear in the text so far.
+        stopSequence:
+          type: array
+          items:
+            type: string
+          description: This is the sequences where the model will stop generating further tokens.
+        reasoningEffort:
+          $ref: "#/components/schemas/ReasoningEffort"
+        verbosity:
+          $ref: "#/components/schemas/Verbosity"
+
+    OutputSchemaField:
+      type: object
+      properties:
+        id:
+          type: string
+          description: This is the unique identifier for the schema field.
+        name:
+          type: string
+          description: This is the name of the schema field.
+        type:
+          oneOf:
+            - $ref: "#/components/schemas/OutputSchemaFieldType"
+            - type: "null"
+          description: This is the data type for schema fields.
+        required:
+          type: boolean
+          default: false
+          description: This indicates whether the field is required in the output.
+        parentId:
+          type: string
+          description: This is the ID of the parent field for nested structures.
+      required: [id, name, type]
+
+    OutputSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          description: This is the name of the output schema.
+        fields:
+          type: array
+          items:
+            $ref: "#/components/schemas/OutputSchemaField"
+          description: This is the array of fields that define the output schema structure.
+      required: [name, fields]
+
+    Tool:
+      type: object
+      properties:
+        id:
+          type: string
+          description: This is the unique identifier for the schema field.
+        name:
+          type: string
+          description: This is the name of the tool.
+        description:
+          type: string
+          description: This is the description of the tool.
+        mode:
+          $ref: "#/components/schemas/ToolMode"
+        structuredSchema:
+          $ref: "#/components/schemas/OutputSchema"
+          description: This is the schema for your tool input.
+      required: [name, description, mode]
+
+    Prompt:
+      type: object
+      description: A single version of a prompt, as pulled by label, version, or commit.
+      properties:
+        id:
+          type: string
+          description: This is the id of the prompt version generated by Confident AI, not to be confused with the alias you supplied or version number.
+        version:
+          type: string
+          description: The version number of the prompt.
+        hash:
+          type: string
+          description: This is the commit hash of the prompt pulled.
+        label:
+          type: string
+          description: The user-defined label for a specific version of the prompt.
+        text:
+          type: string
+          description: This is the text content of the prompt, which is null if the prompt is a list prompt.
+        messages:
+          type: array
+          items:
+            $ref: "#/components/schemas/PromptMessage"
+          description: This is the list of messages associated with the prompt, which is null if the prompt is a text prompt.
+        type:
+          $ref: "#/components/schemas/PromptType"
+        interpolationType:
+          $ref: "#/components/schemas/PromptInterpolationType"
+        modelSettings:
+          $ref: "#/components/schemas/ModelSettings"
+          description: This is the model settings for the prompt.
+        outputType:
+          $ref: "#/components/schemas/PromptOutputType"
+        outputSchema:
+          $ref: "#/components/schemas/OutputSchema"
+          description: This is the output schema definition when outputType is SCHEMA.
+        tools:
+          type: array
+          items:
+            $ref: "#/components/schemas/Tool"
+      required: [id, hash, type, interpolationType, outputType]
+
+    PromptSummary:
+      type: object
+      description: A prompt as it appears in the project's prompt list, without any version content.
+      properties:
+        id:
+          type: string
+          description: This is the unique id of the prompt.
+        alias:
+          type: string
+          description: This is the alias of the prompt, which is unique within your project.
+        type:
+          $ref: "#/components/schemas/PromptType"
+      required: [id, alias, type]
+
+    PromptVersion:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: This is the id of the prompt version generated by Confident AI, not to be confused with the version.
+        version:
+          type: string
+          description: This is the version number of a prompt version.
+      required: [id, version]
+
+    PromptCommit:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of a commit generated by Confident AI, not to be confused with prompt id or commit hash.
+        hash:
+          type: string
+          description: The hash of a commit generated by Confident AI.
+        message:
+          type: string
+          description: The message associated with a commit, not to be confused with a prompt's message.
+      required: [id, hash, message]
+
+    PromptBranch:
+      type: object
+      properties:
+        id:
+          type: string
+          description: This is the unique id of the prompt branch.
+        name:
+          type: string
+          description: This is the name of the prompt branch.
+      required: [id, name]
+
+    PromptBranchRef:
+      type: object
+      properties:
+        id:
+          type: string
+          description: This is the unique id of the prompt branch.
+      required: [id]
+
+    PushPromptRequest:
+      type: object
+      properties:
+        alias:
+          type: string
+          description: The unique alias of the prompt.
+        text:
+          type: string
+          description: The text content of the prompt. Supply this only if you are creating a text-based prompt.
+        messages:
+          type: array
+          items:
+            $ref: "#/components/schemas/PromptMessage"
+          description: The list of messages that make up the prompt. Supply this only if you are creating a list-based prompt.
+        interpolationType:
+          $ref: "#/components/schemas/PromptInterpolationType"
+          default: FSTRING
+        modelSettings:
+          $ref: "#/components/schemas/ModelSettings"
+          description: This is the model settings for the prompt.
+        outputType:
+          $ref: "#/components/schemas/PromptOutputType"
+          default: TEXT
+        outputSchema:
+          $ref: "#/components/schemas/OutputSchema"
+          description: This is the output schema definition when outputType is SCHEMA.
+        tools:
+          type: array
+          items:
+            $ref: "#/components/schemas/Tool"
+        branch:
+          type: string
+          description: The name of the branch you want to push the new commit to. Defaults to "main" if not specified.
+      required: [alias]
+
+    PushPromptResult:
+      type: object
+      properties:
+        promptId:
+          type: string
+          description: This is the id of the prompt generated by Confident AI, not to be confused with the alias you supplied or version number.
+        hash:
+          type: string
+          description: This is the hash of the commit created by Confident AI for pushing this prompt, not to be confused with version number.
+      required: [promptId, hash]
+
+    CreatePromptVersionRequest:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: The hash of the commit you wanna release a new version of. Only commits above the last versioned commit can be released as new versions. If ommited, the most recent commit will be versioned.
+
+    CreatePromptVersionResult:
+      type: object
+      properties:
+        version:
+          type: string
+          description: The version id generated by Confident AI of the new version you just released, it is always incremental.
+        hash:
+          type: string
+          description: The hash code of the commit that was just versioned. This is the same hash you pass in request or the hash of the most recent commit on the Confident AI platform.
+      required: [version, hash]
+
+    CreatePromptBranchRequest:
+      type: object
+      properties:
+        branch:
+          type: string
+          description: The unique name of the branch to create in the prompt.
+      required: [branch]
+
+    UpdatePromptBranchRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The new name of the branch you're trying to update.
+      required: [name]
+
+    PromptList:
+      type: object
+      properties:
+        prompts:
+          type: array
+          items:
+            $ref: "#/components/schemas/PromptSummary"
+          description: This maps to all the prompts retrieved.
+      required: [prompts]
+
+    PromptVersions:
+      type: object
+      additionalProperties: false
+      properties:
+        textVersions:
+          type: array
+          items:
+            $ref: "#/components/schemas/PromptVersion"
+          description: This is the list of versions associated with the text prompt, which is null if the prompt is a messages prompt.
+        messagesVersions:
+          type: array
+          items:
+            $ref: "#/components/schemas/PromptVersion"
+          description: This is the list of versions associated with the messages prompt, which is null if the prompt is a text prompt.
+
+    PromptCommitList:
+      type: object
+      additionalProperties: false
+      properties:
+        commits:
+          type: array
+          items:
+            $ref: "#/components/schemas/PromptCommit"
+          description: This is the list of commits associated with the prompt.
+      required: [commits]
+
+    PromptBranchList:
+      type: object
+      properties:
+        branches:
+          type: array
+          items:
+            $ref: "#/components/schemas/PromptBranch"
+          description: This is the list of branches associated with the prompt.
+      required: [branches]
