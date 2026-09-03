@@ -1,7 +1,7 @@
 export { ConfidentAI } from "./client";
 export type { ConfidentAIOptions } from "./client";
 
-export { Api, Endpoints, HttpMethods } from "./api";
+export { Api, ApiKeyKind, Endpoints, HttpMethods } from "./api";
 export type { RequestOptions } from "./api";
 
 export { OrganizationClient } from "./organization/client";
