@@ -47,7 +47,7 @@ const API_KEY_ENV_VARS: Record<ApiKeyKind, string> = {
 };
 
 const API_KEY_CLIENT_OPTIONS: Record<ApiKeyKind, string> = {
-  [ApiKeyKind.ORGANIZATION]: "apiKey",
+  [ApiKeyKind.ORGANIZATION]: "organizationApiKey",
   [ApiKeyKind.PROJECT]: "projectApiKey",
 };
 

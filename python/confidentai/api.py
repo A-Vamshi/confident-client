@@ -57,7 +57,7 @@ _API_KEY_ENV_VARS = {
 }
 
 _API_KEY_CLIENT_ARGUMENTS = {
-    ApiKeyKind.ORGANIZATION: "api_key",
+    ApiKeyKind.ORGANIZATION: "organization_api_key",
     ApiKeyKind.PROJECT: "project_api_key",
 }
 
