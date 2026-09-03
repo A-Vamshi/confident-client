@@ -41,6 +41,8 @@ aiohttp = "^3.9.0"
 pytest = "^8.0.0"
 ruff = "^0.13.0"
 black = "^25.1.0"
+PyYAML = "^6.0"
+python-dotenv = "^1.0"
 
 [build-system]
 requires = ["poetry-core"]

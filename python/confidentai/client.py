@@ -8,6 +8,7 @@ from .api import (
     get_confident_api_key,
 )
 from .organization import OrganizationClient
+from .prompts import Prompt, Prompts
 from .projects import ProjectClient, ProjectsClient
 from .types import Organization
 
@@ -71,6 +72,35 @@ class ConfidentAI:
     @property
     def projects(self) -> ProjectsClient:
         return ProjectsClient(self._api(ApiKeyKind.ORGANIZATION))
+
+    ##################################
+    ###### STATELESS  ################
+    ##################################
+    @property
+    def prompts(self) -> Prompts:
+        """
+        This one can be used to just call the API via different methods:
+            - client.prompts.push(...)
+            - client.prompts.pull(...)
+            - client.prompts.list_versions(...)
+        """
+        return Prompts(self._api(ApiKeyKind.PROJECT))
+
+    ##################################
+    ###### STATEFULL #################
+    ##################################
+
+    def prompt(self, alias: str) -> Prompt:
+        """
+        This one can be used to hold an object in memory, mutate and use methods on instance:
+            - prompt = client.prompt(alias="new-prompt-1")
+                - prompt.text = "..."
+                - prompt.interpolation_type = ...
+            - prompt.push()
+            - prompt.pull(...)
+            - prompt.list_versions(...)
+        """
+        return Prompt(self._api(ApiKeyKind.PROJECT), alias)
 
     def organization(self) -> OrganizationClient:
         return OrganizationClient(self._api(ApiKeyKind.ORGANIZATION))
