@@ -110,7 +110,9 @@ def test_policies_create_sends_permission_ids(client, http):
     http.enqueue_data(
         {"policy": {"id": "p1", "name": "Billing", "permissions": []}}
     )
-    client.organization().iam.policies.create("Billing", permission_ids=["perm1"])
+    client.organization().iam.policies.create(
+        "Billing", permission_ids=["perm1"]
+    )
     assert http.last["json"] == {
         "name": "Billing",
         "permissionIds": ["perm1"],

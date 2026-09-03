@@ -37,9 +37,11 @@ async_retryable_exceptions = (
     aiohttp.ClientSSLError,
 )
 
+
 class ConfidentRegion(str, Enum):
     US = "US"
     EU = "EU"
+
 
 class ApiKeyKind(Enum):
     ORGANIZATION = "organization"
@@ -65,7 +67,7 @@ def _infer_region_from_api_key(api_key: Optional[str]) -> Optional[str]:
         return None
     key = api_key.strip().lower()
     if key.startswith("confident_eu_"):
-        return ConfidentRegion.US
+        return ConfidentRegion.EU
     if key.startswith("confident_us_"):
         return ConfidentRegion.US
     return None
