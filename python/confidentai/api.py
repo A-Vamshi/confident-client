@@ -19,6 +19,7 @@ from .types import ApiResponse, ConfidentApiError
 from .utils.request import drop_none, join_url
 
 CONFIDENT_ORG_API_KEY_ENV_VAR = "CONFIDENT_ORG_API_KEY"
+CONFIDENT_PROJ_API_KEY_ENV_VAR = "CONFIDENT_PROJ_API_KEY"
 CONFIDENT_BASE_URL_ENV_VAR = "CONFIDENT_BASE_URL"
 CONFIDENT_REGION_ENV_VAR = "CONFIDENT_REGION"
 
@@ -36,22 +37,47 @@ async_retryable_exceptions = (
     aiohttp.ClientSSLError,
 )
 
+class ConfidentRegion(str, Enum):
+    US = "US"
+    EU = "EU"
+
+class ApiKeyKind(Enum):
+    ORGANIZATION = "organization"
+    PROJECT = "project"
+
+    @property
+    def env_var(self) -> str:
+        if self == ApiKeyKind.ORGANIZATION:
+            return CONFIDENT_ORG_API_KEY_ENV_VAR
+        if self == ApiKeyKind.PROJECT:
+            return CONFIDENT_PROJ_API_KEY_ENV_VAR
+
+    @property
+    def client_argument(self) -> str:
+        if self == ApiKeyKind.ORGANIZATION:
+            return "api_key"
+        if self == ApiKeyKind.PROJECT:
+            return "project_api_key"
+
 
 def _infer_region_from_api_key(api_key: Optional[str]) -> Optional[str]:
     if not api_key:
         return None
     key = api_key.strip().lower()
     if key.startswith("confident_eu_"):
-        return "EU"
+        return ConfidentRegion.US
     if key.startswith("confident_us_"):
-        return "US"
+        return ConfidentRegion.US
     return None
 
 
-def get_confident_api_key(api_key: Optional[str] = None) -> Optional[str]:
+def get_confident_api_key(
+    api_key: Optional[str] = None,
+    key_kind: ApiKeyKind = ApiKeyKind.ORGANIZATION,
+) -> Optional[str]:
     if api_key:
         return api_key
-    return os.getenv(CONFIDENT_ORG_API_KEY_ENV_VAR) or None
+    return os.getenv(key_kind.env_var) or None
 
 
 def get_base_api_url(
@@ -68,8 +94,8 @@ def get_base_api_url(
     region = os.getenv(CONFIDENT_REGION_ENV_VAR) or _infer_region_from_api_key(
         api_key
     )
-    region = (region or "US").upper()
-    if region == "EU":
+    region = (region or ConfidentRegion.US).upper()
+    if region == ConfidentRegion.EU:
         return API_BASE_URL_EU
     return API_BASE_URL
 
@@ -168,13 +194,17 @@ class Api:
         api_key: Optional[str] = None,
         base_url: Optional[str] = None,
         timeout: Optional[float] = None,
+        key_kind: ApiKeyKind = ApiKeyKind.ORGANIZATION,
     ) -> None:
-        api_key = get_confident_api_key(api_key)
+        api_key = get_confident_api_key(api_key, key_kind)
         if not api_key:
             raise ValueError(
-                f"No Confident API key found. Please set the {CONFIDENT_ORG_API_KEY_ENV_VAR} environment variable or pass api_key."
+                f"No Confident AI {key_kind.value} API key found. Please set the "
+                f"{key_kind.env_var} environment variable or pass "
+                f"{key_kind.client_argument}."
             )
 
+        self.key_kind = key_kind
         self.api_key = api_key
         self.base_url = get_base_api_url(api_key, base_url)
         self.timeout = timeout if timeout is not None else DEFAULT_TIMEOUT

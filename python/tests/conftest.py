@@ -10,7 +10,13 @@ from typing import Any, Dict, List, Optional
 
 import pytest
 
-from confidentai.api import Api
+from confidentai.api import (
+    CONFIDENT_BASE_URL_ENV_VAR,
+    CONFIDENT_ORG_API_KEY_ENV_VAR,
+    CONFIDENT_PROJ_API_KEY_ENV_VAR,
+    CONFIDENT_REGION_ENV_VAR,
+    Api,
+)
 
 
 class FakeResponse:
@@ -75,6 +81,17 @@ class RequestRecorder:
     @property
     def last(self) -> Dict[str, Any]:
         return self.calls[-1]
+
+
+@pytest.fixture
+def clean_env(monkeypatch) -> None:
+    for env_var in (
+        CONFIDENT_ORG_API_KEY_ENV_VAR,
+        CONFIDENT_PROJ_API_KEY_ENV_VAR,
+        CONFIDENT_BASE_URL_ENV_VAR,
+        CONFIDENT_REGION_ENV_VAR,
+    ):
+        monkeypatch.delenv(env_var, raising=False)
 
 
 @pytest.fixture
