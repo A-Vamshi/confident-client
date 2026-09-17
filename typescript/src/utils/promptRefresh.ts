@@ -1,15 +1,3 @@
-/**
- * Keeping a pulled prompt current, without the caller waiting for it.
- *
- * A prompt pulled with `refresh` set is re-pulled on an interval so that
- * editing it on Confident AI reaches a running process without a deploy.
- *
- * Two rules shape what is here. A refresh that fails must never surface to the
- * caller — the prompt in hand is still good, and the next attempt may succeed —
- * and refreshing must never be the reason a handle stays alive, so the timer
- * holds the prompt weakly and stops once the program has dropped it.
- */
-
 import { Prompt as PromptPayload } from "../prompts/types";
 
 /** How a caller picked the commit to pull. */

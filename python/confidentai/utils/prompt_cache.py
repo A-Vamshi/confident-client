@@ -1,16 +1,3 @@
-"""The prompt cache, and the pull that reads and writes it.
-
-Pulling a prompt over the network on every use puts a round trip in front of
-every LLM call, so a pulled prompt is kept on disk and refreshed in the
-background. `pull_prompt` is what the generated `Prompt.pull` delegates to;
-the refresh loop it starts lives in `prompt_refresh`.
-
-Entries are keyed by prompt id and by the selector the caller pulled with, so
-`latest` and the `production` label are separate entries and neither can serve
-the other. The id is in the key because it is what the routes take, which also
-means two projects using the same alias cannot collide here.
-"""
-
 import json
 import logging
 import os
@@ -32,8 +19,6 @@ CACHE_FILENAME = "prompts.json"
 
 _PAYLOAD = TypeAdapter(PromptPayload)
 
-# One unwritable cache directory is reported once, not on every pull: a
-# read-only filesystem is a deployment's steady state, not a passing fault.
 _warned_unwritable = False
 
 Handle = TypeVar("Handle")

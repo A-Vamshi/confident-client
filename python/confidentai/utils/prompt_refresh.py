@@ -1,16 +1,3 @@
-"""Keeping a pulled prompt current, without the caller waiting for it.
-
-A prompt pulled with `refresh` set is re-pulled on an interval so that editing
-it on Confident AI reaches a running process without a deploy. The work
-happens on one background event loop shared by every prompt, on a daemon
-thread, so a purely synchronous program gets refreshing too.
-
-Two rules shape what is here. A refresh that fails must never surface to the
-caller — the prompt in hand is still good, and the next attempt may succeed —
-and refreshing must never be the reason a handle stays alive, so the loop
-holds the prompt weakly and ends once the program has dropped it.
-"""
-
 import asyncio
 import logging
 import threading
