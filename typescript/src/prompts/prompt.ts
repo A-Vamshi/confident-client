@@ -6,6 +6,7 @@
 import { Api } from "../api";
 import { PromptsClient } from "./client";
 import { interpolatePrompt } from "../utils/helpers";
+import { pullPrompt } from "../utils/promptCache";
 import { PromptType } from "../common/types";
 import {
   CreatePromptVersionResult,
@@ -153,14 +154,15 @@ export class Prompt {
    * @param branch The name of the branch to read from. Defaults to `main` when
    *   omitted. Only valid with `commit`.
    */
-  async pull(
+  /** @internal */
+  async pullOnce(
     options: {
       commit?: string;
       version?: string;
       label?: string;
       branch?: string;
     } = {},
-  ): Promise<this> {
+  ): Promise<PromptPayload> {
     const given = (["commit", "version", "label"] as const).filter(
       (name) => options[name] !== undefined,
     );
@@ -188,7 +190,7 @@ export class Prompt {
       );
     }
     this.load(payload);
-    return this;
+    return payload;
   }
 
   /**
@@ -239,7 +241,8 @@ export class Prompt {
     return interpolatePrompt(this, values);
   }
 
-  private load(payload: PromptPayload): void {
+  /** @internal */
+  load(payload: PromptPayload): void {
     // The payload is one branch of a union, so a field only the other
     // branch declares is absent rather than undefined.
     const source = payload as unknown as Record<string, unknown>;
@@ -258,6 +261,59 @@ export class Prompt {
     this.outputSchema = source["outputSchema"] as typeof this.outputSchema;
     this.tools = source["tools"] as typeof this.tools;
     this.messages = source["messages"] as typeof this.messages;
+  }
+
+  /**
+   * Pull the prompt into this handle, and keep it current.
+   *
+   * Pass at most one of commit, version, label. The commit that comes back is
+   * cached on disk and re-pulled in the background every `refresh` seconds, so
+   * editing the prompt on Confident AI reaches a running process without a
+   * deploy.
+   *
+   * @param options.commit The hash of the commit to pull. Defaults to
+   *   `latest`.
+   * @param options.version The version number of the prompt to pull.
+   * @param options.label The label of the version to pull.
+   * @param options.branch The name of the branch to read from. Defaults to
+   *   `main` when omitted. Only valid with `commit`.
+   * @param options.refresh How often, in seconds, to re-pull the prompt in the
+   *   background. `0` turns off the refresh and the cache together, so that
+   *   every pull calls the API — which is what you want while you are still
+   *   editing the prompt.
+   * @param options.fallbackToCache Serve the cached commit when the API cannot
+   *   be reached, instead of throwing.
+   * @param options.writeToCache Write the pulled commit to the cache. The
+   *   background refresh writes it either way.
+   * @param options.defaultToCache Return the cached commit when there is one,
+   *   rather than waiting for the API.
+   */
+  async pull(
+    options: {
+      commit?: string;
+      version?: string;
+      label?: string;
+      branch?: string;
+      refresh?: number;
+      fallbackToCache?: boolean;
+      writeToCache?: boolean;
+      defaultToCache?: boolean;
+    } = {},
+  ): Promise<this> {
+    const {
+      refresh = 60,
+      fallbackToCache = true,
+      writeToCache = true,
+      defaultToCache = true,
+      ...selector
+    } = options;
+    await pullPrompt(this, selector, {
+      refresh,
+      fallbackToCache,
+      writeToCache,
+      defaultToCache,
+    });
+    return this;
   }
 
   private promptIdOrThrow(): string {

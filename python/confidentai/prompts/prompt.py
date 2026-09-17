@@ -8,6 +8,10 @@ from typing import List, Optional
 from confidentai.api import Api
 from confidentai.prompts.client import PromptsClient
 from confidentai.utils.helpers import interpolate_prompt
+from confidentai.utils.prompt_cache import (
+    a_pull_prompt,
+    pull_prompt,
+)
 from confidentai.common.types import PromptType
 from confidentai.prompts.types import (
     CreatePromptVersionResult,
@@ -225,14 +229,14 @@ class Prompt:
         """
         return await self._client.a_delete_branch(self._prompt_id(), branch_id)
 
-    def pull(
+    def _pull_once(
         self,
         *,
         commit: Optional[str] = None,
         version: Optional[str] = None,
         label: Optional[str] = None,
         branch: Optional[str] = None,
-    ) -> "Prompt":
+    ) -> PromptPayload:
         """Pull
 
         A single commit of a prompt, as pulled by version, commit hash, or
@@ -274,16 +278,16 @@ class Prompt:
                 prompt_id, commit or "latest", branch=branch
             )
         self._load(payload)
-        return self
+        return payload
 
-    async def a_pull(
+    async def _a_pull_once(
         self,
         *,
         commit: Optional[str] = None,
         version: Optional[str] = None,
         label: Optional[str] = None,
         branch: Optional[str] = None,
-    ) -> "Prompt":
+    ) -> PromptPayload:
         """Pull
 
         A single commit of a prompt, as pulled by version, commit hash, or
@@ -325,7 +329,7 @@ class Prompt:
                 prompt_id, commit or "latest", branch=branch
             )
         self._load(payload)
-        return self
+        return payload
 
     def push(self, *, branch: Optional[str] = None) -> PushPromptResult:
         """Push Prompt
@@ -398,6 +402,106 @@ class Prompt:
         self.output_schema = getattr(payload, "output_schema", None)
         self.tools = getattr(payload, "tools", None)
         self.messages = getattr(payload, "messages", None)
+
+    def pull(
+        self,
+        *,
+        commit: Optional[str] = None,
+        version: Optional[str] = None,
+        label: Optional[str] = None,
+        branch: Optional[str] = None,
+        refresh: Optional[int] = 60,
+        fallback_to_cache: bool = True,
+        write_to_cache: bool = True,
+        default_to_cache: bool = True,
+    ) -> "Prompt":
+        """Pull the prompt into this handle, and keep it current.
+
+        Pass at most one of commit, version, label. The commit that comes back
+        is cached on disk and re-pulled in the background every `refresh`
+        seconds, so editing the prompt on Confident AI reaches a running
+        process without a deploy.
+
+        Args:
+            commit: The hash of the commit to pull. Defaults to `latest`.
+            version: The version number of the prompt to pull.
+            label: The label of the version to pull.
+            branch: The name of the branch to read from. Defaults to `main`
+                when omitted. Only valid with `commit`.
+            refresh: How often, in seconds, to re-pull the prompt in the
+                background. `0` turns off the refresh and the cache together,
+                so that every pull calls the API — which is what you want
+                while you are still editing the prompt.
+            fallback_to_cache: Serve the cached commit when the API cannot be
+                reached, instead of raising.
+            write_to_cache: Write the pulled commit to the cache. The
+                background refresh writes it either way.
+            default_to_cache: Return the cached commit when there is one,
+                rather than waiting for the API.
+        """
+        return pull_prompt(
+            self,
+            {
+                "commit": commit,
+                "version": version,
+                "label": label,
+                "branch": branch,
+            },
+            refresh=refresh,
+            fallback_to_cache=fallback_to_cache,
+            write_to_cache=write_to_cache,
+            default_to_cache=default_to_cache,
+        )
+
+    async def a_pull(
+        self,
+        *,
+        commit: Optional[str] = None,
+        version: Optional[str] = None,
+        label: Optional[str] = None,
+        branch: Optional[str] = None,
+        refresh: Optional[int] = 60,
+        fallback_to_cache: bool = True,
+        write_to_cache: bool = True,
+        default_to_cache: bool = True,
+    ) -> "Prompt":
+        """Pull the prompt into this handle, and keep it current.
+
+        Pass at most one of commit, version, label. The commit that comes back
+        is cached on disk and re-pulled in the background every `refresh`
+        seconds, so editing the prompt on Confident AI reaches a running
+        process without a deploy.
+
+        Args:
+            commit: The hash of the commit to pull. Defaults to `latest`.
+            version: The version number of the prompt to pull.
+            label: The label of the version to pull.
+            branch: The name of the branch to read from. Defaults to `main`
+                when omitted. Only valid with `commit`.
+            refresh: How often, in seconds, to re-pull the prompt in the
+                background. `0` turns off the refresh and the cache together,
+                so that every pull calls the API — which is what you want
+                while you are still editing the prompt.
+            fallback_to_cache: Serve the cached commit when the API cannot be
+                reached, instead of raising.
+            write_to_cache: Write the pulled commit to the cache. The
+                background refresh writes it either way.
+            default_to_cache: Return the cached commit when there is one,
+                rather than waiting for the API.
+        """
+        return await a_pull_prompt(
+            self,
+            {
+                "commit": commit,
+                "version": version,
+                "label": label,
+                "branch": branch,
+            },
+            refresh=refresh,
+            fallback_to_cache=fallback_to_cache,
+            write_to_cache=write_to_cache,
+            default_to_cache=default_to_cache,
+        )
 
     def _prompt_id(self) -> str:
         if self.prompt_id is None:

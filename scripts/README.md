@@ -31,19 +31,33 @@ still gets a normal stateless client.
 
 ## `sdkgen/`
 
-Everything else. The three renderers sit at the top, one per kind of artifact:
+Everything else. The renderers sit at the top, one per kind of artifact:
 
 |                       |                                                                      |
 | --------------------- | -------------------------------------------------------------------- |
 | `types.py`            | the wire types — one module per resource                             |
 | `clients.py`          | the endpoint enum, the operations, and the clients that compose them |
 | `stateful_clients.py` | the handles `stateful_resources.yml` describes                       |
+| `overlays.py`         | hand-written code folded into a generated file after rendering       |
 | `constants.py`        | everything the generator is told, as data                            |
 
 `core/` is what those stand on: `spec.py` reads the OpenAPI document,
 `operations.py` models one operation, `shapes.py` turns a schema into a type,
 `naming.py` turns spec names into code names, `output.py` writes and formats,
 `errors.py` holds the one exception.
+
+## Overlays
+
+Some things a client needs are not in the spec at all — prompt caching and
+background refresh is the first of them. `overlays.py` states those as exact
+edits against one rendered file, applied before anything is written, so
+`--check`, idempotence and both formatters cover them like generated code.
+
+Keep an overlay thin: rename a generated method out of the way and call it from
+a hand-written one that lives in the SDK, where it is typed and tested like the
+rest of the library. Every anchor must match the number of times it claims, so
+a generator change that moves one fails the run instead of quietly dropping the
+feature.
 
 ## Two conventions worth keeping
 

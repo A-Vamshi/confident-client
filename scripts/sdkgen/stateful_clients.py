@@ -11,8 +11,10 @@ returning, which send a body built from it, and which methods have no
 operation behind them at all.
 """
 
+import ast
 import re
 
+from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Set, Tuple
 
 import yaml
@@ -21,7 +23,10 @@ from .constants import (
     HELPERS_MODULE,
     METHOD_ORDER,
     ORGANIZATION_KEY_RESOURCES,
+    PYTHON_HELPERS,
+    REPO_ROOT,
     STATEFUL_RESOURCES,
+    TYPESCRIPT_HELPERS,
 )
 from .core.errors import (
     SpecError,
@@ -54,7 +59,76 @@ from .core.output import (
 
 
 def load_stateful_resources() -> Dict[str, Any]:
-    return yaml.safe_load(STATEFUL_RESOURCES.read_text()) or {}
+    resources = yaml.safe_load(STATEFUL_RESOURCES.read_text()) or {}
+    assert_helpers_exist(resources)
+    return resources
+
+
+# `export const x = ...`, `export function x(...)`, and the rest of the forms
+# a hand-written helper can take. Enough to tell a name that is there from one
+# that is not; it is not trying to parse TypeScript.
+TS_EXPORTED = re.compile(
+    r"^export\s+(?:async\s+)?(?:function|const|let|var|class)\s+"
+    r"([A-Za-z_$][\w$]*)",
+    re.M,
+)
+
+
+def python_top_level_names(path: Path) -> Set[str]:
+    """Every name a hand-written Python module defines at the top level."""
+    names: Set[str] = set()
+    for node in ast.parse(path.read_text()).body:
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            names.add(node.name)
+        elif isinstance(node, ast.ClassDef):
+            names.add(node.name)
+        elif isinstance(node, ast.Assign):
+            names.update(
+                target.id
+                for target in node.targets
+                if isinstance(target, ast.Name)
+            )
+    return names
+
+
+def assert_helpers_exist(resources: Dict[str, Any]) -> None:
+    """Refuse to generate a handle whose helper nobody has written.
+
+    A helper is bound onto the generated class by name, so a name with nothing
+    behind it generates a module that cannot be imported. TypeScript catches
+    that at build time; Python does not catch it until a caller first touches
+    the handle, which is far from the YAML line that caused it.
+    """
+    written = {
+        PYTHON_HELPERS: python_top_level_names(PYTHON_HELPERS),
+        TYPESCRIPT_HELPERS: set(
+            TS_EXPORTED.findall(TYPESCRIPT_HELPERS.read_text())
+        ),
+    }
+
+    missing: List[str] = []
+    for resource in sorted(resources):
+        helpers = (resources[resource] or {}).get("helpers") or {}
+        for exposed in sorted(helpers):
+            function = helpers[exposed]
+            for path, spelling in (
+                (PYTHON_HELPERS, function),
+                (TYPESCRIPT_HELPERS, camel_case(function)),
+            ):
+                if spelling not in written[path]:
+                    missing.append(
+                        f"  {resource}.{exposed} -> {spelling}\n"
+                        f"      not found in {path.relative_to(REPO_ROOT)}"
+                    )
+
+    if missing:
+        raise SpecError(
+            f"{STATEFUL_RESOURCES.name} names helpers that are not "
+            "written:\n\n" + "\n".join(missing) + "\n\n"
+            "A helper is hand-written in both SDKs and bound onto the "
+            "generated class by name. Write it in both files, or drop the "
+            "entry from the YAML."
+        )
 
 
 def handle_module(config: Dict[str, Any]) -> str:
@@ -194,9 +268,7 @@ class Handle:
         the class being defined has taken the name. Every annotation that
         mentions it has to follow, or it resolves to the half-built class.
         """
-        return re.sub(
-            rf"\b{self.name}\b", f"{self.name}Payload", annotation
-        )
+        return re.sub(rf"\b{self.name}\b", f"{self.name}Payload", annotation)
 
     def state_fields(self) -> List[Tuple[str, str]]:
         """Every field the handle holds.

@@ -127,8 +127,12 @@ TS_OPERATIONS_MODULE = "operations.ts"
 CLIENTS_PACKAGE = "clients"
 
 # Where a handle's hand-written methods come from. Named in the YAML by
-# function, so one module serves every resource.
+# function, so one module serves every resource. Both files are read at
+# generation time, so a helper named in the YAML but written in neither is
+# reported there rather than as an ImportError in somebody's application.
 HELPERS_MODULE = "confidentai.utils.helpers"
+PYTHON_HELPERS = REPO_ROOT / "python" / "confidentai" / "utils" / "helpers.py"
+TYPESCRIPT_HELPERS = REPO_ROOT / "typescript" / "src" / "utils" / "helpers.ts"
 
 
 # ===== How the spec is spelled =====

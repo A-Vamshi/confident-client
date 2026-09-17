@@ -52,6 +52,7 @@ from sdkgen.core.spec import (
     schema_nodes,
     schemas_reached,
 )
+from sdkgen.overlays import run_after_generation
 from sdkgen.types import (
     declare,
     render_python,
@@ -308,6 +309,10 @@ def build(spec_dir: Path, descriptive: bool = True) -> Generated:
         (path, formatted.get(str(path.relative_to(REPO_ROOT)), content))
         for path, content in outputs
     ]
+
+    # Overlaid last, over formatted text: the anchors an overlay matches are
+    # then the lines a reader sees in the committed file.
+    outputs = run_after_generation(outputs, descriptive)
 
     # Measured against every tag, skipped ones included, so a resource waiting
     # to be generated does not read as drift in the spec.
