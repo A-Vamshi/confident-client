@@ -33,12 +33,12 @@ still gets a normal stateless client.
 
 Everything else. The three renderers sit at the top, one per kind of artifact:
 
-| | |
-| --- | --- |
-| `types.py` | the wire types — one module per resource |
-| `clients.py` | the endpoint enum, the operations, and the clients that compose them |
-| `stateful_clients.py` | the handles `stateful_resources.yml` describes |
-| `constants.py` | everything the generator is told, as data |
+|                       |                                                                      |
+| --------------------- | -------------------------------------------------------------------- |
+| `types.py`            | the wire types — one module per resource                             |
+| `clients.py`          | the endpoint enum, the operations, and the clients that compose them |
+| `stateful_clients.py` | the handles `stateful_resources.yml` describes                       |
+| `constants.py`        | everything the generator is told, as data                            |
 
 `core/` is what those stand on: `spec.py` reads the OpenAPI document,
 `operations.py` models one operation, `shapes.py` turns a schema into a type,
