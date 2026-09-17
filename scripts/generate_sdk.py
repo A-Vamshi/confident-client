@@ -30,8 +30,8 @@ from sdkgen.clients import (
 from sdkgen.constants import (
     CANONICAL_SPEC_LOCATION,
     CLIENTS_PACKAGE,
+    REPO_ROOT,
     COMMON_RESOURCE,
-    DEFAULT_OUT_ROOT,
     DEFAULT_SPEC_DIR,
     MERGED_SPEC,
 )
@@ -114,9 +114,7 @@ def typescript_file(source: str, body: str) -> str:
 # ===== The three rounds of rendering =====
 
 
-def render_wire_types(
-    home: Dict[str, str], schemas: Dict[str, Any], out_root: Path
-) -> Outputs:
+def render_wire_types(home: Dict[str, str], schemas: Dict[str, Any]) -> Outputs:
     """One types module per resource, plus `common` for what they share."""
     owned: Dict[str, Dict[str, Any]] = {}
     for name in sorted(home):
@@ -136,7 +134,7 @@ def render_wire_types(
             )
             raise SpecError(f"{label}: {error}") from None
 
-        paths = ResourcePaths(name=resource, out_root=out_root)
+        paths = ResourcePaths(name=resource)
         outputs.append((paths.python_path, render_python(module, source)))
         outputs.append(
             (paths.typescript_path, render_typescript(module, source))
@@ -150,14 +148,13 @@ def render_per_resource(
     acronyms: Set[str],
     schemas: Dict[str, Any],
     stateful: Dict[str, Any],
-    out_root: Path,
-    docs: bool,
+    descriptive: bool,
 ) -> Outputs:
     """Every operations module and client a resource generates, plus its
     stateful handle when stateful_resources.yml declares one."""
     outputs: Outputs = []
     for resource in sorted(generating):
-        paths = ResourcePaths(name=resource, out_root=out_root)
+        paths = ResourcePaths(name=resource)
         source = resource_source(resource)
         rounds = (
             (resource_client_files, paths.python_path, python_file),
@@ -165,7 +162,12 @@ def render_per_resource(
         )
         for render, path, wrap in rounds:
             for filename, body in render(
-                resource, generating[resource], home, acronyms, schemas, docs
+                resource,
+                generating[resource],
+                home,
+                acronyms,
+                schemas,
+                descriptive,
             ):
                 outputs.append((path.parent / filename, wrap(source, body)))
 
@@ -178,7 +180,7 @@ def render_per_resource(
             home,
             acronyms,
             schemas,
-            docs,
+            descriptive,
         )
         outputs.append(
             (
@@ -200,14 +202,13 @@ def render_shared(
     generating: Dict[str, Any],
     acronyms: Set[str],
     stateful: Dict[str, Any],
-    out_root: Path,
-    docs: bool,
+    descriptive: bool,
 ) -> Outputs:
     """The files no single resource owns: the endpoint enum, and the mixins
     that hang every client off ConfidentAI."""
     source = f"the routes in {CANONICAL_SPEC_LOCATION}/{MERGED_SPEC}"
-    clients = out_root / "python" / "confidentai" / CLIENTS_PACKAGE
-    ts_clients = out_root / "typescript" / "src" / CLIENTS_PACKAGE
+    clients = REPO_ROOT / "python" / "confidentai" / CLIENTS_PACKAGE
+    ts_clients = REPO_ROOT / "typescript" / "src" / CLIENTS_PACKAGE
 
     outputs: Outputs = [
         (
@@ -243,15 +244,15 @@ def render_shared(
 
     outputs.append(
         (
-            out_root / "python" / "confidentai" / "endpoints.py",
-            render_endpoints(generating, source, docs),
+            REPO_ROOT / "python" / "confidentai" / "endpoints.py",
+            render_endpoints(generating, source, descriptive),
         )
     )
     outputs.append(
         (
-            out_root / "typescript" / "src" / "endpoints.ts",
+            REPO_ROOT / "typescript" / "src" / "endpoints.ts",
             typescript_file(
-                source, render_typescript_endpoints(generating, docs)
+                source, render_typescript_endpoints(generating, descriptive)
             ),
         )
     )
@@ -270,7 +271,7 @@ class Generated:
     skipped_resources: List[str] = field(default_factory=list)
 
 
-def build(spec_dir: Path, out_root: Path, docs: bool = True) -> Generated:
+def build(spec_dir: Path, descriptive: bool = True) -> Generated:
     spec, components = load_schemas(spec_dir)
     schemas = components.get("schemas") or {}
 
@@ -288,23 +289,23 @@ def build(spec_dir: Path, out_root: Path, docs: bool = True) -> Generated:
     stateful = load_stateful_resources()
 
     outputs = (
-        render_wire_types(home, schemas, out_root)
+        render_wire_types(home, schemas)
         + render_per_resource(
-            generating, home, acronyms, schemas, stateful, out_root, docs
+            generating, home, acronyms, schemas, stateful, descriptive
         )
-        + render_shared(generating, acronyms, stateful, out_root, docs)
+        + render_shared(generating, acronyms, stateful, descriptive)
     )
 
     # Prettier runs once over every TypeScript file rather than per file, so
     # one node startup covers the whole tree.
     rendered = {
-        str(path.relative_to(out_root)): content
+        str(path.relative_to(REPO_ROOT)): content
         for path, content in outputs
         if path.suffix == ".ts"
     }
     formatted = format_typescript(rendered)
     outputs = [
-        (path, formatted.get(str(path.relative_to(out_root)), content))
+        (path, formatted.get(str(path.relative_to(REPO_ROOT)), content))
         for path, content in outputs
     ]
 
@@ -345,7 +346,7 @@ def report(generated: Generated) -> None:
             print(f"  {name}")
 
 
-def classify(outputs: Outputs, root: Path) -> Tuple[List[Path], Outputs]:
+def classify(outputs: Outputs) -> Tuple[List[Path], Outputs]:
     """Split the run into what is hand-written and what is safe to write.
 
     Every file is classified before any is written, so a run that refuses to
@@ -359,10 +360,16 @@ def classify(outputs: Outputs, root: Path) -> Tuple[List[Path], Outputs]:
         if current == content:
             continue
         if current is not None and not is_generated(current):
-            handwritten.append(path.relative_to(root))
+            handwritten.append(path.relative_to(REPO_ROOT))
             continue
         changed.append((path, content))
     return handwritten, changed
+
+
+def as_boolean(value: str) -> bool:
+    if value.lower() in ("true", "false"):
+        return value.lower() == "true"
+    raise argparse.ArgumentTypeError(f"expected true or false, got {value!r}")
 
 
 def parse_arguments() -> argparse.Namespace:
@@ -379,34 +386,28 @@ def parse_arguments() -> argparse.Namespace:
         help=f"the directory holding confident-cloud's {MERGED_SPEC}",
     )
     parser.add_argument(
-        "--no-docs",
-        dest="docs",
-        action="store_false",
-        help="omit docstrings, JSDoc and explanatory comments from the output",
-    )
-    parser.add_argument(
-        "--out-root",
-        type=Path,
-        default=DEFAULT_OUT_ROOT,
-        help="write the SDKs under this root instead of the repo",
+        "--descriptive",
+        type=as_boolean,
+        default=True,
+        metavar="true|false",
+        help="keep docstrings, JSDoc and explanatory comments in the output",
     )
     return parser.parse_args()
 
 
 def main() -> int:
     arguments = parse_arguments()
-    root = arguments.out_root.resolve()
 
     try:
         generated = build(
-            arguments.spec_dir.resolve(), root, docs=arguments.docs
+            arguments.spec_dir.resolve(), descriptive=arguments.descriptive
         )
     except SpecError as error:
         print(error, file=sys.stderr)
         return 2
 
     report(generated)
-    handwritten, changed = classify(generated.outputs, root)
+    handwritten, changed = classify(generated.outputs)
 
     if handwritten:
         print(
@@ -428,7 +429,7 @@ def main() -> int:
         if changed:
             print("Generated files are stale:", file=sys.stderr)
             for path, _ in changed:
-                print(f"  {path.relative_to(root)}", file=sys.stderr)
+                print(f"  {path.relative_to(REPO_ROOT)}", file=sys.stderr)
             print(
                 "\nRun `poetry run python ../scripts/generate_sdk.py` from "
                 "python/ and commit the result.",
@@ -443,7 +444,7 @@ def main() -> int:
     for path, content in changed:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(content)
-        print(f"wrote {path.relative_to(root)}")
+        print(f"wrote {path.relative_to(REPO_ROOT)}")
     if not changed:
         print("no changes")
     return 0

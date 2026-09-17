@@ -118,10 +118,10 @@ class Handle:
         home: Dict[str, str],
         acronyms: Set[str],
         schemas: Dict[str, Any],
-        docs: bool = True,
+        descriptive: bool = True,
     ) -> None:
         self.resource = resource
-        self.docs = docs
+        self.descriptive = descriptive
         self.config = config
         self.schemas = schemas
         self.home = home
@@ -468,7 +468,7 @@ class Handle:
             )
             lines.extend(
                 render_docstring(
-                    summary, description, documented, " " * 8, self.docs
+                    summary, description, documented, " " * 8, self.descriptive
                 )
             )
             lines.append(
@@ -498,7 +498,9 @@ class Handle:
         ]
         lines = [""]
         lines.extend(
-            render_jsdoc(summary, description, documented, "  ", self.docs)
+            render_jsdoc(
+                summary, description, documented, "  ", self.descriptive
+            )
         )
         lines.append(
             f"  async {camel_case(exposed)}"
@@ -589,7 +591,7 @@ class Handle:
             )
             lines.extend(
                 render_docstring(
-                    summary, description, documented, " " * 8, self.docs
+                    summary, description, documented, " " * 8, self.descriptive
                 )
             )
             lines.append(
@@ -650,7 +652,9 @@ class Handle:
         ]
         lines = [""]
         lines.extend(
-            render_jsdoc(summary, description, documented, "  ", self.docs)
+            render_jsdoc(
+                summary, description, documented, "  ", self.descriptive
+            )
         )
         lines.append(
             f"  async {camel_case(exposed)}({argument}: {carried})"
@@ -692,7 +696,7 @@ class Handle:
             )
             lines.extend(
                 render_docstring(
-                    summary, description, documented, " " * 8, self.docs
+                    summary, description, documented, " " * 8, self.descriptive
                 )
             )
             lines.append(
@@ -721,7 +725,9 @@ class Handle:
 
         lines = [""]
         lines.extend(
-            render_jsdoc(summary, description, documented, "  ", self.docs)
+            render_jsdoc(
+                summary, description, documented, "  ", self.descriptive
+            )
         )
         lines.append(
             f"  async {camel_case(exposed)}({signature}): Promise<this> {{"
@@ -820,7 +826,7 @@ class Handle:
                     description,
                     documented,
                     " " * 8,
-                    self.docs,
+                    self.descriptive,
                 )
             )
             lines.append(
@@ -940,7 +946,7 @@ class Handle:
         lines = [""]
         lines.extend(
             render_jsdoc(
-                exposed.title(), description, documented, "  ", self.docs
+                exposed.title(), description, documented, "  ", self.descriptive
             )
         )
         lines.append(
@@ -1044,7 +1050,7 @@ class Handle:
             )
             lines.extend(
                 render_docstring(
-                    summary, description, documented, " " * 8, self.docs
+                    summary, description, documented, " " * 8, self.descriptive
                 )
             )
             sent = f"self.{body_method}({call})" if whole else ", ".join(spread)
@@ -1089,7 +1095,9 @@ class Handle:
 
         lines = [""]
         lines.extend(
-            render_jsdoc(summary, description, documented, "  ", self.docs)
+            render_jsdoc(
+                summary, description, documented, "  ", self.descriptive
+            )
         )
         lines.append(
             f"  async {camel_case(exposed)}({signature})"
@@ -1327,7 +1335,7 @@ class Handle:
             "        )",
         ]
         dropped = self.undeclared(carried, sends)
-        if dropped and self.docs:
+        if dropped and self.descriptive:
             lines.append(
                 f"        # A {carried} carries fields a {sends} has no room "
                 "for."
@@ -1390,7 +1398,7 @@ class Handle:
             "    const fields = { ...source };",
         ]
         dropped = self.undeclared(carried, sends)
-        if dropped and self.docs:
+        if dropped and self.descriptive:
             lines.append(
                 f"    // A {carried} carries fields a {sends} has no room for."
             )
@@ -1537,7 +1545,7 @@ class Handle:
                         '    """',
                         "",
                     ]
-                    if self.docs
+                    if self.descriptive
                     else []
                 ),
                 "    def __init__(",
@@ -1579,7 +1587,7 @@ class Handle:
         lines.extend(body)
 
         lines.extend(["", f"    def _load(self, payload: {payload}) -> None:"])
-        if union and self.docs:
+        if union and self.descriptive:
             lines.extend(
                 [
                     "        # The payload is one branch of a union, so a "
@@ -1678,7 +1686,7 @@ class Handle:
                         "supplies.",
                         " */",
                     ]
-                    if self.docs
+                    if self.descriptive
                     else []
                 ),
                 f"export class {self.name} {{",
@@ -1720,7 +1728,7 @@ class Handle:
                         "    // branch declares is absent rather than "
                         "undefined.",
                     ]
-                    if self.docs and branches_of(self.name, self.schemas)
+                    if self.descriptive and branches_of(self.name, self.schemas)
                     else []
                 ),
                 "    const source = payload as unknown as "
@@ -1765,13 +1773,13 @@ def render_handle(
     home: Dict[str, str],
     acronyms: Set[str],
     schemas: Dict[str, Any],
-    docs: bool = True,
+    descriptive: bool = True,
 ) -> str:
     ordered = sorted(
         routes, key=lambda route: (route.path, METHOD_ORDER.index(route.method))
     )
     return Handle(
-        resource, config, ordered, home, acronyms, schemas, docs
+        resource, config, ordered, home, acronyms, schemas, descriptive
     ).render()
 
 
@@ -1786,14 +1794,14 @@ def render_ts_handle(
     home: Dict[str, str],
     acronyms: Set[str],
     schemas: Dict[str, Any],
-    docs: bool = True,
+    descriptive: bool = True,
 ) -> str:
     ordered = sorted(
         routes, key=lambda route: (route.path, METHOD_ORDER.index(route.method))
     )
     path = f"{ts_module_for(resource)}/{ts_handle_module(config)}"
     return Handle(
-        resource, config, ordered, home, acronyms, schemas, docs
+        resource, config, ordered, home, acronyms, schemas, descriptive
     ).ts_render(path)
 
 

@@ -20,6 +20,7 @@ import black
 
 from ..constants import (
     GENERATED_MARKER,
+    REPO_ROOT,
     TS_IDENTIFIER,
     PRETTIER_CONFIG,
     PYTHON_LINE_LENGTH,
@@ -42,7 +43,6 @@ class ResourcePaths:
     """
 
     name: str
-    out_root: Path
 
     @property
     def module(self) -> str:
@@ -55,7 +55,7 @@ class ResourcePaths:
     @property
     def python_path(self) -> Path:
         return (
-            self.out_root
+            REPO_ROOT
             / "python"
             / "confidentai"
             / self.python_module
@@ -64,7 +64,7 @@ class ResourcePaths:
 
     @property
     def typescript_path(self) -> Path:
-        return self.out_root / "typescript" / "src" / self.module / "types.ts"
+        return REPO_ROOT / "typescript" / "src" / self.module / "types.ts"
 
 
 def banner(comment: str, source: str) -> List[str]:
@@ -174,9 +174,9 @@ def render_docstring(
     description: Optional[str],
     arguments: List[Tuple[str, Optional[str]]],
     indent: str,
-    docs: bool = True,
+    descriptive: bool = True,
 ) -> List[str]:
-    if not docs:
+    if not descriptive:
         return []
     width = PYTHON_LINE_LENGTH - len(indent)
     lines = [f'{indent}"""{summary}']
@@ -206,9 +206,9 @@ def render_jsdoc(
     description: Optional[str],
     arguments: List[Tuple[str, Optional[str]]],
     indent: str,
-    docs: bool = True,
+    descriptive: bool = True,
 ) -> List[str]:
-    if not docs:
+    if not descriptive:
         return []
     width = PYTHON_LINE_LENGTH - len(indent) - 3
     lines = [f"{indent}/**", f"{indent} * {summary}"]

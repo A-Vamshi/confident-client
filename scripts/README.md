@@ -14,8 +14,8 @@ poetry run python ../scripts/generate_sdk.py            # write
 poetry run python ../scripts/generate_sdk.py --check    # verify, no writes (CI)
 ```
 
-`--spec-dir` points at another checkout of confident-cloud, `--out-root` writes
-somewhere other than the repo, and `--no-docs` drops docstrings and JSDoc. A run
+`--spec-dir` points at another checkout of confident-cloud, and
+`--descriptive false` drops docstrings, JSDoc and explanatory comments. A run
 classifies every file before writing any of it, so it refuses rather than
 overwriting something hand-written.
 

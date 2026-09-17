@@ -16,6 +16,8 @@ from typing import Dict, FrozenSet
 
 # ===== Where the spec is read from, and the SDK written to =====
 
+# Where both SDKs are written: the directory holding python/ and
+# typescript/.
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
 DEFAULT_SPEC_DIR = (
@@ -27,8 +29,6 @@ MERGED_SPEC = "openapi.yml"
 # Headers cite this rather than wherever the specs were read from, so output
 # does not change when CI points --spec-dir at a checkout of confident-cloud.
 CANONICAL_SPEC_LOCATION = "packages/shared/openapi"
-
-DEFAULT_OUT_ROOT = REPO_ROOT
 
 # The stateful handles, described in YAML beside this file rather than here:
 # they are the one part of the generator a reader is expected to hand-edit.

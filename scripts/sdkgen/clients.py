@@ -49,7 +49,7 @@ from .core.spec import Route
 
 
 def render_endpoints(
-    resources: Dict[str, List[Route]], source: str, docs: bool = True
+    resources: Dict[str, List[Route]], source: str, descriptive: bool = True
 ) -> str:
     members: Dict[str, Tuple[str, str]] = {}
     lines = banner("#", source)
@@ -64,7 +64,7 @@ def render_endpoints(
 
     for resource in sorted(resources):
         paths = sorted({route.path for route in resources[resource]})
-        if docs:
+        if descriptive:
             lines.append(f"    # {resource}")
         for path in paths:
             name = endpoint_member(path)
@@ -83,13 +83,13 @@ def render_endpoints(
 
 
 def render_typescript_endpoints(
-    resources: Dict[str, List[Route]], docs: bool = True
+    resources: Dict[str, List[Route]], descriptive: bool = True
 ) -> str:
     lines = [f"export enum {ENDPOINTS_CLASS} {{"]
     for index, resource in enumerate(sorted(resources)):
         if index:
             lines.append("")
-        if docs:
+        if descriptive:
             lines.append(f"  // {resource}")
         for path in sorted({route.path for route in resources[resource]}):
             lines.append(
@@ -217,7 +217,7 @@ def render_client(
     class_name: str,
     schemas: Dict[str, Any],
     owns_api: bool = True,
-    docs: bool = True,
+    descriptive: bool = True,
 ) -> Tuple[str, Set[str]]:
     resolver = Resolver(resource, home)
     referenced: Set[str] = set()
@@ -245,7 +245,7 @@ def render_client(
                 f"    {prefix}{method.name}({', '.join(signature)}) -> "
                 f"{method.returns}:"
             )
-            body.extend(render_docstring(*method.prose, " " * 8, docs))
+            body.extend(render_docstring(*method.prose, " " * 8, descriptive))
             body.append(f"        return {caller}")
             body.extend(f"            {line}" for line in method.call)
             body.append("        )")
@@ -300,7 +300,7 @@ def render_typescript_client(
     schemas: Dict[str, Any],
     path: str,
     extends: Optional[Tuple[str, str]] = None,
-    docs: bool = True,
+    descriptive: bool = True,
 ) -> str:
     """One TypeScript class of methods, mirroring `render_client`."""
     resolver = Resolver(resource, home)
@@ -343,7 +343,9 @@ def render_typescript_client(
             call.append(f"{{ {', '.join(options)} }},")
 
         body.append("")
-        body.extend(render_jsdoc(summary, description, documented, "  ", docs))
+        body.extend(
+            render_jsdoc(summary, description, documented, "  ", descriptive)
+        )
         body.append(
             f"  async {method.ts_name}({', '.join(method.ts_signature())})"
             f": Promise<{method.ts_returns}> {{"
@@ -442,7 +444,7 @@ def resource_client_files(
     home: Dict[str, str],
     acronyms: Set[str],
     schemas: Dict[str, Any],
-    docs: bool = True,
+    descriptive: bool = True,
 ) -> List[Tuple[str, str]]:
     """(filename, source) for every client module one resource generates."""
     client = client_class_name(
@@ -455,7 +457,13 @@ def resource_client_files(
     # indirection.
     if len(groups) == 1:
         source, _ = render_client(
-            resource, routes, home, acronyms, client, schemas, docs=docs
+            resource,
+            routes,
+            home,
+            acronyms,
+            client,
+            schemas,
+            descriptive=descriptive,
         )
         return [("client.py", source)]
 
@@ -469,7 +477,7 @@ def resource_client_files(
             group_class(resource, segments, acronyms),
             schemas,
             owns_api=False,
-            docs=docs,
+            descriptive=descriptive,
         )
         files.append((group_module(segments), source))
     files.append(("client.py", render_composition(resource, groups, acronyms)))
@@ -482,7 +490,7 @@ def ts_resource_client_files(
     home: Dict[str, str],
     acronyms: Set[str],
     schemas: Dict[str, Any],
-    docs: bool = True,
+    descriptive: bool = True,
 ) -> List[Tuple[str, str]]:
     """(filename, source) for every TypeScript client module of one resource.
 
@@ -506,7 +514,7 @@ def ts_resource_client_files(
             client,
             schemas,
             f"{directory}/client.ts",
-            docs=docs,
+            descriptive=descriptive,
         )
         return [("client.ts", source)]
 
@@ -531,7 +539,7 @@ def ts_resource_client_files(
                     schemas,
                     path,
                     extends,
-                    docs,
+                    descriptive,
                 ),
             )
         )
