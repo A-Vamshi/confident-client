@@ -1,6 +1,7 @@
 import pytest
 
 from confidentai import ConfidentAI
+from confidentai.endpoints import Endpoints
 from confidentai.api import (
     API_BASE_URL_EU,
     API_KEY_HEADER,
@@ -8,7 +9,6 @@ from confidentai.api import (
     CONFIDENT_PROJ_API_KEY_ENV_VAR,
     Api,
     ApiKeyKind,
-    Endpoints,
     HttpMethods,
 )
 
