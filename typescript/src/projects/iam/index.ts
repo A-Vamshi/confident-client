@@ -1,1 +1,0 @@
-export { ProjectIam } from "./client";

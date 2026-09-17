@@ -1,1 +1,0 @@
-export { OrganizationGovernance } from "./client";
