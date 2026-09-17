@@ -56,20 +56,25 @@ def test_timeout_override():
     assert client._api(ApiKeyKind.ORGANIZATION).timeout == 5.0
 
 
-def test_organization_and_project_factories(client):
-    from confidentai.organization import OrganizationClient
-    from confidentai.projects import ProjectClient
+def test_generated_clients_are_reachable(client):
+    from confidentai.organization.client import OrganizationClient
+    from confidentai.projects.client import ProjectsClient
 
-    assert isinstance(client.organization(), OrganizationClient)
-    project = client.project("proj_123")
-    assert isinstance(project, ProjectClient)
-    assert project.project_id == "proj_123"
+    assert isinstance(client.organization, OrganizationClient)
+    assert isinstance(client.projects, ProjectsClient)
 
 
 def test_whoami_returns_organization(client, http):
-    http.enqueue_data({"organization": {"id": "org_1", "name": "Acme"}})
+    http.enqueue_data(
+        {
+            "id": "org_1",
+            "name": "Acme",
+            "plan": "TEAM",
+            "created_at": "2026-01-01",
+        }
+    )
     org = client.whoami()
     assert org.id == "org_1"
     assert org.name == "Acme"
-    assert http.last["url"].endswith("/v1/organization")
+    assert http.last["url"].endswith("/v2/organization")
     assert http.last["method"] == "GET"

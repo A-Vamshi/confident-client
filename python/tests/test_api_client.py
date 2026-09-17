@@ -1,7 +1,8 @@
 import pytest
 import requests
 
-from confidentai.api import Api, Endpoints, HttpMethods
+from confidentai.api import Api, HttpMethods
+from confidentai.endpoints import Endpoints
 from confidentai.types import ConfidentApiError
 
 
@@ -54,7 +55,7 @@ def test_url_params_substitute_placeholders(api, http):
         Endpoints.PROJECT_API_KEY_ENDPOINT,
         url_params={"projectId": "p1", "apiKeyId": 42},
     )
-    assert http.last["url"].endswith("/v1/projects/p1/api-keys/42")
+    assert http.last["url"].endswith("/v2/projects/p1/api-keys/42")
     assert ":projectId" not in http.last["url"]
     assert ":apiKeyId" not in http.last["url"]
 

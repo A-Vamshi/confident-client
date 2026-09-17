@@ -1,4 +1,4 @@
-from typing import Dict, Optional
+from typing import TYPE_CHECKING, Dict, Optional
 
 from .api import (
     DEFAULT_TIMEOUT,
@@ -7,12 +7,14 @@ from .api import (
     get_base_api_url,
     get_confident_api_key,
 )
-from .organization import OrganizationClient
-from .projects import ProjectClient, ProjectsClient
-from .types import Organization
+from .clients.generated import GeneratedClients
+from .clients.stateful import StatefulClients
+
+if TYPE_CHECKING:
+    from .organization.types import Organization
 
 
-class ConfidentAI:
+class ConfidentAI(GeneratedClients, StatefulClients):
     def __init__(
         self,
         api_key: Optional[str] = None,
@@ -68,18 +70,8 @@ class ConfidentAI:
     def timeout(self) -> float:
         return self._timeout if self._timeout is not None else DEFAULT_TIMEOUT
 
-    @property
-    def projects(self) -> ProjectsClient:
-        return ProjectsClient(self._api(ApiKeyKind.ORGANIZATION))
+    def whoami(self) -> "Organization":
+        return self.organization.get_organization()
 
-    def organization(self) -> OrganizationClient:
-        return OrganizationClient(self._api(ApiKeyKind.ORGANIZATION))
-
-    def project(self, project_id: str) -> ProjectClient:
-        return ProjectClient(self._api(ApiKeyKind.ORGANIZATION), project_id)
-
-    def whoami(self) -> Organization:
-        return self.organization().get()
-
-    async def a_whoami(self) -> Organization:
-        return await self.organization().a_get()
+    async def a_whoami(self) -> "Organization":
+        return await self.organization.a_get_organization()
