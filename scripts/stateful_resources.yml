@@ -1,0 +1,145 @@
+# The resources that get a stateful handle: an object holding the resource's data
+# so the callers can call methods on it instead of passing the resource's fields every call.
+# Only what the spec cannot say belongs here.
+#
+# Every key, and what it declares. Anything not listed is not read.
+#
+# <tag>:                     one tag in openapi.yml, which is also the SDK
+#                            module the handle is generated into
+#
+#   class:                   the schema `load` returns, whose fields are stored
+#                            on the object as properties. The generated class
+#                            takes its name                           (required)
+#
+#   client_method:                                                   (required)
+#     name:                  what opens a handle — `client.<name>(...)`
+#     takes:                 extra arguments it accepts and writes straight
+#                            onto the object, rather than waiting for a `load`
+#
+#   identity:                                                        (required)
+#     field:                 the handle field holding the record's id
+#     parameter:             the path parameter that id fills
+#
+#   delegate:                methods that pass an operation straight through,
+#     <method>: <operation>  minus the identity. Only the name is chosen here
+#
+#   on_item:                 methods acting on one value the object holds, so
+#     <method>:              the caller passes that value and never an id
+#       operation:           the operation to call
+#       argument:            the method's one parameter
+#       type:                the schema that value is
+#       identity:
+#         field:             the field of it that fills the path parameter
+#         parameter:         the path parameter it fills
+#
+#   load:                    methods that fill the object and return it
+#     <method>:
+#       operation:           one route: every parameter the identity does not
+#                            fill becomes a keyword
+#       by:                  several routes the caller chooses between, one
+#         <keyword>:         keyword each
+#           operation:       the route that keyword selects
+#           default:         its value when the caller passes none. Exactly
+#                            one keyword may carry this
+#
+#   save:                    methods that send a body built from the object,
+#                            then write named response fields back onto the object
+#     <method>:              
+#       operation:           the operation to call
+#       call_params:         body fields taken as arguments instead of state
+#       sent_as:             a held field the body sends as another schema,
+#         <field>: <schema>  named so a rename upstream fails the build
+#       response_mapping:    object field <- response field
+#         <field>: <field>
+#
+#   helpers:                 methods with no operation behind them, written by
+#     <method>: <function>   hand in confidentai/utils/helpers.py and its
+#                            TypeScript twin, and called with the object first
+#
+# Every block below `identity` is optional; a handle declares only the ones it
+# needs.
+
+prompts:
+  class: Prompt
+
+  client_method:
+    name: prompt
+    takes: [alias]
+
+  identity:
+    field: prompt_id
+    parameter: promptId
+
+  delegate:
+    list_versions: getPromptVersions
+    create_version: createVersion
+    list_commits: getPromptCommits
+    list_branches: getPromptBranches
+    create_branch: createPromptBranch
+    update_branch: updatePromptBranch
+    delete_branch: deletePromptBranch
+
+  load:
+    pull:
+      by:
+        commit:
+          operation: getPromptByCommit
+          default: latest
+        version:
+          operation: getPromptByVersion
+        label:
+          operation: getPromptByLabel
+
+  save:
+    push:
+      operation: pushPrompt
+      call_params: [branch]
+      response_mapping:
+        prompt_id: promptId
+        hash: hash
+
+  helpers:
+    interpolate: interpolate_prompt
+
+datasets:
+  class: Dataset
+
+  client_method:
+    name: dataset
+    takes: [alias]
+
+  identity:
+    field: dataset_id
+    parameter: datasetId
+
+  delegate:
+    delete: deleteDataset
+    list_versions: getDatasetVersions
+    create_version: createDatasetVersion
+    run_evaluation: runDatasetEvaluation
+    queue_goldens: queueDatasetGoldens
+    create_golden: createGolden
+    get_golden: getGolden
+    delete_golden: deleteGolden
+
+  on_item:
+    update_golden:
+      operation: updateGolden
+      argument: golden
+      type: Golden
+      identity:
+        field: id
+        parameter: goldenId
+
+  load:
+    pull:
+      operation: pullDataset
+
+  save:
+    push:
+      operation: pushDataset
+      call_params: [finalized]
+      sent_as:
+        goldens: PushGolden
+      response_mapping:
+        dataset_id: id
