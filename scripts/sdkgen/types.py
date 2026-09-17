@@ -211,6 +211,25 @@ def render_python(module: Module, source: str) -> str:
     return format_python("\n".join(lines).rstrip() + "\n")
 
 
+def render_python_barrel(module: Module, source: str) -> str:
+    names = sorted(declaration.name for declaration in module.declarations)
+    lines = banner("#", source)
+    if not names:
+        lines.append("__all__: list = []")
+        return format_python("\n".join(lines) + "\n")
+
+    lines.extend(
+        wrap_python(
+            f"from {python_module_for(module.resource)} import ", names, ""
+        )
+    )
+    lines.append("")
+    lines.append("__all__ = [")
+    lines.extend(f'    "{name}",' for name in names)
+    lines.append("]")
+    return format_python("\n".join(lines) + "\n")
+
+
 def render_typescript(module: Module, source: str) -> str:
     lines = banner("//", source)
     for owner, names in module.imports.items():
@@ -249,3 +268,15 @@ def render_typescript(module: Module, source: str) -> str:
         lines.extend(["}", ""])
 
     return "\n".join(lines).rstrip() + "\n"
+
+
+def render_typescript_barrel(module: Module, source: str) -> str:
+    """The `render_python_barrel` twin: `from "confidentai/datasets"` instead
+    of `from "confidentai/datasets/types"`.
+
+    `export *` carries exactly this resource's declarations, because a types
+    module imports the shapes it shares without re-exporting them.
+    """
+    lines = banner("//", source)
+    lines.append('export * from "./types";')
+    return "\n".join(lines) + "\n"

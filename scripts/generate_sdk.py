@@ -56,7 +56,9 @@ from sdkgen.overlays import run_after_generation
 from sdkgen.types import (
     declare,
     render_python,
+    render_python_barrel,
     render_typescript,
+    render_typescript_barrel,
     sort_by_dependency,
 )
 from sdkgen.stateful_clients import (
@@ -139,6 +141,18 @@ def render_wire_types(home: Dict[str, str], schemas: Dict[str, Any]) -> Outputs:
         outputs.append((paths.python_path, render_python(module, source)))
         outputs.append(
             (paths.typescript_path, render_typescript(module, source))
+        )
+        outputs.append(
+            (
+                paths.python_path.parent / "__init__.py",
+                render_python_barrel(module, source),
+            )
+        )
+        outputs.append(
+            (
+                paths.typescript_path.parent / "index.ts",
+                render_typescript_barrel(module, source),
+            )
         )
     return outputs
 
