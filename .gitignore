@@ -19,6 +19,9 @@ coverage/
 *.tsbuildinfo
 *.log
 
+# Prompt cache written by the SDK at runtime
+.confidentai/
+
 # Env / secrets
 .env
 .env.local
