@@ -71,7 +71,7 @@ class ConfidentAI(GeneratedClients, StatefulClients):
         return self._timeout if self._timeout is not None else DEFAULT_TIMEOUT
 
     def whoami(self) -> "Organization":
-        return self.organization.get_organization()
+        return self.organization.get()
 
     async def a_whoami(self) -> "Organization":
-        return await self.organization.a_get_organization()
+        return await self.organization.a_get()

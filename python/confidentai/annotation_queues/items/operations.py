@@ -22,7 +22,7 @@ from confidentai.endpoints import Endpoints
 class ItemsOperations:
     _api: Api
 
-    def list_annotation_queue_items(
+    def list_items(
         self,
         annotation_queue_id: str,
         *,
@@ -52,7 +52,7 @@ class ItemsOperations:
             query={"page": page, "pageSize": page_size, "status": status},
         )
 
-    async def a_list_annotation_queue_items(
+    async def a_list_items(
         self,
         annotation_queue_id: str,
         *,
@@ -82,7 +82,7 @@ class ItemsOperations:
             query={"page": page, "pageSize": page_size, "status": status},
         )
 
-    def add_annotation_queue_items(
+    def add_items(
         self, annotation_queue_id: str, items: AddQueueItemsRequest
     ) -> AddedQueueItems:
         """Add Annotation Queue Items
@@ -111,7 +111,7 @@ class ItemsOperations:
             path={"annotationQueueId": annotation_queue_id},
         )
 
-    async def a_add_annotation_queue_items(
+    async def a_add_items(
         self, annotation_queue_id: str, items: AddQueueItemsRequest
     ) -> AddedQueueItems:
         """Add Annotation Queue Items
@@ -140,7 +140,7 @@ class ItemsOperations:
             path={"annotationQueueId": annotation_queue_id},
         )
 
-    def annotate_annotation_queue_item(
+    def annotate_item(
         self,
         annotation_queue_id: str,
         queue_item_id: str,
@@ -192,7 +192,7 @@ class ItemsOperations:
             },
         )
 
-    async def a_annotate_annotation_queue_item(
+    async def a_annotate_item(
         self,
         annotation_queue_id: str,
         queue_item_id: str,

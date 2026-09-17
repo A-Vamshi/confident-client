@@ -14,7 +14,7 @@ class MetricsDataClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_metric_data(
+    def list(
         self,
         *,
         page: Optional[int] = None,
@@ -48,7 +48,7 @@ class MetricsDataClient:
             },
         )
 
-    async def a_list_metric_data(
+    async def a_list(
         self,
         *,
         page: Optional[int] = None,

@@ -18,6 +18,7 @@ from .errors import SpecError
 from .naming import (
     camel_case,
     endpoint_member,
+    method_name,
     pascal_case,
     python_module_for,
     snake_case,
@@ -205,7 +206,7 @@ class Method:
 
     @property
     def ts_name(self) -> str:
-        return self.route.operation_id
+        return camel_case(self.name)
 
     def signature(self, skip: Sequence[str] = ()) -> List[str]:
         arguments = ["self"]
@@ -231,7 +232,7 @@ def resolve_method(
     resolver: Resolver,
     schemas: Dict[str, Any],
 ) -> Method:
-    name = snake_case(route.operation_id)
+    name = method_name(route.operation_id, route.resource)
     returns, optional = response_type(route)
     returns_annotation = f"Optional[{returns}]" if optional else returns
     ts_returns = f"{returns} | null" if optional else returns

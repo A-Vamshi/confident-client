@@ -35,7 +35,7 @@ export class ReportsClient {
    * @param pageSize The number of results per page, at most 100. Defaults to
    *   25.
    */
-  async listReports(
+  async list(
     reportTemplateId?: string,
     status?: ReportStatus,
     startDate?: string,
@@ -72,7 +72,7 @@ export class ReportsClient {
    *   required.
    * @param error Why the report failed, when creating it as ERRORED.
    */
-  async createReport(
+  async create(
     reportTemplateId: string,
     sections: ReportSectionInput[],
     status?: ReportStatus,
@@ -94,7 +94,7 @@ export class ReportsClient {
    *
    * @param reportId The id of the report.
    */
-  async getReport(reportId: string): Promise<Report> {
+  async get(reportId: string): Promise<Report> {
     return this.api.sendRequest<Report>(
       HttpMethods.GET,
       Endpoints.REPORT_ENDPOINT,
@@ -115,7 +115,7 @@ export class ReportsClient {
    * @param sections The report's sections, in render order. The list replaces
    *   the report's current sections rather than adding to them.
    */
-  async updateReport(
+  async update(
     reportId: string,
     status?: ReportStatus,
     error?: string | null,
@@ -137,7 +137,7 @@ export class ReportsClient {
    *
    * @param reportId The id of the report.
    */
-  async deleteReport(reportId: string): Promise<ReportRef> {
+  async delete(reportId: string): Promise<ReportRef> {
     return this.api.sendRequest<ReportRef>(
       HttpMethods.DELETE,
       Endpoints.REPORT_ENDPOINT,

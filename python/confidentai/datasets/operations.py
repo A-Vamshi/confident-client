@@ -24,7 +24,7 @@ from confidentai.endpoints import Endpoints
 class DatasetsOperations:
     _api: Api
 
-    def list_datasets(self) -> DatasetList:
+    def list(self) -> DatasetList:
         """List Datasets
 
         Lists all the datasets in your Confident AI project, newest first,
@@ -36,7 +36,7 @@ class DatasetsOperations:
             response_schema=DatasetList,
         )
 
-    async def a_list_datasets(self) -> DatasetList:
+    async def a_list(self) -> DatasetList:
         """List Datasets
 
         Lists all the datasets in your Confident AI project, newest first,
@@ -48,7 +48,7 @@ class DatasetsOperations:
             response_schema=DatasetList,
         )
 
-    def push_dataset(
+    def push(
         self,
         alias: str,
         goldens: List[PushGolden],
@@ -93,7 +93,7 @@ class DatasetsOperations:
             },
         )
 
-    async def a_push_dataset(
+    async def a_push(
         self,
         alias: str,
         goldens: List[PushGolden],
@@ -138,7 +138,7 @@ class DatasetsOperations:
             },
         )
 
-    def pull_dataset(
+    def pull(
         self,
         dataset_id: str,
         *,
@@ -168,7 +168,7 @@ class DatasetsOperations:
             query={"version": version, "finalized": finalized},
         )
 
-    async def a_pull_dataset(
+    async def a_pull(
         self,
         dataset_id: str,
         *,
@@ -198,7 +198,7 @@ class DatasetsOperations:
             query={"version": version, "finalized": finalized},
         )
 
-    def delete_dataset(self, dataset_id: str) -> DatasetRef:
+    def delete(self, dataset_id: str) -> DatasetRef:
         """Delete Dataset
 
         Permanently deletes the dataset and everything in it: its goldens,
@@ -214,7 +214,7 @@ class DatasetsOperations:
             path={"datasetId": dataset_id},
         )
 
-    async def a_delete_dataset(self, dataset_id: str) -> DatasetRef:
+    async def a_delete(self, dataset_id: str) -> DatasetRef:
         """Delete Dataset
 
         Permanently deletes the dataset and everything in it: its goldens,
@@ -230,7 +230,7 @@ class DatasetsOperations:
             path={"datasetId": dataset_id},
         )
 
-    def queue_dataset_goldens(
+    def queue_goldens(
         self, dataset_id: str, goldens: List[GoldenRequest]
     ) -> DatasetRef:
         """Queue Dataset Goldens
@@ -255,7 +255,7 @@ class DatasetsOperations:
             path={"datasetId": dataset_id},
         )
 
-    async def a_queue_dataset_goldens(
+    async def a_queue_goldens(
         self, dataset_id: str, goldens: List[GoldenRequest]
     ) -> DatasetRef:
         """Queue Dataset Goldens
@@ -280,7 +280,7 @@ class DatasetsOperations:
             path={"datasetId": dataset_id},
         )
 
-    def run_dataset_evaluation(
+    def run_evaluation(
         self,
         dataset_id: str,
         metric_collection: str,
@@ -368,7 +368,7 @@ class DatasetsOperations:
             path={"datasetId": dataset_id},
         )
 
-    async def a_run_dataset_evaluation(
+    async def a_run_evaluation(
         self,
         dataset_id: str,
         metric_collection: str,

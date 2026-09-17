@@ -25,7 +25,7 @@ class ReportTemplatesClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_report_templates(
+    def list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> ReportTemplateList:
         """List Report Templates
@@ -46,7 +46,7 @@ class ReportTemplatesClient:
             query={"page": page, "pageSize": page_size},
         )
 
-    async def a_list_report_templates(
+    async def a_list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> ReportTemplateList:
         """List Report Templates
@@ -67,7 +67,7 @@ class ReportTemplatesClient:
             query={"page": page, "pageSize": page_size},
         )
 
-    def create_report_template(
+    def create(
         self,
         name: str,
         *,
@@ -128,7 +128,7 @@ class ReportTemplatesClient:
             },
         )
 
-    async def a_create_report_template(
+    async def a_create(
         self,
         name: str,
         *,
@@ -189,7 +189,7 @@ class ReportTemplatesClient:
             },
         )
 
-    def get_report_template(self, report_template_id: str) -> ReportTemplate:
+    def get(self, report_template_id: str) -> ReportTemplate:
         """Get Report Template
 
         Retrieves a report template by id, with its generation cadence and all
@@ -205,9 +205,7 @@ class ReportTemplatesClient:
             path={"reportTemplateId": report_template_id},
         )
 
-    async def a_get_report_template(
-        self, report_template_id: str
-    ) -> ReportTemplate:
+    async def a_get(self, report_template_id: str) -> ReportTemplate:
         """Get Report Template
 
         Retrieves a report template by id, with its generation cadence and all
@@ -223,7 +221,7 @@ class ReportTemplatesClient:
             path={"reportTemplateId": report_template_id},
         )
 
-    def update_report_template(
+    def update(
         self,
         report_template_id: str,
         *,
@@ -287,7 +285,7 @@ class ReportTemplatesClient:
             path={"reportTemplateId": report_template_id},
         )
 
-    async def a_update_report_template(
+    async def a_update(
         self,
         report_template_id: str,
         *,
@@ -351,9 +349,7 @@ class ReportTemplatesClient:
             path={"reportTemplateId": report_template_id},
         )
 
-    def delete_report_template(
-        self, report_template_id: str
-    ) -> ReportTemplateRef:
+    def delete(self, report_template_id: str) -> ReportTemplateRef:
         """Delete Report Template
 
         Permanently deletes a report template and the schedule that generates
@@ -371,9 +367,7 @@ class ReportTemplatesClient:
             path={"reportTemplateId": report_template_id},
         )
 
-    async def a_delete_report_template(
-        self, report_template_id: str
-    ) -> ReportTemplateRef:
+    async def a_delete(self, report_template_id: str) -> ReportTemplateRef:
         """Delete Report Template
 
         Permanently deletes a report template and the schedule that generates

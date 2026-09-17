@@ -26,7 +26,7 @@ class ExportSchedulesClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_export_schedules(
+    def list(
         self,
         *,
         export_type: Optional[SchedulableExportType] = None,
@@ -59,7 +59,7 @@ class ExportSchedulesClient:
             },
         )
 
-    async def a_list_export_schedules(
+    async def a_list(
         self,
         *,
         export_type: Optional[SchedulableExportType] = None,
@@ -92,7 +92,7 @@ class ExportSchedulesClient:
             },
         )
 
-    def create_export_schedule(
+    def create(
         self,
         name: str,
         export_type: SchedulableExportType,
@@ -156,7 +156,7 @@ class ExportSchedulesClient:
             },
         )
 
-    async def a_create_export_schedule(
+    async def a_create(
         self,
         name: str,
         export_type: SchedulableExportType,
@@ -220,7 +220,7 @@ class ExportSchedulesClient:
             },
         )
 
-    def get_export_schedule(self, export_schedule_id: str) -> ExportSchedule:
+    def get(self, export_schedule_id: str) -> ExportSchedule:
         """Get Export Schedule
 
         Retrieves an export schedule by id, with the cadence it runs on, how far
@@ -237,9 +237,7 @@ class ExportSchedulesClient:
             path={"exportScheduleId": export_schedule_id},
         )
 
-    async def a_get_export_schedule(
-        self, export_schedule_id: str
-    ) -> ExportSchedule:
+    async def a_get(self, export_schedule_id: str) -> ExportSchedule:
         """Get Export Schedule
 
         Retrieves an export schedule by id, with the cadence it runs on, how far
@@ -256,7 +254,7 @@ class ExportSchedulesClient:
             path={"exportScheduleId": export_schedule_id},
         )
 
-    def update_export_schedule(
+    def update(
         self,
         export_schedule_id: str,
         *,
@@ -318,7 +316,7 @@ class ExportSchedulesClient:
             path={"exportScheduleId": export_schedule_id},
         )
 
-    async def a_update_export_schedule(
+    async def a_update(
         self,
         export_schedule_id: str,
         *,
@@ -380,9 +378,7 @@ class ExportSchedulesClient:
             path={"exportScheduleId": export_schedule_id},
         )
 
-    def delete_export_schedule(
-        self, export_schedule_id: str
-    ) -> ExportScheduleRef:
+    def delete(self, export_schedule_id: str) -> ExportScheduleRef:
         """Delete Export Schedule
 
         Permanently deletes an export schedule and unregisters its next run.
@@ -398,9 +394,7 @@ class ExportSchedulesClient:
             path={"exportScheduleId": export_schedule_id},
         )
 
-    async def a_delete_export_schedule(
-        self, export_schedule_id: str
-    ) -> ExportScheduleRef:
+    async def a_delete(self, export_schedule_id: str) -> ExportScheduleRef:
         """Delete Export Schedule
 
         Permanently deletes an export schedule and unregisters its next run.

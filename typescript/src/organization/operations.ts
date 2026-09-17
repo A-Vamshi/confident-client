@@ -23,7 +23,7 @@ export class OrganizationOperations {
    * wherever an organization id is asked for, and its `plan` is what decides
    * which of those endpoints you are entitled to call.
    */
-  async getOrganization(): Promise<Organization> {
+  async get(): Promise<Organization> {
     return this.api.sendRequest<Organization>(
       HttpMethods.GET,
       Endpoints.ORGANIZATION_ENDPOINT,
@@ -40,7 +40,7 @@ export class OrganizationOperations {
    * @param name The name of the organization, as it appears throughout the
    *   Confident AI platform.
    */
-  async updateOrganization(name: string): Promise<Organization> {
+  async update(name: string): Promise<Organization> {
     return this.api.sendRequest<Organization>(
       HttpMethods.PUT,
       Endpoints.ORGANIZATION_ENDPOINT,
@@ -80,7 +80,7 @@ export class OrganizationOperations {
    *   key only works with the Mantle API, and assume-role Bedrock
    *   configurations can only be managed on the Confident AI platform.
    */
-  async updateOrganizationModelCredentials(
+  async updateModelCredentials(
     provider: ModelProvider,
     apiKey?: string | null,
     modelConfig?: Record<string, unknown> | null,
@@ -104,7 +104,7 @@ export class OrganizationOperations {
    * own endpoint; an organization policy that references a project permission
    * id is stored but never matches an organization permission check.
    */
-  async listOrganizationPermissions(): Promise<PermissionList> {
+  async listPermissions(): Promise<PermissionList> {
     return this.api.sendRequest<PermissionList>(
       HttpMethods.GET,
       Endpoints.ORGANIZATION_PERMISSIONS_ENDPOINT,

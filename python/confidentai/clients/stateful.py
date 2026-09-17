@@ -9,6 +9,7 @@ from confidentai.api import Api, ApiKeyKind
 
 if TYPE_CHECKING:
     from confidentai.datasets.dataset import Dataset
+    from confidentai.projects.project import Project
     from confidentai.prompts.prompt import Prompt
 
 
@@ -28,6 +29,17 @@ class StatefulClients:
             self._api(ApiKeyKind.PROJECT),
             dataset_id=dataset_id,
             alias=alias,
+        )
+
+    def project(
+        self,
+        project_id: Optional[str] = None,
+    ) -> "Project":
+        from confidentai.projects.project import Project
+
+        return Project(
+            self._api(ApiKeyKind.ORGANIZATION),
+            project_id=project_id,
         )
 
     def prompt(

@@ -27,7 +27,7 @@ export class WidgetsClient {
    *   datetime. Must be sent together with `startTime`, and must be later than
    *   it.
    */
-  async queryAdHocWidget(
+  async queryAdHoc(
     widget: CreateWidgetRequest,
     startTime?: string,
     endTime?: string,

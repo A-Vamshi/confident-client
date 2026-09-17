@@ -27,10 +27,7 @@ export class TransformersClient {
    * @param pageSize The number of results per page, at most 100. Defaults to
    *   25.
    */
-  async listTransformers(
-    page?: number,
-    pageSize?: number,
-  ): Promise<TransformerList> {
+  async list(page?: number, pageSize?: number): Promise<TransformerList> {
     return this.api.sendRequest<TransformerList>(
       HttpMethods.GET,
       Endpoints.TRANSFORMERS_ENDPOINT,
@@ -48,7 +45,7 @@ export class TransformersClient {
    * @param description What the transformer extracts. Send null to leave it
    *   unset.
    */
-  async createTransformer(
+  async create(
     name: string,
     codeDefinition: TransformerCodeDefinition,
     description?: string | null,
@@ -68,7 +65,7 @@ export class TransformersClient {
    *
    * @param transformerId The id of the transformer.
    */
-  async getTransformer(transformerId: string): Promise<Transformer> {
+  async get(transformerId: string): Promise<Transformer> {
     return this.api.sendRequest<Transformer>(
       HttpMethods.GET,
       Endpoints.TRANSFORMER_ENDPOINT,
@@ -88,7 +85,7 @@ export class TransformersClient {
    * @param name The name of the transformer, unique within the project.
    * @param description What the transformer extracts. Send null to clear it.
    */
-  async updateTransformer(
+  async update(
     transformerId: string,
     name?: string,
     description?: string | null,
@@ -112,7 +109,7 @@ export class TransformersClient {
    *
    * @param transformerId The id of the transformer.
    */
-  async deleteTransformer(transformerId: string): Promise<TransformerRef> {
+  async delete(transformerId: string): Promise<TransformerRef> {
     return this.api.sendRequest<TransformerRef>(
       HttpMethods.DELETE,
       Endpoints.TRANSFORMER_ENDPOINT,
@@ -134,7 +131,7 @@ export class TransformersClient {
    *   function. Any JSON value is accepted; send the shape the transformer
    *   expects to see in production.
    */
-  async testTransformerCode(
+  async testCode(
     transformerId: string,
     inputData?: unknown,
   ): Promise<TransformerCodeRunResult> {

@@ -22,7 +22,7 @@ export class ProjectsOperations {
    * returned in full, including the governance policy it is enrolled in, so a
    * caller building a project picker does not need a second call per row.
    */
-  async listProjects(): Promise<ProjectList> {
+  async list(): Promise<ProjectList> {
     return this.api.sendRequest<ProjectList>(
       HttpMethods.GET,
       Endpoints.PROJECTS_ENDPOINT,
@@ -48,7 +48,7 @@ export class ProjectsOperations {
    *   them. Omit it and the project has no member: it is reachable through its
    *   API key and to organization admins only.
    */
-  async createProject(
+  async create(
     name: string,
     description?: string,
     email?: string,
@@ -71,7 +71,7 @@ export class ProjectsOperations {
    * @param projectId The id of the project. It must belong to the organization
    *   your API key is scoped to.
    */
-  async getProject(projectId: string): Promise<Project> {
+  async get(projectId: string): Promise<Project> {
     return this.api.sendRequest<Project>(
       HttpMethods.GET,
       Endpoints.PROJECT_ENDPOINT,
@@ -92,7 +92,7 @@ export class ProjectsOperations {
    *   another project in the organization.
    * @param description What the project covers.
    */
-  async updateProject(
+  async update(
     projectId: string,
     name?: string,
     description?: string,
@@ -122,7 +122,7 @@ export class ProjectsOperations {
    * @param projectId The id of the project. It must belong to the organization
    *   your API key is scoped to.
    */
-  async deleteProject(projectId: string): Promise<ProjectRef> {
+  async delete(projectId: string): Promise<ProjectRef> {
     return this.api.sendRequest<ProjectRef>(
       HttpMethods.DELETE,
       Endpoints.PROJECT_ENDPOINT,
@@ -168,7 +168,7 @@ export class ProjectsOperations {
    *   key only works with the Mantle API, and assume-role Bedrock
    *   configurations can only be managed on the Confident AI platform.
    */
-  async updateProjectModelCredentials(
+  async updateModelCredentials(
     projectId: string,
     provider: ModelProvider,
     apiKey?: string | null,
@@ -195,7 +195,7 @@ export class ProjectsOperations {
    * @param projectId The id of the project, which must belong to the
    *   organization your API key is scoped to.
    */
-  async listProjectPermissions(projectId: string): Promise<PermissionList> {
+  async listPermissions(projectId: string): Promise<PermissionList> {
     return this.api.sendRequest<PermissionList>(
       HttpMethods.GET,
       Endpoints.PROJECT_PERMISSIONS_ENDPOINT,

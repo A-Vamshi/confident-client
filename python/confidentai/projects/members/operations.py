@@ -14,7 +14,7 @@ from confidentai.projects.types import ProjectMember, ProjectMemberList
 class MembersOperations:
     _api: Api
 
-    def list_project_members(
+    def list_members(
         self,
         project_id: str,
         *,
@@ -45,7 +45,7 @@ class MembersOperations:
             query={"page": page, "pageSize": page_size},
         )
 
-    async def a_list_project_members(
+    async def a_list_members(
         self,
         project_id: str,
         *,
@@ -76,7 +76,7 @@ class MembersOperations:
             query={"page": page, "pageSize": page_size},
         )
 
-    def update_project_member_role(
+    def update_member_role(
         self, project_id: str, user_id: str, role_id: str
     ) -> ProjectMember:
         """Update Project Member Role
@@ -107,7 +107,7 @@ class MembersOperations:
             path={"projectId": project_id, "userId": user_id},
         )
 
-    async def a_update_project_member_role(
+    async def a_update_member_role(
         self, project_id: str, user_id: str, role_id: str
     ) -> ProjectMember:
         """Update Project Member Role
@@ -138,7 +138,7 @@ class MembersOperations:
             path={"projectId": project_id, "userId": user_id},
         )
 
-    def remove_project_member(self, project_id: str, user_id: str) -> MemberRef:
+    def remove_member(self, project_id: str, user_id: str) -> MemberRef:
         """Remove Project Member
 
         Revokes a member's access to this project only: they are disconnected
@@ -164,9 +164,7 @@ class MembersOperations:
             path={"projectId": project_id, "userId": user_id},
         )
 
-    async def a_remove_project_member(
-        self, project_id: str, user_id: str
-    ) -> MemberRef:
+    async def a_remove_member(self, project_id: str, user_id: str) -> MemberRef:
         """Remove Project Member
 
         Revokes a member's access to this project only: they are disconnected

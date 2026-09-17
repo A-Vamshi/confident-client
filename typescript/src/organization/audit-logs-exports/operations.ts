@@ -44,7 +44,7 @@ export class AuditLogsExportsOperations extends ApiKeysOperations {
    *   action, HTTP method, IP address, resource id, user agent, and status
    *   code.
    */
-  async createOrganizationAuditLogExport(
+  async createAuditLogExport(
     startTime?: string,
     endTime?: string,
     searchTerm?: string,
@@ -75,9 +75,7 @@ export class AuditLogsExportsOperations extends ApiKeysOperations {
    * @param exportId The id of the audit log export, as returned when it was
    *   created.
    */
-  async getOrganizationAuditLogExport(
-    exportId: string,
-  ): Promise<AuditLogExport> {
+  async getAuditLogExport(exportId: string): Promise<AuditLogExport> {
     return this.api.sendRequest<AuditLogExport>(
       HttpMethods.GET,
       Endpoints.ORGANIZATION_AUDIT_LOGS_EXPORT_ENDPOINT,

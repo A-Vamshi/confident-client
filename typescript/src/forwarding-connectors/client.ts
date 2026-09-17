@@ -27,7 +27,7 @@ export class ForwardingConnectorsClient {
    * @param pageSize The number of results per page, at most 100. Defaults to
    *   25.
    */
-  async listForwardingConnectors(
+  async list(
     page?: number,
     pageSize?: number,
   ): Promise<ForwardingConnectorList> {
@@ -64,7 +64,7 @@ export class ForwardingConnectorsClient {
    * @param enabled Whether the connector forwards traces. Defaults to true on
    *   create; omit it on an update to leave it unchanged.
    */
-  async createForwardingConnector(
+  async create(
     name: string,
     endpoint: string,
     headers?: ForwardingConnectorHeaderConfig[],
@@ -87,9 +87,7 @@ export class ForwardingConnectorsClient {
    *
    * @param forwardingConnectorId The id of the forwarding connector.
    */
-  async getForwardingConnector(
-    forwardingConnectorId: string,
-  ): Promise<ForwardingConnector> {
+  async get(forwardingConnectorId: string): Promise<ForwardingConnector> {
     return this.api.sendRequest<ForwardingConnector>(
       HttpMethods.GET,
       Endpoints.FORWARDING_CONNECTOR_ENDPOINT,
@@ -123,7 +121,7 @@ export class ForwardingConnectorsClient {
    * @param enabled Whether the connector forwards traces. Defaults to true on
    *   create; omit it on an update to leave it unchanged.
    */
-  async updateForwardingConnector(
+  async update(
     forwardingConnectorId: string,
     name?: string,
     endpoint?: string,
@@ -149,9 +147,7 @@ export class ForwardingConnectorsClient {
    *
    * @param forwardingConnectorId The id of the forwarding connector.
    */
-  async deleteForwardingConnector(
-    forwardingConnectorId: string,
-  ): Promise<ForwardingConnectorRef> {
+  async delete(forwardingConnectorId: string): Promise<ForwardingConnectorRef> {
     return this.api.sendRequest<ForwardingConnectorRef>(
       HttpMethods.DELETE,
       Endpoints.FORWARDING_CONNECTOR_ENDPOINT,

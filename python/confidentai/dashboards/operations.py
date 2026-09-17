@@ -22,7 +22,7 @@ from confidentai.endpoints import Endpoints
 class DashboardsOperations:
     _api: Api
 
-    def list_dashboards(
+    def list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> DashboardList:
         """List Dashboards
@@ -43,7 +43,7 @@ class DashboardsOperations:
             query={"page": page, "pageSize": page_size},
         )
 
-    async def a_list_dashboards(
+    async def a_list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> DashboardList:
         """List Dashboards
@@ -64,7 +64,7 @@ class DashboardsOperations:
             query={"page": page, "pageSize": page_size},
         )
 
-    def create_dashboard(
+    def create(
         self,
         name: str,
         *,
@@ -100,7 +100,7 @@ class DashboardsOperations:
             },
         )
 
-    async def a_create_dashboard(
+    async def a_create(
         self,
         name: str,
         *,
@@ -136,7 +136,7 @@ class DashboardsOperations:
             },
         )
 
-    def get_dashboard(self, dashboard_id: str) -> Dashboard:
+    def get(self, dashboard_id: str) -> Dashboard:
         """Get Dashboard
 
         Retrieves a dashboard by id, with every widget on it and the lines each
@@ -153,7 +153,7 @@ class DashboardsOperations:
             path={"dashboardId": dashboard_id},
         )
 
-    async def a_get_dashboard(self, dashboard_id: str) -> Dashboard:
+    async def a_get(self, dashboard_id: str) -> Dashboard:
         """Get Dashboard
 
         Retrieves a dashboard by id, with every widget on it and the lines each
@@ -170,7 +170,7 @@ class DashboardsOperations:
             path={"dashboardId": dashboard_id},
         )
 
-    def update_dashboard(
+    def update(
         self,
         dashboard_id: str,
         *,
@@ -198,7 +198,7 @@ class DashboardsOperations:
             path={"dashboardId": dashboard_id},
         )
 
-    async def a_update_dashboard(
+    async def a_update(
         self,
         dashboard_id: str,
         *,
@@ -226,7 +226,7 @@ class DashboardsOperations:
             path={"dashboardId": dashboard_id},
         )
 
-    def delete_dashboard(self, dashboard_id: str) -> DashboardRef:
+    def delete(self, dashboard_id: str) -> DashboardRef:
         """Delete Dashboard
 
         Permanently deletes a dashboard. Its widgets are detached rather than
@@ -242,7 +242,7 @@ class DashboardsOperations:
             path={"dashboardId": dashboard_id},
         )
 
-    async def a_delete_dashboard(self, dashboard_id: str) -> DashboardRef:
+    async def a_delete(self, dashboard_id: str) -> DashboardRef:
         """Delete Dashboard
 
         Permanently deletes a dashboard. Its widgets are detached rather than
@@ -258,7 +258,7 @@ class DashboardsOperations:
             path={"dashboardId": dashboard_id},
         )
 
-    def query_dashboard(
+    def query(
         self,
         dashboard_id: str,
         *,
@@ -300,7 +300,7 @@ class DashboardsOperations:
             path={"dashboardId": dashboard_id},
         )
 
-    async def a_query_dashboard(
+    async def a_query(
         self,
         dashboard_id: str,
         *,

@@ -26,7 +26,7 @@ export class MembersOperations extends InvitationsOperations {
    * @param pageSize The number of members per page, at most 100. Defaults to
    *   25.
    */
-  async listProjectMembers(
+  async listMembers(
     projectId: string,
     page?: number,
     pageSize?: number,
@@ -56,7 +56,7 @@ export class MembersOperations extends InvitationsOperations {
    * @param roleId The id of the role to assign. It must be a Confident AI
    *   built-in role or one of the roles the organization or project owns.
    */
-  async updateProjectMemberRole(
+  async updateMemberRole(
     projectId: string,
     userId: string,
     roleId: string,
@@ -85,10 +85,7 @@ export class MembersOperations extends InvitationsOperations {
    * @param userId The id of the user whose membership of this project to
    *   change.
    */
-  async removeProjectMember(
-    projectId: string,
-    userId: string,
-  ): Promise<MemberRef> {
+  async removeMember(projectId: string, userId: string): Promise<MemberRef> {
     return this.api.sendRequest<MemberRef>(
       HttpMethods.DELETE,
       Endpoints.PROJECT_MEMBER_ENDPOINT,

@@ -21,7 +21,7 @@ from confidentai.endpoints import Endpoints
 class LabelsOperations:
     _api: Api
 
-    def list_classifier_labels(
+    def list_labels(
         self,
         classifier_id: str,
         *,
@@ -50,7 +50,7 @@ class LabelsOperations:
             query={"page": page, "pageSize": page_size},
         )
 
-    async def a_list_classifier_labels(
+    async def a_list_labels(
         self,
         classifier_id: str,
         *,
@@ -79,7 +79,7 @@ class LabelsOperations:
             query={"page": page, "pageSize": page_size},
         )
 
-    def create_classifier_label(
+    def create_label(
         self,
         classifier_id: str,
         name: str,
@@ -120,7 +120,7 @@ class LabelsOperations:
             path={"classifierId": classifier_id},
         )
 
-    async def a_create_classifier_label(
+    async def a_create_label(
         self,
         classifier_id: str,
         name: str,
@@ -161,9 +161,7 @@ class LabelsOperations:
             path={"classifierId": classifier_id},
         )
 
-    def get_classifier_label(
-        self, classifier_id: str, label_id: str
-    ) -> ClassifierLabel:
+    def get_label(self, classifier_id: str, label_id: str) -> ClassifierLabel:
         """Get Classifier Label
 
         Retrieves a single label on a classifier, with the description the
@@ -181,7 +179,7 @@ class LabelsOperations:
             path={"classifierId": classifier_id, "labelId": label_id},
         )
 
-    async def a_get_classifier_label(
+    async def a_get_label(
         self, classifier_id: str, label_id: str
     ) -> ClassifierLabel:
         """Get Classifier Label
@@ -201,7 +199,7 @@ class LabelsOperations:
             path={"classifierId": classifier_id, "labelId": label_id},
         )
 
-    def update_classifier_label(
+    def update_label(
         self,
         classifier_id: str,
         label_id: str,
@@ -241,7 +239,7 @@ class LabelsOperations:
             path={"classifierId": classifier_id, "labelId": label_id},
         )
 
-    async def a_update_classifier_label(
+    async def a_update_label(
         self,
         classifier_id: str,
         label_id: str,
@@ -281,7 +279,7 @@ class LabelsOperations:
             path={"classifierId": classifier_id, "labelId": label_id},
         )
 
-    def delete_classifier_label(
+    def delete_label(
         self, classifier_id: str, label_id: str
     ) -> ClassifierLabelRef:
         """Delete Classifier Label
@@ -301,7 +299,7 @@ class LabelsOperations:
             path={"classifierId": classifier_id, "labelId": label_id},
         )
 
-    async def a_delete_classifier_label(
+    async def a_delete_label(
         self, classifier_id: str, label_id: str
     ) -> ClassifierLabelRef:
         """Delete Classifier Label

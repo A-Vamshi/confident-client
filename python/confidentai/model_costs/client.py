@@ -20,7 +20,7 @@ class ModelCostsClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_model_costs(
+    def list(
         self,
         *,
         page: Optional[int] = None,
@@ -53,7 +53,7 @@ class ModelCostsClient:
             },
         )
 
-    async def a_list_model_costs(
+    async def a_list(
         self,
         *,
         page: Optional[int] = None,
@@ -86,7 +86,7 @@ class ModelCostsClient:
             },
         )
 
-    def create_model_cost(
+    def create(
         self,
         match_pattern: str,
         *,
@@ -129,7 +129,7 @@ class ModelCostsClient:
             },
         )
 
-    async def a_create_model_cost(
+    async def a_create(
         self,
         match_pattern: str,
         *,
@@ -172,7 +172,7 @@ class ModelCostsClient:
             },
         )
 
-    def update_model_cost(
+    def update(
         self,
         model_cost_id: str,
         match_pattern: str,
@@ -218,7 +218,7 @@ class ModelCostsClient:
             path={"modelCostId": model_cost_id},
         )
 
-    async def a_update_model_cost(
+    async def a_update(
         self,
         model_cost_id: str,
         match_pattern: str,
@@ -264,7 +264,7 @@ class ModelCostsClient:
             path={"modelCostId": model_cost_id},
         )
 
-    def delete_model_cost(self, model_cost_id: str) -> ModelCostRef:
+    def delete(self, model_cost_id: str) -> ModelCostRef:
         """Delete Model Cost
 
         Permanently deletes a custom model price. Models it matched fall back to
@@ -282,7 +282,7 @@ class ModelCostsClient:
             path={"modelCostId": model_cost_id},
         )
 
-    async def a_delete_model_cost(self, model_cost_id: str) -> ModelCostRef:
+    async def a_delete(self, model_cost_id: str) -> ModelCostRef:
         """Delete Model Cost
 
         Permanently deletes a custom model price. Models it matched fall back to

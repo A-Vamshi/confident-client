@@ -29,7 +29,7 @@ export class AnnotationQueuesOperations {
    * @param type Returns only queues holding this kind of item.
    * @param searchTerm Returns only queues whose name contains this text.
    */
-  async listAnnotationQueues(
+  async list(
     page?: number,
     pageSize?: number,
     type?: AnnotationQueueType,
@@ -53,7 +53,7 @@ export class AnnotationQueuesOperations {
    * @param formId The id of an annotation form in this project to ask of every
    *   item in the queue.
    */
-  async createAnnotationQueue(
+  async create(
     name: string,
     type: AnnotationQueueType,
     formId?: string,
@@ -73,9 +73,7 @@ export class AnnotationQueuesOperations {
    *
    * @param annotationQueueId The id of the annotation queue.
    */
-  async getAnnotationQueue(
-    annotationQueueId: string,
-  ): Promise<AnnotationQueue> {
+  async get(annotationQueueId: string): Promise<AnnotationQueue> {
     return this.api.sendRequest<AnnotationQueue>(
       HttpMethods.GET,
       Endpoints.ANNOTATION_QUEUE_ENDPOINT,
@@ -94,7 +92,7 @@ export class AnnotationQueuesOperations {
    * @param formId The id of an annotation form to ask of every item in the
    *   queue. Send null to detach the current form.
    */
-  async updateAnnotationQueue(
+  async update(
     annotationQueueId: string,
     name?: string,
     formId?: string | null,
@@ -114,9 +112,7 @@ export class AnnotationQueuesOperations {
    *
    * @param annotationQueueId The id of the annotation queue.
    */
-  async deleteAnnotationQueue(
-    annotationQueueId: string,
-  ): Promise<AnnotationQueueRef> {
+  async delete(annotationQueueId: string): Promise<AnnotationQueueRef> {
     return this.api.sendRequest<AnnotationQueueRef>(
       HttpMethods.DELETE,
       Endpoints.ANNOTATION_QUEUE_ENDPOINT,
@@ -141,7 +137,7 @@ export class AnnotationQueuesOperations {
    * @param markAsCompleted Whether to mark the items annotated, for every entry
    *   that does not say otherwise. Defaults to true.
    */
-  async batchAnnotateAnnotationQueueItems(
+  async batchAnnotateItems(
     annotationQueueId: string,
     items: BatchAnnotateItem[],
     annotatorEmail?: string,

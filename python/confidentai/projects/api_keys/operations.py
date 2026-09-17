@@ -22,7 +22,7 @@ from confidentai.endpoints import Endpoints
 class ApiKeysOperations:
     _api: Api
 
-    def list_project_api_keys(self, project_id: str) -> ApiKeyList:
+    def list_api_keys(self, project_id: str) -> ApiKeyList:
         """List Project API Keys
 
         Lists every API key scoped to the project, newest first. Each key's
@@ -41,7 +41,7 @@ class ApiKeysOperations:
             path={"projectId": project_id},
         )
 
-    async def a_list_project_api_keys(self, project_id: str) -> ApiKeyList:
+    async def a_list_api_keys(self, project_id: str) -> ApiKeyList:
         """List Project API Keys
 
         Lists every API key scoped to the project, newest first. Each key's
@@ -60,7 +60,7 @@ class ApiKeysOperations:
             path={"projectId": project_id},
         )
 
-    def create_project_api_key(
+    def create_api_key(
         self,
         project_id: str,
         name: str,
@@ -90,7 +90,7 @@ class ApiKeysOperations:
             path={"projectId": project_id},
         )
 
-    async def a_create_project_api_key(
+    async def a_create_api_key(
         self,
         project_id: str,
         name: str,
@@ -120,7 +120,7 @@ class ApiKeysOperations:
             path={"projectId": project_id},
         )
 
-    def get_project_api_key(self, project_id: str, api_key_id: str) -> ApiKey:
+    def get_api_key(self, project_id: str, api_key_id: str) -> ApiKey:
         """Get Project API Key
 
         Retrieves one project-scoped API key by id. Its `value` is masked — the
@@ -140,9 +140,7 @@ class ApiKeysOperations:
             path={"projectId": project_id, "apiKeyId": api_key_id},
         )
 
-    async def a_get_project_api_key(
-        self, project_id: str, api_key_id: str
-    ) -> ApiKey:
+    async def a_get_api_key(self, project_id: str, api_key_id: str) -> ApiKey:
         """Get Project API Key
 
         Retrieves one project-scoped API key by id. Its `value` is masked — the
@@ -162,7 +160,7 @@ class ApiKeysOperations:
             path={"projectId": project_id, "apiKeyId": api_key_id},
         )
 
-    def update_project_api_key(
+    def update_api_key(
         self, project_id: str, api_key_id: str, valid: bool
     ) -> ApiKey:
         """Update Project API Key
@@ -189,7 +187,7 @@ class ApiKeysOperations:
             path={"projectId": project_id, "apiKeyId": api_key_id},
         )
 
-    async def a_update_project_api_key(
+    async def a_update_api_key(
         self, project_id: str, api_key_id: str, valid: bool
     ) -> ApiKey:
         """Update Project API Key
@@ -216,9 +214,7 @@ class ApiKeysOperations:
             path={"projectId": project_id, "apiKeyId": api_key_id},
         )
 
-    def delete_project_api_key(
-        self, project_id: str, api_key_id: str
-    ) -> ApiKeyRef:
+    def delete_api_key(self, project_id: str, api_key_id: str) -> ApiKeyRef:
         """Revoke Project API Key
 
         Permanently revokes a project-scoped API key. Both its current value and
@@ -237,7 +233,7 @@ class ApiKeysOperations:
             path={"projectId": project_id, "apiKeyId": api_key_id},
         )
 
-    async def a_delete_project_api_key(
+    async def a_delete_api_key(
         self, project_id: str, api_key_id: str
     ) -> ApiKeyRef:
         """Revoke Project API Key
@@ -258,7 +254,7 @@ class ApiKeysOperations:
             path={"projectId": project_id, "apiKeyId": api_key_id},
         )
 
-    def rotate_project_api_key(
+    def rotate_api_key(
         self,
         project_id: str,
         api_key_id: str,
@@ -311,7 +307,7 @@ class ApiKeysOperations:
             path={"projectId": project_id, "apiKeyId": api_key_id},
         )
 
-    async def a_rotate_project_api_key(
+    async def a_rotate_api_key(
         self,
         project_id: str,
         api_key_id: str,

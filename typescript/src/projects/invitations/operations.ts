@@ -24,9 +24,7 @@ export class InvitationsOperations extends AuditLogsExportsOperations {
    * @param projectId The id of the project, which must belong to your
    *   organization.
    */
-  async listProjectInvitations(
-    projectId: string,
-  ): Promise<ProjectInvitationList> {
+  async listInvitations(projectId: string): Promise<ProjectInvitationList> {
     return this.api.sendRequest<ProjectInvitationList>(
       HttpMethods.GET,
       Endpoints.PROJECT_INVITATIONS_ENDPOINT,
@@ -60,7 +58,7 @@ export class InvitationsOperations extends AuditLogsExportsOperations {
    *   they accept. Omit it to give them the default `Member` role. The `Owner`
    *   role cannot be handed out this way.
    */
-  async createProjectInvitations(
+  async createInvitations(
     projectId: string,
     emails: string[],
     projectRoleId?: string,
@@ -89,7 +87,7 @@ export class InvitationsOperations extends AuditLogsExportsOperations {
    *   organization.
    * @param invitationId The id of the project invitation.
    */
-  async resendProjectInvitation(
+  async resendInvitation(
     projectId: string,
     invitationId: string,
   ): Promise<ProjectInvitation> {
@@ -114,7 +112,7 @@ export class InvitationsOperations extends AuditLogsExportsOperations {
    *   organization.
    * @param invitationId The id of the project invitation.
    */
-  async deleteProjectInvitation(
+  async deleteInvitation(
     projectId: string,
     invitationId: string,
   ): Promise<InvitationRef> {

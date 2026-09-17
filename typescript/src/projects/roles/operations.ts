@@ -25,7 +25,7 @@ export class RolesOperations extends PoliciesOperations {
    * @param projectId The id of the project, which must belong to your
    *   organization.
    */
-  async listProjectRoles(projectId: string): Promise<ProjectRoleList> {
+  async listRoles(projectId: string): Promise<ProjectRoleList> {
     return this.api.sendRequest<ProjectRoleList>(
       HttpMethods.GET,
       Endpoints.PROJECT_ROLES_ENDPOINT,
@@ -57,7 +57,7 @@ export class RolesOperations extends PoliciesOperations {
    * @param description What the role is for. On an update, omit it to leave the
    *   stored description unchanged, or send null to clear it.
    */
-  async createProjectRole(
+  async createRole(
     projectId: string,
     name: string,
     policyIds: string[],
@@ -97,7 +97,7 @@ export class RolesOperations extends PoliciesOperations {
    * @param description What the role is for. On an update, omit it to leave the
    *   stored description unchanged, or send null to clear it.
    */
-  async updateProjectRole(
+  async updateRole(
     projectId: string,
     roleId: string,
     name: string,
@@ -129,7 +129,7 @@ export class RolesOperations extends PoliciesOperations {
    * @param roleId The id of the project role. It must be a role the project
    *   owns; a global, system-defined role is not addressable here.
    */
-  async deleteProjectRole(projectId: string, roleId: string): Promise<RoleRef> {
+  async deleteRole(projectId: string, roleId: string): Promise<RoleRef> {
     return this.api.sendRequest<RoleRef>(
       HttpMethods.DELETE,
       Endpoints.PROJECT_ROLE_ENDPOINT,

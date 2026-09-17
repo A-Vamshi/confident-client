@@ -20,7 +20,7 @@ class PersonasClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_personas(
+    def list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> PersonaList:
         """List Personas
@@ -42,7 +42,7 @@ class PersonasClient:
             query={"page": page, "pageSize": page_size},
         )
 
-    async def a_list_personas(
+    async def a_list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> PersonaList:
         """List Personas
@@ -64,7 +64,7 @@ class PersonasClient:
             query={"page": page, "pageSize": page_size},
         )
 
-    def create_persona(self, name: str, characteristics: str) -> PersonaRef:
+    def create(self, name: str, characteristics: str) -> PersonaRef:
         """Create Persona
 
         Creates a persona in your Confident AI project and returns its id. A
@@ -94,9 +94,7 @@ class PersonasClient:
             body={"name": name, "characteristics": characteristics},
         )
 
-    async def a_create_persona(
-        self, name: str, characteristics: str
-    ) -> PersonaRef:
+    async def a_create(self, name: str, characteristics: str) -> PersonaRef:
         """Create Persona
 
         Creates a persona in your Confident AI project and returns its id. A
@@ -126,7 +124,7 @@ class PersonasClient:
             body={"name": name, "characteristics": characteristics},
         )
 
-    def get_persona(self, persona_id: str) -> Persona:
+    def get(self, persona_id: str) -> Persona:
         """Get Persona
 
         Retrieves a persona by id, including the characteristics the simulator
@@ -144,7 +142,7 @@ class PersonasClient:
             path={"personaId": persona_id},
         )
 
-    async def a_get_persona(self, persona_id: str) -> Persona:
+    async def a_get(self, persona_id: str) -> Persona:
         """Get Persona
 
         Retrieves a persona by id, including the characteristics the simulator
@@ -162,7 +160,7 @@ class PersonasClient:
             path={"personaId": persona_id},
         )
 
-    def update_persona(
+    def update(
         self,
         persona_id: str,
         *,
@@ -195,7 +193,7 @@ class PersonasClient:
             path={"personaId": persona_id},
         )
 
-    async def a_update_persona(
+    async def a_update(
         self,
         persona_id: str,
         *,
@@ -228,7 +226,7 @@ class PersonasClient:
             path={"personaId": persona_id},
         )
 
-    def delete_persona(self, persona_id: str) -> PersonaRef:
+    def delete(self, persona_id: str) -> PersonaRef:
         """Delete Persona
 
         Permanently deletes a persona. Goldens that used it are kept and simply
@@ -245,7 +243,7 @@ class PersonasClient:
             path={"personaId": persona_id},
         )
 
-    async def a_delete_persona(self, persona_id: str) -> PersonaRef:
+    async def a_delete(self, persona_id: str) -> PersonaRef:
         """Delete Persona
 
         Permanently deletes a persona. Goldens that used it are kept and simply

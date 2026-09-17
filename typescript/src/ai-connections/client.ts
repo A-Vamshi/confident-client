@@ -31,10 +31,7 @@ export class AIConnectionsClient {
    * @param pageSize The number of results per page, at most 100. Defaults to
    *   25.
    */
-  async listAIConnections(
-    page?: number,
-    pageSize?: number,
-  ): Promise<AIConnectionList> {
+  async list(page?: number, pageSize?: number): Promise<AIConnectionList> {
     return this.api.sendRequest<AIConnectionList>(
       HttpMethods.GET,
       Endpoints.AI_CONNECTIONS_ENDPOINT,
@@ -159,7 +156,7 @@ export class AIConnectionsClient {
    *   the placeholder they fill in `payload`. The map replaces the connection's
    *   current prompts rather than merging into them.
    */
-  async createAIConnection(
+  async create(
     name: string,
     type?: AIConnectionType,
     endpoint?: string | null,
@@ -252,7 +249,7 @@ export class AIConnectionsClient {
    *
    * @param aiConnectionId The id of the AI connection.
    */
-  async getAIConnection(aiConnectionId: string): Promise<AIConnection> {
+  async get(aiConnectionId: string): Promise<AIConnection> {
     return this.api.sendRequest<AIConnection>(
       HttpMethods.GET,
       Endpoints.AI_CONNECTION_ENDPOINT,
@@ -379,7 +376,7 @@ export class AIConnectionsClient {
    *   the placeholder they fill in `payload`. The map replaces the connection's
    *   current prompts rather than merging into them.
    */
-  async updateAIConnection(
+  async update(
     aiConnectionId: string,
     name?: string,
     type?: AIConnectionType,
@@ -471,7 +468,7 @@ export class AIConnectionsClient {
    *
    * @param aiConnectionId The id of the AI connection.
    */
-  async deleteAIConnection(aiConnectionId: string): Promise<AIConnectionRef> {
+  async delete(aiConnectionId: string): Promise<AIConnectionRef> {
     return this.api.sendRequest<AIConnectionRef>(
       HttpMethods.DELETE,
       Endpoints.AI_CONNECTION_ENDPOINT,
@@ -493,7 +490,7 @@ export class AIConnectionsClient {
    * @param multiturn Whether to test the connection over a simulated multi-turn
    *   conversation instead of a single call. Defaults to false.
    */
-  async pingAIConnection(
+  async ping(
     aiConnectionId: string,
     multiturn?: boolean,
   ): Promise<AIConnectionPingResult> {

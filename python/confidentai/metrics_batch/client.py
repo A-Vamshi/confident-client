@@ -15,9 +15,7 @@ class MetricsBatchClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def create_metrics_batch(
-        self, metrics: List[CreateMetricRequest]
-    ) -> MetricList:
+    def create(self, metrics: List[CreateMetricRequest]) -> MetricList:
         """Batch Create Metrics
 
         Creates several GEVAL metrics at once and returns the ones created.
@@ -37,9 +35,7 @@ class MetricsBatchClient:
             body={"metrics": metrics},
         )
 
-    async def a_create_metrics_batch(
-        self, metrics: List[CreateMetricRequest]
-    ) -> MetricList:
+    async def a_create(self, metrics: List[CreateMetricRequest]) -> MetricList:
         """Batch Create Metrics
 
         Creates several GEVAL metrics at once and returns the ones created.

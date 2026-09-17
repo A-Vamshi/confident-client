@@ -19,7 +19,7 @@ export class GovernanceClient {
    * failing. A project that belongs to no governance policy is rejected with a
    * 400.
    */
-  async assessGovernance(): Promise<GovernanceAssessment> {
+  async assess(): Promise<GovernanceAssessment> {
     return this.api.sendRequest<GovernanceAssessment>(
       HttpMethods.POST,
       Endpoints.GOVERNANCE_ASSESS_ENDPOINT,

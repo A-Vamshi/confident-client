@@ -21,7 +21,7 @@ class AnnotationFormsClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_annotation_forms(self) -> AnnotationFormList:
+    def list(self) -> AnnotationFormList:
         """List Annotation Forms
 
         Lists the annotation forms in your Confident AI project, oldest first.
@@ -34,7 +34,7 @@ class AnnotationFormsClient:
             response_schema=AnnotationFormList,
         )
 
-    async def a_list_annotation_forms(self) -> AnnotationFormList:
+    async def a_list(self) -> AnnotationFormList:
         """List Annotation Forms
 
         Lists the annotation forms in your Confident AI project, oldest first.
@@ -47,7 +47,7 @@ class AnnotationFormsClient:
             response_schema=AnnotationFormList,
         )
 
-    def create_annotation_form(
+    def create(
         self,
         name: str,
         *,
@@ -73,7 +73,7 @@ class AnnotationFormsClient:
             body={"name": name, "fields": fields},
         )
 
-    async def a_create_annotation_form(
+    async def a_create(
         self,
         name: str,
         *,
@@ -99,7 +99,7 @@ class AnnotationFormsClient:
             body={"name": name, "fields": fields},
         )
 
-    def get_annotation_form(self, annotation_form_id: str) -> AnnotationForm:
+    def get(self, annotation_form_id: str) -> AnnotationForm:
         """Get Annotation Form
 
         Retrieves an annotation form by id from your Confident AI project, with
@@ -115,9 +115,7 @@ class AnnotationFormsClient:
             path={"annotationFormId": annotation_form_id},
         )
 
-    async def a_get_annotation_form(
-        self, annotation_form_id: str
-    ) -> AnnotationForm:
+    async def a_get(self, annotation_form_id: str) -> AnnotationForm:
         """Get Annotation Form
 
         Retrieves an annotation form by id from your Confident AI project, with
@@ -133,7 +131,7 @@ class AnnotationFormsClient:
             path={"annotationFormId": annotation_form_id},
         )
 
-    def update_annotation_form(
+    def update(
         self,
         annotation_form_id: str,
         *,
@@ -163,7 +161,7 @@ class AnnotationFormsClient:
             path={"annotationFormId": annotation_form_id},
         )
 
-    async def a_update_annotation_form(
+    async def a_update(
         self,
         annotation_form_id: str,
         *,
@@ -193,9 +191,7 @@ class AnnotationFormsClient:
             path={"annotationFormId": annotation_form_id},
         )
 
-    def delete_annotation_form(
-        self, annotation_form_id: str
-    ) -> AnnotationFormRef:
+    def delete(self, annotation_form_id: str) -> AnnotationFormRef:
         """Delete Annotation Form
 
         Permanently deletes an annotation form and the answers recorded against
@@ -212,9 +208,7 @@ class AnnotationFormsClient:
             path={"annotationFormId": annotation_form_id},
         )
 
-    async def a_delete_annotation_form(
-        self, annotation_form_id: str
-    ) -> AnnotationFormRef:
+    async def a_delete(self, annotation_form_id: str) -> AnnotationFormRef:
         """Delete Annotation Form
 
         Permanently deletes an annotation form and the answers recorded against

@@ -23,7 +23,7 @@ from confidentai.endpoints import Endpoints
 class AnnotationQueuesOperations:
     _api: Api
 
-    def list_annotation_queues(
+    def list(
         self,
         *,
         page: Optional[int] = None,
@@ -56,7 +56,7 @@ class AnnotationQueuesOperations:
             },
         )
 
-    async def a_list_annotation_queues(
+    async def a_list(
         self,
         *,
         page: Optional[int] = None,
@@ -89,7 +89,7 @@ class AnnotationQueuesOperations:
             },
         )
 
-    def create_annotation_queue(
+    def create(
         self,
         name: str,
         type: AnnotationQueueType,
@@ -115,7 +115,7 @@ class AnnotationQueuesOperations:
             body={"name": name, "type": type, "formId": form_id},
         )
 
-    async def a_create_annotation_queue(
+    async def a_create(
         self,
         name: str,
         type: AnnotationQueueType,
@@ -141,7 +141,7 @@ class AnnotationQueuesOperations:
             body={"name": name, "type": type, "formId": form_id},
         )
 
-    def get_annotation_queue(self, annotation_queue_id: str) -> AnnotationQueue:
+    def get(self, annotation_queue_id: str) -> AnnotationQueue:
         """Get Annotation Queue
 
         Retrieves an annotation queue by id from your Confident AI project, with
@@ -157,9 +157,7 @@ class AnnotationQueuesOperations:
             path={"annotationQueueId": annotation_queue_id},
         )
 
-    async def a_get_annotation_queue(
-        self, annotation_queue_id: str
-    ) -> AnnotationQueue:
+    async def a_get(self, annotation_queue_id: str) -> AnnotationQueue:
         """Get Annotation Queue
 
         Retrieves an annotation queue by id from your Confident AI project, with
@@ -175,7 +173,7 @@ class AnnotationQueuesOperations:
             path={"annotationQueueId": annotation_queue_id},
         )
 
-    def update_annotation_queue(
+    def update(
         self,
         annotation_queue_id: str,
         *,
@@ -204,7 +202,7 @@ class AnnotationQueuesOperations:
             path={"annotationQueueId": annotation_queue_id},
         )
 
-    async def a_update_annotation_queue(
+    async def a_update(
         self,
         annotation_queue_id: str,
         *,
@@ -233,9 +231,7 @@ class AnnotationQueuesOperations:
             path={"annotationQueueId": annotation_queue_id},
         )
 
-    def delete_annotation_queue(
-        self, annotation_queue_id: str
-    ) -> AnnotationQueueRef:
+    def delete(self, annotation_queue_id: str) -> AnnotationQueueRef:
         """Delete Annotation Queue
 
         Permanently deletes an annotation queue and the items waiting in it.
@@ -251,9 +247,7 @@ class AnnotationQueuesOperations:
             path={"annotationQueueId": annotation_queue_id},
         )
 
-    async def a_delete_annotation_queue(
-        self, annotation_queue_id: str
-    ) -> AnnotationQueueRef:
+    async def a_delete(self, annotation_queue_id: str) -> AnnotationQueueRef:
         """Delete Annotation Queue
 
         Permanently deletes an annotation queue and the items waiting in it.
@@ -269,7 +263,7 @@ class AnnotationQueuesOperations:
             path={"annotationQueueId": annotation_queue_id},
         )
 
-    def batch_annotate_annotation_queue_items(
+    def batch_annotate_items(
         self,
         annotation_queue_id: str,
         items: List[BatchAnnotateItem],
@@ -307,7 +301,7 @@ class AnnotationQueuesOperations:
             path={"annotationQueueId": annotation_queue_id},
         )
 
-    async def a_batch_annotate_annotation_queue_items(
+    async def a_batch_annotate_items(
         self,
         annotation_queue_id: str,
         items: List[BatchAnnotateItem],

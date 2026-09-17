@@ -21,7 +21,7 @@ class ExportDestinationsClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_export_destinations(
+    def list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> ExportDestinationList:
         """List Export Destinations
@@ -42,7 +42,7 @@ class ExportDestinationsClient:
             query={"page": page, "pageSize": page_size},
         )
 
-    async def a_list_export_destinations(
+    async def a_list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> ExportDestinationList:
         """List Export Destinations
@@ -63,7 +63,7 @@ class ExportDestinationsClient:
             query={"page": page, "pageSize": page_size},
         )
 
-    def create_export_destination(
+    def create(
         self,
         name: str,
         bucket: str,
@@ -117,7 +117,7 @@ class ExportDestinationsClient:
             },
         )
 
-    async def a_create_export_destination(
+    async def a_create(
         self,
         name: str,
         bucket: str,
@@ -171,9 +171,7 @@ class ExportDestinationsClient:
             },
         )
 
-    def get_export_destination(
-        self, export_destination_id: str
-    ) -> ExportDestination:
+    def get(self, export_destination_id: str) -> ExportDestination:
         """Get Export Destination
 
         Retrieves an export destination by id. Its credentials come back masked
@@ -191,9 +189,7 @@ class ExportDestinationsClient:
             path={"exportDestinationId": export_destination_id},
         )
 
-    async def a_get_export_destination(
-        self, export_destination_id: str
-    ) -> ExportDestination:
+    async def a_get(self, export_destination_id: str) -> ExportDestination:
         """Get Export Destination
 
         Retrieves an export destination by id. Its credentials come back masked
@@ -211,7 +207,7 @@ class ExportDestinationsClient:
             path={"exportDestinationId": export_destination_id},
         )
 
-    def update_export_destination(
+    def update(
         self,
         export_destination_id: str,
         *,
@@ -271,7 +267,7 @@ class ExportDestinationsClient:
             path={"exportDestinationId": export_destination_id},
         )
 
-    async def a_update_export_destination(
+    async def a_update(
         self,
         export_destination_id: str,
         *,
@@ -331,9 +327,7 @@ class ExportDestinationsClient:
             path={"exportDestinationId": export_destination_id},
         )
 
-    def delete_export_destination(
-        self, export_destination_id: str
-    ) -> ExportDestinationRef:
+    def delete(self, export_destination_id: str) -> ExportDestinationRef:
         """Delete Export Destination
 
         Permanently deletes an export destination. Every export schedule
@@ -350,7 +344,7 @@ class ExportDestinationsClient:
             path={"exportDestinationId": export_destination_id},
         )
 
-    async def a_delete_export_destination(
+    async def a_delete(
         self, export_destination_id: str
     ) -> ExportDestinationRef:
         """Delete Export Destination

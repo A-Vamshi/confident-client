@@ -26,7 +26,7 @@ class AIConnectionsClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_ai_connections(
+    def list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> AIConnectionList:
         """List AI Connections
@@ -48,7 +48,7 @@ class AIConnectionsClient:
             query={"page": page, "pageSize": page_size},
         )
 
-    async def a_list_ai_connections(
+    async def a_list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> AIConnectionList:
         """List AI Connections
@@ -70,7 +70,7 @@ class AIConnectionsClient:
             query={"page": page, "pageSize": page_size},
         )
 
-    def create_ai_connection(
+    def create(
         self,
         name: str,
         *,
@@ -277,7 +277,7 @@ class AIConnectionsClient:
             },
         )
 
-    async def a_create_ai_connection(
+    async def a_create(
         self,
         name: str,
         *,
@@ -484,7 +484,7 @@ class AIConnectionsClient:
             },
         )
 
-    def get_ai_connection(self, ai_connection_id: str) -> AIConnection:
+    def get(self, ai_connection_id: str) -> AIConnection:
         """Get AI Connection
 
         Retrieves an AI connection by id with its full configuration: how
@@ -503,7 +503,7 @@ class AIConnectionsClient:
             path={"aiConnectionId": ai_connection_id},
         )
 
-    async def a_get_ai_connection(self, ai_connection_id: str) -> AIConnection:
+    async def a_get(self, ai_connection_id: str) -> AIConnection:
         """Get AI Connection
 
         Retrieves an AI connection by id with its full configuration: how
@@ -522,7 +522,7 @@ class AIConnectionsClient:
             path={"aiConnectionId": ai_connection_id},
         )
 
-    def update_ai_connection(
+    def update(
         self,
         ai_connection_id: str,
         *,
@@ -733,7 +733,7 @@ class AIConnectionsClient:
             path={"aiConnectionId": ai_connection_id},
         )
 
-    async def a_update_ai_connection(
+    async def a_update(
         self,
         ai_connection_id: str,
         *,
@@ -944,7 +944,7 @@ class AIConnectionsClient:
             path={"aiConnectionId": ai_connection_id},
         )
 
-    def delete_ai_connection(self, ai_connection_id: str) -> AIConnectionRef:
+    def delete(self, ai_connection_id: str) -> AIConnectionRef:
         """Delete AI Connection
 
         Permanently deletes an AI connection. Anything scheduled against it,
@@ -960,9 +960,7 @@ class AIConnectionsClient:
             path={"aiConnectionId": ai_connection_id},
         )
 
-    async def a_delete_ai_connection(
-        self, ai_connection_id: str
-    ) -> AIConnectionRef:
+    async def a_delete(self, ai_connection_id: str) -> AIConnectionRef:
         """Delete AI Connection
 
         Permanently deletes an AI connection. Anything scheduled against it,
@@ -978,7 +976,7 @@ class AIConnectionsClient:
             path={"aiConnectionId": ai_connection_id},
         )
 
-    def ping_ai_connection(
+    def ping(
         self, ai_connection_id: str, *, multiturn: Optional[bool] = None
     ) -> AIConnectionPingResult:
         """Ping AI Connection
@@ -1004,7 +1002,7 @@ class AIConnectionsClient:
             path={"aiConnectionId": ai_connection_id},
         )
 
-    async def a_ping_ai_connection(
+    async def a_ping(
         self, ai_connection_id: str, *, multiturn: Optional[bool] = None
     ) -> AIConnectionPingResult:
         """Ping AI Connection

@@ -97,6 +97,35 @@ def ts_module_for(resource: str) -> str:
     return RESOURCE_MODULES.get(resource, resource)
 
 
+def method_name(operation_id: str, resource: str) -> str:
+    """The method one operation is exposed as, minus its resource's own name.
+
+    A method already sits on its resource's client, so repeating the resource
+    in the name says it twice: `client.projects.list_projects()`. The tag is
+    deleted from the operation id wherever it appears, in whichever number the
+    spec wrote it.
+
+    Only at index 1 or later, and never when it is the whole name: the verb
+    has to survive, or `evaluateTrace` on tag `evaluate` would become
+    `trace()`.
+    """
+    parts = [token.lower() for token in WORD.findall(operation_id)]
+    tag = [token.lower() for token in WORD.findall(resource)]
+    spellings = (
+        tag,
+        tag[:-1] + [singular(tag[-1])],
+        [singular(token) for token in tag],
+    )
+    for spelling in spellings:
+        width = len(spelling)
+        if len(parts) <= width:
+            continue
+        for start in range(1, len(parts) - width + 1):
+            if parts[start : start + width] == spelling:
+                return "_".join(parts[:start] + parts[start + width :])
+    return "_".join(parts)
+
+
 def endpoint_member(path: str) -> str:
     """The enum member naming one route.
 

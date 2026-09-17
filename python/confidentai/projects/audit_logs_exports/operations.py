@@ -13,7 +13,7 @@ from confidentai.endpoints import Endpoints
 class AuditLogsExportsOperations:
     _api: Api
 
-    def create_project_audit_log_export(
+    def create_audit_log_export(
         self,
         project_id: str,
         *,
@@ -74,7 +74,7 @@ class AuditLogsExportsOperations:
             path={"projectId": project_id},
         )
 
-    async def a_create_project_audit_log_export(
+    async def a_create_audit_log_export(
         self,
         project_id: str,
         *,
@@ -135,7 +135,7 @@ class AuditLogsExportsOperations:
             path={"projectId": project_id},
         )
 
-    def get_project_audit_log_export(
+    def get_audit_log_export(
         self, project_id: str, export_id: str
     ) -> AuditLogExport:
         """Get Project Audit Log Export
@@ -167,7 +167,7 @@ class AuditLogsExportsOperations:
             path={"projectId": project_id, "exportId": export_id},
         )
 
-    async def a_get_project_audit_log_export(
+    async def a_get_audit_log_export(
         self, project_id: str, export_id: str
     ) -> AuditLogExport:
         """Get Project Audit Log Export

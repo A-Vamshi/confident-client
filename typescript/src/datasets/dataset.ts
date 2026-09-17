@@ -52,7 +52,7 @@ export class Dataset {
    * versions, tags and custom columns. This action cannot be undone.
    */
   async delete(): Promise<DatasetRef> {
-    return this.client.deleteDataset(this.datasetIdOrThrow());
+    return this.client.delete(this.datasetIdOrThrow());
   }
 
   /**
@@ -62,7 +62,7 @@ export class Dataset {
    * above.
    */
   async listVersions(): Promise<DatasetVersionList> {
-    return this.client.getDatasetVersions(this.datasetIdOrThrow());
+    return this.client.getVersions(this.datasetIdOrThrow());
   }
 
   /**
@@ -74,7 +74,7 @@ export class Dataset {
    * Requires the Team plan or above.
    */
   async createVersion(): Promise<CreateDatasetVersionResult> {
-    return this.client.createDatasetVersion(this.datasetIdOrThrow());
+    return this.client.createVersion(this.datasetIdOrThrow());
   }
 
   /**
@@ -136,7 +136,7 @@ export class Dataset {
     numGenerations?: number,
     mcpServerIds?: string[],
   ): Promise<RunDatasetEvaluationResult> {
-    return this.client.runDatasetEvaluation(
+    return this.client.runEvaluation(
       this.datasetIdOrThrow(),
       metricCollection,
       identifier,
@@ -166,7 +166,7 @@ export class Dataset {
    *   stored unfinalized, whatever each golden's own `finalized` says.
    */
   async queueGoldens(goldens: GoldenRequest[]): Promise<DatasetRef> {
-    return this.client.queueDatasetGoldens(this.datasetIdOrThrow(), goldens);
+    return this.client.queueGoldens(this.datasetIdOrThrow(), goldens);
   }
 
   /**
@@ -249,7 +249,7 @@ export class Dataset {
   async pull(
     options: { version?: string; finalized?: "true" | "false" } = {},
   ): Promise<this> {
-    const payload = await this.client.pullDataset(
+    const payload = await this.client.pull(
       this.datasetIdOrThrow(),
       options.version,
       options.finalized,
@@ -272,7 +272,7 @@ export class Dataset {
    */
   async push(options: { finalized?: boolean } = {}): Promise<DatasetRef> {
     const body = this.pushBody(options.finalized);
-    const result = await this.client.pushDataset(
+    const result = await this.client.push(
       body.alias,
       body.goldens,
       body.finalized,

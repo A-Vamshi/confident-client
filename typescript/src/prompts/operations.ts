@@ -20,7 +20,7 @@ export class PromptsOperations {
    *
    * Lists all the prompts in your Confident AI project.
    */
-  async listPrompts(): Promise<PromptList> {
+  async list(): Promise<PromptList> {
     return this.api.sendRequest<PromptList>(
       HttpMethods.GET,
       Endpoints.PROMPTS_ENDPOINT,
@@ -39,7 +39,7 @@ export class PromptsOperations {
    *   existing prompt's type. Pass a PushTextPrompt or a PushMessagesPrompt,
    *   from confidentai.prompts.types.
    */
-  async pushPrompt(prompt: PushPromptRequest): Promise<PushPromptResult> {
+  async push(prompt: PushPromptRequest): Promise<PushPromptResult> {
     return this.api.sendRequest<PushPromptResult>(
       HttpMethods.POST,
       Endpoints.PROMPTS_ENDPOINT,
@@ -55,7 +55,7 @@ export class PromptsOperations {
    * @param promptId The unique id of the prompt.
    * @param label The label of the version to pull.
    */
-  async getPromptByLabel(promptId: string, label: string): Promise<Prompt> {
+  async getByLabel(promptId: string, label: string): Promise<Prompt> {
     return this.api.sendRequest<Prompt>(
       HttpMethods.GET,
       Endpoints.PROMPT_LABEL_ENDPOINT,

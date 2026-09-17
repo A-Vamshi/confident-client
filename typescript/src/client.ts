@@ -85,6 +85,6 @@ export class ConfidentAI extends StatefulClients {
   }
 
   whoami(): Promise<Organization> {
-    return this.organization.getOrganization();
+    return this.organization.get();
   }
 }

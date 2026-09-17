@@ -29,7 +29,7 @@ export class LabelsOperations extends ClassifiersOperations {
    * @param pageSize The number of results per page, at most 100. Defaults to
    *   25.
    */
-  async listClassifierLabels(
+  async listLabels(
     classifierId: string,
     page?: number,
     pageSize?: number,
@@ -56,7 +56,7 @@ export class LabelsOperations extends ClassifiersOperations {
    *   name.
    * @param enabled Whether the label can be applied. Defaults to true.
    */
-  async createClassifierLabel(
+  async createLabel(
     classifierId: string,
     name: string,
     description: string,
@@ -84,7 +84,7 @@ export class LabelsOperations extends ClassifiersOperations {
    * @param classifierId The id of the classifier the label belongs to.
    * @param labelId The id of the label.
    */
-  async getClassifierLabel(
+  async getLabel(
     classifierId: string,
     labelId: string,
   ): Promise<ClassifierLabel> {
@@ -108,7 +108,7 @@ export class LabelsOperations extends ClassifiersOperations {
    * @param description When this label applies. It cannot be cleared.
    * @param enabled Whether the label can be applied. Defaults to true.
    */
-  async updateClassifierLabel(
+  async updateLabel(
     classifierId: string,
     labelId: string,
     name?: string,
@@ -137,7 +137,7 @@ export class LabelsOperations extends ClassifiersOperations {
    * @param classifierId The id of the classifier the label belongs to.
    * @param labelId The id of the label.
    */
-  async deleteClassifierLabel(
+  async deleteLabel(
     classifierId: string,
     labelId: string,
   ): Promise<ClassifierLabelRef> {

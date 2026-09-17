@@ -20,7 +20,7 @@ from confidentai.endpoints import Endpoints
 class DatasetIngestionTasksOperations:
     _api: Api
 
-    def list_dataset_ingestion_tasks(
+    def list_ingestion_tasks(
         self,
         dataset_id: str,
         *,
@@ -45,7 +45,7 @@ class DatasetIngestionTasksOperations:
             query={"dataModel": data_model},
         )
 
-    async def a_list_dataset_ingestion_tasks(
+    async def a_list_ingestion_tasks(
         self,
         dataset_id: str,
         *,
@@ -70,7 +70,7 @@ class DatasetIngestionTasksOperations:
             query={"dataModel": data_model},
         )
 
-    def create_dataset_ingestion_task(
+    def create_ingestion_task(
         self,
         dataset_id: str,
         name: str,
@@ -157,7 +157,7 @@ class DatasetIngestionTasksOperations:
             path={"datasetId": dataset_id},
         )
 
-    async def a_create_dataset_ingestion_task(
+    async def a_create_ingestion_task(
         self,
         dataset_id: str,
         name: str,
@@ -244,7 +244,7 @@ class DatasetIngestionTasksOperations:
             path={"datasetId": dataset_id},
         )
 
-    def get_dataset_ingestion_task(
+    def get_ingestion_task(
         self, dataset_id: str, dataset_ingestion_task_id: str
     ) -> DatasetIngestionTask:
         """Get Dataset Ingestion Task
@@ -266,7 +266,7 @@ class DatasetIngestionTasksOperations:
             },
         )
 
-    async def a_get_dataset_ingestion_task(
+    async def a_get_ingestion_task(
         self, dataset_id: str, dataset_ingestion_task_id: str
     ) -> DatasetIngestionTask:
         """Get Dataset Ingestion Task
@@ -288,7 +288,7 @@ class DatasetIngestionTasksOperations:
             },
         )
 
-    def update_dataset_ingestion_task(
+    def update_ingestion_task(
         self,
         dataset_id: str,
         dataset_ingestion_task_id: str,
@@ -378,7 +378,7 @@ class DatasetIngestionTasksOperations:
             },
         )
 
-    async def a_update_dataset_ingestion_task(
+    async def a_update_ingestion_task(
         self,
         dataset_id: str,
         dataset_ingestion_task_id: str,
@@ -468,7 +468,7 @@ class DatasetIngestionTasksOperations:
             },
         )
 
-    def delete_dataset_ingestion_task(
+    def delete_ingestion_task(
         self, dataset_id: str, dataset_ingestion_task_id: str
     ) -> DatasetIngestionTaskRef:
         """Delete Dataset Ingestion Task
@@ -491,7 +491,7 @@ class DatasetIngestionTasksOperations:
             },
         )
 
-    async def a_delete_dataset_ingestion_task(
+    async def a_delete_ingestion_task(
         self, dataset_id: str, dataset_ingestion_task_id: str
     ) -> DatasetIngestionTaskRef:
         """Delete Dataset Ingestion Task

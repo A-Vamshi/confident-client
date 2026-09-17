@@ -17,7 +17,7 @@ from confidentai.organization.types import (
 class RolesOperations:
     _api: Api
 
-    def list_organization_roles(self) -> OrganizationRoleList:
+    def list_roles(self) -> OrganizationRoleList:
         """List Organization Roles
 
         Lists every organization role a member of your organization can be
@@ -33,7 +33,7 @@ class RolesOperations:
             response_schema=OrganizationRoleList,
         )
 
-    async def a_list_organization_roles(self) -> OrganizationRoleList:
+    async def a_list_roles(self) -> OrganizationRoleList:
         """List Organization Roles
 
         Lists every organization role a member of your organization can be
@@ -49,7 +49,7 @@ class RolesOperations:
             response_schema=OrganizationRoleList,
         )
 
-    def create_organization_role(
+    def create_role(
         self,
         name: str,
         policy_ids: List[str],
@@ -91,7 +91,7 @@ class RolesOperations:
             },
         )
 
-    async def a_create_organization_role(
+    async def a_create_role(
         self,
         name: str,
         policy_ids: List[str],
@@ -133,7 +133,7 @@ class RolesOperations:
             },
         )
 
-    def update_organization_role(
+    def update_role(
         self,
         role_id: str,
         name: str,
@@ -182,7 +182,7 @@ class RolesOperations:
             path={"roleId": role_id},
         )
 
-    async def a_update_organization_role(
+    async def a_update_role(
         self,
         role_id: str,
         name: str,
@@ -231,7 +231,7 @@ class RolesOperations:
             path={"roleId": role_id},
         )
 
-    def delete_organization_role(self, role_id: str) -> RoleRef:
+    def delete_role(self, role_id: str) -> RoleRef:
         """Delete Organization Role
 
         Permanently deletes a custom organization role. A role that is still
@@ -254,7 +254,7 @@ class RolesOperations:
             path={"roleId": role_id},
         )
 
-    async def a_delete_organization_role(self, role_id: str) -> RoleRef:
+    async def a_delete_role(self, role_id: str) -> RoleRef:
         """Delete Organization Role
 
         Permanently deletes a custom organization role. A role that is still

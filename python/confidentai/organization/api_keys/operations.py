@@ -22,7 +22,7 @@ from confidentai.endpoints import Endpoints
 class ApiKeysOperations:
     _api: Api
 
-    def list_organization_api_keys(self) -> ApiKeyList:
+    def list_api_keys(self) -> ApiKeyList:
         """List Organization API Keys
 
         Lists every organization-scoped API key in your Confident AI
@@ -38,7 +38,7 @@ class ApiKeysOperations:
             response_schema=ApiKeyList,
         )
 
-    async def a_list_organization_api_keys(self) -> ApiKeyList:
+    async def a_list_api_keys(self) -> ApiKeyList:
         """List Organization API Keys
 
         Lists every organization-scoped API key in your Confident AI
@@ -54,7 +54,7 @@ class ApiKeysOperations:
             response_schema=ApiKeyList,
         )
 
-    def create_organization_api_key(
+    def create_api_key(
         self, name: str, *, expires_in_days: Optional[int] = None
     ) -> CreatedApiKey:
         """Create Organization API Key
@@ -78,7 +78,7 @@ class ApiKeysOperations:
             body={"name": name, "expiresInDays": expires_in_days},
         )
 
-    async def a_create_organization_api_key(
+    async def a_create_api_key(
         self, name: str, *, expires_in_days: Optional[int] = None
     ) -> CreatedApiKey:
         """Create Organization API Key
@@ -102,7 +102,7 @@ class ApiKeysOperations:
             body={"name": name, "expiresInDays": expires_in_days},
         )
 
-    def get_organization_api_key(self, api_key_id: str) -> ApiKey:
+    def get_api_key(self, api_key_id: str) -> ApiKey:
         """Get Organization API Key
 
         Retrieves one organization-scoped API key by id. Its `value` is masked —
@@ -121,7 +121,7 @@ class ApiKeysOperations:
             path={"apiKeyId": api_key_id},
         )
 
-    async def a_get_organization_api_key(self, api_key_id: str) -> ApiKey:
+    async def a_get_api_key(self, api_key_id: str) -> ApiKey:
         """Get Organization API Key
 
         Retrieves one organization-scoped API key by id. Its `value` is masked —
@@ -140,9 +140,7 @@ class ApiKeysOperations:
             path={"apiKeyId": api_key_id},
         )
 
-    def update_organization_api_key(
-        self, api_key_id: str, valid: bool
-    ) -> ApiKey:
+    def update_api_key(self, api_key_id: str, valid: bool) -> ApiKey:
         """Update Organization API Key
 
         Activates or deactivates an organization-scoped API key. A deactivated
@@ -165,9 +163,7 @@ class ApiKeysOperations:
             path={"apiKeyId": api_key_id},
         )
 
-    async def a_update_organization_api_key(
-        self, api_key_id: str, valid: bool
-    ) -> ApiKey:
+    async def a_update_api_key(self, api_key_id: str, valid: bool) -> ApiKey:
         """Update Organization API Key
 
         Activates or deactivates an organization-scoped API key. A deactivated
@@ -190,7 +186,7 @@ class ApiKeysOperations:
             path={"apiKeyId": api_key_id},
         )
 
-    def delete_organization_api_key(self, api_key_id: str) -> ApiKeyRef:
+    def delete_api_key(self, api_key_id: str) -> ApiKeyRef:
         """Revoke Organization API Key
 
         Permanently revokes an organization-scoped API key. Both its current
@@ -207,7 +203,7 @@ class ApiKeysOperations:
             path={"apiKeyId": api_key_id},
         )
 
-    async def a_delete_organization_api_key(self, api_key_id: str) -> ApiKeyRef:
+    async def a_delete_api_key(self, api_key_id: str) -> ApiKeyRef:
         """Revoke Organization API Key
 
         Permanently revokes an organization-scoped API key. Both its current
@@ -224,7 +220,7 @@ class ApiKeysOperations:
             path={"apiKeyId": api_key_id},
         )
 
-    def rotate_organization_api_key(
+    def rotate_api_key(
         self,
         api_key_id: str,
         *,
@@ -274,7 +270,7 @@ class ApiKeysOperations:
             path={"apiKeyId": api_key_id},
         )
 
-    async def a_rotate_organization_api_key(
+    async def a_rotate_api_key(
         self,
         api_key_id: str,
         *,

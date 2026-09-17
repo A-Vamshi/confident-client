@@ -38,7 +38,7 @@ export class TestRunsClient {
    * @param multiTurn When true, returns only multi-turn test runs; when false,
    *   only single-turn test runs. Omit to return both.
    */
-  async listTestRuns(
+  async list(
     page?: number,
     pageSize?: number,
     start?: string,
@@ -79,7 +79,7 @@ export class TestRunsClient {
    * @param identifier An optional human-readable identifier for the test run,
    *   shown on the Confident AI platform.
    */
-  async createTestRun(
+  async create(
     metricCollection?: string,
     identifier?: string,
   ): Promise<TestRunRef> {
@@ -157,7 +157,7 @@ export class TestRunsClient {
    *
    * @param testRunId The id of the test run.
    */
-  async getTestRun(testRunId: string): Promise<TestRun> {
+  async get(testRunId: string): Promise<TestRun> {
     return this.api.sendRequest<TestRun>(
       HttpMethods.GET,
       Endpoints.TEST_RUN_ENDPOINT,

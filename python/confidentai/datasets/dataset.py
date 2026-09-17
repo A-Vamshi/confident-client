@@ -57,7 +57,7 @@ class Dataset:
         Permanently deletes the dataset and everything in it: its goldens,
         versions, tags and custom columns. This action cannot be undone.
         """
-        return self._client.delete_dataset(self._dataset_id())
+        return self._client.delete(self._dataset_id())
 
     async def a_delete(self) -> DatasetRef:
         """Delete Dataset
@@ -65,7 +65,7 @@ class Dataset:
         Permanently deletes the dataset and everything in it: its goldens,
         versions, tags and custom columns. This action cannot be undone.
         """
-        return await self._client.a_delete_dataset(self._dataset_id())
+        return await self._client.a_delete(self._dataset_id())
 
     def list_versions(self) -> DatasetVersionList:
         """List Dataset Versions
@@ -73,7 +73,7 @@ class Dataset:
         Lists every version of the dataset, newest first. Requires the Team plan
         or above.
         """
-        return self._client.get_dataset_versions(self._dataset_id())
+        return self._client.get_versions(self._dataset_id())
 
     async def a_list_versions(self) -> DatasetVersionList:
         """List Dataset Versions
@@ -81,7 +81,7 @@ class Dataset:
         Lists every version of the dataset, newest first. Requires the Team plan
         or above.
         """
-        return await self._client.a_get_dataset_versions(self._dataset_id())
+        return await self._client.a_get_versions(self._dataset_id())
 
     def create_version(self) -> CreateDatasetVersionResult:
         """Create Dataset Version
@@ -91,7 +91,7 @@ class Dataset:
         version copies every golden, tag and custom column from the previous
         version. Requires the Team plan or above.
         """
-        return self._client.create_dataset_version(self._dataset_id())
+        return self._client.create_version(self._dataset_id())
 
     async def a_create_version(self) -> CreateDatasetVersionResult:
         """Create Dataset Version
@@ -101,7 +101,7 @@ class Dataset:
         version copies every golden, tag and custom column from the previous
         version. Requires the Team plan or above.
         """
-        return await self._client.a_create_dataset_version(self._dataset_id())
+        return await self._client.a_create_version(self._dataset_id())
 
     def run_evaluation(
         self,
@@ -166,7 +166,7 @@ class Dataset:
                 tool call whose name matches a tool exposed by one of these
                 servers is labeled an MCP tool call rather than a function call.
         """
-        return self._client.run_dataset_evaluation(
+        return self._client.run_evaluation(
             self._dataset_id(),
             metric_collection,
             identifier=identifier,
@@ -246,7 +246,7 @@ class Dataset:
                 tool call whose name matches a tool exposed by one of these
                 servers is labeled an MCP tool call rather than a function call.
         """
-        return await self._client.a_run_dataset_evaluation(
+        return await self._client.a_run_evaluation(
             self._dataset_id(),
             metric_collection,
             identifier=identifier,
@@ -276,7 +276,7 @@ class Dataset:
                 `multiTurn`. They are stored unfinalized, whatever each golden's
                 own `finalized` says.
         """
-        return self._client.queue_dataset_goldens(self._dataset_id(), goldens)
+        return self._client.queue_goldens(self._dataset_id(), goldens)
 
     async def a_queue_goldens(self, goldens: List[GoldenRequest]) -> DatasetRef:
         """Queue Dataset Goldens
@@ -291,9 +291,7 @@ class Dataset:
                 `multiTurn`. They are stored unfinalized, whatever each golden's
                 own `finalized` says.
         """
-        return await self._client.a_queue_dataset_goldens(
-            self._dataset_id(), goldens
-        )
+        return await self._client.a_queue_goldens(self._dataset_id(), goldens)
 
     def create_golden(
         self, golden: GoldenRequest, *, version: Optional[str] = None
@@ -437,7 +435,7 @@ class Dataset:
             finalized: Whether to pull the finalized goldens, or with `false`
                 the goldens still awaiting review. Defaults to `true`.
         """
-        payload = self._client.pull_dataset(
+        payload = self._client.pull(
             self._dataset_id(), version=version, finalized=finalized
         )
         self._load(payload)
@@ -463,7 +461,7 @@ class Dataset:
             finalized: Whether to pull the finalized goldens, or with `false`
                 the goldens still awaiting review. Defaults to `true`.
         """
-        payload = await self._client.a_pull_dataset(
+        payload = await self._client.a_pull(
             self._dataset_id(), version=version, finalized=finalized
         )
         self._load(payload)
@@ -483,7 +481,7 @@ class Dataset:
                 to use in evaluations. Applies to every golden in this request.
         """
         body = self._push_body(finalized=finalized)
-        result = self._client.push_dataset(
+        result = self._client.push(
             body.alias,
             body.goldens,
             finalized=body.finalized,
@@ -506,7 +504,7 @@ class Dataset:
                 to use in evaluations. Applies to every golden in this request.
         """
         body = self._push_body(finalized=finalized)
-        result = await self._client.a_push_dataset(
+        result = await self._client.a_push(
             body.alias,
             body.goldens,
             finalized=body.finalized,

@@ -26,7 +26,7 @@ from confidentai.projects.types import (
 class ProjectsOperations:
     _api: Api
 
-    def list_projects(self) -> ProjectList:
+    def list(self) -> ProjectList:
         """List Projects
 
         Lists every project in your organization, ordered by name. Each project
@@ -40,7 +40,7 @@ class ProjectsOperations:
             response_schema=ProjectList,
         )
 
-    async def a_list_projects(self) -> ProjectList:
+    async def a_list(self) -> ProjectList:
         """List Projects
 
         Lists every project in your organization, ordered by name. Each project
@@ -54,7 +54,7 @@ class ProjectsOperations:
             response_schema=ProjectList,
         )
 
-    def create_project(
+    def create(
         self,
         name: str,
         *,
@@ -90,7 +90,7 @@ class ProjectsOperations:
             body={"name": name, "description": description, "email": email},
         )
 
-    async def a_create_project(
+    async def a_create(
         self,
         name: str,
         *,
@@ -126,7 +126,7 @@ class ProjectsOperations:
             body={"name": name, "description": description, "email": email},
         )
 
-    def get_project(self, project_id: str) -> Project:
+    def get(self, project_id: str) -> Project:
         """Retrieve Project
 
         Retrieves a single project by id, including the governance policy it is
@@ -145,7 +145,7 @@ class ProjectsOperations:
             path={"projectId": project_id},
         )
 
-    async def a_get_project(self, project_id: str) -> Project:
+    async def a_get(self, project_id: str) -> Project:
         """Retrieve Project
 
         Retrieves a single project by id, including the governance policy it is
@@ -164,7 +164,7 @@ class ProjectsOperations:
             path={"projectId": project_id},
         )
 
-    def update_project(
+    def update(
         self,
         project_id: str,
         *,
@@ -193,7 +193,7 @@ class ProjectsOperations:
             path={"projectId": project_id},
         )
 
-    async def a_update_project(
+    async def a_update(
         self,
         project_id: str,
         *,
@@ -222,7 +222,7 @@ class ProjectsOperations:
             path={"projectId": project_id},
         )
 
-    def delete_project(self, project_id: str) -> ProjectRef:
+    def delete(self, project_id: str) -> ProjectRef:
         """Delete Project
 
         Permanently deletes a project. **This cannot be undone, and it
@@ -248,7 +248,7 @@ class ProjectsOperations:
             path={"projectId": project_id},
         )
 
-    async def a_delete_project(self, project_id: str) -> ProjectRef:
+    async def a_delete(self, project_id: str) -> ProjectRef:
         """Delete Project
 
         Permanently deletes a project. **This cannot be undone, and it
@@ -274,7 +274,7 @@ class ProjectsOperations:
             path={"projectId": project_id},
         )
 
-    def update_project_model_credentials(
+    def update_model_credentials(
         self,
         project_id: str,
         provider: ModelProvider,
@@ -335,7 +335,7 @@ class ProjectsOperations:
             path={"projectId": project_id},
         )
 
-    async def a_update_project_model_credentials(
+    async def a_update_model_credentials(
         self,
         project_id: str,
         provider: ModelProvider,
@@ -396,7 +396,7 @@ class ProjectsOperations:
             path={"projectId": project_id},
         )
 
-    def list_project_permissions(self, project_id: str) -> PermissionList:
+    def list_permissions(self, project_id: str) -> PermissionList:
         """List Project Permissions
 
         Lists every project permission a project policy can grant. Each is named
@@ -418,9 +418,7 @@ class ProjectsOperations:
             path={"projectId": project_id},
         )
 
-    async def a_list_project_permissions(
-        self, project_id: str
-    ) -> PermissionList:
+    async def a_list_permissions(self, project_id: str) -> PermissionList:
         """List Project Permissions
 
         Lists every project permission a project policy can grant. Each is named

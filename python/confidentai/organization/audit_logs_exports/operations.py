@@ -13,7 +13,7 @@ from confidentai.endpoints import Endpoints
 class AuditLogsExportsOperations:
     _api: Api
 
-    def create_organization_audit_log_export(
+    def create_audit_log_export(
         self,
         *,
         start_time: Optional[str] = None,
@@ -68,7 +68,7 @@ class AuditLogsExportsOperations:
             },
         )
 
-    async def a_create_organization_audit_log_export(
+    async def a_create_audit_log_export(
         self,
         *,
         start_time: Optional[str] = None,
@@ -123,9 +123,7 @@ class AuditLogsExportsOperations:
             },
         )
 
-    def get_organization_audit_log_export(
-        self, export_id: str
-    ) -> AuditLogExport:
+    def get_audit_log_export(self, export_id: str) -> AuditLogExport:
         """Get Organization Audit Log Export
 
         Retrieves an organization audit log export, so that a caller can poll
@@ -153,9 +151,7 @@ class AuditLogsExportsOperations:
             path={"exportId": export_id},
         )
 
-    async def a_get_organization_audit_log_export(
-        self, export_id: str
-    ) -> AuditLogExport:
+    async def a_get_audit_log_export(self, export_id: str) -> AuditLogExport:
         """Get Organization Audit Log Export
 
         Retrieves an organization audit log export, so that a caller can poll

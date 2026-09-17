@@ -49,7 +49,7 @@ export class TracesClient {
    *   notation, for example `metadata[client]=acme-corp`. Every pair must
    *   match.
    */
-  async listTraces(
+  async list(
     pageSize?: number,
     cursor?: string,
     start?: string,
@@ -132,7 +132,7 @@ export class TracesClient {
    *   `[DEEPEVAL:IMAGE:…]` and `[DEEPEVAL:PDF:…]` markers in this trace. Define
    *   attachments at the trace level with the same ids for the same instances.
    */
-  async createTrace(
+  async create(
     uuid: string,
     startTime: string,
     endTime: string,
@@ -203,7 +203,7 @@ export class TracesClient {
    *
    * @param traceUuid The unique identifier of the trace.
    */
-  async getTrace(traceUuid: string): Promise<Trace> {
+  async get(traceUuid: string): Promise<Trace> {
     return this.api.sendRequest<Trace>(
       HttpMethods.GET,
       Endpoints.TRACE_ENDPOINT,

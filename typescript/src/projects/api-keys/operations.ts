@@ -26,7 +26,7 @@ export class ApiKeysOperations extends ProjectsOperations {
    *
    * @param projectId The id of the project the key belongs to.
    */
-  async listProjectApiKeys(projectId: string): Promise<ApiKeyList> {
+  async listApiKeys(projectId: string): Promise<ApiKeyList> {
     return this.api.sendRequest<ApiKeyList>(
       HttpMethods.GET,
       Endpoints.PROJECT_API_KEYS_ENDPOINT,
@@ -48,7 +48,7 @@ export class ApiKeysOperations extends ProjectsOperations {
    *   not a date. Confident AI turns it into the `expiresAt` instant on the
    *   key. Omit it for a key that never expires.
    */
-  async createProjectApiKey(
+  async createApiKey(
     projectId: string,
     name: string,
     expiresInDays?: number,
@@ -72,7 +72,7 @@ export class ApiKeysOperations extends ProjectsOperations {
    * @param projectId The id of the project the key belongs to.
    * @param apiKeyId The id of the API key.
    */
-  async getProjectApiKey(projectId: string, apiKeyId: string): Promise<ApiKey> {
+  async getApiKey(projectId: string, apiKeyId: string): Promise<ApiKey> {
     return this.api.sendRequest<ApiKey>(
       HttpMethods.GET,
       Endpoints.PROJECT_API_KEY_ENDPOINT,
@@ -95,7 +95,7 @@ export class ApiKeysOperations extends ProjectsOperations {
    *   deactivated key is rejected on every request, and deactivating one takes
    *   effect immediately.
    */
-  async updateProjectApiKey(
+  async updateApiKey(
     projectId: string,
     apiKeyId: string,
     valid: boolean,
@@ -118,10 +118,7 @@ export class ApiKeysOperations extends ProjectsOperations {
    * @param projectId The id of the project the key belongs to.
    * @param apiKeyId The id of the API key.
    */
-  async deleteProjectApiKey(
-    projectId: string,
-    apiKeyId: string,
-  ): Promise<ApiKeyRef> {
+  async deleteApiKey(projectId: string, apiKeyId: string): Promise<ApiKeyRef> {
     return this.api.sendRequest<ApiKeyRef>(
       HttpMethods.DELETE,
       Endpoints.PROJECT_API_KEY_ENDPOINT,
@@ -159,7 +156,7 @@ export class ApiKeysOperations extends ProjectsOperations {
    *   the current expiry, or send null to remove the expiry altogether.
    *   Required when rotating a key that has already expired.
    */
-  async rotateProjectApiKey(
+  async rotateApiKey(
     projectId: string,
     apiKeyId: string,
     gracePeriodInHours?: number,

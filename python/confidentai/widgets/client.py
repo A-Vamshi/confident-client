@@ -18,7 +18,7 @@ class WidgetsClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def query_ad_hoc_widget(
+    def query_ad_hoc(
         self,
         widget: CreateWidgetRequest,
         *,
@@ -56,7 +56,7 @@ class WidgetsClient:
             },
         )
 
-    async def a_query_ad_hoc_widget(
+    async def a_query_ad_hoc(
         self,
         widget: CreateWidgetRequest,
         *,

@@ -28,7 +28,7 @@ class ScheduledAlertsClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_scheduled_alerts(
+    def list(
         self,
         *,
         page: Optional[int] = None,
@@ -64,7 +64,7 @@ class ScheduledAlertsClient:
             },
         )
 
-    async def a_list_scheduled_alerts(
+    async def a_list(
         self,
         *,
         page: Optional[int] = None,
@@ -100,7 +100,7 @@ class ScheduledAlertsClient:
             },
         )
 
-    def create_scheduled_alert(
+    def create(
         self,
         name: str,
         data_model: AlertDataModel,
@@ -193,7 +193,7 @@ class ScheduledAlertsClient:
             },
         )
 
-    async def a_create_scheduled_alert(
+    async def a_create(
         self,
         name: str,
         data_model: AlertDataModel,
@@ -286,7 +286,7 @@ class ScheduledAlertsClient:
             },
         )
 
-    def get_scheduled_alert(self, scheduled_alert_id: str) -> ScheduledAlert:
+    def get(self, scheduled_alert_id: str) -> ScheduledAlert:
         """Get Scheduled Alert
 
         Retrieves a scheduled alert by id, with its aggregation, filters,
@@ -303,9 +303,7 @@ class ScheduledAlertsClient:
             path={"scheduledAlertId": scheduled_alert_id},
         )
 
-    async def a_get_scheduled_alert(
-        self, scheduled_alert_id: str
-    ) -> ScheduledAlert:
+    async def a_get(self, scheduled_alert_id: str) -> ScheduledAlert:
         """Get Scheduled Alert
 
         Retrieves a scheduled alert by id, with its aggregation, filters,
@@ -322,7 +320,7 @@ class ScheduledAlertsClient:
             path={"scheduledAlertId": scheduled_alert_id},
         )
 
-    def update_scheduled_alert(
+    def update(
         self,
         scheduled_alert_id: str,
         *,
@@ -420,7 +418,7 @@ class ScheduledAlertsClient:
             path={"scheduledAlertId": scheduled_alert_id},
         )
 
-    async def a_update_scheduled_alert(
+    async def a_update(
         self,
         scheduled_alert_id: str,
         *,
@@ -518,9 +516,7 @@ class ScheduledAlertsClient:
             path={"scheduledAlertId": scheduled_alert_id},
         )
 
-    def delete_scheduled_alert(
-        self, scheduled_alert_id: str
-    ) -> ScheduledAlertRef:
+    def delete(self, scheduled_alert_id: str) -> ScheduledAlertRef:
         """Delete Scheduled Alert
 
         Permanently deletes a scheduled alert and unregisters its next run. To
@@ -537,9 +533,7 @@ class ScheduledAlertsClient:
             path={"scheduledAlertId": scheduled_alert_id},
         )
 
-    async def a_delete_scheduled_alert(
-        self, scheduled_alert_id: str
-    ) -> ScheduledAlertRef:
+    async def a_delete(self, scheduled_alert_id: str) -> ScheduledAlertRef:
         """Delete Scheduled Alert
 
         Permanently deletes a scheduled alert and unregisters its next run. To

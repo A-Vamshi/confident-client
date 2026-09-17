@@ -41,7 +41,7 @@ export class AnnotationsClient {
    * @param threadId Returns only annotations left on this thread.
    * @param type Returns only annotations recorded on this scale.
    */
-  async listAnnotations(
+  async list(
     page?: number,
     pageSize?: number,
     start?: string,
@@ -87,9 +87,7 @@ export class AnnotationsClient {
    *   one of TraceAnnotationRequest, SpanAnnotationRequest,
    *   ThreadAnnotationRequest, from confidentai.annotations.types.
    */
-  async createAnnotation(
-    annotation: CreateAnnotationRequest,
-  ): Promise<AnnotationRef> {
+  async create(annotation: CreateAnnotationRequest): Promise<AnnotationRef> {
     return this.api.sendRequest<AnnotationRef>(
       HttpMethods.POST,
       Endpoints.ANNOTATIONS_ENDPOINT,
@@ -106,7 +104,7 @@ export class AnnotationsClient {
    *
    * @param annotationId The id of the annotation.
    */
-  async getAnnotation(annotationId: string): Promise<Annotation> {
+  async get(annotationId: string): Promise<Annotation> {
     return this.api.sendRequest<Annotation>(
       HttpMethods.GET,
       Endpoints.ANNOTATION_ENDPOINT,
@@ -132,7 +130,7 @@ export class AnnotationsClient {
    * @param imagesMapping Images referenced by `[DEEPEVAL:IMAGE:<key>]` markers
    *   in the text fields, keyed by that marker's key.
    */
-  async updateAnnotation(
+  async update(
     annotationId: string,
     rating?: number,
     type?: AnnotationType,

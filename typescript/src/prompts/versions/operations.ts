@@ -16,7 +16,7 @@ export class VersionsOperations extends CommitsOperations {
    *
    * @param promptId The unique id of the prompt.
    */
-  async getPromptVersions(promptId: string): Promise<PromptVersionList> {
+  async getVersions(promptId: string): Promise<PromptVersionList> {
     return this.api.sendRequest<PromptVersionList>(
       HttpMethods.GET,
       Endpoints.PROMPT_VERSIONS_ENDPOINT,
@@ -54,7 +54,7 @@ export class VersionsOperations extends CommitsOperations {
    * @param promptId The unique id of the prompt.
    * @param version The version number of the prompt to pull.
    */
-  async getPromptByVersion(promptId: string, version: string): Promise<Prompt> {
+  async getByVersion(promptId: string, version: string): Promise<Prompt> {
     return this.api.sendRequest<Prompt>(
       HttpMethods.GET,
       Endpoints.PROMPT_VERSION_ENDPOINT,

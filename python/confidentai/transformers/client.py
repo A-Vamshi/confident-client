@@ -23,7 +23,7 @@ class TransformersClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_transformers(
+    def list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> TransformerList:
         """List Transformers
@@ -44,7 +44,7 @@ class TransformersClient:
             query={"page": page, "pageSize": page_size},
         )
 
-    async def a_list_transformers(
+    async def a_list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> TransformerList:
         """List Transformers
@@ -65,7 +65,7 @@ class TransformersClient:
             query={"page": page, "pageSize": page_size},
         )
 
-    def create_transformer(
+    def create(
         self,
         name: str,
         code_definition: TransformerCodeDefinition,
@@ -95,7 +95,7 @@ class TransformersClient:
             },
         )
 
-    async def a_create_transformer(
+    async def a_create(
         self,
         name: str,
         code_definition: TransformerCodeDefinition,
@@ -125,7 +125,7 @@ class TransformersClient:
             },
         )
 
-    def get_transformer(self, transformer_id: str) -> Transformer:
+    def get(self, transformer_id: str) -> Transformer:
         """Get Transformer
 
         Retrieves a transformer by id, including the code it runs. A transformer
@@ -141,7 +141,7 @@ class TransformersClient:
             path={"transformerId": transformer_id},
         )
 
-    async def a_get_transformer(self, transformer_id: str) -> Transformer:
+    async def a_get(self, transformer_id: str) -> Transformer:
         """Get Transformer
 
         Retrieves a transformer by id, including the code it runs. A transformer
@@ -157,7 +157,7 @@ class TransformersClient:
             path={"transformerId": transformer_id},
         )
 
-    def update_transformer(
+    def update(
         self,
         transformer_id: str,
         *,
@@ -190,7 +190,7 @@ class TransformersClient:
             path={"transformerId": transformer_id},
         )
 
-    async def a_update_transformer(
+    async def a_update(
         self,
         transformer_id: str,
         *,
@@ -223,7 +223,7 @@ class TransformersClient:
             path={"transformerId": transformer_id},
         )
 
-    def delete_transformer(self, transformer_id: str) -> TransformerRef:
+    def delete(self, transformer_id: str) -> TransformerRef:
         """Delete Transformer
 
         Permanently deletes a transformer and the code stored with it. Anything
@@ -239,7 +239,7 @@ class TransformersClient:
             path={"transformerId": transformer_id},
         )
 
-    async def a_delete_transformer(self, transformer_id: str) -> TransformerRef:
+    async def a_delete(self, transformer_id: str) -> TransformerRef:
         """Delete Transformer
 
         Permanently deletes a transformer and the code stored with it. Anything
@@ -255,7 +255,7 @@ class TransformersClient:
             path={"transformerId": transformer_id},
         )
 
-    def test_transformer_code(
+    def test_code(
         self, transformer_id: str, *, input_data: Optional[Any] = None
     ) -> TransformerCodeRunResult:
         """Test Transformer Code
@@ -282,7 +282,7 @@ class TransformersClient:
             path={"transformerId": transformer_id},
         )
 
-    async def a_test_transformer_code(
+    async def a_test_code(
         self, transformer_id: str, *, input_data: Optional[Any] = None
     ) -> TransformerCodeRunResult:
         """Test Transformer Code

@@ -25,7 +25,7 @@ export class ApiKeysOperations extends OrganizationOperations {
    * completed before the list is read, so a `shadowValue` here is always still
    * in flight.
    */
-  async listOrganizationApiKeys(): Promise<ApiKeyList> {
+  async listApiKeys(): Promise<ApiKeyList> {
     return this.api.sendRequest<ApiKeyList>(
       HttpMethods.GET,
       Endpoints.ORGANIZATION_API_KEYS_ENDPOINT,
@@ -45,7 +45,7 @@ export class ApiKeysOperations extends OrganizationOperations {
    *   not a date. Confident AI turns it into the `expiresAt` instant on the
    *   key. Omit it for a key that never expires.
    */
-  async createOrganizationApiKey(
+  async createApiKey(
     name: string,
     expiresInDays?: number,
   ): Promise<CreatedApiKey> {
@@ -67,7 +67,7 @@ export class ApiKeysOperations extends OrganizationOperations {
    *
    * @param apiKeyId The id of the API key.
    */
-  async getOrganizationApiKey(apiKeyId: string): Promise<ApiKey> {
+  async getApiKey(apiKeyId: string): Promise<ApiKey> {
     return this.api.sendRequest<ApiKey>(
       HttpMethods.GET,
       Endpoints.ORGANIZATION_API_KEY_ENDPOINT,
@@ -88,10 +88,7 @@ export class ApiKeysOperations extends OrganizationOperations {
    *   deactivated key is rejected on every request, and deactivating one takes
    *   effect immediately.
    */
-  async updateOrganizationApiKey(
-    apiKeyId: string,
-    valid: boolean,
-  ): Promise<ApiKey> {
+  async updateApiKey(apiKeyId: string, valid: boolean): Promise<ApiKey> {
     return this.api.sendRequest<ApiKey>(
       HttpMethods.PUT,
       Endpoints.ORGANIZATION_API_KEY_ENDPOINT,
@@ -108,7 +105,7 @@ export class ApiKeysOperations extends OrganizationOperations {
    *
    * @param apiKeyId The id of the API key.
    */
-  async deleteOrganizationApiKey(apiKeyId: string): Promise<ApiKeyRef> {
+  async deleteApiKey(apiKeyId: string): Promise<ApiKeyRef> {
     return this.api.sendRequest<ApiKeyRef>(
       HttpMethods.DELETE,
       Endpoints.ORGANIZATION_API_KEY_ENDPOINT,
@@ -144,7 +141,7 @@ export class ApiKeysOperations extends OrganizationOperations {
    *   the current expiry, or send null to remove the expiry altogether.
    *   Required when rotating a key that has already expired.
    */
-  async rotateOrganizationApiKey(
+  async rotateApiKey(
     apiKeyId: string,
     gracePeriodInHours?: number,
     expiresInDays?: number | null,

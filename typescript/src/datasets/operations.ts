@@ -24,7 +24,7 @@ export class DatasetsOperations {
    * Lists all the datasets in your Confident AI project, newest first, without
    * their goldens.
    */
-  async listDatasets(): Promise<DatasetList> {
+  async list(): Promise<DatasetList> {
     return this.api.sendRequest<DatasetList>(
       HttpMethods.GET,
       Endpoints.DATASETS_ENDPOINT,
@@ -55,7 +55,7 @@ export class DatasetsOperations {
    *   unversioned. A version cannot be given for a dataset that does not exist
    *   yet. Requires the Team plan or above.
    */
-  async pushDataset(
+  async push(
     alias: string,
     goldens: PushGolden[],
     finalized?: boolean,
@@ -83,7 +83,7 @@ export class DatasetsOperations {
    * @param finalized Whether to pull the finalized goldens, or with `false` the
    *   goldens still awaiting review. Defaults to `true`.
    */
-  async pullDataset(
+  async pull(
     datasetId: string,
     version?: string,
     finalized?: "true" | "false",
@@ -103,7 +103,7 @@ export class DatasetsOperations {
    *
    * @param datasetId The unique id of the dataset.
    */
-  async deleteDataset(datasetId: string): Promise<DatasetRef> {
+  async delete(datasetId: string): Promise<DatasetRef> {
     return this.api.sendRequest<DatasetRef>(
       HttpMethods.DELETE,
       Endpoints.DATASET_ENDPOINT,
@@ -123,7 +123,7 @@ export class DatasetsOperations {
    *   must be of the same kind and match the dataset's `multiTurn`. They are
    *   stored unfinalized, whatever each golden's own `finalized` says.
    */
-  async queueDatasetGoldens(
+  async queueGoldens(
     datasetId: string,
     goldens: GoldenRequest[],
   ): Promise<DatasetRef> {
@@ -179,7 +179,7 @@ export class DatasetsOperations {
    *   call whose name matches a tool exposed by one of these servers is labeled
    *   an MCP tool call rather than a function call.
    */
-  async runDatasetEvaluation(
+  async runEvaluation(
     datasetId: string,
     metricCollection: string,
     identifier?: string,

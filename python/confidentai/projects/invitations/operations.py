@@ -18,9 +18,7 @@ from confidentai.projects.types import (
 class InvitationsOperations:
     _api: Api
 
-    def list_project_invitations(
-        self, project_id: str
-    ) -> ProjectInvitationList:
+    def list_invitations(self, project_id: str) -> ProjectInvitationList:
         """List Project Invitations
 
         Lists the invitations to this project that are still outstanding — those
@@ -42,7 +40,7 @@ class InvitationsOperations:
             path={"projectId": project_id},
         )
 
-    async def a_list_project_invitations(
+    async def a_list_invitations(
         self, project_id: str
     ) -> ProjectInvitationList:
         """List Project Invitations
@@ -66,7 +64,7 @@ class InvitationsOperations:
             path={"projectId": project_id},
         )
 
-    def create_project_invitations(
+    def create_invitations(
         self,
         project_id: str,
         emails: List[str],
@@ -108,7 +106,7 @@ class InvitationsOperations:
             path={"projectId": project_id},
         )
 
-    async def a_create_project_invitations(
+    async def a_create_invitations(
         self,
         project_id: str,
         emails: List[str],
@@ -150,7 +148,7 @@ class InvitationsOperations:
             path={"projectId": project_id},
         )
 
-    def resend_project_invitation(
+    def resend_invitation(
         self, project_id: str, invitation_id: str
     ) -> ProjectInvitation:
         """Resend Project Invitation
@@ -178,7 +176,7 @@ class InvitationsOperations:
             path={"projectId": project_id, "invitationId": invitation_id},
         )
 
-    async def a_resend_project_invitation(
+    async def a_resend_invitation(
         self, project_id: str, invitation_id: str
     ) -> ProjectInvitation:
         """Resend Project Invitation
@@ -206,7 +204,7 @@ class InvitationsOperations:
             path={"projectId": project_id, "invitationId": invitation_id},
         )
 
-    def delete_project_invitation(
+    def delete_invitation(
         self, project_id: str, invitation_id: str
     ) -> InvitationRef:
         """Revoke Project Invitation
@@ -231,7 +229,7 @@ class InvitationsOperations:
             path={"projectId": project_id, "invitationId": invitation_id},
         )
 
-    async def a_delete_project_invitation(
+    async def a_delete_invitation(
         self, project_id: str, invitation_id: str
     ) -> InvitationRef:
         """Revoke Project Invitation

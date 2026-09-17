@@ -27,10 +27,7 @@ export class DashboardsOperations {
    * @param pageSize The number of results per page, at most 100. Defaults to
    *   25.
    */
-  async listDashboards(
-    page?: number,
-    pageSize?: number,
-  ): Promise<DashboardList> {
+  async list(page?: number, pageSize?: number): Promise<DashboardList> {
     return this.api.sendRequest<DashboardList>(
       HttpMethods.GET,
       Endpoints.DASHBOARDS_ENDPOINT,
@@ -53,7 +50,7 @@ export class DashboardsOperations {
    * @param widgets The widgets to create the dashboard with. Each one that
    *   sends no `layout` is packed onto the grid in the order given.
    */
-  async createDashboard(
+  async create(
     name: string,
     description?: string | null,
     private_?: boolean,
@@ -75,7 +72,7 @@ export class DashboardsOperations {
    *
    * @param dashboardId The id of the dashboard.
    */
-  async getDashboard(dashboardId: string): Promise<Dashboard> {
+  async get(dashboardId: string): Promise<Dashboard> {
     return this.api.sendRequest<Dashboard>(
       HttpMethods.GET,
       Endpoints.DASHBOARD_ENDPOINT,
@@ -94,7 +91,7 @@ export class DashboardsOperations {
    * @param description What the dashboard covers. Send null to clear it.
    * @param private Whether the dashboard is visible only to its creator.
    */
-  async updateDashboard(
+  async update(
     dashboardId: string,
     name?: string,
     description?: string | null,
@@ -118,7 +115,7 @@ export class DashboardsOperations {
    *
    * @param dashboardId The id of the dashboard.
    */
-  async deleteDashboard(dashboardId: string): Promise<DashboardRef> {
+  async delete(dashboardId: string): Promise<DashboardRef> {
     return this.api.sendRequest<DashboardRef>(
       HttpMethods.DELETE,
       Endpoints.DASHBOARD_ENDPOINT,
@@ -144,7 +141,7 @@ export class DashboardsOperations {
    * @param widgetIds The widgets to compute. Omit it to compute every widget on
    *   the dashboard.
    */
-  async queryDashboard(
+  async query(
     dashboardId: string,
     startTime?: string,
     endTime?: string,

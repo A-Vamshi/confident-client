@@ -63,7 +63,7 @@ export class Prompt {
    * Lists every version released for the prompt, oldest first.
    */
   async listVersions(): Promise<PromptVersionList> {
-    return this.client.getPromptVersions(this.promptIdOrThrow());
+    return this.client.getVersions(this.promptIdOrThrow());
   }
 
   /**
@@ -90,7 +90,7 @@ export class Prompt {
    *   omitted.
    */
   async listCommits(branch?: string): Promise<PromptCommitList> {
-    return this.client.getPromptCommits(this.promptIdOrThrow(), branch);
+    return this.client.getCommits(this.promptIdOrThrow(), branch);
   }
 
   /**
@@ -99,7 +99,7 @@ export class Prompt {
    * Lists the branches of the prompt.
    */
   async listBranches(): Promise<PromptBranchList> {
-    return this.client.getPromptBranches(this.promptIdOrThrow());
+    return this.client.getBranches(this.promptIdOrThrow());
   }
 
   /**
@@ -111,7 +111,7 @@ export class Prompt {
    *   commit of `main`.
    */
   async createBranch(name: string): Promise<PromptBranch> {
-    return this.client.createPromptBranch(this.promptIdOrThrow(), name);
+    return this.client.createBranch(this.promptIdOrThrow(), name);
   }
 
   /**
@@ -124,11 +124,7 @@ export class Prompt {
    *   renamed.
    */
   async updateBranch(branchId: string, name: string): Promise<PromptBranchRef> {
-    return this.client.updatePromptBranch(
-      this.promptIdOrThrow(),
-      branchId,
-      name,
-    );
+    return this.client.updateBranch(this.promptIdOrThrow(), branchId, name);
   }
 
   /**
@@ -140,7 +136,7 @@ export class Prompt {
    * @param branchId The unique id of the branch.
    */
   async deleteBranch(branchId: string): Promise<PromptBranchRef> {
-    return this.client.deletePromptBranch(this.promptIdOrThrow(), branchId);
+    return this.client.deleteBranch(this.promptIdOrThrow(), branchId);
   }
 
   /**
@@ -181,11 +177,11 @@ export class Prompt {
     const promptId = this.promptIdOrThrow();
     let payload: PromptPayload;
     if (options.version !== undefined) {
-      payload = await this.client.getPromptByVersion(promptId, options.version);
+      payload = await this.client.getByVersion(promptId, options.version);
     } else if (options.label !== undefined) {
-      payload = await this.client.getPromptByLabel(promptId, options.label);
+      payload = await this.client.getByLabel(promptId, options.label);
     } else {
-      payload = await this.client.getPromptByCommit(
+      payload = await this.client.getByCommit(
         promptId,
         options.commit ?? "latest",
         options.branch,
@@ -203,7 +199,7 @@ export class Prompt {
    * `messages` for a messages prompt, not both.
    */
   async push(options: { branch?: string } = {}): Promise<PushPromptResult> {
-    const result = await this.client.pushPrompt(this.pushBody(options.branch));
+    const result = await this.client.push(this.pushBody(options.branch));
     this.promptId = result.promptId;
     this.hash = result.hash;
     return result;

@@ -6,6 +6,7 @@
 import { Api, ApiKeyKind } from "../api";
 import { GeneratedClients } from "./generated";
 import { Dataset } from "../datasets/dataset";
+import { Project } from "../projects/project";
 import { Prompt } from "../prompts/prompt";
 
 export abstract class StatefulClients extends GeneratedClients {
@@ -13,6 +14,12 @@ export abstract class StatefulClients extends GeneratedClients {
     return new Dataset(this.api(ApiKeyKind.PROJECT), {
       datasetId,
       alias: options.alias,
+    });
+  }
+
+  project(projectId?: string): Project {
+    return new Project(this.api(ApiKeyKind.ORGANIZATION), {
+      projectId,
     });
   }
 

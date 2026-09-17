@@ -16,7 +16,7 @@ export class BranchesOperations extends PromptsOperations {
    *
    * @param promptId The unique id of the prompt.
    */
-  async getPromptBranches(promptId: string): Promise<PromptBranchList> {
+  async getBranches(promptId: string): Promise<PromptBranchList> {
     return this.api.sendRequest<PromptBranchList>(
       HttpMethods.GET,
       Endpoints.PROMPT_BRANCHES_ENDPOINT,
@@ -33,10 +33,7 @@ export class BranchesOperations extends PromptsOperations {
    * @param name The name of the branch to create. It diverges from the head
    *   commit of `main`.
    */
-  async createPromptBranch(
-    promptId: string,
-    name: string,
-  ): Promise<PromptBranch> {
+  async createBranch(promptId: string, name: string): Promise<PromptBranch> {
     return this.api.sendRequest<PromptBranch>(
       HttpMethods.POST,
       Endpoints.PROMPT_BRANCHES_ENDPOINT,
@@ -54,7 +51,7 @@ export class BranchesOperations extends PromptsOperations {
    * @param name The new name of the branch. The `main` branch cannot be
    *   renamed.
    */
-  async updatePromptBranch(
+  async updateBranch(
     promptId: string,
     branchId: string,
     name: string,
@@ -75,7 +72,7 @@ export class BranchesOperations extends PromptsOperations {
    * @param promptId The unique id of the prompt.
    * @param branchId The unique id of the branch.
    */
-  async deletePromptBranch(
+  async deleteBranch(
     promptId: string,
     branchId: string,
   ): Promise<PromptBranchRef> {

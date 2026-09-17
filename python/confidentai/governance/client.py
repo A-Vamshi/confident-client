@@ -12,7 +12,7 @@ class GovernanceClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def assess_governance(self) -> GovernanceAssessment:
+    def assess(self) -> GovernanceAssessment:
         """Assess Governance
 
         Assesses this project against every control in the governance policy it
@@ -27,7 +27,7 @@ class GovernanceClient:
             response_schema=GovernanceAssessment,
         )
 
-    async def a_assess_governance(self) -> GovernanceAssessment:
+    async def a_assess(self) -> GovernanceAssessment:
         """Assess Governance
 
         Assesses this project against every control in the governance policy it

@@ -22,7 +22,7 @@ class AnnotationsClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_annotations(
+    def list(
         self,
         *,
         page: Optional[int] = None,
@@ -78,7 +78,7 @@ class AnnotationsClient:
             },
         )
 
-    async def a_list_annotations(
+    async def a_list(
         self,
         *,
         page: Optional[int] = None,
@@ -134,9 +134,7 @@ class AnnotationsClient:
             },
         )
 
-    def create_annotation(
-        self, annotation: CreateAnnotationRequest
-    ) -> AnnotationRef:
+    def create(self, annotation: CreateAnnotationRequest) -> AnnotationRef:
         """Create Annotation
 
         Records a rating against exactly one trace, span or thread, and returns
@@ -160,7 +158,7 @@ class AnnotationsClient:
             body=annotation,
         )
 
-    async def a_create_annotation(
+    async def a_create(
         self, annotation: CreateAnnotationRequest
     ) -> AnnotationRef:
         """Create Annotation
@@ -186,7 +184,7 @@ class AnnotationsClient:
             body=annotation,
         )
 
-    def get_annotation(self, annotation_id: str) -> Annotation:
+    def get(self, annotation_id: str) -> Annotation:
         """Get Annotation
 
         Retrieves an annotation by id from your Confident AI project, with the
@@ -203,7 +201,7 @@ class AnnotationsClient:
             path={"annotationId": annotation_id},
         )
 
-    async def a_get_annotation(self, annotation_id: str) -> Annotation:
+    async def a_get(self, annotation_id: str) -> Annotation:
         """Get Annotation
 
         Retrieves an annotation by id from your Confident AI project, with the
@@ -220,7 +218,7 @@ class AnnotationsClient:
             path={"annotationId": annotation_id},
         )
 
-    def update_annotation(
+    def update(
         self,
         annotation_id: str,
         *,
@@ -266,7 +264,7 @@ class AnnotationsClient:
             path={"annotationId": annotation_id},
         )
 
-    async def a_update_annotation(
+    async def a_update(
         self,
         annotation_id: str,
         *,

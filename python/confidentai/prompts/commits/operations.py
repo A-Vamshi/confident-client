@@ -13,7 +13,7 @@ from confidentai.prompts.types import Prompt, PromptCommitList
 class CommitsOperations:
     _api: Api
 
-    def get_prompt_commits(
+    def get_commits(
         self, prompt_id: str, *, branch: Optional[str] = None
     ) -> PromptCommitList:
         """List Prompt Commits
@@ -34,7 +34,7 @@ class CommitsOperations:
             query={"branch": branch},
         )
 
-    async def a_get_prompt_commits(
+    async def a_get_commits(
         self, prompt_id: str, *, branch: Optional[str] = None
     ) -> PromptCommitList:
         """List Prompt Commits
@@ -55,7 +55,7 @@ class CommitsOperations:
             query={"branch": branch},
         )
 
-    def get_prompt_by_commit(
+    def get_by_commit(
         self, prompt_id: str, hash: str, *, branch: Optional[str] = None
     ) -> Prompt:
         """Pull Prompt by Commit
@@ -77,7 +77,7 @@ class CommitsOperations:
             query={"branch": branch},
         )
 
-    async def a_get_prompt_by_commit(
+    async def a_get_by_commit(
         self, prompt_id: str, hash: str, *, branch: Optional[str] = None
     ) -> Prompt:
         """Pull Prompt by Commit

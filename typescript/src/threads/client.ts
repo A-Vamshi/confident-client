@@ -38,7 +38,7 @@ export class ThreadsClient {
    *   traces were created, and returns threads from all environments if not
    *   specified.
    */
-  async listThreads(
+  async list(
     pageSize?: number,
     cursor?: string,
     start?: string,
@@ -74,7 +74,7 @@ export class ThreadsClient {
    * @param threadId The id of the thread, as you supplied it when creating its
    *   traces.
    */
-  async getThread(threadId: string): Promise<Thread> {
+  async get(threadId: string): Promise<Thread> {
     return this.api.sendRequest<Thread>(
       HttpMethods.GET,
       Endpoints.THREAD_ENDPOINT,

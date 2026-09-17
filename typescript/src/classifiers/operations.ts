@@ -31,7 +31,7 @@ export class ClassifiersOperations {
    * @param pageSize The number of results per page, at most 100. Defaults to
    *   25.
    */
-  async listClassifiers(
+  async list(
     page?: number,
     pageSize?: number,
     dataModel?: ClassifierDataModel,
@@ -69,7 +69,7 @@ export class ClassifiersOperations {
    * @param autoGenerationConfig How a generation run samples and clusters your
    *   traffic to discover labels. Send null to clear it.
    */
-  async createClassifier(
+  async create(
     name: string,
     dataModel: ClassifierDataModel,
     preset?: ClassifierPreset,
@@ -106,7 +106,7 @@ export class ClassifiersOperations {
    *
    * @param classifierId The id of the classifier.
    */
-  async getClassifier(classifierId: string): Promise<Classifier> {
+  async get(classifierId: string): Promise<Classifier> {
     return this.api.sendRequest<Classifier>(
       HttpMethods.GET,
       Endpoints.CLASSIFIER_ENDPOINT,
@@ -138,7 +138,7 @@ export class ClassifiersOperations {
    * @param autoGenerationConfig How a generation run samples and clusters your
    *   traffic to discover labels. Send null to clear it.
    */
-  async updateClassifier(
+  async update(
     classifierId: string,
     name?: string,
     description?: string | null,
@@ -173,7 +173,7 @@ export class ClassifiersOperations {
    *
    * @param classifierId The id of the classifier.
    */
-  async deleteClassifier(classifierId: string): Promise<ClassifierRef> {
+  async delete(classifierId: string): Promise<ClassifierRef> {
     return this.api.sendRequest<ClassifierRef>(
       HttpMethods.DELETE,
       Endpoints.CLASSIFIER_ENDPOINT,
@@ -201,7 +201,7 @@ export class ClassifiersOperations {
    *
    * @param classifierId The id of the classifier.
    */
-  async generateClassifierLabels(
+  async generateLabels(
     classifierId: string,
   ): Promise<ClassifierLabelGeneration> {
     return this.api.sendRequest<ClassifierLabelGeneration>(

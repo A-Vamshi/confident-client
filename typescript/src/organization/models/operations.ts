@@ -26,9 +26,7 @@ export class ModelsOperations extends MembersOperations {
    *   has no evaluation model of its own; that one is always configured per
    *   project.
    */
-  async getOrganizationModel(
-    type: "PLATFORM" | "SIMULATION",
-  ): Promise<Model | null> {
+  async getModel(type: "PLATFORM" | "SIMULATION"): Promise<Model | null> {
     return this.api.sendRequest<Model | null>(
       HttpMethods.GET,
       Endpoints.ORGANIZATION_MODELS_ENDPOINT,
@@ -61,7 +59,7 @@ export class ModelsOperations extends MembersOperations {
    * @param maxInputTokens How many input tokens Confident AI may send to this
    *   model per call. Omit it or send null for no limit of its own.
    */
-  async updateOrganizationModel(
+  async updateModel(
     modelType: string,
     provider: ModelProvider,
     name?: string,

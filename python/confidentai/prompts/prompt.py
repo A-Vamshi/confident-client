@@ -68,14 +68,14 @@ class Prompt:
 
         Lists every version released for the prompt, oldest first.
         """
-        return self._client.get_prompt_versions(self._prompt_id())
+        return self._client.get_versions(self._prompt_id())
 
     async def a_list_versions(self) -> PromptVersionList:
         """List Prompt Versions
 
         Lists every version released for the prompt, oldest first.
         """
-        return await self._client.a_get_prompt_versions(self._prompt_id())
+        return await self._client.a_get_versions(self._prompt_id())
 
     def create_version(
         self, *, hash: Optional[str] = None
@@ -119,7 +119,7 @@ class Prompt:
             branch: The name of the branch to read from. Defaults to `main` when
                 omitted.
         """
-        return self._client.get_prompt_commits(self._prompt_id(), branch=branch)
+        return self._client.get_commits(self._prompt_id(), branch=branch)
 
     async def a_list_commits(
         self, *, branch: Optional[str] = None
@@ -133,7 +133,7 @@ class Prompt:
             branch: The name of the branch to read from. Defaults to `main` when
                 omitted.
         """
-        return await self._client.a_get_prompt_commits(
+        return await self._client.a_get_commits(
             self._prompt_id(), branch=branch
         )
 
@@ -142,14 +142,14 @@ class Prompt:
 
         Lists the branches of the prompt.
         """
-        return self._client.get_prompt_branches(self._prompt_id())
+        return self._client.get_branches(self._prompt_id())
 
     async def a_list_branches(self) -> PromptBranchList:
         """List Prompt Branches
 
         Lists the branches of the prompt.
         """
-        return await self._client.a_get_prompt_branches(self._prompt_id())
+        return await self._client.a_get_branches(self._prompt_id())
 
     def create_branch(self, name: str) -> PromptBranch:
         """Create Prompt Branch
@@ -160,7 +160,7 @@ class Prompt:
             name: The name of the branch to create. It diverges from the head
                 commit of `main`.
         """
-        return self._client.create_prompt_branch(self._prompt_id(), name)
+        return self._client.create_branch(self._prompt_id(), name)
 
     async def a_create_branch(self, name: str) -> PromptBranch:
         """Create Prompt Branch
@@ -171,9 +171,7 @@ class Prompt:
             name: The name of the branch to create. It diverges from the head
                 commit of `main`.
         """
-        return await self._client.a_create_prompt_branch(
-            self._prompt_id(), name
-        )
+        return await self._client.a_create_branch(self._prompt_id(), name)
 
     def update_branch(self, branch_id: str, name: str) -> PromptBranchRef:
         """Update Prompt Branch
@@ -185,9 +183,7 @@ class Prompt:
             name: The new name of the branch. The `main` branch cannot be
                 renamed.
         """
-        return self._client.update_prompt_branch(
-            self._prompt_id(), branch_id, name
-        )
+        return self._client.update_branch(self._prompt_id(), branch_id, name)
 
     async def a_update_branch(
         self, branch_id: str, name: str
@@ -201,7 +197,7 @@ class Prompt:
             name: The new name of the branch. The `main` branch cannot be
                 renamed.
         """
-        return await self._client.a_update_prompt_branch(
+        return await self._client.a_update_branch(
             self._prompt_id(), branch_id, name
         )
 
@@ -215,7 +211,7 @@ class Prompt:
         Args:
             branch_id: The unique id of the branch.
         """
-        return self._client.delete_prompt_branch(self._prompt_id(), branch_id)
+        return self._client.delete_branch(self._prompt_id(), branch_id)
 
     async def a_delete_branch(self, branch_id: str) -> PromptBranchRef:
         """Delete Prompt Branch
@@ -227,9 +223,7 @@ class Prompt:
         Args:
             branch_id: The unique id of the branch.
         """
-        return await self._client.a_delete_prompt_branch(
-            self._prompt_id(), branch_id
-        )
+        return await self._client.a_delete_branch(self._prompt_id(), branch_id)
 
     def pull(
         self,
@@ -272,11 +266,11 @@ class Prompt:
             )
         prompt_id = self._prompt_id()
         if version is not None:
-            payload = self._client.get_prompt_by_version(prompt_id, version)
+            payload = self._client.get_by_version(prompt_id, version)
         elif label is not None:
-            payload = self._client.get_prompt_by_label(prompt_id, label)
+            payload = self._client.get_by_label(prompt_id, label)
         else:
-            payload = self._client.get_prompt_by_commit(
+            payload = self._client.get_by_commit(
                 prompt_id, commit or "latest", branch=branch
             )
         self._load(payload)
@@ -323,13 +317,11 @@ class Prompt:
             )
         prompt_id = self._prompt_id()
         if version is not None:
-            payload = await self._client.a_get_prompt_by_version(
-                prompt_id, version
-            )
+            payload = await self._client.a_get_by_version(prompt_id, version)
         elif label is not None:
-            payload = await self._client.a_get_prompt_by_label(prompt_id, label)
+            payload = await self._client.a_get_by_label(prompt_id, label)
         else:
-            payload = await self._client.a_get_prompt_by_commit(
+            payload = await self._client.a_get_by_commit(
                 prompt_id, commit or "latest", branch=branch
             )
         self._load(payload)
@@ -342,7 +334,7 @@ class Prompt:
         prompt first when it does not exist. Send `text` for a text prompt or
         `messages` for a messages prompt, not both.
         """
-        result = self._client.push_prompt(self._push_body(branch=branch))
+        result = self._client.push(self._push_body(branch=branch))
         self.prompt_id = result.prompt_id
         self.hash = result.hash
         return result
@@ -354,9 +346,7 @@ class Prompt:
         prompt first when it does not exist. Send `text` for a text prompt or
         `messages` for a messages prompt, not both.
         """
-        result = await self._client.a_push_prompt(
-            self._push_body(branch=branch)
-        )
+        result = await self._client.a_push(self._push_body(branch=branch))
         self.prompt_id = result.prompt_id
         self.hash = result.hash
         return result

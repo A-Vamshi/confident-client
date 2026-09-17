@@ -23,7 +23,7 @@ export class PoliciesOperations extends ModelsOperations {
    * @param projectId The id of the project, which must belong to your
    *   organization.
    */
-  async listProjectPolicies(projectId: string): Promise<PolicyList> {
+  async listPolicies(projectId: string): Promise<PolicyList> {
     return this.api.sendRequest<PolicyList>(
       HttpMethods.GET,
       Endpoints.PROJECT_POLICIES_ENDPOINT,
@@ -55,7 +55,7 @@ export class PoliciesOperations extends ModelsOperations {
    * @param description What the policy is for. On an update, omit it to leave
    *   the stored description unchanged, or send null to clear it.
    */
-  async createProjectPolicy(
+  async createPolicy(
     projectId: string,
     name: string,
     permissionIds: string[],
@@ -93,7 +93,7 @@ export class PoliciesOperations extends ModelsOperations {
    * @param description What the policy is for. On an update, omit it to leave
    *   the stored description unchanged, or send null to clear it.
    */
-  async updateProjectPolicy(
+  async updatePolicy(
     projectId: string,
     policyId: string,
     name: string,
@@ -124,10 +124,7 @@ export class PoliciesOperations extends ModelsOperations {
    * @param projectId The id of the project the policy belongs to.
    * @param policyId The id of the project policy.
    */
-  async deleteProjectPolicy(
-    projectId: string,
-    policyId: string,
-  ): Promise<PolicyRef> {
+  async deletePolicy(projectId: string, policyId: string): Promise<PolicyRef> {
     return this.api.sendRequest<PolicyRef>(
       HttpMethods.DELETE,
       Endpoints.PROJECT_POLICY_ENDPOINT,

@@ -22,7 +22,7 @@ class EvaluationRulesClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_evaluation_rules(
+    def list(
         self,
         *,
         data_model: Optional[EvaluationRuleDataModel] = None,
@@ -52,7 +52,7 @@ class EvaluationRulesClient:
             },
         )
 
-    async def a_list_evaluation_rules(
+    async def a_list(
         self,
         *,
         data_model: Optional[EvaluationRuleDataModel] = None,
@@ -82,7 +82,7 @@ class EvaluationRulesClient:
             },
         )
 
-    def create_evaluation_rule(
+    def create(
         self,
         name: str,
         data_model: EvaluationRuleDataModel,
@@ -147,7 +147,7 @@ class EvaluationRulesClient:
             },
         )
 
-    async def a_create_evaluation_rule(
+    async def a_create(
         self,
         name: str,
         data_model: EvaluationRuleDataModel,
@@ -212,7 +212,7 @@ class EvaluationRulesClient:
             },
         )
 
-    def get_evaluation_rule(self, evaluation_rule_id: str) -> EvaluationRule:
+    def get(self, evaluation_rule_id: str) -> EvaluationRule:
         """Get Evaluation Rule
 
         Retrieves an evaluation rule by id with its full configuration,
@@ -229,9 +229,7 @@ class EvaluationRulesClient:
             path={"evaluationRuleId": evaluation_rule_id},
         )
 
-    async def a_get_evaluation_rule(
-        self, evaluation_rule_id: str
-    ) -> EvaluationRule:
+    async def a_get(self, evaluation_rule_id: str) -> EvaluationRule:
         """Get Evaluation Rule
 
         Retrieves an evaluation rule by id with its full configuration,
@@ -248,7 +246,7 @@ class EvaluationRulesClient:
             path={"evaluationRuleId": evaluation_rule_id},
         )
 
-    def update_evaluation_rule(
+    def update(
         self,
         evaluation_rule_id: str,
         *,
@@ -313,7 +311,7 @@ class EvaluationRulesClient:
             path={"evaluationRuleId": evaluation_rule_id},
         )
 
-    async def a_update_evaluation_rule(
+    async def a_update(
         self,
         evaluation_rule_id: str,
         *,
@@ -378,9 +376,7 @@ class EvaluationRulesClient:
             path={"evaluationRuleId": evaluation_rule_id},
         )
 
-    def delete_evaluation_rule(
-        self, evaluation_rule_id: str
-    ) -> EvaluationRuleRef:
+    def delete(self, evaluation_rule_id: str) -> EvaluationRuleRef:
         """Delete Evaluation Rule
 
         Permanently deletes an evaluation rule. Metric results it already
@@ -397,9 +393,7 @@ class EvaluationRulesClient:
             path={"evaluationRuleId": evaluation_rule_id},
         )
 
-    async def a_delete_evaluation_rule(
-        self, evaluation_rule_id: str
-    ) -> EvaluationRuleRef:
+    async def a_delete(self, evaluation_rule_id: str) -> EvaluationRuleRef:
         """Delete Evaluation Rule
 
         Permanently deletes an evaluation rule. Metric results it already

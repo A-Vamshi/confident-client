@@ -23,7 +23,7 @@ class ReportsClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_reports(
+    def list(
         self,
         *,
         report_template_id: Optional[str] = None,
@@ -65,7 +65,7 @@ class ReportsClient:
             },
         )
 
-    async def a_list_reports(
+    async def a_list(
         self,
         *,
         report_template_id: Optional[str] = None,
@@ -107,7 +107,7 @@ class ReportsClient:
             },
         )
 
-    def create_report(
+    def create(
         self,
         report_template_id: str,
         sections: List[ReportSectionInput],
@@ -143,7 +143,7 @@ class ReportsClient:
             },
         )
 
-    async def a_create_report(
+    async def a_create(
         self,
         report_template_id: str,
         sections: List[ReportSectionInput],
@@ -179,7 +179,7 @@ class ReportsClient:
             },
         )
 
-    def get_report(self, report_id: str) -> Report:
+    def get(self, report_id: str) -> Report:
         """Get Report
 
         Retrieves a report by id, with every section it renders in order. A
@@ -195,7 +195,7 @@ class ReportsClient:
             path={"reportId": report_id},
         )
 
-    async def a_get_report(self, report_id: str) -> Report:
+    async def a_get(self, report_id: str) -> Report:
         """Get Report
 
         Retrieves a report by id, with every section it renders in order. A
@@ -211,7 +211,7 @@ class ReportsClient:
             path={"reportId": report_id},
         )
 
-    def update_report(
+    def update(
         self,
         report_id: str,
         *,
@@ -247,7 +247,7 @@ class ReportsClient:
             path={"reportId": report_id},
         )
 
-    async def a_update_report(
+    async def a_update(
         self,
         report_id: str,
         *,
@@ -283,7 +283,7 @@ class ReportsClient:
             path={"reportId": report_id},
         )
 
-    def delete_report(self, report_id: str) -> ReportRef:
+    def delete(self, report_id: str) -> ReportRef:
         """Delete Report
 
         Permanently deletes a report and all of its sections. The report
@@ -299,7 +299,7 @@ class ReportsClient:
             path={"reportId": report_id},
         )
 
-    async def a_delete_report(self, report_id: str) -> ReportRef:
+    async def a_delete(self, report_id: str) -> ReportRef:
         """Delete Report
 
         Permanently deletes a report and all of its sections. The report

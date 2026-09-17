@@ -33,7 +33,7 @@ export class ExportSchedulesClient {
    * @param pageSize The number of results per page, at most 100. Defaults to
    *   25.
    */
-  async listExportSchedules(
+  async list(
     exportType?: SchedulableExportType,
     enabled?: "true" | "false",
     page?: number,
@@ -72,7 +72,7 @@ export class ExportSchedulesClient {
    * @param enabled Whether the schedule starts running as soon as it is
    *   created. Defaults to true.
    */
-  async createExportSchedule(
+  async create(
     name: string,
     exportType: SchedulableExportType,
     recurrence?: ScheduleRecurrenceType,
@@ -116,7 +116,7 @@ export class ExportSchedulesClient {
    *
    * @param exportScheduleId The id of the export schedule.
    */
-  async getExportSchedule(exportScheduleId: string): Promise<ExportSchedule> {
+  async get(exportScheduleId: string): Promise<ExportSchedule> {
     return this.api.sendRequest<ExportSchedule>(
       HttpMethods.GET,
       Endpoints.EXPORT_SCHEDULE_ENDPOINT,
@@ -149,7 +149,7 @@ export class ExportSchedulesClient {
    * @param enabled Whether the schedule runs. Send false to pause it without
    *   deleting it.
    */
-  async updateExportSchedule(
+  async update(
     exportScheduleId: string,
     recurrence?: ScheduleRecurrenceType,
     repeatEvery?: number | null,
@@ -193,9 +193,7 @@ export class ExportSchedulesClient {
    *
    * @param exportScheduleId The id of the export schedule.
    */
-  async deleteExportSchedule(
-    exportScheduleId: string,
-  ): Promise<ExportScheduleRef> {
+  async delete(exportScheduleId: string): Promise<ExportScheduleRef> {
     return this.api.sendRequest<ExportScheduleRef>(
       HttpMethods.DELETE,
       Endpoints.EXPORT_SCHEDULE_ENDPOINT,

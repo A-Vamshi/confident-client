@@ -22,7 +22,7 @@ export class AnnotationFormsClient {
    * form is returned as a summary with its field and queue counts; retrieve a
    * form by id for its questions.
    */
-  async listAnnotationForms(): Promise<AnnotationFormList> {
+  async list(): Promise<AnnotationFormList> {
     return this.api.sendRequest<AnnotationFormList>(
       HttpMethods.GET,
       Endpoints.ANNOTATION_FORMS_ENDPOINT,
@@ -40,7 +40,7 @@ export class AnnotationFormsClient {
    * @param fields The questions to put on the form, in the order annotators see
    *   them. A form created without fields collects nothing until you add some.
    */
-  async createAnnotationForm(
+  async create(
     name: string,
     fields?: AnnotationFormFieldConfig[],
   ): Promise<AnnotationFormRef> {
@@ -59,7 +59,7 @@ export class AnnotationFormsClient {
    *
    * @param annotationFormId The id of the annotation form.
    */
-  async getAnnotationForm(annotationFormId: string): Promise<AnnotationForm> {
+  async get(annotationFormId: string): Promise<AnnotationForm> {
     return this.api.sendRequest<AnnotationForm>(
       HttpMethods.GET,
       Endpoints.ANNOTATION_FORM_ENDPOINT,
@@ -80,7 +80,7 @@ export class AnnotationFormsClient {
    *   replaces the stored fields: a field you send with its `id` keeps its
    *   recorded answers, and one you leave out is removed along with them.
    */
-  async updateAnnotationForm(
+  async update(
     annotationFormId: string,
     name?: string,
     fields?: AnnotationFormFieldConfig[],
@@ -100,9 +100,7 @@ export class AnnotationFormsClient {
    *
    * @param annotationFormId The id of the annotation form.
    */
-  async deleteAnnotationForm(
-    annotationFormId: string,
-  ): Promise<AnnotationFormRef> {
+  async delete(annotationFormId: string): Promise<AnnotationFormRef> {
     return this.api.sendRequest<AnnotationFormRef>(
       HttpMethods.DELETE,
       Endpoints.ANNOTATION_FORM_ENDPOINT,

@@ -24,7 +24,7 @@ export class AttackMethodsClient {
    * @param multiTurn When true, returns only multi-turn attack methods; when
    *   false, only single-turn ones. Omit to return both.
    */
-  async listAttackMethods(
+  async list(
     page?: number,
     pageSize?: number,
     multiTurn?: "true" | "false",
@@ -45,7 +45,7 @@ export class AttackMethodsClient {
    * @param attackMethodId The id of the attack method, as the list returns it.
    *   A method's catalog name also resolves.
    */
-  async getAttackMethod(attackMethodId: string): Promise<AttackMethod> {
+  async get(attackMethodId: string): Promise<AttackMethod> {
     return this.api.sendRequest<AttackMethod>(
       HttpMethods.GET,
       Endpoints.ATTACK_METHOD_ENDPOINT,
@@ -67,7 +67,7 @@ export class AttackMethodsClient {
    *   replace this project's stored configuration wholesale, so send every
    *   value you want kept, and each must match the type its parameter declares.
    */
-  async updateAttackMethod(
+  async update(
     attackMethodId: string,
     parameters: Record<string, unknown>,
   ): Promise<AttackMethod> {
@@ -88,7 +88,7 @@ export class AttackMethodsClient {
    * @param attackMethodId The id of the attack method, as the list returns it.
    *   A method's catalog name also resolves.
    */
-  async resetAttackMethod(attackMethodId: string): Promise<AttackMethodRef> {
+  async reset(attackMethodId: string): Promise<AttackMethodRef> {
     return this.api.sendRequest<AttackMethodRef>(
       HttpMethods.DELETE,
       Endpoints.ATTACK_METHOD_ENDPOINT,

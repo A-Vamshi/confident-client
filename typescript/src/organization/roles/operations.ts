@@ -20,7 +20,7 @@ export class RolesOperations extends PoliciesOperations {
    * permissions come from — a global role's permissions are system-defined
    * instead, so it comes back with an empty `policies` array.
    */
-  async listOrganizationRoles(): Promise<OrganizationRoleList> {
+  async listRoles(): Promise<OrganizationRoleList> {
     return this.api.sendRequest<OrganizationRoleList>(
       HttpMethods.GET,
       Endpoints.ORGANIZATION_ROLES_ENDPOINT,
@@ -49,7 +49,7 @@ export class RolesOperations extends PoliciesOperations {
    * @param description What the role is for. On an update, omit it to leave the
    *   stored description unchanged, or send null to clear it.
    */
-  async createOrganizationRole(
+  async createRole(
     name: string,
     policyIds: string[],
     description?: string | null,
@@ -88,7 +88,7 @@ export class RolesOperations extends PoliciesOperations {
    * @param description What the role is for. On an update, omit it to leave the
    *   stored description unchanged, or send null to clear it.
    */
-  async updateOrganizationRole(
+  async updateRole(
     roleId: string,
     name: string,
     policyIds: string[],
@@ -115,7 +115,7 @@ export class RolesOperations extends PoliciesOperations {
    * @param roleId The id of the role. It must be a role the organization or
    *   project owns; a global, system-defined role is not addressable here.
    */
-  async deleteOrganizationRole(roleId: string): Promise<RoleRef> {
+  async deleteRole(roleId: string): Promise<RoleRef> {
     return this.api.sendRequest<RoleRef>(
       HttpMethods.DELETE,
       Endpoints.ORGANIZATION_ROLE_ENDPOINT,

@@ -37,7 +37,7 @@ export class ScheduledAlertsClient {
    * @param enabled Returns only alerts whose schedule is running when `true`,
    *   or only the paused ones when `false`. Omit to return both.
    */
-  async listScheduledAlerts(
+  async list(
     page?: number,
     pageSize?: number,
     dataModel?: AlertDataModel,
@@ -99,7 +99,7 @@ export class ScheduledAlertsClient {
    *   and measure everything.
    * @param enabled Whether the schedule runs. Defaults to true.
    */
-  async createScheduledAlert(
+  async create(
     name: string,
     dataModel: AlertDataModel,
     aggregation: string,
@@ -147,7 +147,7 @@ export class ScheduledAlertsClient {
    *
    * @param scheduledAlertId The id of the scheduled alert.
    */
-  async getScheduledAlert(scheduledAlertId: string): Promise<ScheduledAlert> {
+  async get(scheduledAlertId: string): Promise<ScheduledAlert> {
     return this.api.sendRequest<ScheduledAlert>(
       HttpMethods.GET,
       Endpoints.SCHEDULED_ALERT_ENDPOINT,
@@ -207,7 +207,7 @@ export class ScheduledAlertsClient {
    *   date has passed cannot be re-enabled without also moving `maxRuns` or
    *   `endAt`.
    */
-  async updateScheduledAlert(
+  async update(
     scheduledAlertId: string,
     recurrence?: ScheduleRecurrenceType,
     repeatEvery?: number | null,
@@ -258,9 +258,7 @@ export class ScheduledAlertsClient {
    *
    * @param scheduledAlertId The id of the scheduled alert.
    */
-  async deleteScheduledAlert(
-    scheduledAlertId: string,
-  ): Promise<ScheduledAlertRef> {
+  async delete(scheduledAlertId: string): Promise<ScheduledAlertRef> {
     return this.api.sendRequest<ScheduledAlertRef>(
       HttpMethods.DELETE,
       Endpoints.SCHEDULED_ALERT_ENDPOINT,

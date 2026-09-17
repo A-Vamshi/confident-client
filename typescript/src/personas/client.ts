@@ -22,7 +22,7 @@ export class PersonasClient {
    * @param pageSize The number of results per page, at most 100. Defaults to
    *   25.
    */
-  async listPersonas(page?: number, pageSize?: number): Promise<PersonaList> {
+  async list(page?: number, pageSize?: number): Promise<PersonaList> {
     return this.api.sendRequest<PersonaList>(
       HttpMethods.GET,
       Endpoints.PERSONAS_ENDPOINT,
@@ -50,10 +50,7 @@ export class PersonasClient {
    *   conversation is about and when it is finished come from the golden's
    *   scenario and expected outcome, not from here.
    */
-  async createPersona(
-    name: string,
-    characteristics: string,
-  ): Promise<PersonaRef> {
+  async create(name: string, characteristics: string): Promise<PersonaRef> {
     return this.api.sendRequest<PersonaRef>(
       HttpMethods.POST,
       Endpoints.PERSONAS_ENDPOINT,
@@ -71,7 +68,7 @@ export class PersonasClient {
    *
    * @param personaId The id of the persona.
    */
-  async getPersona(personaId: string): Promise<Persona> {
+  async get(personaId: string): Promise<Persona> {
     return this.api.sendRequest<Persona>(
       HttpMethods.GET,
       Endpoints.PERSONA_ENDPOINT,
@@ -96,7 +93,7 @@ export class PersonasClient {
    *   outright rather than being appended to, so send the whole description.
    *   Omit it to keep the current one.
    */
-  async updatePersona(
+  async update(
     personaId: string,
     name?: string,
     characteristics?: string,
@@ -117,7 +114,7 @@ export class PersonasClient {
    *
    * @param personaId The id of the persona.
    */
-  async deletePersona(personaId: string): Promise<PersonaRef> {
+  async delete(personaId: string): Promise<PersonaRef> {
     return this.api.sendRequest<PersonaRef>(
       HttpMethods.DELETE,
       Endpoints.PERSONA_ENDPOINT,

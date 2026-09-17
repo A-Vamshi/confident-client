@@ -24,7 +24,7 @@ class McpServersClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_mcp_servers(
+    def list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> McpServerList:
         """List MCP Servers
@@ -46,7 +46,7 @@ class McpServersClient:
             query={"page": page, "pageSize": page_size},
         )
 
-    async def a_list_mcp_servers(
+    async def a_list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> McpServerList:
         """List MCP Servers
@@ -68,7 +68,7 @@ class McpServersClient:
             query={"page": page, "pageSize": page_size},
         )
 
-    def create_mcp_server(
+    def create(
         self,
         name: str,
         transport: McpServerTransport,
@@ -122,7 +122,7 @@ class McpServersClient:
             },
         )
 
-    async def a_create_mcp_server(
+    async def a_create(
         self,
         name: str,
         transport: McpServerTransport,
@@ -176,7 +176,7 @@ class McpServersClient:
             },
         )
 
-    def get_mcp_server(self, mcp_server_id: str) -> McpServer:
+    def get(self, mcp_server_id: str) -> McpServer:
         """Get MCP Server
 
         Retrieves an MCP server by id, with its full configuration and the tools
@@ -194,7 +194,7 @@ class McpServersClient:
             path={"mcpServerId": mcp_server_id},
         )
 
-    async def a_get_mcp_server(self, mcp_server_id: str) -> McpServer:
+    async def a_get(self, mcp_server_id: str) -> McpServer:
         """Get MCP Server
 
         Retrieves an MCP server by id, with its full configuration and the tools
@@ -212,7 +212,7 @@ class McpServersClient:
             path={"mcpServerId": mcp_server_id},
         )
 
-    def update_mcp_server(
+    def update(
         self,
         mcp_server_id: str,
         *,
@@ -273,7 +273,7 @@ class McpServersClient:
             path={"mcpServerId": mcp_server_id},
         )
 
-    async def a_update_mcp_server(
+    async def a_update(
         self,
         mcp_server_id: str,
         *,
@@ -334,7 +334,7 @@ class McpServersClient:
             path={"mcpServerId": mcp_server_id},
         )
 
-    def delete_mcp_server(self, mcp_server_id: str) -> McpServerRef:
+    def delete(self, mcp_server_id: str) -> McpServerRef:
         """Delete MCP Server
 
         Permanently deletes an MCP server from your project. This cannot be
@@ -351,7 +351,7 @@ class McpServersClient:
             path={"mcpServerId": mcp_server_id},
         )
 
-    async def a_delete_mcp_server(self, mcp_server_id: str) -> McpServerRef:
+    async def a_delete(self, mcp_server_id: str) -> McpServerRef:
         """Delete MCP Server
 
         Permanently deletes an MCP server from your project. This cannot be
@@ -368,7 +368,7 @@ class McpServersClient:
             path={"mcpServerId": mcp_server_id},
         )
 
-    def connect_mcp_server(self, mcp_server_id: str) -> McpServerConnection:
+    def connect(self, mcp_server_id: str) -> McpServerConnection:
         """Connect MCP Server
 
         Connects to the MCP server, lists the tools it exposes, and replaces its
@@ -388,9 +388,7 @@ class McpServersClient:
             path={"mcpServerId": mcp_server_id},
         )
 
-    async def a_connect_mcp_server(
-        self, mcp_server_id: str
-    ) -> McpServerConnection:
+    async def a_connect(self, mcp_server_id: str) -> McpServerConnection:
         """Connect MCP Server
 
         Connects to the MCP server, lists the tools it exposes, and replaces its

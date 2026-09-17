@@ -15,7 +15,7 @@ class SpansClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_spans(
+    def list(
         self,
         *,
         page_size: Optional[int] = None,
@@ -107,7 +107,7 @@ class SpansClient:
             },
         )
 
-    async def a_list_spans(
+    async def a_list(
         self,
         *,
         page_size: Optional[int] = None,
@@ -199,7 +199,7 @@ class SpansClient:
             },
         )
 
-    def get_span(self, span_uuid: str) -> Span:
+    def get(self, span_uuid: str) -> Span:
         """Get Span
 
         Retrieves a span by uuid from your Confident AI project, with its full
@@ -215,7 +215,7 @@ class SpansClient:
             path={"spanUuid": span_uuid},
         )
 
-    async def a_get_span(self, span_uuid: str) -> Span:
+    async def a_get(self, span_uuid: str) -> Span:
         """Get Span
 
         Retrieves a span by uuid from your Confident AI project, with its full

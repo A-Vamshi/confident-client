@@ -26,10 +26,7 @@ export class ReportTemplatesClient {
    * @param pageSize The number of results per page, at most 100. Defaults to
    *   25.
    */
-  async listReportTemplates(
-    page?: number,
-    pageSize?: number,
-  ): Promise<ReportTemplateList> {
+  async list(page?: number, pageSize?: number): Promise<ReportTemplateList> {
     return this.api.sendRequest<ReportTemplateList>(
       HttpMethods.GET,
       Endpoints.REPORT_TEMPLATES_ENDPOINT,
@@ -64,7 +61,7 @@ export class ReportTemplatesClient {
    * @param endAt When the schedule stops running, as an ISO 8601 datetime. Send
    *   null to leave it open-ended.
    */
-  async createReportTemplate(
+  async create(
     name: string,
     description?: string | null,
     templateSections?: ReportTemplateSectionConfig[],
@@ -104,7 +101,7 @@ export class ReportTemplatesClient {
    *
    * @param reportTemplateId The id of the report template.
    */
-  async getReportTemplate(reportTemplateId: string): Promise<ReportTemplate> {
+  async get(reportTemplateId: string): Promise<ReportTemplate> {
     return this.api.sendRequest<ReportTemplate>(
       HttpMethods.GET,
       Endpoints.REPORT_TEMPLATE_ENDPOINT,
@@ -141,7 +138,7 @@ export class ReportTemplatesClient {
    * @param endAt When the schedule stops running, as an ISO 8601 datetime. Send
    *   null to leave it open-ended.
    */
-  async updateReportTemplate(
+  async update(
     reportTemplateId: string,
     name?: string,
     description?: string | null,
@@ -185,9 +182,7 @@ export class ReportTemplatesClient {
    *
    * @param reportTemplateId The id of the report template.
    */
-  async deleteReportTemplate(
-    reportTemplateId: string,
-  ): Promise<ReportTemplateRef> {
+  async delete(reportTemplateId: string): Promise<ReportTemplateRef> {
     return this.api.sendRequest<ReportTemplateRef>(
       HttpMethods.DELETE,
       Endpoints.REPORT_TEMPLATE_ENDPOINT,

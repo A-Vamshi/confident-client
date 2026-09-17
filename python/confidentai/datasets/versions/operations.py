@@ -14,7 +14,7 @@ from confidentai.endpoints import Endpoints
 class VersionsOperations:
     _api: Api
 
-    def get_dataset_versions(self, dataset_id: str) -> DatasetVersionList:
+    def get_versions(self, dataset_id: str) -> DatasetVersionList:
         """List Dataset Versions
 
         Lists every version of the dataset, newest first. Requires the Team plan
@@ -30,9 +30,7 @@ class VersionsOperations:
             path={"datasetId": dataset_id},
         )
 
-    async def a_get_dataset_versions(
-        self, dataset_id: str
-    ) -> DatasetVersionList:
+    async def a_get_versions(self, dataset_id: str) -> DatasetVersionList:
         """List Dataset Versions
 
         Lists every version of the dataset, newest first. Requires the Team plan
@@ -48,9 +46,7 @@ class VersionsOperations:
             path={"datasetId": dataset_id},
         )
 
-    def create_dataset_version(
-        self, dataset_id: str
-    ) -> CreateDatasetVersionResult:
+    def create_version(self, dataset_id: str) -> CreateDatasetVersionResult:
         """Create Dataset Version
 
         Snapshots the current state of the dataset as a new immutable version.
@@ -68,7 +64,7 @@ class VersionsOperations:
             path={"datasetId": dataset_id},
         )
 
-    async def a_create_dataset_version(
+    async def a_create_version(
         self, dataset_id: str
     ) -> CreateDatasetVersionResult:
         """Create Dataset Version

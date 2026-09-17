@@ -21,7 +21,7 @@ class VulnerabilitiesClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_vulnerabilities(
+    def list(
         self,
         *,
         page: Optional[int] = None,
@@ -58,7 +58,7 @@ class VulnerabilitiesClient:
             },
         )
 
-    async def a_list_vulnerabilities(
+    async def a_list(
         self,
         *,
         page: Optional[int] = None,
@@ -95,7 +95,7 @@ class VulnerabilitiesClient:
             },
         )
 
-    def create_vulnerability(
+    def create(
         self,
         name: str,
         criteria: str,
@@ -141,7 +141,7 @@ class VulnerabilitiesClient:
             },
         )
 
-    async def a_create_vulnerability(
+    async def a_create(
         self,
         name: str,
         criteria: str,
@@ -187,7 +187,7 @@ class VulnerabilitiesClient:
             },
         )
 
-    def get_vulnerability(self, vulnerability_id: str) -> Vulnerability:
+    def get(self, vulnerability_id: str) -> Vulnerability:
         """Get Vulnerability
 
         Retrieves a vulnerability by id, with the criteria the evaluator
@@ -205,7 +205,7 @@ class VulnerabilitiesClient:
             path={"vulnerabilityId": vulnerability_id},
         )
 
-    async def a_get_vulnerability(self, vulnerability_id: str) -> Vulnerability:
+    async def a_get(self, vulnerability_id: str) -> Vulnerability:
         """Get Vulnerability
 
         Retrieves a vulnerability by id, with the criteria the evaluator
@@ -223,7 +223,7 @@ class VulnerabilitiesClient:
             path={"vulnerabilityId": vulnerability_id},
         )
 
-    def update_vulnerability(
+    def update(
         self,
         vulnerability_id: str,
         *,
@@ -274,7 +274,7 @@ class VulnerabilitiesClient:
             path={"vulnerabilityId": vulnerability_id},
         )
 
-    async def a_update_vulnerability(
+    async def a_update(
         self,
         vulnerability_id: str,
         *,
@@ -325,7 +325,7 @@ class VulnerabilitiesClient:
             path={"vulnerabilityId": vulnerability_id},
         )
 
-    def delete_vulnerability(self, vulnerability_id: str) -> VulnerabilityRef:
+    def delete(self, vulnerability_id: str) -> VulnerabilityRef:
         """Delete Vulnerability
 
         Permanently deletes a vulnerability your project defined, along with its
@@ -343,9 +343,7 @@ class VulnerabilitiesClient:
             path={"vulnerabilityId": vulnerability_id},
         )
 
-    async def a_delete_vulnerability(
-        self, vulnerability_id: str
-    ) -> VulnerabilityRef:
+    async def a_delete(self, vulnerability_id: str) -> VulnerabilityRef:
         """Delete Vulnerability
 
         Permanently deletes a vulnerability your project defined, along with its

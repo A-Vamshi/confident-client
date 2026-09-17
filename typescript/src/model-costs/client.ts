@@ -25,7 +25,7 @@ export class ModelCostsClient {
    * @param searchTerm Returns only model costs whose match pattern or provider
    *   contains this text, case-insensitively.
    */
-  async listModelCosts(
+  async list(
     page?: number,
     pageSize?: number,
     searchTerm?: string,
@@ -58,7 +58,7 @@ export class ModelCostsClient {
    *   tokens. Send null when only the input rate is priced; output tokens are
    *   then costed at zero.
    */
-  async createModelCost(
+  async create(
     matchPattern: string,
     provider?: string | null,
     inputCostPerMillionTokens?: number | null,
@@ -100,7 +100,7 @@ export class ModelCostsClient {
    *   tokens. Send null when only the input rate is priced; output tokens are
    *   then costed at zero.
    */
-  async updateModelCost(
+  async update(
     modelCostId: string,
     matchPattern: string,
     provider?: string | null,
@@ -132,7 +132,7 @@ export class ModelCostsClient {
    *
    * @param modelCostId The id of the model cost.
    */
-  async deleteModelCost(modelCostId: string): Promise<ModelCostRef> {
+  async delete(modelCostId: string): Promise<ModelCostRef> {
     return this.api.sendRequest<ModelCostRef>(
       HttpMethods.DELETE,
       Endpoints.MODEL_COST_ENDPOINT,

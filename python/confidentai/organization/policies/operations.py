@@ -18,7 +18,7 @@ from confidentai.endpoints import Endpoints
 class PoliciesOperations:
     _api: Api
 
-    def list_organization_policies(self) -> PolicyList:
+    def list_policies(self) -> PolicyList:
         """List Organization Policies
 
         Lists the custom access policies your organization owns. Each one is a
@@ -34,7 +34,7 @@ class PoliciesOperations:
             response_schema=PolicyList,
         )
 
-    async def a_list_organization_policies(self) -> PolicyList:
+    async def a_list_policies(self) -> PolicyList:
         """List Organization Policies
 
         Lists the custom access policies your organization owns. Each one is a
@@ -50,7 +50,7 @@ class PoliciesOperations:
             response_schema=PolicyList,
         )
 
-    def create_organization_policy(
+    def create_policy(
         self,
         name: str,
         permission_ids: List[str],
@@ -92,7 +92,7 @@ class PoliciesOperations:
             },
         )
 
-    async def a_create_organization_policy(
+    async def a_create_policy(
         self,
         name: str,
         permission_ids: List[str],
@@ -134,7 +134,7 @@ class PoliciesOperations:
             },
         )
 
-    def update_organization_policy(
+    def update_policy(
         self,
         policy_id: str,
         name: str,
@@ -181,7 +181,7 @@ class PoliciesOperations:
             path={"policyId": policy_id},
         )
 
-    async def a_update_organization_policy(
+    async def a_update_policy(
         self,
         policy_id: str,
         name: str,
@@ -228,7 +228,7 @@ class PoliciesOperations:
             path={"policyId": policy_id},
         )
 
-    def delete_organization_policy(self, policy_id: str) -> PolicyRef:
+    def delete_policy(self, policy_id: str) -> PolicyRef:
         """Delete Organization Policy
 
         Permanently deletes an organization policy. Unlike a role, a policy in
@@ -250,7 +250,7 @@ class PoliciesOperations:
             path={"policyId": policy_id},
         )
 
-    async def a_delete_organization_policy(self, policy_id: str) -> PolicyRef:
+    async def a_delete_policy(self, policy_id: str) -> PolicyRef:
         """Delete Organization Policy
 
         Permanently deletes an organization policy. Unlike a role, a policy in

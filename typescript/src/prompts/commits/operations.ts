@@ -19,7 +19,7 @@ export class CommitsOperations extends BranchesOperations {
    * @param branch The name of the branch to read from. Defaults to `main` when
    *   omitted.
    */
-  async getPromptCommits(
+  async getCommits(
     promptId: string,
     branch?: string,
   ): Promise<PromptCommitList> {
@@ -41,7 +41,7 @@ export class CommitsOperations extends BranchesOperations {
    * @param branch The name of the branch to read from. Defaults to `main` when
    *   omitted.
    */
-  async getPromptByCommit(
+  async getByCommit(
     promptId: string,
     hash: string,
     branch?: string,

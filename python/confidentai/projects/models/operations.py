@@ -18,7 +18,7 @@ from confidentai.projects.types import (
 class ModelsOperations:
     _api: Api
 
-    def get_project_model(
+    def get_model(
         self,
         project_id: str,
         *,
@@ -59,7 +59,7 @@ class ModelsOperations:
             query={"type": type},
         )
 
-    async def a_get_project_model(
+    async def a_get_model(
         self,
         project_id: str,
         *,
@@ -100,7 +100,7 @@ class ModelsOperations:
             query={"type": type},
         )
 
-    def update_project_model(
+    def update_model(
         self,
         project_id: str,
         model_type: str,
@@ -150,7 +150,7 @@ class ModelsOperations:
             path={"projectId": project_id, "modelType": model_type},
         )
 
-    async def a_update_project_model(
+    async def a_update_model(
         self,
         project_id: str,
         model_type: str,
@@ -200,7 +200,7 @@ class ModelsOperations:
             path={"projectId": project_id, "modelType": model_type},
         )
 
-    def delete_project_model(
+    def delete_model(
         self, project_id: str, model_type: str
     ) -> ClearProjectModelResult:
         """Clear Project Model Override
@@ -223,7 +223,7 @@ class ModelsOperations:
             path={"projectId": project_id, "modelType": model_type},
         )
 
-    async def a_delete_project_model(
+    async def a_delete_model(
         self, project_id: str, model_type: str
     ) -> ClearProjectModelResult:
         """Clear Project Model Override

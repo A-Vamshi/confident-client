@@ -19,7 +19,7 @@ export class PoliciesOperations extends ModelsOperations {
    * do not draw their permissions from policies, so nothing here applies to
    * them.
    */
-  async listOrganizationPolicies(): Promise<PolicyList> {
+  async listPolicies(): Promise<PolicyList> {
     return this.api.sendRequest<PolicyList>(
       HttpMethods.GET,
       Endpoints.ORGANIZATION_POLICIES_ENDPOINT,
@@ -48,7 +48,7 @@ export class PoliciesOperations extends ModelsOperations {
    * @param description What the policy is for. On an update, omit it to leave
    *   the stored description unchanged, or send null to clear it.
    */
-  async createOrganizationPolicy(
+  async createPolicy(
     name: string,
     permissionIds: string[],
     description?: string | null,
@@ -84,7 +84,7 @@ export class PoliciesOperations extends ModelsOperations {
    * @param description What the policy is for. On an update, omit it to leave
    *   the stored description unchanged, or send null to clear it.
    */
-  async updateOrganizationPolicy(
+  async updatePolicy(
     policyId: string,
     name: string,
     permissionIds: string[],
@@ -110,7 +110,7 @@ export class PoliciesOperations extends ModelsOperations {
    *
    * @param policyId The id of the policy.
    */
-  async deleteOrganizationPolicy(policyId: string): Promise<PolicyRef> {
+  async deletePolicy(policyId: string): Promise<PolicyRef> {
     return this.api.sendRequest<PolicyRef>(
       HttpMethods.DELETE,
       Endpoints.ORGANIZATION_POLICY_ENDPOINT,

@@ -22,7 +22,7 @@ class ForwardingConnectorsClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_forwarding_connectors(
+    def list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> ForwardingConnectorList:
         """List Forwarding Connectors
@@ -43,7 +43,7 @@ class ForwardingConnectorsClient:
             query={"page": page, "pageSize": page_size},
         )
 
-    async def a_list_forwarding_connectors(
+    async def a_list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> ForwardingConnectorList:
         """List Forwarding Connectors
@@ -64,7 +64,7 @@ class ForwardingConnectorsClient:
             query={"page": page, "pageSize": page_size},
         )
 
-    def create_forwarding_connector(
+    def create(
         self,
         name: str,
         endpoint: str,
@@ -114,7 +114,7 @@ class ForwardingConnectorsClient:
             },
         )
 
-    async def a_create_forwarding_connector(
+    async def a_create(
         self,
         name: str,
         endpoint: str,
@@ -164,9 +164,7 @@ class ForwardingConnectorsClient:
             },
         )
 
-    def get_forwarding_connector(
-        self, forwarding_connector_id: str
-    ) -> ForwardingConnector:
+    def get(self, forwarding_connector_id: str) -> ForwardingConnector:
         """Get Forwarding Connector
 
         Retrieves a forwarding connector by id, with its headers, the
@@ -183,9 +181,7 @@ class ForwardingConnectorsClient:
             path={"forwardingConnectorId": forwarding_connector_id},
         )
 
-    async def a_get_forwarding_connector(
-        self, forwarding_connector_id: str
-    ) -> ForwardingConnector:
+    async def a_get(self, forwarding_connector_id: str) -> ForwardingConnector:
         """Get Forwarding Connector
 
         Retrieves a forwarding connector by id, with its headers, the
@@ -202,7 +198,7 @@ class ForwardingConnectorsClient:
             path={"forwardingConnectorId": forwarding_connector_id},
         )
 
-    def update_forwarding_connector(
+    def update(
         self,
         forwarding_connector_id: str,
         *,
@@ -254,7 +250,7 @@ class ForwardingConnectorsClient:
             path={"forwardingConnectorId": forwarding_connector_id},
         )
 
-    async def a_update_forwarding_connector(
+    async def a_update(
         self,
         forwarding_connector_id: str,
         *,
@@ -306,9 +302,7 @@ class ForwardingConnectorsClient:
             path={"forwardingConnectorId": forwarding_connector_id},
         )
 
-    def delete_forwarding_connector(
-        self, forwarding_connector_id: str
-    ) -> ForwardingConnectorRef:
+    def delete(self, forwarding_connector_id: str) -> ForwardingConnectorRef:
         """Delete Forwarding Connector
 
         Permanently deletes a forwarding connector and the credentials stored in
@@ -324,7 +318,7 @@ class ForwardingConnectorsClient:
             path={"forwardingConnectorId": forwarding_connector_id},
         )
 
-    async def a_delete_forwarding_connector(
+    async def a_delete(
         self, forwarding_connector_id: str
     ) -> ForwardingConnectorRef:
         """Delete Forwarding Connector

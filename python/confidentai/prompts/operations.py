@@ -16,7 +16,7 @@ from confidentai.prompts.types import (
 class PromptsOperations:
     _api: Api
 
-    def list_prompts(self) -> PromptList:
+    def list(self) -> PromptList:
         """List Prompts
 
         Lists all the prompts in your Confident AI project.
@@ -27,7 +27,7 @@ class PromptsOperations:
             response_schema=PromptList,
         )
 
-    async def a_list_prompts(self) -> PromptList:
+    async def a_list(self) -> PromptList:
         """List Prompts
 
         Lists all the prompts in your Confident AI project.
@@ -38,7 +38,7 @@ class PromptsOperations:
             response_schema=PromptList,
         )
 
-    def push_prompt(self, prompt: PushPromptRequest) -> PushPromptResult:
+    def push(self, prompt: PushPromptRequest) -> PushPromptResult:
         """Push Prompt
 
         Creates a new commit for the prompt with the given `alias`, creating the
@@ -59,9 +59,7 @@ class PromptsOperations:
             body=prompt,
         )
 
-    async def a_push_prompt(
-        self, prompt: PushPromptRequest
-    ) -> PushPromptResult:
+    async def a_push(self, prompt: PushPromptRequest) -> PushPromptResult:
         """Push Prompt
 
         Creates a new commit for the prompt with the given `alias`, creating the
@@ -82,7 +80,7 @@ class PromptsOperations:
             body=prompt,
         )
 
-    def get_prompt_by_label(self, prompt_id: str, label: str) -> Prompt:
+    def get_by_label(self, prompt_id: str, label: str) -> Prompt:
         """Pull Prompt by Label
 
         Retrieves the prompt version carrying `label`.
@@ -98,7 +96,7 @@ class PromptsOperations:
             path={"promptId": prompt_id, "label": label},
         )
 
-    async def a_get_prompt_by_label(self, prompt_id: str, label: str) -> Prompt:
+    async def a_get_by_label(self, prompt_id: str, label: str) -> Prompt:
         """Pull Prompt by Label
 
         Retrieves the prompt version carrying `label`.

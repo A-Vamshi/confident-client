@@ -21,7 +21,7 @@ class MetricCollectionsClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_metric_collections(self) -> MetricCollectionList:
+    def list(self) -> MetricCollectionList:
         """List Metric Collections
 
         Lists all the metric collections in your Confident AI project, each with
@@ -33,7 +33,7 @@ class MetricCollectionsClient:
             response_schema=MetricCollectionList,
         )
 
-    async def a_list_metric_collections(self) -> MetricCollectionList:
+    async def a_list(self) -> MetricCollectionList:
         """List Metric Collections
 
         Lists all the metric collections in your Confident AI project, each with
@@ -45,7 +45,7 @@ class MetricCollectionsClient:
             response_schema=MetricCollectionList,
         )
 
-    def create_metric_collection(
+    def create(
         self,
         name: str,
         *,
@@ -92,7 +92,7 @@ class MetricCollectionsClient:
             },
         )
 
-    async def a_create_metric_collection(
+    async def a_create(
         self,
         name: str,
         *,
@@ -139,9 +139,7 @@ class MetricCollectionsClient:
             },
         )
 
-    def get_metric_collection(
-        self, metric_collection_id: str
-    ) -> MetricCollection:
+    def get(self, metric_collection_id: str) -> MetricCollection:
         """Get Metric Collection
 
         Retrieves a metric collection with every metric inside it and the
@@ -157,9 +155,7 @@ class MetricCollectionsClient:
             path={"metricCollectionId": metric_collection_id},
         )
 
-    async def a_get_metric_collection(
-        self, metric_collection_id: str
-    ) -> MetricCollection:
+    async def a_get(self, metric_collection_id: str) -> MetricCollection:
         """Get Metric Collection
 
         Retrieves a metric collection with every metric inside it and the
@@ -175,7 +171,7 @@ class MetricCollectionsClient:
             path={"metricCollectionId": metric_collection_id},
         )
 
-    def update_metric_collection(
+    def update(
         self,
         metric_collection_id: str,
         *,
@@ -221,7 +217,7 @@ class MetricCollectionsClient:
             path={"metricCollectionId": metric_collection_id},
         )
 
-    async def a_update_metric_collection(
+    async def a_update(
         self,
         metric_collection_id: str,
         *,
@@ -267,9 +263,7 @@ class MetricCollectionsClient:
             path={"metricCollectionId": metric_collection_id},
         )
 
-    def delete_metric_collection(
-        self, metric_collection_id: str
-    ) -> MetricCollectionRef:
+    def delete(self, metric_collection_id: str) -> MetricCollectionRef:
         """Delete Metric Collection
 
         Permanently deletes a metric collection. Every evaluation rule that runs
@@ -286,9 +280,7 @@ class MetricCollectionsClient:
             path={"metricCollectionId": metric_collection_id},
         )
 
-    async def a_delete_metric_collection(
-        self, metric_collection_id: str
-    ) -> MetricCollectionRef:
+    async def a_delete(self, metric_collection_id: str) -> MetricCollectionRef:
         """Delete Metric Collection
 
         Permanently deletes a metric collection. Every evaluation rule that runs

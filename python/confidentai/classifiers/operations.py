@@ -24,7 +24,7 @@ from confidentai.endpoints import Endpoints
 class ClassifiersOperations:
     _api: Api
 
-    def list_classifiers(
+    def list(
         self,
         *,
         page: Optional[int] = None,
@@ -54,7 +54,7 @@ class ClassifiersOperations:
             },
         )
 
-    async def a_list_classifiers(
+    async def a_list(
         self,
         *,
         page: Optional[int] = None,
@@ -84,7 +84,7 @@ class ClassifiersOperations:
             },
         )
 
-    def create_classifier(
+    def create(
         self,
         name: str,
         data_model: ClassifierDataModel,
@@ -139,7 +139,7 @@ class ClassifiersOperations:
             },
         )
 
-    async def a_create_classifier(
+    async def a_create(
         self,
         name: str,
         data_model: ClassifierDataModel,
@@ -194,7 +194,7 @@ class ClassifiersOperations:
             },
         )
 
-    def get_classifier(self, classifier_id: str) -> Classifier:
+    def get(self, classifier_id: str) -> Classifier:
         """Get Classifier
 
         Retrieves a classifier by id, with the filters that scope what it runs
@@ -211,7 +211,7 @@ class ClassifiersOperations:
             path={"classifierId": classifier_id},
         )
 
-    async def a_get_classifier(self, classifier_id: str) -> Classifier:
+    async def a_get(self, classifier_id: str) -> Classifier:
         """Get Classifier
 
         Retrieves a classifier by id, with the filters that scope what it runs
@@ -228,7 +228,7 @@ class ClassifiersOperations:
             path={"classifierId": classifier_id},
         )
 
-    def update_classifier(
+    def update(
         self,
         classifier_id: str,
         *,
@@ -279,7 +279,7 @@ class ClassifiersOperations:
             path={"classifierId": classifier_id},
         )
 
-    async def a_update_classifier(
+    async def a_update(
         self,
         classifier_id: str,
         *,
@@ -330,7 +330,7 @@ class ClassifiersOperations:
             path={"classifierId": classifier_id},
         )
 
-    def delete_classifier(self, classifier_id: str) -> ClassifierRef:
+    def delete(self, classifier_id: str) -> ClassifierRef:
         """Delete Classifier
 
         Permanently deletes a classifier and all of its labels, and returns its
@@ -348,7 +348,7 @@ class ClassifiersOperations:
             path={"classifierId": classifier_id},
         )
 
-    async def a_delete_classifier(self, classifier_id: str) -> ClassifierRef:
+    async def a_delete(self, classifier_id: str) -> ClassifierRef:
         """Delete Classifier
 
         Permanently deletes a classifier and all of its labels, and returns its
@@ -366,9 +366,7 @@ class ClassifiersOperations:
             path={"classifierId": classifier_id},
         )
 
-    def generate_classifier_labels(
-        self, classifier_id: str
-    ) -> ClassifierLabelGeneration:
+    def generate_labels(self, classifier_id: str) -> ClassifierLabelGeneration:
         """Generate Classifier Labels
 
         Discovers labels for a classifier from your project's real traffic: it
@@ -396,7 +394,7 @@ class ClassifiersOperations:
             path={"classifierId": classifier_id},
         )
 
-    async def a_generate_classifier_labels(
+    async def a_generate_labels(
         self, classifier_id: str
     ) -> ClassifierLabelGeneration:
         """Generate Classifier Labels

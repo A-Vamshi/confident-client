@@ -17,7 +17,7 @@ export class VersionsOperations extends GoldensOperations {
    *
    * @param datasetId The unique id of the dataset.
    */
-  async getDatasetVersions(datasetId: string): Promise<DatasetVersionList> {
+  async getVersions(datasetId: string): Promise<DatasetVersionList> {
     return this.api.sendRequest<DatasetVersionList>(
       HttpMethods.GET,
       Endpoints.DATASET_VERSIONS_ENDPOINT,
@@ -35,9 +35,7 @@ export class VersionsOperations extends GoldensOperations {
    *
    * @param datasetId The unique id of the dataset.
    */
-  async createDatasetVersion(
-    datasetId: string,
-  ): Promise<CreateDatasetVersionResult> {
+  async createVersion(datasetId: string): Promise<CreateDatasetVersionResult> {
     return this.api.sendRequest<CreateDatasetVersionResult>(
       HttpMethods.POST,
       Endpoints.DATASET_VERSIONS_ENDPOINT,

@@ -22,7 +22,7 @@ export class MetricsClient {
    *
    * Lists all the custom metrics in your Confident AI project.
    */
-  async listMetrics(): Promise<MetricList> {
+  async list(): Promise<MetricList> {
     return this.api.sendRequest<MetricList>(
       HttpMethods.GET,
       Endpoints.METRICS_ENDPOINT,
@@ -49,7 +49,7 @@ export class MetricsClient {
    *   `multiTurn`.
    * @param rubric Score ranges that anchor how the metric scores.
    */
-  async createMetric(
+  async create(
     name: string,
     multiTurn?: boolean,
     criteria?: string,
@@ -86,7 +86,7 @@ export class MetricsClient {
    *
    * @param metricId The unique id of the metric.
    */
-  async getMetric(metricId: string): Promise<Metric> {
+  async get(metricId: string): Promise<Metric> {
     return this.api.sendRequest<Metric>(
       HttpMethods.GET,
       Endpoints.METRIC_ENDPOINT,
@@ -110,7 +110,7 @@ export class MetricsClient {
    *   must match the metric's `multiTurn`.
    * @param rubric Score ranges that anchor how the metric scores.
    */
-  async updateMetric(
+  async update(
     metricId: string,
     criteria?: string | null,
     evaluationSteps?: string[] | null,

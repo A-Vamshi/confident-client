@@ -29,7 +29,7 @@ class TracesClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_traces(
+    def list(
         self,
         *,
         page_size: Optional[int] = None,
@@ -87,7 +87,7 @@ class TracesClient:
             },
         )
 
-    async def a_list_traces(
+    async def a_list(
         self,
         *,
         page_size: Optional[int] = None,
@@ -145,7 +145,7 @@ class TracesClient:
             },
         )
 
-    def create_trace(
+    def create(
         self,
         uuid: str,
         start_time: str,
@@ -267,7 +267,7 @@ class TracesClient:
             },
         )
 
-    async def a_create_trace(
+    async def a_create(
         self,
         uuid: str,
         start_time: str,
@@ -389,7 +389,7 @@ class TracesClient:
             },
         )
 
-    def get_trace(self, trace_uuid: str) -> Trace:
+    def get(self, trace_uuid: str) -> Trace:
         """Get Trace
 
         Retrieves a trace by uuid from your Confident AI project, with its
@@ -406,7 +406,7 @@ class TracesClient:
             path={"traceUuid": trace_uuid},
         )
 
-    async def a_get_trace(self, trace_uuid: str) -> Trace:
+    async def a_get(self, trace_uuid: str) -> Trace:
         """Get Trace
 
         Retrieves a trace by uuid from your Confident AI project, with its

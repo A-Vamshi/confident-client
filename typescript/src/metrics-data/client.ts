@@ -24,7 +24,7 @@ export class MetricsDataClient {
    *   datetime.
    * @param end Returns only results recorded before this ISO 8601 datetime.
    */
-  async listMetricData(
+  async list(
     page?: number,
     pageSize?: number,
     start?: string,

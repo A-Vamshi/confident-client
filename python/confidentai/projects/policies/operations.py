@@ -18,7 +18,7 @@ from confidentai.endpoints import Endpoints
 class PoliciesOperations:
     _api: Api
 
-    def list_project_policies(self, project_id: str) -> PolicyList:
+    def list_policies(self, project_id: str) -> PolicyList:
         """List Project Policies
 
         Lists the custom access policies this project owns. Each one is a named
@@ -40,7 +40,7 @@ class PoliciesOperations:
             path={"projectId": project_id},
         )
 
-    async def a_list_project_policies(self, project_id: str) -> PolicyList:
+    async def a_list_policies(self, project_id: str) -> PolicyList:
         """List Project Policies
 
         Lists the custom access policies this project owns. Each one is a named
@@ -62,7 +62,7 @@ class PoliciesOperations:
             path={"projectId": project_id},
         )
 
-    def create_project_policy(
+    def create_policy(
         self,
         project_id: str,
         name: str,
@@ -108,7 +108,7 @@ class PoliciesOperations:
             path={"projectId": project_id},
         )
 
-    async def a_create_project_policy(
+    async def a_create_policy(
         self,
         project_id: str,
         name: str,
@@ -154,7 +154,7 @@ class PoliciesOperations:
             path={"projectId": project_id},
         )
 
-    def update_project_policy(
+    def update_policy(
         self,
         project_id: str,
         policy_id: str,
@@ -202,7 +202,7 @@ class PoliciesOperations:
             path={"projectId": project_id, "policyId": policy_id},
         )
 
-    async def a_update_project_policy(
+    async def a_update_policy(
         self,
         project_id: str,
         policy_id: str,
@@ -250,9 +250,7 @@ class PoliciesOperations:
             path={"projectId": project_id, "policyId": policy_id},
         )
 
-    def delete_project_policy(
-        self, project_id: str, policy_id: str
-    ) -> PolicyRef:
+    def delete_policy(self, project_id: str, policy_id: str) -> PolicyRef:
         """Delete Project Policy
 
         Permanently deletes a project policy. Unlike a role, a policy in use is
@@ -275,7 +273,7 @@ class PoliciesOperations:
             path={"projectId": project_id, "policyId": policy_id},
         )
 
-    async def a_delete_project_policy(
+    async def a_delete_policy(
         self, project_id: str, policy_id: str
     ) -> PolicyRef:
         """Delete Project Policy

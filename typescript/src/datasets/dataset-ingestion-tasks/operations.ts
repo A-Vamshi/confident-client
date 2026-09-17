@@ -25,7 +25,7 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
    * @param dataModel Only return tasks harvesting this kind of item. Omit it to
    *   return all of them.
    */
-  async listDatasetIngestionTasks(
+  async listIngestionTasks(
     datasetId: string,
     dataModel?: "TRACE" | "SPAN" | "THREAD",
   ): Promise<DatasetIngestionTaskList> {
@@ -74,7 +74,7 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
    * @param includeExpectedTools Populate the golden's `expectedTools` from the
    *   harvested item.
    */
-  async createDatasetIngestionTask(
+  async createIngestionTask(
     datasetId: string,
     name: string,
     dataModel: IngestionDataModel,
@@ -129,7 +129,7 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
    * @param datasetId The unique id of the dataset.
    * @param datasetIngestionTaskId The unique id of the ingestion task.
    */
-  async getDatasetIngestionTask(
+  async getIngestionTask(
     datasetId: string,
     datasetIngestionTaskId: string,
   ): Promise<DatasetIngestionTask> {
@@ -177,7 +177,7 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
    * @param includeExpectedTools Populate the golden's `expectedTools` from the
    *   harvested item.
    */
-  async updateDatasetIngestionTask(
+  async updateIngestionTask(
     datasetId: string,
     datasetIngestionTaskId: string,
     name?: string,
@@ -234,7 +234,7 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
    * @param datasetId The unique id of the dataset.
    * @param datasetIngestionTaskId The unique id of the ingestion task.
    */
-  async deleteDatasetIngestionTask(
+  async deleteIngestionTask(
     datasetId: string,
     datasetIngestionTaskId: string,
   ): Promise<DatasetIngestionTaskRef> {

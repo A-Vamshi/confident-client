@@ -26,10 +26,7 @@ export class ExportDestinationsClient {
    * @param pageSize The number of results per page, at most 100. Defaults to
    *   25.
    */
-  async listExportDestinations(
-    page?: number,
-    pageSize?: number,
-  ): Promise<ExportDestinationList> {
+  async list(page?: number, pageSize?: number): Promise<ExportDestinationList> {
     return this.api.sendRequest<ExportDestinationList>(
       HttpMethods.GET,
       Endpoints.EXPORT_DESTINATIONS_ENDPOINT,
@@ -61,7 +58,7 @@ export class ExportDestinationsClient {
    * @param enabled Whether export schedules may upload to this destination.
    *   Defaults to true.
    */
-  async createExportDestination(
+  async create(
     name: string,
     bucket: string,
     region: string,
@@ -98,9 +95,7 @@ export class ExportDestinationsClient {
    *
    * @param exportDestinationId The id of the export destination.
    */
-  async getExportDestination(
-    exportDestinationId: string,
-  ): Promise<ExportDestination> {
+  async get(exportDestinationId: string): Promise<ExportDestination> {
     return this.api.sendRequest<ExportDestination>(
       HttpMethods.GET,
       Endpoints.EXPORT_DESTINATION_ENDPOINT,
@@ -134,7 +129,7 @@ export class ExportDestinationsClient {
    * @param enabled Whether export schedules may upload to this destination. Set
    *   it to false to stop uploads without deleting the destination.
    */
-  async updateExportDestination(
+  async update(
     exportDestinationId: string,
     name?: string,
     type?: ExportDestinationType,
@@ -173,9 +168,7 @@ export class ExportDestinationsClient {
    *
    * @param exportDestinationId The id of the export destination.
    */
-  async deleteExportDestination(
-    exportDestinationId: string,
-  ): Promise<ExportDestinationRef> {
+  async delete(exportDestinationId: string): Promise<ExportDestinationRef> {
     return this.api.sendRequest<ExportDestinationRef>(
       HttpMethods.DELETE,
       Endpoints.EXPORT_DESTINATION_ENDPOINT,

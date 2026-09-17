@@ -52,7 +52,7 @@ export class SpansClient {
    * @param topK Filter retriever spans by the topK value.
    * @param chunkSize Filter retriever spans by the chunk size.
    */
-  async listSpans(
+  async list(
     pageSize?: number,
     cursor?: string,
     start?: string,
@@ -110,7 +110,7 @@ export class SpansClient {
    *
    * @param spanUuid The unique identifier of the span.
    */
-  async getSpan(spanUuid: string): Promise<Span> {
+  async get(spanUuid: string): Promise<Span> {
     return this.api.sendRequest<Span>(
       HttpMethods.GET,
       Endpoints.SPAN_ENDPOINT,

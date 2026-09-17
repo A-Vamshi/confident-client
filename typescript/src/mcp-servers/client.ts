@@ -30,10 +30,7 @@ export class McpServersClient {
    * @param pageSize The number of results per page, at most 100. Defaults to
    *   25.
    */
-  async listMcpServers(
-    page?: number,
-    pageSize?: number,
-  ): Promise<McpServerList> {
+  async list(page?: number, pageSize?: number): Promise<McpServerList> {
     return this.api.sendRequest<McpServerList>(
       HttpMethods.GET,
       Endpoints.MCP_SERVERS_ENDPOINT,
@@ -62,7 +59,7 @@ export class McpServersClient {
    * @param args The arguments passed to `command`. `STDIO` transport only. This
    *   list is stored as a whole rather than appended to.
    */
-  async createMcpServer(
+  async create(
     name: string,
     transport: McpServerTransport,
     description?: string | null,
@@ -101,7 +98,7 @@ export class McpServersClient {
    *
    * @param mcpServerId The id of the MCP server.
    */
-  async getMcpServer(mcpServerId: string): Promise<McpServer> {
+  async get(mcpServerId: string): Promise<McpServer> {
     return this.api.sendRequest<McpServer>(
       HttpMethods.GET,
       Endpoints.MCP_SERVER_ENDPOINT,
@@ -134,7 +131,7 @@ export class McpServersClient {
    * @param args The arguments passed to `command`. `STDIO` transport only. This
    *   list is stored as a whole rather than appended to.
    */
-  async updateMcpServer(
+  async update(
     mcpServerId: string,
     name?: string,
     transport?: McpServerTransport,
@@ -174,7 +171,7 @@ export class McpServersClient {
    *
    * @param mcpServerId The id of the MCP server.
    */
-  async deleteMcpServer(mcpServerId: string): Promise<McpServerRef> {
+  async delete(mcpServerId: string): Promise<McpServerRef> {
     return this.api.sendRequest<McpServerRef>(
       HttpMethods.DELETE,
       Endpoints.MCP_SERVER_ENDPOINT,
@@ -193,7 +190,7 @@ export class McpServersClient {
    *
    * @param mcpServerId The id of the MCP server.
    */
-  async connectMcpServer(mcpServerId: string): Promise<McpServerConnection> {
+  async connect(mcpServerId: string): Promise<McpServerConnection> {
     return this.api.sendRequest<McpServerConnection>(
       HttpMethods.POST,
       Endpoints.MCP_SERVER_CONNECT_ENDPOINT,

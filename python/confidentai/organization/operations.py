@@ -22,7 +22,7 @@ from confidentai.organization.types import (
 class OrganizationOperations:
     _api: Api
 
-    def get_organization(self) -> Organization:
+    def get(self) -> Organization:
         """Retrieve Organization
 
         Retrieves the organization your API key is scoped to. Every other admin
@@ -36,7 +36,7 @@ class OrganizationOperations:
             response_schema=Organization,
         )
 
-    async def a_get_organization(self) -> Organization:
+    async def a_get(self) -> Organization:
         """Retrieve Organization
 
         Retrieves the organization your API key is scoped to. Every other admin
@@ -50,7 +50,7 @@ class OrganizationOperations:
             response_schema=Organization,
         )
 
-    def update_organization(self, name: str) -> Organization:
+    def update(self, name: str) -> Organization:
         """Update Organization
 
         Renames the organization and returns it as stored. The name is the only
@@ -69,7 +69,7 @@ class OrganizationOperations:
             body={"name": name},
         )
 
-    async def a_update_organization(self, name: str) -> Organization:
+    async def a_update(self, name: str) -> Organization:
         """Update Organization
 
         Renames the organization and returns it as stored. The name is the only
@@ -88,7 +88,7 @@ class OrganizationOperations:
             body={"name": name},
         )
 
-    def update_organization_model_credentials(
+    def update_model_credentials(
         self,
         provider: ModelProvider,
         *,
@@ -142,7 +142,7 @@ class OrganizationOperations:
             },
         )
 
-    async def a_update_organization_model_credentials(
+    async def a_update_model_credentials(
         self,
         provider: ModelProvider,
         *,
@@ -196,7 +196,7 @@ class OrganizationOperations:
             },
         )
 
-    def list_organization_permissions(self) -> PermissionList:
+    def list_permissions(self) -> PermissionList:
         """List Organization Permissions
 
         Lists every organization permission an organization policy can grant.
@@ -215,7 +215,7 @@ class OrganizationOperations:
             response_schema=PermissionList,
         )
 
-    async def a_list_organization_permissions(self) -> PermissionList:
+    async def a_list_permissions(self) -> PermissionList:
         """List Organization Permissions
 
         Lists every organization permission an organization policy can grant.

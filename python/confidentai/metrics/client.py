@@ -23,7 +23,7 @@ class MetricsClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_metrics(self) -> MetricList:
+    def list(self) -> MetricList:
         """List Metrics
 
         Lists all the custom metrics in your Confident AI project.
@@ -34,7 +34,7 @@ class MetricsClient:
             response_schema=MetricList,
         )
 
-    async def a_list_metrics(self) -> MetricList:
+    async def a_list(self) -> MetricList:
         """List Metrics
 
         Lists all the custom metrics in your Confident AI project.
@@ -45,7 +45,7 @@ class MetricsClient:
             response_schema=MetricList,
         )
 
-    def create_metric(
+    def create(
         self,
         name: str,
         *,
@@ -94,7 +94,7 @@ class MetricsClient:
             },
         )
 
-    async def a_create_metric(
+    async def a_create(
         self,
         name: str,
         *,
@@ -143,7 +143,7 @@ class MetricsClient:
             },
         )
 
-    def get_metric(self, metric_id: str) -> Metric:
+    def get(self, metric_id: str) -> Metric:
         """Pull Metric
 
         Retrieves a custom metric by id so it can be run locally. The metric
@@ -160,7 +160,7 @@ class MetricsClient:
             path={"metricId": metric_id},
         )
 
-    async def a_get_metric(self, metric_id: str) -> Metric:
+    async def a_get(self, metric_id: str) -> Metric:
         """Pull Metric
 
         Retrieves a custom metric by id so it can be run locally. The metric
@@ -177,7 +177,7 @@ class MetricsClient:
             path={"metricId": metric_id},
         )
 
-    def update_metric(
+    def update(
         self,
         metric_id: str,
         *,
@@ -216,7 +216,7 @@ class MetricsClient:
             path={"metricId": metric_id},
         )
 
-    async def a_update_metric(
+    async def a_update(
         self,
         metric_id: str,
         *,

@@ -32,7 +32,7 @@ export class VulnerabilitiesClient {
    *   ships; when false, only the ones your project defined. Omit to return
    *   both.
    */
-  async listVulnerabilities(
+  async list(
     page?: number,
     pageSize?: number,
     category?: string,
@@ -63,7 +63,7 @@ export class VulnerabilitiesClient {
    *   applying `criteria`.
    * @param evaluationExamples Worked examples that steer the evaluator.
    */
-  async createVulnerability(
+  async create(
     name: string,
     criteria: string,
     vulnerabilityTypes: string[],
@@ -97,7 +97,7 @@ export class VulnerabilitiesClient {
    * @param vulnerabilityId The id of the vulnerability, as the list returns it.
    *   A built-in's catalog name also resolves.
    */
-  async getVulnerability(vulnerabilityId: string): Promise<Vulnerability> {
+  async get(vulnerabilityId: string): Promise<Vulnerability> {
     return this.api.sendRequest<Vulnerability>(
       HttpMethods.GET,
       Endpoints.VULNERABILITY_ENDPOINT,
@@ -126,7 +126,7 @@ export class VulnerabilitiesClient {
    *   applying `criteria`.
    * @param evaluationExamples Worked examples that steer the evaluator.
    */
-  async updateVulnerability(
+  async update(
     vulnerabilityId: string,
     name?: string,
     description?: string | null,
@@ -162,9 +162,7 @@ export class VulnerabilitiesClient {
    * @param vulnerabilityId The id of the vulnerability, as the list returns it.
    *   A built-in's catalog name also resolves.
    */
-  async deleteVulnerability(
-    vulnerabilityId: string,
-  ): Promise<VulnerabilityRef> {
+  async delete(vulnerabilityId: string): Promise<VulnerabilityRef> {
     return this.api.sendRequest<VulnerabilityRef>(
       HttpMethods.DELETE,
       Endpoints.VULNERABILITY_ENDPOINT,

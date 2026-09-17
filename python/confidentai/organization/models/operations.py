@@ -14,7 +14,7 @@ from confidentai.organization.types import UpdateOrganizationModelRequest
 class ModelsOperations:
     _api: Api
 
-    def get_organization_model(
+    def get_model(
         self, *, type: Literal["PLATFORM", "SIMULATION"]
     ) -> Optional[Model]:
         """Get Organization Model
@@ -41,7 +41,7 @@ class ModelsOperations:
             query={"type": type},
         )
 
-    async def a_get_organization_model(
+    async def a_get_model(
         self, *, type: Literal["PLATFORM", "SIMULATION"]
     ) -> Optional[Model]:
         """Get Organization Model
@@ -68,7 +68,7 @@ class ModelsOperations:
             query={"type": type},
         )
 
-    def update_organization_model(
+    def update_model(
         self,
         model_type: str,
         provider: ModelProvider,
@@ -117,7 +117,7 @@ class ModelsOperations:
             path={"modelType": model_type},
         )
 
-    async def a_update_organization_model(
+    async def a_update_model(
         self,
         model_type: str,
         provider: ModelProvider,

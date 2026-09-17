@@ -14,7 +14,7 @@ from confidentai.projects.types import ProjectRole, ProjectRoleList
 class RolesOperations:
     _api: Api
 
-    def list_project_roles(self, project_id: str) -> ProjectRoleList:
+    def list_roles(self, project_id: str) -> ProjectRoleList:
         """List Project Roles
 
         Lists every role a member of this project can be given: the custom roles
@@ -37,7 +37,7 @@ class RolesOperations:
             path={"projectId": project_id},
         )
 
-    async def a_list_project_roles(self, project_id: str) -> ProjectRoleList:
+    async def a_list_roles(self, project_id: str) -> ProjectRoleList:
         """List Project Roles
 
         Lists every role a member of this project can be given: the custom roles
@@ -60,7 +60,7 @@ class RolesOperations:
             path={"projectId": project_id},
         )
 
-    def create_project_role(
+    def create_role(
         self,
         project_id: str,
         name: str,
@@ -106,7 +106,7 @@ class RolesOperations:
             path={"projectId": project_id},
         )
 
-    async def a_create_project_role(
+    async def a_create_role(
         self,
         project_id: str,
         name: str,
@@ -152,7 +152,7 @@ class RolesOperations:
             path={"projectId": project_id},
         )
 
-    def update_project_role(
+    def update_role(
         self,
         project_id: str,
         role_id: str,
@@ -202,7 +202,7 @@ class RolesOperations:
             path={"projectId": project_id, "roleId": role_id},
         )
 
-    async def a_update_project_role(
+    async def a_update_role(
         self,
         project_id: str,
         role_id: str,
@@ -252,7 +252,7 @@ class RolesOperations:
             path={"projectId": project_id, "roleId": role_id},
         )
 
-    def delete_project_role(self, project_id: str, role_id: str) -> RoleRef:
+    def delete_role(self, project_id: str, role_id: str) -> RoleRef:
         """Delete Project Role
 
         Permanently deletes a custom project role. A role that is still assigned
@@ -275,9 +275,7 @@ class RolesOperations:
             path={"projectId": project_id, "roleId": role_id},
         )
 
-    async def a_delete_project_role(
-        self, project_id: str, role_id: str
-    ) -> RoleRef:
+    async def a_delete_role(self, project_id: str, role_id: str) -> RoleRef:
         """Delete Project Role
 
         Permanently deletes a custom project role. A role that is still assigned

@@ -35,7 +35,7 @@ export class ModelsOperations extends MembersOperations {
    *   organization your API key is scoped to.
    * @param type Which of the project's models to read.
    */
-  async getProjectModel(
+  async getModel(
     projectId: string,
     type:
       | "EVALUATION"
@@ -83,7 +83,7 @@ export class ModelsOperations extends MembersOperations {
    *   Confident AI platform. Pass a UpdateEvaluationProjectModelRequest or a
    *   UpdatePlatformProjectModelRequest, from confidentai.projects.types.
    */
-  async updateProjectModel(
+  async updateModel(
     projectId: string,
     modelType: string,
     modelConfig: UpdateProjectModelRequest,
@@ -108,7 +108,7 @@ export class ModelsOperations extends MembersOperations {
    *   organization your API key is scoped to.
    * @param modelType Which of the project's models to act on.
    */
-  async deleteProjectModel(
+  async deleteModel(
     projectId: string,
     modelType: string,
   ): Promise<ClearProjectModelResult> {

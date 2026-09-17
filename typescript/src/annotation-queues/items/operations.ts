@@ -30,7 +30,7 @@ export class ItemsOperations extends AnnotationQueuesOperations {
    * @param status Returns only items in this state. Omit to return every item
    *   whatever its state.
    */
-  async listAnnotationQueueItems(
+  async listItems(
     annotationQueueId: string,
     page?: number,
     pageSize?: number,
@@ -59,7 +59,7 @@ export class ItemsOperations extends AnnotationQueuesOperations {
    *   Pass one of AddTraceQueueItemsRequest, AddSpanQueueItemsRequest,
    *   AddThreadQueueItemsRequest, from confidentai.annotation_queues.types.
    */
-  async addAnnotationQueueItems(
+  async addItems(
     annotationQueueId: string,
     items: AddQueueItemsRequest,
   ): Promise<AddedQueueItems> {
@@ -93,7 +93,7 @@ export class ItemsOperations extends AnnotationQueuesOperations {
    * @param markAsCompleted Whether to mark the item annotated, taking it out of
    *   the pending list. Defaults to true.
    */
-  async annotateAnnotationQueueItem(
+  async annotateItem(
     annotationQueueId: string,
     queueItemId: string,
     annotations?: QueueItemAnnotation[],

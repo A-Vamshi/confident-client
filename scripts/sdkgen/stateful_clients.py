@@ -11,6 +11,8 @@ returning, which send a body built from it, and which methods have no
 operation behind them at all.
 """
 
+import re
+
 from typing import Any, Dict, List, Optional, Sequence, Set, Tuple
 
 import yaml
@@ -183,6 +185,18 @@ class Handle:
         return annotation
 
     # ===== What the handle holds =====
+
+    def aliased(self, annotation: str) -> str:
+        """An annotation, with the payload type's alias in place of its name.
+
+        A resource whose pulled shape is named after its handle — `Project`
+        returning a `Project` — imports the shape as `<name>Payload`, because
+        the class being defined has taken the name. Every annotation that
+        mentions it has to follow, or it resolves to the half-built class.
+        """
+        return re.sub(
+            rf"\b{self.name}\b", f"{self.name}Payload", annotation
+        )
 
     def state_fields(self) -> List[Tuple[str, str]]:
         """Every field the handle holds.
@@ -464,7 +478,8 @@ class Handle:
             lines.append("")
             lines.append(
                 f"    {'async def a_' if is_async else 'def '}{exposed}"
-                f"({', '.join(method.signature(skip=(held,)))}) -> {method.returns}:"
+                f"({', '.join(self.aliased(a) for a in method.signature(skip=(held,)))})"
+                f" -> {self.aliased(method.returns)}:"
             )
             lines.extend(
                 render_docstring(
@@ -504,8 +519,8 @@ class Handle:
         )
         lines.append(
             f"  async {camel_case(exposed)}"
-            f"({', '.join(method.ts_signature(skip=(held,)))})"
-            f": Promise<{method.ts_returns}> {{"
+            f"({', '.join(self.aliased(a) for a in method.ts_signature(skip=(held,)))})"
+            f": Promise<{self.aliased(method.ts_returns)}> {{"
         )
         lines.append(
             f"    return this.client.{method.ts_name}({', '.join(arguments)});"
@@ -587,7 +602,8 @@ class Handle:
             lines.append("")
             lines.append(
                 f"    {'async def a_' if is_async else 'def '}{exposed}"
-                f"(self, {argument}: {carried}) -> {method.returns}:"
+                f"(self, {argument}: {self.aliased(carried)}) -> "
+                f"{self.aliased(method.returns)}:"
             )
             lines.extend(
                 render_docstring(
@@ -657,8 +673,8 @@ class Handle:
             )
         )
         lines.append(
-            f"  async {camel_case(exposed)}({argument}: {carried})"
-            f": Promise<{method.ts_returns}> {{"
+            f"  async {camel_case(exposed)}({argument}: {self.aliased(carried)})"
+            f": Promise<{self.aliased(method.ts_returns)}> {{"
         )
         lines.append(
             f"    return this.client.{method.ts_name}({', '.join(call)});"
@@ -1033,7 +1049,12 @@ class Handle:
 
         body_method = f"_{exposed}_body"
         whole = any(p.source == "union-body" for p in method.parameters)
-        spread = [f"body.{p.name}" for p in method.parameters if not p.keyword]
+        identity = f"self._{self.identity['field']}()"
+        spread = [
+            identity if p.source == "path" else f"body.{p.name}"
+            for p in method.parameters
+            if not p.keyword
+        ]
         spread += [
             f"{p.name}=body.{p.name}" for p in method.parameters if p.keyword
         ]
@@ -1046,14 +1067,19 @@ class Handle:
             lines.append("")
             lines.append(
                 f"    {'async def a_' if is_async else 'def '}{exposed}"
-                f"({', '.join(signature)}) -> {method.returns}:"
+                f"({', '.join(signature)}) -> {self.aliased(method.returns)}:"
             )
             lines.extend(
                 render_docstring(
                     summary, description, documented, " " * 8, self.descriptive
                 )
             )
-            sent = f"self.{body_method}({call})" if whole else ", ".join(spread)
+            held = [identity for p in method.parameters if p.source == "path"]
+            sent = (
+                ", ".join(held + [f"self.{body_method}({call})"])
+                if whole
+                else ", ".join(spread)
+            )
             if not whole:
                 lines.append(f"        body = self.{body_method}({call})")
             lines.append(
@@ -1101,24 +1127,32 @@ class Handle:
         )
         lines.append(
             f"  async {camel_case(exposed)}({signature})"
-            f": Promise<{method.ts_returns}> {{"
+            f": Promise<{self.aliased(method.ts_returns)}> {{"
         )
         call = ", ".join(f"options.{name}" for name in arguments)
         whole = any(p.source == "union-body" for p in method.parameters)
         ordered = [p for p in method.parameters if p.required]
         ordered += [p for p in method.parameters if not p.required]
+        identity = f"this.{camel_case(self.identity['field'])}OrThrow()"
+        held = [identity for p in method.parameters if p.source == "path"]
         if whole:
+            sent = held + [f"this.{camel_case(exposed)}Body({call})"]
             lines.append(
-                f"    const result = await this.client.{method.ts_name}"
-                f"(this.{camel_case(exposed)}Body({call}));"
+                f"    const result = await this.client.{method.ts_name}("
+                + ", ".join(sent)
+                + ");"
             )
         else:
             lines.append(
                 f"    const body = this.{camel_case(exposed)}Body({call});"
             )
+            sent = [
+                identity if p.source == "path" else f"body.{p.ts_name}"
+                for p in ordered
+            ]
             lines.append(
                 f"    const result = await this.client.{method.ts_name}("
-                + ", ".join(f"body.{p.ts_name}" for p in ordered)
+                + ", ".join(sent)
                 + ");"
             )
         for handle_field, wire in mapping.items():
@@ -1160,7 +1194,10 @@ class Handle:
             )
         ]
 
-        lines = ["", f"    def {name}({', '.join(signature)}) -> {sends}:"]
+        lines = [
+            "",
+            f"    def {name}({', '.join(signature)}) -> {self.aliased(sends)}:",
+        ]
         for field in shared:
             if field in required:
                 lines.extend(
@@ -1249,7 +1286,8 @@ class Handle:
 
         lines = [
             "",
-            f"  private {camel_case(exposed)}Body({parameters}): {sends} {{",
+            f"  private {camel_case(exposed)}Body({parameters}): "
+            f"{self.aliased(sends)} {{",
         ]
         for field in shared:
             if field in required:
@@ -1329,7 +1367,8 @@ class Handle:
 
         lines = [
             "",
-            f"    def {name}(self, {argument}: {carried}) -> {sends}:",
+            f"    def {name}(self, {argument}: {self.aliased(carried)}) -> "
+            f"{self.aliased(sends)}:",
             f"        fields = {argument}.model_dump(",
             '            mode="json", by_alias=True, exclude_none=True',
             "        )",
@@ -1392,7 +1431,8 @@ class Handle:
         name = camel_case(name)
         lines = [
             "",
-            f"  private {name}({argument}: {carried}): {sends} {{",
+            f"  private {name}({argument}: {self.aliased(carried)}): "
+            f"{self.aliased(sends)} {{",
             f"    const source = {argument} as unknown as "
             "Record<string, unknown>;",
             "    const fields = { ...source };",
@@ -1447,7 +1487,7 @@ class Handle:
         read = f"{argument}.{snake_case(key)}"
         return [
             "",
-            f"    def {name}(self, {argument}: {carried}) -> str:",
+            f"    def {name}(self, {argument}: {self.aliased(carried)}) -> str:",
             f"        if {read} is None:",
             "            raise ValueError(",
             f'                "{self.refusal(argument, snake_case(key))}"',
@@ -1462,7 +1502,7 @@ class Handle:
         read = f"{argument}.{camel_case(key)}"
         return [
             "",
-            f"  private {camel_case(name)}OrThrow({argument}: {carried})"
+            f"  private {camel_case(name)}OrThrow({argument}: {self.aliased(carried)})"
             ": string {",
             f"    if ({read} === undefined) {{",
             "      throw new Error(",
@@ -1845,7 +1885,9 @@ def render_ts_stateful_clients(
                 "",
                 f"  {config['client_method']['name']}(",
                 f"    {identity}?: string,",
-                f"    options: {{ {options} }} = {{}},",
+            ]
+            + ([f"    options: {{ {options} }} = {{}},"] if takes else [])
+            + [
                 f"  ): {config['class']} {{",
                 f"    return new {config['class']}(this.api(ApiKeyKind.{kind}), {{",
                 f"      {identity},",
@@ -1906,8 +1948,8 @@ def render_stateful_clients(
                 f"    def {config['client_method']['name']}(",
                 "        self,",
                 f"        {identity['field']}: Optional[str] = None,",
-                "        *,",
             ]
+            + (["        *,"] if opened[1:] else [])
             + [f"        {seed}: Optional[str] = None," for seed in opened[1:]]
             + [
                 f'    ) -> "{config["class"]}":',

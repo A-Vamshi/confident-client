@@ -23,7 +23,7 @@ from confidentai.rt_frameworks.types import (
 class RTFrameworksOperations:
     _api: Api
 
-    def list_rt_frameworks(
+    def list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> RTFrameworkList:
         """List RT Frameworks
@@ -45,7 +45,7 @@ class RTFrameworksOperations:
             query={"page": page, "pageSize": page_size},
         )
 
-    async def a_list_rt_frameworks(
+    async def a_list(
         self, *, page: Optional[int] = None, page_size: Optional[int] = None
     ) -> RTFrameworkList:
         """List RT Frameworks
@@ -67,7 +67,7 @@ class RTFrameworksOperations:
             query={"page": page, "pageSize": page_size},
         )
 
-    def create_rt_framework(
+    def create(
         self,
         name: str,
         *,
@@ -100,7 +100,7 @@ class RTFrameworksOperations:
             },
         )
 
-    async def a_create_rt_framework(
+    async def a_create(
         self,
         name: str,
         *,
@@ -133,7 +133,7 @@ class RTFrameworksOperations:
             },
         )
 
-    def get_rt_framework(self, rt_framework_id: str) -> RTFramework:
+    def get(self, rt_framework_id: str) -> RTFramework:
         """Get RT Framework
 
         Retrieves a red teaming framework by id, with each risk category
@@ -150,7 +150,7 @@ class RTFrameworksOperations:
             path={"rtFrameworkId": rt_framework_id},
         )
 
-    async def a_get_rt_framework(self, rt_framework_id: str) -> RTFramework:
+    async def a_get(self, rt_framework_id: str) -> RTFramework:
         """Get RT Framework
 
         Retrieves a red teaming framework by id, with each risk category
@@ -167,7 +167,7 @@ class RTFrameworksOperations:
             path={"rtFrameworkId": rt_framework_id},
         )
 
-    def update_rt_framework(
+    def update(
         self,
         rt_framework_id: str,
         *,
@@ -193,7 +193,7 @@ class RTFrameworksOperations:
             path={"rtFrameworkId": rt_framework_id},
         )
 
-    async def a_update_rt_framework(
+    async def a_update(
         self,
         rt_framework_id: str,
         *,
@@ -219,7 +219,7 @@ class RTFrameworksOperations:
             path={"rtFrameworkId": rt_framework_id},
         )
 
-    def delete_rt_framework(self, rt_framework_id: str) -> RTFrameworkRef:
+    def delete(self, rt_framework_id: str) -> RTFrameworkRef:
         """Delete RT Framework
 
         Permanently deletes a red teaming framework and its risk categories.
@@ -235,9 +235,7 @@ class RTFrameworksOperations:
             path={"rtFrameworkId": rt_framework_id},
         )
 
-    async def a_delete_rt_framework(
-        self, rt_framework_id: str
-    ) -> RTFrameworkRef:
+    async def a_delete(self, rt_framework_id: str) -> RTFrameworkRef:
         """Delete RT Framework
 
         Permanently deletes a red teaming framework and its risk categories.
@@ -253,7 +251,7 @@ class RTFrameworksOperations:
             path={"rtFrameworkId": rt_framework_id},
         )
 
-    def run_rt_framework(
+    def run(
         self,
         rt_framework_id: str,
         risk_categories: List[str],
@@ -305,7 +303,7 @@ class RTFrameworksOperations:
             path={"rtFrameworkId": rt_framework_id},
         )
 
-    async def a_run_rt_framework(
+    async def a_run(
         self,
         rt_framework_id: str,
         risk_categories: List[str],

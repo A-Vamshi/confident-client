@@ -143,3 +143,54 @@ datasets:
         goldens: PushGolden
       response_mapping:
         dataset_id: id
+
+projects:
+  class: Project
+
+  client_method:
+    name: project
+
+  identity:
+    field: project_id
+    parameter: projectId
+
+  delegate:
+    delete: deleteProject
+    list_api_keys: listProjectApiKeys
+    create_api_key: createProjectApiKey
+    get_api_key: getProjectApiKey
+    update_api_key: updateProjectApiKey
+    delete_api_key: deleteProjectApiKey
+    rotate_api_key: rotateProjectApiKey
+    list_members: listProjectMembers
+    update_member_role: updateProjectMemberRole
+    remove_member: removeProjectMember
+    list_invitations: listProjectInvitations
+    create_invitations: createProjectInvitations
+    resend_invitation: resendProjectInvitation
+    delete_invitation: deleteProjectInvitation
+    list_permissions: listProjectPermissions
+    list_policies: listProjectPolicies
+    create_policy: createProjectPolicy
+    update_policy: updateProjectPolicy
+    delete_policy: deleteProjectPolicy
+    list_roles: listProjectRoles
+    create_role: createProjectRole
+    update_role: updateProjectRole
+    delete_role: deleteProjectRole
+    get_model: getProjectModel
+    update_model: updateProjectModel
+    delete_model: deleteProjectModel
+    update_model_credentials: updateProjectModelCredentials
+    create_audit_log_export: createProjectAuditLogExport
+    get_audit_log_export: getProjectAuditLogExport
+
+  load:
+    get:
+      operation: getProject
+
+  save:
+    update:
+      operation: updateProject
+      response_mapping:
+        project_id: id

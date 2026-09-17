@@ -28,7 +28,7 @@ export class EvaluationRulesClient {
    * @param pageSize The number of results per page, at most 100. Defaults to
    *   25.
    */
-  async listEvaluationRules(
+  async list(
     dataModel?: EvaluationRuleDataModel,
     page?: number,
     pageSize?: number,
@@ -70,7 +70,7 @@ export class EvaluationRulesClient {
    * @param overwriteEvals Re-evaluate items that already have results for this
    *   metric collection instead of skipping them. Defaults to false.
    */
-  async createEvaluationRule(
+  async create(
     name: string,
     dataModel: EvaluationRuleDataModel,
     metricCollectionId: string,
@@ -110,7 +110,7 @@ export class EvaluationRulesClient {
    *
    * @param evaluationRuleId The id of the evaluation rule.
    */
-  async getEvaluationRule(evaluationRuleId: string): Promise<EvaluationRule> {
+  async get(evaluationRuleId: string): Promise<EvaluationRule> {
     return this.api.sendRequest<EvaluationRule>(
       HttpMethods.GET,
       Endpoints.EVALUATION_RULE_ENDPOINT,
@@ -146,7 +146,7 @@ export class EvaluationRulesClient {
    * @param overwriteEvals Re-evaluate items that already have results for this
    *   metric collection instead of skipping them. Defaults to false.
    */
-  async updateEvaluationRule(
+  async update(
     evaluationRuleId: string,
     name?: string,
     enabled?: boolean,
@@ -188,9 +188,7 @@ export class EvaluationRulesClient {
    *
    * @param evaluationRuleId The id of the evaluation rule.
    */
-  async deleteEvaluationRule(
-    evaluationRuleId: string,
-  ): Promise<EvaluationRuleRef> {
+  async delete(evaluationRuleId: string): Promise<EvaluationRuleRef> {
     return this.api.sendRequest<EvaluationRuleRef>(
       HttpMethods.DELETE,
       Endpoints.EVALUATION_RULE_ENDPOINT,

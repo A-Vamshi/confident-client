@@ -19,7 +19,7 @@ class AttackMethodsClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_attack_methods(
+    def list(
         self,
         *,
         page: Optional[int] = None,
@@ -51,7 +51,7 @@ class AttackMethodsClient:
             },
         )
 
-    async def a_list_attack_methods(
+    async def a_list(
         self,
         *,
         page: Optional[int] = None,
@@ -83,7 +83,7 @@ class AttackMethodsClient:
             },
         )
 
-    def get_attack_method(self, attack_method_id: str) -> AttackMethod:
+    def get(self, attack_method_id: str) -> AttackMethod:
         """Get Attack Method
 
         Retrieves an attack method by id, with the parameters it takes and the
@@ -100,7 +100,7 @@ class AttackMethodsClient:
             path={"attackMethodId": attack_method_id},
         )
 
-    async def a_get_attack_method(self, attack_method_id: str) -> AttackMethod:
+    async def a_get(self, attack_method_id: str) -> AttackMethod:
         """Get Attack Method
 
         Retrieves an attack method by id, with the parameters it takes and the
@@ -117,7 +117,7 @@ class AttackMethodsClient:
             path={"attackMethodId": attack_method_id},
         )
 
-    def update_attack_method(
+    def update(
         self, attack_method_id: str, parameters: Dict[str, Any]
     ) -> AttackMethod:
         """Update Attack Method
@@ -144,7 +144,7 @@ class AttackMethodsClient:
             path={"attackMethodId": attack_method_id},
         )
 
-    async def a_update_attack_method(
+    async def a_update(
         self, attack_method_id: str, parameters: Dict[str, Any]
     ) -> AttackMethod:
         """Update Attack Method
@@ -171,7 +171,7 @@ class AttackMethodsClient:
             path={"attackMethodId": attack_method_id},
         )
 
-    def reset_attack_method(self, attack_method_id: str) -> AttackMethodRef:
+    def reset(self, attack_method_id: str) -> AttackMethodRef:
         """Reset Attack Method
 
         Clears your project's configuration of an attack method, so it runs with
@@ -190,9 +190,7 @@ class AttackMethodsClient:
             path={"attackMethodId": attack_method_id},
         )
 
-    async def a_reset_attack_method(
-        self, attack_method_id: str
-    ) -> AttackMethodRef:
+    async def a_reset(self, attack_method_id: str) -> AttackMethodRef:
         """Reset Attack Method
 
         Clears your project's configuration of an attack method, so it runs with

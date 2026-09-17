@@ -18,7 +18,7 @@ from confidentai.prompts.types import (
 class VersionsOperations:
     _api: Api
 
-    def get_prompt_versions(self, prompt_id: str) -> PromptVersionList:
+    def get_versions(self, prompt_id: str) -> PromptVersionList:
         """List Prompt Versions
 
         Lists every version released for the prompt, oldest first.
@@ -33,7 +33,7 @@ class VersionsOperations:
             path={"promptId": prompt_id},
         )
 
-    async def a_get_prompt_versions(self, prompt_id: str) -> PromptVersionList:
+    async def a_get_versions(self, prompt_id: str) -> PromptVersionList:
         """List Prompt Versions
 
         Lists every version released for the prompt, oldest first.
@@ -96,7 +96,7 @@ class VersionsOperations:
             path={"promptId": prompt_id},
         )
 
-    def get_prompt_by_version(self, prompt_id: str, version: str) -> Prompt:
+    def get_by_version(self, prompt_id: str, version: str) -> Prompt:
         """Pull Prompt by Version
 
         Retrieves the prompt commit released as `version`.
@@ -112,9 +112,7 @@ class VersionsOperations:
             path={"promptId": prompt_id, "version": version},
         )
 
-    async def a_get_prompt_by_version(
-        self, prompt_id: str, version: str
-    ) -> Prompt:
+    async def a_get_by_version(self, prompt_id: str, version: str) -> Prompt:
         """Pull Prompt by Version
 
         Retrieves the prompt commit released as `version`.

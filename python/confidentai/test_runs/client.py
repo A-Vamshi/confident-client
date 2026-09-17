@@ -22,7 +22,7 @@ class TestRunsClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_test_runs(
+    def list(
         self,
         *,
         page: Optional[int] = None,
@@ -74,7 +74,7 @@ class TestRunsClient:
             },
         )
 
-    async def a_list_test_runs(
+    async def a_list(
         self,
         *,
         page: Optional[int] = None,
@@ -126,7 +126,7 @@ class TestRunsClient:
             },
         )
 
-    def create_test_run(
+    def create(
         self,
         *,
         metric_collection: Optional[str] = None,
@@ -157,7 +157,7 @@ class TestRunsClient:
             },
         )
 
-    async def a_create_test_run(
+    async def a_create(
         self,
         *,
         metric_collection: Optional[str] = None,
@@ -310,7 +310,7 @@ class TestRunsClient:
             path={"testCaseId": test_case_id},
         )
 
-    def get_test_run(self, test_run_id: str) -> TestRun:
+    def get(self, test_run_id: str) -> TestRun:
         """Get Test Run
 
         Retrieves a test run with its aggregated metric scores and every test
@@ -328,7 +328,7 @@ class TestRunsClient:
             path={"testRunId": test_run_id},
         )
 
-    async def a_get_test_run(self, test_run_id: str) -> TestRun:
+    async def a_get(self, test_run_id: str) -> TestRun:
         """Get Test Run
 
         Retrieves a test run with its aggregated metric scores and every test

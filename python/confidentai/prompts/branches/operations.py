@@ -17,7 +17,7 @@ from confidentai.prompts.types import (
 class BranchesOperations:
     _api: Api
 
-    def get_prompt_branches(self, prompt_id: str) -> PromptBranchList:
+    def get_branches(self, prompt_id: str) -> PromptBranchList:
         """List Prompt Branches
 
         Lists the branches of the prompt.
@@ -32,7 +32,7 @@ class BranchesOperations:
             path={"promptId": prompt_id},
         )
 
-    async def a_get_prompt_branches(self, prompt_id: str) -> PromptBranchList:
+    async def a_get_branches(self, prompt_id: str) -> PromptBranchList:
         """List Prompt Branches
 
         Lists the branches of the prompt.
@@ -47,7 +47,7 @@ class BranchesOperations:
             path={"promptId": prompt_id},
         )
 
-    def create_prompt_branch(self, prompt_id: str, name: str) -> PromptBranch:
+    def create_branch(self, prompt_id: str, name: str) -> PromptBranch:
         """Create Prompt Branch
 
         Creates a branch of the prompt diverging from the head commit of `main`.
@@ -66,9 +66,7 @@ class BranchesOperations:
             path={"promptId": prompt_id},
         )
 
-    async def a_create_prompt_branch(
-        self, prompt_id: str, name: str
-    ) -> PromptBranch:
+    async def a_create_branch(self, prompt_id: str, name: str) -> PromptBranch:
         """Create Prompt Branch
 
         Creates a branch of the prompt diverging from the head commit of `main`.
@@ -87,7 +85,7 @@ class BranchesOperations:
             path={"promptId": prompt_id},
         )
 
-    def update_prompt_branch(
+    def update_branch(
         self, prompt_id: str, branch_id: str, name: str
     ) -> PromptBranchRef:
         """Update Prompt Branch
@@ -109,7 +107,7 @@ class BranchesOperations:
             path={"promptId": prompt_id, "branchId": branch_id},
         )
 
-    async def a_update_prompt_branch(
+    async def a_update_branch(
         self, prompt_id: str, branch_id: str, name: str
     ) -> PromptBranchRef:
         """Update Prompt Branch
@@ -131,9 +129,7 @@ class BranchesOperations:
             path={"promptId": prompt_id, "branchId": branch_id},
         )
 
-    def delete_prompt_branch(
-        self, prompt_id: str, branch_id: str
-    ) -> PromptBranchRef:
+    def delete_branch(self, prompt_id: str, branch_id: str) -> PromptBranchRef:
         """Delete Prompt Branch
 
         Deletes a branch of the prompt. The `main` branch, branches with open
@@ -151,7 +147,7 @@ class BranchesOperations:
             path={"promptId": prompt_id, "branchId": branch_id},
         )
 
-    async def a_delete_prompt_branch(
+    async def a_delete_branch(
         self, prompt_id: str, branch_id: str
     ) -> PromptBranchRef:
         """Delete Prompt Branch

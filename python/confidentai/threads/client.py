@@ -15,7 +15,7 @@ class ThreadsClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def list_threads(
+    def list(
         self,
         *,
         page_size: Optional[int] = None,
@@ -68,7 +68,7 @@ class ThreadsClient:
             },
         )
 
-    async def a_list_threads(
+    async def a_list(
         self,
         *,
         page_size: Optional[int] = None,
@@ -121,7 +121,7 @@ class ThreadsClient:
             },
         )
 
-    def get_thread(self, thread_id: str) -> Thread:
+    def get(self, thread_id: str) -> Thread:
         """Get Thread
 
         Retrieves a thread by id from your Confident AI project, with its
@@ -139,7 +139,7 @@ class ThreadsClient:
             path={"threadId": thread_id},
         )
 
-    async def a_get_thread(self, thread_id: str) -> Thread:
+    async def a_get(self, thread_id: str) -> Thread:
         """Get Thread
 
         Retrieves a thread by id from your Confident AI project, with its

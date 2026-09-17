@@ -28,10 +28,7 @@ export class RTFrameworksOperations {
    * @param pageSize The number of results per page, at most 100. Defaults to
    *   25.
    */
-  async listRtFrameworks(
-    page?: number,
-    pageSize?: number,
-  ): Promise<RTFrameworkList> {
+  async list(page?: number, pageSize?: number): Promise<RTFrameworkList> {
     return this.api.sendRequest<RTFrameworkList>(
       HttpMethods.GET,
       Endpoints.RT_FRAMEWORKS_ENDPOINT,
@@ -53,7 +50,7 @@ export class RTFrameworksOperations {
    *   creates its risk categories with vulnerability types and attack methods
    *   already selected. Omit it for an empty framework.
    */
-  async createRtFramework(
+  async create(
     name: string,
     description?: string | null,
     template?: string,
@@ -74,7 +71,7 @@ export class RTFrameworksOperations {
    *
    * @param rtFrameworkId The id of the red teaming framework.
    */
-  async getRtFramework(rtFrameworkId: string): Promise<RTFramework> {
+  async get(rtFrameworkId: string): Promise<RTFramework> {
     return this.api.sendRequest<RTFramework>(
       HttpMethods.GET,
       Endpoints.RT_FRAMEWORK_ENDPOINT,
@@ -92,7 +89,7 @@ export class RTFrameworksOperations {
    * @param name The name of the framework, unique within the project.
    * @param description What the framework covers. Send null to clear it.
    */
-  async updateRtFramework(
+  async update(
     rtFrameworkId: string,
     name?: string,
     description?: string | null,
@@ -112,7 +109,7 @@ export class RTFrameworksOperations {
    *
    * @param rtFrameworkId The id of the red teaming framework.
    */
-  async deleteRtFramework(rtFrameworkId: string): Promise<RTFrameworkRef> {
+  async delete(rtFrameworkId: string): Promise<RTFrameworkRef> {
     return this.api.sendRequest<RTFrameworkRef>(
       HttpMethods.DELETE,
       Endpoints.RT_FRAMEWORK_ENDPOINT,
@@ -140,7 +137,7 @@ export class RTFrameworksOperations {
    * @param promptCommit The commit hash of the prompt to attack. Requires
    *   `promptAlias`; defaults to its latest commit.
    */
-  async runRtFramework(
+  async run(
     rtFrameworkId: string,
     riskCategories: string[],
     exposure: Level,

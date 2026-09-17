@@ -21,7 +21,7 @@ export class MetricCollectionsClient {
    * Lists all the metric collections in your Confident AI project, each with
    * the metrics inside it.
    */
-  async listMetricCollections(): Promise<MetricCollectionList> {
+  async list(): Promise<MetricCollectionList> {
     return this.api.sendRequest<MetricCollectionList>(
       HttpMethods.GET,
       Endpoints.METRIC_COLLECTIONS_ENDPOINT,
@@ -50,7 +50,7 @@ export class MetricCollectionsClient {
    * @param outputTransformerId The id of a transformer that reshapes the result
    *   after evaluation. Send null to unset it.
    */
-  async createMetricCollection(
+  async create(
     name: string,
     multiTurn?: boolean,
     metricsSettings?: MetricSettingConfig[],
@@ -82,9 +82,7 @@ export class MetricCollectionsClient {
    *
    * @param metricCollectionId The unique id of the metric collection.
    */
-  async getMetricCollection(
-    metricCollectionId: string,
-  ): Promise<MetricCollection> {
+  async get(metricCollectionId: string): Promise<MetricCollection> {
     return this.api.sendRequest<MetricCollection>(
       HttpMethods.GET,
       Endpoints.METRIC_COLLECTION_ENDPOINT,
@@ -113,7 +111,7 @@ export class MetricCollectionsClient {
    * @param outputTransformerId The id of a transformer that reshapes the result
    *   after evaluation. Send null to unset it.
    */
-  async updateMetricCollection(
+  async update(
     metricCollectionId: string,
     name?: string,
     metricsSettings?: MetricSettingConfig[],
@@ -146,9 +144,7 @@ export class MetricCollectionsClient {
    *
    * @param metricCollectionId The unique id of the metric collection.
    */
-  async deleteMetricCollection(
-    metricCollectionId: string,
-  ): Promise<MetricCollectionRef> {
+  async delete(metricCollectionId: string): Promise<MetricCollectionRef> {
     return this.api.sendRequest<MetricCollectionRef>(
       HttpMethods.DELETE,
       Endpoints.METRIC_COLLECTION_ENDPOINT,
