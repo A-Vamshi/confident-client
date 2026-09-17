@@ -1,0 +1,123 @@
+name: OpenAPI SDK Sync
+
+# Regenerates both SDKs from the spec confident-cloud publishes, 
+# and opens a PR when the result differs from main.
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: openapi-sdk-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Regenerate both SDKs from confident-cloud
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout confident-client
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Checkout confident-cloud specs
+        uses: actions/checkout@v4
+        with:
+          repository: confident-ai/confident-cloud
+          ref: main
+          token: ${{ secrets.CLOUD_READ_TOKEN }}
+          path: confident-cloud
+          sparse-checkout: packages/shared/openapi
+
+      - name: Fail if no spec was checked out
+        run: ls confident-cloud/packages/shared/openapi/openapi.yml
+
+      - name: Install Poetry
+        run: pipx install poetry
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: poetry
+          cache-dependency-path: python/poetry.lock
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: typescript/package-lock.json
+
+      - name: Install Python dependencies
+        working-directory: python
+        run: poetry install --no-interaction
+
+      - name: Install TypeScript dependencies
+        working-directory: typescript
+        run: npm ci
+
+      - name: Regenerate both SDKs
+        working-directory: python
+        env:
+          OPENAPI_SPEC_DIR: ${{ github.workspace }}/confident-cloud/packages/shared/openapi
+        run: poetry run python ../scripts/generate_sdk.py
+
+      - name: Check the generator is idempotent
+        working-directory: python
+        env:
+          OPENAPI_SPEC_DIR: ${{ github.workspace }}/confident-cloud/packages/shared/openapi
+        run: poetry run python ../scripts/generate_sdk.py --check
+
+      - name: Verify Python
+        working-directory: python
+        run: |
+          poetry run ruff check .
+          poetry run black --check .
+          poetry run pytest -m "not integration"
+
+      - name: Verify TypeScript
+        working-directory: typescript
+        run: |
+          npx tsc --noEmit
+          npm run format:check
+          npm test
+
+      - name: Detect changes
+        id: diff
+        run: |
+          git add python/confidentai typescript/src
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "source_sha=$(git -C confident-cloud rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update PR
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.CLOUD_READ_TOKEN }}
+          BRANCH: chore/openapi-sdk-sync
+          SOURCE_SHA: ${{ steps.diff.outputs.source_sha }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git commit -m "chore: regenerate the SDKs from confident-cloud"
+          git push --force origin "$BRANCH"
+
+          if [ "$(gh pr list --base main --head "$BRANCH" --state open --json number --jq length)" != "0" ]; then
+            echo "PR for $BRANCH is already open; branch updated."
+            exit 0
+          fi
+
+          gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "chore: regenerate the SDKs from confident-cloud" \
+            --body "$(printf 'Automated regeneration of the Python and TypeScript SDKs from confident-cloud/packages/shared/openapi at confident-ai/confident-cloud@%s.\n\nDo not edit these files by hand. If the diff is wrong, fix the route in confident-cloud; this PR updates on the next scheduled run.\n\nBoth SDKs were linted, typechecked and tested before this PR was opened, and the generator was confirmed idempotent over its own output.' "$SOURCE_SHA")"

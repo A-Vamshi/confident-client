@@ -26,7 +26,7 @@ const PATTERNS: Partial<Record<PromptInterpolationType, RegExp>> = {
   ),
 };
 
-export type Interpolated = string | PromptMessage[];
+export type InterpolatedPrompt = string | PromptMessage[];
 
 interface PromptTemplate {
   type?: PromptType;
@@ -66,7 +66,7 @@ function substitute(
 export function interpolatePrompt(
   prompt: PromptTemplate,
   values: Record<string, unknown>,
-): Interpolated {
+): InterpolatedPrompt {
   if (prompt.type === undefined || prompt.interpolationType === undefined) {
     throw new Error(
       "Prompt has no template to interpolate. Pull it first, or set its text " +

@@ -24,7 +24,7 @@ _PATTERNS: Dict[PromptInterpolationType, Pattern[str]] = {
     ),
 }
 
-Interpolated = Union[str, List[PromptMessage]]
+InterpolatedPrompt = Union[str, List[PromptMessage]]
 
 
 def _substitute(
@@ -50,7 +50,7 @@ def _substitute(
     return pattern.sub(replace, text)
 
 
-def interpolate_prompt(prompt: Any, **values: Any) -> Interpolated:
+def interpolate_prompt(prompt: Any, **values: Any) -> InterpolatedPrompt:
     """Render the prompt's template with `values`, without calling the API.
 
     Returns the interpolated text for a text prompt, and the interpolated
