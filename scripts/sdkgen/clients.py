@@ -26,7 +26,6 @@ from .core.naming import (
     endpoint_member,
     endpoint_value,
     python_module_for,
-    singular,
     snake_case,
     ts_module_for,
 )
@@ -197,12 +196,12 @@ def group_class(
 
     Named for the URL segments it covers, falling back to the resource for the
     group at the top of it — every resource has one of those, so naming it for
-    its position would declare the same class in every nested resource. The
-    resource is singularized so a tag that is already singular, like
-    `organization`, reads the same as one that is not.
+    its position would declare the same class in every nested resource. Both
+    are taken from the spec verbatim: a tag or a segment is already the word
+    the API uses, so transforming it would only invent a name nothing else has.
     """
     return client_class_name(
-        "-".join(segments) or singular(resource), acronyms, "Operations"
+        "-".join(segments) or resource, acronyms, "Operations"
     )
 
 
