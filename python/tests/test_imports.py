@@ -1,17 +1,10 @@
 def test_public_exports_are_importable():
     import confidentai
-    from confidentai import (
-        ConfidentAI,
-        ConfidentApiError,
-        Organization,
-        Project,
-    )
+    from confidentai import ConfidentAI, ConfidentApiError
 
     assert confidentai.__version__
     assert ConfidentAI is not None
     assert issubclass(ConfidentApiError, Exception)
-    assert Organization is not None
-    assert Project is not None
 
 
 def test_api_primitives_exported():
@@ -28,3 +21,11 @@ def test_api_primitives_exported():
     assert issubclass(ConfidentApiError, Exception)
     assert Endpoints is not None
     assert HttpMethods is not None
+
+
+def test_generated_types_live_with_their_resource():
+    from confidentai.organization.types import Organization
+    from confidentai.projects.types import Project
+
+    assert Organization is not None
+    assert Project is not None
