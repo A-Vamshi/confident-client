@@ -7,9 +7,8 @@ import {
   getBaseApiUrl,
   getConfidentApiKey,
 } from "./api";
-import { OrganizationClient } from "./organization/client";
-import { ProjectClient, ProjectsClient } from "./projects/client";
-import { Organization } from "./types";
+import { StatefulClients } from "./clients/stateful";
+import { Organization } from "./organization/types";
 
 export interface ConfidentAIOptions {
   apiKey?: string;
@@ -20,13 +19,14 @@ export interface ConfidentAIOptions {
 
 const KEY_KINDS = [ApiKeyKind.ORGANIZATION, ApiKeyKind.PROJECT] as const;
 
-export class ConfidentAI {
+export class ConfidentAI extends StatefulClients {
   private readonly apiKeys: Record<ApiKeyKind, string | undefined>;
   private readonly explicitBaseUrl?: string;
   private readonly explicitTimeout?: number;
   private readonly apis = new Map<ApiKeyKind, Api>();
 
   constructor(options: ConfidentAIOptions = {}) {
+    super();
     this.apiKeys = {
       [ApiKeyKind.ORGANIZATION]: options.apiKey,
       [ApiKeyKind.PROJECT]: options.projectApiKey,
@@ -51,7 +51,7 @@ export class ConfidentAI {
     return getConfidentApiKey(this.apiKeys[keyKind], keyKind);
   }
 
-  private api(keyKind: ApiKeyKind): Api {
+  protected api(keyKind: ApiKeyKind): Api {
     const existing = this.apis.get(keyKind);
     if (existing) return existing;
 
@@ -84,19 +84,7 @@ export class ConfidentAI {
     return this.explicitTimeout ?? DEFAULT_TIMEOUT_MS;
   }
 
-  get projects(): ProjectsClient {
-    return new ProjectsClient(this.api(ApiKeyKind.ORGANIZATION));
-  }
-
-  organization(): OrganizationClient {
-    return new OrganizationClient(this.api(ApiKeyKind.ORGANIZATION));
-  }
-
-  project(projectId: string): ProjectClient {
-    return new ProjectClient(this.api(ApiKeyKind.ORGANIZATION), projectId);
-  }
-
   whoami(): Promise<Organization> {
-    return this.organization().get();
+    return this.organization.getOrganization();
   }
 }

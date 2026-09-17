@@ -15,11 +15,11 @@ import {
   CONFIDENT_PROJ_API_KEY_ENV_VAR,
   Api,
   ApiKeyKind,
-  Endpoints,
   HttpMethods,
   apiKeyClientOption,
   apiKeyEnvVar,
 } from "../src/api";
+import { Endpoints } from "../src/endpoints";
 import { clearConfidentEnv, lastCall, mockData, resetAxios } from "./helpers";
 
 jest.mock("axios");

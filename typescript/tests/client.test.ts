@@ -56,17 +56,23 @@ describe("ConfidentAI", () => {
     expect(client.timeout).toBe(5000);
   });
 
-  it("scopes a project client by id", () => {
+  it("exposes the generated clients", () => {
     const client = new ConfidentAI({ apiKey: "k" });
-    expect(client.project("proj_123").projectId).toBe("proj_123");
+    expect(client.organization).toBeDefined();
+    expect(client.projects).toBeDefined();
   });
 
   it("whoami returns the organization", async () => {
     const client = new ConfidentAI({ apiKey: "k" });
-    mockData({ organization: { id: "org_1", name: "Acme" } });
+    mockData({
+      id: "org_1",
+      name: "Acme",
+      plan: "TEAM",
+      created_at: "2026-01-01",
+    });
     const org = await client.whoami();
     expect(org.id).toBe("org_1");
     expect(lastCall().method).toBe("GET");
-    expect(lastCall().url).toContain("/v1/organization");
+    expect(lastCall().url).toContain("/v2/organization");
   });
 });
