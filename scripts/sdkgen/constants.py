@@ -51,13 +51,11 @@ GENERATED_OPERATIONS: Dict[str, FrozenSet[str]] = {}
 
 # Operations we ignore instead of generating. Naming one the spec no longer
 # declares stops the generator, so a rename upstream cannot slip past.
-EXCLUDED_OPERATIONS = frozenset(
-    {
-        # The `download` pair answers 302 with a `Location` banner and no body,
-        # so there is no response schema to validate into.
-        "downloadOrganizationAuditLogExport",
-        "downloadProjectAuditLogExport",
-    }
+EXCLUDED_OPERATIONS = (
+    # Both answer 302 with a `Location` header and no body, so there is no
+    # response schema to validate into.
+    "downloadOrganizationAuditLogExport",
+    "downloadProjectAuditLogExport",
 )
 
 # A resource that must generate into a module other than its tag. The name is

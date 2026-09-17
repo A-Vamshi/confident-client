@@ -125,7 +125,7 @@ def generated_routes(
     declared = {
         route.operation_id for routes in resources.values() for route in routes
     }
-    stale = sorted(EXCLUDED_OPERATIONS - declared)
+    stale = sorted(set(EXCLUDED_OPERATIONS) - declared)
     if stale:
         raise SpecError(
             f"EXCLUDED_OPERATIONS names `{stale[0]}`, which the spec no longer "
