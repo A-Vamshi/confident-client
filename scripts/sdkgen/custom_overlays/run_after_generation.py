@@ -1,15 +1,12 @@
 """Folding hand-written code into generated files, after rendering.
 
-The generator says what the spec says. A few things a client needs are not in
-the spec at all — prompt caching and background refresh is the first of them —
-and belong on a generated class anyway. Each such edit is declared beside the
-resource it belongs to and applied here.
+The generator says what the spec says.
+A few custom logic like prompt polling needs to be applied to the generated code after rendering.
+Each such edit is declared beside the resource it belongs to and applied here.
 
 Overlays are applied to the rendered text before anything is written, so
-`--check`, the idempotence guarantee and both formatters cover overlaid code
-exactly as they cover generated code. Every anchor must match the number of
-times it says: a generator change that moves one fails the run rather than
-quietly dropping the feature.
+`--check`, the idempotence guarantee and both formatters cover overlaid code exactly as they cover generated code.
+Every anchor must match the number of times it says: a generator change that moves one fails the run rather than quietly dropping the feature.
 """
 
 from pathlib import Path

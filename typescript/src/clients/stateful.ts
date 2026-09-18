@@ -4,12 +4,12 @@
 // and regenerate.
 
 import { Api, ApiKeyKind } from "../api";
-import { GeneratedClients } from "./generated";
+import { StatelessClients } from "./stateless";
 import { Dataset } from "../datasets/dataset";
 import { Project } from "../projects/project";
 import { Prompt } from "../prompts/prompt";
 
-export abstract class StatefulClients extends GeneratedClients {
+export abstract class StatefulClients extends StatelessClients {
   dataset(datasetId?: string, options: { alias?: string } = {}): Dataset {
     return new Dataset(this.api(ApiKeyKind.PROJECT), {
       datasetId,

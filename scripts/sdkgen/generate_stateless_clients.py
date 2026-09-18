@@ -566,7 +566,7 @@ def ts_resource_client_files(
 # ===== The mixin that hangs every client off ConfidentAI =====
 
 
-def render_generated_clients(
+def render_stateless_clients(
     resources: Dict[str, List[Route]], acronyms: Set[str]
 ) -> str:
     """The mixin that hangs every generated client off the root client."""
@@ -596,7 +596,7 @@ def render_generated_clients(
         [
             "",
             "",
-            "class GeneratedClients:",
+            "class StatelessClients:",
             "    def _api(self, key_kind: ApiKeyKind) -> Api:",
             "        raise NotImplementedError",
         ]
@@ -623,7 +623,7 @@ def render_generated_clients(
     return "\n".join(lines)
 
 
-def render_typescript_generated_clients(
+def render_typescript_stateless_clients(
     resources: Dict[str, List[Route]], acronyms: Set[str]
 ) -> str:
     """The base class that hangs every generated client off ConfidentAI."""
@@ -645,7 +645,7 @@ def render_typescript_generated_clients(
     lines.extend(
         [
             "",
-            "export abstract class GeneratedClients {",
+            "export abstract class StatelessClients {",
             "  protected abstract api(keyKind: ApiKeyKind): Api;",
         ]
     )

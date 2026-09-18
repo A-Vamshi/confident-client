@@ -21,9 +21,9 @@ import yaml
 
 from sdkgen.generate_stateless_clients import (
     render_endpoints,
-    render_generated_clients,
+    render_stateless_clients,
     render_typescript_endpoints,
-    render_typescript_generated_clients,
+    render_typescript_stateless_clients,
     resource_client_files,
     ts_resource_client_files,
 )
@@ -55,19 +55,19 @@ from sdkgen.openapi_helpers.openapi_parser import (
 from sdkgen.custom_overlays.run_after_generation import run_after_generation
 from sdkgen.generate_types import (
     declare,
-    render_python,
+    render_python_types,
     render_python_barrel,
-    render_typescript,
+    render_typescript_types,
     render_typescript_barrel,
     sort_by_dependency,
 )
 from sdkgen.generate_stateful_clients import (
     handle_module,
-    load_stateful_resources,
+    load_stateful_config,
     render_handle,
     render_stateful_clients,
-    render_ts_handle,
-    render_ts_stateful_clients,
+    render_typescript_handle,
+    render_typescript_stateful_clients,
     ts_handle_module,
 )
 
@@ -138,9 +138,9 @@ def render_wire_types(home: Dict[str, str], schemas: Dict[str, Any]) -> Outputs:
             raise SpecError(f"{label}: {error}") from None
 
         paths = ResourcePaths(name=resource)
-        outputs.append((paths.python_path, render_python(module, source)))
+        outputs.append((paths.python_path, render_python_types(module, source)))
         outputs.append(
-            (paths.typescript_path, render_typescript(module, source))
+            (paths.typescript_path, render_typescript_types(module, source))
         )
         outputs.append(
             (
@@ -207,7 +207,7 @@ def render_per_resource(
             (
                 paths.typescript_path.parent
                 / ts_handle_module(stateful[resource]),
-                typescript_file(source, render_ts_handle(*handle)),
+                typescript_file(source, render_typescript_handle(*handle)),
             )
         )
     return outputs
@@ -227,14 +227,14 @@ def render_shared(
 
     outputs: Outputs = [
         (
-            clients / "generated.py",
-            python_file(source, render_generated_clients(generating, acronyms)),
+            clients / "stateless.py",
+            python_file(source, render_stateless_clients(generating, acronyms)),
         ),
         (
-            ts_clients / "generated.ts",
+            ts_clients / "stateless.ts",
             typescript_file(
                 source,
-                render_typescript_generated_clients(generating, acronyms),
+                render_typescript_stateless_clients(generating, acronyms),
             ),
         ),
     ]
@@ -252,7 +252,9 @@ def render_shared(
                 ts_clients / "stateful.ts",
                 typescript_file(
                     source,
-                    render_ts_stateful_clients(stateful, list(generating)),
+                    render_typescript_stateful_clients(
+                        stateful, list(generating)
+                    ),
                 ),
             )
         )
@@ -301,7 +303,7 @@ def build(spec_dir: Path, descriptive: bool = True) -> Generated:
     generating = generated_routes(tagged)
     home = schema_homes(generating, components)
     acronyms = acronyms_in(schemas)
-    stateful = load_stateful_resources()
+    stateful = load_stateful_config()
 
     outputs = (
         render_wire_types(home, schemas)

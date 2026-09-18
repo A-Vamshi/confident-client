@@ -40,7 +40,7 @@ import { TransformersClient } from "../transformers/client";
 import { VulnerabilitiesClient } from "../vulnerabilities/client";
 import { WidgetsClient } from "../widgets/client";
 
-export abstract class GeneratedClients {
+export abstract class StatelessClients {
   protected abstract api(keyKind: ApiKeyKind): Api;
 
   get aiConnections(): AIConnectionsClient {

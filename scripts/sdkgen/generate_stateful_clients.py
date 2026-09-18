@@ -61,7 +61,7 @@ from .generate_files import (
 )
 
 
-def load_stateful_resources() -> Dict[str, Any]:
+def load_stateful_config() -> Dict[str, Any]:
     resources = yaml.safe_load(STATEFUL_CONFIG.read_text()) or {}
     assert_helpers_exist(resources)
     return resources
@@ -1902,7 +1902,7 @@ def ts_handle_module(config: Dict[str, Any]) -> str:
     return f"{camel_case(config['class'])}.ts"
 
 
-def render_ts_handle(
+def render_typescript_handle(
     resource: str,
     config: Dict[str, Any],
     routes: List[Route],
@@ -1920,7 +1920,7 @@ def render_ts_handle(
     ).ts_render(path)
 
 
-def render_ts_stateful_clients(
+def render_typescript_stateful_clients(
     stateful: Dict[str, Any], resources: Sequence[str]
 ) -> str:
     """The base class opening a handle, extending the generated clients."""
@@ -1930,7 +1930,7 @@ def render_ts_stateful_clients(
 
     lines = [
         'import { Api, ApiKeyKind } from "../api";',
-        'import { GeneratedClients } from "./generated";',
+        'import { StatelessClients } from "./stateless";',
     ]
     for resource in selected:
         config = stateful[resource]
@@ -1940,7 +1940,7 @@ def render_ts_stateful_clients(
             f'"../{ts_module_for(resource)}/{stem}";'
         )
     lines.extend(
-        ["", "export abstract class StatefulClients extends GeneratedClients {"]
+        ["", "export abstract class StatefulClients extends StatelessClients {"]
     )
     for resource in selected:
         config = stateful[resource]

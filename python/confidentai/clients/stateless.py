@@ -47,7 +47,7 @@ if TYPE_CHECKING:
     from confidentai.widgets.client import WidgetsClient
 
 
-class GeneratedClients:
+class StatelessClients:
     def _api(self, key_kind: ApiKeyKind) -> Api:
         raise NotImplementedError
 

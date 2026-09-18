@@ -7,14 +7,14 @@ from .api import (
     get_base_api_url,
     get_confident_api_key,
 )
-from .clients.generated import GeneratedClients
+from .clients.stateless import StatelessClients
 from .clients.stateful import StatefulClients
 
 if TYPE_CHECKING:
     from .organization.types import Organization
 
 
-class ConfidentAI(GeneratedClients, StatefulClients):
+class ConfidentAI(StatelessClients, StatefulClients):
     def __init__(
         self,
         api_key: Optional[str] = None,

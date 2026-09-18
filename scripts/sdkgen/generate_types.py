@@ -105,7 +105,7 @@ def uses(module: Module, needle: str) -> bool:
     return any(needle in annotation for annotation in annotations)
 
 
-def render_python(module: Module, source: str) -> str:
+def render_python_types(module: Module, source: str) -> str:
     uses_optional = any(
         item.optional or item.type.nullable
         for obj in module.objects
@@ -233,7 +233,7 @@ def render_python_barrel(module: Module, source: str) -> str:
     return format_python("\n".join(lines) + "\n")
 
 
-def render_typescript(module: Module, source: str) -> str:
+def render_typescript_types(module: Module, source: str) -> str:
     lines = banner("//", source)
     for owner, names in module.imports.items():
         directory = RESOURCE_MODULES.get(owner, owner)
