@@ -32,10 +32,13 @@ export class ItemsOperations extends AnnotationQueuesOperations {
    */
   async listItems(
     annotationQueueId: string,
-    page?: number,
-    pageSize?: number,
-    status?: QueueItemStatus,
+    options: {
+      page?: number;
+      pageSize?: number;
+      status?: QueueItemStatus;
+    } = {},
   ): Promise<AnnotationQueueItemList> {
+    const { page, pageSize, status } = options;
     return this.api.sendRequest<AnnotationQueueItemList>(
       HttpMethods.GET,
       Endpoints.ANNOTATION_QUEUE_ITEMS_ENDPOINT,
@@ -96,12 +99,21 @@ export class ItemsOperations extends AnnotationQueuesOperations {
   async annotateItem(
     annotationQueueId: string,
     queueItemId: string,
-    annotations?: QueueItemAnnotation[],
-    formResponses?: QueueItemFormResponse[],
-    annotatorEmail?: string,
-    flagged?: boolean,
-    markAsCompleted?: boolean,
+    options: {
+      annotations?: QueueItemAnnotation[];
+      formResponses?: QueueItemFormResponse[];
+      annotatorEmail?: string;
+      flagged?: boolean;
+      markAsCompleted?: boolean;
+    } = {},
   ): Promise<AnnotateQueueItemResult> {
+    const {
+      annotations,
+      formResponses,
+      annotatorEmail,
+      flagged,
+      markAsCompleted,
+    } = options;
     return this.api.sendRequest<AnnotateQueueItemResult>(
       HttpMethods.POST,
       Endpoints.ANNOTATION_QUEUE_ITEM_ANNOTATE_ENDPOINT,

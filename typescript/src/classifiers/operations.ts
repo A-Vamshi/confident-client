@@ -32,10 +32,13 @@ export class ClassifiersOperations {
    *   25.
    */
   async list(
-    page?: number,
-    pageSize?: number,
-    dataModel?: ClassifierDataModel,
+    options: {
+      page?: number;
+      pageSize?: number;
+      dataModel?: ClassifierDataModel;
+    } = {},
   ): Promise<ClassifierList> {
+    const { page, pageSize, dataModel } = options;
     return this.api.sendRequest<ClassifierList>(
       HttpMethods.GET,
       Endpoints.CLASSIFIERS_ENDPOINT,
@@ -72,13 +75,23 @@ export class ClassifiersOperations {
   async create(
     name: string,
     dataModel: ClassifierDataModel,
-    preset?: ClassifierPreset,
-    description?: string | null,
-    enabled?: boolean,
-    autoClassify?: boolean,
-    filters?: FilterSet | null,
-    autoGenerationConfig?: ClassifierAutoGenerationConfig | null,
+    options: {
+      preset?: ClassifierPreset;
+      description?: string | null;
+      enabled?: boolean;
+      autoClassify?: boolean;
+      filters?: FilterSet | null;
+      autoGenerationConfig?: ClassifierAutoGenerationConfig | null;
+    } = {},
   ): Promise<ClassifierRef> {
+    const {
+      preset,
+      description,
+      enabled,
+      autoClassify,
+      filters,
+      autoGenerationConfig,
+    } = options;
     return this.api.sendRequest<ClassifierRef>(
       HttpMethods.POST,
       Endpoints.CLASSIFIERS_ENDPOINT,
@@ -140,13 +153,23 @@ export class ClassifiersOperations {
    */
   async update(
     classifierId: string,
-    name?: string,
-    description?: string | null,
-    enabled?: boolean,
-    autoClassify?: boolean,
-    filters?: FilterSet | null,
-    autoGenerationConfig?: ClassifierAutoGenerationConfig | null,
+    options: {
+      name?: string;
+      description?: string | null;
+      enabled?: boolean;
+      autoClassify?: boolean;
+      filters?: FilterSet | null;
+      autoGenerationConfig?: ClassifierAutoGenerationConfig | null;
+    } = {},
   ): Promise<Classifier> {
+    const {
+      name,
+      description,
+      enabled,
+      autoClassify,
+      filters,
+      autoGenerationConfig,
+    } = options;
     return this.api.sendRequest<Classifier>(
       HttpMethods.PUT,
       Endpoints.CLASSIFIER_ENDPOINT,

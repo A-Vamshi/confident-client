@@ -30,11 +30,14 @@ export class AnnotationQueuesOperations {
    * @param searchTerm Returns only queues whose name contains this text.
    */
   async list(
-    page?: number,
-    pageSize?: number,
-    type?: AnnotationQueueType,
-    searchTerm?: string,
+    options: {
+      page?: number;
+      pageSize?: number;
+      type?: AnnotationQueueType;
+      searchTerm?: string;
+    } = {},
   ): Promise<AnnotationQueueList> {
+    const { page, pageSize, type, searchTerm } = options;
     return this.api.sendRequest<AnnotationQueueList>(
       HttpMethods.GET,
       Endpoints.ANNOTATION_QUEUES_ENDPOINT,

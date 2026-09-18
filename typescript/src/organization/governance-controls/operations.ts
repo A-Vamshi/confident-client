@@ -34,11 +34,14 @@ export class GovernanceControlsOperations extends GovernanceControlGroupsOperati
    *   25.
    */
   async listGovernanceControls(
-    type?: GovernanceControlType,
-    activity?: GovernanceControlActivity,
-    page?: number,
-    pageSize?: number,
+    options: {
+      type?: GovernanceControlType;
+      activity?: GovernanceControlActivity;
+      page?: number;
+      pageSize?: number;
+    } = {},
   ): Promise<GovernanceControlList> {
+    const { type, activity, page, pageSize } = options;
     return this.api.sendRequest<GovernanceControlList>(
       HttpMethods.GET,
       Endpoints.ORGANIZATION_GOVERNANCE_CONTROLS_ENDPOINT,
@@ -66,11 +69,19 @@ export class GovernanceControlsOperations extends GovernanceControlGroupsOperati
   async createGovernanceControl(
     name: string,
     type: CreatableGovernanceControlType,
-    description?: string | null,
-    runtimeConfig?: GovernanceControlRuntimeConfig,
-    preDeploymentConfig?: GovernanceControlPreDeploymentConfig,
-    governancePolicyId?: string,
+    options: {
+      description?: string | null;
+      runtimeConfig?: GovernanceControlRuntimeConfig;
+      preDeploymentConfig?: GovernanceControlPreDeploymentConfig;
+      governancePolicyId?: string;
+    } = {},
   ): Promise<GovernanceControlRef> {
+    const {
+      description,
+      runtimeConfig,
+      preDeploymentConfig,
+      governancePolicyId,
+    } = options;
     return this.api.sendRequest<GovernanceControlRef>(
       HttpMethods.POST,
       Endpoints.ORGANIZATION_GOVERNANCE_CONTROLS_ENDPOINT,
@@ -209,10 +220,9 @@ export class GovernanceControlsOperations extends GovernanceControlGroupsOperati
    */
   async listGovernanceControlAssessments(
     controlId: string,
-    version?: string,
-    page?: number,
-    pageSize?: number,
+    options: { version?: string; page?: number; pageSize?: number } = {},
   ): Promise<GovernanceControlAssessmentList> {
+    const { version, page, pageSize } = options;
     return this.api.sendRequest<GovernanceControlAssessmentList>(
       HttpMethods.GET,
       Endpoints.ORGANIZATION_GOVERNANCE_CONTROL_ASSESSMENTS_ENDPOINT,

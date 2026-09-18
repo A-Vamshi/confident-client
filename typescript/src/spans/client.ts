@@ -53,26 +53,49 @@ export class SpansClient {
    * @param chunkSize Filter retriever spans by the chunk size.
    */
   async list(
-    pageSize?: number,
-    cursor?: string,
-    start?: string,
-    end?: string,
-    ascending?: "true" | "false",
-    sortBy?: SpanSortBy,
-    environment?: Environment,
-    type?: SpanType,
-    traceUuid?: string,
-    name?: string,
-    hasError?: "true" | "false",
-    model?: string,
-    promptAlias?: string,
-    promptVersion?: string,
-    promptLabel?: string,
-    promptCommitHash?: string,
-    embedder?: string,
-    topK?: number | null,
-    chunkSize?: number | null,
+    options: {
+      pageSize?: number;
+      cursor?: string;
+      start?: string;
+      end?: string;
+      ascending?: "true" | "false";
+      sortBy?: SpanSortBy;
+      environment?: Environment;
+      type?: SpanType;
+      traceUuid?: string;
+      name?: string;
+      hasError?: "true" | "false";
+      model?: string;
+      promptAlias?: string;
+      promptVersion?: string;
+      promptLabel?: string;
+      promptCommitHash?: string;
+      embedder?: string;
+      topK?: number | null;
+      chunkSize?: number | null;
+    } = {},
   ): Promise<SpanList> {
+    const {
+      pageSize,
+      cursor,
+      start,
+      end,
+      ascending,
+      sortBy,
+      environment,
+      type,
+      traceUuid,
+      name,
+      hasError,
+      model,
+      promptAlias,
+      promptVersion,
+      promptLabel,
+      promptCommitHash,
+      embedder,
+      topK,
+      chunkSize,
+    } = options;
     return this.api.sendRequest<SpanList>(
       HttpMethods.GET,
       Endpoints.SPANS_ENDPOINT,

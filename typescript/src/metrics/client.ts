@@ -51,14 +51,25 @@ export class MetricsClient {
    */
   async create(
     name: string,
-    multiTurn?: boolean,
-    criteria?: string,
-    evaluationSteps?: string[],
-    evaluationParams?: MetricEvaluationParam[],
-    rubric?: Rubric[],
-    algorithm?: MetricAlgorithm,
-    dag?: MetricDag,
+    options: {
+      multiTurn?: boolean;
+      criteria?: string;
+      evaluationSteps?: string[];
+      evaluationParams?: MetricEvaluationParam[];
+      rubric?: Rubric[];
+      algorithm?: MetricAlgorithm;
+      dag?: MetricDag;
+    } = {},
   ): Promise<Metric> {
+    const {
+      multiTurn,
+      criteria,
+      evaluationSteps,
+      evaluationParams,
+      rubric,
+      algorithm,
+      dag,
+    } = options;
     return this.api.sendRequest<Metric>(
       HttpMethods.POST,
       Endpoints.METRICS_ENDPOINT,
@@ -112,11 +123,14 @@ export class MetricsClient {
    */
   async update(
     metricId: string,
-    criteria?: string | null,
-    evaluationSteps?: string[] | null,
-    evaluationParams?: MetricEvaluationParam[],
-    rubric?: Rubric[],
+    options: {
+      criteria?: string | null;
+      evaluationSteps?: string[] | null;
+      evaluationParams?: MetricEvaluationParam[];
+      rubric?: Rubric[];
+    } = {},
   ): Promise<Metric> {
+    const { criteria, evaluationSteps, evaluationParams, rubric } = options;
     return this.api.sendRequest<Metric>(
       HttpMethods.PUT,
       Endpoints.METRIC_ENDPOINT,

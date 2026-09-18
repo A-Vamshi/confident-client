@@ -123,34 +123,25 @@ export class Dataset {
    */
   async runEvaluation(
     metricCollection: string,
-    identifier?: string,
-    version?: string,
-    aiConnectionId?: string,
-    promptAlias?: string,
-    promptCommit?: string,
-    generationMode?: GenerationMode,
-    variablesMapping?: Record<string, string>,
-    includeSimulation?: boolean,
-    maxConcurrentGeneration?: number,
-    generationTimeout?: number,
-    numGenerations?: number,
-    mcpServerIds?: string[],
+    options: {
+      identifier?: string;
+      version?: string;
+      aiConnectionId?: string;
+      promptAlias?: string;
+      promptCommit?: string;
+      generationMode?: GenerationMode;
+      variablesMapping?: Record<string, string>;
+      includeSimulation?: boolean;
+      maxConcurrentGeneration?: number;
+      generationTimeout?: number;
+      numGenerations?: number;
+      mcpServerIds?: string[];
+    } = {},
   ): Promise<RunDatasetEvaluationResult> {
     return this.client.runEvaluation(
       this.datasetIdOrThrow(),
       metricCollection,
-      identifier,
-      version,
-      aiConnectionId,
-      promptAlias,
-      promptCommit,
-      generationMode,
-      variablesMapping,
-      includeSimulation,
-      maxConcurrentGeneration,
-      generationTimeout,
-      numGenerations,
-      mcpServerIds,
+      options,
     );
   }
 

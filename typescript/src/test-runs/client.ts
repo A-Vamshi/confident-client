@@ -39,15 +39,19 @@ export class TestRunsClient {
    *   only single-turn test runs. Omit to return both.
    */
   async list(
-    page?: number,
-    pageSize?: number,
-    start?: string,
-    end?: string,
-    sortBy?: "createdAt" | "runDuration",
-    ascending?: boolean,
-    status?: "IN_PROGRESS" | "COMPLETED" | "ERRORED" | "CANCELLED",
-    multiTurn?: boolean,
+    options: {
+      page?: number;
+      pageSize?: number;
+      start?: string;
+      end?: string;
+      sortBy?: "createdAt" | "runDuration";
+      ascending?: boolean;
+      status?: "IN_PROGRESS" | "COMPLETED" | "ERRORED" | "CANCELLED";
+      multiTurn?: boolean;
+    } = {},
   ): Promise<TestRunList> {
+    const { page, pageSize, start, end, sortBy, ascending, status, multiTurn } =
+      options;
     return this.api.sendRequest<TestRunList>(
       HttpMethods.GET,
       Endpoints.TEST_RUNS_ENDPOINT,
@@ -119,15 +123,27 @@ export class TestRunsClient {
    */
   async submitTestCaseResult(
     testCaseId: string,
-    actualOutput?: string,
-    retrievalContext?: string[],
-    toolsCalled?: ToolCall[],
-    expectedTools?: ToolCall[],
-    tokenCost?: number,
-    inputTokenCount?: number,
-    outputTokenCount?: number,
-    metadata?: Record<string, unknown>,
+    options: {
+      actualOutput?: string;
+      retrievalContext?: string[];
+      toolsCalled?: ToolCall[];
+      expectedTools?: ToolCall[];
+      tokenCost?: number;
+      inputTokenCount?: number;
+      outputTokenCount?: number;
+      metadata?: Record<string, unknown>;
+    } = {},
   ): Promise<SubmittedTestCaseResult> {
+    const {
+      actualOutput,
+      retrievalContext,
+      toolsCalled,
+      expectedTools,
+      tokenCost,
+      inputTokenCount,
+      outputTokenCount,
+      metadata,
+    } = options;
     return this.api.sendRequest<SubmittedTestCaseResult>(
       HttpMethods.POST,
       Endpoints.TEST_RUNS_EVALUATE_ENDPOINT,

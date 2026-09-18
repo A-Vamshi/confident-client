@@ -62,10 +62,13 @@ export class ModelsOperations extends MembersOperations {
   async updateModel(
     modelType: string,
     provider: ModelProvider,
-    name?: string,
-    maxConcurrency?: number | null,
-    maxInputTokens?: number | null,
+    options: {
+      name?: string;
+      maxConcurrency?: number | null;
+      maxInputTokens?: number | null;
+    } = {},
   ): Promise<Model> {
+    const { name, maxConcurrency, maxInputTokens } = options;
     return this.api.sendRequest<Model>(
       HttpMethods.PUT,
       Endpoints.ORGANIZATION_MODEL_ENDPOINT,

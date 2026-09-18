@@ -762,16 +762,9 @@ export class Project {
    *   code.
    */
   async createAuditLogExport(
-    startTime?: string,
-    endTime?: string,
-    searchTerm?: string,
+    options: { startTime?: string; endTime?: string; searchTerm?: string } = {},
   ): Promise<AuditLogExport> {
-    return this.client.createAuditLogExport(
-      this.projectIdOrThrow(),
-      startTime,
-      endTime,
-      searchTerm,
-    );
+    return this.client.createAuditLogExport(this.projectIdOrThrow(), options);
   }
 
   /**

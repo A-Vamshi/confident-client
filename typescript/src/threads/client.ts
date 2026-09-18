@@ -39,14 +39,18 @@ export class ThreadsClient {
    *   specified.
    */
   async list(
-    pageSize?: number,
-    cursor?: string,
-    start?: string,
-    end?: string,
-    ascending?: "true" | "false",
-    sortBy?: ThreadSortBy,
-    environment?: Environment,
+    options: {
+      pageSize?: number;
+      cursor?: string;
+      start?: string;
+      end?: string;
+      ascending?: "true" | "false";
+      sortBy?: ThreadSortBy;
+      environment?: Environment;
+    } = {},
   ): Promise<ThreadList> {
+    const { pageSize, cursor, start, end, ascending, sortBy, environment } =
+      options;
     return this.api.sendRequest<ThreadList>(
       HttpMethods.GET,
       Endpoints.THREADS_ENDPOINT,

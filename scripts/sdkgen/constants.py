@@ -240,6 +240,14 @@ TS_RESERVED = frozenset(
 )
 
 
+# How many optional arguments a TypeScript method takes before they are
+# gathered into a trailing options object. Python has keyword arguments and
+# needs no such rule; TypeScript carries optionality in the argument order, so
+# past a couple of them a caller is counting `undefined`s to reach the one it
+# wants.
+TS_OPTIONS_THRESHOLD = 3
+
+
 # ===== How the output is formatted =====
 
 # Black owns Python's line breaking; the width is repeated here because

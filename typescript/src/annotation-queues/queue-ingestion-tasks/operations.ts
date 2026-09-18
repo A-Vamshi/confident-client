@@ -60,14 +60,25 @@ export class QueueIngestionTasksOperations extends ItemsOperations {
     annotationQueueId: string,
     name: string,
     dataModel: IngestionDataModel,
-    description?: string | null,
-    enabled?: boolean,
-    sampleRate?: number,
-    filters?: FilterSet,
-    maxItems?: number | null,
-    assignmentStrategy?: AssignmentStrategy,
-    reviewerEmails?: string[],
+    options: {
+      description?: string | null;
+      enabled?: boolean;
+      sampleRate?: number;
+      filters?: FilterSet;
+      maxItems?: number | null;
+      assignmentStrategy?: AssignmentStrategy;
+      reviewerEmails?: string[];
+    } = {},
   ): Promise<QueueIngestionTaskRef> {
+    const {
+      description,
+      enabled,
+      sampleRate,
+      filters,
+      maxItems,
+      assignmentStrategy,
+      reviewerEmails,
+    } = options;
     return this.api.sendRequest<QueueIngestionTaskRef>(
       HttpMethods.POST,
       Endpoints.ANNOTATION_QUEUE_QUEUE_INGESTION_TASKS_ENDPOINT,
@@ -131,16 +142,29 @@ export class QueueIngestionTasksOperations extends ItemsOperations {
   async updateQueueIngestionTask(
     annotationQueueId: string,
     queueIngestionTaskId: string,
-    name?: string,
-    dataModel?: IngestionDataModel,
-    description?: string | null,
-    enabled?: boolean,
-    sampleRate?: number,
-    filters?: FilterSet,
-    maxItems?: number | null,
-    assignmentStrategy?: AssignmentStrategy,
-    reviewerEmails?: string[],
+    options: {
+      name?: string;
+      dataModel?: IngestionDataModel;
+      description?: string | null;
+      enabled?: boolean;
+      sampleRate?: number;
+      filters?: FilterSet;
+      maxItems?: number | null;
+      assignmentStrategy?: AssignmentStrategy;
+      reviewerEmails?: string[];
+    } = {},
   ): Promise<QueueIngestionTask> {
+    const {
+      name,
+      dataModel,
+      description,
+      enabled,
+      sampleRate,
+      filters,
+      maxItems,
+      assignmentStrategy,
+      reviewerEmails,
+    } = options;
     return this.api.sendRequest<QueueIngestionTask>(
       HttpMethods.PUT,
       Endpoints.ANNOTATION_QUEUE_QUEUE_INGESTION_TASK_ENDPOINT,

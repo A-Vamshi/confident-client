@@ -62,14 +62,18 @@ export class McpServersClient {
   async create(
     name: string,
     transport: McpServerTransport,
-    description?: string | null,
-    url?: string | null,
-    headers?: Record<string, string> | null,
-    authType?: McpServerAuthType,
-    authConfig?: McpServerAuthConfig | null,
-    command?: string | null,
-    args?: string[],
+    options: {
+      description?: string | null;
+      url?: string | null;
+      headers?: Record<string, string> | null;
+      authType?: McpServerAuthType;
+      authConfig?: McpServerAuthConfig | null;
+      command?: string | null;
+      args?: string[];
+    } = {},
   ): Promise<McpServerRef> {
+    const { description, url, headers, authType, authConfig, command, args } =
+      options;
     return this.api.sendRequest<McpServerRef>(
       HttpMethods.POST,
       Endpoints.MCP_SERVERS_ENDPOINT,
@@ -133,16 +137,29 @@ export class McpServersClient {
    */
   async update(
     mcpServerId: string,
-    name?: string,
-    transport?: McpServerTransport,
-    description?: string | null,
-    url?: string | null,
-    headers?: Record<string, string> | null,
-    authType?: McpServerAuthType,
-    authConfig?: McpServerAuthConfig | null,
-    command?: string | null,
-    args?: string[],
+    options: {
+      name?: string;
+      transport?: McpServerTransport;
+      description?: string | null;
+      url?: string | null;
+      headers?: Record<string, string> | null;
+      authType?: McpServerAuthType;
+      authConfig?: McpServerAuthConfig | null;
+      command?: string | null;
+      args?: string[];
+    } = {},
   ): Promise<McpServer> {
+    const {
+      name,
+      transport,
+      description,
+      url,
+      headers,
+      authType,
+      authConfig,
+      command,
+      args,
+    } = options;
     return this.api.sendRequest<McpServer>(
       HttpMethods.PUT,
       Endpoints.MCP_SERVER_ENDPOINT,

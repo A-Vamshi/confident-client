@@ -63,16 +63,29 @@ export class ReportTemplatesClient {
    */
   async create(
     name: string,
-    description?: string | null,
-    templateSections?: ReportTemplateSectionConfig[],
-    enabled?: boolean,
-    recurrence?: ScheduleRecurrenceType,
-    repeatEvery?: number | null,
-    repeatUnit?: ScheduleIntervalUnit | null,
-    startAt?: string | null,
-    maxRuns?: number | null,
-    endAt?: string | null,
+    options: {
+      description?: string | null;
+      templateSections?: ReportTemplateSectionConfig[];
+      enabled?: boolean;
+      recurrence?: ScheduleRecurrenceType;
+      repeatEvery?: number | null;
+      repeatUnit?: ScheduleIntervalUnit | null;
+      startAt?: string | null;
+      maxRuns?: number | null;
+      endAt?: string | null;
+    } = {},
   ): Promise<ReportTemplateRef> {
+    const {
+      description,
+      templateSections,
+      enabled,
+      recurrence,
+      repeatEvery,
+      repeatUnit,
+      startAt,
+      maxRuns,
+      endAt,
+    } = options;
     return this.api.sendRequest<ReportTemplateRef>(
       HttpMethods.POST,
       Endpoints.REPORT_TEMPLATES_ENDPOINT,
@@ -140,17 +153,31 @@ export class ReportTemplatesClient {
    */
   async update(
     reportTemplateId: string,
-    name?: string,
-    description?: string | null,
-    templateSections?: ReportTemplateSectionConfig[],
-    enabled?: boolean,
-    recurrence?: ScheduleRecurrenceType,
-    repeatEvery?: number | null,
-    repeatUnit?: ScheduleIntervalUnit | null,
-    startAt?: string | null,
-    maxRuns?: number | null,
-    endAt?: string | null,
+    options: {
+      name?: string;
+      description?: string | null;
+      templateSections?: ReportTemplateSectionConfig[];
+      enabled?: boolean;
+      recurrence?: ScheduleRecurrenceType;
+      repeatEvery?: number | null;
+      repeatUnit?: ScheduleIntervalUnit | null;
+      startAt?: string | null;
+      maxRuns?: number | null;
+      endAt?: string | null;
+    } = {},
   ): Promise<ReportTemplate> {
+    const {
+      name,
+      description,
+      templateSections,
+      enabled,
+      recurrence,
+      repeatEvery,
+      repeatUnit,
+      startAt,
+      maxRuns,
+      endAt,
+    } = options;
     return this.api.sendRequest<ReportTemplate>(
       HttpMethods.PUT,
       Endpoints.REPORT_TEMPLATE_ENDPOINT,

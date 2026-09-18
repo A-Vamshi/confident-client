@@ -34,10 +34,13 @@ export class GovernanceProjectsOperations extends GovernancePoliciesSkillOperati
    *   25.
    */
   async listGovernanceProjects(
-    status?: GovernanceProjectStatus,
-    page?: number,
-    pageSize?: number,
+    options: {
+      status?: GovernanceProjectStatus;
+      page?: number;
+      pageSize?: number;
+    } = {},
   ): Promise<GovernanceProjectList> {
+    const { status, page, pageSize } = options;
     return this.api.sendRequest<GovernanceProjectList>(
       HttpMethods.GET,
       Endpoints.ORGANIZATION_GOVERNANCE_PROJECTS_ENDPOINT,

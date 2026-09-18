@@ -51,18 +51,33 @@ export class WidgetsOperations extends DashboardsOperations {
   async createWidget(
     dashboardId: string,
     name: string,
-    description?: string | null,
-    type?: WidgetType | null,
-    unit?: WidgetUnit | null,
-    mode?: WidgetMode | null,
-    bucketMode?: WidgetBucketMode | null,
-    dimension?: WidgetDimension | null,
-    topK?: WidgetTopK | null,
-    startTime?: string | null,
-    endTime?: string | null,
-    layout?: WidgetLayout | null,
-    lines?: WidgetLineConfig[] | null,
+    options: {
+      description?: string | null;
+      type?: WidgetType | null;
+      unit?: WidgetUnit | null;
+      mode?: WidgetMode | null;
+      bucketMode?: WidgetBucketMode | null;
+      dimension?: WidgetDimension | null;
+      topK?: WidgetTopK | null;
+      startTime?: string | null;
+      endTime?: string | null;
+      layout?: WidgetLayout | null;
+      lines?: WidgetLineConfig[] | null;
+    } = {},
   ): Promise<WidgetRef> {
+    const {
+      description,
+      type,
+      unit,
+      mode,
+      bucketMode,
+      dimension,
+      topK,
+      startTime,
+      endTime,
+      layout,
+      lines,
+    } = options;
     return this.api.sendRequest<WidgetRef>(
       HttpMethods.POST,
       Endpoints.DASHBOARD_WIDGETS_ENDPOINT,
@@ -120,18 +135,33 @@ export class WidgetsOperations extends DashboardsOperations {
     dashboardId: string,
     widgetId: string,
     name: string,
-    description?: string | null,
-    type?: WidgetType | null,
-    unit?: WidgetUnit | null,
-    mode?: WidgetMode | null,
-    bucketMode?: WidgetBucketMode | null,
-    dimension?: WidgetDimension | null,
-    topK?: WidgetTopK | null,
-    startTime?: string | null,
-    endTime?: string | null,
-    layout?: WidgetLayout | null,
-    lines?: WidgetLineConfig[] | null,
+    options: {
+      description?: string | null;
+      type?: WidgetType | null;
+      unit?: WidgetUnit | null;
+      mode?: WidgetMode | null;
+      bucketMode?: WidgetBucketMode | null;
+      dimension?: WidgetDimension | null;
+      topK?: WidgetTopK | null;
+      startTime?: string | null;
+      endTime?: string | null;
+      layout?: WidgetLayout | null;
+      lines?: WidgetLineConfig[] | null;
+    } = {},
   ): Promise<Widget> {
+    const {
+      description,
+      type,
+      unit,
+      mode,
+      bucketMode,
+      dimension,
+      topK,
+      startTime,
+      endTime,
+      layout,
+      lines,
+    } = options;
     return this.api.sendRequest<Widget>(
       HttpMethods.PUT,
       Endpoints.DASHBOARD_WIDGET_ENDPOINT,
@@ -196,10 +226,13 @@ export class WidgetsOperations extends DashboardsOperations {
   async queryWidget(
     dashboardId: string,
     widgetId: string,
-    startTime?: string,
-    endTime?: string,
-    granularity?: WidgetGranularity,
+    options: {
+      startTime?: string;
+      endTime?: string;
+      granularity?: WidgetGranularity;
+    } = {},
   ): Promise<WidgetQueryResult> {
+    const { startTime, endTime, granularity } = options;
     return this.api.sendRequest<WidgetQueryResult>(
       HttpMethods.POST,
       Endpoints.DASHBOARD_WIDGET_QUERY_ENDPOINT,

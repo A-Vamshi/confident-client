@@ -50,15 +50,27 @@ export class TracesClient {
    *   match.
    */
   async list(
-    pageSize?: number,
-    cursor?: string,
-    start?: string,
-    end?: string,
-    ascending?: "true" | "false",
-    sortBy?: TraceSortBy,
-    environment?: Environment,
-    metadata?: Record<string, string>,
+    options: {
+      pageSize?: number;
+      cursor?: string;
+      start?: string;
+      end?: string;
+      ascending?: "true" | "false";
+      sortBy?: TraceSortBy;
+      environment?: Environment;
+      metadata?: Record<string, string>;
+    } = {},
   ): Promise<TraceList> {
+    const {
+      pageSize,
+      cursor,
+      start,
+      end,
+      ascending,
+      sortBy,
+      environment,
+      metadata,
+    } = options;
     return this.api.sendRequest<TraceList>(
       HttpMethods.GET,
       Endpoints.TRACES_ENDPOINT,
@@ -136,29 +148,55 @@ export class TracesClient {
     uuid: string,
     startTime: string,
     endTime: string,
-    name?: string,
-    input?: unknown,
-    output?: unknown,
-    status?: TraceSpanStatus,
-    environment?: Environment,
-    metadata?: Record<string, unknown>,
-    tags?: string[],
-    threadId?: string,
-    thread?: ThreadRequest,
-    userId?: string,
-    metricCollection?: string,
-    testRunId?: string,
-    testCaseId?: string,
-    turnId?: string,
-    retrievalContext?: string[],
-    context?: string[],
-    expectedOutput?: string,
-    toolsCalled?: ToolCall[],
-    expectedTools?: ToolCall[],
-    spans?: SpanRequest[],
-    metricsData?: MetricDataConfig[],
-    attachments?: Record<string, TraceAttachment>,
+    options: {
+      name?: string;
+      input?: unknown;
+      output?: unknown;
+      status?: TraceSpanStatus;
+      environment?: Environment;
+      metadata?: Record<string, unknown>;
+      tags?: string[];
+      threadId?: string;
+      thread?: ThreadRequest;
+      userId?: string;
+      metricCollection?: string;
+      testRunId?: string;
+      testCaseId?: string;
+      turnId?: string;
+      retrievalContext?: string[];
+      context?: string[];
+      expectedOutput?: string;
+      toolsCalled?: ToolCall[];
+      expectedTools?: ToolCall[];
+      spans?: SpanRequest[];
+      metricsData?: MetricDataConfig[];
+      attachments?: Record<string, TraceAttachment>;
+    } = {},
   ): Promise<TraceRef> {
+    const {
+      name,
+      input,
+      output,
+      status,
+      environment,
+      metadata,
+      tags,
+      threadId,
+      thread,
+      userId,
+      metricCollection,
+      testRunId,
+      testCaseId,
+      turnId,
+      retrievalContext,
+      context,
+      expectedOutput,
+      toolsCalled,
+      expectedTools,
+      spans,
+      metricsData,
+      attachments,
+    } = options;
     return this.api.sendRequest<TraceRef>(
       HttpMethods.POST,
       Endpoints.TRACES_ENDPOINT,

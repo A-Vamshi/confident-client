@@ -52,12 +52,21 @@ export class MetricCollectionsClient {
    */
   async create(
     name: string,
-    multiTurn?: boolean,
-    metricsSettings?: MetricSettingConfig[],
-    sampleRate?: number,
-    inputTransformerId?: string | null,
-    outputTransformerId?: string | null,
+    options: {
+      multiTurn?: boolean;
+      metricsSettings?: MetricSettingConfig[];
+      sampleRate?: number;
+      inputTransformerId?: string | null;
+      outputTransformerId?: string | null;
+    } = {},
   ): Promise<MetricCollection> {
+    const {
+      multiTurn,
+      metricsSettings,
+      sampleRate,
+      inputTransformerId,
+      outputTransformerId,
+    } = options;
     return this.api.sendRequest<MetricCollection>(
       HttpMethods.POST,
       Endpoints.METRIC_COLLECTIONS_ENDPOINT,
@@ -113,12 +122,21 @@ export class MetricCollectionsClient {
    */
   async update(
     metricCollectionId: string,
-    name?: string,
-    metricsSettings?: MetricSettingConfig[],
-    sampleRate?: number,
-    inputTransformerId?: string | null,
-    outputTransformerId?: string | null,
+    options: {
+      name?: string;
+      metricsSettings?: MetricSettingConfig[];
+      sampleRate?: number;
+      inputTransformerId?: string | null;
+      outputTransformerId?: string | null;
+    } = {},
   ): Promise<MetricCollection> {
+    const {
+      name,
+      metricsSettings,
+      sampleRate,
+      inputTransformerId,
+      outputTransformerId,
+    } = options;
     return this.api.sendRequest<MetricCollection>(
       HttpMethods.PUT,
       Endpoints.METRIC_COLLECTION_ENDPOINT,

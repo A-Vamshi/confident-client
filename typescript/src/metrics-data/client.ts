@@ -25,11 +25,14 @@ export class MetricsDataClient {
    * @param end Returns only results recorded before this ISO 8601 datetime.
    */
   async list(
-    page?: number,
-    pageSize?: number,
-    start?: string,
-    end?: string,
+    options: {
+      page?: number;
+      pageSize?: number;
+      start?: string;
+      end?: string;
+    } = {},
   ): Promise<MetricDataList> {
+    const { page, pageSize, start, end } = options;
     return this.api.sendRequest<MetricDataList>(
       HttpMethods.GET,
       Endpoints.METRICS_DATA_ENDPOINT,

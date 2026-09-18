@@ -42,17 +42,31 @@ export class AnnotationsClient {
    * @param type Returns only annotations recorded on this scale.
    */
   async list(
-    page?: number,
-    pageSize?: number,
-    start?: string,
-    end?: string,
-    sortBy?: AnnotationSortBy,
-    ascending?: "true" | "false",
-    traceUuid?: string,
-    spanUuid?: string,
-    threadId?: string,
-    type?: AnnotationType,
+    options: {
+      page?: number;
+      pageSize?: number;
+      start?: string;
+      end?: string;
+      sortBy?: AnnotationSortBy;
+      ascending?: "true" | "false";
+      traceUuid?: string;
+      spanUuid?: string;
+      threadId?: string;
+      type?: AnnotationType;
+    } = {},
   ): Promise<AnnotationList> {
+    const {
+      page,
+      pageSize,
+      start,
+      end,
+      sortBy,
+      ascending,
+      traceUuid,
+      spanUuid,
+      threadId,
+      type,
+    } = options;
     return this.api.sendRequest<AnnotationList>(
       HttpMethods.GET,
       Endpoints.ANNOTATIONS_ENDPOINT,
@@ -132,13 +146,23 @@ export class AnnotationsClient {
    */
   async update(
     annotationId: string,
-    rating?: number,
-    type?: AnnotationType,
-    explanation?: string,
-    expectedOutput?: string,
-    expectedOutcome?: string,
-    imagesMapping?: Record<string, MLLMImage>,
+    options: {
+      rating?: number;
+      type?: AnnotationType;
+      explanation?: string;
+      expectedOutput?: string;
+      expectedOutcome?: string;
+      imagesMapping?: Record<string, MLLMImage>;
+    } = {},
   ): Promise<AnnotationRef> {
+    const {
+      rating,
+      type,
+      explanation,
+      expectedOutput,
+      expectedOutcome,
+      imagesMapping,
+    } = options;
     return this.api.sendRequest<AnnotationRef>(
       HttpMethods.PUT,
       Endpoints.ANNOTATION_ENDPOINT,

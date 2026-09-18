@@ -52,10 +52,13 @@ export class DashboardsOperations {
    */
   async create(
     name: string,
-    description?: string | null,
-    private_?: boolean,
-    widgets?: CreateWidgetRequest[],
+    options: {
+      description?: string | null;
+      private_?: boolean;
+      widgets?: CreateWidgetRequest[];
+    } = {},
   ): Promise<DashboardRef> {
+    const { description, private_, widgets } = options;
     return this.api.sendRequest<DashboardRef>(
       HttpMethods.POST,
       Endpoints.DASHBOARDS_ENDPOINT,
@@ -93,10 +96,13 @@ export class DashboardsOperations {
    */
   async update(
     dashboardId: string,
-    name?: string,
-    description?: string | null,
-    private_?: boolean,
+    options: {
+      name?: string;
+      description?: string | null;
+      private_?: boolean;
+    } = {},
   ): Promise<Dashboard> {
+    const { name, description, private_ } = options;
     return this.api.sendRequest<Dashboard>(
       HttpMethods.PUT,
       Endpoints.DASHBOARD_ENDPOINT,
@@ -143,11 +149,14 @@ export class DashboardsOperations {
    */
   async query(
     dashboardId: string,
-    startTime?: string,
-    endTime?: string,
-    granularity?: WidgetGranularity,
-    widgetIds?: string[],
+    options: {
+      startTime?: string;
+      endTime?: string;
+      granularity?: WidgetGranularity;
+      widgetIds?: string[];
+    } = {},
   ): Promise<DashboardQueryResult> {
+    const { startTime, endTime, granularity, widgetIds } = options;
     return this.api.sendRequest<DashboardQueryResult>(
       HttpMethods.POST,
       Endpoints.DASHBOARD_QUERY_ENDPOINT,

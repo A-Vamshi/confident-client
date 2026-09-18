@@ -67,10 +67,13 @@ export class ForwardingConnectorsClient {
   async create(
     name: string,
     endpoint: string,
-    headers?: ForwardingConnectorHeaderConfig[],
-    environments?: Environment[],
-    enabled?: boolean,
+    options: {
+      headers?: ForwardingConnectorHeaderConfig[];
+      environments?: Environment[];
+      enabled?: boolean;
+    } = {},
   ): Promise<ForwardingConnectorRef> {
+    const { headers, environments, enabled } = options;
     return this.api.sendRequest<ForwardingConnectorRef>(
       HttpMethods.POST,
       Endpoints.FORWARDING_CONNECTORS_ENDPOINT,
@@ -123,12 +126,15 @@ export class ForwardingConnectorsClient {
    */
   async update(
     forwardingConnectorId: string,
-    name?: string,
-    endpoint?: string,
-    headers?: ForwardingConnectorHeaderConfig[],
-    environments?: Environment[],
-    enabled?: boolean,
+    options: {
+      name?: string;
+      endpoint?: string;
+      headers?: ForwardingConnectorHeaderConfig[];
+      environments?: Environment[];
+      enabled?: boolean;
+    } = {},
   ): Promise<ForwardingConnector> {
+    const { name, endpoint, headers, environments, enabled } = options;
     return this.api.sendRequest<ForwardingConnector>(
       HttpMethods.PUT,
       Endpoints.FORWARDING_CONNECTOR_ENDPOINT,

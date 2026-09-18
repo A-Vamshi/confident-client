@@ -54,11 +54,19 @@ export class RiskCategoriesOperations extends RTFrameworksOperations {
   async createRiskCategory(
     rtFrameworkId: string,
     name: string,
-    description?: string | null,
-    vulnerabilityTypeIds?: string[],
-    attackMethodIds?: string[],
-    vulnerabilityIdToPriorityLevel?: Record<string, number> | null,
+    options: {
+      description?: string | null;
+      vulnerabilityTypeIds?: string[];
+      attackMethodIds?: string[];
+      vulnerabilityIdToPriorityLevel?: Record<string, number> | null;
+    } = {},
   ): Promise<RiskCategoryRef> {
+    const {
+      description,
+      vulnerabilityTypeIds,
+      attackMethodIds,
+      vulnerabilityIdToPriorityLevel,
+    } = options;
     return this.api.sendRequest<RiskCategoryRef>(
       HttpMethods.POST,
       Endpoints.RT_FRAMEWORK_RISK_CATEGORIES_ENDPOINT,
@@ -120,12 +128,21 @@ export class RiskCategoriesOperations extends RTFrameworksOperations {
   async updateRiskCategory(
     rtFrameworkId: string,
     riskCategoryId: string,
-    name?: string,
-    description?: string | null,
-    vulnerabilityTypeIds?: string[],
-    attackMethodIds?: string[],
-    vulnerabilityIdToPriorityLevel?: Record<string, number> | null,
+    options: {
+      name?: string;
+      description?: string | null;
+      vulnerabilityTypeIds?: string[];
+      attackMethodIds?: string[];
+      vulnerabilityIdToPriorityLevel?: Record<string, number> | null;
+    } = {},
   ): Promise<RiskCategory> {
+    const {
+      name,
+      description,
+      vulnerabilityTypeIds,
+      attackMethodIds,
+      vulnerabilityIdToPriorityLevel,
+    } = options;
     return this.api.sendRequest<RiskCategory>(
       HttpMethods.PUT,
       Endpoints.RT_FRAMEWORK_RISK_CATEGORY_ENDPOINT,

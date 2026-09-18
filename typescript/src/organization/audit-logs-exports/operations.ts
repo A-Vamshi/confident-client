@@ -45,10 +45,9 @@ export class AuditLogsExportsOperations extends ApiKeysOperations {
    *   code.
    */
   async createAuditLogExport(
-    startTime?: string,
-    endTime?: string,
-    searchTerm?: string,
+    options: { startTime?: string; endTime?: string; searchTerm?: string } = {},
   ): Promise<AuditLogExport> {
+    const { startTime, endTime, searchTerm } = options;
     return this.api.sendRequest<AuditLogExport>(
       HttpMethods.POST,
       Endpoints.ORGANIZATION_AUDIT_LOGS_EXPORTS_ENDPOINT,

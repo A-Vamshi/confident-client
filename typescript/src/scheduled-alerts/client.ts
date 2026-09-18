@@ -38,11 +38,14 @@ export class ScheduledAlertsClient {
    *   or only the paused ones when `false`. Omit to return both.
    */
   async list(
-    page?: number,
-    pageSize?: number,
-    dataModel?: AlertDataModel,
-    enabled?: "true" | "false",
+    options: {
+      page?: number;
+      pageSize?: number;
+      dataModel?: AlertDataModel;
+      enabled?: "true" | "false";
+    } = {},
   ): Promise<ScheduledAlertList> {
+    const { page, pageSize, dataModel, enabled } = options;
     return this.api.sendRequest<ScheduledAlertList>(
       HttpMethods.GET,
       Endpoints.SCHEDULED_ALERTS_ENDPOINT,
@@ -104,17 +107,31 @@ export class ScheduledAlertsClient {
     dataModel: AlertDataModel,
     aggregation: string,
     thresholdSettings: AlertThresholdSettings,
-    recurrence?: ScheduleRecurrenceType,
-    repeatEvery?: number | null,
-    repeatUnit?: ScheduleIntervalUnit | null,
-    startAt?: string | null,
-    maxRuns?: number | null,
-    endAt?: string | null,
-    description?: string | null,
-    filters?: FilterSet | null,
-    severity?: AlertSeverity,
-    enabled?: boolean,
+    options: {
+      recurrence?: ScheduleRecurrenceType;
+      repeatEvery?: number | null;
+      repeatUnit?: ScheduleIntervalUnit | null;
+      startAt?: string | null;
+      maxRuns?: number | null;
+      endAt?: string | null;
+      description?: string | null;
+      filters?: FilterSet | null;
+      severity?: AlertSeverity;
+      enabled?: boolean;
+    } = {},
   ): Promise<ScheduledAlertRef> {
+    const {
+      recurrence,
+      repeatEvery,
+      repeatUnit,
+      startAt,
+      maxRuns,
+      endAt,
+      description,
+      filters,
+      severity,
+      enabled,
+    } = options;
     return this.api.sendRequest<ScheduledAlertRef>(
       HttpMethods.POST,
       Endpoints.SCHEDULED_ALERTS_ENDPOINT,
@@ -209,21 +226,39 @@ export class ScheduledAlertsClient {
    */
   async update(
     scheduledAlertId: string,
-    recurrence?: ScheduleRecurrenceType,
-    repeatEvery?: number | null,
-    repeatUnit?: ScheduleIntervalUnit | null,
-    startAt?: string | null,
-    maxRuns?: number | null,
-    endAt?: string | null,
-    description?: string | null,
-    filters?: FilterSet | null,
-    severity?: AlertSeverity,
-    name?: string,
-    dataModel?: AlertDataModel,
-    aggregation?: string,
-    thresholdSettings?: AlertThresholdSettings,
-    enabled?: boolean,
+    options: {
+      recurrence?: ScheduleRecurrenceType;
+      repeatEvery?: number | null;
+      repeatUnit?: ScheduleIntervalUnit | null;
+      startAt?: string | null;
+      maxRuns?: number | null;
+      endAt?: string | null;
+      description?: string | null;
+      filters?: FilterSet | null;
+      severity?: AlertSeverity;
+      name?: string;
+      dataModel?: AlertDataModel;
+      aggregation?: string;
+      thresholdSettings?: AlertThresholdSettings;
+      enabled?: boolean;
+    } = {},
   ): Promise<ScheduledAlert> {
+    const {
+      recurrence,
+      repeatEvery,
+      repeatUnit,
+      startAt,
+      maxRuns,
+      endAt,
+      description,
+      filters,
+      severity,
+      name,
+      dataModel,
+      aggregation,
+      thresholdSettings,
+      enabled,
+    } = options;
     return this.api.sendRequest<ScheduledAlert>(
       HttpMethods.PUT,
       Endpoints.SCHEDULED_ALERT_ENDPOINT,

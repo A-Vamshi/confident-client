@@ -349,6 +349,7 @@ def render_typescript_client(
             f"  async {method.ts_name}({', '.join(method.ts_signature())})"
             f": Promise<{method.ts_returns}> {{"
         )
+        body.extend(f"    {line}" for line in method.ts_unpacking())
         body.append(f"    return this.api.sendRequest<{method.ts_returns}>(")
         body.extend(f"      {line}" for line in call)
         body.append("    );")

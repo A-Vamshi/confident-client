@@ -33,11 +33,14 @@ export class VulnerabilitiesClient {
    *   both.
    */
   async list(
-    page?: number,
-    pageSize?: number,
-    category?: string,
-    builtIn?: "true" | "false",
+    options: {
+      page?: number;
+      pageSize?: number;
+      category?: string;
+      builtIn?: "true" | "false";
+    } = {},
   ): Promise<VulnerabilityList> {
+    const { page, pageSize, category, builtIn } = options;
     return this.api.sendRequest<VulnerabilityList>(
       HttpMethods.GET,
       Endpoints.VULNERABILITIES_ENDPOINT,
@@ -67,10 +70,13 @@ export class VulnerabilitiesClient {
     name: string,
     criteria: string,
     vulnerabilityTypes: string[],
-    description?: string | null,
-    evaluationGuidelines?: string[],
-    evaluationExamples?: VulnerabilityEvaluationExample[],
+    options: {
+      description?: string | null;
+      evaluationGuidelines?: string[];
+      evaluationExamples?: VulnerabilityEvaluationExample[];
+    } = {},
   ): Promise<VulnerabilityRef> {
+    const { description, evaluationGuidelines, evaluationExamples } = options;
     return this.api.sendRequest<VulnerabilityRef>(
       HttpMethods.POST,
       Endpoints.VULNERABILITIES_ENDPOINT,
@@ -128,13 +134,23 @@ export class VulnerabilitiesClient {
    */
   async update(
     vulnerabilityId: string,
-    name?: string,
-    description?: string | null,
-    criteria?: string,
-    vulnerabilityTypes?: string[],
-    evaluationGuidelines?: string[],
-    evaluationExamples?: VulnerabilityEvaluationExample[],
+    options: {
+      name?: string;
+      description?: string | null;
+      criteria?: string;
+      vulnerabilityTypes?: string[];
+      evaluationGuidelines?: string[];
+      evaluationExamples?: VulnerabilityEvaluationExample[];
+    } = {},
   ): Promise<Vulnerability> {
+    const {
+      name,
+      description,
+      criteria,
+      vulnerabilityTypes,
+      evaluationGuidelines,
+      evaluationExamples,
+    } = options;
     return this.api.sendRequest<Vulnerability>(
       HttpMethods.PUT,
       Endpoints.VULNERABILITY_ENDPOINT,

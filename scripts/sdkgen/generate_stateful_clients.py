@@ -581,11 +581,19 @@ class Handle:
             for p in method.parameters
             if p.name != held and p.required
         ]
-        arguments += [
-            p.ts_name
-            for p in method.parameters
-            if p.name != held and not p.required
-        ]
+        # The handle and the client it calls gather their optionals at the
+        # same threshold, so an options object passes straight through. The
+        # other branches keep the two honest if that ever stops holding.
+        optional = method.ts_optional(skip=(held,))
+        if method.ts_takes_options() and method.ts_takes_options(skip=(held,)):
+            arguments.append("options")
+        elif method.ts_takes_options():
+            entries = ", ".join(p.ts_name for p in optional)
+            arguments.append(f"{{ {entries} }}")
+        elif method.ts_takes_options(skip=(held,)):
+            arguments += [f"options.{p.ts_name}" for p in optional]
+        else:
+            arguments += [p.ts_name for p in optional]
         lines = [""]
         lines.extend(
             render_jsdoc(

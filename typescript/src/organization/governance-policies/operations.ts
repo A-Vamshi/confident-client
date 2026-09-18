@@ -118,11 +118,14 @@ export class GovernancePoliciesOperations extends GovernanceControlsVersionsOper
    */
   async updateGovernancePolicy(
     policyId: string,
-    name?: string,
-    description?: string | null,
-    ownerEmail?: string | null,
-    basePolicyIds?: string[],
+    options: {
+      name?: string;
+      description?: string | null;
+      ownerEmail?: string | null;
+      basePolicyIds?: string[];
+    } = {},
   ): Promise<GovernancePolicy> {
+    const { name, description, ownerEmail, basePolicyIds } = options;
     return this.api.sendRequest<GovernancePolicy>(
       HttpMethods.PUT,
       Endpoints.ORGANIZATION_GOVERNANCE_POLICY_ENDPOINT,

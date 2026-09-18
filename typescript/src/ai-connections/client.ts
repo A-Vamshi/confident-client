@@ -158,41 +158,79 @@ export class AIConnectionsClient {
    */
   async create(
     name: string,
-    type?: AIConnectionType,
-    endpoint?: string | null,
-    responseMode?: AIConnectionResponseMode | null,
-    asyncResponse?: boolean,
-    timeout?: number | null,
-    maxConcurrency?: number | null,
-    maxRetries?: number | null,
-    defaultNumGenerations?: number,
-    headers?: AIConnectionKeyValue[] | null,
-    queryParams?: AIConnectionKeyValue[] | null,
-    payload?: Record<string, unknown> | null,
-    hyperparameters?: Record<string, unknown> | null,
-    authentication?: Record<string, unknown> | null,
-    cloudProvider?: Record<string, unknown> | null,
-    actualOutputKeyPath?: (string | number)[] | null,
-    retrievalContextKeyPath?: (string | number)[] | null,
-    toolsCalledKeyPath?: (string | number)[] | null,
-    stateKeyPath?: (string | number)[] | null,
-    inputTokenCountKeyPath?: (string | number)[] | null,
-    outputTokenCountKeyPath?: (string | number)[] | null,
-    tokenCostKeyPath?: (string | number)[] | null,
-    actualOutputEvent?: string | null,
-    retrievalContextEvent?: string | null,
-    toolsCalledEvent?: string | null,
-    stateEvent?: string | null,
-    actualOutputAccumulate?: boolean,
-    actualOutputTransformerId?: string | null,
-    retrievalContextTransformerId?: string | null,
-    toolsCalledTransformerId?: string | null,
-    stateTransformerId?: string | null,
-    inputTokenCountTransformerId?: string | null,
-    outputTokenCountTransformerId?: string | null,
-    tokenCostTransformerId?: string | null,
-    prompts?: Record<string, AIConnectionPromptRef> | null,
+    options: {
+      type?: AIConnectionType;
+      endpoint?: string | null;
+      responseMode?: AIConnectionResponseMode | null;
+      asyncResponse?: boolean;
+      timeout?: number | null;
+      maxConcurrency?: number | null;
+      maxRetries?: number | null;
+      defaultNumGenerations?: number;
+      headers?: AIConnectionKeyValue[] | null;
+      queryParams?: AIConnectionKeyValue[] | null;
+      payload?: Record<string, unknown> | null;
+      hyperparameters?: Record<string, unknown> | null;
+      authentication?: Record<string, unknown> | null;
+      cloudProvider?: Record<string, unknown> | null;
+      actualOutputKeyPath?: (string | number)[] | null;
+      retrievalContextKeyPath?: (string | number)[] | null;
+      toolsCalledKeyPath?: (string | number)[] | null;
+      stateKeyPath?: (string | number)[] | null;
+      inputTokenCountKeyPath?: (string | number)[] | null;
+      outputTokenCountKeyPath?: (string | number)[] | null;
+      tokenCostKeyPath?: (string | number)[] | null;
+      actualOutputEvent?: string | null;
+      retrievalContextEvent?: string | null;
+      toolsCalledEvent?: string | null;
+      stateEvent?: string | null;
+      actualOutputAccumulate?: boolean;
+      actualOutputTransformerId?: string | null;
+      retrievalContextTransformerId?: string | null;
+      toolsCalledTransformerId?: string | null;
+      stateTransformerId?: string | null;
+      inputTokenCountTransformerId?: string | null;
+      outputTokenCountTransformerId?: string | null;
+      tokenCostTransformerId?: string | null;
+      prompts?: Record<string, AIConnectionPromptRef> | null;
+    } = {},
   ): Promise<AIConnectionRef> {
+    const {
+      type,
+      endpoint,
+      responseMode,
+      asyncResponse,
+      timeout,
+      maxConcurrency,
+      maxRetries,
+      defaultNumGenerations,
+      headers,
+      queryParams,
+      payload,
+      hyperparameters,
+      authentication,
+      cloudProvider,
+      actualOutputKeyPath,
+      retrievalContextKeyPath,
+      toolsCalledKeyPath,
+      stateKeyPath,
+      inputTokenCountKeyPath,
+      outputTokenCountKeyPath,
+      tokenCostKeyPath,
+      actualOutputEvent,
+      retrievalContextEvent,
+      toolsCalledEvent,
+      stateEvent,
+      actualOutputAccumulate,
+      actualOutputTransformerId,
+      retrievalContextTransformerId,
+      toolsCalledTransformerId,
+      stateTransformerId,
+      inputTokenCountTransformerId,
+      outputTokenCountTransformerId,
+      tokenCostTransformerId,
+      prompts,
+    } = options;
     return this.api.sendRequest<AIConnectionRef>(
       HttpMethods.POST,
       Endpoints.AI_CONNECTIONS_ENDPOINT,
@@ -378,42 +416,81 @@ export class AIConnectionsClient {
    */
   async update(
     aiConnectionId: string,
-    name?: string,
-    type?: AIConnectionType,
-    endpoint?: string | null,
-    responseMode?: AIConnectionResponseMode | null,
-    asyncResponse?: boolean,
-    timeout?: number | null,
-    maxConcurrency?: number | null,
-    maxRetries?: number | null,
-    defaultNumGenerations?: number,
-    headers?: AIConnectionKeyValue[] | null,
-    queryParams?: AIConnectionKeyValue[] | null,
-    payload?: Record<string, unknown> | null,
-    hyperparameters?: Record<string, unknown> | null,
-    authentication?: Record<string, unknown> | null,
-    cloudProvider?: Record<string, unknown> | null,
-    actualOutputKeyPath?: (string | number)[] | null,
-    retrievalContextKeyPath?: (string | number)[] | null,
-    toolsCalledKeyPath?: (string | number)[] | null,
-    stateKeyPath?: (string | number)[] | null,
-    inputTokenCountKeyPath?: (string | number)[] | null,
-    outputTokenCountKeyPath?: (string | number)[] | null,
-    tokenCostKeyPath?: (string | number)[] | null,
-    actualOutputEvent?: string | null,
-    retrievalContextEvent?: string | null,
-    toolsCalledEvent?: string | null,
-    stateEvent?: string | null,
-    actualOutputAccumulate?: boolean,
-    actualOutputTransformerId?: string | null,
-    retrievalContextTransformerId?: string | null,
-    toolsCalledTransformerId?: string | null,
-    stateTransformerId?: string | null,
-    inputTokenCountTransformerId?: string | null,
-    outputTokenCountTransformerId?: string | null,
-    tokenCostTransformerId?: string | null,
-    prompts?: Record<string, AIConnectionPromptRef> | null,
+    options: {
+      name?: string;
+      type?: AIConnectionType;
+      endpoint?: string | null;
+      responseMode?: AIConnectionResponseMode | null;
+      asyncResponse?: boolean;
+      timeout?: number | null;
+      maxConcurrency?: number | null;
+      maxRetries?: number | null;
+      defaultNumGenerations?: number;
+      headers?: AIConnectionKeyValue[] | null;
+      queryParams?: AIConnectionKeyValue[] | null;
+      payload?: Record<string, unknown> | null;
+      hyperparameters?: Record<string, unknown> | null;
+      authentication?: Record<string, unknown> | null;
+      cloudProvider?: Record<string, unknown> | null;
+      actualOutputKeyPath?: (string | number)[] | null;
+      retrievalContextKeyPath?: (string | number)[] | null;
+      toolsCalledKeyPath?: (string | number)[] | null;
+      stateKeyPath?: (string | number)[] | null;
+      inputTokenCountKeyPath?: (string | number)[] | null;
+      outputTokenCountKeyPath?: (string | number)[] | null;
+      tokenCostKeyPath?: (string | number)[] | null;
+      actualOutputEvent?: string | null;
+      retrievalContextEvent?: string | null;
+      toolsCalledEvent?: string | null;
+      stateEvent?: string | null;
+      actualOutputAccumulate?: boolean;
+      actualOutputTransformerId?: string | null;
+      retrievalContextTransformerId?: string | null;
+      toolsCalledTransformerId?: string | null;
+      stateTransformerId?: string | null;
+      inputTokenCountTransformerId?: string | null;
+      outputTokenCountTransformerId?: string | null;
+      tokenCostTransformerId?: string | null;
+      prompts?: Record<string, AIConnectionPromptRef> | null;
+    } = {},
   ): Promise<AIConnection> {
+    const {
+      name,
+      type,
+      endpoint,
+      responseMode,
+      asyncResponse,
+      timeout,
+      maxConcurrency,
+      maxRetries,
+      defaultNumGenerations,
+      headers,
+      queryParams,
+      payload,
+      hyperparameters,
+      authentication,
+      cloudProvider,
+      actualOutputKeyPath,
+      retrievalContextKeyPath,
+      toolsCalledKeyPath,
+      stateKeyPath,
+      inputTokenCountKeyPath,
+      outputTokenCountKeyPath,
+      tokenCostKeyPath,
+      actualOutputEvent,
+      retrievalContextEvent,
+      toolsCalledEvent,
+      stateEvent,
+      actualOutputAccumulate,
+      actualOutputTransformerId,
+      retrievalContextTransformerId,
+      toolsCalledTransformerId,
+      stateTransformerId,
+      inputTokenCountTransformerId,
+      outputTokenCountTransformerId,
+      tokenCostTransformerId,
+      prompts,
+    } = options;
     return this.api.sendRequest<AIConnection>(
       HttpMethods.PUT,
       Endpoints.AI_CONNECTION_ENDPOINT,

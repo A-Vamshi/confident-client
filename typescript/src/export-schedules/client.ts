@@ -34,11 +34,14 @@ export class ExportSchedulesClient {
    *   25.
    */
   async list(
-    exportType?: SchedulableExportType,
-    enabled?: "true" | "false",
-    page?: number,
-    pageSize?: number,
+    options: {
+      exportType?: SchedulableExportType;
+      enabled?: "true" | "false";
+      page?: number;
+      pageSize?: number;
+    } = {},
   ): Promise<ExportScheduleList> {
+    const { exportType, enabled, page, pageSize } = options;
     return this.api.sendRequest<ExportScheduleList>(
       HttpMethods.GET,
       Endpoints.EXPORT_SCHEDULES_ENDPOINT,
@@ -75,17 +78,31 @@ export class ExportSchedulesClient {
   async create(
     name: string,
     exportType: SchedulableExportType,
-    recurrence?: ScheduleRecurrenceType,
-    repeatEvery?: number | null,
-    repeatUnit?: ScheduleIntervalUnit | null,
-    startAt?: string | null,
-    maxRuns?: number | null,
-    endAt?: string | null,
-    description?: string | null,
-    filters?: FilterSet,
-    destinationId?: string | null,
-    enabled?: boolean,
+    options: {
+      recurrence?: ScheduleRecurrenceType;
+      repeatEvery?: number | null;
+      repeatUnit?: ScheduleIntervalUnit | null;
+      startAt?: string | null;
+      maxRuns?: number | null;
+      endAt?: string | null;
+      description?: string | null;
+      filters?: FilterSet;
+      destinationId?: string | null;
+      enabled?: boolean;
+    } = {},
   ): Promise<ExportScheduleRef> {
+    const {
+      recurrence,
+      repeatEvery,
+      repeatUnit,
+      startAt,
+      maxRuns,
+      endAt,
+      description,
+      filters,
+      destinationId,
+      enabled,
+    } = options;
     return this.api.sendRequest<ExportScheduleRef>(
       HttpMethods.POST,
       Endpoints.EXPORT_SCHEDULES_ENDPOINT,
@@ -151,18 +168,33 @@ export class ExportSchedulesClient {
    */
   async update(
     exportScheduleId: string,
-    recurrence?: ScheduleRecurrenceType,
-    repeatEvery?: number | null,
-    repeatUnit?: ScheduleIntervalUnit | null,
-    startAt?: string | null,
-    maxRuns?: number | null,
-    endAt?: string | null,
-    name?: string,
-    description?: string | null,
-    filters?: FilterSet,
-    destinationId?: string | null,
-    enabled?: boolean,
+    options: {
+      recurrence?: ScheduleRecurrenceType;
+      repeatEvery?: number | null;
+      repeatUnit?: ScheduleIntervalUnit | null;
+      startAt?: string | null;
+      maxRuns?: number | null;
+      endAt?: string | null;
+      name?: string;
+      description?: string | null;
+      filters?: FilterSet;
+      destinationId?: string | null;
+      enabled?: boolean;
+    } = {},
   ): Promise<ExportSchedule> {
+    const {
+      recurrence,
+      repeatEvery,
+      repeatUnit,
+      startAt,
+      maxRuns,
+      endAt,
+      name,
+      description,
+      filters,
+      destinationId,
+      enabled,
+    } = options;
     return this.api.sendRequest<ExportSchedule>(
       HttpMethods.PUT,
       Endpoints.EXPORT_SCHEDULE_ENDPOINT,

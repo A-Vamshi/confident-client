@@ -36,13 +36,17 @@ export class ReportsClient {
    *   25.
    */
   async list(
-    reportTemplateId?: string,
-    status?: ReportStatus,
-    startDate?: string,
-    endDate?: string,
-    page?: number,
-    pageSize?: number,
+    options: {
+      reportTemplateId?: string;
+      status?: ReportStatus;
+      startDate?: string;
+      endDate?: string;
+      page?: number;
+      pageSize?: number;
+    } = {},
   ): Promise<ReportList> {
+    const { reportTemplateId, status, startDate, endDate, page, pageSize } =
+      options;
     return this.api.sendRequest<ReportList>(
       HttpMethods.GET,
       Endpoints.REPORTS_ENDPOINT,
@@ -75,10 +79,13 @@ export class ReportsClient {
   async create(
     reportTemplateId: string,
     sections: ReportSectionInput[],
-    status?: ReportStatus,
-    error?: string | null,
-    metadata?: ReportMetadataInput,
+    options: {
+      status?: ReportStatus;
+      error?: string | null;
+      metadata?: ReportMetadataInput;
+    } = {},
   ): Promise<ReportRef> {
+    const { status, error, metadata } = options;
     return this.api.sendRequest<ReportRef>(
       HttpMethods.POST,
       Endpoints.REPORTS_ENDPOINT,
@@ -117,11 +124,14 @@ export class ReportsClient {
    */
   async update(
     reportId: string,
-    status?: ReportStatus,
-    error?: string | null,
-    metadata?: ReportMetadataInput,
-    sections?: ReportSectionInput[],
+    options: {
+      status?: ReportStatus;
+      error?: string | null;
+      metadata?: ReportMetadataInput;
+      sections?: ReportSectionInput[];
+    } = {},
   ): Promise<Report> {
+    const { status, error, metadata, sections } = options;
     return this.api.sendRequest<Report>(
       HttpMethods.PUT,
       Endpoints.REPORT_ENDPOINT,

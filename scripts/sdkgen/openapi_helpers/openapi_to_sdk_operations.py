@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Sequence, Set, Tuple
 
 from ..constants import (
+    TS_OPTIONS_THRESHOLD,
     ENDPOINTS_CLASS,
     PATH_PARAMETER,
     TS_RESERVED,
@@ -218,13 +219,40 @@ class Method:
             arguments += keyword
         return arguments
 
-    def ts_signature(self, skip: Sequence[str] = ()) -> List[str]:
-        """TypeScript has no keyword arguments, so optionality carries the
-        order: everything required first, everything else after."""
-        kept = [p for p in self.parameters if p.name not in skip]
-        return [p.ts_declaration() for p in kept if p.required] + [
-            p.ts_declaration() for p in kept if not p.required
+    def ts_optional(self, skip: Sequence[str] = ()) -> List["Parameter"]:
+        return [
+            p for p in self.parameters if p.name not in skip and not p.required
         ]
+
+    def ts_takes_options(self, skip: Sequence[str] = ()) -> bool:
+        """Whether the optionals are gathered into a trailing object.
+
+        TypeScript carries optionality in the argument order, so a method with
+        several optionals makes a caller pass `undefined` for each one it is
+        skipping. Past `TS_OPTIONS_THRESHOLD` they become one named object.
+        """
+        return len(self.ts_optional(skip)) >= TS_OPTIONS_THRESHOLD
+
+    def ts_signature(self, skip: Sequence[str] = ()) -> List[str]:
+        """Required arguments in path order, then whatever is optional."""
+        kept = [p for p in self.parameters if p.name not in skip]
+        required = [p.ts_declaration() for p in kept if p.required]
+        optional = self.ts_optional(skip)
+        if not self.ts_takes_options(skip):
+            return required + [p.ts_declaration() for p in optional]
+        fields = "; ".join(p.ts_declaration() for p in optional)
+        return required + [f"options: {{ {fields} }} = {{}}"]
+
+    def ts_unpacking(self, skip: Sequence[str] = ()) -> List[str]:
+        """Binds a trailing options object back to the bare names the body uses.
+
+        One line, so that everything below it reads the same whichever form the
+        signature took.
+        """
+        if not self.ts_takes_options(skip):
+            return []
+        names = ", ".join(p.ts_name for p in self.ts_optional(skip))
+        return [f"const {{ {names} }} = options;"]
 
 
 def resolve_method(

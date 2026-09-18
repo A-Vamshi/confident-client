@@ -141,13 +141,23 @@ export class RTFrameworksOperations {
     rtFrameworkId: string,
     riskCategories: string[],
     exposure: Level,
-    identifier?: string,
-    aiConnectionId?: string,
-    promptAlias?: string,
-    promptCommit?: string,
-    generationMode?: GenerationMode,
-    attackEngine?: AttackEngine,
+    options: {
+      identifier?: string;
+      aiConnectionId?: string;
+      promptAlias?: string;
+      promptCommit?: string;
+      generationMode?: GenerationMode;
+      attackEngine?: AttackEngine;
+    } = {},
   ): Promise<RiskAssessmentRef> {
+    const {
+      identifier,
+      aiConnectionId,
+      promptAlias,
+      promptCommit,
+      generationMode,
+      attackEngine,
+    } = options;
     return this.api.sendRequest<RiskAssessmentRef>(
       HttpMethods.POST,
       Endpoints.RT_FRAMEWORK_RUN_ENDPOINT,

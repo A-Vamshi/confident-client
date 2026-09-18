@@ -87,10 +87,13 @@ export class TransformersClient {
    */
   async update(
     transformerId: string,
-    name?: string,
-    description?: string | null,
-    codeDefinition?: TransformerCodeDefinition,
+    options: {
+      name?: string;
+      description?: string | null;
+      codeDefinition?: TransformerCodeDefinition;
+    } = {},
   ): Promise<Transformer> {
+    const { name, description, codeDefinition } = options;
     return this.api.sendRequest<Transformer>(
       HttpMethods.PUT,
       Endpoints.TRANSFORMER_ENDPOINT,

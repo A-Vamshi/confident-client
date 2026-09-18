@@ -64,10 +64,13 @@ export class ExportDestinationsClient {
     region: string,
     accessKeyId: string,
     secretAccessKey: string,
-    type?: ExportDestinationType,
-    pathPrefix?: string | null,
-    enabled?: boolean,
+    options: {
+      type?: ExportDestinationType;
+      pathPrefix?: string | null;
+      enabled?: boolean;
+    } = {},
   ): Promise<ExportDestinationRef> {
+    const { type, pathPrefix, enabled } = options;
     return this.api.sendRequest<ExportDestinationRef>(
       HttpMethods.POST,
       Endpoints.EXPORT_DESTINATIONS_ENDPOINT,
@@ -131,15 +134,27 @@ export class ExportDestinationsClient {
    */
   async update(
     exportDestinationId: string,
-    name?: string,
-    type?: ExportDestinationType,
-    bucket?: string,
-    region?: string,
-    accessKeyId?: string,
-    secretAccessKey?: string,
-    pathPrefix?: string | null,
-    enabled?: boolean,
+    options: {
+      name?: string;
+      type?: ExportDestinationType;
+      bucket?: string;
+      region?: string;
+      accessKeyId?: string;
+      secretAccessKey?: string;
+      pathPrefix?: string | null;
+      enabled?: boolean;
+    } = {},
   ): Promise<ExportDestination> {
+    const {
+      name,
+      type,
+      bucket,
+      region,
+      accessKeyId,
+      secretAccessKey,
+      pathPrefix,
+      enabled,
+    } = options;
     return this.api.sendRequest<ExportDestination>(
       HttpMethods.PUT,
       Endpoints.EXPORT_DESTINATION_ENDPOINT,

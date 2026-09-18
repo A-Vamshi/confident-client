@@ -60,10 +60,13 @@ export class LabelsOperations extends ClassifiersOperations {
     classifierId: string,
     name: string,
     description: string,
-    enabled?: boolean,
-    status?: ClassifierLabelStatus,
-    polarity?: SignalPolarity,
+    options: {
+      enabled?: boolean;
+      status?: ClassifierLabelStatus;
+      polarity?: SignalPolarity;
+    } = {},
   ): Promise<ClassifierLabelRef> {
+    const { enabled, status, polarity } = options;
     return this.api.sendRequest<ClassifierLabelRef>(
       HttpMethods.POST,
       Endpoints.CLASSIFIER_LABELS_ENDPOINT,
@@ -111,12 +114,15 @@ export class LabelsOperations extends ClassifiersOperations {
   async updateLabel(
     classifierId: string,
     labelId: string,
-    name?: string,
-    description?: string,
-    enabled?: boolean,
-    status?: ClassifierLabelStatus,
-    polarity?: SignalPolarity,
+    options: {
+      name?: string;
+      description?: string;
+      enabled?: boolean;
+      status?: ClassifierLabelStatus;
+      polarity?: SignalPolarity;
+    } = {},
   ): Promise<ClassifierLabel> {
+    const { name, description, enabled, status, polarity } = options;
     return this.api.sendRequest<ClassifierLabel>(
       HttpMethods.PUT,
       Endpoints.CLASSIFIER_LABEL_ENDPOINT,

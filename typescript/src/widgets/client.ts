@@ -29,10 +29,13 @@ export class WidgetsClient {
    */
   async queryAdHoc(
     widget: CreateWidgetRequest,
-    startTime?: string,
-    endTime?: string,
-    granularity?: WidgetGranularity,
+    options: {
+      startTime?: string;
+      endTime?: string;
+      granularity?: WidgetGranularity;
+    } = {},
   ): Promise<AdHocWidgetQueryResult> {
+    const { startTime, endTime, granularity } = options;
     return this.api.sendRequest<AdHocWidgetQueryResult>(
       HttpMethods.POST,
       Endpoints.WIDGETS_QUERY_ENDPOINT,

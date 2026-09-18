@@ -26,10 +26,9 @@ export class ModelCostsClient {
    *   contains this text, case-insensitively.
    */
   async list(
-    page?: number,
-    pageSize?: number,
-    searchTerm?: string,
+    options: { page?: number; pageSize?: number; searchTerm?: string } = {},
   ): Promise<ModelCostList> {
+    const { page, pageSize, searchTerm } = options;
     return this.api.sendRequest<ModelCostList>(
       HttpMethods.GET,
       Endpoints.MODEL_COSTS_ENDPOINT,
@@ -60,10 +59,14 @@ export class ModelCostsClient {
    */
   async create(
     matchPattern: string,
-    provider?: string | null,
-    inputCostPerMillionTokens?: number | null,
-    outputCostPerMillionTokens?: number | null,
+    options: {
+      provider?: string | null;
+      inputCostPerMillionTokens?: number | null;
+      outputCostPerMillionTokens?: number | null;
+    } = {},
   ): Promise<ModelCostRef> {
+    const { provider, inputCostPerMillionTokens, outputCostPerMillionTokens } =
+      options;
     return this.api.sendRequest<ModelCostRef>(
       HttpMethods.POST,
       Endpoints.MODEL_COSTS_ENDPOINT,
@@ -103,10 +106,14 @@ export class ModelCostsClient {
   async update(
     modelCostId: string,
     matchPattern: string,
-    provider?: string | null,
-    inputCostPerMillionTokens?: number | null,
-    outputCostPerMillionTokens?: number | null,
+    options: {
+      provider?: string | null;
+      inputCostPerMillionTokens?: number | null;
+      outputCostPerMillionTokens?: number | null;
+    } = {},
   ): Promise<ModelCost> {
+    const { provider, inputCostPerMillionTokens, outputCostPerMillionTokens } =
+      options;
     return this.api.sendRequest<ModelCost>(
       HttpMethods.PUT,
       Endpoints.MODEL_COST_ENDPOINT,

@@ -29,10 +29,13 @@ export class EvaluationRulesClient {
    *   25.
    */
   async list(
-    dataModel?: EvaluationRuleDataModel,
-    page?: number,
-    pageSize?: number,
+    options: {
+      dataModel?: EvaluationRuleDataModel;
+      page?: number;
+      pageSize?: number;
+    } = {},
   ): Promise<EvaluationRuleList> {
+    const { dataModel, page, pageSize } = options;
     return this.api.sendRequest<EvaluationRuleList>(
       HttpMethods.GET,
       Endpoints.EVALUATION_RULES_ENDPOINT,
@@ -74,14 +77,25 @@ export class EvaluationRulesClient {
     name: string,
     dataModel: EvaluationRuleDataModel,
     metricCollectionId: string,
-    enabled?: boolean,
-    description?: string | null,
-    sampleRate?: number,
-    spanType?: SpanType | null,
-    filters?: FilterSet | null,
-    threadTimelimit?: number,
-    overwriteEvals?: boolean,
+    options: {
+      enabled?: boolean;
+      description?: string | null;
+      sampleRate?: number;
+      spanType?: SpanType | null;
+      filters?: FilterSet | null;
+      threadTimelimit?: number;
+      overwriteEvals?: boolean;
+    } = {},
   ): Promise<EvaluationRuleRef> {
+    const {
+      enabled,
+      description,
+      sampleRate,
+      spanType,
+      filters,
+      threadTimelimit,
+      overwriteEvals,
+    } = options;
     return this.api.sendRequest<EvaluationRuleRef>(
       HttpMethods.POST,
       Endpoints.EVALUATION_RULES_ENDPOINT,
@@ -148,17 +162,31 @@ export class EvaluationRulesClient {
    */
   async update(
     evaluationRuleId: string,
-    name?: string,
-    enabled?: boolean,
-    dataModel?: EvaluationRuleDataModel,
-    metricCollectionId?: string,
-    description?: string | null,
-    sampleRate?: number,
-    spanType?: SpanType | null,
-    filters?: FilterSet | null,
-    threadTimelimit?: number,
-    overwriteEvals?: boolean,
+    options: {
+      name?: string;
+      enabled?: boolean;
+      dataModel?: EvaluationRuleDataModel;
+      metricCollectionId?: string;
+      description?: string | null;
+      sampleRate?: number;
+      spanType?: SpanType | null;
+      filters?: FilterSet | null;
+      threadTimelimit?: number;
+      overwriteEvals?: boolean;
+    } = {},
   ): Promise<EvaluationRule> {
+    const {
+      name,
+      enabled,
+      dataModel,
+      metricCollectionId,
+      description,
+      sampleRate,
+      spanType,
+      filters,
+      threadTimelimit,
+      overwriteEvals,
+    } = options;
     return this.api.sendRequest<EvaluationRule>(
       HttpMethods.PUT,
       Endpoints.EVALUATION_RULE_ENDPOINT,

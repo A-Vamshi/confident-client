@@ -78,21 +78,39 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
     datasetId: string,
     name: string,
     dataModel: IngestionDataModel,
-    description?: string | null,
-    enabled?: boolean,
-    sampleRate?: number,
-    filters?: FilterSet,
-    maxGoldens?: number | null,
-    inputTransformerId?: string | null,
-    outputTransformerId?: string | null,
-    includeInput?: boolean,
-    includeActualOutput?: boolean,
-    includeExpectedOutput?: boolean,
-    includeRetrievalContext?: boolean,
-    includeContext?: boolean,
-    includeToolsCalled?: boolean,
-    includeExpectedTools?: boolean,
+    options: {
+      description?: string | null;
+      enabled?: boolean;
+      sampleRate?: number;
+      filters?: FilterSet;
+      maxGoldens?: number | null;
+      inputTransformerId?: string | null;
+      outputTransformerId?: string | null;
+      includeInput?: boolean;
+      includeActualOutput?: boolean;
+      includeExpectedOutput?: boolean;
+      includeRetrievalContext?: boolean;
+      includeContext?: boolean;
+      includeToolsCalled?: boolean;
+      includeExpectedTools?: boolean;
+    } = {},
   ): Promise<DatasetIngestionTaskRef> {
+    const {
+      description,
+      enabled,
+      sampleRate,
+      filters,
+      maxGoldens,
+      inputTransformerId,
+      outputTransformerId,
+      includeInput,
+      includeActualOutput,
+      includeExpectedOutput,
+      includeRetrievalContext,
+      includeContext,
+      includeToolsCalled,
+      includeExpectedTools,
+    } = options;
     return this.api.sendRequest<DatasetIngestionTaskRef>(
       HttpMethods.POST,
       Endpoints.DATASET_DATASET_INGESTION_TASKS_ENDPOINT,
@@ -180,23 +198,43 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
   async updateIngestionTask(
     datasetId: string,
     datasetIngestionTaskId: string,
-    name?: string,
-    dataModel?: IngestionDataModel,
-    description?: string | null,
-    enabled?: boolean,
-    sampleRate?: number,
-    filters?: FilterSet,
-    maxGoldens?: number | null,
-    inputTransformerId?: string | null,
-    outputTransformerId?: string | null,
-    includeInput?: boolean,
-    includeActualOutput?: boolean,
-    includeExpectedOutput?: boolean,
-    includeRetrievalContext?: boolean,
-    includeContext?: boolean,
-    includeToolsCalled?: boolean,
-    includeExpectedTools?: boolean,
+    options: {
+      name?: string;
+      dataModel?: IngestionDataModel;
+      description?: string | null;
+      enabled?: boolean;
+      sampleRate?: number;
+      filters?: FilterSet;
+      maxGoldens?: number | null;
+      inputTransformerId?: string | null;
+      outputTransformerId?: string | null;
+      includeInput?: boolean;
+      includeActualOutput?: boolean;
+      includeExpectedOutput?: boolean;
+      includeRetrievalContext?: boolean;
+      includeContext?: boolean;
+      includeToolsCalled?: boolean;
+      includeExpectedTools?: boolean;
+    } = {},
   ): Promise<DatasetIngestionTask> {
+    const {
+      name,
+      dataModel,
+      description,
+      enabled,
+      sampleRate,
+      filters,
+      maxGoldens,
+      inputTransformerId,
+      outputTransformerId,
+      includeInput,
+      includeActualOutput,
+      includeExpectedOutput,
+      includeRetrievalContext,
+      includeContext,
+      includeToolsCalled,
+      includeExpectedTools,
+    } = options;
     return this.api.sendRequest<DatasetIngestionTask>(
       HttpMethods.PUT,
       Endpoints.DATASET_DATASET_INGESTION_TASK_ENDPOINT,

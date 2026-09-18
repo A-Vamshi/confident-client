@@ -25,10 +25,13 @@ export class AttackMethodsClient {
    *   false, only single-turn ones. Omit to return both.
    */
   async list(
-    page?: number,
-    pageSize?: number,
-    multiTurn?: "true" | "false",
+    options: {
+      page?: number;
+      pageSize?: number;
+      multiTurn?: "true" | "false";
+    } = {},
   ): Promise<AttackMethodList> {
+    const { page, pageSize, multiTurn } = options;
     return this.api.sendRequest<AttackMethodList>(
       HttpMethods.GET,
       Endpoints.ATTACK_METHODS_ENDPOINT,
