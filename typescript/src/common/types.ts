@@ -320,6 +320,7 @@ export interface AuditLogExport {
     | "TRACES_WITH_SPANS"
     | "CONVERSATIONS"
     | "CONVERSATION_METRICS"
+    | "ANNOTATIONS"
     | "AUDIT_LOGS";
   startTime: string | null;
   endTime: string | null;
@@ -425,13 +426,13 @@ export interface FilterSetGroupFilter {
   category:
     | "User Id"
     | "Thread Id"
-    | "Trace Uuid"
+    | "Trace UUID"
     | "Trace Name"
     | "Trace Version"
     | "Trace Status"
     | "Trace Tags"
     | "Trace"
-    | "Span Uuid"
+    | "Span UUID"
     | "Name"
     | "Span Name"
     | "Span Type"

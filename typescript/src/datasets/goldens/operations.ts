@@ -55,8 +55,9 @@ export class GoldensOperations extends DatasetIngestionTasksOperations {
    * Update Golden
    *
    * Replaces the fields of a single golden with the values you send and returns
-   * its id. `tags` and `customColumnKeyValues` are left unchanged unless you
-   * include them. The golden's kind must match the dataset's `multiTurn`.
+   * its id. `sourceFile`, `sourceFiles`, `tags` and `customColumnKeyValues` are
+   * left unchanged unless you include them. The golden's kind must match the
+   * dataset's `multiTurn`.
    *
    * @param datasetId The unique id of the dataset.
    * @param goldenId The unique id of the golden, returned when the dataset is

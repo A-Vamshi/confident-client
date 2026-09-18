@@ -328,6 +328,7 @@ class AuditLogExport(ConfidentBaseModel):
         "TRACES_WITH_SPANS",
         "CONVERSATIONS",
         "CONVERSATION_METRICS",
+        "ANNOTATIONS",
         "AUDIT_LOGS",
     ] = Field(
         alias="exportType",
@@ -448,13 +449,13 @@ class FilterSetGroupFilter(ConfidentBaseModel):
     category: Literal[
         "User Id",
         "Thread Id",
-        "Trace Uuid",
+        "Trace UUID",
         "Trace Name",
         "Trace Version",
         "Trace Status",
         "Trace Tags",
         "Trace",
-        "Span Uuid",
+        "Span UUID",
         "Name",
         "Span Name",
         "Span Type",

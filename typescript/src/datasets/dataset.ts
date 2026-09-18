@@ -217,8 +217,9 @@ export class Dataset {
    * Update Golden
    *
    * Replaces the fields of a single golden with the values you send and returns
-   * its id. `tags` and `customColumnKeyValues` are left unchanged unless you
-   * include them. The golden's kind must match the dataset's `multiTurn`.
+   * its id. `sourceFile`, `sourceFiles`, `tags` and `customColumnKeyValues` are
+   * left unchanged unless you include them. The golden's kind must match the
+   * dataset's `multiTurn`.
    *
    * @param golden A golden in the dataset: single-turn when it carries `input`,
    *   multi-turn when it carries `scenario`. The dataset's `multiTurn` decides

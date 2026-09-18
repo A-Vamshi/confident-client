@@ -116,9 +116,9 @@ class GoldensOperations:
         """Update Golden
 
         Replaces the fields of a single golden with the values you send and
-        returns its id. `tags` and `customColumnKeyValues` are left unchanged
-        unless you include them. The golden's kind must match the dataset's
-        `multiTurn`.
+        returns its id. `sourceFile`, `sourceFiles`, `tags` and
+        `customColumnKeyValues` are left unchanged unless you include them. The
+        golden's kind must match the dataset's `multiTurn`.
 
         Args:
             dataset_id: The unique id of the dataset.
@@ -145,9 +145,9 @@ class GoldensOperations:
         """Update Golden
 
         Replaces the fields of a single golden with the values you send and
-        returns its id. `tags` and `customColumnKeyValues` are left unchanged
-        unless you include them. The golden's kind must match the dataset's
-        `multiTurn`.
+        returns its id. `sourceFile`, `sourceFiles`, `tags` and
+        `customColumnKeyValues` are left unchanged unless you include them. The
+        golden's kind must match the dataset's `multiTurn`.
 
         Args:
             dataset_id: The unique id of the dataset.
