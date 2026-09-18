@@ -3,10 +3,16 @@
 # Do not edit by hand — change the route in confident-cloud
 # and regenerate.
 
-from confidentai.threads.types import Thread, ThreadList, ThreadSummary
+from confidentai.threads.types import (
+    Thread,
+    ThreadList,
+    ThreadSortBy,
+    ThreadSummary,
+)
 
 __all__ = [
     "Thread",
     "ThreadList",
+    "ThreadSortBy",
     "ThreadSummary",
 ]

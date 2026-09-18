@@ -4,6 +4,7 @@
 # and regenerate.
 
 from confidentai.annotation_forms.types import (
+    AnnotationFieldType,
     AnnotationForm,
     AnnotationFormField,
     AnnotationFormFieldConfig,
@@ -15,6 +16,7 @@ from confidentai.annotation_forms.types import (
 )
 
 __all__ = [
+    "AnnotationFieldType",
     "AnnotationForm",
     "AnnotationFormField",
     "AnnotationFormFieldConfig",

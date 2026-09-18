@@ -9,6 +9,7 @@ from confidentai.attack_methods.types import (
     AttackMethodRef,
     AttackMethodSummary,
     AttackParameter,
+    AttackParameterType,
     UpdateAttackMethodRequest,
 )
 
@@ -18,5 +19,6 @@ __all__ = [
     "AttackMethodRef",
     "AttackMethodSummary",
     "AttackParameter",
+    "AttackParameterType",
     "UpdateAttackMethodRequest",
 ]

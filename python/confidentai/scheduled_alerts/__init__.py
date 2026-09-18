@@ -4,6 +4,9 @@
 # and regenerate.
 
 from confidentai.scheduled_alerts.types import (
+    AlertDataModel,
+    AlertSeverity,
+    AlertThresholdDirection,
     AlertThresholdSettings,
     CreateScheduledAlertRequest,
     ScheduledAlert,
@@ -15,6 +18,9 @@ from confidentai.scheduled_alerts.types import (
 )
 
 __all__ = [
+    "AlertDataModel",
+    "AlertSeverity",
+    "AlertThresholdDirection",
     "AlertThresholdSettings",
     "CreateScheduledAlertRequest",
     "ScheduledAlert",

@@ -16,6 +16,7 @@ from confidentai.traces.types import (
     TraceAttachment,
     TraceList,
     TraceRef,
+    TraceSortBy,
     TraceSummary,
 )
 
@@ -32,5 +33,6 @@ __all__ = [
     "TraceAttachment",
     "TraceList",
     "TraceRef",
+    "TraceSortBy",
     "TraceSummary",
 ]

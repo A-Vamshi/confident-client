@@ -3,9 +3,10 @@
 # Do not edit by hand — change the route in confident-cloud
 # and regenerate.
 
-from confidentai.spans.types import SpanList, SpanSummary
+from confidentai.spans.types import SpanList, SpanSortBy, SpanSummary
 
 __all__ = [
     "SpanList",
+    "SpanSortBy",
     "SpanSummary",
 ]

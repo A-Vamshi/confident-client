@@ -9,6 +9,7 @@ from confidentai.export_destinations.types import (
     ExportDestinationList,
     ExportDestinationRef,
     ExportDestinationSummary,
+    ExportDestinationType,
     UpdateExportDestinationRequest,
 )
 
@@ -18,5 +19,6 @@ __all__ = [
     "ExportDestinationList",
     "ExportDestinationRef",
     "ExportDestinationSummary",
+    "ExportDestinationType",
     "UpdateExportDestinationRequest",
 ]

@@ -6,6 +6,7 @@
 from confidentai.evaluation_rules.types import (
     CreateEvaluationRuleRequest,
     EvaluationRule,
+    EvaluationRuleDataModel,
     EvaluationRuleList,
     EvaluationRuleRef,
     EvaluationRuleSummary,
@@ -15,6 +16,7 @@ from confidentai.evaluation_rules.types import (
 __all__ = [
     "CreateEvaluationRuleRequest",
     "EvaluationRule",
+    "EvaluationRuleDataModel",
     "EvaluationRuleList",
     "EvaluationRuleRef",
     "EvaluationRuleSummary",

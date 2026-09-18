@@ -12,7 +12,10 @@ from confidentai.report_templates.types import (
     ReportTemplateSection,
     ReportTemplateSectionConfig,
     ReportTemplateSectionContent,
+    ReportTemplateSectionSeverity,
+    ReportTemplateSectionType,
     ReportTemplateSummary,
+    ReportTemplateType,
     UpdateReportTemplateRequest,
 )
 
@@ -25,6 +28,9 @@ __all__ = [
     "ReportTemplateSection",
     "ReportTemplateSectionConfig",
     "ReportTemplateSectionContent",
+    "ReportTemplateSectionSeverity",
+    "ReportTemplateSectionType",
     "ReportTemplateSummary",
+    "ReportTemplateType",
     "UpdateReportTemplateRequest",
 ]

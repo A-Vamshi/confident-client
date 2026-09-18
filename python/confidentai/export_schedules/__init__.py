@@ -10,6 +10,7 @@ from confidentai.export_schedules.types import (
     ExportScheduleRef,
     ExportScheduleSettings,
     ExportScheduleSummary,
+    SchedulableExportType,
     UpdateExportScheduleRequest,
 )
 
@@ -20,5 +21,6 @@ __all__ = [
     "ExportScheduleRef",
     "ExportScheduleSettings",
     "ExportScheduleSummary",
+    "SchedulableExportType",
     "UpdateExportScheduleRequest",
 ]

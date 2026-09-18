@@ -7,12 +7,14 @@ from confidentai.mcp_servers.types import (
     CreateMcpServerRequest,
     McpServer,
     McpServerAuthConfig,
+    McpServerAuthType,
     McpServerConnection,
     McpServerList,
     McpServerMaskedAuthConfig,
     McpServerRef,
     McpServerSummary,
     McpServerTool,
+    McpServerTransport,
     UpdateMcpServerRequest,
 )
 
@@ -20,11 +22,13 @@ __all__ = [
     "CreateMcpServerRequest",
     "McpServer",
     "McpServerAuthConfig",
+    "McpServerAuthType",
     "McpServerConnection",
     "McpServerList",
     "McpServerMaskedAuthConfig",
     "McpServerRef",
     "McpServerSummary",
     "McpServerTool",
+    "McpServerTransport",
     "UpdateMcpServerRequest",
 ]

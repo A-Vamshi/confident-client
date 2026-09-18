@@ -212,7 +212,10 @@ def render_python(module: Module, source: str) -> str:
 
 
 def render_python_barrel(module: Module, source: str) -> str:
-    names = sorted(declaration.name for declaration in module.declarations)
+    names = sorted(
+        {enum.name for enum in module.enums}
+        | {declaration.name for declaration in module.declarations}
+    )
     lines = banner("#", source)
     if not names:
         lines.append("__all__: list = []")
