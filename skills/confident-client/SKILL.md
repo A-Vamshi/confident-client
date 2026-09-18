@@ -33,9 +33,8 @@ members, RBAC, governance, API keys) and the resources a project holds
 (prompts, datasets, traces, spans, threads, metrics, test runs, evaluations,
 dashboards, annotation queues, red teaming).
 
-This skill stops at the API. Instrumenting a running application with spans, or
-writing a pytest eval suite, is a different job — see the `deepeval`,
-`deepeval-tracing`, and `deepeval-otel` skills.
+This skill does not instrument a running application or write eval suites. For
+those, see the `deepeval`, `deepeval-tracing`, and `deepeval-otel` skills.
 
 ## Two Keys, Two Scopes
 
@@ -66,9 +65,10 @@ both be configured at once.
 - **`deepeval-tracing` skill** — instrument an app (`@observe`, integrations).
 - **`deepeval-otel` skill** — export raw OpenTelemetry / OTLP traces.
 
-The line is *running* versus *managing*. Pulling a prompt, pushing goldens to a
-dataset, or reading a test run's results is this skill. Emitting a span from a
-live request, or asserting a metric inside a test, is not.
+Use this skill for API calls: pulling a prompt, pushing goldens to a dataset,
+or reading a test run's results. Use the other three for work inside a running
+program: emitting a span from a live request, or asserting a metric inside a
+test suite.
 
 ## Prerequisites
 
