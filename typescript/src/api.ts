@@ -1,11 +1,13 @@
 import axios from "axios";
 
+import { Endpoints } from "./endpoints";
+
 export const SDK_VERSION = "0.2.0";
 
-// Organization-scoped API key env var. Named CONFIDENT_ORG_API_KEY (not
-// CONFIDENT_API_KEY) to avoid clashing with deepeval's CONFIDENT_API_KEY, which
-// holds a project key for a different SDK.
+// One credential env var per ApiKeyKind. Both are namespaced (ORG / PROJ)
+// rather than reusing deepeval's CONFIDENT_API_KEY, which this SDK never reads.
 export const CONFIDENT_ORG_API_KEY_ENV_VAR = "CONFIDENT_ORG_API_KEY";
+export const CONFIDENT_PROJ_API_KEY_ENV_VAR = "CONFIDENT_PROJ_API_KEY";
 export const CONFIDENT_BASE_URL_ENV_VAR = "CONFIDENT_BASE_URL";
 export const CONFIDENT_REGION_ENV_VAR = "CONFIDENT_REGION";
 
@@ -29,11 +31,36 @@ const RETRYABLE_ERROR_CODES = [
 ];
 
 function logRetryError(error: unknown, attempt: number): void {
-  console.error(`Confident AI Error: ${error}. Retrying: ${attempt} time(s)...`);
+  console.error(
+    `Confident AI Error: ${error}. Retrying: ${attempt} time(s)...`,
+  );
 }
 
 function wait(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export enum ApiKeyKind {
+  ORGANIZATION = "organization",
+  PROJECT = "project",
+}
+
+const API_KEY_ENV_VARS: Record<ApiKeyKind, string> = {
+  [ApiKeyKind.ORGANIZATION]: CONFIDENT_ORG_API_KEY_ENV_VAR,
+  [ApiKeyKind.PROJECT]: CONFIDENT_PROJ_API_KEY_ENV_VAR,
+};
+
+const API_KEY_CLIENT_OPTIONS: Record<ApiKeyKind, string> = {
+  [ApiKeyKind.ORGANIZATION]: "apiKey",
+  [ApiKeyKind.PROJECT]: "projectApiKey",
+};
+
+export function apiKeyEnvVar(keyKind: ApiKeyKind): string {
+  return API_KEY_ENV_VARS[keyKind];
+}
+
+export function apiKeyClientOption(keyKind: ApiKeyKind): string {
+  return API_KEY_CLIENT_OPTIONS[keyKind];
 }
 
 export enum HttpMethods {
@@ -41,41 +68,6 @@ export enum HttpMethods {
   POST = "POST",
   DELETE = "DELETE",
   PUT = "PUT",
-}
-
-export enum Endpoints {
-  // Organization management
-  ORGANIZATION_ENDPOINT = "/v1/organization",
-  ORGANIZATION_MEMBERS_ENDPOINT = "/v1/organization/members",
-  ORGANIZATION_MEMBER_ENDPOINT = "/v1/organization/members/:userId",
-  ORGANIZATION_INVITATIONS_ENDPOINT = "/v1/organization/invitations",
-  ORGANIZATION_INVITATION_ENDPOINT = "/v1/organization/invitations/:invitationId",
-  ORGANIZATION_ROLES_ENDPOINT = "/v1/organization/roles",
-  ORGANIZATION_ROLE_ENDPOINT = "/v1/organization/roles/:roleId",
-  ORGANIZATION_POLICIES_ENDPOINT = "/v1/organization/policies",
-  ORGANIZATION_POLICY_ENDPOINT = "/v1/organization/policies/:policyId",
-  ORGANIZATION_PERMISSIONS_ENDPOINT = "/v1/organization/permissions",
-  ORGANIZATION_API_KEYS_ENDPOINT = "/v1/organization/api-keys",
-  ORGANIZATION_API_KEY_ENDPOINT = "/v1/organization/api-keys/:apiKeyId",
-  ORGANIZATION_GOVERNANCE_POLICIES_ENDPOINT = "/v1/organization/governance-policies",
-  ORGANIZATION_GOVERNANCE_POLICY_ASSIGN_ENDPOINT = "/v1/organization/governance-policies/:policyId/assign",
-  ORGANIZATION_GOVERNANCE_POLICY_UNASSIGN_ENDPOINT = "/v1/organization/governance-policies/:policyId/unassign",
-  ORGANIZATION_GOVERNANCE_POLICY_PROJECTS_ENDPOINT = "/v1/organization/governance-policies/:policyId/projects",
-
-  // Project management
-  PROJECTS_ENDPOINT = "/v1/projects",
-  PROJECT_ENDPOINT = "/v1/projects/:projectId",
-  PROJECT_MEMBERS_ENDPOINT = "/v1/projects/:projectId/members",
-  PROJECT_MEMBER_ENDPOINT = "/v1/projects/:projectId/members/:userId",
-  PROJECT_INVITATIONS_ENDPOINT = "/v1/projects/:projectId/invitations",
-  PROJECT_INVITATION_ENDPOINT = "/v1/projects/:projectId/invitations/:invitationId",
-  PROJECT_ROLES_ENDPOINT = "/v1/projects/:projectId/roles",
-  PROJECT_ROLE_ENDPOINT = "/v1/projects/:projectId/roles/:roleId",
-  PROJECT_POLICIES_ENDPOINT = "/v1/projects/:projectId/policies",
-  PROJECT_POLICY_ENDPOINT = "/v1/projects/:projectId/policies/:policyId",
-  PROJECT_PERMISSIONS_ENDPOINT = "/v1/projects/:projectId/permissions",
-  PROJECT_API_KEYS_ENDPOINT = "/v1/projects/:projectId/api-keys",
-  PROJECT_API_KEY_ENDPOINT = "/v1/projects/:projectId/api-keys/:apiKeyId",
 }
 
 export interface RequestOptions {
@@ -108,8 +100,11 @@ function inferRegionFromApiKey(apiKey?: string): string | undefined {
   return undefined;
 }
 
-export function getConfidentApiKey(apiKey?: string): string | undefined {
-  return apiKey || process.env[CONFIDENT_ORG_API_KEY_ENV_VAR] || undefined;
+export function getConfidentApiKey(
+  apiKey?: string,
+  keyKind: ApiKeyKind = ApiKeyKind.ORGANIZATION,
+): string | undefined {
+  return apiKey || process.env[apiKeyEnvVar(keyKind)] || undefined;
 }
 
 export function getBaseApiUrl(apiKey?: string, baseUrl?: string): string {
@@ -143,6 +138,7 @@ function dropUndefined(
 }
 
 export class Api {
+  readonly keyKind: ApiKeyKind;
   readonly apiKey: string;
   readonly baseUrl: string;
   readonly timeout: number;
@@ -152,14 +148,17 @@ export class Api {
     apiKey?: string;
     baseUrl?: string;
     timeout?: number;
+    keyKind?: ApiKeyKind;
   }) {
-    const apiKey = getConfidentApiKey(options.apiKey);
+    const keyKind = options.keyKind ?? ApiKeyKind.ORGANIZATION;
+    const apiKey = getConfidentApiKey(options.apiKey, keyKind);
     if (!apiKey) {
       throw new Error(
-        `No Confident AI API key found. Pass { apiKey } or set the ${CONFIDENT_ORG_API_KEY_ENV_VAR} environment variable.`,
+        `No Confident AI ${keyKind} API key found. Pass { ${apiKeyClientOption(keyKind)} } or set the ${apiKeyEnvVar(keyKind)} environment variable.`,
       );
     }
 
+    this.keyKind = keyKind;
     this.apiKey = apiKey;
     this.baseUrl = getBaseApiUrl(apiKey, options.baseUrl);
     this.timeout = options.timeout ?? DEFAULT_TIMEOUT_MS;
@@ -204,7 +203,10 @@ export class Api {
 
         if (options.jitter) {
           const jitterFactor = Math.random() + 0.5;
-          delay = Math.min(delay * options.factor * jitterFactor, options.maxDelay);
+          delay = Math.min(
+            delay * options.factor * jitterFactor,
+            options.maxDelay,
+          );
         } else {
           delay = Math.min(delay * options.factor, options.maxDelay);
         }
@@ -242,7 +244,9 @@ export class Api {
         response?: { data?: { error?: string } };
         message?: string;
       };
-      throw new Error(err.response?.data?.error || err.message || String(error));
+      throw new Error(
+        err.response?.data?.error || err.message || String(error),
+      );
     }
   }
 

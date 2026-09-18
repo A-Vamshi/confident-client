@@ -25,74 +25,77 @@ All methods here require an **Organization API Key**. See
 `references/quickstart.md` to create a client. Each operation is shown for both
 Python and TypeScript — use the code block matching your project.
 
+The same verbs exist at both scopes: on `client.organization` for the
+organization, and on the `client.project(id)` handle for one project.
+
 ## Members
 
 ### List Members
 
-List members page by page; the listing defaults to the first page and a page
-size of 25.
+Both calls take `page` and `page_size`, and return an envelope whose rows are on
+`.members`.
 
 ```python
 from confidentai import ConfidentAI
 
 client = ConfidentAI()
-
-org = client.organization()
-project = client.project("clq9z3x1k0001la08f7t3g5p2")
+project = client.project("<PROJECT-ID>")
 
 # Organization members
-members = org.members.list(page=1, page_size=25)
+members = client.organization.list_members(page=1, page_size=25)
+for member in members.members:
+    print(member.id, member.email, member.organization_role)
 
 # Project members
-project_members = project.members.list(page=1)
+project_members = project.list_members(page=1)
+for member in project_members.members:
+    print(member.id, member.email, member.project_role)
 ```
 
 ```typescript
 import { ConfidentAI } from "confidentai";
 
 const client = new ConfidentAI();
-
-const org = client.organization();
-const project = client.project("clq9z3x1k0001la08f7t3g5p2");
+const project = client.project("<PROJECT-ID>");
 
 // Organization members
-const members = await org.members.list({ page: 1, pageSize: 25 });
+const members = await client.organization.listMembers(1, 25);
+members.members.forEach((member) =>
+  console.log(member.id, member.email, member.organizationRole),
+);
 
 // Project members
-const projectMembers = await project.members.list({ page: 1 });
+const projectMembers = await project.listMembers(1);
+projectMembers.members.forEach((member) =>
+  console.log(member.id, member.email, member.projectRole),
+);
 ```
 
 ### Update a Member's Role
 
-Assign a role to a member by their user ID. Roles are managed in
+Assign a role to a member by their user id. Both arguments are positional: the
+user id, then the role id. Roles are managed in
 `references/roles-policies-permissions.md`.
 
 ```python
-org = client.organization()
-project = client.project("clq9z3x1k0001la08f7t3g5p2")
-
 # Organization-level role
-member = org.members.update_role("clq8n3p9k0002la09a1b7c4d2", role_id="b3f1c2a9-7d4e-4c1b-9a2f-1e6d8c0a4b7e")
+member = client.organization.update_member_role("<USER-ID>", "<ROLE-ID>")
 
 # Project-level role
-project_member = project.members.update_role("clq8n3p9k0002la09a1b7c4d2", role_id="b3f1c2a9-7d4e-4c1b-9a2f-1e6d8c0a4b7e")
+project_member = project.update_member_role("<USER-ID>", "<PROJECT-ROLE-ID>")
 ```
 
 ```typescript
-const org = client.organization();
-const project = client.project("clq9z3x1k0001la08f7t3g5p2");
-
 // Organization-level role
-const member = await org.members.updateRole("clq8n3p9k0002la09a1b7c4d2", {
-  roleId: "b3f1c2a9-7d4e-4c1b-9a2f-1e6d8c0a4b7e",
-});
+const member = await client.organization.updateMemberRole(
+  "<USER-ID>",
+  "<ROLE-ID>",
+);
 
 // Project-level role
-const projectMember = await project.members.updateRole(
-  "clq8n3p9k0002la09a1b7c4d2",
-  {
-    roleId: "b3f1c2a9-7d4e-4c1b-9a2f-1e6d8c0a4b7e",
-  },
+const projectMember = await project.updateMemberRole(
+  "<USER-ID>",
+  "<PROJECT-ROLE-ID>",
 );
 ```
 
@@ -103,127 +106,108 @@ Manager at the project level).
 
 ### Remove a Member
 
-Remove a member from your organization or a specific project by their user ID.
+Remove a member from your organization or from a single project by their user
+id.
 
 ```python
-org = client.organization()
-project = client.project("clq9z3x1k0001la08f7t3g5p2")
-
-org.members.remove("clq8n3p9k0002la09a1b7c4d2")
-project.members.remove("clq8n3p9k0002la09a1b7c4d2")
+client.organization.remove_member("<USER-ID>")
+project.remove_member("<USER-ID>")
 ```
 
 ```typescript
-const org = client.organization();
-const project = client.project("clq9z3x1k0001la08f7t3g5p2");
-
-await org.members.remove("clq8n3p9k0002la09a1b7c4d2");
-await project.members.remove("clq8n3p9k0002la09a1b7c4d2");
+await client.organization.removeMember("<USER-ID>");
+await project.removeMember("<USER-ID>");
 ```
+
+Removing someone from the organization removes them from its projects too;
+removing them from a project leaves their organization membership intact.
 
 ## Invitations
 
-Invite new people to your organization or projects, and manage invitations that
-are still pending.
+An invitation carries an email address and, optionally, the role the invitee
+receives when they accept. **Ask which role to grant** rather than silently
+omitting it.
 
 ### List Invitations
 
-List the pending invitations at the organization or project level.
+List the pending invitations at either scope. The rows are on `.invitations`.
 
 ```python
-org = client.organization()
-project = client.project("clq9z3x1k0001la08f7t3g5p2")
+invitations = client.organization.list_invitations()
+project_invitations = project.list_invitations()
 
-invitations = org.invitations.list()
-project_invitations = project.invitations.list()
+for invitation in invitations.invitations:
+    print(invitation.id, invitation.email, invitation.status)
 ```
 
 ```typescript
-const org = client.organization();
-const project = client.project("clq9z3x1k0001la08f7t3g5p2");
+const invitations = await client.organization.listInvitations();
+const projectInvitations = await project.listInvitations();
 
-const invitations = await org.invitations.list();
-const projectInvitations = await project.invitations.list();
+invitations.invitations.forEach((invitation) =>
+  console.log(invitation.id, invitation.email, invitation.status),
+);
 ```
 
 ### Create Invitations
 
-Invite one or more emails at once; the optional role ID assigns a role to
-invitees when they join. If the request doesn't specify a role, **ask which role
-invitees should receive before sending** — only invite without a role if the
-user confirms that's intended. (See `references/roles-policies-permissions.md`
-to list available roles and their ids.)
+Invite one or more people by email. The role keyword differs by scope —
+`organization_role_id` for the organization, `project_role_id` for a project —
+because the two draw from different role sets.
 
 ```python
-org = client.organization()
-project = client.project("clq9z3x1k0001la08f7t3g5p2")
-
 # Organization invitations
-invitations = org.invitations.create(
-    ["alice@example.com", "bob@example.com"],
-    role_id="b3f1c2a9-7d4e-4c1b-9a2f-1e6d8c0a4b7e",
+invitations = client.organization.create_invitations(
+    ["new.hire@example.com"],
+    organization_role_id="<ROLE-ID>",
 )
 
 # Project invitations
-project_invitations = project.invitations.create(
-    ["alice@example.com"],
-    role_id="b3f1c2a9-7d4e-4c1b-9a2f-1e6d8c0a4b7e",
+project_invitations = project.create_invitations(
+    ["new.hire@example.com"],
+    project_role_id="<PROJECT-ROLE-ID>",
 )
 ```
 
 ```typescript
-const org = client.organization();
-const project = client.project("clq9z3x1k0001la08f7t3g5p2");
-
 // Organization invitations
-const invitations = await org.invitations.create({
-  emails: ["alice@example.com", "bob@example.com"],
-  roleId: "b3f1c2a9-7d4e-4c1b-9a2f-1e6d8c0a4b7e",
-});
+const invitations = await client.organization.createInvitations(
+  ["new.hire@example.com"],
+  "<ROLE-ID>",
+);
 
 // Project invitations
-const projectInvitations = await project.invitations.create({
-  emails: ["alice@example.com"],
-  roleId: "b3f1c2a9-7d4e-4c1b-9a2f-1e6d8c0a4b7e",
-});
+const projectInvitations = await project.createInvitations(
+  ["new.hire@example.com"],
+  "<PROJECT-ROLE-ID>",
+);
 ```
 
-Inviting requires a paid plan, and you can't invite anyone as Owner. Emails that
-are already invited or already members are skipped, so the returned list may be
-shorter than the emails you passed.
+### Resend and Revoke Invitations
 
-### Resend & Revoke Invitations
-
-Resend a pending invitation by its ID, or revoke it to cancel access before it's
-accepted.
+Resend re-sends the email for a pending invitation; deleting it revokes it.
 
 ```python
-org = client.organization()
-project = client.project("clq9z3x1k0001la08f7t3g5p2")
-
 # Resend
-org.invitations.resend(42)
-project.invitations.resend(42)
+client.organization.resend_invitation("<INVITATION-ID>")
+project.resend_invitation("<INVITATION-ID>")
 
 # Revoke
-org.invitations.revoke(42)
-project.invitations.revoke(42)
+client.organization.delete_invitation("<INVITATION-ID>")
+project.delete_invitation("<INVITATION-ID>")
 ```
 
 ```typescript
-const org = client.organization();
-const project = client.project("clq9z3x1k0001la08f7t3g5p2");
-
 // Resend
-await org.invitations.resend(42);
-await project.invitations.resend(42);
+await client.organization.resendInvitation("<INVITATION-ID>");
+await project.resendInvitation("<INVITATION-ID>");
 
 // Revoke
-await org.invitations.revoke(42);
-await project.invitations.revoke(42);
+await client.organization.deleteInvitation("<INVITATION-ID>");
+await project.deleteInvitation("<INVITATION-ID>");
 ```
 
 ## Next Steps
 
-- Define roles before assigning access — `references/roles-policies-permissions.md`.
-- Manage the projects members belong to — `references/projects.md`.
+- Define the roles you assign — `references/roles-policies-permissions.md`.
+- Provision keys for the projects members work in — `references/api-keys.md`.

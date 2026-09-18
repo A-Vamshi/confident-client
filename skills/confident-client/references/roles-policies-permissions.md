@@ -23,178 +23,164 @@ Each building block exists independently at both the **organization** and
 organization; project-level roles govern access within a single project.
 
 All methods here require an **Organization API Key**. See
-`references/quickstart.md` to create a client. Permissions, policies, and roles
-are grouped under the **`iam`** namespace on both clients —
-`client.organization().iam` and `client.project(id).iam`. Each operation is
-shown for both Python and TypeScript — use the code block matching your project.
+`references/quickstart.md` to create a client. The methods are flat on each
+client — `client.organization.list_roles()`, and the same verbs on the
+`client.project(id)` handle. Each operation is shown for both Python and
+TypeScript — use the code block matching your project.
 
 ## Permissions
 
 Permissions are read-only. List them to discover the ids to attach to policies.
+The rows are on `.permissions`.
 
 ```python
 from confidentai import ConfidentAI
 
 client = ConfidentAI()
+project = client.project("<PROJECT-ID>")
 
-org = client.organization()
-project = client.project("clq9z3x1k0001la08f7t3g5p2")
+permissions = client.organization.list_permissions()
+project_permissions = project.list_permissions()
 
-permissions = org.iam.permissions.list()
-project_permissions = project.iam.permissions.list()
+for permission in permissions.permissions:
+    print(permission.id, permission.name)
 ```
 
 ```typescript
 import { ConfidentAI } from "confidentai";
 
 const client = new ConfidentAI();
+const project = client.project("<PROJECT-ID>");
 
-const org = client.organization();
-const project = client.project("clq9z3x1k0001la08f7t3g5p2");
+const permissions = await client.organization.listPermissions();
+const projectPermissions = await project.listPermissions();
 
-const permissions = await org.iam.permissions.list();
-const projectPermissions = await project.iam.permissions.list();
+permissions.permissions.forEach((permission) =>
+  console.log(permission.id, permission.name),
+);
 ```
 
 ## Policies
 
-A policy bundles permissions together. Provide the permission ids from the
-permissions listing above. Each policy takes a name, a list of permission ids,
-and an optional description.
+A policy is a named bundle of permission ids. `name` and `permission_ids` are
+positional; `description` is optional. **Update replaces the bundle** — send the
+full permission list you want the policy to end up with, not just additions.
 
 ```python
-org = client.organization()
-project = client.project("clq9z3x1k0001la08f7t3g5p2")
-
-# List
-policies = org.iam.policies.list()
-project_policies = project.iam.policies.list()
+# List — rows are on `.policies`
+policies = client.organization.list_policies()
 
 # Create
-policy = org.iam.policies.create(
-    "Dataset Editor",
-    permission_ids=["5e9a1c3d-7b2f-4e8a-9c1d-3a6b5f0e2d4c", "8d2c4f6a-1e3b-4c7d-9a5e-2b8f1d0c6a3e"],
-    description="Can edit datasets",
+policy = client.organization.create_policy(
+    "Billing", ["<PERMISSION-ID>"], description="Read billing data"
 )
 
-# Update
-policy = org.iam.policies.update(
-    "a17c4e2d-9b3f-4a6c-8d1e-2f5a9c3b7e0d",
-    name="Dataset Editor",
-    permission_ids=["5e9a1c3d-7b2f-4e8a-9c1d-3a6b5f0e2d4c", "8d2c4f6a-1e3b-4c7d-9a5e-2b8f1d0c6a3e", "2a7e9c1d-4b6f-4a8c-1d3e-7f5a9b2c0e4d"],
+# Update — `name` and `permission_ids` are required, and replace what is stored
+policy = client.organization.update_policy(
+    "<POLICY-ID>", "Billing", ["<PERMISSION-ID>", "<OTHER-PERMISSION-ID>"]
 )
 
 # Delete
-org.iam.policies.delete("a17c4e2d-9b3f-4a6c-8d1e-2f5a9c3b7e0d")
+client.organization.delete_policy("<POLICY-ID>")
 ```
 
 ```typescript
-const org = client.organization();
-const project = client.project("clq9z3x1k0001la08f7t3g5p2");
-
-// List
-const policies = await org.iam.policies.list();
-const projectPolicies = await project.iam.policies.list();
+// List — rows are on `.policies`
+const policies = await client.organization.listPolicies();
 
 // Create
-const policy = await org.iam.policies.create({
-  name: "Dataset Editor",
-  permissionIds: [
-    "5e9a1c3d-7b2f-4e8a-9c1d-3a6b5f0e2d4c",
-    "8d2c4f6a-1e3b-4c7d-9a5e-2b8f1d0c6a3e",
-  ],
-  description: "Can edit datasets",
-});
-
-// Update
-const updatedPolicy = await org.iam.policies.update(
-  "a17c4e2d-9b3f-4a6c-8d1e-2f5a9c3b7e0d",
-  {
-    name: "Dataset Editor",
-    permissionIds: [
-      "5e9a1c3d-7b2f-4e8a-9c1d-3a6b5f0e2d4c",
-      "8d2c4f6a-1e3b-4c7d-9a5e-2b8f1d0c6a3e",
-      "2a7e9c1d-4b6f-4a8c-1d3e-7f5a9b2c0e4d",
-    ],
-  },
+const policy = await client.organization.createPolicy(
+  "Billing",
+  ["<PERMISSION-ID>"],
+  "Read billing data",
 );
 
+// Update — `name` and `permissionIds` are required, and replace what is stored
+const updated = await client.organization.updatePolicy("<POLICY-ID>", "Billing", [
+  "<PERMISSION-ID>",
+  "<OTHER-PERMISSION-ID>",
+]);
+
 // Delete
-await org.iam.policies.delete("a17c4e2d-9b3f-4a6c-8d1e-2f5a9c3b7e0d");
+await client.organization.deletePolicy("<POLICY-ID>");
 ```
 
-Project-scoped policies use the same list, create, update, and delete operations
-as organization-scoped policies.
+The same verbs exist on a project: `project.list_policies()`,
+`project.create_policy(...)`, and so on.
 
 ## Roles
 
-A role bundles policies together and is assigned to members. Provide the policy
-ids from the policies above. Each role takes a name, a list of policy ids, and
-an optional description.
+A role is a named bundle of policy ids, and roles are what you assign to
+members. As with policies, **update replaces the bundle**.
 
 ```python
-org = client.organization()
-project = client.project("clq9z3x1k0001la08f7t3g5p2")
-
-# List
-roles = org.iam.roles.list()
-project_roles = project.iam.roles.list()
+# List — rows are on `.roles`
+roles = client.organization.list_roles()
 
 # Create
-role = org.iam.roles.create(
-    "Data Scientist",
-    policy_ids=["a17c4e2d-9b3f-4a6c-8d1e-2f5a9c3b7e0d"],
-    description="Read/write datasets and prompts",
+role = client.organization.create_role(
+    "Analyst", ["<POLICY-ID>"], description="Read-only analyst"
 )
 
-# Update
-role = org.iam.roles.update(
-    "b3f1c2a9-7d4e-4c1b-9a2f-1e6d8c0a4b7e",
-    name="Data Scientist",
-    policy_ids=["a17c4e2d-9b3f-4a6c-8d1e-2f5a9c3b7e0d", "c4f8a2e6-1d3b-4e9a-8c7d-5b2f1a0e6d3c"],
+# Update — `name` and `policy_ids` are required, and replace what is stored
+role = client.organization.update_role(
+    "<ROLE-ID>", "Analyst", ["<POLICY-ID>", "<OTHER-POLICY-ID>"]
 )
 
 # Delete
-org.iam.roles.delete("b3f1c2a9-7d4e-4c1b-9a2f-1e6d8c0a4b7e")
+client.organization.delete_role("<ROLE-ID>")
 ```
 
 ```typescript
-const org = client.organization();
-const project = client.project("clq9z3x1k0001la08f7t3g5p2");
-
-// List
-const roles = await org.iam.roles.list();
-const projectRoles = await project.iam.roles.list();
+// List — rows are on `.roles`
+const roles = await client.organization.listRoles();
 
 // Create
-const role = await org.iam.roles.create({
-  name: "Data Scientist",
-  policyIds: ["a17c4e2d-9b3f-4a6c-8d1e-2f5a9c3b7e0d"],
-  description: "Read/write datasets and prompts",
-});
-
-// Update
-const updatedRole = await org.iam.roles.update(
-  "b3f1c2a9-7d4e-4c1b-9a2f-1e6d8c0a4b7e",
-  {
-    name: "Data Scientist",
-    policyIds: [
-      "a17c4e2d-9b3f-4a6c-8d1e-2f5a9c3b7e0d",
-      "c4f8a2e6-1d3b-4e9a-8c7d-5b2f1a0e6d3c",
-    ],
-  },
+const role = await client.organization.createRole(
+  "Analyst",
+  ["<POLICY-ID>"],
+  "Read-only analyst",
 );
 
+// Update — `name` and `policyIds` are required, and replace what is stored
+const updated = await client.organization.updateRole("<ROLE-ID>", "Analyst", [
+  "<POLICY-ID>",
+  "<OTHER-POLICY-ID>",
+]);
+
 // Delete
-await org.iam.roles.delete("b3f1c2a9-7d4e-4c1b-9a2f-1e6d8c0a4b7e");
+await client.organization.deleteRole("<ROLE-ID>");
 ```
 
-Project-scoped roles use the same list, create, update, and delete operations as
-organization-scoped roles.
+The same verbs exist on a project: `project.list_roles()`,
+`project.create_role(...)`, and so on. A project role draws from project
+permissions and is assigned with `project.update_member_role(...)`.
 
-Role and policy names must be unique within their scope, and a custom role can't
-reuse a built-in role name (for example `Owner` or `Admin`).
+## Putting It Together
+
+Compose in one direction, then assign:
+
+```python
+permissions = client.organization.list_permissions()
+wanted = [p.id for p in permissions.permissions if p.name.endswith(":read")]
+
+policy = client.organization.create_policy("Read Everything", wanted)
+role = client.organization.create_role("Auditor", [policy.id])
+client.organization.update_member_role("<USER-ID>", role.id)
+```
+
+```typescript
+const permissions = await client.organization.listPermissions();
+const wanted = permissions.permissions
+  .filter((p) => p.name.endsWith(":read"))
+  .map((p) => p.id);
+
+const policy = await client.organization.createPolicy("Read Everything", wanted);
+const role = await client.organization.createRole("Auditor", [policy.id]);
+await client.organization.updateMemberRole("<USER-ID>", role.id);
+```
 
 ## Next Steps
 
-- Assign roles to members and invitees — `references/members-and-invitations.md`.
+- Assign the roles you defined — `references/members-and-invitations.md`.
+- Attach compliance controls to projects — `references/governance.md`.

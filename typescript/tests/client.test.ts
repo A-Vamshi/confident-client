@@ -1,9 +1,6 @@
 import { ConfidentAI } from "../src";
-import {
-  API_BASE_URL,
-  API_BASE_URL_EU,
-} from "../src/api";
-import { mockData, lastCall, resetAxios } from "./helpers";
+import { API_BASE_URL, API_BASE_URL_EU } from "../src/api";
+import { clearConfidentEnv, lastCall, mockData, resetAxios } from "./helpers";
 
 jest.mock("axios");
 
@@ -12,9 +9,7 @@ describe("ConfidentAI", () => {
 
   beforeEach(() => {
     resetAxios();
-    delete process.env.CONFIDENT_ORG_API_KEY;
-    delete process.env.CONFIDENT_BASE_URL;
-    delete process.env.CONFIDENT_REGION;
+    clearConfidentEnv();
   });
 
   afterAll(() => {
@@ -56,17 +51,28 @@ describe("ConfidentAI", () => {
     expect(client.baseUrl).toBe(API_BASE_URL_EU);
   });
 
-  it("scopes a project client by id", () => {
+  it("honors an explicit timeout", () => {
+    const client = new ConfidentAI({ apiKey: "k", timeout: 5000 });
+    expect(client.timeout).toBe(5000);
+  });
+
+  it("exposes the generated clients", () => {
     const client = new ConfidentAI({ apiKey: "k" });
-    expect(client.project("proj_123").projectId).toBe("proj_123");
+    expect(client.organization).toBeDefined();
+    expect(client.projects).toBeDefined();
   });
 
   it("whoami returns the organization", async () => {
     const client = new ConfidentAI({ apiKey: "k" });
-    mockData({ organization: { id: "org_1", name: "Acme" } });
+    mockData({
+      id: "org_1",
+      name: "Acme",
+      plan: "TEAM",
+      created_at: "2026-01-01",
+    });
     const org = await client.whoami();
     expect(org.id).toBe("org_1");
     expect(lastCall().method).toBe("GET");
-    expect(lastCall().url).toContain("/v1/organization");
+    expect(lastCall().url).toContain("/v2/organization");
   });
 });

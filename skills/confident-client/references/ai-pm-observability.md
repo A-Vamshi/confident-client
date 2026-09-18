@@ -3,7 +3,7 @@
 Source: https://www.news.aakashg.com/p/ai-pm-observability
 ("AI PM's Ultimate Guide: Observability" — Aakash Gupta & Aman Khan)
 
-This is background/context, not Admin SDK API surface. It motivates _why_ teams
+This is background/context, not SDK API surface. It motivates _why_ teams
 provision Confident AI projects and keys in the first place: to get
 observability over AI products in production. Use it to explain the value of the
 platform to stakeholders, not as a reference for administration calls.
@@ -46,9 +46,9 @@ If you can read a funnel chart, you can read a trace.
   when it's wrong (e.g. a bot books the wrong city 10% of the time; only the
   unlucky few complain). Without observability you're the frog in boiling water.
 
-## Why This Belongs Next to the Admin SDK
+## Why This Belongs Next to the SDK
 
-Administration (this skill) is how you set up the account: create projects for
+This skill is how you set up the account: create projects for
 each agent/environment/customer, invite the team, and provision project API
 keys. Those project keys are what an instrumented app uses to send traces and
 run evals — the observability this article argues for. For the instrumentation

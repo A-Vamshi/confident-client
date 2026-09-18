@@ -1,5 +1,12 @@
-import { Api, Endpoints, HttpMethods } from "../src/api";
-import { lastCall, mockData, mockRaw, mockedAxios, resetAxios } from "./helpers";
+import { Api, HttpMethods } from "../src/api";
+import { Endpoints } from "../src/endpoints";
+import {
+  lastCall,
+  mockData,
+  mockRaw,
+  mockedAxios,
+  resetAxios,
+} from "./helpers";
 
 jest.mock("axios");
 
@@ -59,7 +66,7 @@ describe("Api", () => {
       Endpoints.PROJECT_API_KEY_ENDPOINT,
       { urlParams: { projectId: "p1", apiKeyId: 42 } },
     );
-    expect(lastCall().url).toContain("/v1/projects/p1/api-keys/42");
+    expect(lastCall().url).toContain("/v2/projects/p1/api-keys/42");
     expect(lastCall().url).not.toContain(":projectId");
     expect(lastCall().url).not.toContain(":apiKeyId");
   });

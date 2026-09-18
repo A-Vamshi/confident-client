@@ -4,6 +4,7 @@ from confidentai import ConfidentAI
 from confidentai.api import (
     API_BASE_URL,
     API_BASE_URL_EU,
+    ApiKeyKind,
 )
 
 
@@ -19,8 +20,7 @@ def test_initializes_from_env_var(monkeypatch):
     assert client.api_key == "confident_us_org_fromenv"
 
 
-def test_missing_api_key_raises(monkeypatch):
-    monkeypatch.delenv("CONFIDENT_ORG_API_KEY", raising=False)
+def test_missing_api_key_raises(clean_env):
     with pytest.raises(ValueError):
         ConfidentAI()
 
@@ -52,23 +52,29 @@ def test_region_inferred_from_api_key_prefix(monkeypatch):
 
 def test_timeout_override():
     client = ConfidentAI(api_key="k", timeout=5.0)
-    assert client._api.timeout == 5.0
+    assert client.timeout == 5.0
+    assert client._api(ApiKeyKind.ORGANIZATION).timeout == 5.0
 
 
-def test_organization_and_project_factories(client):
-    from confidentai.organization import OrganizationClient
-    from confidentai.projects import ProjectClient
+def test_generated_clients_are_reachable(client):
+    from confidentai.organization.client import OrganizationClient
+    from confidentai.projects.client import ProjectsClient
 
-    assert isinstance(client.organization(), OrganizationClient)
-    project = client.project("proj_123")
-    assert isinstance(project, ProjectClient)
-    assert project.project_id == "proj_123"
+    assert isinstance(client.organization, OrganizationClient)
+    assert isinstance(client.projects, ProjectsClient)
 
 
 def test_whoami_returns_organization(client, http):
-    http.enqueue_data({"organization": {"id": "org_1", "name": "Acme"}})
+    http.enqueue_data(
+        {
+            "id": "org_1",
+            "name": "Acme",
+            "plan": "TEAM",
+            "created_at": "2026-01-01",
+        }
+    )
     org = client.whoami()
     assert org.id == "org_1"
     assert org.name == "Acme"
-    assert http.last["url"].endswith("/v1/organization")
+    assert http.last["url"].endswith("/v2/organization")
     assert http.last["method"] == "GET"
