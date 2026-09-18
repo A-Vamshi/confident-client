@@ -1,74 +1,82 @@
 ---
 name: confident-client
 description: >
-  Manage a Confident AI account programmatically with the Admin SDK (the
-  `confidentai` package for Python and TypeScript). TRIGGER when the user wants
-  to create, read, update, or delete organizations, projects, members,
-  invitations, roles, policies, permissions, governance policies, or API keys on
-  Confident AI; provision or rotate organization- and project-scoped API keys;
-  onboard or offboard team members; set up RBAC (permissions → policies → roles →
-  members); assign governance policies to projects; or automate project
-  provisioning (project-per-agent,
-  project-per-environment, project-per-customer). All administrative operations
-  require an Organization API Key (`CONFIDENT_ORG_API_KEY`). DO NOT TRIGGER for
-  sending traces or running evaluations against a project (that uses a project
-  key `CONFIDENT_API_KEY` — see the `deepeval`, `deepeval-tracing`, and
-  `deepeval-otel` skills); this skill is account and project administration
-  only, not tracing or evals.
+  Work with the Confident AI API from code using the `confidentai` package for
+  Python and TypeScript. TRIGGER when the user wants to manage an account —
+  organizations, projects, members, invitations, roles, policies, permissions,
+  governance policies, API keys — or to read and write the resources a project
+  holds: prompts, datasets and goldens, traces, spans and threads, metrics and
+  metric collections, test runs, evaluations, dashboards, annotation queues, red
+  teaming. Also TRIGGER to provision or rotate API keys, onboard or offboard
+  team members, set up RBAC (permissions → policies → roles → members), or
+  automate project provisioning. Account-level calls need an Organization API
+  Key (`CONFIDENT_ORG_API_KEY`); everything else needs a Project API Key
+  (`CONFIDENT_PROJ_API_KEY`). DO NOT TRIGGER to instrument an application with
+  tracing or to write a pytest eval suite — that is the `deepeval`,
+  `deepeval-tracing`, and `deepeval-otel` skills; this skill calls the API, it
+  does not run evals or emit spans from a running app.
 license: Apache-2.0
 metadata:
   author: Confident AI
-  version: "1.0.0"
-  category: administration
-  tags: "confident-ai, admin-sdk, confidentai, organizations, projects, members, invitations, rbac, roles, governance, api-keys"
-  compatibility: "Python (`pip install confidentai`) or TypeScript (`npm install confidentai`). Every method requires an Organization API Key, read by default from `CONFIDENT_ORG_API_KEY` (distinct from the project-scoped `CONFIDENT_API_KEY` used for tracing and evals)."
+  version: "2.0.0"
+  category: api
+  tags: "confident-ai, confidentai, api, organizations, projects, members, invitations, rbac, roles, governance, api-keys, prompts, datasets, traces, metrics, test-runs"
+  compatibility: "Python (`pip install confidentai`) or TypeScript (`npm install confidentai`). Account-level methods need an Organization API Key (`CONFIDENT_ORG_API_KEY`); every other resource needs a Project API Key (`CONFIDENT_PROJ_API_KEY`). Both are distinct from the `CONFIDENT_API_KEY` that deepeval uses, so they can be configured side by side."
 ---
 
-# Confident AI Admin SDK
+# Confident AI SDK
 
-Use this skill to manage a **Confident AI account programmatically** with the
-Admin SDK — the `confidentai` package, available for both Python and
-TypeScript. The work is account and project administration: organizations,
-projects, members and invitations, RBAC (permissions, policies, roles),
-governance policies, and API keys.
+Use this skill to call the **Confident AI API** from code with the
+`confidentai` package, available for both Python and TypeScript. It covers
+**275 operations across 35 resources**: the account (organizations, projects,
+members, RBAC, governance, API keys) and the resources a project holds
+(prompts, datasets, traces, spans, threads, metrics, test runs, evaluations,
+dashboards, annotation queues, red teaming).
 
-This skill stops at administration. Sending traces and running evaluations
-against a project is a different job with a different key — see the `deepeval`,
+This skill stops at the API. Instrumenting a running application with spans, or
+writing a pytest eval suite, is a different job — see the `deepeval`,
 `deepeval-tracing`, and `deepeval-otel` skills.
 
-## Scope: Account Administration Only
+## Two Keys, Two Scopes
 
-Use the Admin SDK for administrative workflows that would otherwise be done by
-hand in the platform UI — project provisioning, member onboarding, role
-synchronization, and API key rotation. Every operation is scoped to either the
-**organization** (account-wide resources) or a single **project**
-(project-scoped resources).
+Which key a call needs is decided by the resource, not by the operation:
 
-Do not reach for this skill to instrument an app or score outputs. Tracing and
-evals authenticate with a project key (`CONFIDENT_API_KEY`); administration
-authenticates with an Organization API Key (`CONFIDENT_ORG_API_KEY`).
+| Key | Environment variable | Reaches |
+| --- | --- | --- |
+| Organization | `CONFIDENT_ORG_API_KEY` | `client.organization`, `client.projects`, `client.project(id)` |
+| Project | `CONFIDENT_PROJ_API_KEY` | every other resource — prompts, datasets, traces, metrics, test runs, … |
+
+One client can hold both, and picks the right one per call:
+
+```python
+client = ConfidentAI()  # reads both environment variables
+client.organization.get()      # organization key
+client.datasets.list()         # project key
+```
+
+Neither is `CONFIDENT_API_KEY`, which deepeval uses — the distinct names let
+both be configured at once.
 
 ## When to Use vs the Eval / Tracing Skills
 
-- **This skill (`confident-client`)** — administer the account: create and
-  rename the organization, CRUD projects, invite and manage members, define
-  RBAC, and provision or rotate API keys. Requires an **Organization API Key**.
-- **`deepeval` skill** — build pytest eval suites: datasets, metrics, traced
-  evals, `deepeval test run`, iteration. Requires a **project key**.
-- **`deepeval-tracing` skill** — instrument an app with the DeepEval SDK
-  (`@observe`, integrations). Requires a **project key**.
-- **`deepeval-otel` skill** — export raw OpenTelemetry / OTLP traces to
-  Confident AI. Requires a **project key**.
+- **This skill (`confident-client`)** — call the API: administer the account,
+  and create, read, update or delete the resources a project holds.
+- **`deepeval` skill** — build pytest eval suites: metrics, traced evals,
+  `deepeval test run`, iteration.
+- **`deepeval-tracing` skill** — instrument an app (`@observe`, integrations).
+- **`deepeval-otel` skill** — export raw OpenTelemetry / OTLP traces.
+
+The line is *running* versus *managing*. Pulling a prompt, pushing goldens to a
+dataset, or reading a test run's results is this skill. Emitting a span from a
+live request, or asserting a metric inside a test, is not.
 
 ## Prerequisites
 
-- The Admin SDK installed: `pip install confidentai` (Python) or
+- The SDK installed: `pip install confidentai` (Python) or
   `npm install confidentai` (TypeScript).
-- An **Organization API Key** (e.g. `confident_us_org_...`), read by default
-  from the `CONFIDENT_ORG_API_KEY` environment variable. This is separate from
-  the project-scoped `CONFIDENT_API_KEY` used for tracing and evals, so both can
-  be configured at once. Retrieve the org key from the Confident AI settings
-  under organization-level authentication.
+- An **Organization API Key** (`confident_us_org_...`) for account work, a
+  **Project API Key** (`confident_us_proj_...`) for everything else, or both.
+  Read by default from `CONFIDENT_ORG_API_KEY` and `CONFIDENT_PROJ_API_KEY`.
 
 ## Language Detection
 
@@ -92,62 +100,64 @@ reference.
    you're defaulting.
 
 Within each reference, the code block for the target language is authoritative
-for exact method names, argument shapes (keyword arguments vs an options
-object), and casing (snake_case vs camelCase). Do not guess a binding from the
-other language's examples.
+for exact method names, argument shapes (keyword arguments vs positional), and
+casing (snake_case vs camelCase). Do not guess a binding from the other
+language's examples.
 
 ## Workflow
 
-1. Confirm the task is administration (managing orgs, projects, members, roles,
-   or keys). If the user instead wants to send traces or run evals, stop and use
-   the `deepeval` / `deepeval-tracing` / `deepeval-otel` skills.
-2. Determine the target language — **Python** or **TypeScript** — using the
-   **Language Detection** section above, then read `references/<topic>.md` and
-   use the code blocks for that language.
-3. Configure the client with an Organization API Key. Read
-   `references/quickstart.md`.
-4. Pick the right scope: organization-wide (`client.organization()`) vs a single
-   project (`client.project(project_id)`). Read `references/introduction.md` for
-   scope and capabilities.
-5. Read the exact reference for the resource being managed
-   (organization, projects, members and invitations, RBAC, governance policies,
-   or API keys) before writing code, and follow its examples.
-6. For RBAC, compose in order: list `permissions`, bundle them into `policies`,
+1. Determine the target language — **Python** or **TypeScript** — using the
+   **Language Detection** section above.
+2. Work out which key the resource needs (see **Two Keys, Two Scopes**) and
+   configure the client. Read `references/quickstart.md`.
+3. Read the exact reference for the resource being managed before writing code,
+   and follow its examples. `references/introduction.md` maps the whole surface.
+4. For RBAC, compose in order: list `permissions`, bundle them into `policies`,
    bundle policies into `roles`, then assign roles to members. Read
    `references/roles-policies-permissions.md`.
-7. When creating an API key (or a project, which mints its first key), capture
+5. When creating an API key (or a project, which mints its first key), capture
    the full secret `value` immediately — it is shown only once. Read
    `references/api-keys.md`.
 
 ## Core Principles
 
-1. Administration uses an **Organization API Key**
-   (`CONFIDENT_ORG_API_KEY`), never a project key. Keep it out of source
-   control and logs.
-2. Choose scope deliberately: organization-scoped calls affect the whole
-   account; project-scoped calls (`client.project(id)`) affect one project.
-3. An API key's full secret `value` is returned **only at creation** (creating a
+1. **Method names are flat.** A resource's client exposes one method per route:
+   `client.organization.list_api_keys()`.
+2. **A resource client is a property.** `client.organization.get()`,
+   `client.datasets.list()`.
+3. **A list returns an envelope.** `list_members()` returns an
+   `OrganizationMemberList`: `.members` holds the rows, `.page` and
+   `.page_size` describe the window. Read the rows off the named field.
+4. **`client.project(id)`, `client.prompt(id)` and `client.dataset(id)` return
+   a stateful handle** that holds the record's id, so its methods take only
+   what is left. `get()` fills the handle and returns it; `update()` sends what
+   the handle holds.
+5. **Types are imported from the resource**: `from confidentai.datasets import
+   SingleTurnGolden` (Python), `import { SingleTurnGolden } from
+   "confidentai/datasets"` (TypeScript).
+6. An API key's full secret `value` is returned **only at creation** (creating a
    project also mints its first project key). Store it securely then; later
-   reads are masked.
-4. RBAC composes in one direction: permissions → policies → roles → members.
+   reads are masked. Prefer `rotate_api_key` over delete-and-recreate when a key
+   is in use — it can issue the replacement with a grace period.
+7. RBAC composes in one direction: permissions → policies → roles → members.
    Permissions are predefined and read-only; you can only list them.
-5. A user must be an **organization member** before being added to a project.
+8. A user must be an **organization member** before being added to a project.
    Invitations create membership when accepted.
-6. Destructive operations are irreversible — deleting a project permanently
+9. Destructive operations are irreversible — deleting a project permanently
    removes its datasets, prompts, traces, and evaluations; deleting a key
    immediately revokes it. Prefer disabling a key (set `valid` to false) over
    deleting when you only need to revoke temporarily.
-7. Never hardcode secrets or raw sensitive data; prefer environment variables
-   for keys.
-8. Governance policies are **organization-scoped only** and read-only through
-   the SDK — list them and assign/unassign them to projects, but do not expect
-   create/update/delete. (Python only: every method also has an async `a_*`
-   variant.)
-9. **Clarify before mutating.** For create/update calls, confirm the required
-   inputs and ask about consequential optional ones the user hasn't specified
-   rather than silently omitting them or guessing. In particular: whether a new
-   project should have an **owner** (`email`), and which **role** (`role_id`) to
-   grant when inviting members or adding them to a project. Ask first, then act.
+10. Never hardcode secrets or raw sensitive data; prefer environment variables
+    for keys.
+11. Governance policies are **organization-scoped** and support full CRUD —
+    create, read, update, delete, and assign or unassign to projects.
+12. **Python has an async twin for every method**, prefixed `a_`:
+    `await client.organization.a_get()`. TypeScript is already promise-based.
+13. **Clarify before mutating.** For create/update calls, confirm the required
+    inputs and ask about consequential optional ones the user hasn't specified
+    rather than silently omitting them or guessing. In particular: whether a new
+    project should have an **owner** (`email`), and which **role** (`role_id`) to
+    grant when inviting members or adding them to a project. Ask first, then act.
 
 ## References
 
@@ -156,12 +166,17 @@ examples; use the code block matching the target language.
 
 | Topic | File |
 | --- | --- |
-| Install, configure the Organization API Key, first call | `references/quickstart.md` |
+| Install, configure both keys, first call | `references/quickstart.md` |
+| The whole surface, the two scopes, stateful handles | `references/introduction.md` |
 | Read and rename the organization | `references/organization.md` |
 | Create, read, update, delete projects | `references/projects.md` |
 | Members, invitations, and role assignment | `references/members-and-invitations.md` |
 | RBAC: permissions, policies, and roles | `references/roles-policies-permissions.md` |
 | Provision, rotate, enable/disable, and delete API keys | `references/api-keys.md` |
-| Governance policies: list and assign/unassign to projects (org-only) | `references/governance.md` |
-| Admin SDK overview, org vs project scope, and key capabilities | `references/introduction.md` |
+| Governance policies: CRUD and assign/unassign to projects | `references/governance.md` |
+| Prompts, datasets, traces, metrics, test runs and evaluations | `references/resources.md` |
 | Background: why observability matters for AI products | `references/ai-pm-observability.md` |
+
+Every method carries the route's own summary and description as its docstring
+(Python) or JSDoc (TypeScript), so a resource with no worked example here is
+still readable from the method itself.
