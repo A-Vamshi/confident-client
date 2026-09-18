@@ -1,4 +1,4 @@
-"""Renders the stateful handles described by stateful_resources.yml.
+"""Renders the stateful handles described by stateful_config.yml.
 
 A handle holds one resource's identity, so every method it exposes is the
 stateless method minus the path parameter that identity supplies. That part is
@@ -25,13 +25,13 @@ from .constants import (
     ORGANIZATION_KEY_RESOURCES,
     PYTHON_HELPERS,
     REPO_ROOT,
-    STATEFUL_RESOURCES,
+    STATEFUL_CONFIG,
     TYPESCRIPT_HELPERS,
 )
-from .core.errors import (
+from .errors import (
     SpecError,
 )
-from .core.naming import (
+from .openapi_helpers.openapi_to_sdk_names import (
     camel_case,
     client_class_name,
     pascal_case,
@@ -39,17 +39,20 @@ from .core.naming import (
     singular,
     snake_case,
 )
-from .core.spec import (
+from .openapi_helpers.openapi_parser import (
     Route,
     ref_name,
     split_union,
 )
-from .core.shapes import (
+from .openapi_helpers.openapi_to_sdk_types import (
     Resolver,
 )
-from .core.naming import ts_module_for
-from .core.operations import request_type, resolve_method
-from .core.output import (
+from .openapi_helpers.openapi_to_sdk_names import ts_module_for
+from .openapi_helpers.openapi_to_sdk_operations import (
+    request_type,
+    resolve_method,
+)
+from .generate_files import (
     render_docstring,
     render_jsdoc,
     ts_import,
@@ -59,7 +62,7 @@ from .core.output import (
 
 
 def load_stateful_resources() -> Dict[str, Any]:
-    resources = yaml.safe_load(STATEFUL_RESOURCES.read_text()) or {}
+    resources = yaml.safe_load(STATEFUL_CONFIG.read_text()) or {}
     assert_helpers_exist(resources)
     return resources
 
@@ -123,7 +126,7 @@ def assert_helpers_exist(resources: Dict[str, Any]) -> None:
 
     if missing:
         raise SpecError(
-            f"{STATEFUL_RESOURCES.name} names helpers that are not "
+            f"{STATEFUL_CONFIG.name} names helpers that are not "
             "written:\n\n" + "\n".join(missing) + "\n\n"
             "A helper is hand-written in both SDKs and bound onto the "
             "generated class by name. Write it in both files, or drop the "
@@ -221,7 +224,7 @@ class Handle:
     def route(self, operation: str) -> Route:
         if operation not in self.routes:
             raise SpecError(
-                f"{self.resource}: stateful_resources.yml names "
+                f"{self.resource}: stateful_config.yml names "
                 f"`{operation}`, "
                 "which the spec does not declare in this resource."
             )
@@ -419,7 +422,7 @@ class Handle:
             raise SpecError(
                 f"{self.resource}: `{sends}.{field}` is sent as "
                 f"`{declared}`, not "
-                f"`{target}` as stateful_resources.yml says."
+                f"`{target}` as stateful_config.yml says."
             )
         if target is None and held != declared:
             raise SpecError(

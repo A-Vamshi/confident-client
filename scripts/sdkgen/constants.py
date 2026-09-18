@@ -32,9 +32,7 @@ CANONICAL_SPEC_LOCATION = "packages/shared/openapi"
 
 # The stateful handles, described in YAML beside this file rather than here:
 # they are the one part of the generator a reader is expected to hand-edit.
-STATEFUL_RESOURCES = (
-    Path(__file__).resolve().parents[1] / "stateful_resources.yml"
-)
+STATEFUL_CONFIG = Path(__file__).resolve().parents[1] / "stateful_config.yml"
 
 
 # ===== Which routes are generated =====

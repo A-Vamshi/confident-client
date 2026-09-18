@@ -14,8 +14,8 @@ from ..constants import (
     TS_RESERVED,
     UNION_BODY_PARAMETERS,
 )
-from .errors import SpecError
-from .naming import (
+from ..errors import SpecError
+from .openapi_to_sdk_names import (
     camel_case,
     endpoint_member,
     method_name,
@@ -23,8 +23,8 @@ from .naming import (
     python_module_for,
     snake_case,
 )
-from .shapes import Resolver
-from .spec import Route, ref_name, split_union
+from .openapi_to_sdk_types import Resolver
+from .openapi_parser import Route, ref_name, split_union
 
 
 def parameters_in(route: Route, location: str) -> List[Dict[str, Any]]:

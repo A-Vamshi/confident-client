@@ -19,8 +19,8 @@ from .constants import (
     RESOURCE_MODULES,
     TS_OPERATIONS_MODULE,
 )
-from .core.errors import SpecError
-from .core.naming import (
+from .errors import SpecError
+from .openapi_helpers.openapi_to_sdk_names import (
     camel_case,
     client_class_name,
     endpoint_member,
@@ -29,8 +29,8 @@ from .core.naming import (
     snake_case,
     ts_module_for,
 )
-from .core.operations import resolve_method
-from .core.output import (
+from .openapi_helpers.openapi_to_sdk_operations import resolve_method
+from .generate_files import (
     banner,
     format_python,
     render_docstring,
@@ -40,8 +40,8 @@ from .core.output import (
     typing_imports,
     wrap_python,
 )
-from .core.shapes import Resolver
-from .core.spec import Route
+from .openapi_helpers.openapi_to_sdk_types import Resolver
+from .openapi_helpers.openapi_parser import Route
 
 
 # ===== The endpoint enum =====

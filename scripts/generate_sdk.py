@@ -19,7 +19,7 @@ from typing import Any, Dict, List, Set, Tuple
 
 import yaml
 
-from sdkgen.clients import (
+from sdkgen.generate_stateless_clients import (
     render_endpoints,
     render_generated_clients,
     render_typescript_endpoints,
@@ -35,16 +35,16 @@ from sdkgen.constants import (
     DEFAULT_SPEC_DIR,
     MERGED_SPEC,
 )
-from sdkgen.core.errors import SpecError
-from sdkgen.core.naming import acronyms_in
-from sdkgen.core.output import (
+from sdkgen.errors import SpecError
+from sdkgen.openapi_helpers.openapi_to_sdk_names import acronyms_in
+from sdkgen.generate_files import (
     ResourcePaths,
     banner,
     format_python,
     format_typescript,
     is_generated,
 )
-from sdkgen.core.spec import (
+from sdkgen.openapi_helpers.openapi_parser import (
     generated_routes,
     operations_by_resource,
     relax_required,
@@ -52,8 +52,8 @@ from sdkgen.core.spec import (
     schema_nodes,
     schemas_reached,
 )
-from sdkgen.overlays import run_after_generation
-from sdkgen.types import (
+from sdkgen.custom_overlays.run_after_generation import run_after_generation
+from sdkgen.generate_types import (
     declare,
     render_python,
     render_python_barrel,
@@ -61,7 +61,7 @@ from sdkgen.types import (
     render_typescript_barrel,
     sort_by_dependency,
 )
-from sdkgen.stateful_clients import (
+from sdkgen.generate_stateful_clients import (
     handle_module,
     load_stateful_resources,
     render_handle,
@@ -166,7 +166,7 @@ def render_per_resource(
     descriptive: bool,
 ) -> Outputs:
     """Every operations module and client a resource generates, plus its
-    stateful handle when stateful_resources.yml declares one."""
+    stateful handle when stateful_config.yml declares one."""
     outputs: Outputs = []
     for resource in sorted(generating):
         paths = ResourcePaths(name=resource)

@@ -1,61 +1,16 @@
-"""Hand-written code folded into generated files, after rendering.
+"""The prompts overlay: caching and background refresh on `pull`.
 
-The generator says what the spec says. A few things a client needs are not in
-the spec at all and belong on a generated class anyway — prompt caching and
-background refresh is the first of them. An overlay states one such edit
-against one rendered file.
+`pull` is generated from three routes the caller chooses between, and that
+dispatch is worth keeping generated. So the generated method becomes the
+private one-shot fetch, returning the payload it already loaded, and the
+`pull` a caller sees is written on top of it — which is also why a refresh can
+re-pull without a second copy of the dispatch to keep in step.
 
-Overlays are applied to the rendered text before anything is written, so
-`--check`, the idempotence guarantee and both formatters cover overlaid code
-exactly as they cover generated code. Every anchor must match the number of
-times it says: a generator change that moves one fails the run rather than
-quietly dropping the feature.
-
-Prefer leaving logic here as thin as it will go. An overlay is best at
-renaming a generated method out of the way and calling it from a hand-written
-one; the hand-written one belongs in the SDK, where it is read, typed and
-tested like the rest of the library.
+The code these edits call lives in the SDK, in `confidentai/utils/`, where it
+is typed and tested like the rest of the library.
 """
 
-from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Dict, List, Tuple
-
-from .constants import REPO_ROOT
-from .core.errors import SpecError
-from .core.output import format_python, format_typescript
-
-
-@dataclass(frozen=True)
-class Edit:
-    """One exact replacement, and how many times it must match."""
-
-    anchor: str
-    replacement: str
-    occurrences: int = 1
-
-
-@dataclass(frozen=True)
-class Overlay:
-    """The edits one generated file takes after it is rendered."""
-
-    path: str
-    edits: Tuple[Edit, ...] = field(default_factory=tuple)
-
-    def apply(self, text: str) -> str:
-        for edit in self.edits:
-            found = text.count(edit.anchor)
-            if found != edit.occurrences:
-                raise SpecError(
-                    f"the overlay for {self.path} expected "
-                    f"{edit.occurrences} occurrence(s) of\n\n"
-                    f"{edit.anchor}\n\n"
-                    f"but the generated file has {found}. The generator's "
-                    "output moved; update the overlay in "
-                    "sdkgen/overlays.py to match it."
-                )
-            text = text.replace(edit.anchor, edit.replacement)
-        return text
+from .overlay import Edit, Overlay
 
 
 # ===== Prompts: caching and background refresh =====
@@ -254,43 +209,3 @@ def ts_prompts_overlay(descriptive: bool) -> Overlay:
             ),
         ),
     )
-
-
-def overlays(descriptive: bool) -> List[Overlay]:
-    return [prompts_overlay(descriptive), ts_prompts_overlay(descriptive)]
-
-
-# ===== Applying them =====
-
-
-def run_after_generation(
-    outputs: List[Tuple[Path, str]], descriptive: bool = True
-) -> List[Tuple[Path, str]]:
-    """Fold every overlay into the files it names, before any are written."""
-    pending: Dict[str, Overlay] = {
-        overlay.path: overlay for overlay in overlays(descriptive)
-    }
-
-    applied: List[Tuple[Path, str]] = []
-    for path, content in outputs:
-        overlay = pending.pop(str(path.relative_to(REPO_ROOT)), None)
-        if overlay is None:
-            applied.append((path, content))
-            continue
-        name = str(path.relative_to(REPO_ROOT))
-        overlaid = overlay.apply(content)
-        # Both formatters have already run, so an overlaid file goes back
-        # through its own to land on the same house style as everything else.
-        if path.suffix == ".py":
-            overlaid = format_python(overlaid)
-        else:
-            overlaid = format_typescript({name: overlaid})[name]
-        applied.append((path, overlaid))
-
-    if pending:
-        raise SpecError(
-            "these overlays name a file the generator does not produce: "
-            + ", ".join(sorted(pending))
-            + ". Update sdkgen/overlays.py, or the resource it overlays."
-        )
-    return applied

@@ -18,7 +18,7 @@ from ..constants import (
     SCHEMA_REF,
     WRITABLE_SCHEMAS,
 )
-from .errors import SpecError
+from ..errors import SpecError
 
 
 def ref_name(ref: str) -> str:

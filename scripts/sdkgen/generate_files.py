@@ -18,7 +18,7 @@ from typing import Dict, Iterable, List, Optional, Tuple
 
 import black
 
-from ..constants import (
+from .constants import (
     GENERATED_MARKER,
     REPO_ROOT,
     TS_IDENTIFIER,
@@ -29,7 +29,7 @@ from ..constants import (
     TYPESCRIPT_ROOT,
 )
 from .errors import SpecError
-from .naming import camel_case
+from .openapi_helpers.openapi_to_sdk_names import camel_case
 
 
 @dataclass(frozen=True)

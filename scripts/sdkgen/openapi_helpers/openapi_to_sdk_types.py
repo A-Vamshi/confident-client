@@ -14,9 +14,9 @@ from ..constants import (
     PYDANTIC_RESERVED,
     TS_IDENTIFIER,
 )
-from .errors import SpecError
-from .naming import pascal_case, singular, snake_case
-from .spec import ref_name, split_union
+from ..errors import SpecError
+from .openapi_to_sdk_names import pascal_case, singular, snake_case
+from .openapi_parser import ref_name, split_union
 
 
 @dataclass

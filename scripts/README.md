@@ -24,34 +24,45 @@ overwriting something hand-written.
 **`generate_sdk.py`** is the entrypoint and the only file you run. It reads the
 spec once, hands it to each renderer, and writes what comes back.
 
-**`stateful_resources.yml`** declares the stateful handles — the objects like
+**`stateful_config.yml`** declares the stateful handles — the objects like
 `client.dataset(id)` that hold a record's id so callers stop passing it to every
 call. Its header is a menu of every key it accepts; a resource absent from it
 still gets a normal stateless client.
 
 ## `sdkgen/`
 
-Everything else. The renderers sit at the top, one per kind of artifact:
+Everything else. A file that emits SDK source is named `generate_*`:
 
-|                       |                                                                      |
-| --------------------- | -------------------------------------------------------------------- |
-| `types.py`            | the wire types — one module per resource                             |
-| `clients.py`          | the endpoint enum, the operations, and the clients that compose them |
-| `stateful_clients.py` | the handles `stateful_resources.yml` describes                       |
-| `overlays.py`         | hand-written code folded into a generated file after rendering       |
-| `constants.py`        | everything the generator is told, as data                            |
+|                                  |                                                                      |
+| -------------------------------- | -------------------------------------------------------------------- |
+| `generate_types.py`              | the wire types — one module per resource, and its barrel             |
+| `generate_stateless_clients.py`  | the endpoint enum, the operations, and the clients that compose them |
+| `generate_stateful_clients.py`   | the handles `stateful_config.yml` describes                          |
+| `generate_files.py`              | where generated files go, their banner, and both formatters          |
+| `constants.py`                   | everything the generator is told, as data                            |
+| `errors.py`                      | the one exception the generator raises                               |
 
-`core/` is what those stand on: `spec.py` reads the OpenAPI document,
-`operations.py` models one operation, `shapes.py` turns a schema into a type,
-`naming.py` turns spec names into code names, `output.py` writes and formats,
-`errors.py` holds the one exception.
+`openapi_helpers/` is what those stand on — reading the spec, and turning what
+it says into SDK names, types and operations:
+
+|                                  |                                                    |
+| -------------------------------- | -------------------------------------------------- |
+| `openapi_parser.py`              | reads the OpenAPI document                         |
+| `openapi_to_sdk_types.py`        | turns a schema into a type both languages declare  |
+| `openapi_to_sdk_operations.py`   | turns a route into a method both languages spell   |
+| `openapi_to_sdk_names.py`        | turns a name in the spec into a name in the SDK    |
+
+`custom_overlays/` holds the hand-written code folded into generated files —
+see below.
 
 ## Overlays
 
 Some things a client needs are not in the spec at all — prompt caching and
-background refresh is the first of them. `overlays.py` states those as exact
-edits against one rendered file, applied before anything is written, so
+background refresh is the first of them. `custom_overlays/` states those as
+exact edits against one rendered file, applied before anything is written, so
 `--check`, idempotence and both formatters cover them like generated code.
+`overlay.py` is what an overlay is, `run_after_generation.py` applies them all,
+and one module per resource (`prompts.py`) holds the edits themselves.
 
 Keep an overlay thin: rename a generated method out of the way and call it from
 a hand-written one that lives in the SDK, where it is typed and tested like the

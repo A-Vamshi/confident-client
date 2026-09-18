@@ -6,23 +6,23 @@ from .constants import (
     RESOURCE_MODULES,
     PYTHON_LINE_LENGTH,
 )
-from .core.errors import (
+from .errors import (
     SpecError,
 )
-from .core.naming import (
+from .openapi_helpers.openapi_to_sdk_names import (
     enum_member_name,
     python_module_for,
 )
-from .core.spec import (
+from .openapi_helpers.openapi_parser import (
     split_union,
 )
-from .core.shapes import (
+from .openapi_helpers.openapi_to_sdk_types import (
     AliasType,
     EnumType,
     Module,
     Resolver,
 )
-from .core.output import (
+from .generate_files import (
     format_python,
     banner,
     wrap_python,
