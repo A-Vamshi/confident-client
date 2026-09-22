@@ -600,42 +600,78 @@ def _describe_handle(
 # ===== Describing the wire types those methods name =====
 
 
+def _import_location(resource: str, name: str) -> Dict[str, Dict[str, str]]:
+    """Where a caller imports the type from, as they would write it.
+
+    The barrel each resource publishes, not the module the type is declared
+    in. Generated code imports the module directly to keep the barrel out of
+    its own import cycle; a caller has no such problem, and
+    `confidentai.datasets` is the import the package exists to offer.
+    """
+    return {
+        "python": {
+            "module": python_module_for(resource)[: -len(".types")],
+            "name": name,
+        },
+        "typescript": {
+            "module": f"confidentai/{ts_module_for(resource)}",
+            "name": name,
+        },
+    }
+
+
 def _describe_types(
     reachable: Dict[str, Set[str]],
     home: Dict[str, str],
     schemas: Dict[str, Any],
 ) -> List[Dict[str, Any]]:
-    """Every schema the documented resources reach, in dependency order."""
-    owned: Dict[str, str] = {}
-    for resource in sorted(reachable):
-        for name in sorted(reachable[resource]):
-            owned.setdefault(name, home.get(name, resource))
+    """Every schema the documented resources reach, in dependency order.
 
-    module = declare(
-        "common", {name: schemas[name] for name in sorted(owned)}, home
-    )
-    sort_by_dependency(module)
+    Grouped and declared one resource at a time, exactly as `render_wire_types`
+    does it. Declaring them together instead would leave a shape the resolver
+    promotes out of an inline definition with no resource to attribute it to,
+    and the import published for it would name a module that never declares it.
+    """
+    owned: Dict[str, Dict[str, Any]] = {}
+    for name in sorted(home):
+        owned.setdefault(home[name], {})[name] = schemas[name]
+
+    wanted = {name for names in reachable.values() for name in names}
+
+    entries: List[Dict[str, Any]] = []
+    for resource in sorted(owned):
+        if not wanted & set(owned[resource]):
+            continue
+        module = declare(resource, owned[resource], home)
+        sort_by_dependency(module)
+        entries.extend(
+            _describe_module_types(module, resource, schemas, wanted)
+        )
+    return sorted(entries, key=lambda entry: entry["name"])
+
+
+def _describe_module_types(
+    module: Any,
+    resource: str,
+    schemas: Dict[str, Any],
+    wanted: Set[str],
+) -> List[Dict[str, Any]]:
+    """One module's declarations, minus what no documented method reaches.
+
+    A promoted shape is named by nothing in the spec, so it is kept whenever
+    its module is: the only thing that reaches it is a type declared beside it.
+    """
+
+    def keep(name: str) -> bool:
+        return name in wanted or name not in schemas
 
     def import_location(name: str) -> Dict[str, Dict[str, str]]:
-        """Where a caller imports the type from, as they would write it.
-
-        Not the file it is declared in: TypeScript publishes one subpath per
-        resource, so a reader imports the barrel.
-        """
-        resource = owned.get(name, "common")
-        return {
-            "python": {
-                "module": python_module_for(resource),
-                "name": name,
-            },
-            "typescript": {
-                "module": f"confidentai/{ts_module_for(resource)}",
-                "name": name,
-            },
-        }
+        return _import_location(resource, name)
 
     entries: List[Dict[str, Any]] = []
     for enum in module.enums:
+        if not keep(enum.name):
+            continue
         schema = schemas.get(enum.name) or {}
         entries.append(
             {
@@ -652,6 +688,8 @@ def _describe_types(
         )
 
     for declaration in module.declarations:
+        if not keep(declaration.name):
+            continue
         schema = schemas.get(declaration.name) or {}
         # From the spec rather than the resolver's dependencies, which cover
         # only the module being declared: a type another module owns is an
@@ -694,7 +732,7 @@ def _describe_types(
             }
         entries.append(entry)
 
-    return sorted(entries, key=lambda entry: entry["name"])
+    return entries
 
 
 # ===== The source this run rendered =====

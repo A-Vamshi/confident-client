@@ -25648,7 +25648,7 @@ types:
     `authentication` and `cloudProvider` come back exactly as they were stored, credentials
     included.'
   python:
-    module: confidentai.ai_connections.types
+    module: confidentai.ai_connections
     name: AIConnection
   typescript:
     module: confidentai/ai-connections
@@ -26120,7 +26120,7 @@ types:
   description: One header or query parameter Confident AI sends with every request
     to your application.
   python:
-    module: confidentai.ai_connections.types
+    module: confidentai.ai_connections
     name: AIConnectionKeyValue
   typescript:
     module: confidentai/ai-connections
@@ -26152,7 +26152,7 @@ types:
 - name: AIConnectionList
   description: One page of AI connections, with the total across all pages.
   python:
-    module: confidentai.ai_connections.types
+    module: confidentai.ai_connections
     name: AIConnectionList
   typescript:
     module: confidentai/ai-connections
@@ -26209,7 +26209,7 @@ types:
     authored on the Confident AI platform. Sending `payload` through the API sets
     this to JSON.'
   python:
-    module: confidentai.ai_connections.types
+    module: confidentai.ai_connections
     name: AIConnectionPayloadMode
   typescript:
     module: confidentai/ai-connections
@@ -26225,7 +26225,7 @@ types:
     what it sent back, and what Confident AI managed to extract from it. A ping that
     failed is reported here with `active` false rather than as an error status.'
   python:
-    module: confidentai.ai_connections.types
+    module: confidentai.ai_connections
     name: AIConnectionPingResult
   typescript:
     module: confidentai/ai-connections
@@ -26468,7 +26468,7 @@ types:
 - name: AIConnectionPromptBranchRef
   description: A prompt followed through the head commit of one branch.
   python:
-    module: confidentai.ai_connections.types
+    module: confidentai.ai_connections
     name: AIConnectionPromptBranchRef
   typescript:
     module: confidentai/ai-connections
@@ -26500,7 +26500,7 @@ types:
 - name: AIConnectionPromptCommitRef
   description: A prompt pinned to one of its commits.
   python:
-    module: confidentai.ai_connections.types
+    module: confidentai.ai_connections
     name: AIConnectionPromptCommitRef
   typescript:
     module: confidentai/ai-connections
@@ -26531,7 +26531,7 @@ types:
 - name: AIConnectionPromptLabelRef
   description: A prompt followed through one of its labels.
   python:
-    module: confidentai.ai_connections.types
+    module: confidentai.ai_connections
     name: AIConnectionPromptLabelRef
   typescript:
     module: confidentai/ai-connections
@@ -26565,7 +26565,7 @@ types:
     of it. Name the prompt by `alias`, then choose it with exactly one of `version`,
     `label`, `branch` or `hash`.
   python:
-    module: confidentai.ai_connections.types
+    module: confidentai.ai_connections
     name: AIConnectionPromptRef
   typescript:
     module: confidentai/ai-connections
@@ -26589,7 +26589,7 @@ types:
 - name: AIConnectionPromptVersionRef
   description: A prompt pinned to one of its published versions.
   python:
-    module: confidentai.ai_connections.types
+    module: confidentai.ai_connections
     name: AIConnectionPromptVersionRef
   typescript:
     module: confidentai/ai-connections
@@ -26620,7 +26620,7 @@ types:
 - name: AIConnectionRef
   description: A reference to an AI connection by its id.
   python:
-    module: confidentai.ai_connections.types
+    module: confidentai.ai_connections
     name: AIConnectionRef
   typescript:
     module: confidentai/ai-connections
@@ -26646,7 +26646,7 @@ types:
     and WEBSOCKET requires a `wss://` endpoint. PHONE and SIP are voice connections
     placed over a telephony provider.
   python:
-    module: confidentai.ai_connections.types
+    module: confidentai.ai_connections
     name: AIConnectionResponseMode
   typescript:
     module: confidentai/ai-connections
@@ -26671,7 +26671,7 @@ types:
   description: 'An AI connection as it appears in a list: enough to pick one out.
     Retrieve it by id for its request, response and authentication configuration.'
   python:
-    module: confidentai.ai_connections.types
+    module: confidentai.ai_connections
     name: AIConnectionSummary
   typescript:
     module: confidentai/ai-connections
@@ -26728,7 +26728,7 @@ types:
     runner to pull work rather than being called, so it needs no endpoint. Defaults
     to ENDPOINT.'
   python:
-    module: confidentai.ai_connections.types
+    module: confidentai.ai_connections
     name: AIConnectionType
   typescript:
     module: confidentai/ai-connections
@@ -26746,7 +26746,7 @@ types:
     apply as to any query: at most 20 lines, a `topK.limit` of at most 100, and a
     range no longer than 366 days.'
   python:
-    module: confidentai.widgets.types
+    module: confidentai.widgets
     name: AdHocWidgetQueryRequest
   typescript:
     module: confidentai/widgets
@@ -26805,7 +26805,7 @@ types:
   description: The computed data for a widget that was defined inline rather than
     saved, so it carries no widget id.
   python:
-    module: confidentai.widgets.types
+    module: confidentai.widgets
     name: AdHocWidgetQueryResult
   typescript:
     module: confidentai/widgets
@@ -26857,7 +26857,7 @@ types:
     queue, `threadIds` for a `THREAD` queue — and every id must already exist in
     your project. Items already in the queue are skipped.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: AddQueueItemsRequest
   typescript:
     module: confidentai/annotation-queues
@@ -26877,7 +26877,7 @@ types:
 - name: AddSpanQueueItemsRequest
   description: Spans to add to a `SPAN` queue.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: AddSpanQueueItemsRequest
   typescript:
     module: confidentai/annotation-queues
@@ -26899,7 +26899,7 @@ types:
 - name: AddThreadQueueItemsRequest
   description: Threads to add to a `THREAD` queue.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: AddThreadQueueItemsRequest
   typescript:
     module: confidentai/annotation-queues
@@ -26921,7 +26921,7 @@ types:
 - name: AddTraceQueueItemsRequest
   description: Traces to add to a `TRACE` queue.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: AddTraceQueueItemsRequest
   typescript:
     module: confidentai/annotation-queues
@@ -26943,7 +26943,7 @@ types:
 - name: AddedQueueItems
   description: The items created by adding production data to a queue.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: AddedQueueItems
   typescript:
     module: confidentai/annotation-queues
@@ -26967,7 +26967,7 @@ types:
   description: A span recording an agent step, with the tools and handoffs available
     to it.
   python:
-    module: confidentai.traces.types
+    module: confidentai.traces
     name: AgentSpanRequest
   typescript:
     module: confidentai/traces
@@ -27208,7 +27208,7 @@ types:
   description: The AI-generated summary of a test run, produced on the Confident
     AI platform. Null until it has been generated.
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: AiInsightsSummary
   typescript:
     module: confidentai/test-runs
@@ -27245,7 +27245,7 @@ types:
   description: What kind of production item an alert measures over. `TRACE` and `SPAN`
     alerts aggregate single requests; `THREAD` alerts aggregate conversations.
   python:
-    module: confidentai.scheduled_alerts.types
+    module: confidentai.scheduled_alerts
     name: AlertDataModel
   typescript:
     module: confidentai/scheduled-alerts
@@ -27273,7 +27273,7 @@ types:
   description: 'How urgent the alert is. It also decides who hears about it: an integration
     receives an alert only when it subscribes to that severity.'
   python:
-    module: confidentai.scheduled_alerts.types
+    module: confidentai.scheduled_alerts
     name: AlertSeverity
   typescript:
     module: confidentai/scheduled-alerts
@@ -27293,7 +27293,7 @@ types:
   description: Whether the alert fires when the measured value rises above the threshold
     or falls below it.
   python:
-    module: confidentai.scheduled_alerts.types
+    module: confidentai.scheduled_alerts
     name: AlertThresholdDirection
   typescript:
     module: confidentai/scheduled-alerts
@@ -27308,7 +27308,7 @@ types:
   description: When the alert fires. Latency is compared in seconds, cost in USD,
     and rates such as `ERROR_RATE` as fractions between 0 and 1.
   python:
-    module: confidentai.scheduled_alerts.types
+    module: confidentai.scheduled_alerts
     name: AlertThresholdSettings
   typescript:
     module: confidentai/scheduled-alerts
@@ -27342,7 +27342,7 @@ types:
   description: The annotation to record on one queue item. Send at least one of `annotations`
     or `formResponses`.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: AnnotateQueueItemRequest
   typescript:
     module: confidentai/annotation-queues
@@ -27411,7 +27411,7 @@ types:
 - name: AnnotateQueueItemResult
   description: What one item's annotation wrote.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: AnnotateQueueItemResult
   typescript:
     module: confidentai/annotation-queues
@@ -27445,7 +27445,7 @@ types:
   description: A human rating left on a trace, span or thread, with the ids of what
     it was left on.
   python:
-    module: confidentai.annotations.types
+    module: confidentai.annotations
     name: Annotation
   typescript:
     module: confidentai/annotations
@@ -27597,7 +27597,7 @@ types:
     BOOLEAN for a free answer, SELECT or MULTI_SELECT for a choice from `selectOptions`,
     and ANNOTATION_CRITERIA for a rating on the scale named by `criteriaType`.'
   python:
-    module: confidentai.annotation_forms.types
+    module: confidentai.annotation_forms
     name: AnnotationFieldType
   typescript:
     module: confidentai/annotation-forms
@@ -27622,7 +27622,7 @@ types:
   description: A form of questions asked of every item in the annotation queues it
     is attached to.
   python:
-    module: confidentai.annotation_forms.types
+    module: confidentai.annotation_forms
     name: AnnotationForm
   typescript:
     module: confidentai/annotation-forms
@@ -27695,7 +27695,7 @@ types:
 - name: AnnotationFormField
   description: One question on an annotation form.
   python:
-    module: confidentai.annotation_forms.types
+    module: confidentai.annotation_forms
     name: AnnotationFormField
   typescript:
     module: confidentai/annotation-forms
@@ -27842,7 +27842,7 @@ types:
   description: A question to put on the form. A SELECT or MULTI_SELECT field must
     carry `selectOptions`, and an ANNOTATION_CRITERIA field must carry `criteriaType`.
   python:
-    module: confidentai.annotation_forms.types
+    module: confidentai.annotation_forms
     name: AnnotationFormFieldConfig
   typescript:
     module: confidentai/annotation-forms
@@ -27990,7 +27990,7 @@ types:
 - name: AnnotationFormList
   description: The annotation forms in the project.
   python:
-    module: confidentai.annotation_forms.types
+    module: confidentai.annotation_forms
     name: AnnotationFormList
   typescript:
     module: confidentai/annotation-forms
@@ -28013,7 +28013,7 @@ types:
 - name: AnnotationFormRef
   description: A reference to an annotation form by its id.
   python:
-    module: confidentai.annotation_forms.types
+    module: confidentai.annotation_forms
     name: AnnotationFormRef
   typescript:
     module: confidentai/annotation-forms
@@ -28035,7 +28035,7 @@ types:
   description: 'A form as it appears in a list: its name and counts, without its
     questions.'
   python:
-    module: confidentai.annotation_forms.types
+    module: confidentai.annotation_forms
     name: AnnotationFormSummary
   typescript:
     module: confidentai/annotation-forms
@@ -28106,7 +28106,7 @@ types:
 - name: AnnotationList
   description: One page of annotations, with the total across all pages.
   python:
-    module: confidentai.annotations.types
+    module: confidentai.annotations
     name: AnnotationList
   typescript:
     module: confidentai/annotations
@@ -28160,7 +28160,7 @@ types:
   description: A queue of production data your team annotates, with its progress
     and how the work is shared out.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: AnnotationQueue
   typescript:
     module: confidentai/annotation-queues
@@ -28313,7 +28313,7 @@ types:
   description: One piece of production data waiting to be annotated. Retrieve the
     trace, span or thread it names for the payload to show your annotator.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: AnnotationQueueItem
   typescript:
     module: confidentai/annotation-queues
@@ -28411,7 +28411,7 @@ types:
 - name: AnnotationQueueItemList
   description: One page of queue items, with the total across all pages.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: AnnotationQueueItemList
   typescript:
     module: confidentai/annotation-queues
@@ -28464,7 +28464,7 @@ types:
 - name: AnnotationQueueList
   description: One page of annotation queues, with the total across all pages.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: AnnotationQueueList
   typescript:
     module: confidentai/annotation-queues
@@ -28517,7 +28517,7 @@ types:
 - name: AnnotationQueueRef
   description: A reference to an annotation queue by its id.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: AnnotationQueueRef
   typescript:
     module: confidentai/annotation-queues
@@ -28539,7 +28539,7 @@ types:
   description: 'A queue as it appears in a list: what it holds and how far through
     it your team is, without the per-reviewer breakdown.'
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: AnnotationQueueSummary
   typescript:
     module: confidentai/annotation-queues
@@ -28668,7 +28668,7 @@ types:
     `THREAD` queues are filled from your production data, while `GOLDEN` and `TEST_RUN`
     queues are filled by Confident AI.'
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: AnnotationQueueType
   typescript:
     module: confidentai/annotation-queues
@@ -28688,7 +28688,7 @@ types:
 - name: AnnotationRef
   description: A reference to an annotation by its id.
   python:
-    module: confidentai.annotations.types
+    module: confidentai.annotations
     name: AnnotationRef
   typescript:
     module: confidentai/annotations
@@ -28711,7 +28711,7 @@ types:
   description: 'The annotation field to sort by: createdAt orders by when the annotation
     was left, rating by the score it carries.'
   python:
-    module: confidentai.annotations.types
+    module: confidentai.annotations
     name: AnnotationSortBy
   typescript:
     module: confidentai/annotations
@@ -28726,7 +28726,7 @@ types:
   description: A human rating as it appears under the trace, span or thread it was
     left on, without repeating the ids of that target.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: AnnotationSummary
   typescript:
     module: confidentai/common
@@ -28833,7 +28833,7 @@ types:
   description: This is the type of annotation, which can be either thumbs rating
     or five star rating.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: AnnotationType
   typescript:
     module: confidentai/common
@@ -28850,7 +28850,7 @@ types:
     scope is fixed when it is created and shows in the prefix of its value (`confident_<region>_org_`
     or `confident_<region>_proj_`).
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: ApiKey
   typescript:
     module: confidentai/common
@@ -28960,7 +28960,7 @@ types:
   description: 'The API keys of one organization or one project. There is no pagination:
     the whole set is returned.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: ApiKeyList
   typescript:
     module: confidentai/common
@@ -28985,7 +28985,7 @@ types:
   description: Confirmation that an API key was revoked. The key's row is deleted
     and both of its values stop authenticating at once.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: ApiKeyRef
   typescript:
     module: confidentai/common
@@ -29007,7 +29007,7 @@ types:
   description: What one on-demand run of a control produced across the projects it
     governs.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: AssessGovernanceControlResult
   typescript:
     module: confidentai/organization
@@ -29055,7 +29055,7 @@ types:
 - name: AssignmentBreakdownEntry
   description: One reviewer's share of a queue.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: AssignmentBreakdownEntry
   typescript:
     module: confidentai/annotation-queues
@@ -29089,7 +29089,7 @@ types:
     gives every item to one reviewer, ROUND_ROBIN deals them out in turn, and RANDOM
     assigns each one at random.'
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: AssignmentStrategy
   typescript:
     module: confidentai/annotation-queues
@@ -29105,7 +29105,7 @@ types:
 - name: AttackEngine
   description: How attacks are generated for this run.
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: AttackEngine
   typescript:
     module: confidentai/rt-frameworks
@@ -29129,7 +29129,7 @@ types:
   description: One way of attacking the system under test, drawn from the Confident
     AI catalog and configured per project.
   python:
-    module: confidentai.attack_methods.types
+    module: confidentai.attack_methods
     name: AttackMethod
   typescript:
     module: confidentai/attack-methods
@@ -29219,7 +29219,7 @@ types:
 - name: AttackMethodList
   description: One page of attack methods, with the total across all pages.
   python:
-    module: confidentai.attack_methods.types
+    module: confidentai.attack_methods
     name: AttackMethodList
   typescript:
     module: confidentai/attack-methods
@@ -29273,7 +29273,7 @@ types:
 - name: AttackMethodRef
   description: A reference to an attack method by its id.
   python:
-    module: confidentai.attack_methods.types
+    module: confidentai.attack_methods
     name: AttackMethodRef
   typescript:
     module: confidentai/attack-methods
@@ -29294,7 +29294,7 @@ types:
 - name: AttackMethodSummary
   description: An attack method as it appears in a list, without its parameters.
   python:
-    module: confidentai.attack_methods.types
+    module: confidentai.attack_methods
     name: AttackMethodSummary
   typescript:
     module: confidentai/attack-methods
@@ -29371,7 +29371,7 @@ types:
   description: One setting an attack method takes, with the value in force for this
     project.
   python:
-    module: confidentai.attack_methods.types
+    module: confidentai.attack_methods
     name: AttackParameter
   typescript:
     module: confidentai/attack-methods
@@ -29439,7 +29439,7 @@ types:
   description: The kind of value a parameter takes. `enum` accepts one of the strings
     in `options`, and `json` accepts an object.
   python:
-    module: confidentai.attack_methods.types
+    module: confidentai.attack_methods
     name: AttackParameterType
   typescript:
     module: confidentai/attack-methods
@@ -29462,7 +29462,7 @@ types:
   description: 'One run of an audit log export: the period it covers, where it is
     in its lifecycle, and how many audit logs its file holds once it completes.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: AuditLogExport
   typescript:
     module: confidentai/common
@@ -29609,7 +29609,7 @@ types:
     if the run failed. Only a `COMPLETED` export has a file to download, and both
     `COMPLETED` and `ERRORED` are terminal.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: AuditLogExportStatus
   typescript:
     module: confidentai/common
@@ -29625,7 +29625,7 @@ types:
 - name: BaseSpanRequest
   description: A plain span with no model, retriever, tool or agent detail.
   python:
-    module: confidentai.traces.types
+    module: confidentai.traces
     name: BaseSpanRequest
   typescript:
     module: confidentai/traces
@@ -29843,7 +29843,7 @@ types:
 - name: BatchAnnotateFailure
   description: An entry that could not be annotated.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: BatchAnnotateFailure
   typescript:
     module: confidentai/annotation-queues
@@ -29885,7 +29885,7 @@ types:
   description: One item's annotation within a batch. Anything it omits falls back
     to the batch-level value.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: BatchAnnotateItem
   typescript:
     module: confidentai/annotation-queues
@@ -29965,7 +29965,7 @@ types:
   description: Annotations for several items of one queue, applied in a single call.
     Every item must belong to the queue in the path.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: BatchAnnotateRequest
   typescript:
     module: confidentai/annotation-queues
@@ -30011,7 +30011,7 @@ types:
 - name: BatchAnnotateResult
   description: One result per entry sent to a batch annotation.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: BatchAnnotateResult
   typescript:
     module: confidentai/annotation-queues
@@ -30037,7 +30037,7 @@ types:
 - name: BatchAnnotateSuccess
   description: An entry that was annotated.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: BatchAnnotateSuccess
   typescript:
     module: confidentai/annotation-queues
@@ -30091,7 +30091,7 @@ types:
   description: A label assigned by one of your project's classifiers, with the reason
     it was chosen.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: Classification
   typescript:
     module: confidentai/common
@@ -30123,7 +30123,7 @@ types:
   description: 'A classifier: what it runs on, how it discovers labels, and the labels
     it can apply.'
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: Classifier
   typescript:
     module: confidentai/classifiers
@@ -30234,7 +30234,7 @@ types:
   description: How a generation run samples and clusters your traffic. Both `summaryPrompt`
     and `nClusters` must be set before the generate endpoint will run.
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: ClassifierAutoGenerationConfig
   typescript:
     module: confidentai/classifiers
@@ -30279,7 +30279,7 @@ types:
     individual traces, `THREAD` labels whole conversations. It is fixed when the
     classifier is created.'
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: ClassifierDataModel
   typescript:
     module: confidentai/classifiers
@@ -30293,7 +30293,7 @@ types:
 - name: ClassifierLabel
   description: One label a classifier can apply to what it classifies.
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: ClassifierLabel
   typescript:
     module: confidentai/classifiers
@@ -30370,7 +30370,7 @@ types:
   description: The outcome of dispatching a label generation run. The run itself
     is asynchronous and returns no handle, so poll the labels endpoint for its results.
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: ClassifierLabelGeneration
   typescript:
     module: confidentai/classifiers
@@ -30414,7 +30414,7 @@ types:
 - name: ClassifierLabelList
   description: One page of labels, with the total across all pages.
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: ClassifierLabelList
   typescript:
     module: confidentai/classifiers
@@ -30467,7 +30467,7 @@ types:
 - name: ClassifierLabelRef
   description: A reference to a classifier label by its id.
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: ClassifierLabelRef
   typescript:
     module: confidentai/classifiers
@@ -30490,7 +30490,7 @@ types:
   description: ACTIVE labels are in use; RECOMMENDED ones are generated suggestions
     awaiting review.
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: ClassifierLabelStatus
   typescript:
     module: confidentai/classifiers
@@ -30505,7 +30505,7 @@ types:
   description: 'A label as it appears in a list: enough to triage a generated suggestion,
     without its description or polarity.'
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: ClassifierLabelSummary
   typescript:
     module: confidentai/classifiers
@@ -30558,7 +30558,7 @@ types:
 - name: ClassifierList
   description: One page of classifiers, with the total across all pages.
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: ClassifierList
   typescript:
     module: confidentai/classifiers
@@ -30614,7 +30614,7 @@ types:
     with its labels ready; `TOPICS`, `USE_CASES` and `ISSUES` ship with none and
     expect a generation run next. `CUSTOM` seeds nothing.
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: ClassifierPreset
   typescript:
     module: confidentai/classifiers
@@ -30634,7 +30634,7 @@ types:
 - name: ClassifierRef
   description: A reference to a classifier by its id.
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: ClassifierRef
   typescript:
     module: confidentai/classifiers
@@ -30656,7 +30656,7 @@ types:
   description: 'A classifier as it appears in a list: enough to pick one, without
     its filters, generation config, or labels.'
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: ClassifierSummary
   typescript:
     module: confidentai/classifiers
@@ -30711,7 +30711,7 @@ types:
     `source` is always `organization`, since the project now follows the organization's
     default.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: ClearProjectModelResult
   typescript:
     module: confidentai/projects
@@ -30736,7 +30736,7 @@ types:
   description: The control types you can create. OPERATIONAL is absent because Confident
     AI seeds those controls from its own registry.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: CreatableGovernanceControlType
   typescript:
     module: confidentai/organization
@@ -30755,7 +30755,7 @@ types:
     the seven values Confident AI extracts from a response, send either its key path
     or its transformer id, never both.
   python:
-    module: confidentai.ai_connections.types
+    module: confidentai.ai_connections
     name: CreateAIConnectionRequest
   typescript:
     module: confidentai/ai-connections
@@ -31223,7 +31223,7 @@ types:
   description: An annotation form to add to this project. Attach it to an annotation
     queue to have its questions asked of every item in that queue.
   python:
-    module: confidentai.annotation_forms.types
+    module: confidentai.annotation_forms
     name: CreateAnnotationFormRequest
   typescript:
     module: confidentai/annotation-forms
@@ -31258,7 +31258,7 @@ types:
   description: A queue to open for your team to annotate. Its `type` is fixed at
     creation and decides what can be added to it.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: CreateAnnotationQueueRequest
   typescript:
     module: confidentai/annotation-queues
@@ -31305,7 +31305,7 @@ types:
     it: `expectedOutput` for a trace or span, `expectedOutcome` for a thread. `type`
     defaults to THUMBS_RATING.'
   python:
-    module: confidentai.annotations.types
+    module: confidentai.annotations
     name: CreateAnnotationRequest
   typescript:
     module: confidentai/annotations
@@ -31326,7 +31326,7 @@ types:
   description: The key to mint. Its value is generated by Confident AI and returned
     once, in the response.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: CreateApiKeyRequest
   typescript:
     module: confidentai/common
@@ -31361,7 +31361,7 @@ types:
     log ever recorded; `startTime` and `endTime` must be sent together to export
     one period instead.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: CreateAuditLogExportRequest
   typescript:
     module: confidentai/common
@@ -31407,7 +31407,7 @@ types:
   description: A label to add to the classifier. Setting `status` to ACTIVE also
     enables the label, so sending `enabled` false alongside it is rejected.
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: CreateClassifierLabelRequest
   typescript:
     module: confidentai/classifiers
@@ -31476,7 +31476,7 @@ types:
     config, and a starting set of labels; any field you send explicitly overrides
     what the preset would have set.
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: CreateClassifierRequest
   typescript:
     module: confidentai/classifiers
@@ -31589,7 +31589,7 @@ types:
   description: A dashboard to add to this project, optionally with the widgets it
     starts out with.
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: CreateDashboardRequest
   typescript:
     module: confidentai/dashboards
@@ -31646,7 +31646,7 @@ types:
     dataset as goldens. `dataModel` must match the dataset: `THREAD` for a multi-turn
     dataset, `TRACE` or `SPAN` for a single-turn one.'
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: CreateDatasetIngestionTaskRequest
   typescript:
     module: confidentai/datasets
@@ -31834,7 +31834,7 @@ types:
 - name: CreateDatasetVersionResult
   description: null
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: CreateDatasetVersionResult
   typescript:
     module: confidentai/datasets
@@ -31868,7 +31868,7 @@ types:
   description: 'The standing rule to create: what to evaluate, which metric collection
     to run, and how much of the matching traffic to score.'
   python:
-    module: confidentai.evaluation_rules.types
+    module: confidentai.evaluation_rules
     name: CreateEvaluationRuleRequest
   typescript:
     module: confidentai/evaluation-rules
@@ -32004,7 +32004,7 @@ types:
     upload to. Credentials must be sent in full: a value copied from a read is masked,
     and storing the mask would produce a destination whose uploads can never authenticate.'
   python:
-    module: confidentai.export_destinations.types
+    module: confidentai.export_destinations
     name: CreateExportDestinationRequest
   typescript:
     module: confidentai/export-destinations
@@ -32105,7 +32105,7 @@ types:
     data of the window since the previous run, narrowed by `filters`, and delivers
     it to `destinationId`.
   python:
-    module: confidentai.export_schedules.types
+    module: confidentai.export_schedules
     name: CreateExportScheduleRequest
   typescript:
     module: confidentai/export-schedules
@@ -32260,7 +32260,7 @@ types:
   description: The forwarding connector to create. A project can hold at most 3 connectors,
     so creating one past that limit is rejected.
   python:
-    module: confidentai.forwarding_connectors.types
+    module: confidentai.forwarding_connectors
     name: CreateForwardingConnectorRequest
   typescript:
     module: confidentai/forwarding-connectors
@@ -32338,7 +32338,7 @@ types:
 - name: CreateGoldenRequest
   description: null
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: CreateGoldenRequest
   typescript:
     module: confidentai/datasets
@@ -32373,7 +32373,7 @@ types:
   description: A control group to add to your organization. The group starts empty,
     since a control's membership is set on the control rather than here.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: CreateGovernanceControlGroupRequest
   typescript:
     module: confidentai/organization
@@ -32409,7 +32409,7 @@ types:
     as ERROR until you add a version. A config that does not match `type` is ignored
     rather than rejected.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: CreateGovernanceControlRequest
   typescript:
     module: confidentai/organization
@@ -32494,7 +32494,7 @@ types:
     Except for `extraQueryParams`, every field is required even when null, so a version
     is a complete definition rather than a patch of the one before it.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: CreateGovernanceControlVersionRequest
   typescript:
     module: confidentai/organization
@@ -32514,7 +32514,7 @@ types:
     controls attached and no projects enrolled, so both are done afterwards through
     their own endpoints.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: CreateGovernancePolicyRequest
   typescript:
     module: confidentai/organization
@@ -32561,7 +32561,7 @@ types:
     server needs its `authConfig` credentials including `clientSecret`, since there
     is no stored secret to fall back on yet. Registering does not connect.
   python:
-    module: confidentai.mcp_servers.types
+    module: confidentai.mcp_servers
     name: CreateMcpServerRequest
   typescript:
     module: confidentai/mcp-servers
@@ -32677,7 +32677,7 @@ types:
 - name: CreateMetricCollectionRequest
   description: null
   python:
-    module: confidentai.metric_collections.types
+    module: confidentai.metric_collections
     name: CreateMetricCollectionRequest
   typescript:
     module: confidentai/metric-collections
@@ -32758,7 +32758,7 @@ types:
   description: A metric to create. GEVAL metrics need `criteria` or `evaluationSteps`;
     a DAG metric needs `algorithm` set to DAG and a `dag`.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: CreateMetricRequest
   typescript:
     module: confidentai/common
@@ -32865,7 +32865,7 @@ types:
 - name: CreateMetricsBatchRequest
   description: null
   python:
-    module: confidentai.metrics_batch.types
+    module: confidentai.metrics_batch
     name: CreateMetricsBatchRequest
   typescript:
     module: confidentai/metrics-batch
@@ -32891,7 +32891,7 @@ types:
     `inputCostPerMillionTokens` and `outputCostPerMillionTokens`; the pair of `matchPattern`
     and `provider` must not already be priced in this project.
   python:
-    module: confidentai.model_costs.types
+    module: confidentai.model_costs
     name: CreateModelCostRequest
   typescript:
     module: confidentai/model-costs
@@ -32950,7 +32950,7 @@ types:
     Every field is applied, so an update must resend `name` and `permissionIds` even
     when they are unchanged.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: CreateOrUpdatePolicyRequest
   typescript:
     module: confidentai/common
@@ -33000,7 +33000,7 @@ types:
     field is applied, so an update must resend `name` and `policyIds` even when they
     are unchanged.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: CreateOrUpdateRoleRequest
   typescript:
     module: confidentai/common
@@ -33050,7 +33050,7 @@ types:
   description: Who to invite into the organization, and the role they should hold
     once they accept.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: CreateOrganizationInvitationsRequest
   typescript:
     module: confidentai/organization
@@ -33088,7 +33088,7 @@ types:
     — attach it to a multi-turn golden for a simulated conversation to be played
     in its voice.
   python:
-    module: confidentai.personas.types
+    module: confidentai.personas
     name: CreatePersonaRequest
   typescript:
     module: confidentai/personas
@@ -33128,7 +33128,7 @@ types:
   description: Who to invite into the project, and the role they should hold in it
     once they accept.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: CreateProjectInvitationsRequest
   typescript:
     module: confidentai/projects
@@ -33166,7 +33166,7 @@ types:
     may hold depends on your plan, so this call can be refused on entitlement grounds
     even when the name is free.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: CreateProjectRequest
   typescript:
     module: confidentai/projects
@@ -33212,7 +33212,7 @@ types:
   description: The created project and the API key provisioned with it. The key's
     `value` is not retrievable afterwards, so read it out of this response.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: CreateProjectResult
   typescript:
     module: confidentai/projects
@@ -33248,7 +33248,7 @@ types:
 - name: CreatePromptBranchRequest
   description: null
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: CreatePromptBranchRequest
   typescript:
     module: confidentai/prompts
@@ -33270,7 +33270,7 @@ types:
 - name: CreatePromptVersionRequest
   description: null
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: CreatePromptVersionRequest
   typescript:
     module: confidentai/prompts
@@ -33293,7 +33293,7 @@ types:
 - name: CreatePromptVersionResult
   description: null
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: CreatePromptVersionResult
   typescript:
     module: confidentai/prompts
@@ -33327,7 +33327,7 @@ types:
   description: 'A rule that keeps the queue filled from your production data: it
     matches items against `filters` and queues the share named by `sampleRate`.'
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: CreateQueueIngestionTaskRequest
   typescript:
     module: confidentai/annotation-queues
@@ -33446,7 +33446,7 @@ types:
   description: A red teaming framework to add to this project. A framework groups
     risk categories, and running one starts a risk assessment.
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: CreateRTFrameworkRequest
   typescript:
     module: confidentai/rt-frameworks
@@ -33491,7 +33491,7 @@ types:
     supplied. `status` defaults to COMPLETED, which makes the report immediately
     readable; send IN_PROGRESS to fill it in over several requests.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: CreateReportRequest
   typescript:
     module: confidentai/reports
@@ -33561,7 +33561,7 @@ types:
     repeats every 1 day, and an INTERVAL cadence must carry both `repeatEvery` and
     `repeatUnit`.
   python:
-    module: confidentai.report_templates.types
+    module: confidentai.report_templates
     name: CreateReportTemplateRequest
   typescript:
     module: confidentai/report-templates
@@ -33689,7 +33689,7 @@ types:
   description: A risk category to add to the framework. Selecting vulnerability types
     and attack methods now saves a second call to update it.
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: CreateRiskCategoryRequest
   typescript:
     module: confidentai/rt-frameworks
@@ -33759,7 +33759,7 @@ types:
     the measurement window, so an alert repeating every hour compares the last hour
     of data; a ONCE alert measures the last 24 hours.
   python:
-    module: confidentai.scheduled_alerts.types
+    module: confidentai.scheduled_alerts
     name: CreateScheduledAlertRequest
   typescript:
     module: confidentai/scheduled-alerts
@@ -33955,7 +33955,7 @@ types:
   description: A test run to open for trace ingestion. Both fields are optional;
     without `metricCollection` the ingested traces are recorded but not evaluated.
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: CreateTestRunRequest
   typescript:
     module: confidentai/test-runs
@@ -33990,7 +33990,7 @@ types:
     to evaluate it online, `threadId` to group it into a conversation, and `testRunId`
     with `metricCollection` to record it as a test case of an in-progress test run.
   python:
-    module: confidentai.traces.types
+    module: confidentai.traces
     name: CreateTraceRequest
   typescript:
     module: confidentai/traces
@@ -34336,7 +34336,7 @@ types:
   description: A transformer to add to this project. Confident AI runs its code wherever
     the transformer is attached, so send the code with it.
   python:
-    module: confidentai.transformers.types
+    module: confidentai.transformers
     name: CreateTransformerRequest
   typescript:
     module: confidentai/transformers
@@ -34380,7 +34380,7 @@ types:
   description: A vulnerability to add to this project. Its name cannot match one
     Confident AI ships — customise that one instead.
   python:
-    module: confidentai.vulnerabilities.types
+    module: confidentai.vulnerabilities
     name: CreateVulnerabilityRequest
   typescript:
     module: confidentai/vulnerabilities
@@ -34458,7 +34458,7 @@ types:
   description: 'A widget to add to a dashboard: the chart to draw, the time range
     and breakdown to draw it over, and the lines to plot on it.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: CreateWidgetRequest
   typescript:
     module: confidentai/common
@@ -34611,7 +34611,7 @@ types:
 - name: CreatedApiKey
   description: A newly minted API key, carrying the only copy of its full value.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: CreatedApiKey
   typescript:
     module: confidentai/common
@@ -34722,7 +34722,7 @@ types:
     provided. `name` only takes effect when a customer id is resolvable; successive
     ingestions take the latest name.
   python:
-    module: confidentai.traces.types
+    module: confidentai.traces
     name: CustomerRequest
   typescript:
     module: confidentai/traces
@@ -34756,7 +34756,7 @@ types:
   description: A dashboard and the widgets on it. It carries the widgets' configuration,
     not their data — a query endpoint computes that.
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: Dashboard
   typescript:
     module: confidentai/dashboards
@@ -34851,7 +34851,7 @@ types:
 - name: DashboardList
   description: One page of dashboards, with the total across all pages.
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: DashboardList
   typescript:
     module: confidentai/dashboards
@@ -34905,7 +34905,7 @@ types:
   description: Which widgets to compute and over what range. Send `{}` to compute
     every widget over its own saved range.
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: DashboardQueryRequest
   typescript:
     module: confidentai/dashboards
@@ -34962,7 +34962,7 @@ types:
 - name: DashboardQueryResult
   description: The computed data for the widgets of one dashboard.
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: DashboardQueryResult
   typescript:
     module: confidentai/dashboards
@@ -34985,7 +34985,7 @@ types:
 - name: DashboardRef
   description: A reference to a dashboard by its id.
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: DashboardRef
   typescript:
     module: confidentai/dashboards
@@ -35007,7 +35007,7 @@ types:
   description: 'A dashboard as it appears in a list: what it is and how much it holds,
     without its widgets'' configuration.'
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: DashboardSummary
   typescript:
     module: confidentai/dashboards
@@ -35101,7 +35101,7 @@ types:
   description: A widget of the dashboard that could not be computed. One widget failing
     does not fail the rest of the query.
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: DashboardWidgetQueryFailure
   typescript:
     module: confidentai/dashboards
@@ -35144,7 +35144,7 @@ types:
 - name: DashboardWidgetQueryResult
   description: What a dashboard query produced for one widget. Branch on `status`.
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: DashboardWidgetQueryResult
   typescript:
     module: confidentai/dashboards
@@ -35162,7 +35162,7 @@ types:
 - name: DashboardWidgetQuerySuccess
   description: A widget of the dashboard that Confident AI computed.
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: DashboardWidgetQuerySuccess
   typescript:
     module: confidentai/dashboards
@@ -35231,7 +35231,7 @@ types:
 - name: Dataset
   description: A pulled dataset with the goldens of one version.
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: Dataset
   typescript:
     module: confidentai/datasets
@@ -35299,7 +35299,7 @@ types:
   description: 'An ingestion task: which production items it harvests into the dataset,
     how it samples them, and which golden fields it fills.'
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: DatasetIngestionTask
   typescript:
     module: confidentai/datasets
@@ -35512,7 +35512,7 @@ types:
 - name: DatasetIngestionTaskList
   description: null
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: DatasetIngestionTaskList
   typescript:
     module: confidentai/datasets
@@ -35536,7 +35536,7 @@ types:
 - name: DatasetIngestionTaskRef
   description: null
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: DatasetIngestionTaskRef
   typescript:
     module: confidentai/datasets
@@ -35558,7 +35558,7 @@ types:
   description: A row in the dataset's ingestion task list. Its full configuration
     comes from the get endpoint.
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: DatasetIngestionTaskSummary
   typescript:
     module: confidentai/datasets
@@ -35611,7 +35611,7 @@ types:
 - name: DatasetList
   description: null
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: DatasetList
   typescript:
     module: confidentai/datasets
@@ -35634,7 +35634,7 @@ types:
 - name: DatasetRef
   description: null
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: DatasetRef
   typescript:
     module: confidentai/datasets
@@ -35656,7 +35656,7 @@ types:
   description: A dataset as it appears in your project's dataset list, without any
     goldens.
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: DatasetSummary
   typescript:
     module: confidentai/datasets
@@ -35699,7 +35699,7 @@ types:
 - name: DatasetVersion
   description: null
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: DatasetVersion
   typescript:
     module: confidentai/datasets
@@ -35741,7 +35741,7 @@ types:
 - name: DatasetVersionList
   description: null
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: DatasetVersionList
   typescript:
     module: confidentai/datasets
@@ -35765,7 +35765,7 @@ types:
   description: The controls to stop applying through this governance policy. The
     controls themselves are not deleted and stay available to other policies.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: DeleteGovernancePolicyControlsRequest
   typescript:
     module: confidentai/organization
@@ -35792,7 +35792,7 @@ types:
     separating and debugging traces from different environments on the Confident
     AI platform.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: Environment
   typescript:
     module: confidentai/common
@@ -35810,7 +35810,7 @@ types:
 - name: ErrorResponse
   description: null
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: ErrorResponse
   typescript:
     module: confidentai/common
@@ -35873,7 +35873,7 @@ types:
 - name: ErrorResponseDetails
   description: null
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: ErrorResponseDetails
   typescript:
     module: confidentai/common
@@ -35904,7 +35904,7 @@ types:
 - name: EvaluateRequest
   description: null
   python:
-    module: confidentai.evaluate.types
+    module: confidentai.evaluate
     name: EvaluateRequest
   typescript:
     module: confidentai/evaluate
@@ -35962,7 +35962,7 @@ types:
 - name: EvaluateResult
   description: null
   python:
-    module: confidentai.evaluate.types
+    module: confidentai.evaluate
     name: EvaluateResult
   typescript:
     module: confidentai/evaluate
@@ -35985,7 +35985,7 @@ types:
 - name: EvaluateSpanRequest
   description: The metric collection to evaluate a span against.
   python:
-    module: confidentai.evaluate.types
+    module: confidentai.evaluate
     name: EvaluateSpanRequest
   typescript:
     module: confidentai/evaluate
@@ -36019,7 +36019,7 @@ types:
 - name: EvaluateSpanResult
   description: The span whose evaluation was queued.
   python:
-    module: confidentai.evaluate.types
+    module: confidentai.evaluate
     name: EvaluateSpanResult
   typescript:
     module: confidentai/evaluate
@@ -36041,7 +36041,7 @@ types:
   description: The metric collection to evaluate a thread against, and the role its
     chatbot was playing.
   python:
-    module: confidentai.evaluate.types
+    module: confidentai.evaluate
     name: EvaluateThreadRequest
   typescript:
     module: confidentai/evaluate
@@ -36086,7 +36086,7 @@ types:
 - name: EvaluateThreadResult
   description: The thread whose evaluation was queued.
   python:
-    module: confidentai.evaluate.types
+    module: confidentai.evaluate
     name: EvaluateThreadResult
   typescript:
     module: confidentai/evaluate
@@ -36107,7 +36107,7 @@ types:
 - name: EvaluateTraceRequest
   description: The metric collection to evaluate a trace against.
   python:
-    module: confidentai.evaluate.types
+    module: confidentai.evaluate
     name: EvaluateTraceRequest
   typescript:
     module: confidentai/evaluate
@@ -36141,7 +36141,7 @@ types:
 - name: EvaluateTraceResult
   description: The trace whose evaluation was queued.
   python:
-    module: confidentai.evaluate.types
+    module: confidentai.evaluate
     name: EvaluateTraceResult
   typescript:
     module: confidentai/evaluate
@@ -36165,7 +36165,7 @@ types:
     the evaluation model failed, the test case lacked the parameters the metric needs,
     or an internal error occurred.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: EvaluationErrorType
   typescript:
     module: confidentai/common
@@ -36186,7 +36186,7 @@ types:
   description: A standing rule that runs a metric collection against matching production
     traces, spans or threads as they arrive.
   python:
-    module: confidentai.evaluation_rules.types
+    module: confidentai.evaluation_rules
     name: EvaluationRule
   typescript:
     module: confidentai/evaluation-rules
@@ -36348,7 +36348,7 @@ types:
   description: 'What kind of production item a rule evaluates: `TRACE` for a whole
     trace, `SPAN` for a single step within one, `THREAD` for a finished conversation.'
   python:
-    module: confidentai.evaluation_rules.types
+    module: confidentai.evaluation_rules
     name: EvaluationRuleDataModel
   typescript:
     module: confidentai/evaluation-rules
@@ -36364,7 +36364,7 @@ types:
 - name: EvaluationRuleList
   description: One page of evaluation rules, with the total across all pages.
   python:
-    module: confidentai.evaluation_rules.types
+    module: confidentai.evaluation_rules
     name: EvaluationRuleList
   typescript:
     module: confidentai/evaluation-rules
@@ -36417,7 +36417,7 @@ types:
 - name: EvaluationRuleRef
   description: A reference to an evaluation rule by its id.
   python:
-    module: confidentai.evaluation_rules.types
+    module: confidentai.evaluation_rules
     name: EvaluationRuleRef
   typescript:
     module: confidentai/evaluation-rules
@@ -36439,7 +36439,7 @@ types:
   description: 'A rule as it appears in a list: enough to pick one. Its full configuration
     and the metric collection it runs come from retrieving it by id.'
   python:
-    module: confidentai.evaluation_rules.types
+    module: confidentai.evaluation_rules
     name: EvaluationRuleSummary
   typescript:
     module: confidentai/evaluation-rules
@@ -36494,7 +36494,7 @@ types:
     masked. Confident AI returns the last six characters of each credential so you
     can tell which one is stored, never the credential itself.
   python:
-    module: confidentai.export_destinations.types
+    module: confidentai.export_destinations
     name: ExportDestination
   typescript:
     module: confidentai/export-destinations
@@ -36622,7 +36622,7 @@ types:
 - name: ExportDestinationList
   description: One page of destinations, with the total across all pages.
   python:
-    module: confidentai.export_destinations.types
+    module: confidentai.export_destinations
     name: ExportDestinationList
   typescript:
     module: confidentai/export-destinations
@@ -36675,7 +36675,7 @@ types:
 - name: ExportDestinationRef
   description: A reference to an export destination by its id.
   python:
-    module: confidentai.export_destinations.types
+    module: confidentai.export_destinations
     name: ExportDestinationRef
   typescript:
     module: confidentai/export-destinations
@@ -36697,7 +36697,7 @@ types:
   description: 'A destination as it appears in a list: enough to pick one, without
     its credentials. Retrieve it by id for the full record.'
   python:
-    module: confidentai.export_destinations.types
+    module: confidentai.export_destinations
     name: ExportDestinationSummary
   typescript:
     module: confidentai/export-destinations
@@ -36762,7 +36762,7 @@ types:
   description: The kind of storage exports are uploaded to. Only `S3` is supported
     today, and any other member is rejected on create and update.
   python:
-    module: confidentai.export_destinations.types
+    module: confidentai.export_destinations
     name: ExportDestinationType
   typescript:
     module: confidentai/export-destinations
@@ -36782,7 +36782,7 @@ types:
     since the previous run and narrows it by `filters`, where an empty `groups` list
     exports everything in that window.
   python:
-    module: confidentai.export_schedules.types
+    module: confidentai.export_schedules
     name: ExportSchedule
   typescript:
     module: confidentai/export-schedules
@@ -36891,7 +36891,7 @@ types:
 - name: ExportScheduleList
   description: One page of export schedules, with the total across all pages.
   python:
-    module: confidentai.export_schedules.types
+    module: confidentai.export_schedules
     name: ExportScheduleList
   typescript:
     module: confidentai/export-schedules
@@ -36944,7 +36944,7 @@ types:
 - name: ExportScheduleRef
   description: A reference to an export schedule by its id.
   python:
-    module: confidentai.export_schedules.types
+    module: confidentai.export_schedules
     name: ExportScheduleRef
   typescript:
     module: confidentai/export-schedules
@@ -36966,7 +36966,7 @@ types:
   description: The cadence an export schedule runs on, together with how far through
     that cadence it is.
   python:
-    module: confidentai.export_schedules.types
+    module: confidentai.export_schedules
     name: ExportScheduleSettings
   typescript:
     module: confidentai/export-schedules
@@ -37075,7 +37075,7 @@ types:
   description: 'An export schedule as it appears in a list: what it exports and whether
     it is running, without its cadence or filters.'
   python:
-    module: confidentai.export_schedules.types
+    module: confidentai.export_schedules
     name: ExportScheduleSummary
   typescript:
     module: confidentai/export-schedules
@@ -37131,7 +37131,7 @@ types:
     such as `Name` or `User Id`, against a value with a condition such as `Is` or
     `Contains`.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: FilterSet
   typescript:
     module: confidentai/common
@@ -37162,7 +37162,7 @@ types:
 - name: FilterSetGroup
   description: null
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: FilterSetGroup
   typescript:
     module: confidentai/common
@@ -37193,7 +37193,7 @@ types:
 - name: FilterSetGroupFilter
   description: null
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: FilterSetGroupFilter
   typescript:
     module: confidentai/common
@@ -37286,7 +37286,7 @@ types:
   description: A destination Confident AI forwards your traces to over OTLP/HTTP,
     with its delivery history. Header values are always masked.
   python:
-    module: confidentai.forwarding_connectors.types
+    module: confidentai.forwarding_connectors
     name: ForwardingConnector
   typescript:
     module: confidentai/forwarding-connectors
@@ -37432,7 +37432,7 @@ types:
     back in the clear, but the value is always masked, because a header is where
     a bearer token or API key lives.
   python:
-    module: confidentai.forwarding_connectors.types
+    module: confidentai.forwarding_connectors
     name: ForwardingConnectorHeader
   typescript:
     module: confidentai/forwarding-connectors
@@ -37466,7 +37466,7 @@ types:
   description: An HTTP header to send with every forwarded batch. Header values are
     treated as credentials, so they are never readable once stored.
   python:
-    module: confidentai.forwarding_connectors.types
+    module: confidentai.forwarding_connectors
     name: ForwardingConnectorHeaderConfig
   typescript:
     module: confidentai/forwarding-connectors
@@ -37500,7 +37500,7 @@ types:
 - name: ForwardingConnectorList
   description: One page of forwarding connectors, with the total across all pages.
   python:
-    module: confidentai.forwarding_connectors.types
+    module: confidentai.forwarding_connectors
     name: ForwardingConnectorList
   typescript:
     module: confidentai/forwarding-connectors
@@ -37553,7 +37553,7 @@ types:
 - name: ForwardingConnectorRef
   description: A reference to a forwarding connector by its id.
   python:
-    module: confidentai.forwarding_connectors.types
+    module: confidentai.forwarding_connectors
     name: ForwardingConnectorRef
   typescript:
     module: confidentai/forwarding-connectors
@@ -37576,7 +37576,7 @@ types:
     out, without its headers, environments or delivery history. Retrieve it by id
     for those.'
   python:
-    module: confidentai.forwarding_connectors.types
+    module: confidentai.forwarding_connectors
     name: ForwardingConnectorSummary
   typescript:
     module: confidentai/forwarding-connectors
@@ -37628,7 +37628,7 @@ types:
   description: An attack method as a framework carries it, with the settings a run
     would use.
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: FrameworkAttackMethod
   typescript:
     module: confidentai/rt-frameworks
@@ -37673,7 +37673,7 @@ types:
   description: A risk category as the framework carries it, resolved to everything
     a run needs.
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: FrameworkRiskCategory
   typescript:
     module: confidentai/rt-frameworks
@@ -37739,7 +37739,7 @@ types:
 - name: FrameworkRiskCategorySummary
   description: A framework's risk category, counted rather than resolved.
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: FrameworkRiskCategorySummary
   typescript:
     module: confidentai/rt-frameworks
@@ -37781,7 +37781,7 @@ types:
   description: 'A vulnerability as a framework carries it: the types this category
     selected, with everything the evaluator needs to judge a reply.'
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: FrameworkVulnerability
   typescript:
     module: confidentai/rt-frameworks
@@ -37845,10 +37845,10 @@ types:
 - name: FrameworkVulnerabilityEvaluationExample
   description: null
   python:
-    module: confidentai.common.types
+    module: confidentai.rt_frameworks
     name: FrameworkVulnerabilityEvaluationExample
   typescript:
-    module: confidentai/common
+    module: confidentai/rt-frameworks
     name: FrameworkVulnerabilityEvaluationExample
   references: []
   kind: object
@@ -37900,7 +37900,7 @@ types:
     supply at most one of `aiConnectionId` or `promptAlias`, and Confident AI infers
     the mode from whichever you sent.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: GenerationMode
   typescript:
     module: confidentai/common
@@ -37916,7 +37916,7 @@ types:
     when it carries `scenario`. The dataset''s `multiTurn` decides which kind every
     golden in it is.'
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: Golden
   typescript:
     module: confidentai/datasets
@@ -37934,7 +37934,7 @@ types:
 - name: GoldenRef
   description: null
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: GoldenRef
   typescript:
     module: confidentai/datasets
@@ -37957,7 +37957,7 @@ types:
     when it carries `scenario`. A golden cannot be both, and its kind must match
     the dataset''s `multiTurn`.'
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: GoldenRequest
   typescript:
     module: confidentai/datasets
@@ -37976,7 +37976,7 @@ types:
   description: The verdict of assessing a project against every control in its governance
     policy.
   python:
-    module: confidentai.governance.types
+    module: confidentai.governance
     name: GovernanceAssessment
   typescript:
     module: confidentai/governance
@@ -38013,7 +38013,7 @@ types:
     — while the rule it evaluates lives on its append-only versions, the newest of
     which is the definition every new assessment runs against.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControl
   typescript:
     module: confidentai/organization
@@ -38174,7 +38174,7 @@ types:
   description: Whether a control is attached to at least one governance policy. A
     control in no policy governs no project and is never assessed.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlActivity
   typescript:
     module: confidentai/organization
@@ -38193,7 +38193,7 @@ types:
     `Input tokens` needs `SPAN` — and a pairing the selected `dataModel` does not
     support is rejected.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlAggregation
   typescript:
     module: confidentai/organization
@@ -38249,7 +38249,7 @@ types:
     are append-only, so a project's current state for a control is its newest assessment
     and everything older is history.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlAssessment
   typescript:
     module: confidentai/organization
@@ -38371,7 +38371,7 @@ types:
   description: One page of a control's verdicts for a single version of its definition,
     with the total across all pages.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlAssessmentList
   typescript:
     module: confidentai/organization
@@ -38443,7 +38443,7 @@ types:
     for evaluation scores, and `ANNOTATION` for human ratings. It decides which aggregations
     are valid.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlDataModel
   typescript:
     module: confidentai/organization
@@ -38464,7 +38464,7 @@ types:
   description: Extra scoping for the data a runtime control measures, beyond its
     data model and filters.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlExtraQueryParams
   typescript:
     module: confidentai/organization
@@ -38492,7 +38492,7 @@ types:
     checks or where. A control belongs to at most one group, and membership is set
     on the control rather than here.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlGroup
   typescript:
     module: confidentai/organization
@@ -38577,7 +38577,7 @@ types:
 - name: GovernanceControlGroupList
   description: One page of governance control groups, with the total across all pages.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlGroupList
   typescript:
     module: confidentai/organization
@@ -38632,7 +38632,7 @@ types:
   description: A control as it appears inside its group. Retrieve the control by
     id for its health, its policy membership and its definition.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlGroupMember
   typescript:
     module: confidentai/organization
@@ -38686,7 +38686,7 @@ types:
 - name: GovernanceControlGroupRef
   description: A reference to a governance control group by its id.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlGroupRef
   typescript:
     module: confidentai/organization
@@ -38708,7 +38708,7 @@ types:
   description: A control group as it appears in a list, with its controls counted
     rather than named.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlGroupSummary
   typescript:
     module: confidentai/organization
@@ -38784,7 +38784,7 @@ types:
     A project is governed when its policy holds the control, or when its policy extends
     a base policy that holds it.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlHealth
   typescript:
     module: confidentai/organization
@@ -38855,7 +38855,7 @@ types:
 - name: GovernanceControlList
   description: One page of governance controls, with the total across all pages.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlList
   typescript:
     module: confidentai/organization
@@ -38912,7 +38912,7 @@ types:
   description: Which kind of item the evaluation scores were recorded on, for a control
     measuring METRIC_DATA.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlMetricDataCategory
   typescript:
     module: confidentai/organization
@@ -38936,7 +38936,7 @@ types:
     picks which by the control''s own type, so the same shape serves both. Send a
     non-empty `identifier` unless `officialOnly` is true.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlPreDeploymentConfig
   typescript:
     module: confidentai/organization
@@ -39014,7 +39014,7 @@ types:
     an empty object; a configured control always carries either `identifier` and
     `window` or `officialOnly` set to true.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlPreDeploymentSettings
   typescript:
     module: confidentai/organization
@@ -39060,7 +39060,7 @@ types:
   description: The rolling lookback a pre-deployment control searches for the run
     it gates on.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlPreDeploymentWindow
   typescript:
     module: confidentai/organization
@@ -39083,7 +39083,7 @@ types:
   description: One governed project's latest verdict for a control, which is the
     current state of that pair.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlProjectStatus
   typescript:
     module: confidentai/organization
@@ -39127,7 +39127,7 @@ types:
 - name: GovernanceControlRef
   description: A reference to a governance control by its id.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlRef
   typescript:
     module: confidentai/organization
@@ -39154,7 +39154,7 @@ types:
     is fixed and is not part of the definition. The aggregation has to be one the
     data model supports.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlRuntimeConfig
   typescript:
     module: confidentai/organization
@@ -39247,7 +39247,7 @@ types:
     control. LOW never blocks a deployment gate; CRITICAL, HIGH and MEDIUM block,
     and so does leaving the severity unset.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlSeverity
   typescript:
     module: confidentai/organization
@@ -39267,7 +39267,7 @@ types:
   description: The verdict of assessing one governance control against a project
     or organization.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlStatus
   typescript:
     module: confidentai/organization
@@ -39287,7 +39287,7 @@ types:
     runtime control; either can be absent on a version snapshotted before the control
     was configured, which is what makes it unconfigured.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlStoredThresholdSettings
   typescript:
     module: confidentai/organization
@@ -39324,7 +39324,7 @@ types:
     and how it is doing across the projects it governs. Its definition is not included
     — read the control''s versions for that.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlSummary
   typescript:
     module: confidentai/organization
@@ -39474,7 +39474,7 @@ types:
   description: 'Which side of the threshold fails: `above` fails once the measured
     value rises past `value`, `below` fails once it drops under it.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlThresholdDirection
   typescript:
     module: confidentai/organization
@@ -39489,7 +39489,7 @@ types:
   description: The comparison that turns a runtime control's measured value into
     a verdict.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlThresholdSettings
   typescript:
     module: confidentai/organization
@@ -39527,7 +39527,7 @@ types:
     PRE_DEPLOYMENT_EVALS and PRE_DEPLOYMENT_RED_TEAMING gate a release, and OPERATIONAL
     covers process rather than the system itself.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlType
   typescript:
     module: confidentai/organization
@@ -39550,7 +39550,7 @@ types:
     Editing a control appends a new version rather than changing this one, so every
     past verdict keeps pointing at the definition it was computed against.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlVersion
   typescript:
     module: confidentai/organization
@@ -39709,7 +39709,7 @@ types:
   description: One page of a control's definition history, with the total across
     all pages.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlVersionList
   typescript:
     module: confidentai/organization
@@ -39763,7 +39763,7 @@ types:
 - name: GovernanceControlVersionReference
   description: The version of a control's definition an assessment was computed against.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceControlVersionReference
   typescript:
     module: confidentai/organization
@@ -39798,7 +39798,7 @@ types:
     controls, and that chain is exactly two levels deep — a policy that is extended
     by another cannot extend anything itself.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernancePolicy
   typescript:
     module: confidentai/organization
@@ -39983,7 +39983,7 @@ types:
     are append-only, so the current standing of a (control, project) pair is its
     newest assessment.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernancePolicyAssessment
   typescript:
     module: confidentai/organization
@@ -40084,7 +40084,7 @@ types:
     from the policy or from each project, since a run appends one assessment per
     (control, project) pair.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernancePolicyAssessmentRun
   typescript:
     module: confidentai/organization
@@ -40120,7 +40120,7 @@ types:
     a partial-success operation: every id that names a project in your organization
     is enrolled, and the rest come back in `notFoundProjectIds`.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernancePolicyAssignment
   typescript:
     module: confidentai/organization
@@ -40182,7 +40182,7 @@ types:
     this policy attaches the control directly and a base policy happens to hold it
     too. A control with neither field is owned outright by this policy.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernancePolicyControl
   typescript:
     module: confidentai/organization
@@ -40309,7 +40309,7 @@ types:
   description: The controls a governance policy applies, as they stand after the
     call.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernancePolicyControlList
   typescript:
     module: confidentai/organization
@@ -40346,7 +40346,7 @@ types:
     the policy by id, or list its controls, to see each control's configuration state
     and verdicts.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernancePolicyControlSummary
   typescript:
     module: confidentai/organization
@@ -40389,7 +40389,7 @@ types:
 - name: GovernancePolicyIdentifier
   description: A governance policy, identified by its id.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernancePolicyIdentifier
   typescript:
     module: confidentai/organization
@@ -40410,7 +40410,7 @@ types:
 - name: GovernancePolicyList
   description: Every governance policy in your organization.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernancePolicyList
   typescript:
     module: confidentai/organization
@@ -40434,7 +40434,7 @@ types:
   description: A project enrolled in a governance policy, with where it currently
     stands against each of the policy's controls.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernancePolicyProject
   typescript:
     module: confidentai/organization
@@ -40502,7 +40502,7 @@ types:
   description: One page of the projects enrolled in a governance policy, with the
     total across all pages.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernancePolicyProjectList
   typescript:
     module: confidentai/organization
@@ -40558,7 +40558,7 @@ types:
     project belongs to at most one policy, so assigning one that is already on another
     policy moves it.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernancePolicyProjectsRequest
   typescript:
     module: confidentai/organization
@@ -40582,7 +40582,7 @@ types:
 - name: GovernancePolicyReference
   description: A governance policy, named by id.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: GovernancePolicyReference
   typescript:
     module: confidentai/common
@@ -40619,7 +40619,7 @@ types:
     it. Nothing about the skill is assessed — it instructs the agent, it is not a
     control.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernancePolicySkill
   typescript:
     module: confidentai/organization
@@ -40661,7 +40661,7 @@ types:
   description: 'A governance policy as it appears in a list: what it covers and which
     controls apply, without resolving each control''s definition or verdicts.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernancePolicySummary
   typescript:
     module: confidentai/organization
@@ -40739,7 +40739,7 @@ types:
     a partial-success operation: only projects currently on this policy are removed,
     and the rest come back in `skippedProjectIds`.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernancePolicyUnassignment
   typescript:
     module: confidentai/organization
@@ -40798,7 +40798,7 @@ types:
     view — a project belonging to no governance policy has nothing to assess and
     is reported as not found.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceProject
   typescript:
     module: confidentai/organization
@@ -40897,7 +40897,7 @@ types:
     policy attaches the control directly and a base policy holds it too. Verdicts
     are not folded in here — read them from `assessments`.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceProjectControl
   typescript:
     module: confidentai/organization
@@ -40988,7 +40988,7 @@ types:
     is the denominator of its pass rate, so a project with controls that have never
     run reports a `checksTotal` above its `checksRun`.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceProjectHealth
   typescript:
     module: confidentai/organization
@@ -41052,7 +41052,7 @@ types:
   description: One page of the governance inventory, with the organization-wide roll-up
     alongside it.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceProjectList
   typescript:
     module: confidentai/organization
@@ -41122,7 +41122,7 @@ types:
     counts are mutually exclusive and sum to `total`, and the roll-up always covers
     the whole organization even when the accompanying list is filtered or paginated.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceProjectPortfolio
   typescript:
     module: confidentai/organization
@@ -41206,7 +41206,7 @@ types:
 - name: GovernanceProjectReference
   description: A project, named by id.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceProjectReference
   typescript:
     module: confidentai/organization
@@ -41242,7 +41242,7 @@ types:
     is failing. `needs_attention` and `critical` both have failing controls and differ
     only by pass rate, with `critical` below Confident AI's healthy threshold.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceProjectStatus
   typescript:
     module: confidentai/organization
@@ -41264,7 +41264,7 @@ types:
     governs it, how many controls that brings, and where it currently stands. Every
     project in the organization appears here, enrolled or not.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: GovernanceProjectSummary
   typescript:
     module: confidentai/organization
@@ -41369,7 +41369,7 @@ types:
   description: A plain value such as a model name, or a reference to the prompt the
     run used.
   python:
-    module: confidentai.evaluate.types
+    module: confidentai.evaluate
     name: HyperparameterValue
   typescript:
     module: confidentai/evaluate
@@ -41387,7 +41387,7 @@ types:
     been replaced and the previous value stopped authenticating the moment this response
     was produced.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: ImmediatelyRotatedApiKey
   typescript:
     module: confidentai/common
@@ -41496,7 +41496,7 @@ types:
   description: What kind of production item an ingestion task harvests. `THREAD`
     tasks fill multi-turn datasets; `TRACE` and `SPAN` tasks fill single-turn ones.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: IngestionDataModel
   typescript:
     module: confidentai/common
@@ -41513,7 +41513,7 @@ types:
   description: Confirmation that the invitation is gone and its link can no longer
     be accepted.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: InvitationRef
   typescript:
     module: confidentai/common
@@ -41537,7 +41537,7 @@ types:
     ACCEPTED once the invitee joined, DECLINED once they turned it down. A declined
     invitation cannot be accepted again until it is resent.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: InvitationStatus
   typescript:
     module: confidentai/common
@@ -41555,7 +41555,7 @@ types:
   description: A three-step scale, LOW to HIGH, used for how exposed a system under
     test is and how easily an attack method exploits it.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: Level
   typescript:
     module: confidentai/common
@@ -41572,7 +41572,7 @@ types:
   description: A span recording a call to a language model, with its model, token
     counts, costs and the prompt it used.
   python:
-    module: confidentai.traces.types
+    module: confidentai.traces
     name: LlmSpanRequest
   typescript:
     module: confidentai/traces
@@ -41903,7 +41903,7 @@ types:
   description: An image referenced from a text field by a `[DEEPEVAL:IMAGE:<key>]`
     marker. Send either a public `url` or the bytes in `base64`.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: MLLMImage
   typescript:
     module: confidentai/common
@@ -41977,7 +41977,7 @@ types:
     OAuth client secret is never returned — `authConfig.clientSecretPreview` masks
     it.'
   python:
-    module: confidentai.mcp_servers.types
+    module: confidentai.mcp_servers
     name: McpServer
   typescript:
     module: confidentai/mcp-servers
@@ -42128,7 +42128,7 @@ types:
     keys are ignored, which is what lets you send back an object you read from the
     API without stripping its `clientSecretPreview` first.
   python:
-    module: confidentai.mcp_servers.types
+    module: confidentai.mcp_servers
     name: McpServerAuthConfig
   typescript:
     module: confidentai/mcp-servers
@@ -42188,7 +42188,7 @@ types:
     from `authConfig` before every call. `HTTP` transport only; a `STDIO` server
     is always `HEADERS`.
   python:
-    module: confidentai.mcp_servers.types
+    module: confidentai.mcp_servers
     name: McpServerAuthType
   typescript:
     module: confidentai/mcp-servers
@@ -42205,7 +42205,7 @@ types:
   description: The outcome of a connection attempt, which also becomes the server's
     stored `connected` and `availableTools`.
   python:
-    module: confidentai.mcp_servers.types
+    module: confidentai.mcp_servers
     name: McpServerConnection
   typescript:
     module: confidentai/mcp-servers
@@ -42251,7 +42251,7 @@ types:
 - name: McpServerList
   description: One page of MCP servers, with the total across all pages.
   python:
-    module: confidentai.mcp_servers.types
+    module: confidentai.mcp_servers
     name: McpServerList
   typescript:
     module: confidentai/mcp-servers
@@ -42305,7 +42305,7 @@ types:
   description: 'The stored credentials with the secret removed: `clientSecret` never
     leaves Confident AI, and a masked `clientSecretPreview` stands in for it.'
   python:
-    module: confidentai.mcp_servers.types
+    module: confidentai.mcp_servers
     name: McpServerMaskedAuthConfig
   typescript:
     module: confidentai/mcp-servers
@@ -42360,7 +42360,7 @@ types:
 - name: McpServerRef
   description: A reference to an MCP server by its id.
   python:
-    module: confidentai.mcp_servers.types
+    module: confidentai.mcp_servers
     name: McpServerRef
   typescript:
     module: confidentai/mcp-servers
@@ -42382,7 +42382,7 @@ types:
   description: 'An MCP server as it appears in a list: enough to pick one, without
     its configuration or credentials.'
   python:
-    module: confidentai.mcp_servers.types
+    module: confidentai.mcp_servers
     name: McpServerSummary
   typescript:
     module: confidentai/mcp-servers
@@ -42455,7 +42455,7 @@ types:
 - name: McpServerTool
   description: A tool an MCP server exposes, as the last connection saw it.
   python:
-    module: confidentai.mcp_servers.types
+    module: confidentai.mcp_servers
     name: McpServerTool
   typescript:
     module: confidentai/mcp-servers
@@ -42512,7 +42512,7 @@ types:
     the only transport that authenticates; `STDIO` requires `command` and launches
     the server as a local process.
   python:
-    module: confidentai.mcp_servers.types
+    module: confidentai.mcp_servers
     name: McpServerTransport
   typescript:
     module: confidentai/mcp-servers
@@ -42528,7 +42528,7 @@ types:
     member also removes them from every project in it; removing a project member
     leaves their organization membership untouched.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: MemberRef
   typescript:
     module: confidentai/common
@@ -42551,7 +42551,7 @@ types:
     role by id from the roles endpoint of the same scope to see the policies behind
     it.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: MemberRole
   typescript:
     module: confidentai/common
@@ -42582,7 +42582,7 @@ types:
 - name: MessagesPrompt
   description: A pulled prompt whose content is a list of messages.
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: MessagesPrompt
   typescript:
     module: confidentai/prompts
@@ -42734,7 +42734,7 @@ types:
 - name: Metric
   description: 'A custom metric: how it scores, and which test case fields it needs.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: Metric
   typescript:
     module: confidentai/common
@@ -42852,7 +42852,7 @@ types:
     or evaluation steps, DAG walks a decision graph, CODE runs your own code, and
     DEFAULT is a built-in metric.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: MetricAlgorithm
   typescript:
     module: confidentai/common
@@ -42871,7 +42871,7 @@ types:
   description: 'A metric collection: its name, sampling and transformer configuration,
     and the settings for every metric inside it.'
   python:
-    module: confidentai.metric_collections.types
+    module: confidentai.metric_collections
     name: MetricCollection
   typescript:
     module: confidentai/metric-collections
@@ -42960,7 +42960,7 @@ types:
 - name: MetricCollectionList
   description: null
   python:
-    module: confidentai.metric_collections.types
+    module: confidentai.metric_collections
     name: MetricCollectionList
   typescript:
     module: confidentai/metric-collections
@@ -42983,7 +42983,7 @@ types:
 - name: MetricCollectionRef
   description: null
   python:
-    module: confidentai.metric_collections.types
+    module: confidentai.metric_collections
     name: MetricCollectionRef
   typescript:
     module: confidentai/metric-collections
@@ -43005,7 +43005,7 @@ types:
   description: The decision graph of a DAG metric. It is validated on write, and
     metric references are resolved against the metrics in your project.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: MetricDag
   typescript:
     module: confidentai/common
@@ -43046,7 +43046,7 @@ types:
   description: The result of an evaluated metric, with the ids of whatever it was
     recorded against.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: MetricData
   typescript:
     module: confidentai/common
@@ -43278,7 +43278,7 @@ types:
   description: A metric result you computed yourself, recorded on the trace or span
     as-is instead of being evaluated by Confident AI.
   python:
-    module: confidentai.traces.types
+    module: confidentai.traces
     name: MetricDataConfig
   typescript:
     module: confidentai/traces
@@ -43412,7 +43412,7 @@ types:
 - name: MetricDataList
   description: One page of metric results, with the total across all pages.
   python:
-    module: confidentai.metrics_data.types
+    module: confidentai.metrics_data
     name: MetricDataList
   typescript:
     module: confidentai/metrics-data
@@ -43471,7 +43471,7 @@ types:
     content, role, scenario, expectedOutcome and turns; toolsCalled, retrievalContext,
     metadata and tags apply to both.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: MetricEvaluationParam
   typescript:
     module: confidentai/common
@@ -43509,7 +43509,7 @@ types:
 - name: MetricList
   description: null
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: MetricList
   typescript:
     module: confidentai/common
@@ -43532,7 +43532,7 @@ types:
 - name: MetricRef
   description: A metric referenced by its name.
   python:
-    module: confidentai.metric_collections.types
+    module: confidentai.metric_collections
     name: MetricRef
   typescript:
     module: confidentai/metric-collections
@@ -43554,7 +43554,7 @@ types:
 - name: MetricScores
   description: A metric's aggregated results across the test cases in a test run.
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: MetricScores
   typescript:
     module: confidentai/test-runs
@@ -43631,7 +43631,7 @@ types:
   description: A metric in the collection with the settings that decide whether and
     how it runs.
   python:
-    module: confidentai.metric_collections.types
+    module: confidentai.metric_collections
     name: MetricSetting
   typescript:
     module: confidentai/metric-collections
@@ -43734,7 +43734,7 @@ types:
     whether and how it runs. Omit `evaluationModelProvider` to evaluate with your
     project's default model.
   python:
-    module: confidentai.metric_collections.types
+    module: confidentai.metric_collections
     name: MetricSettingConfig
   typescript:
     module: confidentai/metric-collections
@@ -43836,7 +43836,7 @@ types:
 - name: MetricSummary
   description: A metric as it appears inside a collection, by id and name.
   python:
-    module: confidentai.metric_collections.types
+    module: confidentai.metric_collections
     name: MetricSummary
   typescript:
     module: confidentai/metric-collections
@@ -43870,7 +43870,7 @@ types:
     either to the organization (`organizationId` set) or to a single project (`projectId`
     set), never to both.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: Model
   typescript:
     module: confidentai/common
@@ -43974,7 +43974,7 @@ types:
     AI uses it to cost an LLM span whose provider did not report a priceable cost,
     taking a provider-specific match first and a provider-less one otherwise.
   python:
-    module: confidentai.model_costs.types
+    module: confidentai.model_costs
     name: ModelCost
   typescript:
     module: confidentai/model-costs
@@ -44059,7 +44059,7 @@ types:
 - name: ModelCostList
   description: One page of model costs, with the total across all pages.
   python:
-    module: confidentai.model_costs.types
+    module: confidentai.model_costs
     name: ModelCostList
   typescript:
     module: confidentai/model-costs
@@ -44125,7 +44125,7 @@ types:
 - name: ModelCostRef
   description: A reference to a model cost by its id.
   python:
-    module: confidentai.model_costs.types
+    module: confidentai.model_costs
     name: ModelCostRef
   typescript:
     module: confidentai/model-costs
@@ -44150,7 +44150,7 @@ types:
     a configuration object — so a stored credential can never be read back in full
     once it is set. A field is null when no credential is stored for that provider.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: ModelCredentials
   typescript:
     module: confidentai/common
@@ -44347,7 +44347,7 @@ types:
   kind: enum
   description: This is the provider of the model.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: ModelProvider
   typescript:
     module: confidentai/common
@@ -44393,7 +44393,7 @@ types:
 - name: ModelSettings
   description: This is the model settings the prompt was authored for.
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: ModelSettings
   typescript:
     module: confidentai/prompts
@@ -44534,7 +44534,7 @@ types:
     default. The evaluation model is always project scoped, so it only ever reports
     `project`.'
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: ModelSource
   typescript:
     module: confidentai/projects
@@ -44553,7 +44553,7 @@ types:
     `SIMULATION` is the model that simulates user turns in conversation simulations.
     Those three are the only types the public API reads or writes.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: ModelType
   typescript:
     module: confidentai/common
@@ -44575,7 +44575,7 @@ types:
 - name: MultiTurnGolden
   description: A multi-turn golden as stored in the dataset.
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: MultiTurnGolden
   typescript:
     module: confidentai/datasets
@@ -44732,7 +44732,7 @@ types:
   description: 'A multi-turn golden to write: the scenario of a conversation with
     your LLM application and, optionally, its turns.'
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: MultiTurnGoldenRequest
   typescript:
     module: confidentai/datasets
@@ -44899,7 +44899,7 @@ types:
 - name: MultiTurnTestCase
   description: A test case for a conversation with your LLM application.
   python:
-    module: confidentai.evaluate.types
+    module: confidentai.evaluate
     name: MultiTurnTestCase
   typescript:
     module: confidentai/evaluate
@@ -45082,7 +45082,7 @@ types:
     API key is scoped to exactly one of these, so this is the top of the hierarchy
     the admin endpoints operate on.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: Organization
   typescript:
     module: confidentai/organization
@@ -45137,7 +45137,7 @@ types:
     the invitee an organization member; it grants no access to any project on its
     own.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: OrganizationInvitation
   typescript:
     module: confidentai/organization
@@ -45219,7 +45219,7 @@ types:
     Accepted invitations are left out, since the invitee is an organization member
     by then.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: OrganizationInvitationList
   typescript:
     module: confidentai/organization
@@ -45244,7 +45244,7 @@ types:
     what they can do in it. Organization membership alone grants no access to any
     project's data.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: OrganizationMember
   typescript:
     module: confidentai/organization
@@ -45309,7 +45309,7 @@ types:
 - name: OrganizationMemberList
   description: One page of organization members, with the total across all pages.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: OrganizationMemberList
   typescript:
     module: confidentai/organization
@@ -45371,7 +45371,7 @@ types:
     as FREE, but this field keeps reporting the stored plan, so it is not a substitute
     for a 403 when deciding whether a call will be allowed.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: OrganizationPlan
   typescript:
     module: confidentai/organization
@@ -45395,7 +45395,7 @@ types:
     holds at most one organization role, and every organization permission they have
     comes from the policies attached to it.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: OrganizationRole
   typescript:
     module: confidentai/organization
@@ -45461,7 +45461,7 @@ types:
 - name: OrganizationRoleList
   description: Every organization role a member can be given, owned and global together.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: OrganizationRoleList
   typescript:
     module: confidentai/organization
@@ -45485,7 +45485,7 @@ types:
 - name: OutputSchema
   description: This is the output schema definition, used when `outputType` is SCHEMA.
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: OutputSchema
   typescript:
     module: confidentai/prompts
@@ -45518,7 +45518,7 @@ types:
 - name: OutputSchemaField
   description: null
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: OutputSchemaField
   typescript:
     module: confidentai/prompts
@@ -45584,7 +45584,7 @@ types:
   description: 'The result of rotating with a grace period: two values authenticate
     at once, the outgoing one until `rotatesAt` and the new one from now on.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: PendingRotationApiKey
   typescript:
     module: confidentai/common
@@ -45697,7 +45697,7 @@ types:
     member directly: a policy names a set of them, a role holds policies, and a member
     holds roles.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: Permission
   typescript:
     module: confidentai/common
@@ -45746,7 +45746,7 @@ types:
     taken from Confident AI's own catalog rather than from what your organization
     happens to use already.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: PermissionList
   typescript:
     module: confidentai/common
@@ -45776,7 +45776,7 @@ types:
     ''a frustrated customer who types in lowercase'' from being retyped on every
     row, and lets you compare runs where only the user changed.'
   python:
-    module: confidentai.personas.types
+    module: confidentai.personas
     name: Persona
   typescript:
     module: confidentai/personas
@@ -45840,7 +45840,7 @@ types:
 - name: PersonaList
   description: One page of personas, with the total across all pages.
   python:
-    module: confidentai.personas.types
+    module: confidentai.personas
     name: PersonaList
   typescript:
     module: confidentai/personas
@@ -45893,7 +45893,7 @@ types:
 - name: PersonaRef
   description: A reference to a persona by its id.
   python:
-    module: confidentai.personas.types
+    module: confidentai.personas
     name: PersonaRef
   typescript:
     module: confidentai/personas
@@ -45915,7 +45915,7 @@ types:
   description: 'A persona as it appears in a list: enough to recognise it and pick
     its id. Retrieve one by id to read the characteristics that drive the simulation.'
   python:
-    module: confidentai.personas.types
+    module: confidentai.personas
     name: PersonaSummary
   typescript:
     module: confidentai/personas
@@ -45947,7 +45947,7 @@ types:
   description: How to test the connection. Send `{}` to make a single call with a
     sample test case.
   python:
-    module: confidentai.ai_connections.types
+    module: confidentai.ai_connections
     name: PingAIConnectionRequest
   typescript:
     module: confidentai/ai-connections
@@ -45971,7 +45971,7 @@ types:
     A policy is attached to roles of the same scope, never to a member directly,
     so it only grants anything once a role that holds it is assigned to someone.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: Policy
   typescript:
     module: confidentai/common
@@ -46025,7 +46025,7 @@ types:
   description: The policies available to attach to the roles of the same organization
     or project.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: PolicyList
   typescript:
     module: confidentai/common
@@ -46051,7 +46051,7 @@ types:
     same scope (`GET /v2/organization/permissions` or `GET /v2/projects/{projectId}/permissions`)
     lists every pair a policy there can grant.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: PolicyPermission
   typescript:
     module: confidentai/common
@@ -46083,7 +46083,7 @@ types:
 - name: PolicyRef
   description: Confirmation that the policy no longer exists.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: PolicyRef
   typescript:
     module: confidentai/common
@@ -46106,7 +46106,7 @@ types:
     members, datasets, prompts, metrics and traces, and every project-scoped endpoint
     reads and writes within exactly one of them.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: Project
   typescript:
     module: confidentai/projects
@@ -46183,7 +46183,7 @@ types:
     is the credential the project's own data endpoints authenticate with — the organization
     key you created the project with cannot reach them.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: ProjectDefaultApiKey
   typescript:
     module: confidentai/projects
@@ -46293,7 +46293,7 @@ types:
   description: The governance policy a project is enrolled in, named rather than
     resolved. Retrieve the policy itself to see the controls it enforces.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: ProjectGovernancePolicy
   typescript:
     module: confidentai/projects
@@ -46326,7 +46326,7 @@ types:
     invitee to the project and, if they are not in it yet, to the organization the
     project belongs to.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: ProjectInvitation
   typescript:
     module: confidentai/projects
@@ -46407,7 +46407,7 @@ types:
   description: Every invitation to this project that has not been accepted or revoked.
     Accepted invitations are left out, since the invitee is a project member by then.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: ProjectInvitationList
   typescript:
     module: confidentai/projects
@@ -46431,7 +46431,7 @@ types:
   description: 'The organization''s projects. The list is not paginated: every project
     is returned.'
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: ProjectList
   typescript:
     module: confidentai/projects
@@ -46456,7 +46456,7 @@ types:
     they can do inside it. Every project member is also a member of the project's
     organization, but the reverse does not hold.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: ProjectMember
   typescript:
     module: confidentai/projects
@@ -46521,7 +46521,7 @@ types:
 - name: ProjectMemberList
   description: One page of project members, with the total across all pages.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: ProjectMemberList
   typescript:
     module: confidentai/projects
@@ -46575,7 +46575,7 @@ types:
   description: The model the project actually runs for one type, whether that is
     its own override or the organization's default.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: ProjectModel
   typescript:
     module: confidentai/projects
@@ -46612,7 +46612,7 @@ types:
 - name: ProjectRef
   description: Confirmation that the project was deleted.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: ProjectRef
   typescript:
     module: confidentai/projects
@@ -46635,7 +46635,7 @@ types:
     member holds at most one role per project, and every permission they have in
     that project comes from the policies attached to it.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: ProjectRole
   typescript:
     module: confidentai/projects
@@ -46702,7 +46702,7 @@ types:
   description: Every project role a member can be given in this project, owned and
     global together.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: ProjectRoleList
   typescript:
     module: confidentai/projects
@@ -46727,7 +46727,7 @@ types:
   description: A project's own fields, without its governance enrollment. This is
     the shape create returns, where the project cannot yet be enrolled in a policy.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: ProjectSummary
   typescript:
     module: confidentai/projects
@@ -46790,7 +46790,7 @@ types:
     label. It carries `text` when the prompt is a text prompt and `messages` when
     it is a messages prompt, never both.
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: Prompt
   typescript:
     module: confidentai/prompts
@@ -46808,7 +46808,7 @@ types:
 - name: PromptBranch
   description: null
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: PromptBranch
   typescript:
     module: confidentai/prompts
@@ -46839,7 +46839,7 @@ types:
 - name: PromptBranchList
   description: null
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: PromptBranchList
   typescript:
     module: confidentai/prompts
@@ -46862,7 +46862,7 @@ types:
 - name: PromptBranchRef
   description: null
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: PromptBranchRef
   typescript:
     module: confidentai/prompts
@@ -46883,7 +46883,7 @@ types:
 - name: PromptCommit
   description: null
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: PromptCommit
   typescript:
     module: confidentai/prompts
@@ -46926,7 +46926,7 @@ types:
 - name: PromptCommitList
   description: null
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: PromptCommitList
   typescript:
     module: confidentai/prompts
@@ -46949,7 +46949,7 @@ types:
 - name: PromptHyperparameter
   description: A reference to the prompt version the run used.
   python:
-    module: confidentai.evaluate.types
+    module: confidentai.evaluate
     name: PromptHyperparameter
   typescript:
     module: confidentai/evaluate
@@ -46984,7 +46984,7 @@ types:
   description: The type of interpolation format used in the prompt to insert dynamic
     variables.
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: PromptInterpolationType
   typescript:
     module: confidentai/prompts
@@ -47004,7 +47004,7 @@ types:
 - name: PromptList
   description: null
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: PromptList
   typescript:
     module: confidentai/prompts
@@ -47027,7 +47027,7 @@ types:
 - name: PromptMessage
   description: null
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: PromptMessage
   typescript:
     module: confidentai/prompts
@@ -47060,7 +47060,7 @@ types:
   kind: enum
   description: The type of output expected from the prompt.
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: PromptOutputType
   typescript:
     module: confidentai/prompts
@@ -47077,7 +47077,7 @@ types:
   description: A prompt as it appears in your project's prompt list, without any
     version content.
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: PromptSummary
   typescript:
     module: confidentai/prompts
@@ -47122,7 +47122,7 @@ types:
   description: This is the type of the prompt, which can be either a simple text
     or a list of messages.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: PromptType
   typescript:
     module: confidentai/common
@@ -47136,7 +47136,7 @@ types:
 - name: PromptVersion
   description: null
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: PromptVersion
   typescript:
     module: confidentai/prompts
@@ -47168,7 +47168,7 @@ types:
 - name: PromptVersionList
   description: null
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: PromptVersionList
   typescript:
     module: confidentai/prompts
@@ -47206,7 +47206,7 @@ types:
     place, so a pulled dataset can be edited and pushed back without duplicating
     it.
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: PushDatasetRequest
   typescript:
     module: confidentai/datasets
@@ -47270,7 +47270,7 @@ types:
     the dataset''s `multiTurn`. Carrying an `id` updates that golden instead of adding
     one.'
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: PushGolden
   typescript:
     module: confidentai/datasets
@@ -47289,7 +47289,7 @@ types:
   description: Pushes a commit to a messages prompt. `interpolationType` defaults
     to `FSTRING` when omitted.
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: PushMessagesPrompt
   typescript:
     module: confidentai/prompts
@@ -47400,7 +47400,7 @@ types:
     your LLM application and, optionally, its turns, updating the golden named by
     `id` when there is one.'
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: PushMultiTurnGolden
   typescript:
     module: confidentai/datasets
@@ -47580,7 +47580,7 @@ types:
   description: The commit to push. Send `text` for a text prompt or `messages` for
     a messages prompt, never both. The kind must match the existing prompt's type.
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: PushPromptRequest
   typescript:
     module: confidentai/prompts
@@ -47598,7 +47598,7 @@ types:
 - name: PushPromptResult
   description: null
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: PushPromptResult
   typescript:
     module: confidentai/prompts
@@ -47632,7 +47632,7 @@ types:
   description: 'A single-turn golden to push: one input to your LLM application and
     the outputs expected of it, updating the golden named by `id` when there is one.'
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: PushSingleTurnGolden
   typescript:
     module: confidentai/datasets
@@ -47860,7 +47860,7 @@ types:
   description: Pushes a commit to a text prompt. `interpolationType` defaults to
     `FSTRING` when omitted.
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: PushTextPrompt
   typescript:
     module: confidentai/prompts
@@ -47963,7 +47963,7 @@ types:
 - name: QueueDatasetGoldensRequest
   description: null
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: QueueDatasetGoldensRequest
   typescript:
     module: confidentai/datasets
@@ -47989,7 +47989,7 @@ types:
   description: A rule that keeps an annotation queue filled from your production
     data.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: QueueIngestionTask
   typescript:
     module: confidentai/annotation-queues
@@ -48131,7 +48131,7 @@ types:
 - name: QueueIngestionTaskList
   description: The ingestion tasks filling an annotation queue.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: QueueIngestionTaskList
   typescript:
     module: confidentai/annotation-queues
@@ -48154,7 +48154,7 @@ types:
 - name: QueueIngestionTaskRef
   description: A reference to a queue ingestion task by its id.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: QueueIngestionTaskRef
   typescript:
     module: confidentai/annotation-queues
@@ -48176,7 +48176,7 @@ types:
   description: 'A task as it appears in a list: what it harvests and whether it is
     running, without its filters or reviewers.'
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: QueueIngestionTaskSummary
   typescript:
     module: confidentai/annotation-queues
@@ -48230,7 +48230,7 @@ types:
   description: One criterion's rating, as an annotator would leave it on the item.
     `type` defaults to THUMBS_RATING.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: QueueItemAnnotation
   typescript:
     module: confidentai/annotation-queues
@@ -48320,7 +48320,7 @@ types:
 - name: QueueItemFormResponse
   description: One answer to a field on the queue's annotation form.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: QueueItemFormResponse
   typescript:
     module: confidentai/annotation-queues
@@ -48357,7 +48357,7 @@ types:
     be annotated, DEFERRED once a reviewer has set it aside to come back to, and
     COMPLETED once it has been annotated.'
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: QueueItemStatus
   typescript:
     module: confidentai/annotation-queues
@@ -48374,7 +48374,7 @@ types:
   description: 'A red teaming framework: the risk categories a risk assessment runs,
     resolved to everything the run needs.'
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: RTFramework
   typescript:
     module: confidentai/rt-frameworks
@@ -48428,7 +48428,7 @@ types:
 - name: RTFrameworkList
   description: One page of frameworks, with the total across all pages.
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: RTFrameworkList
   typescript:
     module: confidentai/rt-frameworks
@@ -48481,7 +48481,7 @@ types:
 - name: RTFrameworkRef
   description: A reference to a red teaming framework by its id.
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: RTFrameworkRef
   typescript:
     module: confidentai/rt-frameworks
@@ -48503,7 +48503,7 @@ types:
   description: 'A framework as it appears in a list: its name and what each risk
     category holds, without resolving the selections.'
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: RTFrameworkSummary
   typescript:
     module: confidentai/rt-frameworks
@@ -48557,7 +48557,7 @@ types:
   kind: enum
   description: This is the level of reasoning effort for the model.
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: ReasoningEffort
   typescript:
     module: confidentai/prompts
@@ -48575,7 +48575,7 @@ types:
 - name: Report
   description: A report written under a report template, with every section it renders.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: Report
   typescript:
     module: confidentai/reports
@@ -48674,7 +48674,7 @@ types:
 - name: ReportAdmonitionContent
   description: The content of an ADMONITION section — a callout carrying a severity.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportAdmonitionContent
   typescript:
     module: confidentai/reports
@@ -48721,7 +48721,7 @@ types:
 - name: ReportAdmonitionSectionInput
   description: A callout box carrying a severity.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportAdmonitionSectionInput
   typescript:
     module: confidentai/reports
@@ -48777,7 +48777,7 @@ types:
   kind: enum
   description: How an `ADMONITION` section's callout is styled.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportAdmonitionSeverity
   typescript:
     module: confidentai/reports
@@ -48795,7 +48795,7 @@ types:
 - name: ReportContentSectionInput
   description: A section of prose.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportContentSectionInput
   typescript:
     module: confidentai/reports
@@ -48850,7 +48850,7 @@ types:
 - name: ReportDateRange
   description: The window a report describes, shown in its header.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportDateRange
   typescript:
     module: confidentai/reports
@@ -48884,7 +48884,7 @@ types:
     against your project when the report is rendered. Read-only — a chart you write
     yourself is always a snapshot.'
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportGraphConfigContent
   typescript:
     module: confidentai/reports
@@ -49012,7 +49012,7 @@ types:
     is the only chart form you can write over the API, so the chart always renders
     exactly the numbers you supply.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportGraphContent
   typescript:
     module: confidentai/reports
@@ -49104,7 +49104,7 @@ types:
 - name: ReportGraphSectionInput
   description: A chart plotting the numbers you supply.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportGraphSectionInput
   typescript:
     module: confidentai/reports
@@ -49159,7 +49159,7 @@ types:
 - name: ReportGraphSeries
   description: One plotted line on a `GRAPH` section.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportGraphSeries
   typescript:
     module: confidentai/reports
@@ -49204,7 +49204,7 @@ types:
   kind: enum
   description: The chart style a `GRAPH` section renders as.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportGraphType
   typescript:
     module: confidentai/reports
@@ -49222,7 +49222,7 @@ types:
 - name: ReportList
   description: One page of reports, with the total across all pages.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportList
   typescript:
     module: confidentai/reports
@@ -49276,7 +49276,7 @@ types:
   description: The report's stored header information. A field the report was written
     without comes back as null.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportMetadata
   typescript:
     module: confidentai/reports
@@ -49330,7 +49330,7 @@ types:
   description: The report's header information. Confident AI stamps `generatedAt`
     itself.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportMetadataInput
   typescript:
     module: confidentai/reports
@@ -49374,7 +49374,7 @@ types:
 - name: ReportNarrativeContent
   description: The content of a `CONTENT` section — a block of prose.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportNarrativeContent
   typescript:
     module: confidentai/reports
@@ -49421,7 +49421,7 @@ types:
 - name: ReportRef
   description: A reference to a report by its id.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportRef
   typescript:
     module: confidentai/reports
@@ -49443,7 +49443,7 @@ types:
   description: One section of a report. Its `content` is null while Confident AI
     is still writing it.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportSection
   typescript:
     module: confidentai/reports
@@ -49541,7 +49541,7 @@ types:
   description: One section to write into a report. Its `content` must match its `type`,
     and sections render in the order you send them.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportSectionInput
   typescript:
     module: confidentai/reports
@@ -49570,7 +49570,7 @@ types:
     CONTENT is prose, ADMONITION a callout, STAT_CARDS a row of headline numbers,
     TABLE a grid, and GRAPH a chart.'
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportSectionType
   typescript:
     module: confidentai/reports
@@ -49590,7 +49590,7 @@ types:
 - name: ReportStatCard
   description: One headline number on a `STAT_CARDS` section.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportStatCard
   typescript:
     module: confidentai/reports
@@ -49633,7 +49633,7 @@ types:
 - name: ReportStatCardsContent
   description: The content of a STAT_CARDS section — a row of headline numbers.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportStatCardsContent
   typescript:
     module: confidentai/reports
@@ -49681,7 +49681,7 @@ types:
 - name: ReportStatCardsSectionInput
   description: A row of headline numbers.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportStatCardsSectionInput
   typescript:
     module: confidentai/reports
@@ -49736,7 +49736,7 @@ types:
 - name: ReportStatHighlight
   description: A standout finding shown alongside the stat cards.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportStatHighlight
   typescript:
     module: confidentai/reports
@@ -49769,7 +49769,7 @@ types:
   description: 'Where a report is in its life: IN_PROGRESS while its sections are
     still being written, COMPLETED once it is readable, ERRORED when writing it failed.'
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportStatus
   typescript:
     module: confidentai/reports
@@ -49786,7 +49786,7 @@ types:
   description: 'A report as it appears in a list: its status and header information,
     without its sections.'
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportSummary
   typescript:
     module: confidentai/reports
@@ -49873,7 +49873,7 @@ types:
 - name: ReportTableContent
   description: The content of a TABLE section — headers and the rows beneath them.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportTableContent
   typescript:
     module: confidentai/reports
@@ -49924,7 +49924,7 @@ types:
 - name: ReportTableSectionInput
   description: A grid of headers and rows.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: ReportTableSectionInput
   typescript:
     module: confidentai/reports
@@ -49980,7 +49980,7 @@ types:
   description: A recurring report definition, generated on the schedule you set —
     every 1 day unless you say otherwise.
   python:
-    module: confidentai.report_templates.types
+    module: confidentai.report_templates
     name: ReportTemplate
   typescript:
     module: confidentai/report-templates
@@ -50082,7 +50082,7 @@ types:
 - name: ReportTemplateList
   description: One page of report templates, with the total across all pages.
   python:
-    module: confidentai.report_templates.types
+    module: confidentai.report_templates
     name: ReportTemplateList
   typescript:
     module: confidentai/report-templates
@@ -50135,7 +50135,7 @@ types:
 - name: ReportTemplateRef
   description: A reference to a report template by its id.
   python:
-    module: confidentai.report_templates.types
+    module: confidentai.report_templates
     name: ReportTemplateRef
   typescript:
     module: confidentai/report-templates
@@ -50157,7 +50157,7 @@ types:
   description: 'When a report template generates, and how far it has got: the cadence
     you set, plus the read-only progress against it.'
   python:
-    module: confidentai.report_templates.types
+    module: confidentai.report_templates
     name: ReportTemplateSchedule
   typescript:
     module: confidentai/report-templates
@@ -50256,7 +50256,7 @@ types:
 - name: ReportTemplateSection
   description: A stored section of a report template.
   python:
-    module: confidentai.report_templates.types
+    module: confidentai.report_templates
     name: ReportTemplateSection
   typescript:
     module: confidentai/report-templates
@@ -50357,7 +50357,7 @@ types:
     TABLE and GRAPH must be AI-authored; CONTENT and ADMONITION can be either. A
     section's position in `templateSections` sets the order it renders in.
   python:
-    module: confidentai.report_templates.types
+    module: confidentai.report_templates
     name: ReportTemplateSectionConfig
   typescript:
     module: confidentai/report-templates
@@ -50451,7 +50451,7 @@ types:
   description: The static content of a hardcoded (non-AI) template section. Null
     for AI-authored sections, which are written by the generator from their prompt.
   python:
-    module: confidentai.report_templates.types
+    module: confidentai.report_templates
     name: ReportTemplateSectionContent
   typescript:
     module: confidentai/report-templates
@@ -50488,7 +50488,7 @@ types:
   description: The callout style of an ADMONITION section, from an informational
     note to a danger warning.
   python:
-    module: confidentai.report_templates.types
+    module: confidentai.report_templates
     name: ReportTemplateSectionSeverity
   typescript:
     module: confidentai/report-templates
@@ -50508,7 +50508,7 @@ types:
   description: What a section renders as. STAT_CARDS, TABLE and GRAPH must be AI-authored;
     CONTENT and ADMONITION can be either AI-authored or hardcoded.
   python:
-    module: confidentai.report_templates.types
+    module: confidentai.report_templates
     name: ReportTemplateSectionType
   typescript:
     module: confidentai/report-templates
@@ -50529,7 +50529,7 @@ types:
   description: A report template as it appears in a list. Retrieve one by id for
     its cadence and its sections.
   python:
-    module: confidentai.report_templates.types
+    module: confidentai.report_templates
     name: ReportTemplateSummary
   typescript:
     module: confidentai/report-templates
@@ -50608,7 +50608,7 @@ types:
     the API generate executive reports; RISK_ASSESSMENT_REPORT belongs to the reports
     Confident AI generates for a risk assessment.
   python:
-    module: confidentai.report_templates.types
+    module: confidentai.report_templates
     name: ReportTemplateType
   typescript:
     module: confidentai/report-templates
@@ -50623,7 +50623,7 @@ types:
   description: A span recording a knowledge-base lookup, with the embedder and retrieval
     settings it used.
   python:
-    module: confidentai.traces.types
+    module: confidentai.traces
     name: RetrieverSpanRequest
   typescript:
     module: confidentai/traces
@@ -50871,7 +50871,7 @@ types:
 - name: RiskAssessmentRef
   description: A reference to a risk assessment by its id.
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: RiskAssessmentRef
   typescript:
     module: confidentai/rt-frameworks
@@ -50893,7 +50893,7 @@ types:
   description: One area of risk inside a framework, pairing the vulnerability types
     to probe for with the attack methods to probe with.
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: RiskCategory
   typescript:
     module: confidentai/rt-frameworks
@@ -50970,7 +50970,7 @@ types:
 - name: RiskCategoryAttackMethod
   description: An attack method selected into a risk category.
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: RiskCategoryAttackMethod
   typescript:
     module: confidentai/rt-frameworks
@@ -51012,7 +51012,7 @@ types:
 - name: RiskCategoryList
   description: One page of risk categories, with the total across all pages.
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: RiskCategoryList
   typescript:
     module: confidentai/rt-frameworks
@@ -51065,7 +51065,7 @@ types:
 - name: RiskCategoryRef
   description: A reference to a risk category by its id.
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: RiskCategoryRef
   typescript:
     module: confidentai/rt-frameworks
@@ -51087,7 +51087,7 @@ types:
   description: 'A risk category as it appears in a list: what it covers and how much
     it selects, without naming the selections.'
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: RiskCategorySummary
   typescript:
     module: confidentai/rt-frameworks
@@ -51148,7 +51148,7 @@ types:
 - name: RiskCategoryVulnerabilityType
   description: A vulnerability type selected into a risk category.
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: RiskCategoryVulnerabilityType
   typescript:
     module: confidentai/rt-frameworks
@@ -51202,7 +51202,7 @@ types:
     scope (`GET /v2/organization/policies` or `GET /v2/projects/{projectId}/policies`)
     to see them.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: RolePolicy
   typescript:
     module: confidentai/common
@@ -51233,7 +51233,7 @@ types:
 - name: RoleRef
   description: Confirmation that the role no longer exists.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: RoleRef
   typescript:
     module: confidentai/common
@@ -51255,7 +51255,7 @@ types:
   description: How to rotate the key. Every field is optional; an empty body rotates
     the value immediately and leaves the expiry alone.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: RotateApiKeyRequest
   typescript:
     module: confidentai/common
@@ -51294,7 +51294,7 @@ types:
     without one the new secret is `value` and `shadowValue` is null, with one the
     new secret is `shadowValue` and `value` is the masked outgoing key.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: RotatedApiKey
   typescript:
     module: confidentai/common
@@ -51312,7 +51312,7 @@ types:
 - name: Rubric
   description: A score range and the outcome it stands for. Ranges must not overlap.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: Rubric
   typescript:
     module: confidentai/common
@@ -51348,7 +51348,7 @@ types:
     outputs are evaluated; supply `aiConnectionId` or `promptAlias`, never both,
     to generate them first.
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: RunDatasetEvaluationRequest
   typescript:
     module: confidentai/datasets
@@ -51511,7 +51511,7 @@ types:
 - name: RunDatasetEvaluationResult
   description: null
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: RunDatasetEvaluationResult
   typescript:
     module: confidentai/datasets
@@ -51544,7 +51544,7 @@ types:
   description: What to attack and how far to go. Provide exactly one target — an
     AI connection or a prompt — and the risk categories to run.
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: RunRTFrameworkRequest
   typescript:
     module: confidentai/rt-frameworks
@@ -51651,7 +51651,7 @@ types:
     ANNOTATIONS, TEST_RUNS. Audit log exports are organization-scoped and are not
     export schedules. Please configure them on the platform instead.'
   python:
-    module: confidentai.export_schedules.types
+    module: confidentai.export_schedules
     name: SchedulableExportType
   typescript:
     module: confidentai/export-schedules
@@ -51676,7 +51676,7 @@ types:
   kind: enum
   description: The unit `repeatEvery` counts for an `INTERVAL` schedule.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: ScheduleIntervalUnit
   typescript:
     module: confidentai/common
@@ -51698,7 +51698,7 @@ types:
   description: 'How often a schedule fires: ONCE runs a single time at `startAt`,
     INTERVAL repeats every `repeatEvery` `repeatUnit`s.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: ScheduleRecurrenceType
   typescript:
     module: confidentai/common
@@ -51713,7 +51713,7 @@ types:
   description: An alert that re-runs an aggregate query on a schedule and notifies
     when the result crosses its threshold.
   python:
-    module: confidentai.scheduled_alerts.types
+    module: confidentai.scheduled_alerts
     name: ScheduledAlert
   typescript:
     module: confidentai/scheduled-alerts
@@ -51825,7 +51825,7 @@ types:
 - name: ScheduledAlertList
   description: One page of scheduled alerts, with the total across all pages.
   python:
-    module: confidentai.scheduled_alerts.types
+    module: confidentai.scheduled_alerts
     name: ScheduledAlertList
   typescript:
     module: confidentai/scheduled-alerts
@@ -51878,7 +51878,7 @@ types:
 - name: ScheduledAlertRef
   description: A reference to a scheduled alert by its id.
   python:
-    module: confidentai.scheduled_alerts.types
+    module: confidentai.scheduled_alerts
     name: ScheduledAlertRef
   typescript:
     module: confidentai/scheduled-alerts
@@ -51899,7 +51899,7 @@ types:
 - name: ScheduledAlertScheduleSettings
   description: The alert's cadence together with its run history.
   python:
-    module: confidentai.scheduled_alerts.types
+    module: confidentai.scheduled_alerts
     name: ScheduledAlertScheduleSettings
   typescript:
     module: confidentai/scheduled-alerts
@@ -52008,7 +52008,7 @@ types:
     is running. Retrieve it by id for its aggregation, filters, threshold, severity
     and run history.'
   python:
-    module: confidentai.scheduled_alerts.types
+    module: confidentai.scheduled_alerts
     name: ScheduledAlertSummary
   typescript:
     module: confidentai/scheduled-alerts
@@ -52063,7 +52063,7 @@ types:
   kind: enum
   description: This is the data type of a schema field.
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: SchemaDataType
   typescript:
     module: confidentai/prompts
@@ -52088,7 +52088,7 @@ types:
   description: The controls a governance policy should apply. This replaces the policy's
     own attachments outright rather than adding to them.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: SetGovernancePolicyControlsRequest
   typescript:
     module: confidentai/organization
@@ -52114,7 +52114,7 @@ types:
   kind: enum
   description: Whether more of a signal is good, bad, or neither, for trend reporting.
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: SignalPolarity
   typescript:
     module: confidentai/classifiers
@@ -52130,7 +52130,7 @@ types:
 - name: SingleTurnGolden
   description: A single-turn golden as stored in the dataset.
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: SingleTurnGolden
   typescript:
     module: confidentai/datasets
@@ -52335,7 +52335,7 @@ types:
   description: 'A single-turn golden to write: one input to your LLM application
     and the outputs expected of it.'
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: SingleTurnGoldenRequest
   typescript:
     module: confidentai/datasets
@@ -52550,7 +52550,7 @@ types:
 - name: SingleTurnTestCase
   description: A test case for a single exchange with your LLM application.
   python:
-    module: confidentai.evaluate.types
+    module: confidentai.evaluate
     name: SingleTurnTestCase
   typescript:
     module: confidentai/evaluate
@@ -52740,7 +52740,7 @@ types:
   description: A span with its full input and output, evaluation fields, results
     and annotations.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: Span
   typescript:
     module: confidentai/common
@@ -53189,7 +53189,7 @@ types:
 - name: SpanAnnotationRequest
   description: A rating left on a span.
   python:
-    module: confidentai.annotations.types
+    module: confidentai.annotations
     name: SpanAnnotationRequest
   typescript:
     module: confidentai/annotations
@@ -53288,7 +53288,7 @@ types:
 - name: SpanList
   description: null
   python:
-    module: confidentai.spans.types
+    module: confidentai.spans
     name: SpanList
   typescript:
     module: confidentai/spans
@@ -53336,7 +53336,7 @@ types:
     for a knowledge-base lookup, `TOOL` for a tool call, or `AGENT` for an agent
     step. Each variant accepts only its own fields.'
   python:
-    module: confidentai.traces.types
+    module: confidentai.traces
     name: SpanRequest
   typescript:
     module: confidentai/traces
@@ -53365,7 +53365,7 @@ types:
     start and end time, cost by its cost, duration by how long it took, and name
     alphabetically.'
   python:
-    module: confidentai.spans.types
+    module: confidentai.spans
     name: SpanSortBy
   typescript:
     module: confidentai/spans
@@ -53387,7 +53387,7 @@ types:
     details with a preview of its input and output, but without its evaluation fields,
     results or annotations.'
   python:
-    module: confidentai.spans.types
+    module: confidentai.spans
     name: SpanSummary
   typescript:
     module: confidentai/spans
@@ -53758,7 +53758,7 @@ types:
     a model call, `RETRIEVER` for a knowledge-base lookup, `TOOL` for a tool call,
     and `AGENT` for an agent step.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: SpanType
   typescript:
     module: confidentai/common
@@ -53778,7 +53778,7 @@ types:
 - name: StructuredSchema
   description: This is the schema for your tool's input.
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: StructuredSchema
   typescript:
     module: confidentai/prompts
@@ -53821,7 +53821,7 @@ types:
 - name: StructuredSchemaField
   description: null
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: StructuredSchemaField
   typescript:
     module: confidentai/prompts
@@ -53898,7 +53898,7 @@ types:
     field is optional; a field you omit keeps the value Confident AI already holds
     for the golden.
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: SubmitTestCaseResultRequest
   typescript:
     module: confidentai/test-runs
@@ -53994,7 +53994,7 @@ types:
 - name: SubmittedTestCaseResult
   description: The recorded test case id and whether its result was accepted.
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: SubmittedTestCaseResult
   typescript:
     module: confidentai/test-runs
@@ -54027,7 +54027,7 @@ types:
 - name: SummaryOverview
   description: The headline findings and action items of a test run.
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: SummaryOverview
   typescript:
     module: confidentai/test-runs
@@ -54060,7 +54060,7 @@ types:
 - name: SummaryPoint
   description: A single finding in a topic summary.
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: SummaryPoint
   typescript:
     module: confidentai/test-runs
@@ -54106,7 +54106,7 @@ types:
     when it carries `turns`. A test case cannot be both, and one request cannot mix
     the two kinds.'
   python:
-    module: confidentai.evaluate.types
+    module: confidentai.evaluate
     name: TestCase
   typescript:
     module: confidentai/evaluate
@@ -54124,7 +54124,7 @@ types:
 - name: TestCaseMetricData
   description: The result of evaluating one metric against a test case.
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: TestCaseMetricData
   typescript:
     module: confidentai/test-runs
@@ -54316,7 +54316,7 @@ types:
     when a result for this test case had already been recorded and this retry was
     ignored.'
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: TestCaseResultStatus
   typescript:
     module: confidentai/test-runs
@@ -54331,7 +54331,7 @@ types:
   description: The trace a component-level test case was formed from, without its
     spans. Fetch the trace by `uuid` for the full span tree.
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: TestCaseTrace
   typescript:
     module: confidentai/test-runs
@@ -54530,7 +54530,7 @@ types:
   description: A test run with its aggregated metric scores and every test case in
     it.
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: TestRun
   typescript:
     module: confidentai/test-runs
@@ -54701,7 +54701,7 @@ types:
 - name: TestRunList
   description: null
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: TestRunList
   typescript:
     module: confidentai/test-runs
@@ -54754,7 +54754,7 @@ types:
 - name: TestRunMultiTurnTestCase
   description: A test case evaluated as a conversation with your LLM application.
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: TestRunMultiTurnTestCase
   typescript:
     module: confidentai/test-runs
@@ -54908,7 +54908,7 @@ types:
 - name: TestRunRef
   description: null
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: TestRunRef
   typescript:
     module: confidentai/test-runs
@@ -54930,7 +54930,7 @@ types:
 - name: TestRunSingleTurnTestCase
   description: A test case evaluated as a single exchange with your LLM application.
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: TestRunSingleTurnTestCase
   typescript:
     module: confidentai/test-runs
@@ -55102,7 +55102,7 @@ types:
   description: 'The status of the test run: IN_PROGRESS while test cases are still
     being evaluated, then COMPLETED, ERRORED or CANCELLED.'
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: TestRunStatus
   typescript:
     module: confidentai/test-runs
@@ -55121,7 +55121,7 @@ types:
   description: 'A test run as it appears in a listing: its counts, aggregated metric
     scores and AI summary, without its test cases.'
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: TestRunSummary
   typescript:
     module: confidentai/test-runs
@@ -55281,7 +55281,7 @@ types:
     multi-turn when it carries `turns`, trace-based when it carries `trace`. Every
     test case in one test run is of the same kind.'
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: TestRunTestCase
   typescript:
     module: confidentai/test-runs
@@ -55302,7 +55302,7 @@ types:
   description: A test case formed from an ingested trace and evaluated component
     by component. Its span-level metrics are in `metricsData`.
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: TestRunTraceTestCase
   typescript:
     module: confidentai/test-runs
@@ -55410,7 +55410,7 @@ types:
   description: A sample value to run the transformer's stored code against, so you
     can see what it returns before attaching it to anything.
   python:
-    module: confidentai.transformers.types
+    module: confidentai.transformers
     name: TestTransformerCodeRequest
   typescript:
     module: confidentai/transformers
@@ -55434,7 +55434,7 @@ types:
 - name: TextPrompt
   description: A pulled prompt whose content is a single text template.
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: TextPrompt
   typescript:
     module: confidentai/prompts
@@ -55581,7 +55581,7 @@ types:
   description: A thread with its evaluation results, annotations and the traces that
     make up the conversation.
   python:
-    module: confidentai.threads.types
+    module: confidentai.threads
     name: Thread
   typescript:
     module: confidentai/threads
@@ -55720,7 +55720,7 @@ types:
 - name: ThreadAnnotationRequest
   description: A rating left on a thread.
   python:
-    module: confidentai.annotations.types
+    module: confidentai.annotations
     name: ThreadAnnotationRequest
   typescript:
     module: confidentai/annotations
@@ -55819,7 +55819,7 @@ types:
 - name: ThreadList
   description: null
   python:
-    module: confidentai.threads.types
+    module: confidentai.threads
     name: ThreadList
   typescript:
     module: confidentai/threads
@@ -55867,7 +55867,7 @@ types:
     `metadata` and `tags` only take effect when a thread id is resolvable; successive
     ingestions merge metadata keys, while tags replace any prior value.
   python:
-    module: confidentai.traces.types
+    module: confidentai.traces
     name: ThreadRequest
   typescript:
     module: confidentai/traces
@@ -55916,7 +55916,7 @@ types:
   description: 'The thread field to sort by: lastActivity orders by the time of the
     thread''s most recent trace and createdAt by when the thread was created.'
   python:
-    module: confidentai.threads.types
+    module: confidentai.threads
     name: ThreadSortBy
   typescript:
     module: confidentai/threads
@@ -55931,7 +55931,7 @@ types:
   description: 'A thread as it appears in a list: its activity, metadata, tags and
     labels, without its traces, evaluation results or annotations.'
   python:
-    module: confidentai.threads.types
+    module: confidentai.threads
     name: ThreadSummary
   typescript:
     module: confidentai/threads
@@ -56032,7 +56032,7 @@ types:
 - name: Tool
   description: null
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: Tool
   typescript:
     module: confidentai/prompts
@@ -56098,7 +56098,7 @@ types:
   description: A tool your LLM application invoked, with what it passed in and what
     came back.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: ToolCall
   typescript:
     module: confidentai/common
@@ -56173,7 +56173,7 @@ types:
   kind: enum
   description: The type of the tool call, either a function or an MCP tool.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: ToolCallType
   typescript:
     module: confidentai/common
@@ -56189,7 +56189,7 @@ types:
   description: This is the mode for your tool input fields, which controls whether
     fields outside the schema are allowed.
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: ToolMode
   typescript:
     module: confidentai/prompts
@@ -56205,7 +56205,7 @@ types:
 - name: ToolSpanRequest
   description: A span recording a tool call.
   python:
-    module: confidentai.traces.types
+    module: confidentai.traces
     name: ToolSpanRequest
   typescript:
     module: confidentai/traces
@@ -56433,7 +56433,7 @@ types:
 - name: TopicSummary
   description: The findings for one topic of test cases.
   python:
-    module: confidentai.test_runs.types
+    module: confidentai.test_runs
     name: TopicSummary
   typescript:
     module: confidentai/test-runs
@@ -56478,7 +56478,7 @@ types:
   description: A trace with its full input and output, evaluation fields, classifier
     labels, results and annotations, and its spans when retrieved by id.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: Trace
   typescript:
     module: confidentai/common
@@ -56786,7 +56786,7 @@ types:
 - name: TraceAnnotationRequest
   description: A rating left on a trace.
   python:
-    module: confidentai.annotations.types
+    module: confidentai.annotations
     name: TraceAnnotationRequest
   typescript:
     module: confidentai/annotations
@@ -56886,7 +56886,7 @@ types:
   description: Payload for a multimodal attachment referenced by id in `[DEEPEVAL:IMAGE:…]`
     or `[DEEPEVAL:PDF:…]` markers. Provide either a `url`, or `dataBase64` with `mimeType`.
   python:
-    module: confidentai.traces.types
+    module: confidentai.traces
     name: TraceAttachment
   typescript:
     module: confidentai/traces
@@ -56928,7 +56928,7 @@ types:
 - name: TraceList
   description: null
   python:
-    module: confidentai.traces.types
+    module: confidentai.traces
     name: TraceList
   typescript:
     module: confidentai/traces
@@ -56973,7 +56973,7 @@ types:
 - name: TraceRef
   description: null
   python:
-    module: confidentai.traces.types
+    module: confidentai.traces
     name: TraceRef
   typescript:
     module: confidentai/traces
@@ -56997,7 +56997,7 @@ types:
   description: 'The trace field to sort by: createdAt orders by the trace''s start
     time and endedAt by its end time.'
   python:
-    module: confidentai.traces.types
+    module: confidentai.traces
     name: TraceSortBy
   typescript:
     module: confidentai/traces
@@ -57013,7 +57013,7 @@ types:
   description: 'This represents the error status of a trace or span: SUCCESS when
     it completed, ERRORED when it failed.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: TraceSpanStatus
   typescript:
     module: confidentai/common
@@ -57029,7 +57029,7 @@ types:
     with a preview of its input and output, but without its spans, evaluation fields,
     results or annotations.'
   python:
-    module: confidentai.traces.types
+    module: confidentai.traces
     name: TraceSummary
   typescript:
     module: confidentai/traces
@@ -57204,7 +57204,7 @@ types:
   description: Code that reshapes a value on its way into or out of an evaluation,
     such as extracting the answer from your endpoint's response.
   python:
-    module: confidentai.transformers.types
+    module: confidentai.transformers
     name: Transformer
   typescript:
     module: confidentai/transformers
@@ -57278,7 +57278,7 @@ types:
 - name: TransformerCodeDefinition
   description: The code a transformer runs, with the language it is written in.
   python:
-    module: confidentai.transformers.types
+    module: confidentai.transformers
     name: TransformerCodeDefinition
   typescript:
     module: confidentai/transformers
@@ -57314,7 +57314,7 @@ types:
   description: A run of the transformer's code that raised or timed out. Code that
     fails is still a completed test, so this is returned with a 200; branch on `success`.
   python:
-    module: confidentai.transformers.types
+    module: confidentai.transformers
     name: TransformerCodeRunFailure
   typescript:
     module: confidentai/transformers
@@ -57370,7 +57370,7 @@ types:
   description: 'What running the transformer''s code against your sample produced.
     Branch on `success`: the code raising is reported here, not as an error status.'
   python:
-    module: confidentai.transformers.types
+    module: confidentai.transformers
     name: TransformerCodeRunResult
   typescript:
     module: confidentai/transformers
@@ -57388,7 +57388,7 @@ types:
 - name: TransformerCodeRunSuccess
   description: A run of the transformer's code that returned a value.
   python:
-    module: confidentai.transformers.types
+    module: confidentai.transformers
     name: TransformerCodeRunSuccess
   typescript:
     module: confidentai/transformers
@@ -57431,7 +57431,7 @@ types:
   kind: enum
   description: The language a transformer's code is written in.
   python:
-    module: confidentai.transformers.types
+    module: confidentai.transformers
     name: TransformerLanguage
   typescript:
     module: confidentai/transformers
@@ -57443,7 +57443,7 @@ types:
 - name: TransformerList
   description: One page of transformers, with the total across all pages.
   python:
-    module: confidentai.transformers.types
+    module: confidentai.transformers
     name: TransformerList
   typescript:
     module: confidentai/transformers
@@ -57496,7 +57496,7 @@ types:
 - name: TransformerRef
   description: A reference to a transformer by its id.
   python:
-    module: confidentai.transformers.types
+    module: confidentai.transformers
     name: TransformerRef
   typescript:
     module: confidentai/transformers
@@ -57518,7 +57518,7 @@ types:
   description: 'A transformer as it appears in a list: what it is and when it changed,
     without its code. Retrieve one by id to read the code.'
   python:
-    module: confidentai.transformers.types
+    module: confidentai.transformers
     name: TransformerSummary
   typescript:
     module: confidentai/transformers
@@ -57580,7 +57580,7 @@ types:
   description: One message in a conversation, from either the user or the assistant,
     with the context and tools behind an assistant reply.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: Turn
   typescript:
     module: confidentai/common
@@ -57657,7 +57657,7 @@ types:
   kind: enum
   description: The role of the turn, either user or assistant.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: TurnRole
   typescript:
     module: confidentai/common
@@ -57673,7 +57673,7 @@ types:
     you omit is left alone and a field you send null is cleared, while `headers`,
     `queryParams` and `prompts` each replace the stored collection outright.
   python:
-    module: confidentai.ai_connections.types
+    module: confidentai.ai_connections
     name: UpdateAIConnectionRequest
   typescript:
     module: confidentai/ai-connections
@@ -58140,7 +58140,7 @@ types:
 - name: UpdateAnnotationFormRequest
   description: The parts of the form to change. Send at least one of `name` or `fields`.
   python:
-    module: confidentai.annotation_forms.types
+    module: confidentai.annotation_forms
     name: UpdateAnnotationFormRequest
   typescript:
     module: confidentai/annotation-forms
@@ -58176,7 +58176,7 @@ types:
   description: The parts of the queue to change. Send at least one; a queue's `type`
     cannot be changed after it is created.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: UpdateAnnotationQueueRequest
   typescript:
     module: confidentai/annotation-queues
@@ -58209,7 +58209,7 @@ types:
   description: The fields of the annotation to change. A field you omit keeps its
     stored value, and the target the annotation was left on cannot be changed.
   python:
-    module: confidentai.annotations.types
+    module: confidentai.annotations
     name: UpdateAnnotationRequest
   typescript:
     module: confidentai/annotations
@@ -58289,7 +58289,7 @@ types:
   description: Whether the key should authenticate. This is the only field of a key
     that can be changed; its value changes only by rotating it.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: UpdateApiKeyRequest
   typescript:
     module: confidentai/common
@@ -58312,7 +58312,7 @@ types:
   description: The parameter values this project runs the attack method with. Only
     a method whose `configurable` is true accepts them.
   python:
-    module: confidentai.attack_methods.types
+    module: confidentai.attack_methods
     name: UpdateAttackMethodRequest
   typescript:
     module: confidentai/attack-methods
@@ -58338,7 +58338,7 @@ types:
     generated suggestion is an update to status ACTIVE, which also enables the label,
     so sending `enabled` false alongside it is rejected.
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: UpdateClassifierLabelRequest
   typescript:
     module: confidentai/classifiers
@@ -58405,7 +58405,7 @@ types:
     is fixed at creation and a preset can only be applied when creating one; labels
     are managed through their own endpoints.
   python:
-    module: confidentai.classifiers.types
+    module: confidentai.classifiers
     name: UpdateClassifierRequest
   typescript:
     module: confidentai/classifiers
@@ -58494,7 +58494,7 @@ types:
   description: The fields of the dashboard to change. Send at least one; its widgets
     are managed through their own endpoints.
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: UpdateDashboardRequest
   typescript:
     module: confidentai/dashboards
@@ -58536,7 +58536,7 @@ types:
   description: A partial update to an ingestion task. Only the fields you send are
     changed, and at least one is required. Send null to clear a nullable field.
   python:
-    module: confidentai.datasets.types
+    module: confidentai.datasets
     name: UpdateDatasetIngestionTaskRequest
   typescript:
     module: confidentai/datasets
@@ -58725,7 +58725,7 @@ types:
   description: The model to run as the project's evaluation model. It takes no `maxInputTokens`,
     which is rejected on this path.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: UpdateEvaluationProjectModelRequest
   typescript:
     module: confidentai/projects
@@ -58774,7 +58774,7 @@ types:
     field you omit keeps its stored value, and the constraints are re-checked against
     the rule the update produces rather than against the fields you sent.
   python:
-    module: confidentai.evaluation_rules.types
+    module: confidentai.evaluation_rules
     name: UpdateEvaluationRuleRequest
   typescript:
     module: confidentai/evaluation-rules
@@ -58908,7 +58908,7 @@ types:
     a credential is how you leave the stored one alone; resending the masked value
     a read returned does the same, so the mask never reaches storage.
   python:
-    module: confidentai.export_destinations.types
+    module: confidentai.export_destinations
     name: UpdateExportDestinationRequest
   typescript:
     module: confidentai/export-destinations
@@ -59010,7 +59010,7 @@ types:
   description: The fields of the export schedule to change. Send at least one; `exportType`
     is fixed at creation, because changing it would re-target every future run.
   python:
-    module: confidentai.export_schedules.types
+    module: confidentai.export_schedules
     name: UpdateExportScheduleRequest
   typescript:
     module: confidentai/export-schedules
@@ -59153,7 +59153,7 @@ types:
     field is left as stored, which is how you leave a stored header value alone without
     knowing it.
   python:
-    module: confidentai.forwarding_connectors.types
+    module: confidentai.forwarding_connectors
     name: UpdateForwardingConnectorRequest
   typescript:
     module: confidentai/forwarding-connectors
@@ -59232,7 +59232,7 @@ types:
     on the control rather than on a version, so an update never snapshots a new version
     and never changes what the control checks.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: UpdateGovernanceControlRequest
   typescript:
     module: confidentai/organization
@@ -59266,7 +59266,7 @@ types:
     anything you omit is left as stored. Its controls, projects and agent skill are
     managed through their own endpoints.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: UpdateGovernancePolicyRequest
   typescript:
     module: confidentai/organization
@@ -59325,7 +59325,7 @@ types:
     this policy governs. Both fields are required, so this replaces the stored skill
     outright rather than patching it.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: UpdateGovernancePolicySkillRequest
   typescript:
     module: confidentai/organization
@@ -59370,7 +59370,7 @@ types:
     the stored secret, so send a new `clientSecret` with it. Any successful update
     resets `connected` to false.
   python:
-    module: confidentai.mcp_servers.types
+    module: confidentai.mcp_servers
     name: UpdateMcpServerRequest
   typescript:
     module: confidentai/mcp-servers
@@ -59487,7 +59487,7 @@ types:
   description: The role to move a member onto. Sending the `Owner` role transfers
     ownership of the organization or project.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: UpdateMemberRoleRequest
   typescript:
     module: confidentai/common
@@ -59511,7 +59511,7 @@ types:
     are changed, and at least one is required. `multiTurn` cannot be changed; create
     a new collection instead.
   python:
-    module: confidentai.metric_collections.types
+    module: confidentai.metric_collections
     name: UpdateMetricCollectionRequest
   typescript:
     module: confidentai/metric-collections
@@ -59582,7 +59582,7 @@ types:
   description: A partial update to a metric. Only the fields you send are changed,
     and at least one is required.
   python:
-    module: confidentai.metrics.types
+    module: confidentai.metrics
     name: UpdateMetricRequest
   typescript:
     module: confidentai/metrics
@@ -59646,7 +59646,7 @@ types:
     record rather than merging into it, so a field you omit is cleared; send at least
     one of `inputCostPerMillionTokens` and `outputCostPerMillionTokens`.
   python:
-    module: confidentai.model_costs.types
+    module: confidentai.model_costs
     name: UpdateModelCostRequest
   typescript:
     module: confidentai/model-costs
@@ -59709,7 +59709,7 @@ types:
     or sending the wrong one for the provider is rejected, as is a provider that
     stores no credentials at all, such as `CONFIDENT_AI`.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: UpdateModelCredentialsRequest
   typescript:
     module: confidentai/common
@@ -59776,7 +59776,7 @@ types:
     null. `CUSTOM` is rejected: a custom model can only be configured on the Confident
     AI platform.'
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: UpdateOrganizationModelRequest
   typescript:
     module: confidentai/organization
@@ -59835,7 +59835,7 @@ types:
   description: The fields of the organization to change. The name is the only field
     the API can set; the plan is changed through billing, not here.
   python:
-    module: confidentai.organization.types
+    module: confidentai.organization
     name: UpdateOrganizationRequest
   typescript:
     module: confidentai/organization
@@ -59860,7 +59860,7 @@ types:
     change on their next simulation, so an edit rewrites how future conversations
     are played, not conversations already simulated.
   python:
-    module: confidentai.personas.types
+    module: confidentai.personas
     name: UpdatePersonaRequest
   typescript:
     module: confidentai/personas
@@ -59897,7 +59897,7 @@ types:
 - name: UpdatePlatformProjectModelRequest
   description: The model to run for any project model type other than `evaluation`.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: UpdatePlatformProjectModelRequest
   typescript:
     module: confidentai/projects
@@ -59962,7 +59962,7 @@ types:
     you omit is stored as null. `CUSTOM` is rejected: a custom model can only be
     configured on the Confident AI platform.'
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: UpdateProjectModelRequest
   typescript:
     module: confidentai/projects
@@ -59983,7 +59983,7 @@ types:
     so answers which scope now wins; the evaluation model is always project scoped
     and omits it.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: UpdateProjectModelResult
   typescript:
     module: confidentai/projects
@@ -60020,7 +60020,7 @@ types:
     omit is left as it is. The project's members, API keys and governance enrollment
     are managed through their own endpoints.
   python:
-    module: confidentai.projects.types
+    module: confidentai.projects
     name: UpdateProjectRequest
   typescript:
     module: confidentai/projects
@@ -60052,7 +60052,7 @@ types:
 - name: UpdatePromptBranchRequest
   description: null
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: UpdatePromptBranchRequest
   typescript:
     module: confidentai/prompts
@@ -60074,7 +60074,7 @@ types:
   description: The fields of the task to change. A field you omit keeps its stored
     value.
   python:
-    module: confidentai.annotation_queues.types
+    module: confidentai.annotation_queues
     name: UpdateQueueIngestionTaskRequest
   typescript:
     module: confidentai/annotation-queues
@@ -60193,7 +60193,7 @@ types:
   description: The fields of the framework to change. Send at least one; its risk
     categories are managed through their own endpoints.
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: UpdateRTFrameworkRequest
   typescript:
     module: confidentai/rt-frameworks
@@ -60226,7 +60226,7 @@ types:
     is merged onto the report's stored header, so a field you leave out keeps its
     stored value.
   python:
-    module: confidentai.reports.types
+    module: confidentai.reports
     name: UpdateReportRequest
   typescript:
     module: confidentai/reports
@@ -60288,7 +60288,7 @@ types:
     cadence must end up with both `repeatEvery` and `repeatUnit` set, whether from
     this request or from what is already stored.
   python:
-    module: confidentai.report_templates.types
+    module: confidentai.report_templates
     name: UpdateReportTemplateRequest
   typescript:
     module: confidentai/report-templates
@@ -60416,7 +60416,7 @@ types:
   description: The fields of the risk category to change. Send at least one; each
     list you send replaces the stored selection rather than adding to it.
   python:
-    module: confidentai.rt_frameworks.types
+    module: confidentai.rt_frameworks
     name: UpdateRiskCategoryRequest
   typescript:
     module: confidentai/rt-frameworks
@@ -60486,7 +60486,7 @@ types:
     set of aggregations, so send `aggregation` alongside `dataModel` when moving
     an alert between data models.
   python:
-    module: confidentai.scheduled_alerts.types
+    module: confidentai.scheduled_alerts
     name: UpdateScheduledAlertRequest
   typescript:
     module: confidentai/scheduled-alerts
@@ -60683,7 +60683,7 @@ types:
   description: The fields of the transformer to change. Send at least one; `codeDefinition`
     replaces the stored code outright, so send both its fields together.
   python:
-    module: confidentai.transformers.types
+    module: confidentai.transformers
     name: UpdateTransformerRequest
   typescript:
     module: confidentai/transformers
@@ -60729,7 +60729,7 @@ types:
     projects untouched. A built-in cannot be renamed, because risk assessment results
     record it by name.
   python:
-    module: confidentai.vulnerabilities.types
+    module: confidentai.vulnerabilities
     name: UpdateVulnerabilityRequest
   typescript:
     module: confidentai/vulnerabilities
@@ -60809,7 +60809,7 @@ types:
     keep what is stored until you send them. Sending `lines` replaces the widget''s
     lines outright, which gives them new ids.'
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: UpdateWidgetRequest
   typescript:
     module: confidentai/dashboards
@@ -60962,7 +60962,7 @@ types:
 - name: UserReference
   description: A Confident AI user, as referenced by the records they created.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: UserReference
   typescript:
     module: confidentai/common
@@ -61017,7 +61017,7 @@ types:
     `name` only takes effect when an end-user id is resolvable; successive ingestions
     take the latest name.
   python:
-    module: confidentai.traces.types
+    module: confidentai.traces
     name: UserRequest
   typescript:
     module: confidentai/traces
@@ -61051,7 +61051,7 @@ types:
   kind: enum
   description: This is the verbosity level for model output.
   python:
-    module: confidentai.prompts.types
+    module: confidentai.prompts
     name: Verbosity
   typescript:
     module: confidentai/prompts
@@ -61068,7 +61068,7 @@ types:
   description: A weakness a risk assessment probes for, either one Confident AI ships
     or one your project defined.
   python:
-    module: confidentai.vulnerabilities.types
+    module: confidentai.vulnerabilities
     name: Vulnerability
   typescript:
     module: confidentai/vulnerabilities
@@ -61178,7 +61178,7 @@ types:
   description: A worked example that shows the evaluator what a passing or failing
     reply looks like.
   python:
-    module: confidentai.vulnerabilities.types
+    module: confidentai.vulnerabilities
     name: VulnerabilityEvaluationExample
   typescript:
     module: confidentai/vulnerabilities
@@ -61230,7 +61230,7 @@ types:
 - name: VulnerabilityList
   description: One page of vulnerabilities, with the total across all pages.
   python:
-    module: confidentai.vulnerabilities.types
+    module: confidentai.vulnerabilities
     name: VulnerabilityList
   typescript:
     module: confidentai/vulnerabilities
@@ -61285,7 +61285,7 @@ types:
 - name: VulnerabilityRef
   description: A reference to a vulnerability by its id.
   python:
-    module: confidentai.vulnerabilities.types
+    module: confidentai.vulnerabilities
     name: VulnerabilityRef
   typescript:
     module: confidentai/vulnerabilities
@@ -61307,7 +61307,7 @@ types:
   description: 'A vulnerability as it appears in a list: what it is and how many
     types it has, without its criteria or examples.'
   python:
-    module: confidentai.vulnerabilities.types
+    module: confidentai.vulnerabilities
     name: VulnerabilitySummary
   typescript:
     module: confidentai/vulnerabilities
@@ -61382,7 +61382,7 @@ types:
   description: One specific way a vulnerability shows up, which is what a risk category
     selects and a test case targets.
   python:
-    module: confidentai.vulnerabilities.types
+    module: confidentai.vulnerabilities
     name: VulnerabilityType
   typescript:
     module: confidentai/vulnerabilities
@@ -61414,7 +61414,7 @@ types:
   description: One chart on a dashboard, with the configuration a query computes
     it from.
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: Widget
   typescript:
     module: confidentai/dashboards
@@ -61582,7 +61582,7 @@ types:
     lines, `TOTAL_TOKENS` to span lines — and a token that does not apply to the
     line's data model is rejected with the list of the ones that do.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetAggregation
   typescript:
     module: confidentai/common
@@ -61645,7 +61645,7 @@ types:
   description: The whole query range aggregated to one figure per line, as a BIG_NUMBER
     widget draws it.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetBigNumberData
   typescript:
     module: confidentai/common
@@ -61695,7 +61695,7 @@ types:
     the whole range into a single bucket, as a BIG_NUMBER widget wants. Defaults
     to `SERIES`.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetBucketMode
   typescript:
     module: confidentai/common
@@ -61711,7 +61711,7 @@ types:
     AI derives the shape from the widget''s `type` and `mode`, so a `DIMENSION_SERIES`
     widget drawn as a `TABLE` returns `TABLE` data.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetData
   typescript:
     module: confidentai/common
@@ -61737,7 +61737,7 @@ types:
   description: The entity a widget line aggregates over. It decides which aggregations,
     filters and `extraQueryParams` the line accepts.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetDataModel
   typescript:
     module: confidentai/common
@@ -61773,7 +61773,7 @@ types:
   description: The property a widget breaks its data down by, one series or table
     row per distinct value.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetDimension
   typescript:
     module: confidentai/common
@@ -61838,7 +61838,7 @@ types:
   description: The whole query range aggregated per dimension value, as a DIMENSION_SERIES
     widget draws it.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetDimensionData
   typescript:
     module: confidentai/common
@@ -61886,7 +61886,7 @@ types:
   description: The size of each bucket in computed widget data. Left unset, Confident
     AI picks one from the length of the query range.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetGranularity
   typescript:
     module: confidentai/common
@@ -61907,7 +61907,7 @@ types:
   description: A widget's position and size on the dashboard's 12-column grid. Omit
     it when creating a widget and Confident AI packs it into the first free space.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetLayout
   typescript:
     module: confidentai/common
@@ -61958,7 +61958,7 @@ types:
 - name: WidgetLine
   description: One series plotted on a widget.
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: WidgetLine
   typescript:
     module: confidentai/dashboards
@@ -62053,7 +62053,7 @@ types:
   description: The colour a line is drawn in, from the Confident AI palette. A line
     you create without one is assigned the next colour in the palette.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetLineColor
   typescript:
     module: confidentai/common
@@ -62084,7 +62084,7 @@ types:
   description: 'One series to plot on a widget: what to aggregate, how to aggregate
     it, and over which entities.'
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetLineConfig
   typescript:
     module: confidentai/common
@@ -62176,7 +62176,7 @@ types:
     and `source` say which annotations an `ANNOTATION` line counts. Unrecognised
     keys are ignored, and most lines send none of these.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetLineExtraQueryParams
   typescript:
     module: confidentai/common
@@ -62191,7 +62191,7 @@ types:
     series per value of the widget's `dimension`. This is the widget's saved configuration
     — the shape of a query response is given by `kind` on the result.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetMode
   typescript:
     module: confidentai/common
@@ -62205,7 +62205,7 @@ types:
 - name: WidgetQueryError
   description: Why one widget of a dashboard query could not be computed.
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: WidgetQueryError
   typescript:
     module: confidentai/dashboards
@@ -62237,7 +62237,7 @@ types:
   description: The range to compute the widget over. Send `{}` to use the widget's
     own saved range.
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: WidgetQueryRequest
   typescript:
     module: confidentai/dashboards
@@ -62283,7 +62283,7 @@ types:
 - name: WidgetQueryResult
   description: One widget's computed data, with the widget it came from.
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: WidgetQueryResult
   typescript:
     module: confidentai/dashboards
@@ -62342,7 +62342,7 @@ types:
 - name: WidgetRef
   description: A reference to a widget by its id.
   python:
-    module: confidentai.dashboards.types
+    module: confidentai.dashboards
     name: WidgetRef
   typescript:
     module: confidentai/dashboards
@@ -62363,7 +62363,7 @@ types:
 - name: WidgetScalarValue
   description: One headline figure of a big number widget.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetScalarValue
   typescript:
     module: confidentai/common
@@ -62430,7 +62430,7 @@ types:
 - name: WidgetSeries
   description: One plotted series of a time series or dimension breakdown.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetSeries
   typescript:
     module: confidentai/common
@@ -62499,7 +62499,7 @@ types:
 - name: WidgetSeriesPoint
   description: One plotted point of a series.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetSeriesPoint
   typescript:
     module: confidentai/common
@@ -62532,7 +62532,7 @@ types:
 - name: WidgetTableColumn
   description: One column of a table widget's result.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetTableColumn
   typescript:
     module: confidentai/common
@@ -62564,7 +62564,7 @@ types:
   description: The whole query range aggregated into a table, as a TABLE widget draws
     it.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetTableData
   typescript:
     module: confidentai/common
@@ -62613,7 +62613,7 @@ types:
   description: Values bucketed over the query range, each point's `x` the start of
     its time bucket.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetTimeSeriesData
   typescript:
     module: confidentai/common
@@ -62661,7 +62661,7 @@ types:
   description: Caps a dimension breakdown at the most interesting values, so a dimension
     with thousands of values still plots.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetTopK
   typescript:
     module: confidentai/common
@@ -62720,7 +62720,7 @@ types:
     and does not by itself decide the shape of a query response — a `TABLE` widget
     returns tabular data whatever its `mode` is.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetType
   typescript:
     module: confidentai/common
@@ -62745,7 +62745,7 @@ types:
   kind: enum
   description: The unit a widget's values are measured in.
   python:
-    module: confidentai.common.types
+    module: confidentai.common
     name: WidgetUnit
   typescript:
     module: confidentai/common
