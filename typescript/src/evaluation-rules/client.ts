@@ -49,13 +49,14 @@ export class EvaluationRulesClient {
    * Creates a standing rule that runs a metric collection against matching
    * production traces, spans or threads as they arrive, and returns its id.
    * Running metrics consumes LLM usage. The metric collection's turn type must
-   * match the rule: THREAD rules require a multi-turn collection, TRACE and
-   * SPAN rules a single-turn one, and only one enabled THREAD rule may target a
-   * given collection. Requires the Starter plan or above.
+   * match the rule: `THREAD` rules require a multi-turn collection, `TRACE` and
+   * `SPAN` rules a single-turn one, and only one enabled `THREAD` rule may
+   * target a given collection. Requires the Starter plan or above.
    *
    * @param name A name for the rule, unique within the project.
    * @param metricCollectionId The id of the metric collection to run. It must
-   *   be multi-turn for THREAD rules and single-turn for TRACE and SPAN rules.
+   *   be multi-turn for `THREAD` rules and single-turn for `TRACE` and `SPAN`
+   *   rules.
    * @param enabled Whether the rule evaluates matching items as they arrive.
    *   Defaults to true.
    * @param description A note about what the rule checks. Send null to clear
@@ -63,13 +64,15 @@ export class EvaluationRulesClient {
    * @param sampleRate The fraction of matching items to evaluate, between 0 and
    *   1. Defaults to 1, all of them.
    * @param spanType Only evaluate spans of this kind. Allowed only when
-   *   `dataModel` is SPAN, and cleared automatically if the rule moves off
-   *   SPAN. Send null to evaluate every span.
+   *   `dataModel` is `SPAN`, and cleared automatically if the rule moves off
+   *   `SPAN`. Send null to evaluate every span.
    * @param filters Only evaluate items matching these filters. Send null to
    *   evaluate every item the rule's `dataModel` covers.
-   * @param threadTimelimit For THREAD rules, the seconds of inactivity to wait
-   *   before evaluating a thread, so an in-progress conversation is not scored
-   *   halfway. Defaults to 300.
+   * @param threadTimelimit For `THREAD` rules, the seconds of inactivity to
+   *   wait before evaluating a thread, so an in-progress conversation is not
+   *   scored halfway. The minimum is 120, which leaves time for the last traces
+   *   to be stored. Send null to use the project's thread timelimit, which
+   *   defaults to 300.
    * @param overwriteEvals Re-evaluate items that already have results for this
    *   metric collection instead of skipping them. Defaults to false.
    */
@@ -83,7 +86,7 @@ export class EvaluationRulesClient {
       sampleRate?: number;
       spanType?: SpanType | null;
       filters?: FilterSet | null;
-      threadTimelimit?: number;
+      threadTimelimit?: number | null;
       overwriteEvals?: boolean;
     } = {},
   ): Promise<EvaluationRuleRef> {
@@ -138,8 +141,8 @@ export class EvaluationRulesClient {
    * Updates an evaluation rule and returns it. Only the fields you send are
    * changed; omitting a field leaves it untouched, and sending null clears it.
    * Constraints are re-checked against the rule the update produces, not just
-   * the fields you sent, so switching a rule to THREAD still requires a multi-
-   * turn metric collection.
+   * the fields you sent, so switching a rule to `THREAD` still requires a
+   * multi-turn metric collection.
    *
    * @param evaluationRuleId The id of the evaluation rule.
    * @param name A new name for the rule, unique within the project.
@@ -150,13 +153,15 @@ export class EvaluationRulesClient {
    * @param sampleRate The fraction of matching items to evaluate, between 0 and
    *   1. Defaults to 1, all of them.
    * @param spanType Only evaluate spans of this kind. Allowed only when
-   *   `dataModel` is SPAN, and cleared automatically if the rule moves off
-   *   SPAN. Send null to evaluate every span.
+   *   `dataModel` is `SPAN`, and cleared automatically if the rule moves off
+   *   `SPAN`. Send null to evaluate every span.
    * @param filters Only evaluate items matching these filters. Send null to
    *   evaluate every item the rule's `dataModel` covers.
-   * @param threadTimelimit For THREAD rules, the seconds of inactivity to wait
-   *   before evaluating a thread, so an in-progress conversation is not scored
-   *   halfway. Defaults to 300.
+   * @param threadTimelimit For `THREAD` rules, the seconds of inactivity to
+   *   wait before evaluating a thread, so an in-progress conversation is not
+   *   scored halfway. The minimum is 120, which leaves time for the last traces
+   *   to be stored. Send null to use the project's thread timelimit, which
+   *   defaults to 300.
    * @param overwriteEvals Re-evaluate items that already have results for this
    *   metric collection instead of skipping them. Defaults to false.
    */
@@ -171,7 +176,7 @@ export class EvaluationRulesClient {
       sampleRate?: number;
       spanType?: SpanType | null;
       filters?: FilterSet | null;
-      threadTimelimit?: number;
+      threadTimelimit?: number | null;
       overwriteEvals?: boolean;
     } = {},
   ): Promise<EvaluationRule> {

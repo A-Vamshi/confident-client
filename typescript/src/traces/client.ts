@@ -7,6 +7,7 @@ import { Api, HttpMethods } from "../api";
 import { Endpoints } from "../endpoints";
 import { Environment, ToolCall, Trace, TraceSpanStatus } from "../common/types";
 import {
+  CustomerRequest,
   MetricDataConfig,
   SpanRequest,
   ThreadRequest,
@@ -14,6 +15,7 @@ import {
   TraceList,
   TraceRef,
   TraceSortBy,
+  UserRequest,
 } from "./types";
 
 export class TracesClient {
@@ -116,6 +118,9 @@ export class TracesClient {
    *   the trace, which groups traces in the same thread into a conversation.
    * @param userId This is the unique identifier for your end user for the
    *   trace.
+   * @param customerId This is the unique identifier of the customer the trace
+   *   belongs to — the account, tenant or organization your end user belongs
+   *   to.
    * @param metricCollection This is the metric collection you wish to use to
    *   evaluate the trace.
    * @param testRunId This is the unique identifier of the test run to associate
@@ -159,6 +164,9 @@ export class TracesClient {
       threadId?: string;
       thread?: ThreadRequest;
       userId?: string;
+      user?: UserRequest;
+      customerId?: string;
+      customer?: CustomerRequest;
       metricCollection?: string;
       testRunId?: string;
       testCaseId?: string;
@@ -184,6 +192,9 @@ export class TracesClient {
       threadId,
       thread,
       userId,
+      user,
+      customerId,
+      customer,
       metricCollection,
       testRunId,
       testCaseId,
@@ -215,6 +226,9 @@ export class TracesClient {
           threadId,
           thread,
           userId,
+          user,
+          customerId,
+          customer,
           metricCollection,
           testRunId,
           testCaseId,

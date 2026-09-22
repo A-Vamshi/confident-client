@@ -51,8 +51,7 @@ export class EvaluateClient {
    *
    * Queues an evaluation of a span against the metrics in `metricCollection`.
    * The evaluation runs in the background, and its results are stored on the
-   * span, so [fetch the span](/docs/api-reference/v2/spans/get-span) to read
-   * them once it has finished.
+   * span, so fetch the span to read them once it has finished.
    *
    * @param spanUuid The unique identifier of the span.
    * @param metricCollection The name of the single-turn metric collection you
@@ -78,8 +77,8 @@ export class EvaluateClient {
    *
    * Queues an evaluation of a thread against the multi-turn metrics in
    * `metricCollection`. The evaluation runs in the background, and its results
-   * are stored on the thread, so [fetch the thread](/docs/api-
-   * reference/v2/threads/get-thread) to read them once it has finished.
+   * are stored on the thread, so fetch the thread to read them once it has
+   * finished.
    *
    * @param threadId The id of the thread, as you supplied it when creating its
    *   traces.
@@ -112,8 +111,7 @@ export class EvaluateClient {
    *
    * Queues an evaluation of a trace against the metrics in `metricCollection`.
    * The evaluation runs in the background, and its results are stored on the
-   * trace, so [fetch the trace](/docs/api-reference/v2/traces/get-trace) to
-   * read them once it has finished.
+   * trace, so fetch the trace to read them once it has finished.
    *
    * @param traceUuid The unique identifier of the trace.
    * @param metricCollection The name of the single-turn metric collection you

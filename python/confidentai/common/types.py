@@ -214,6 +214,7 @@ class WidgetDimension(Enum):
     TEST_CASE_ID = "test_case_id"
     TEST_RUN_ID = "test_run_id"
     END_USER = "end_user"
+    CUSTOMER = "customer"
     SOURCE = "source"
     ANNOTATOR = "annotator"
     NAME = "name"
@@ -329,6 +330,7 @@ class AuditLogExport(ConfidentBaseModel):
         "CONVERSATIONS",
         "CONVERSATION_METRICS",
         "ANNOTATIONS",
+        "TEST_RUNS",
         "AUDIT_LOGS",
     ] = Field(
         alias="exportType",
@@ -448,6 +450,8 @@ class WidgetLayout(ConfidentBaseModel):
 class FilterSetGroupFilter(ConfidentBaseModel):
     category: Literal[
         "User Id",
+        "Customer Id",
+        "Customer Name",
         "Thread Id",
         "Trace UUID",
         "Trace Name",
@@ -697,6 +701,11 @@ class MetricData(ConfidentBaseModel):
     created_at: str = Field(alias="createdAt")
     evaluated_at: Optional[str] = Field(alias="evaluatedAt")
     multi_turn: bool = Field(alias="multiTurn")
+    trace_uuid: Optional[str] = Field(alias="traceUuid")
+    span_uuid: Optional[str] = Field(alias="spanUuid")
+    thread_id: Optional[str] = Field(alias="threadId")
+    test_case_id: Optional[str] = Field(alias="testCaseId")
+    test_run_id: Optional[str] = Field(alias="testRunId")
 
 
 class MetricList(ConfidentBaseModel):
@@ -871,6 +880,7 @@ class Trace(ConfidentBaseModel):
     cost: Optional[float]
     thread_id: Optional[str] = Field(alias="threadId")
     user_id: Optional[str] = Field(alias="userId")
+    customer_id: Optional[str] = Field(alias="customerId")
     environment: Environment
     tags: Optional[List[str]]
     metadata: Optional[Dict[str, Any]]

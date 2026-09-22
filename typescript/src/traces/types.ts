@@ -82,6 +82,16 @@ export interface ThreadRequest {
   tags?: string[] | null;
 }
 
+export interface UserRequest {
+  id?: string;
+  name?: string | null;
+}
+
+export interface CustomerRequest {
+  id?: string;
+  name?: string | null;
+}
+
 export interface LlmSpanRequest {
   type: "LLM";
   uuid: string;
@@ -190,6 +200,9 @@ export interface CreateTraceRequest {
   threadId?: string;
   thread?: ThreadRequest;
   userId?: string;
+  user?: UserRequest;
+  customerId?: string;
+  customer?: CustomerRequest;
   metricCollection?: string;
   testRunId?: string;
   testCaseId?: string;
@@ -214,6 +227,7 @@ export interface TraceSummary {
   cost: number | null;
   threadId: string | null;
   userId: string | null;
+  customerId: string | null;
   environment: Environment;
   tags: string[] | null;
   metadata: Record<string, unknown> | null;

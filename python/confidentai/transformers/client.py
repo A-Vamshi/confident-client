@@ -269,7 +269,7 @@ class TransformersClient:
 
         Args:
             transformer_id: The id of the transformer.
-            input_data: The value to pass to the transformer's `transform`
+            input_data: The value to pass to the transformer's `transformer`
                 function. Any JSON value is accepted; send the shape the
                 transformer expects to see in production.
         """
@@ -296,7 +296,7 @@ class TransformersClient:
 
         Args:
             transformer_id: The id of the transformer.
-            input_data: The value to pass to the transformer's `transform`
+            input_data: The value to pass to the transformer's `transformer`
                 function. Any JSON value is accepted; send the shape the
                 transformer expects to see in production.
         """

@@ -74,7 +74,7 @@ export class ReportsClient {
    *   Required, since a report is read under its template.
    * @param sections The report's sections, in render order. At least one is
    *   required.
-   * @param error Why the report failed, when creating it as ERRORED.
+   * @param error Why the report failed, when creating it as `ERRORED`.
    */
   async create(
     reportTemplateId: string,

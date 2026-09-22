@@ -101,15 +101,16 @@ class EvaluationRulesClient:
         Creates a standing rule that runs a metric collection against matching
         production traces, spans or threads as they arrive, and returns its id.
         Running metrics consumes LLM usage. The metric collection's turn type
-        must match the rule: THREAD rules require a multi-turn collection, TRACE
-        and SPAN rules a single-turn one, and only one enabled THREAD rule may
-        target a given collection. Requires the Starter plan or above.
+        must match the rule: `THREAD` rules require a multi-turn collection,
+        `TRACE` and `SPAN` rules a single-turn one, and only one enabled
+        `THREAD` rule may target a given collection. Requires the Starter plan
+        or above.
 
         Args:
             name: A name for the rule, unique within the project.
             metric_collection_id: The id of the metric collection to run. It
-                must be multi-turn for THREAD rules and single-turn for TRACE
-                and SPAN rules.
+                must be multi-turn for `THREAD` rules and single-turn for
+                `TRACE` and `SPAN` rules.
             enabled: Whether the rule evaluates matching items as they arrive.
                 Defaults to true.
             description: A note about what the rule checks. Send null to clear
@@ -117,13 +118,15 @@ class EvaluationRulesClient:
             sample_rate: The fraction of matching items to evaluate, between 0
                 and 1. Defaults to 1, all of them.
             span_type: Only evaluate spans of this kind. Allowed only when
-                `dataModel` is SPAN, and cleared automatically if the rule moves
-                off SPAN. Send null to evaluate every span.
+                `dataModel` is `SPAN`, and cleared automatically if the rule
+                moves off `SPAN`. Send null to evaluate every span.
             filters: Only evaluate items matching these filters. Send null to
                 evaluate every item the rule's `dataModel` covers.
-            thread_timelimit: For THREAD rules, the seconds of inactivity to
+            thread_timelimit: For `THREAD` rules, the seconds of inactivity to
                 wait before evaluating a thread, so an in-progress conversation
-                is not scored halfway. Defaults to 300.
+                is not scored halfway. The minimum is 120, which leaves time for
+                the last traces to be stored. Send null to use the project's
+                thread timelimit, which defaults to 300.
             overwrite_evals: Re-evaluate items that already have results for
                 this metric collection instead of skipping them. Defaults to
                 false.
@@ -166,15 +169,16 @@ class EvaluationRulesClient:
         Creates a standing rule that runs a metric collection against matching
         production traces, spans or threads as they arrive, and returns its id.
         Running metrics consumes LLM usage. The metric collection's turn type
-        must match the rule: THREAD rules require a multi-turn collection, TRACE
-        and SPAN rules a single-turn one, and only one enabled THREAD rule may
-        target a given collection. Requires the Starter plan or above.
+        must match the rule: `THREAD` rules require a multi-turn collection,
+        `TRACE` and `SPAN` rules a single-turn one, and only one enabled
+        `THREAD` rule may target a given collection. Requires the Starter plan
+        or above.
 
         Args:
             name: A name for the rule, unique within the project.
             metric_collection_id: The id of the metric collection to run. It
-                must be multi-turn for THREAD rules and single-turn for TRACE
-                and SPAN rules.
+                must be multi-turn for `THREAD` rules and single-turn for
+                `TRACE` and `SPAN` rules.
             enabled: Whether the rule evaluates matching items as they arrive.
                 Defaults to true.
             description: A note about what the rule checks. Send null to clear
@@ -182,13 +186,15 @@ class EvaluationRulesClient:
             sample_rate: The fraction of matching items to evaluate, between 0
                 and 1. Defaults to 1, all of them.
             span_type: Only evaluate spans of this kind. Allowed only when
-                `dataModel` is SPAN, and cleared automatically if the rule moves
-                off SPAN. Send null to evaluate every span.
+                `dataModel` is `SPAN`, and cleared automatically if the rule
+                moves off `SPAN`. Send null to evaluate every span.
             filters: Only evaluate items matching these filters. Send null to
                 evaluate every item the rule's `dataModel` covers.
-            thread_timelimit: For THREAD rules, the seconds of inactivity to
+            thread_timelimit: For `THREAD` rules, the seconds of inactivity to
                 wait before evaluating a thread, so an in-progress conversation
-                is not scored halfway. Defaults to 300.
+                is not scored halfway. The minimum is 120, which leaves time for
+                the last traces to be stored. Send null to use the project's
+                thread timelimit, which defaults to 300.
             overwrite_evals: Re-evaluate items that already have results for
                 this metric collection instead of skipping them. Defaults to
                 false.
@@ -266,8 +272,8 @@ class EvaluationRulesClient:
         Updates an evaluation rule and returns it. Only the fields you send are
         changed; omitting a field leaves it untouched, and sending null clears
         it. Constraints are re-checked against the rule the update produces, not
-        just the fields you sent, so switching a rule to THREAD still requires a
-        multi-turn metric collection.
+        just the fields you sent, so switching a rule to `THREAD` still requires
+        a multi-turn metric collection.
 
         Args:
             evaluation_rule_id: The id of the evaluation rule.
@@ -280,13 +286,15 @@ class EvaluationRulesClient:
             sample_rate: The fraction of matching items to evaluate, between 0
                 and 1. Defaults to 1, all of them.
             span_type: Only evaluate spans of this kind. Allowed only when
-                `dataModel` is SPAN, and cleared automatically if the rule moves
-                off SPAN. Send null to evaluate every span.
+                `dataModel` is `SPAN`, and cleared automatically if the rule
+                moves off `SPAN`. Send null to evaluate every span.
             filters: Only evaluate items matching these filters. Send null to
                 evaluate every item the rule's `dataModel` covers.
-            thread_timelimit: For THREAD rules, the seconds of inactivity to
+            thread_timelimit: For `THREAD` rules, the seconds of inactivity to
                 wait before evaluating a thread, so an in-progress conversation
-                is not scored halfway. Defaults to 300.
+                is not scored halfway. The minimum is 120, which leaves time for
+                the last traces to be stored. Send null to use the project's
+                thread timelimit, which defaults to 300.
             overwrite_evals: Re-evaluate items that already have results for
                 this metric collection instead of skipping them. Defaults to
                 false.
@@ -331,8 +339,8 @@ class EvaluationRulesClient:
         Updates an evaluation rule and returns it. Only the fields you send are
         changed; omitting a field leaves it untouched, and sending null clears
         it. Constraints are re-checked against the rule the update produces, not
-        just the fields you sent, so switching a rule to THREAD still requires a
-        multi-turn metric collection.
+        just the fields you sent, so switching a rule to `THREAD` still requires
+        a multi-turn metric collection.
 
         Args:
             evaluation_rule_id: The id of the evaluation rule.
@@ -345,13 +353,15 @@ class EvaluationRulesClient:
             sample_rate: The fraction of matching items to evaluate, between 0
                 and 1. Defaults to 1, all of them.
             span_type: Only evaluate spans of this kind. Allowed only when
-                `dataModel` is SPAN, and cleared automatically if the rule moves
-                off SPAN. Send null to evaluate every span.
+                `dataModel` is `SPAN`, and cleared automatically if the rule
+                moves off `SPAN`. Send null to evaluate every span.
             filters: Only evaluate items matching these filters. Send null to
                 evaluate every item the rule's `dataModel` covers.
-            thread_timelimit: For THREAD rules, the seconds of inactivity to
+            thread_timelimit: For `THREAD` rules, the seconds of inactivity to
                 wait before evaluating a thread, so an in-progress conversation
-                is not scored halfway. Defaults to 300.
+                is not scored halfway. The minimum is 120, which leaves time for
+                the last traces to be stored. Send null to use the project's
+                thread timelimit, which defaults to 300.
             overwrite_evals: Re-evaluate items that already have results for
                 this metric collection instead of skipping them. Defaults to
                 false.

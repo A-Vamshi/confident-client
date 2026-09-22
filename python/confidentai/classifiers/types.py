@@ -25,6 +25,7 @@ class ClassifierLabelStatus(Enum):
 class ClassifierPreset(Enum):
     CUSTOM = "CUSTOM"
     SENTIMENT = "SENTIMENT"
+    TOPICS = "TOPICS"
     USE_CASES = "USE_CASES"
     ISSUES = "ISSUES"
 
