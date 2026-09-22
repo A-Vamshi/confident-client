@@ -90,7 +90,7 @@ jobs:
       - name: Detect changes
         id: diff
         run: |
-          git add python/confidentai typescript/src
+          git add python/confidentai typescript/src sdk-reference.yml
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
@@ -120,4 +120,4 @@ jobs:
             --base main \
             --head "$BRANCH" \
             --title "chore: regenerate the SDKs from confident-cloud" \
-            --body "$(printf 'Automated regeneration of the Python and TypeScript SDKs from confident-cloud/packages/shared/openapi at confident-ai/confident-cloud@%s.\n\nDo not edit these files by hand. If the diff is wrong, fix the route in confident-cloud; this PR updates on the next scheduled run.\n\nBoth SDKs were linted, typechecked and tested before this PR was opened, and the generator was confirmed idempotent over its own output.' "$SOURCE_SHA")"
+            --body "$(printf 'Automated regeneration of the Python and TypeScript SDKs, and of the sdk-reference.yml confident-landing renders the SDK docs from, from confident-cloud/packages/shared/openapi at confident-ai/confident-cloud@%s.\n\nDo not edit these files by hand. If the diff is wrong, fix the route in confident-cloud; this PR updates on the next scheduled run.\n\nBoth SDKs were linted, typechecked and tested before this PR was opened, and the generator was confirmed idempotent over its own output.' "$SOURCE_SHA")"
