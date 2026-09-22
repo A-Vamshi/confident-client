@@ -905,8 +905,8 @@ class Handle:
             part
             for part in (
                 state.get("description"),
-                f"Pass at most one of {listed}; the handle is filled in from "
-                "the result.",
+                f"Pass at most one of {listed}; this object is filled in "
+                "from the result.",
             )
             if part
         )
@@ -1036,8 +1036,8 @@ class Handle:
             part
             for part in (
                 state.get("description"),
-                f"Pass at most one of {listed}; the handle is filled in from "
-                "the result.",
+                f"Pass at most one of {listed}; this object is filled in "
+                "from the result.",
             )
             if part
         )
@@ -1663,7 +1663,7 @@ class Handle:
                         f"of your project, held by its {field}.",
                         "",
                         f"    Its methods are {self.client_class}'s, minus the",
-                        f"    `{self.identity['parameter']}` that this handle "
+                        f"    `{self.identity['parameter']}` that this object "
                         "supplies.",
                         '    """',
                         "",
@@ -1805,7 +1805,7 @@ class Handle:
                         f"your project, held by its {field}.",
                         " *",
                         f" * Its methods are {self.client_class}'s, minus the",
-                        f" * `{self.identity['parameter']}` that this handle "
+                        f" * `{self.identity['parameter']}` that this object "
                         "supplies.",
                         " */",
                     ]

@@ -29,7 +29,7 @@ _PULL = '''\
         write_to_cache: bool = True,
         default_to_cache: bool = True,
     ) -> "Prompt":
-        """Pull the prompt into this handle, and keep it current.
+        """Pull the prompt from Confident AI, and keep it current.
 
         Pass at most one of commit, version, label. The commit that comes back
         is cached on disk and re-pulled in the background every `refresh`
@@ -79,7 +79,7 @@ _PULL = '''\
         write_to_cache: bool = True,
         default_to_cache: bool = True,
     ) -> "Prompt":
-        """Pull the prompt into this handle, and keep it current.
+        """Pull the prompt from Confident AI, and keep it current.
 
         Pass at most one of commit, version, label. The commit that comes back
         is cached on disk and re-pulled in the background every `refresh`
@@ -125,7 +125,7 @@ _DOCSTRING = re.compile(r'\n        """.*?"""\n', re.S)
 
 
 _TS_PULL_DOC = """  /**
-   * Pull the prompt into this handle, and keep it current.
+   * Pull the prompt from Confident AI, and keep it current.
    *
    * Pass at most one of commit, version, label. The commit that comes back is
    * cached on disk and re-pulled in the background every `refresh` seconds, so
