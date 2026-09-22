@@ -27,7 +27,7 @@ import {
  * One dataset of your project, held by its datasetId.
  *
  * Its methods are DatasetsClient's, minus the
- * `datasetId` that this handle supplies.
+ * `datasetId` that this object supplies.
  */
 export class Dataset {
   private readonly client: DatasetsClient;

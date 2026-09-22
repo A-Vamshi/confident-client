@@ -43,7 +43,7 @@ import {
  * One project of your project, held by its projectId.
  *
  * Its methods are ProjectsClient's, minus the
- * `projectId` that this handle supplies.
+ * `projectId` that this object supplies.
  */
 export class Project {
   private readonly client: ProjectsClient;

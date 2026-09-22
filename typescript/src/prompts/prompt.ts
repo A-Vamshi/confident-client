@@ -32,7 +32,7 @@ import {
  * One prompt of your project, held by its promptId.
  *
  * Its methods are PromptsClient's, minus the
- * `promptId` that this handle supplies.
+ * `promptId` that this object supplies.
  */
 export class Prompt {
   private readonly client: PromptsClient;
@@ -146,7 +146,7 @@ export class Prompt {
    * A single commit of a prompt, as pulled by version, commit hash, or label.
    * It carries `text` when the prompt is a text prompt and `messages` when it
    * is a messages prompt, never both. Pass at most one of commit, version,
-   * label; the handle is filled in from the result.
+   * label; this object is filled in from the result.
    *
    * @param commit The hash of the commit to pull. Defaults to `latest`.
    * @param version The version number of the prompt to pull.
@@ -264,7 +264,7 @@ export class Prompt {
   }
 
   /**
-   * Pull the prompt into this handle, and keep it current.
+   * Pull the prompt from Confident AI, and keep it current.
    *
    * Pass at most one of commit, version, label. The commit that comes back is
    * cached on disk and re-pulled in the background every `refresh` seconds, so

@@ -30,7 +30,7 @@ class Dataset:
     """One dataset of your project, held by its dataset_id.
 
     Its methods are DatasetsClient's, minus the
-    `datasetId` that this handle supplies.
+    `datasetId` that this object supplies.
     """
 
     def __init__(
