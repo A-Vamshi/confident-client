@@ -20602,6 +20602,10 @@ resources:
         - fallbackToCache
         - writeToCache
         - defaultToCache
+      chooseOneOf:
+      - commit
+      - version
+      - label
     - name:
         python: interpolate
         pythonAsync: null

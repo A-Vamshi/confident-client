@@ -425,6 +425,26 @@ def _describe_modules(
     return entries
 
 
+def _exclusive_keywords(config: Dict[str, Any]) -> Dict[str, List[str]]:
+    """Each method's arguments a caller may pass only one of, default first.
+
+    A `load` that chooses between routes takes one keyword per route, and the
+    method rejects a call carrying more than one. Nothing about the arguments
+    themselves says so, so the constraint is published rather than left for a
+    reader — or a generated example — to discover by raising.
+    """
+    found: Dict[str, List[str]] = {}
+    for exposed, declared in (config.get("load") or {}).items():
+        choices = declared.get("by")
+        if not choices:
+            continue
+        keywords = sorted(
+            choices, key=lambda name: "default" not in choices[name]
+        )
+        found[exposed] = keywords
+    return found
+
+
 def _routes_per_handle_method(config: Dict[str, Any]) -> Dict[str, List[str]]:
     """Each method the YAML exposes, against the operations behind it.
 
@@ -515,6 +535,7 @@ def _describe_handle(
 
     by_operation = {route.operation_id: route for route in routes}
     index = _routes_per_handle_method(config)
+    exclusive = _exclusive_keywords(config)
     helpers = config.get("helpers") or {}
 
     methods: List[Dict[str, Any]] = []
@@ -533,6 +554,8 @@ def _describe_handle(
             _describe_operation(by_operation[operation])
             for operation in index[name]
         ]
+        if name in exclusive:
+            entry["chooseOneOf"] = exclusive[name]
         methods.append(entry)
 
     for exposed, function in helpers.items():
