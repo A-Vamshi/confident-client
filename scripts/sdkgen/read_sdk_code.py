@@ -119,7 +119,7 @@ def _python_parameters(
     return tuple(found)
 
 
-def _held_fields(node: ast.ClassDef) -> Tuple[Tuple[str, str], ...]:
+def _object_fields(node: ast.ClassDef) -> Tuple[Tuple[str, str], ...]:
     """What `__init__` assigns onto `self`, annotated, in source order."""
     for member in node.body:
         if (
@@ -174,7 +174,7 @@ def python_classes(source: str) -> Dict[str, RenderedClass]:
             name=node.name,
             doc=ast.get_docstring(node),
             methods=methods,
-            fields=_held_fields(node),
+            fields=_object_fields(node),
             bindings=bindings,
         )
     return found
