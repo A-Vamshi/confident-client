@@ -1480,9 +1480,8 @@ resources:
       summary: Ping AI Connection
       description: 'Calls your LLM application once with a sample test case and reports
         what came back, including what each configured key path or transformer managed
-        to extract. The verdict replaces the connection''s stored `active`. A ping
-        that fails is still a `200`: read `active` and `error` in the body rather
-        than the status code.'
+        to extract. A ping that fails is still a `200`: read `active` and `error`
+        in the body rather than the status code.'
       operations:
       - id: pingAIConnection
         method: POST
@@ -2479,8 +2478,8 @@ resources:
         pythonAsync: a_get_queue_ingestion_task
         typescript: getQueueIngestionTask
       summary: Get Queue Ingestion Task
-      description: Retrieves an ingestion task by id, with the filters an item must
-        match to be queued and the reviewers harvested items are assigned to.
+      description: Retrieves one of the queue's ingestion tasks by id, with its full
+        configuration.
       operations:
       - id: getQueueIngestionTask
         method: GET
@@ -3298,9 +3297,8 @@ resources:
         typescript: update
       summary: Update Attack Method
       description: Configures the parameter values your project runs an attack method
-        with, and returns the method. The values replace this project's stored configuration
-        wholesale, so send every value you want kept. An attack method that takes
-        no parameters cannot be configured.
+        with, and returns the method. An attack method that takes no parameters cannot
+        be configured.
       operations:
       - id: updateAttackMethod
         method: PUT
@@ -3471,12 +3469,9 @@ resources:
         typescript: create
       summary: Create Classifier
       description: Creates a classifier that tags incoming traces or threads with
-        labels, and returns its id. A name is unique per data model within the project.
-        Sending a `preset` seeds the classifier with a description, a generation
-        config, and a starting set of labels, and any field you send explicitly overrides
-        what the preset would have set — `SENTIMENT` arrives with its labels ready,
-        while `TOPICS`, `USE_CASES` and `ISSUES` ship with none and expect a generation
-        run next. Requires the Starter plan or above.
+        labels, and returns its id. Sending a `preset` seeds it with a description,
+        a generation config, and a starting set of labels; any field you send explicitly
+        overrides what the preset would have set. Requires the Starter plan or above.
       operations:
       - id: createClassifier
         method: POST
@@ -4370,8 +4365,7 @@ resources:
       summary: Create Dashboard
       description: Creates a dashboard in your Confident AI project and returns its
         id. Send `widgets` to create it with its charts already on it, which saves
-        a call per widget; any widget you send without a `layout` is packed onto
-        the grid in the order given.
+        a call per widget.
       operations:
       - id: createDashboard
         method: POST
@@ -5369,11 +5363,9 @@ resources:
         pythonAsync: a_push
         typescript: push
       summary: Push Dataset
-      description: Adds goldens to the dataset with the given `alias`, creating the
-        dataset first when it does not exist, and returns the dataset's id. Every
-        golden in one request must be of the same kind — all single-turn, or all
-        multi- turn — and that kind must match the dataset's `multiTurn`. Pushing
-        to a `version` requires the Team plan or above.
+      description: Adds goldens to a dataset, creating it when the `alias` names
+        none yet, and returns the dataset's id. Pushing to a `version` requires the
+        Team plan or above.
       operations:
       - id: pushDataset
         method: POST
@@ -5565,8 +5557,7 @@ resources:
         typescript: queueGoldens
       summary: Queue Dataset Goldens
       description: Adds goldens to the dataset as unfinalized goldens, for review
-        on the platform before they are used in evaluations. Every golden in one
-        request must be of the same kind, matching the dataset's `multiTurn`.
+        on the platform before they are used in evaluations.
       operations:
       - id: queueDatasetGoldens
         method: POST
@@ -5880,9 +5871,8 @@ resources:
         pythonAsync: a_list_ingestion_tasks
         typescript: listIngestionTasks
       summary: List Dataset Ingestion Tasks
-      description: Lists the ingestion tasks on the dataset, newest first, as summary
-        rows. Get a single task for its full configuration. Requires the Starter
-        plan or above.
+      description: Lists the ingestion tasks on the dataset as summary rows. Retrieve
+        one by id for its full configuration. Requires the Starter plan or above.
       operations:
       - id: listDatasetIngestionTasks
         method: GET
@@ -6638,9 +6628,8 @@ resources:
         pythonAsync: a_create_golden
         typescript: createGolden
       summary: Create Golden
-      description: Adds a single golden to the dataset and returns its id. The golden's
-        kind must match the dataset's `multiTurn`. Pass `version` to add it to a
-        specific dataset version; omitting it targets the latest version.
+      description: Adds a single golden to the dataset and returns its id. Pass `version`
+        to add it to a specific dataset version; omitting it targets the latest.
       operations:
       - id: createGolden
         method: POST
@@ -7378,8 +7367,7 @@ resources:
         typescript: queueGoldens
       summary: Queue Dataset Goldens
       description: Adds goldens to the dataset as unfinalized goldens, for review
-        on the platform before they are used in evaluations. Every golden in one
-        request must be of the same kind, matching the dataset's `multiTurn`.
+        on the platform before they are used in evaluations.
       operations:
       - id: queueDatasetGoldens
         method: POST
@@ -7415,9 +7403,8 @@ resources:
         pythonAsync: a_create_golden
         typescript: createGolden
       summary: Create Golden
-      description: Adds a single golden to the dataset and returns its id. The golden's
-        kind must match the dataset's `multiTurn`. Pass `version` to add it to a
-        specific dataset version; omitting it targets the latest version.
+      description: Adds a single golden to the dataset and returns its id. Pass `version`
+        to add it to a specific dataset version; omitting it targets the latest.
       operations:
       - id: createGolden
         method: POST
@@ -7631,11 +7618,9 @@ resources:
         pythonAsync: a_push
         typescript: push
       summary: Push Dataset
-      description: Adds goldens to the dataset with the given `alias`, creating the
-        dataset first when it does not exist, and returns the dataset's id. Every
-        golden in one request must be of the same kind — all single-turn, or all
-        multi- turn — and that kind must match the dataset's `multiTurn`. Pushing
-        to a `version` requires the Team plan or above.
+      description: Adds goldens to a dataset, creating it when the `alias` names
+        none yet, and returns the dataset's id. Pushing to a `version` requires the
+        Team plan or above.
       operations:
       - id: pushDataset
         method: POST
@@ -8004,9 +7989,7 @@ resources:
         typescript: list
       summary: List Evaluation Rules
       description: Lists the evaluation rules in your Confident AI project one page
-        at a time, newest first, as summary rows. Retrieve a rule by id for its full
-        configuration and the metric collection it runs. Requires the Starter plan
-        or above.
+        at a time, newest first, as summary rows. Requires the Starter plan or above.
       operations:
       - id: listEvaluationRules
         method: GET
@@ -9377,9 +9360,8 @@ resources:
         pythonAsync: a_get
         typescript: get
       summary: Get Export Schedule
-      description: Retrieves an export schedule by id, with the cadence it runs on,
-        how far through that cadence it is, and the filters and destination each
-        run uses.
+      description: Retrieves an export schedule by id, with the filters and destination
+        each of its runs uses.
       operations:
       - id: getExportSchedule
         method: GET
@@ -9912,10 +9894,8 @@ resources:
         pythonAsync: a_update
         typescript: update
       summary: Update Forwarding Connector
-      description: 'Updates a forwarding connector and returns it. Every field you
-        omit is left as stored. When you do send `headers`, the list replaces all
-        stored headers, so resend the ones you want to keep: a value left masked
-        keeps the stored credential, and a plaintext value replaces it.'
+      description: Updates a forwarding connector and returns it. Every field you
+        omit is left as stored.
       operations:
       - id: updateForwardingConnector
         method: PUT
@@ -10087,11 +10067,9 @@ resources:
         pythonAsync: a_assess
         typescript: assess
       summary: Assess Governance
-      description: 'Assesses this project against every control in the governance
-        policy it belongs to, and returns whether they all passed. Call it as a gate
-        in a deployment pipeline: a false `passed` means at least one control is
-        failing. A project that belongs to no governance policy is rejected with
-        a 400.'
+      description: Assesses this project against every control in the governance
+        policy it belongs to, and returns whether they all passed. A project that
+        belongs to no governance policy is rejected with a `400`.
       operations:
       - id: assessGovernance
         method: POST
@@ -12519,8 +12497,7 @@ resources:
       summary: Get Governance Control Group
       description: Retrieves a single governance control group with the controls
         inside it, which the list endpoint reports only as a count. Each control
-        is named rather than resolved — retrieve a control by id for its health,
-        its policy membership and its definition.
+        is named rather than resolved.
       operations:
       - id: getGovernanceControlGroup
         method: GET
@@ -13244,13 +13221,11 @@ resources:
         pythonAsync: a_create_governance_policy
         typescript: createGovernancePolicy
       summary: Create Governance Policy
-      description: 'Creates a governance policy and returns its id. It starts with
+      description: Creates a governance policy and returns its id. It starts with
         no controls attached and no projects enrolled, so use their own endpoints
-        afterwards. Send `basePolicyIds` to inherit another policy''s controls: inheritance
-        is exactly two levels deep, so every id must name a policy that extends nothing
-        itself, and the whole request is rejected if one does. That check and the
-        write run in one serializable transaction, so concurrent creates cannot slip
-        past the rule.'
+        afterwards. A `basePolicyIds` entry that itself extends another policy is
+        rejected, and that check and the write run in one serializable transaction,
+        so concurrent creates cannot slip past the rule.
       operations:
       - id: createGovernancePolicy
         method: POST
@@ -13538,14 +13513,11 @@ resources:
         pythonAsync: a_assign_projects_to_governance_policy
         typescript: assignProjectsToGovernancePolicy
       summary: Assign Projects to Governance Policy
-      description: 'Enrolls projects in a governance policy, so the controls it applies
+      description: Enrolls projects in a governance policy, so the controls it applies
         — its own and the ones it inherits — start gating them. A project belongs
         to at most one policy, so one currently on a different policy is moved here,
-        and one already here is left as it is. This is a partial-success operation:
-        ids that name nothing come back in `notFoundProjectIds` rather than failing
-        the request, so check that list rather than assuming the whole batch landed.
-        Enrolling does not assess — call assess on the policy, or wait for the next
-        scheduled run, for verdicts to appear.'
+        and one already here is left as it is. Enrolling does not assess — call assess
+        on the policy, or wait for the next scheduled run, for verdicts to appear.
       operations:
       - id: assignProjectsToGovernancePolicy
         method: POST
@@ -13772,10 +13744,7 @@ resources:
         changing what it gates its projects on from the next assessment onward. This
         is how a control comes to govern anything: a newly created control is attached
         to no policy, so it gates nothing until a policy attaches it here. Every
-        id must name a control in your organization, or the whole request is rejected,
-        and an inherited control cannot be listed — it is attached on the base policy
-        that owns it. Returns the policy''s controls as they now stand, inherited
-        ones included.'
+        id must name a control in your organization, or the whole request is rejected.'
       operations:
       - id: updateGovernancePolicyControls
         method: PUT
@@ -13827,12 +13796,11 @@ resources:
         pythonAsync: a_remove_governance_policy_controls
         typescript: removeGovernancePolicyControls
       summary: Remove Governance Policy Controls
-      description: 'Detaches the named controls from the governance policy, leaving
+      description: Detaches the named controls from the governance policy, leaving
         its others in place, so the policy stops gating its projects on them. The
         controls themselves are not deleted and stay available to other policies,
-        and verdicts already recorded are kept. An inherited control cannot be detached
-        here: it is managed on the base policy that owns it, and the request is rejected
-        naming that policy rather than silently doing nothing.'
+        and verdicts already recorded are kept. Naming an inherited control is rejected
+        rather than silently ignored.
       operations:
       - id: removeGovernancePolicyControls
         method: DELETE
@@ -14125,12 +14093,10 @@ resources:
         typescript: getGovernanceProject
       summary: Get Project
       description: 'Retrieves one project''s governance view in full: every control
-        its policy applies, inherited ones included, and the project''s verdict history
-        over the last 30 days, newest first. Several assessments of the same control
-        on the same day collapse to the last one, so a control appears at most once
-        per day however often it was recomputed. A project enrolled in no policy
-        is reported as not found, so use the inventory listing to tell an ungoverned
-        project from one that does not exist.'
+        its policy applies, inherited ones included, together with its recent verdict
+        history. A project enrolled in no policy is reported as not found, so use
+        the inventory listing to tell an ungoverned project from one that does not
+        exist.'
       operations:
       - id: getGovernanceProject
         method: GET
@@ -14199,9 +14165,8 @@ resources:
         granting organization access when accepted — organization access only; a
         project is joined separately. Addresses that already have an invitation,
         or already belong to a member, are dropped from the batch; if that leaves
-        nothing, the request is refused as a conflict. The `Owner` role cannot be
-        handed out this way, and the Free plan caps members plus invitations at 2.
-        Only the invitations created are returned.
+        nothing, the request is refused as a conflict. The Free plan caps members
+        plus invitations at 2. Only the invitations created are returned.
       operations:
       - id: createInvitations
         method: POST
@@ -14339,10 +14304,8 @@ resources:
         pythonAsync: a_list_members
         typescript: listMembers
       summary: List Organization Members
-      description: Lists the members of your organization one page at a time, each
-        with the organization role that decides what they can do. Membership here
-        is what grants access to the organization itself; a member still has to be
-        added to a project before they can see that project's data, so every project's
+      description: Lists your organization's members one page at a time. Membership
+        here is what grants access to the organization itself, so every project's
         member list is drawn from this one.
       operations:
       - id: listMembers
@@ -14643,11 +14606,10 @@ resources:
         pythonAsync: a_list_policies
         typescript: listPolicies
       summary: List Organization Policies
-      description: Lists the custom access policies your organization owns. Each
-        is a named set of organization permissions, returned with every permission
-        it grants as a `resource:action` pair such as `billing:read`. These are what
-        you attach to organization roles; the global, system-defined roles do not
-        draw their permissions from policies.
+      description: Lists the custom access policies your organization owns, each
+        with the permissions it grants. These are what you attach to organization
+        roles; the global, system-defined roles do not draw their permissions from
+        policies.
       operations:
       - id: listOrganizationPolicies
         method: GET
@@ -14742,9 +14704,7 @@ resources:
       description: 'Replaces an organization policy''s name, description, and granted
         permissions. The change reaches people through the roles the policy is attached
         to, and it reaches them immediately: every member holding any of those roles
-        gains or loses the affected permissions on their next call. `permissionIds`
-        is the policy''s complete permission set rather than an addition to it, so
-        an empty array makes the policy grant nothing.'
+        gains or loses the affected permissions on their next call.'
       operations:
       - id: updateOrganizationPolicy
         method: PUT
@@ -14879,9 +14839,7 @@ resources:
       summary: List Organization Roles
       description: 'Lists every organization role a member can be given: the custom
         roles your organization owns, plus the global, system-defined ones (`organizationId`
-        is null). Each comes with the policies attached to it, which is where its
-        permissions come from — a global role''s permissions are system-defined instead,
-        so it returns an empty `policies` array.'
+        is null). Each comes with the policies attached to it.'
       operations:
       - id: listOrganizationRoles
         method: GET
@@ -14976,10 +14934,7 @@ resources:
       summary: Update Organization Role
       description: Replaces a custom organization role's name, description, and attached
         policies. Every member holding the role is affected immediately, since permissions
-        are resolved on each request. `policyIds` is the role's complete policy set
-        rather than an addition to it, so an empty array leaves every member holding
-        the role with no organization permissions. A global, system-defined role
-        responds `404`.
+        are resolved on each request. A global, system-defined role responds `404`.
       operations:
       - id: updateOrganizationRole
         method: PUT
@@ -15522,8 +15477,7 @@ resources:
         typescript: get
       summary: Retrieve Project
       description: Retrieves a single project by id, including the governance policy
-        it is enrolled in. The project must belong to the organization your API key
-        is scoped to; one belonging to another organization is reported as not found
+        it is enrolled in. A project in another organization is reported as not found
         rather than as forbidden.
       operations:
       - id: getProject
@@ -15560,7 +15514,7 @@ resources:
       summary: Update Project
       description: Renames a project or changes its description, and returns the
         project as stored. Send at least one field; a field you omit is left as it
-        is. A name already taken by another project in the organization is refused.
+        is.
       operations:
       - id: updateProject
         method: PUT
@@ -16384,13 +16338,11 @@ resources:
         typescript: createInvitations
       summary: Create Project Invitations
       description: Invites people to this project by email, each with a link. Accepting
-        adds the invitee to the project and, if needed, to the organization it belongs
-        to — so this can grow the organization, not just the project. Addresses that
-        already have an invitation to this project, or already belong to it, are
-        dropped from the batch; if that leaves nothing, the request is refused as
-        a conflict. The `Owner` role cannot be handed out this way, and the Free
-        plan caps the organization's members plus invitations at 2. Only the invitations
-        created are returned.
+        can grow the organization too, not just the project. Addresses that already
+        have an invitation to this project, or already belong to it, are dropped
+        from the batch; if that leaves nothing, the request is refused as a conflict.
+        The Free plan caps the organization's members plus invitations at 2. Only
+        the invitations created are returned.
       operations:
       - id: createProjectInvitations
         method: POST
@@ -16574,8 +16526,7 @@ resources:
         pythonAsync: a_list_members
         typescript: listMembers
       summary: List Project Members
-      description: 'Lists the members of one project a page at a time, each with
-        the project role that decides what they can do inside it. Project members
+      description: 'Lists the members of one project a page at a time. Project members
         are drawn from the organization''s members: someone can belong to the organization
         and not appear here, and being here is what gives them access to this project''s
         data.'
@@ -16772,11 +16723,10 @@ resources:
         pythonAsync: a_get_model
         typescript: getModel
       summary: Get Project Model
-      description: Returns the model in effect for the project, selected by the required
-        `type` query parameter. `PLATFORM` and `SIMULATION` fall back to the organization's
-        default when the project has no override of its own; `EVALUATION` is always
-        project scoped. Reading never creates configuration, so the model is null
-        until one is set.
+      description: Returns which model the project uses for the `type` you ask for.
+        `PLATFORM` and `SIMULATION` fall back to the organization's default when
+        the project has no override of its own; `EVALUATION` is always project scoped.
+        Reading never creates configuration.
       operations:
       - id: getProjectModel
         method: GET
@@ -17095,9 +17045,7 @@ resources:
       description: 'Replaces a project policy''s name, description, and granted permissions.
         The change reaches people through the roles the policy is attached to, and
         it reaches them immediately: every member holding any of those roles gains
-        or loses the affected permissions on their next call. `permissionIds` is
-        the policy''s complete permission set rather than an addition to it, so an
-        empty array makes the policy grant nothing.'
+        or loses the affected permissions on their next call.'
       operations:
       - id: updateProjectPolicy
         method: PUT
@@ -17262,11 +17210,8 @@ resources:
       summary: List Project Roles
       description: 'Lists every role a member of this project can be given: the custom
         roles the project owns, plus the global, system-defined ones (`projectId`
-        is null). Each comes with the project policies attached to it, which is where
-        its permissions come from — a global role''s permissions are system-defined
-        instead, so it returns an empty `policies` array. Project roles govern access
-        inside this project only; organization-wide settings come from the member''s
-        organization role.'
+        is null). Project roles govern access inside this project only; organization-wide
+        settings come from the member''s organization role.'
       operations:
       - id: listProjectRoles
         method: GET
@@ -17391,10 +17336,7 @@ resources:
       summary: Update Project Role
       description: Replaces a custom project role's name, description, and attached
         policies. Every member holding the role is affected immediately, since permissions
-        are resolved on each request. `policyIds` is the role's complete policy set
-        rather than an addition to it, so an empty array leaves every member holding
-        the role with no permissions in this project. A global, system-defined role
-        responds `404`.
+        are resolved on each request. A global, system-defined role responds `404`.
       operations:
       - id: updateProjectRole
         method: PUT
@@ -17960,8 +17902,7 @@ resources:
         pythonAsync: a_list_members
         typescript: listMembers
       summary: List Project Members
-      description: 'Lists the members of one project a page at a time, each with
-        the project role that decides what they can do inside it. Project members
+      description: 'Lists the members of one project a page at a time. Project members
         are drawn from the organization''s members: someone can belong to the organization
         and not appear here, and being here is what gives them access to this project''s
         data.'
@@ -18128,13 +18069,11 @@ resources:
         typescript: createInvitations
       summary: Create Project Invitations
       description: Invites people to this project by email, each with a link. Accepting
-        adds the invitee to the project and, if needed, to the organization it belongs
-        to — so this can grow the organization, not just the project. Addresses that
-        already have an invitation to this project, or already belong to it, are
-        dropped from the batch; if that leaves nothing, the request is refused as
-        a conflict. The `Owner` role cannot be handed out this way, and the Free
-        plan caps the organization's members plus invitations at 2. Only the invitations
-        created are returned.
+        can grow the organization too, not just the project. Addresses that already
+        have an invitation to this project, or already belong to it, are dropped
+        from the batch; if that leaves nothing, the request is refused as a conflict.
+        The Free plan caps the organization's members plus invitations at 2. Only
+        the invitations created are returned.
       operations:
       - id: createProjectInvitations
         method: POST
@@ -18387,9 +18326,7 @@ resources:
       description: 'Replaces a project policy''s name, description, and granted permissions.
         The change reaches people through the roles the policy is attached to, and
         it reaches them immediately: every member holding any of those roles gains
-        or loses the affected permissions on their next call. `permissionIds` is
-        the policy''s complete permission set rather than an addition to it, so an
-        empty array makes the policy grant nothing.'
+        or loses the affected permissions on their next call.'
       operations:
       - id: updateProjectPolicy
         method: PUT
@@ -18515,11 +18452,8 @@ resources:
       summary: List Project Roles
       description: 'Lists every role a member of this project can be given: the custom
         roles the project owns, plus the global, system-defined ones (`projectId`
-        is null). Each comes with the project policies attached to it, which is where
-        its permissions come from — a global role''s permissions are system-defined
-        instead, so it returns an empty `policies` array. Project roles govern access
-        inside this project only; organization-wide settings come from the member''s
-        organization role.'
+        is null). Project roles govern access inside this project only; organization-wide
+        settings come from the member''s organization role.'
       operations:
       - id: listProjectRoles
         method: GET
@@ -18614,10 +18548,7 @@ resources:
       summary: Update Project Role
       description: Replaces a custom project role's name, description, and attached
         policies. Every member holding the role is affected immediately, since permissions
-        are resolved on each request. `policyIds` is the role's complete policy set
-        rather than an addition to it, so an empty array leaves every member holding
-        the role with no permissions in this project. A global, system-defined role
-        responds `404`.
+        are resolved on each request. A global, system-defined role responds `404`.
       operations:
       - id: updateProjectRole
         method: PUT
@@ -18743,11 +18674,10 @@ resources:
         pythonAsync: a_get_model
         typescript: getModel
       summary: Get Project Model
-      description: Returns the model in effect for the project, selected by the required
-        `type` query parameter. `PLATFORM` and `SIMULATION` fall back to the organization's
-        default when the project has no override of its own; `EVALUATION` is always
-        project scoped. Reading never creates configuration, so the model is null
-        until one is set.
+      description: Returns which model the project uses for the `type` you ask for.
+        `PLATFORM` and `SIMULATION` fall back to the organization's default when
+        the project has no override of its own; `EVALUATION` is always project scoped.
+        Reading never creates configuration.
       operations:
       - id: getProjectModel
         method: GET
@@ -19084,8 +19014,7 @@ resources:
         typescript: get
       summary: Retrieve Project
       description: Retrieves a single project by id, including the governance policy
-        it is enrolled in. The project must belong to the organization your API key
-        is scoped to; one belonging to another organization is reported as not found
+        it is enrolled in. A project in another organization is reported as not found
         rather than as forbidden.
       operations:
       - id: getProject
@@ -19106,7 +19035,7 @@ resources:
       summary: Update Project
       description: Renames a project or changes its description, and returns the
         project as stored. Send at least one field; a field you omit is left as it
-        is. A name already taken by another project in the organization is refused.
+        is.
       operations:
       - id: updateProject
         method: PUT
@@ -21345,9 +21274,8 @@ resources:
         typescript: create
       summary: Create RT Framework
       description: Creates a red teaming framework in your Confident AI project and
-        returns its id. Send `template` to fill it from a Confident AI template,
-        which creates its risk categories with vulnerability types and attack methods
-        already selected.
+        returns its id. Send `template` to fill it from a Confident AI template rather
+        than starting empty.
       operations:
       - id: createRtFramework
         method: POST
@@ -22148,8 +22076,7 @@ resources:
         typescript: list
       summary: List Scheduled Alerts
       description: Lists the scheduled alerts in your Confident AI project one page
-        at a time, ordered by name. Each alert is returned as a summary row; retrieve
-        one by id for its aggregation, filters, threshold, severity and run history.
+        at a time, ordered by name, as summary rows.
       operations:
       - id: listScheduledAlerts
         method: GET
@@ -22876,9 +22803,8 @@ resources:
         typescript: list
       summary: List Spans
       description: Lists the spans in your Confident AI project one page at a time,
-        newest first by default. Each span is returned as a summary with a preview
-        of its input and output; retrieve a span by id for its evaluation fields,
-        results and annotations.
+        newest first by default, as summary rows. Retrieve a span by id for its full
+        detail.
       operations:
       - id: listSpans
         method: GET
@@ -23602,10 +23528,8 @@ resources:
         pythonAsync: a_get
         typescript: get
       summary: Get Test Run
-      description: Retrieves a test run with its aggregated metric scores and every
-        test case in it, each with its metric results. The test cases are single-
-        turn, multi-turn or trace-based depending on how the run was evaluated, never
-        a mix. Requires an active trial or paid plan.
+      description: Retrieves a test run by id, with its aggregated scores and the
+        results of each test case it covers. Requires an active trial or paid plan.
       operations:
       - id: getTestRun
         method: GET
@@ -23837,9 +23761,8 @@ resources:
         typescript: list
       summary: List Traces
       description: Lists the traces in your Confident AI project one page at a time,
-        newest first by default. Each trace is returned as a summary with a preview
-        of its input and output; retrieve a trace by uuid for its spans, evaluation
-        fields, results and annotations.
+        newest first by default, as summary rows. Retrieve a trace by uuid for its
+        full detail.
       operations:
       - id: listTraces
         method: GET
@@ -24860,10 +24783,9 @@ resources:
         pythonAsync: a_list
         typescript: list
       summary: List Vulnerabilities
-      description: 'Lists the vulnerabilities available to your Confident AI project
-        one page at a time: the ones Confident AI ships first, then the ones your
-        project defined. Filter by catalog category or by whether a vulnerability
-        is built in.'
+      description: Lists the vulnerabilities available to your Confident AI project
+        one page at a time, both the ones Confident AI ships and your project's own.
+        Filter by catalog category or by whether a vulnerability is built in.
       operations:
       - id: listVulnerabilities
         method: GET
@@ -25099,8 +25021,7 @@ resources:
       summary: Update Vulnerability
       description: Updates a vulnerability and returns it. Updating one Confident
         AI ships makes this project its own copy of it, leaving every other project
-        untouched, and a built-in cannot be renamed. Sending `vulnerabilityTypes`
-        replaces the stored types, so a name you leave out is removed.
+        untouched, and a built-in cannot be renamed.
       operations:
       - id: updateVulnerability
         method: PUT
