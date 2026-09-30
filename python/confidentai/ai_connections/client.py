@@ -981,9 +981,8 @@ class AIConnectionsClient:
 
         Calls your LLM application once with a sample test case and reports what
         came back, including what each configured key path or transformer
-        managed to extract. The verdict replaces the connection's stored
-        `active`. A ping that fails is still a `200`: read `active` and `error`
-        in the body rather than the status code.
+        managed to extract. A ping that fails is still a `200`: read `active`
+        and `error` in the body rather than the status code.
 
         Args:
             ai_connection_id: The id of the AI connection.
@@ -1006,9 +1005,8 @@ class AIConnectionsClient:
 
         Calls your LLM application once with a sample test case and reports what
         came back, including what each configured key path or transformer
-        managed to extract. The verdict replaces the connection's stored
-        `active`. A ping that fails is still a `200`: read `active` and `error`
-        in the body rather than the status code.
+        managed to extract. A ping that fails is still a `200`: read `active`
+        and `error` in the body rather than the status code.
 
         Args:
             ai_connection_id: The id of the AI connection.

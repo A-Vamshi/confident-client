@@ -117,8 +117,7 @@ class GovernanceControlGroupsOperations:
 
         Retrieves a single governance control group with the controls inside it,
         which the list endpoint reports only as a count. Each control is named
-        rather than resolved — retrieve a control by id for its health, its
-        policy membership and its definition.
+        rather than resolved.
 
         Args:
             control_group_id: The id of the governance control group.
@@ -137,8 +136,7 @@ class GovernanceControlGroupsOperations:
 
         Retrieves a single governance control group with the controls inside it,
         which the list endpoint reports only as a count. Each control is named
-        rather than resolved — retrieve a control by id for its health, its
-        policy membership and its definition.
+        rather than resolved.
 
         Args:
             control_group_id: The id of the governance control group.

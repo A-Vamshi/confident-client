@@ -32,9 +32,7 @@ class EvaluationRulesClient:
         """List Evaluation Rules
 
         Lists the evaluation rules in your Confident AI project one page at a
-        time, newest first, as summary rows. Retrieve a rule by id for its full
-        configuration and the metric collection it runs. Requires the Starter
-        plan or above.
+        time, newest first, as summary rows. Requires the Starter plan or above.
 
         Args:
             page: The page to return. Defaults to 1.
@@ -62,9 +60,7 @@ class EvaluationRulesClient:
         """List Evaluation Rules
 
         Lists the evaluation rules in your Confident AI project one page at a
-        time, newest first, as summary rows. Retrieve a rule by id for its full
-        configuration and the metric collection it runs. Requires the Starter
-        plan or above.
+        time, newest first, as summary rows. Requires the Starter plan or above.
 
         Args:
             page: The page to return. Defaults to 1.

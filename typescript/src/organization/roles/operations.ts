@@ -15,9 +15,7 @@ export class RolesOperations extends PoliciesOperations {
    *
    * Lists every organization role a member can be given: the custom roles your
    * organization owns, plus the global, system-defined ones (`organizationId`
-   * is null). Each comes with the policies attached to it, which is where its
-   * permissions come from — a global role's permissions are system-defined
-   * instead, so it returns an empty `policies` array.
+   * is null). Each comes with the policies attached to it.
    */
   async listRoles(): Promise<OrganizationRoleList> {
     return this.api.sendRequest<OrganizationRoleList>(
@@ -63,10 +61,8 @@ export class RolesOperations extends PoliciesOperations {
    *
    * Replaces a custom organization role's name, description, and attached
    * policies. Every member holding the role is affected immediately, since
-   * permissions are resolved on each request. `policyIds` is the role's
-   * complete policy set rather than an addition to it, so an empty array leaves
-   * every member holding the role with no organization permissions. A global,
-   * system-defined role responds `404`.
+   * permissions are resolved on each request. A global, system-defined role
+   * responds `404`.
    *
    * @param roleId The id of the role. It must be a role the organization or
    *   project owns; a global, system-defined role is not addressable here.

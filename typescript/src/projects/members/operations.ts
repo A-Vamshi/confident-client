@@ -13,11 +13,10 @@ export class MembersOperations extends InvitationsOperations {
   /**
    * List Project Members
    *
-   * Lists the members of one project a page at a time, each with the project
-   * role that decides what they can do inside it. Project members are drawn
-   * from the organization's members: someone can belong to the organization and
-   * not appear here, and being here is what gives them access to this project's
-   * data.
+   * Lists the members of one project a page at a time. Project members are
+   * drawn from the organization's members: someone can belong to the
+   * organization and not appear here, and being here is what gives them access
+   * to this project's data.
    *
    * @param projectId The id of the project, which must belong to your
    *   organization.

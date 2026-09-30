@@ -39,9 +39,7 @@ class ScheduledAlertsClient:
         """List Scheduled Alerts
 
         Lists the scheduled alerts in your Confident AI project one page at a
-        time, ordered by name. Each alert is returned as a summary row; retrieve
-        one by id for its aggregation, filters, threshold, severity and run
-        history.
+        time, ordered by name, as summary rows.
 
         Args:
             page: The page of scheduled alerts to return. Defaults to 1.
@@ -75,9 +73,7 @@ class ScheduledAlertsClient:
         """List Scheduled Alerts
 
         Lists the scheduled alerts in your Confident AI project one page at a
-        time, ordered by name. Each alert is returned as a summary row; retrieve
-        one by id for its aggregation, filters, threshold, severity and run
-        history.
+        time, ordered by name, as summary rows.
 
         Args:
             page: The page of scheduled alerts to return. Defaults to 1.

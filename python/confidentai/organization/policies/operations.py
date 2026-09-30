@@ -21,11 +21,10 @@ class PoliciesOperations:
     def list_policies(self) -> PolicyList:
         """List Organization Policies
 
-        Lists the custom access policies your organization owns. Each is a named
-        set of organization permissions, returned with every permission it
-        grants as a `resource:action` pair such as `billing:read`. These are
-        what you attach to organization roles; the global, system-defined roles
-        do not draw their permissions from policies.
+        Lists the custom access policies your organization owns, each with the
+        permissions it grants. These are what you attach to organization roles;
+        the global, system-defined roles do not draw their permissions from
+        policies.
         """
         return self._api.request(
             HttpMethods.GET,
@@ -36,11 +35,10 @@ class PoliciesOperations:
     async def a_list_policies(self) -> PolicyList:
         """List Organization Policies
 
-        Lists the custom access policies your organization owns. Each is a named
-        set of organization permissions, returned with every permission it
-        grants as a `resource:action` pair such as `billing:read`. These are
-        what you attach to organization roles; the global, system-defined roles
-        do not draw their permissions from policies.
+        Lists the custom access policies your organization owns, each with the
+        permissions it grants. These are what you attach to organization roles;
+        the global, system-defined roles do not draw their permissions from
+        policies.
         """
         return await self._api.a_request(
             HttpMethods.GET,
@@ -142,9 +140,7 @@ class PoliciesOperations:
         permissions. The change reaches people through the roles the policy is
         attached to, and it reaches them immediately: every member holding any
         of those roles gains or loses the affected permissions on their next
-        call. `permissionIds` is the policy's complete permission set rather
-        than an addition to it, so an empty array makes the policy grant
-        nothing.
+        call.
 
         Args:
             policy_id: The id of the policy.
@@ -188,9 +184,7 @@ class PoliciesOperations:
         permissions. The change reaches people through the roles the policy is
         attached to, and it reaches them immediately: every member holding any
         of those roles gains or loses the affected permissions on their next
-        call. `permissionIds` is the policy's complete permission set rather
-        than an addition to it, so an empty array makes the policy grant
-        nothing.
+        call.
 
         Args:
             policy_id: The id of the policy.

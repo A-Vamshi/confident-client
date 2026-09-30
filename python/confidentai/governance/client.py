@@ -16,10 +16,8 @@ class GovernanceClient:
         """Assess Governance
 
         Assesses this project against every control in the governance policy it
-        belongs to, and returns whether they all passed. Call it as a gate in a
-        deployment pipeline: a false `passed` means at least one control is
-        failing. A project that belongs to no governance policy is rejected with
-        a 400.
+        belongs to, and returns whether they all passed. A project that belongs
+        to no governance policy is rejected with a `400`.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -31,10 +29,8 @@ class GovernanceClient:
         """Assess Governance
 
         Assesses this project against every control in the governance policy it
-        belongs to, and returns whether they all passed. Call it as a gate in a
-        deployment pipeline: a false `passed` means at least one control is
-        failing. A project that belongs to no governance policy is rejected with
-        a 400.
+        belongs to, and returns whether they all passed. A project that belongs
+        to no governance policy is rejected with a `400`.
         """
         return await self._api.a_request(
             HttpMethods.POST,

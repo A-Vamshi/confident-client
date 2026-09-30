@@ -32,9 +32,8 @@ class VulnerabilitiesClient:
         """List Vulnerabilities
 
         Lists the vulnerabilities available to your Confident AI project one
-        page at a time: the ones Confident AI ships first, then the ones your
-        project defined. Filter by catalog category or by whether a
-        vulnerability is built in.
+        page at a time, both the ones Confident AI ships and your project's own.
+        Filter by catalog category or by whether a vulnerability is built in.
 
         Args:
             page: The page of vulnerabilities to return. Defaults to 1.
@@ -69,9 +68,8 @@ class VulnerabilitiesClient:
         """List Vulnerabilities
 
         Lists the vulnerabilities available to your Confident AI project one
-        page at a time: the ones Confident AI ships first, then the ones your
-        project defined. Filter by catalog category or by whether a
-        vulnerability is built in.
+        page at a time, both the ones Confident AI ships and your project's own.
+        Filter by catalog category or by whether a vulnerability is built in.
 
         Args:
             page: The page of vulnerabilities to return. Defaults to 1.
@@ -240,9 +238,7 @@ class VulnerabilitiesClient:
 
         Updates a vulnerability and returns it. Updating one Confident AI ships
         makes this project its own copy of it, leaving every other project
-        untouched, and a built-in cannot be renamed. Sending
-        `vulnerabilityTypes` replaces the stored types, so a name you leave out
-        is removed.
+        untouched, and a built-in cannot be renamed.
 
         Args:
             vulnerability_id: The id of the vulnerability, as the list returns
@@ -291,9 +287,7 @@ class VulnerabilitiesClient:
 
         Updates a vulnerability and returns it. Updating one Confident AI ships
         makes this project its own copy of it, leaving every other project
-        untouched, and a built-in cannot be renamed. Sending
-        `vulnerabilityTypes` replaces the stored types, so a name you leave out
-        is removed.
+        untouched, and a built-in cannot be renamed.
 
         Args:
             vulnerability_id: The id of the vulnerability, as the list returns

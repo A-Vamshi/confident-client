@@ -59,9 +59,9 @@ class InvitationsOperations:
         organization access when accepted — organization access only; a project
         is joined separately. Addresses that already have an invitation, or
         already belong to a member, are dropped from the batch; if that leaves
-        nothing, the request is refused as a conflict. The `Owner` role cannot
-        be handed out this way, and the Free plan caps members plus invitations
-        at 2. Only the invitations created are returned.
+        nothing, the request is refused as a conflict. The Free plan caps
+        members plus invitations at 2. Only the invitations created are
+        returned.
 
         Args:
             emails: The email addresses to invite, between 1 and 50 of them.
@@ -88,9 +88,9 @@ class InvitationsOperations:
         organization access when accepted — organization access only; a project
         is joined separately. Addresses that already have an invitation, or
         already belong to a member, are dropped from the batch; if that leaves
-        nothing, the request is refused as a conflict. The `Owner` role cannot
-        be handed out this way, and the Free plan caps members plus invitations
-        at 2. Only the invitations created are returned.
+        nothing, the request is refused as a conflict. The Free plan caps
+        members plus invitations at 2. Only the invitations created are
+        returned.
 
         Args:
             emails: The email addresses to invite, between 1 and 50 of them.

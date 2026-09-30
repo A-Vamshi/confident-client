@@ -194,11 +194,10 @@ export class Project {
   /**
    * List Project Members
    *
-   * Lists the members of one project a page at a time, each with the project
-   * role that decides what they can do inside it. Project members are drawn
-   * from the organization's members: someone can belong to the organization and
-   * not appear here, and being here is what gives them access to this project's
-   * data.
+   * Lists the members of one project a page at a time. Project members are
+   * drawn from the organization's members: someone can belong to the
+   * organization and not appear here, and being here is what gives them access
+   * to this project's data.
    *
    * @param page The page to return. Defaults to 1.
    * @param pageSize The number of members per page, at most 100. Defaults to
@@ -272,14 +271,12 @@ export class Project {
   /**
    * Create Project Invitations
    *
-   * Invites people to this project by email, each with a link. Accepting adds
-   * the invitee to the project and, if needed, to the organization it belongs
-   * to — so this can grow the organization, not just the project. Addresses
-   * that already have an invitation to this project, or already belong to it,
-   * are dropped from the batch; if that leaves nothing, the request is refused
-   * as a conflict. The `Owner` role cannot be handed out this way, and the Free
-   * plan caps the organization's members plus invitations at 2. Only the
-   * invitations created are returned.
+   * Invites people to this project by email, each with a link. Accepting can
+   * grow the organization too, not just the project. Addresses that already
+   * have an invitation to this project, or already belong to it, are dropped
+   * from the batch; if that leaves nothing, the request is refused as a
+   * conflict. The Free plan caps the organization's members plus invitations at
+   * 2. Only the invitations created are returned.
    *
    * @param emails The email addresses to invite, between 1 and 50 of them. Each
    *   is trimmed and lowercased, and must be a company address — free and
@@ -399,9 +396,7 @@ export class Project {
    * Replaces a project policy's name, description, and granted permissions. The
    * change reaches people through the roles the policy is attached to, and it
    * reaches them immediately: every member holding any of those roles gains or
-   * loses the affected permissions on their next call. `permissionIds` is the
-   * policy's complete permission set rather than an addition to it, so an empty
-   * array makes the policy grant nothing.
+   * loses the affected permissions on their next call.
    *
    * @param policyId The id of the project policy.
    * @param name The name of the policy, unique within the organization or
@@ -452,11 +447,8 @@ export class Project {
    *
    * Lists every role a member of this project can be given: the custom roles
    * the project owns, plus the global, system-defined ones (`projectId` is
-   * null). Each comes with the project policies attached to it, which is where
-   * its permissions come from — a global role's permissions are system-defined
-   * instead, so it returns an empty `policies` array. Project roles govern
-   * access inside this project only; organization-wide settings come from the
-   * member's organization role.
+   * null). Project roles govern access inside this project only; organization-
+   * wide settings come from the member's organization role.
    */
   async listRoles(): Promise<ProjectRoleList> {
     return this.client.listRoles(this.projectIdOrThrow());
@@ -501,10 +493,7 @@ export class Project {
    *
    * Replaces a custom project role's name, description, and attached policies.
    * Every member holding the role is affected immediately, since permissions
-   * are resolved on each request. `policyIds` is the role's complete policy set
-   * rather than an addition to it, so an empty array leaves every member
-   * holding the role with no permissions in this project. A global, system-
-   * defined role responds `404`.
+   * are resolved on each request. A global, system-defined role responds `404`.
    *
    * @param roleId The id of the project role. It must be a role the project
    *   owns; a global, system-defined role is not addressable here.
@@ -555,11 +544,10 @@ export class Project {
   /**
    * Get Project Model
    *
-   * Returns the model in effect for the project, selected by the required
-   * `type` query parameter. `PLATFORM` and `SIMULATION` fall back to the
-   * organization's default when the project has no override of its own;
-   * `EVALUATION` is always project scoped. Reading never creates configuration,
-   * so the model is null until one is set.
+   * Returns which model the project uses for the `type` you ask for. `PLATFORM`
+   * and `SIMULATION` fall back to the organization's default when the project
+   * has no override of its own; `EVALUATION` is always project scoped. Reading
+   * never creates configuration.
    *
    * @param type Which of the project's models to read.
    */
@@ -715,8 +703,7 @@ export class Project {
    * Retrieve Project
    *
    * Retrieves a single project by id, including the governance policy it is
-   * enrolled in. The project must belong to the organization your API key is
-   * scoped to; one belonging to another organization is reported as not found
+   * enrolled in. A project in another organization is reported as not found
    * rather than as forbidden.
    */
   async get(): Promise<this> {
@@ -729,8 +716,7 @@ export class Project {
    * Update Project
    *
    * Renames a project or changes its description, and returns the project as
-   * stored. Send at least one field; a field you omit is left as it is. A name
-   * already taken by another project in the organization is refused.
+   * stored. Send at least one field; a field you omit is left as it is.
    */
   async update(): Promise<ProjectPayload> {
     const body = this.updateBody();

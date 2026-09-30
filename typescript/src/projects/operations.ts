@@ -63,8 +63,7 @@ export class ProjectsOperations {
    * Retrieve Project
    *
    * Retrieves a single project by id, including the governance policy it is
-   * enrolled in. The project must belong to the organization your API key is
-   * scoped to; one belonging to another organization is reported as not found
+   * enrolled in. A project in another organization is reported as not found
    * rather than as forbidden.
    *
    * @param projectId The id of the project. It must belong to the organization
@@ -82,8 +81,7 @@ export class ProjectsOperations {
    * Update Project
    *
    * Renames a project or changes its description, and returns the project as
-   * stored. Send at least one field; a field you omit is left as it is. A name
-   * already taken by another project in the organization is refused.
+   * stored. Send at least one field; a field you omit is left as it is.
    *
    * @param projectId The id of the project. It must belong to the organization
    *   your API key is scoped to.

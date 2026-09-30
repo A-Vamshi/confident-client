@@ -142,8 +142,8 @@ export class ExportSchedulesClient {
   /**
    * Get Export Schedule
    *
-   * Retrieves an export schedule by id, with the cadence it runs on, how far
-   * through that cadence it is, and the filters and destination each run uses.
+   * Retrieves an export schedule by id, with the filters and destination each
+   * of its runs uses.
    *
    * @param exportScheduleId The id of the export schedule.
    */

@@ -20,9 +20,7 @@ export class EvaluationRulesClient {
    * List Evaluation Rules
    *
    * Lists the evaluation rules in your Confident AI project one page at a time,
-   * newest first, as summary rows. Retrieve a rule by id for its full
-   * configuration and the metric collection it runs. Requires the Starter plan
-   * or above.
+   * newest first, as summary rows. Requires the Starter plan or above.
    *
    * @param page The page to return. Defaults to 1.
    * @param pageSize The number of results per page, at most 100. Defaults to

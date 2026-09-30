@@ -14,10 +14,8 @@ export class GovernanceClient {
    * Assess Governance
    *
    * Assesses this project against every control in the governance policy it
-   * belongs to, and returns whether they all passed. Call it as a gate in a
-   * deployment pipeline: a false `passed` means at least one control is
-   * failing. A project that belongs to no governance policy is rejected with a
-   * 400.
+   * belongs to, and returns whether they all passed. A project that belongs to
+   * no governance policy is rejected with a `400`.
    */
   async assess(): Promise<GovernanceAssessment> {
     return this.api.sendRequest<GovernanceAssessment>(

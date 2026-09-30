@@ -26,8 +26,7 @@ export class ScheduledAlertsClient {
    * List Scheduled Alerts
    *
    * Lists the scheduled alerts in your Confident AI project one page at a time,
-   * ordered by name. Each alert is returned as a summary row; retrieve one by
-   * id for its aggregation, filters, threshold, severity and run history.
+   * ordered by name, as summary rows.
    *
    * @param page The page of scheduled alerts to return. Defaults to 1.
    * @param pageSize The number of scheduled alerts per page, at most 100.

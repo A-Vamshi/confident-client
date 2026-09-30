@@ -83,12 +83,10 @@ class GovernanceProjectsOperations:
         """Get Project
 
         Retrieves one project's governance view in full: every control its
-        policy applies, inherited ones included, and the project's verdict
-        history over the last 30 days, newest first. Several assessments of the
-        same control on the same day collapse to the last one, so a control
-        appears at most once per day however often it was recomputed. A project
-        enrolled in no policy is reported as not found, so use the inventory
-        listing to tell an ungoverned project from one that does not exist.
+        policy applies, inherited ones included, together with its recent
+        verdict history. A project enrolled in no policy is reported as not
+        found, so use the inventory listing to tell an ungoverned project from
+        one that does not exist.
 
         Args:
             project_id: The id of the project.
@@ -106,12 +104,10 @@ class GovernanceProjectsOperations:
         """Get Project
 
         Retrieves one project's governance view in full: every control its
-        policy applies, inherited ones included, and the project's verdict
-        history over the last 30 days, newest first. Several assessments of the
-        same control on the same day collapse to the last one, so a control
-        appears at most once per day however often it was recomputed. A project
-        enrolled in no policy is reported as not found, so use the inventory
-        listing to tell an ungoverned project from one that does not exist.
+        policy applies, inherited ones included, together with its recent
+        verdict history. A project enrolled in no policy is reported as not
+        found, so use the inventory listing to tell an ungoverned project from
+        one that does not exist.
 
         Args:
             project_id: The id of the project.

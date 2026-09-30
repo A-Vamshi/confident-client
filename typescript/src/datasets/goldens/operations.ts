@@ -12,9 +12,8 @@ export class GoldensOperations extends DatasetIngestionTasksOperations {
   /**
    * Create Golden
    *
-   * Adds a single golden to the dataset and returns its id. The golden's kind
-   * must match the dataset's `multiTurn`. Pass `version` to add it to a
-   * specific dataset version; omitting it targets the latest version.
+   * Adds a single golden to the dataset and returns its id. Pass `version` to
+   * add it to a specific dataset version; omitting it targets the latest.
    *
    * @param datasetId The unique id of the dataset.
    * @param version The dataset version to add the golden to. Omitting it

@@ -15,11 +15,8 @@ export class RolesOperations extends PoliciesOperations {
    *
    * Lists every role a member of this project can be given: the custom roles
    * the project owns, plus the global, system-defined ones (`projectId` is
-   * null). Each comes with the project policies attached to it, which is where
-   * its permissions come from — a global role's permissions are system-defined
-   * instead, so it returns an empty `policies` array. Project roles govern
-   * access inside this project only; organization-wide settings come from the
-   * member's organization role.
+   * null). Project roles govern access inside this project only; organization-
+   * wide settings come from the member's organization role.
    *
    * @param projectId The id of the project, which must belong to your
    *   organization.
@@ -73,10 +70,7 @@ export class RolesOperations extends PoliciesOperations {
    *
    * Replaces a custom project role's name, description, and attached policies.
    * Every member holding the role is affected immediately, since permissions
-   * are resolved on each request. `policyIds` is the role's complete policy set
-   * rather than an addition to it, so an empty array leaves every member
-   * holding the role with no permissions in this project. A global, system-
-   * defined role responds `404`.
+   * are resolved on each request. A global, system-defined role responds `404`.
    *
    * @param projectId The id of the project the role belongs to.
    * @param roleId The id of the project role. It must be a role the project

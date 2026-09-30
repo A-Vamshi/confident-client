@@ -76,8 +76,7 @@ class DashboardsOperations:
 
         Creates a dashboard in your Confident AI project and returns its id.
         Send `widgets` to create it with its charts already on it, which saves a
-        call per widget; any widget you send without a `layout` is packed onto
-        the grid in the order given.
+        call per widget.
 
         Args:
             name: The name of the dashboard.
@@ -112,8 +111,7 @@ class DashboardsOperations:
 
         Creates a dashboard in your Confident AI project and returns its id.
         Send `widgets` to create it with its charts already on it, which saves a
-        call per widget; any widget you send without a `layout` is packed onto
-        the grid in the order given.
+        call per widget.
 
         Args:
             name: The name of the dashboard.

@@ -13,11 +13,9 @@ export class MembersOperations extends InvitationsOperations {
   /**
    * List Organization Members
    *
-   * Lists the members of your organization one page at a time, each with the
-   * organization role that decides what they can do. Membership here is what
-   * grants access to the organization itself; a member still has to be added to
-   * a project before they can see that project's data, so every project's
-   * member list is drawn from this one.
+   * Lists your organization's members one page at a time. Membership here is
+   * what grants access to the organization itself, so every project's member
+   * list is drawn from this one.
    *
    * @param page The page to return. Defaults to 1.
    * @param pageSize The number of members per page, at most 100. Defaults to

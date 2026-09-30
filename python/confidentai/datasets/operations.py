@@ -58,11 +58,9 @@ class DatasetsOperations:
     ) -> DatasetRef:
         """Push Dataset
 
-        Adds goldens to the dataset with the given `alias`, creating the dataset
-        first when it does not exist, and returns the dataset's id. Every golden
-        in one request must be of the same kind — all single-turn, or all multi-
-        turn — and that kind must match the dataset's `multiTurn`. Pushing to a
-        `version` requires the Team plan or above.
+        Adds goldens to a dataset, creating it when the `alias` names none yet,
+        and returns the dataset's id. Pushing to a `version` requires the Team
+        plan or above.
 
         Args:
             alias: The alias of the dataset, unique within your project. A new
@@ -103,11 +101,9 @@ class DatasetsOperations:
     ) -> DatasetRef:
         """Push Dataset
 
-        Adds goldens to the dataset with the given `alias`, creating the dataset
-        first when it does not exist, and returns the dataset's id. Every golden
-        in one request must be of the same kind — all single-turn, or all multi-
-        turn — and that kind must match the dataset's `multiTurn`. Pushing to a
-        `version` requires the Team plan or above.
+        Adds goldens to a dataset, creating it when the `alias` names none yet,
+        and returns the dataset's id. Pushing to a `version` requires the Team
+        plan or above.
 
         Args:
             alias: The alias of the dataset, unique within your project. A new
@@ -236,8 +232,7 @@ class DatasetsOperations:
         """Queue Dataset Goldens
 
         Adds goldens to the dataset as unfinalized goldens, for review on the
-        platform before they are used in evaluations. Every golden in one
-        request must be of the same kind, matching the dataset's `multiTurn`.
+        platform before they are used in evaluations.
 
         Args:
             dataset_id: The unique id of the dataset.
@@ -261,8 +256,7 @@ class DatasetsOperations:
         """Queue Dataset Goldens
 
         Adds goldens to the dataset as unfinalized goldens, for review on the
-        platform before they are used in evaluations. Every golden in one
-        request must be of the same kind, matching the dataset's `multiTurn`.
+        platform before they are used in evaluations.
 
         Args:
             dataset_id: The unique id of the dataset.

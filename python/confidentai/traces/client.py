@@ -46,9 +46,8 @@ class TracesClient:
         """List Traces
 
         Lists the traces in your Confident AI project one page at a time, newest
-        first by default. Each trace is returned as a summary with a preview of
-        its input and output; retrieve a trace by uuid for its spans, evaluation
-        fields, results and annotations.
+        first by default, as summary rows. Retrieve a trace by uuid for its full
+        detail.
 
         Args:
             page_size: The number of results per page, at most 100. Defaults to
@@ -103,9 +102,8 @@ class TracesClient:
         """List Traces
 
         Lists the traces in your Confident AI project one page at a time, newest
-        first by default. Each trace is returned as a summary with a preview of
-        its input and output; retrieve a trace by uuid for its spans, evaluation
-        fields, results and annotations.
+        first by default, as summary rows. Retrieve a trace by uuid for its full
+        detail.
 
         Args:
             page_size: The number of results per page, at most 100. Defaults to

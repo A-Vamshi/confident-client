@@ -182,8 +182,8 @@ class QueueIngestionTasksOperations:
     ) -> QueueIngestionTask:
         """Get Queue Ingestion Task
 
-        Retrieves an ingestion task by id, with the filters an item must match
-        to be queued and the reviewers harvested items are assigned to.
+        Retrieves one of the queue's ingestion tasks by id, with its full
+        configuration.
 
         Args:
             annotation_queue_id: The id of the annotation queue the task fills.
@@ -204,8 +204,8 @@ class QueueIngestionTasksOperations:
     ) -> QueueIngestionTask:
         """Get Queue Ingestion Task
 
-        Retrieves an ingestion task by id, with the filters an item must match
-        to be queued and the reviewers harvested items are assigned to.
+        Retrieves one of the queue's ingestion tasks by id, with its full
+        configuration.
 
         Args:
             annotation_queue_id: The id of the annotation queue the task fills.

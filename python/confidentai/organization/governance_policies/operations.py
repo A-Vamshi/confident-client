@@ -67,11 +67,9 @@ class GovernancePoliciesOperations:
 
         Creates a governance policy and returns its id. It starts with no
         controls attached and no projects enrolled, so use their own endpoints
-        afterwards. Send `basePolicyIds` to inherit another policy's controls:
-        inheritance is exactly two levels deep, so every id must name a policy
-        that extends nothing itself, and the whole request is rejected if one
-        does. That check and the write run in one serializable transaction, so
-        concurrent creates cannot slip past the rule.
+        afterwards. A `basePolicyIds` entry that itself extends another policy
+        is rejected, and that check and the write run in one serializable
+        transaction, so concurrent creates cannot slip past the rule.
 
         Args:
             name: The name of the governance policy, unique within your
@@ -106,11 +104,9 @@ class GovernancePoliciesOperations:
 
         Creates a governance policy and returns its id. It starts with no
         controls attached and no projects enrolled, so use their own endpoints
-        afterwards. Send `basePolicyIds` to inherit another policy's controls:
-        inheritance is exactly two levels deep, so every id must name a policy
-        that extends nothing itself, and the whole request is rejected if one
-        does. That check and the write run in one serializable transaction, so
-        concurrent creates cannot slip past the rule.
+        afterwards. A `basePolicyIds` entry that itself extends another policy
+        is rejected, and that check and the write run in one serializable
+        transaction, so concurrent creates cannot slip past the rule.
 
         Args:
             name: The name of the governance policy, unique within your
@@ -370,11 +366,9 @@ class GovernancePoliciesOperations:
         Enrolls projects in a governance policy, so the controls it applies —
         its own and the ones it inherits — start gating them. A project belongs
         to at most one policy, so one currently on a different policy is moved
-        here, and one already here is left as it is. This is a partial-success
-        operation: ids that name nothing come back in `notFoundProjectIds`
-        rather than failing the request, so check that list rather than assuming
-        the whole batch landed. Enrolling does not assess — call assess on the
-        policy, or wait for the next scheduled run, for verdicts to appear.
+        here, and one already here is left as it is. Enrolling does not assess —
+        call assess on the policy, or wait for the next scheduled run, for
+        verdicts to appear.
 
         Args:
             policy_id: The id of the governance policy.
@@ -400,11 +394,9 @@ class GovernancePoliciesOperations:
         Enrolls projects in a governance policy, so the controls it applies —
         its own and the ones it inherits — start gating them. A project belongs
         to at most one policy, so one currently on a different policy is moved
-        here, and one already here is left as it is. This is a partial-success
-        operation: ids that name nothing come back in `notFoundProjectIds`
-        rather than failing the request, so check that list rather than assuming
-        the whole batch landed. Enrolling does not assess — call assess on the
-        policy, or wait for the next scheduled run, for verdicts to appear.
+        here, and one already here is left as it is. Enrolling does not assess —
+        call assess on the policy, or wait for the next scheduled run, for
+        verdicts to appear.
 
         Args:
             policy_id: The id of the governance policy.

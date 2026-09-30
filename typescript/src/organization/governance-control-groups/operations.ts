@@ -64,8 +64,7 @@ export class GovernanceControlGroupsOperations extends AuditLogsExportsOperation
    *
    * Retrieves a single governance control group with the controls inside it,
    * which the list endpoint reports only as a count. Each control is named
-   * rather than resolved — retrieve a control by id for its health, its policy
-   * membership and its definition.
+   * rather than resolved.
    *
    * @param controlGroupId The id of the governance control group.
    */

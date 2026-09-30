@@ -17,11 +17,10 @@ export class ModelsOperations extends MembersOperations {
   /**
    * Get Project Model
    *
-   * Returns the model in effect for the project, selected by the required
-   * `type` query parameter. `PLATFORM` and `SIMULATION` fall back to the
-   * organization's default when the project has no override of its own;
-   * `EVALUATION` is always project scoped. Reading never creates configuration,
-   * so the model is null until one is set.
+   * Returns which model the project uses for the `type` you ask for. `PLATFORM`
+   * and `SIMULATION` fall back to the organization's default when the project
+   * has no override of its own; `EVALUATION` is always project scoped. Reading
+   * never creates configuration.
    *
    * @param projectId The id of the project, which must belong to the
    *   organization your API key is scoped to.

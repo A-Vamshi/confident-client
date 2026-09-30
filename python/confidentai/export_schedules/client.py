@@ -245,9 +245,8 @@ class ExportSchedulesClient:
     def get(self, export_schedule_id: str) -> ExportSchedule:
         """Get Export Schedule
 
-        Retrieves an export schedule by id, with the cadence it runs on, how far
-        through that cadence it is, and the filters and destination each run
-        uses.
+        Retrieves an export schedule by id, with the filters and destination
+        each of its runs uses.
 
         Args:
             export_schedule_id: The id of the export schedule.
@@ -262,9 +261,8 @@ class ExportSchedulesClient:
     async def a_get(self, export_schedule_id: str) -> ExportSchedule:
         """Get Export Schedule
 
-        Retrieves an export schedule by id, with the cadence it runs on, how far
-        through that cadence it is, and the filters and destination each run
-        uses.
+        Retrieves an export schedule by id, with the filters and destination
+        each of its runs uses.
 
         Args:
             export_schedule_id: The id of the export schedule.

@@ -71,14 +71,12 @@ class InvitationsOperations:
     ) -> ProjectInvitationList:
         """Create Project Invitations
 
-        Invites people to this project by email, each with a link. Accepting
-        adds the invitee to the project and, if needed, to the organization it
-        belongs to — so this can grow the organization, not just the project.
-        Addresses that already have an invitation to this project, or already
-        belong to it, are dropped from the batch; if that leaves nothing, the
-        request is refused as a conflict. The `Owner` role cannot be handed out
-        this way, and the Free plan caps the organization's members plus
-        invitations at 2. Only the invitations created are returned.
+        Invites people to this project by email, each with a link. Accepting can
+        grow the organization too, not just the project. Addresses that already
+        have an invitation to this project, or already belong to it, are dropped
+        from the batch; if that leaves nothing, the request is refused as a
+        conflict. The Free plan caps the organization's members plus invitations
+        at 2. Only the invitations created are returned.
 
         Args:
             project_id: The id of the project, which must belong to your
@@ -108,14 +106,12 @@ class InvitationsOperations:
     ) -> ProjectInvitationList:
         """Create Project Invitations
 
-        Invites people to this project by email, each with a link. Accepting
-        adds the invitee to the project and, if needed, to the organization it
-        belongs to — so this can grow the organization, not just the project.
-        Addresses that already have an invitation to this project, or already
-        belong to it, are dropped from the batch; if that leaves nothing, the
-        request is refused as a conflict. The `Owner` role cannot be handed out
-        this way, and the Free plan caps the organization's members plus
-        invitations at 2. Only the invitations created are returned.
+        Invites people to this project by email, each with a link. Accepting can
+        grow the organization too, not just the project. Addresses that already
+        have an invitation to this project, or already belong to it, are dropped
+        from the batch; if that leaves nothing, the request is refused as a
+        conflict. The Free plan caps the organization's members plus invitations
+        at 2. Only the invitations created are returned.
 
         Args:
             project_id: The id of the project, which must belong to your

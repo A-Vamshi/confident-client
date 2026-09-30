@@ -163,8 +163,6 @@ class PoliciesOperations:
         The change reaches people through the roles the policy is attached to,
         and it reaches them immediately: every member holding any of those roles
         gains or loses the affected permissions on their next call.
-        `permissionIds` is the policy's complete permission set rather than an
-        addition to it, so an empty array makes the policy grant nothing.
 
         Args:
             project_id: The id of the project the policy belongs to.
@@ -210,8 +208,6 @@ class PoliciesOperations:
         The change reaches people through the roles the policy is attached to,
         and it reaches them immediately: every member holding any of those roles
         gains or loses the affected permissions on their next call.
-        `permissionIds` is the policy's complete permission set rather than an
-        addition to it, so an empty array makes the policy grant nothing.
 
         Args:
             project_id: The id of the project the policy belongs to.

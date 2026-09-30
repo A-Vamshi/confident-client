@@ -12,11 +12,9 @@ export class PoliciesOperations extends ModelsOperations {
   /**
    * List Organization Policies
    *
-   * Lists the custom access policies your organization owns. Each is a named
-   * set of organization permissions, returned with every permission it grants
-   * as a `resource:action` pair such as `billing:read`. These are what you
-   * attach to organization roles; the global, system-defined roles do not draw
-   * their permissions from policies.
+   * Lists the custom access policies your organization owns, each with the
+   * permissions it grants. These are what you attach to organization roles; the
+   * global, system-defined roles do not draw their permissions from policies.
    */
   async listPolicies(): Promise<PolicyList> {
     return this.api.sendRequest<PolicyList>(
@@ -64,8 +62,6 @@ export class PoliciesOperations extends ModelsOperations {
    * permissions. The change reaches people through the roles the policy is
    * attached to, and it reaches them immediately: every member holding any of
    * those roles gains or loses the affected permissions on their next call.
-   * `permissionIds` is the policy's complete permission set rather than an
-   * addition to it, so an empty array makes the policy grant nothing.
    *
    * @param policyId The id of the policy.
    * @param name The name of the policy, unique within the organization or

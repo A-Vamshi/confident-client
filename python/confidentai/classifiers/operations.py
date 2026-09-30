@@ -99,12 +99,10 @@ class ClassifiersOperations:
         """Create Classifier
 
         Creates a classifier that tags incoming traces or threads with labels,
-        and returns its id. A name is unique per data model within the project.
-        Sending a `preset` seeds the classifier with a description, a generation
-        config, and a starting set of labels, and any field you send explicitly
-        overrides what the preset would have set — `SENTIMENT` arrives with its
-        labels ready, while `TOPICS`, `USE_CASES` and `ISSUES` ship with none
-        and expect a generation run next. Requires the Starter plan or above.
+        and returns its id. Sending a `preset` seeds it with a description, a
+        generation config, and a starting set of labels; any field you send
+        explicitly overrides what the preset would have set. Requires the
+        Starter plan or above.
 
         Args:
             name: The name of the classifier, unique per data model within the
@@ -153,12 +151,10 @@ class ClassifiersOperations:
         """Create Classifier
 
         Creates a classifier that tags incoming traces or threads with labels,
-        and returns its id. A name is unique per data model within the project.
-        Sending a `preset` seeds the classifier with a description, a generation
-        config, and a starting set of labels, and any field you send explicitly
-        overrides what the preset would have set — `SENTIMENT` arrives with its
-        labels ready, while `TOPICS`, `USE_CASES` and `ISSUES` ship with none
-        and expect a generation run next. Requires the Starter plan or above.
+        and returns its id. Sending a `preset` seeds it with a description, a
+        generation config, and a starting set of labels; any field you send
+        explicitly overrides what the preset would have set. Requires the
+        Starter plan or above.
 
         Args:
             name: The name of the classifier, unique per data model within the

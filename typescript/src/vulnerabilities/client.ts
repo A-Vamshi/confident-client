@@ -19,9 +19,8 @@ export class VulnerabilitiesClient {
    * List Vulnerabilities
    *
    * Lists the vulnerabilities available to your Confident AI project one page
-   * at a time: the ones Confident AI ships first, then the ones your project
-   * defined. Filter by catalog category or by whether a vulnerability is built
-   * in.
+   * at a time, both the ones Confident AI ships and your project's own. Filter
+   * by catalog category or by whether a vulnerability is built in.
    *
    * @param page The page of vulnerabilities to return. Defaults to 1.
    * @param pageSize The number of vulnerabilities per page, at most 100.
@@ -116,8 +115,7 @@ export class VulnerabilitiesClient {
    *
    * Updates a vulnerability and returns it. Updating one Confident AI ships
    * makes this project its own copy of it, leaving every other project
-   * untouched, and a built-in cannot be renamed. Sending `vulnerabilityTypes`
-   * replaces the stored types, so a name you leave out is removed.
+   * untouched, and a built-in cannot be renamed.
    *
    * @param vulnerabilityId The id of the vulnerability, as the list returns it.
    *   A built-in's catalog name also resolves.

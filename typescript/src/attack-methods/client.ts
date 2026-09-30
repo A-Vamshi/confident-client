@@ -60,9 +60,8 @@ export class AttackMethodsClient {
    * Update Attack Method
    *
    * Configures the parameter values your project runs an attack method with,
-   * and returns the method. The values replace this project's stored
-   * configuration wholesale, so send every value you want kept. An attack
-   * method that takes no parameters cannot be configured.
+   * and returns the method. An attack method that takes no parameters cannot be
+   * configured.
    *
    * @param attackMethodId The id of the attack method, as the list returns it.
    *   A method's catalog name also resolves.

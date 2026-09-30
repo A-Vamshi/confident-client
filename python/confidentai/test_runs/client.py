@@ -311,10 +311,8 @@ class TestRunsClient:
     def get(self, test_run_id: str) -> TestRun:
         """Get Test Run
 
-        Retrieves a test run with its aggregated metric scores and every test
-        case in it, each with its metric results. The test cases are single-
-        turn, multi-turn or trace-based depending on how the run was evaluated,
-        never a mix. Requires an active trial or paid plan.
+        Retrieves a test run by id, with its aggregated scores and the results
+        of each test case it covers. Requires an active trial or paid plan.
 
         Args:
             test_run_id: The id of the test run.
@@ -329,10 +327,8 @@ class TestRunsClient:
     async def a_get(self, test_run_id: str) -> TestRun:
         """Get Test Run
 
-        Retrieves a test run with its aggregated metric scores and every test
-        case in it, each with its metric results. The test cases are single-
-        turn, multi-turn or trace-based depending on how the run was evaluated,
-        never a mix. Requires an active trial or paid plan.
+        Retrieves a test run by id, with its aggregated scores and the results
+        of each test case it covers. Requires an active trial or paid plan.
 
         Args:
             test_run_id: The id of the test run.

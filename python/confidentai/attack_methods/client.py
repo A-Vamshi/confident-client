@@ -123,9 +123,8 @@ class AttackMethodsClient:
         """Update Attack Method
 
         Configures the parameter values your project runs an attack method with,
-        and returns the method. The values replace this project's stored
-        configuration wholesale, so send every value you want kept. An attack
-        method that takes no parameters cannot be configured.
+        and returns the method. An attack method that takes no parameters cannot
+        be configured.
 
         Args:
             attack_method_id: The id of the attack method, as the list returns
@@ -150,9 +149,8 @@ class AttackMethodsClient:
         """Update Attack Method
 
         Configures the parameter values your project runs an attack method with,
-        and returns the method. The values replace this project's stored
-        configuration wholesale, so send every value you want kept. An attack
-        method that takes no parameters cannot be configured.
+        and returns the method. An attack method that takes no parameters cannot
+        be configured.
 
         Args:
             attack_method_id: The id of the attack method, as the list returns

@@ -211,9 +211,7 @@ class ForwardingConnectorsClient:
         """Update Forwarding Connector
 
         Updates a forwarding connector and returns it. Every field you omit is
-        left as stored. When you do send `headers`, the list replaces all stored
-        headers, so resend the ones you want to keep: a value left masked keeps
-        the stored credential, and a plaintext value replaces it.
+        left as stored.
 
         Args:
             forwarding_connector_id: The id of the forwarding connector.
@@ -262,9 +260,7 @@ class ForwardingConnectorsClient:
         """Update Forwarding Connector
 
         Updates a forwarding connector and returns it. Every field you omit is
-        left as stored. When you do send `headers`, the list replaces all stored
-        headers, so resend the ones you want to keep: a value left masked keeps
-        the stored credential, and a plaintext value replaces it.
+        left as stored.
 
         Args:
             forwarding_connector_id: The id of the forwarding connector.

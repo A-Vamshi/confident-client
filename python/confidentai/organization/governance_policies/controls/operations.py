@@ -71,9 +71,7 @@ class GovernancePoliciesControlsOperations:
         This is how a control comes to govern anything: a newly created control
         is attached to no policy, so it gates nothing until a policy attaches it
         here. Every id must name a control in your organization, or the whole
-        request is rejected, and an inherited control cannot be listed — it is
-        attached on the base policy that owns it. Returns the policy's controls
-        as they now stand, inherited ones included.
+        request is rejected.
 
         Args:
             policy_id: The id of the governance policy.
@@ -102,9 +100,7 @@ class GovernancePoliciesControlsOperations:
         This is how a control comes to govern anything: a newly created control
         is attached to no policy, so it gates nothing until a policy attaches it
         here. Every id must name a control in your organization, or the whole
-        request is rejected, and an inherited control cannot be listed — it is
-        attached on the base policy that owns it. Returns the policy's controls
-        as they now stand, inherited ones included.
+        request is rejected.
 
         Args:
             policy_id: The id of the governance policy.
@@ -131,10 +127,8 @@ class GovernancePoliciesControlsOperations:
         Detaches the named controls from the governance policy, leaving its
         others in place, so the policy stops gating its projects on them. The
         controls themselves are not deleted and stay available to other
-        policies, and verdicts already recorded are kept. An inherited control
-        cannot be detached here: it is managed on the base policy that owns it,
-        and the request is rejected naming that policy rather than silently
-        doing nothing.
+        policies, and verdicts already recorded are kept. Naming an inherited
+        control is rejected rather than silently ignored.
 
         Args:
             policy_id: The id of the governance policy.
@@ -159,10 +153,8 @@ class GovernancePoliciesControlsOperations:
         Detaches the named controls from the governance policy, leaving its
         others in place, so the policy stops gating its projects on them. The
         controls themselves are not deleted and stay available to other
-        policies, and verdicts already recorded are kept. An inherited control
-        cannot be detached here: it is managed on the base policy that owns it,
-        and the request is rejected naming that policy rather than silently
-        doing nothing.
+        policies, and verdicts already recorded are kept. Naming an inherited
+        control is rejected rather than silently ignored.
 
         Args:
             policy_id: The id of the governance policy.
