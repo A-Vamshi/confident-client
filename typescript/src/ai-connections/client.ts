@@ -279,11 +279,9 @@ export class AIConnectionsClient {
   /**
    * Get AI Connection
    *
-   * Retrieves an AI connection by id with its full configuration: how Confident
-   * AI calls your application, and where in the response each evaluated value
-   * is read from. The stored `headers`, `queryParams`, `authentication` and
-   * `cloudProvider` are returned exactly as they were saved, so treat the
-   * response as carrying credentials.
+   * Retrieves an AI connection by id with its full configuration. The stored
+   * `headers`, `queryParams`, `authentication` and `cloudProvider` are returned
+   * exactly as they were saved, so treat the response as carrying credentials.
    *
    * @param aiConnectionId The id of the AI connection.
    */
@@ -558,10 +556,8 @@ export class AIConnectionsClient {
    *
    * Calls your LLM application once with a sample test case and reports what
    * came back, including what each configured key path or transformer managed
-   * to extract. Use it to confirm a connection works before running an
-   * evaluation through it. The verdict replaces the connection's stored
-   * `active`. A ping that fails is still a 200 response: read `active` and
-   * `error` in the body rather than the status code.
+   * to extract. A ping that fails is still a `200`: read `active` and `error`
+   * in the body rather than the status code.
    *
    * @param aiConnectionId The id of the AI connection.
    * @param multiturn Whether to test the connection over a simulated multi-turn

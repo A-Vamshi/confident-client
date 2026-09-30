@@ -15,10 +15,8 @@ export class SpansClient {
    * List Spans
    *
    * Lists the spans in your Confident AI project one page at a time, newest
-   * first by default. Filter by type, trace, name, model, prompt or retriever
-   * settings, and pass `nextCursor` back as `cursor` for the next page. Each
-   * span is returned as a summary with a preview of its input and output;
-   * retrieve a span by id for its evaluation fields, results and annotations.
+   * first by default, as summary rows. Retrieve a span by id for its full
+   * detail.
    *
    * @param pageSize The number of results per page, at most 100. Defaults to
    *   25.

@@ -13,11 +13,9 @@ export class MembersOperations extends InvitationsOperations {
   /**
    * List Organization Members
    *
-   * Lists the members of your organization one page at a time, each with the
-   * organization role that decides what they can do. Membership here is what
-   * grants access to the organization itself; a member still has to be added to
-   * a project before they can see that project's data, so every project's
-   * member list is drawn from this one.
+   * Lists your organization's members one page at a time. Membership here is
+   * what grants access to the organization itself, so every project's member
+   * list is drawn from this one.
    *
    * @param page The page to return. Defaults to 1.
    * @param pageSize The number of members per page, at most 100. Defaults to
@@ -37,13 +35,12 @@ export class MembersOperations extends InvitationsOperations {
   /**
    * Update Organization Member Role
    *
-   * Replaces a member's organization role, which changes what they may do
-   * across the organization from their next request onwards. Assigning the
-   * `Owner` role transfers ownership: the member becomes Owner and the previous
-   * Owner is demoted to `Admin` in the same transaction. That is the only way
-   * the Owner's role changes — moving the Owner onto any other role directly is
-   * refused. A role id belonging to another organization is rejected, and the
-   * member's project roles are left untouched.
+   * Replaces a member's organization role, which changes what they may do from
+   * their next request onwards. Assigning the `Owner` role transfers ownership:
+   * the member becomes Owner and the previous Owner is demoted to `Admin` in
+   * the same transaction. That is the only way the Owner's role changes —
+   * moving the Owner onto another role directly is refused. The member's
+   * project roles are left untouched.
    *
    * @param userId The id of the user whose organization membership to change.
    * @param roleId The id of the role to assign. It must be a Confident AI
@@ -63,14 +60,12 @@ export class MembersOperations extends InvitationsOperations {
   /**
    * Remove Organization Member
    *
-   * Revokes a member's access to the organization and to everything inside it:
-   * they are detached from the organization, disconnected from every project in
-   * it, their organization and project roles are deleted, and any invitation
-   * still outstanding for their email address is cleared. The Owner cannot be
-   * removed, so transfer ownership first. Removal is not reversible through
-   * this endpoint — the only way back is a fresh invitation, which returns them
-   * with no project access. The user's own account and the records they created
-   * are kept.
+   * Revokes a member's access to the organization and everything inside it:
+   * they are detached from every project, their organization and project roles
+   * are deleted, and any outstanding invitation for their email is cleared. The
+   * Owner cannot be removed, so transfer ownership first. The only way back is
+   * a fresh invitation, which returns them with no project access. Their
+   * account and the records they created are kept.
    *
    * @param userId The id of the user whose organization membership to change.
    */

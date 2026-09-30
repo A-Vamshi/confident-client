@@ -12,29 +12,15 @@ export class AuditLogsExportsOperations extends ApiKeysOperations {
   /**
    * Create Project Audit Log Export
    *
-   * Starts an export of one project's audit logs — every audited action
-   * recorded against that project — as a gzipped CSV, and returns the export to
-   * poll. Use the organization endpoint instead to cover every project at once.
-   * Send an empty body (`{}`) to export every audit log ever recorded for the
-   * project. Send `startTime` and `endTime` together to export a single period
-   * instead: both ends are inclusive, `endTime` must be after `startTime`, and
-   * an audit log export has no cap on how long that period may be. `searchTerm`
-   * narrows it further. The `startTime` and `endTime` on the returned export
-   * are the period its file will cover — for an all-time export, the timestamps
-   * of the oldest and newest audit log matched. The export runs in the
-   * background, so this responds `202` with `status: IN_PROGRESS` as soon as
-   * the job is queued. Poll `GET /v2/projects/{projectId}/audit-
-   * logs/exports/{exportId}` until `status` is `COMPLETED`; there is nothing to
-   * fetch before then. Then call `GET /v2/projects/{projectId}/audit-
-   * logs/exports/{exportId}/download`, which responds `302` with a `Location`
-   * header pointing at a pre-signed object storage URL valid for 15 minutes —
-   * follow the redirect to receive the file, and call the endpoint again rather
-   * than storing that URL. `ERRORED` is terminal: read `errorMessage` and start
-   * a new export rather than polling on. One audit log export runs at a time
-   * per project and caller, so starting a second while one is `IN_PROGRESS`
-   * returns `409`. A period matching no audit logs, or matching more than
-   * 10,000,000 audit logs, is rejected with `400` — narrow it with `searchTerm`
-   * or a shorter period.
+   * Starts a background export of one project's audit logs — every audited
+   * action recorded against that project — as a gzipped CSV, and responds `202`
+   * with the export to poll. Use the organization endpoint to cover every
+   * project at once. Poll `GET /v2/projects/{projectId}/audit-
+   * logs/exports/{exportId}` until `status` is `COMPLETED`, then call `GET
+   * /v2/projects/{projectId}/audit-logs/exports/{exportId}/download` for the
+   * file; `ERRORED` is terminal. One export runs at a time per project and
+   * caller, so starting a second returns `409`, and a period matching no audit
+   * logs, or more than 10,000,000 audit logs, is rejected with `400`.
    *
    * @param projectId The id of the project whose audit logs are exported. It
    *   must belong to the organization the API key belongs to.
@@ -63,18 +49,12 @@ export class AuditLogsExportsOperations extends ApiKeysOperations {
   /**
    * Get Project Audit Log Export
    *
-   * Retrieves a project audit log export, so that a caller can poll one it
-   * started. `status` is `IN_PROGRESS` while the file is being written,
-   * `COMPLETED` once the file is in storage and ready to download, or `ERRORED`
-   * if the run failed, in which case `errorMessage` says why. `rowCount` is
-   * null until the export completes and then reports how many audit logs its
-   * file holds, and `startTime` and `endTime` are the period that file covers.
-   * Poll here rather than at the download endpoint, which has nothing to serve
-   * until `status` is `COMPLETED`. An export is kept for 24 hours after it was
-   * created, or 5 minutes once it has failed, after which this returns `404`.
-   * The lookup is by id among the exports you started in this project and is
-   * not restricted to audit log exports, so an id belonging to another kind of
-   * export comes back with its own `exportType`.
+   * Retrieves a project audit log export, so you can poll one you started —
+   * poll here rather than at the download endpoint, which has nothing to serve
+   * until `status` is `COMPLETED`. An export is kept for 24 hours, or 5 minutes
+   * once it has failed, after which this returns `404`. The lookup is not
+   * restricted to audit log exports, so another kind of export id comes back
+   * with its own `exportType`.
    *
    * @param projectId The id of the project whose audit logs are exported. It
    *   must belong to the organization the API key belongs to.

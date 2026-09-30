@@ -40,9 +40,8 @@ export class RTFrameworksOperations {
    * Create RT Framework
    *
    * Creates a red teaming framework in your Confident AI project and returns
-   * its id. Send `template` to fill it from a Confident AI template, which
-   * creates its risk categories with vulnerability types and attack methods
-   * already selected.
+   * its id. Send `template` to fill it from a Confident AI template rather than
+   * starting empty.
    *
    * @param name The name of the framework, unique within the project.
    * @param description What the framework covers. Send null to leave it unset.

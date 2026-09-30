@@ -4,7 +4,6 @@
 // and regenerate.
 
 import {
-  AnnotationType,
   FilterSet,
   IngestionDataModel,
   MLLMImage,
@@ -27,6 +26,7 @@ export enum AssignmentStrategy {
 
 export enum QueueItemStatus {
   IN_PROGRESS = "IN_PROGRESS",
+  DRAFT = "DRAFT",
   DEFERRED = "DEFERRED",
   COMPLETED = "COMPLETED",
 }
@@ -48,8 +48,8 @@ export interface AddedQueueItems {
 }
 
 export interface QueueItemAnnotation {
-  rating: number;
-  type?: AnnotationType;
+  fieldType?: "THUMBS_RATING" | "FIVE_STAR_RATING";
+  value: boolean | number;
   name?: string;
   explanation?: string;
   expectedOutput?: string;
@@ -88,6 +88,7 @@ export interface AnnotationQueue {
   updatedAt: string;
   testRunId: string | null;
   formId: string | null;
+  tags: string[];
   totalItems: number;
   completedItems: number;
   pendingItems: number;
@@ -122,6 +123,7 @@ export interface AnnotationQueueSummary {
   updatedAt: string;
   testRunId: string | null;
   formId: string | null;
+  tags: string[];
   totalItems: number;
   completedItems: number;
   pendingItems: number;
@@ -175,6 +177,7 @@ export interface CreateAnnotationQueueRequest {
   name: string;
   type: AnnotationQueueType;
   formId?: string;
+  tags?: string[];
 }
 
 export interface CreateQueueIngestionTaskRequest {
@@ -222,6 +225,7 @@ export interface QueueIngestionTaskRef {
 export interface UpdateAnnotationQueueRequest {
   name?: string;
   formId?: string | null;
+  tags?: string[];
 }
 
 export interface UpdateQueueIngestionTaskRequest {

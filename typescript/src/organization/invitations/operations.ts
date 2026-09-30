@@ -15,8 +15,7 @@ export class InvitationsOperations extends GovernanceProjectsOperations {
    *
    * Lists the invitations to your organization that are still outstanding —
    * those the invitee has not answered, and those they declined. An invitation
-   * disappears from this list once it is accepted, since the invitee is an
-   * organization member from then on, and once it is revoked. Invitations do
+   * disappears from this list once it is accepted or revoked. Invitations do
    * not expire on their own, so a pending one stays acceptable until it is
    * revoked or resent. Every entry carries the token from the invitee's invite
    * link, so treat the response as sensitive.
@@ -31,16 +30,12 @@ export class InvitationsOperations extends GovernanceProjectsOperations {
   /**
    * Create Organization Invitations
    *
-   * Invites people to your organization by email and emails each of them a link
-   * that grants organization access when accepted — organization access only; a
-   * project has to be joined separately. Addresses are lowercased and must be
-   * company addresses. An address that already has an organization invitation
-   * is dropped from the batch, and so is one that already belongs to a member;
-   * if that leaves nothing to invite, the whole request is refused as a
-   * conflict instead. `organizationRoleId` sets the role every invitee lands
-   * on, and the `Owner` role cannot be handed out this way. On the Free plan,
-   * members plus new invitations cannot exceed 2 users. Only the invitations
-   * that were created are returned, each with its token.
+   * Invites people to your organization by email, each with a link granting
+   * organization access when accepted — organization access only; a project is
+   * joined separately. Addresses that already have an invitation, or already
+   * belong to a member, are dropped from the batch; if that leaves nothing, the
+   * request is refused as a conflict. The Free plan caps members plus
+   * invitations at 2. Only the invitations created are returned.
    *
    * @param emails The email addresses to invite, between 1 and 50 of them. Each
    *   is trimmed and lowercased, and must be a company address — free and
@@ -63,15 +58,13 @@ export class InvitationsOperations extends GovernanceProjectsOperations {
   /**
    * Resend Organization Invitation
    *
-   * Emails the invitation again and returns it. The invitation is reset in the
-   * process: its status goes back to `PENDING`, it is stamped with a new
-   * creation time, and a fresh token is issued — so any link sent for it
-   * earlier stops working. That reset is what revives an invitation the invitee
-   * declined. An invitation that was already accepted is reset the same way,
-   * which mails the member a link they no longer need without touching the
-   * access they already have; revoke the invitation or remove the member
-   * instead if that is what you meant. Invitations never expire on their own,
-   * so resending is about a link that was lost, not one that timed out.
+   * Emails the invitation again and returns it, resetting it in the process:
+   * the status goes back to `PENDING`, a fresh token is issued, and any link
+   * sent earlier stops working. That reset is what revives an invitation the
+   * invitee declined. An invitation that was already accepted is reset the same
+   * way, mailing the member a link they no longer need without touching the
+   * access they have — revoke the invitation or remove the member instead if
+   * that is what you meant.
    *
    * @param invitationId The id of the organization invitation.
    */
@@ -89,11 +82,10 @@ export class InvitationsOperations extends GovernanceProjectsOperations {
    * Revoke Organization Invitation
    *
    * Deletes the invitation, whatever its status, so its link can no longer be
-   * accepted and it disappears from the invitation list. Only the invitation
-   * goes: an invitee who already accepted keeps their organization membership,
-   * so revoke access by removing them from the organization's members instead.
-   * Revoking cannot be undone — invite the address again to issue a new
-   * invitation with a new token.
+   * accepted. Only the invitation goes: an invitee who already accepted keeps
+   * their organization membership, so revoke access by removing them from the
+   * members instead. This cannot be undone — invite the address again to issue
+   * a new invitation with a new token.
    *
    * @param invitationId The id of the organization invitation.
    */

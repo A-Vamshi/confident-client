@@ -3,7 +3,7 @@
 // Do not edit by hand — change the route in confident-cloud
 // and regenerate.
 
-import { AnnotationType, MLLMImage, UserReference } from "../common/types";
+import { AnnotationFieldType, MLLMImage, UserReference } from "../common/types";
 
 export enum AnnotationSortBy {
   CREATEDAT = "createdAt",
@@ -12,8 +12,8 @@ export enum AnnotationSortBy {
 
 export interface Annotation {
   id: string;
-  rating: number;
-  type: AnnotationType;
+  fieldType: AnnotationFieldType;
+  value: string | number | boolean | string[] | null;
   name: string | null;
   explanation: string | null;
   expectedOutcome: string | null;
@@ -37,11 +37,13 @@ export interface AnnotationRef {
   id: string;
 }
 
+export type AnnotationValue = string | number | boolean | string[];
+
 export interface SpanAnnotationRequest {
   spanUuid: string;
   expectedOutput?: string;
-  rating: number;
-  type?: AnnotationType;
+  fieldType?: AnnotationFieldType;
+  value: AnnotationValue;
   name?: string;
   explanation?: string;
   userId?: string;
@@ -51,8 +53,8 @@ export interface SpanAnnotationRequest {
 export interface ThreadAnnotationRequest {
   threadId: string;
   expectedOutcome?: string;
-  rating: number;
-  type?: AnnotationType;
+  fieldType?: AnnotationFieldType;
+  value: AnnotationValue;
   name?: string;
   explanation?: string;
   userId?: string;
@@ -62,8 +64,8 @@ export interface ThreadAnnotationRequest {
 export interface TraceAnnotationRequest {
   traceUuid: string;
   expectedOutput?: string;
-  rating: number;
-  type?: AnnotationType;
+  fieldType?: AnnotationFieldType;
+  value: AnnotationValue;
   name?: string;
   explanation?: string;
   userId?: string;
@@ -71,8 +73,8 @@ export interface TraceAnnotationRequest {
 }
 
 export interface UpdateAnnotationRequest {
-  rating?: number;
-  type?: AnnotationType;
+  fieldType?: AnnotationFieldType;
+  value?: AnnotationValue;
   explanation?: string;
   expectedOutput?: string;
   expectedOutcome?: string;

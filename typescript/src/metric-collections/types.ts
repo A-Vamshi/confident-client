@@ -5,6 +5,12 @@
 
 import { ModelProvider } from "../common/types";
 
+export enum EvalMode {
+  LLM = "LLM",
+  HYBRID = "HYBRID",
+  DECISION = "DECISION",
+}
+
 export interface MetricRef {
   name: string;
 }
@@ -18,6 +24,9 @@ export interface MetricSettingConfig {
   sampleRate?: number;
   evaluationModelProvider?: ModelProvider | null;
   evaluationModelName?: string | null;
+  decisionModelProvider?: ModelProvider | null;
+  decisionModelName?: string | null;
+  evalMode?: EvalMode | null;
 }
 
 export interface CreateMetricCollectionRequest {
@@ -43,6 +52,9 @@ export interface MetricSetting {
   sampleRate: number;
   evaluationModelProvider: ModelProvider | null;
   evaluationModelName: string | null;
+  decisionModelProvider: ModelProvider | null;
+  decisionModelName: string | null;
+  evalMode: EvalMode | null;
 }
 
 export interface MetricCollection {

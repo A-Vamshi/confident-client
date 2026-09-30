@@ -40,8 +40,7 @@ export class DashboardsOperations {
    *
    * Creates a dashboard in your Confident AI project and returns its id. Send
    * `widgets` to create it with its charts already on it, which saves a call
-   * per widget; any widget you send without a `layout` is packed onto the grid
-   * in the order given.
+   * per widget.
    *
    * @param name The name of the dashboard.
    * @param description What the dashboard covers. Send null to leave it unset.

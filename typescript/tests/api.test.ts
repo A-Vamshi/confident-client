@@ -24,7 +24,7 @@ describe("Api", () => {
     const headers = lastCall().headers;
     expect(headers.CONFIDENT_API_KEY).toBe("confident_us_org_k");
     expect(headers["Content-Type"]).toBe("application/json");
-    expect(headers["X-Confident-SDK-Version"]).toContain("confidentai-ts/");
+    expect(headers["X-Confident-SDK-Version"]).toContain("confident-ai-ts/");
   });
 
   it("unwraps the data envelope on GET", async () => {

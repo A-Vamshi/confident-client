@@ -4,10 +4,17 @@
 // and regenerate.
 
 import {
+  Environment,
   FilterSet,
   ScheduleIntervalUnit,
   ScheduleRecurrenceType,
 } from "../common/types";
+
+export enum AnnotationSelectionType {
+  SPANS = "Spans",
+  THREADS = "Threads",
+  TRACES = "Traces",
+}
 
 export enum SchedulableExportType {
   TRACES = "TRACES",
@@ -30,6 +37,8 @@ export interface CreateExportScheduleRequest {
   description?: string | null;
   exportType: SchedulableExportType;
   filters?: FilterSet;
+  environment?: Environment | null;
+  annotationSelectionType?: AnnotationSelectionType | null;
   destinationId?: string | null;
   enabled?: boolean;
 }
@@ -52,6 +61,8 @@ export interface ExportSchedule {
   description: string | null;
   exportType: SchedulableExportType;
   filters: FilterSet;
+  environment: Environment | null;
+  annotationSelectionType: AnnotationSelectionType | null;
   destinationId: string | null;
   scheduleSettings: ExportScheduleSettings | null;
   createdAt: string;
@@ -86,6 +97,8 @@ export interface UpdateExportScheduleRequest {
   name?: string;
   description?: string | null;
   filters?: FilterSet;
+  environment?: Environment | null;
+  annotationSelectionType?: AnnotationSelectionType | null;
   destinationId?: string | null;
   enabled?: boolean;
 }

@@ -6,11 +6,13 @@
 import { Api, HttpMethods } from "../api";
 import { Endpoints } from "../endpoints";
 import {
+  Environment,
   FilterSet,
   ScheduleIntervalUnit,
   ScheduleRecurrenceType,
 } from "../common/types";
 import {
+  AnnotationSelectionType,
   ExportSchedule,
   ExportScheduleList,
   ExportScheduleRef,
@@ -69,6 +71,12 @@ export class ExportSchedulesClient {
    * @param endAt When the schedule stops running, as an ISO 8601 datetime. Send
    *   null to leave it open-ended.
    * @param description What the schedule exports. Send null to leave it unset.
+   * @param environment The environment each run exports data from. Omit it, or
+   *   send null, to export data from every environment. Ignored for `TEST_RUNS`
+   *   exports, which have no environment.
+   * @param annotationSelectionType The annotation source for each `ANNOTATIONS`
+   *   export run. Omit it, or send null, to export annotations from every
+   *   source. Ignored for other export types.
    * @param destinationId The id of the export destination each run delivers its
    *   file to. A scheduled run has no recipient of its own, so a schedule
    *   created without a destination produces files that go nowhere.
@@ -87,6 +95,8 @@ export class ExportSchedulesClient {
       endAt?: string | null;
       description?: string | null;
       filters?: FilterSet;
+      environment?: Environment | null;
+      annotationSelectionType?: AnnotationSelectionType | null;
       destinationId?: string | null;
       enabled?: boolean;
     } = {},
@@ -100,6 +110,8 @@ export class ExportSchedulesClient {
       endAt,
       description,
       filters,
+      environment,
+      annotationSelectionType,
       destinationId,
       enabled,
     } = options;
@@ -118,6 +130,8 @@ export class ExportSchedulesClient {
           endAt,
           description,
           filters,
+          environment,
+          annotationSelectionType,
           destinationId,
           enabled,
         },
@@ -128,8 +142,8 @@ export class ExportSchedulesClient {
   /**
    * Get Export Schedule
    *
-   * Retrieves an export schedule by id, with the cadence it runs on, how far
-   * through that cadence it is, and the filters and destination each run uses.
+   * Retrieves an export schedule by id, with the filters and destination each
+   * of its runs uses.
    *
    * @param exportScheduleId The id of the export schedule.
    */
@@ -161,6 +175,12 @@ export class ExportSchedulesClient {
    *   null to leave it open-ended.
    * @param name The name of the schedule.
    * @param description What the schedule exports. Send null to clear it.
+   * @param environment The environment each run exports data from. Send null to
+   *   export data from every environment. Ignored for `TEST_RUNS` exports,
+   *   which have no environment.
+   * @param annotationSelectionType The annotation source for each `ANNOTATIONS`
+   *   export run. Send null to export annotations from every source. Ignored
+   *   for other export types.
    * @param destinationId The id of the export destination each run delivers its
    *   file to. Send null to leave the schedule without one.
    * @param enabled Whether the schedule runs. Send false to pause it without
@@ -178,6 +198,8 @@ export class ExportSchedulesClient {
       name?: string;
       description?: string | null;
       filters?: FilterSet;
+      environment?: Environment | null;
+      annotationSelectionType?: AnnotationSelectionType | null;
       destinationId?: string | null;
       enabled?: boolean;
     } = {},
@@ -192,6 +214,8 @@ export class ExportSchedulesClient {
       name,
       description,
       filters,
+      environment,
+      annotationSelectionType,
       destinationId,
       enabled,
     } = options;
@@ -209,6 +233,8 @@ export class ExportSchedulesClient {
           name,
           description,
           filters,
+          environment,
+          annotationSelectionType,
           destinationId,
           enabled,
         },

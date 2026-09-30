@@ -1,5 +1,5 @@
 {
-  "name": "confidentai",
+  "name": "confident-ai",
   "version": "0.2.1",
   "description": "The official TypeScript SDK for the Confident AI platform management API.",
   "license": "Apache-2.0",

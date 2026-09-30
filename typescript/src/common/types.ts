@@ -3,7 +3,13 @@
 // Do not edit by hand — change the route in confident-cloud
 // and regenerate.
 
-export enum AnnotationType {
+export enum AnnotationFieldType {
+  TEXT = "TEXT",
+  NUMBER = "NUMBER",
+  FLOAT = "FLOAT",
+  BOOLEAN = "BOOLEAN",
+  CHOICE = "CHOICE",
+  MULTIPLE_CHOICE = "MULTIPLE_CHOICE",
   FIVE_STAR_RATING = "FIVE_STAR_RATING",
   THUMBS_RATING = "THUMBS_RATING",
 }
@@ -56,6 +62,7 @@ export enum MetricAlgorithm {
   DEFAULT = "DEFAULT",
   DAG = "DAG",
   GEVAL = "GEVAL",
+  JEVAL = "JEVAL",
   CODE = "CODE",
 }
 
@@ -95,6 +102,8 @@ export enum ModelProvider {
   LITE_LLM = "LITE_LLM",
   TRUE_FOUNDRY = "TRUE_FOUNDRY",
   HUGGING_FACE = "HUGGING_FACE",
+  TYPE_SAFE = "TYPE_SAFE",
+  FAL = "FAL",
 }
 
 export enum ModelType {
@@ -104,6 +113,8 @@ export enum ModelType {
   SIMULATION = "SIMULATION",
   TEXT_TO_SPEECH = "TEXT_TO_SPEECH",
   SPEECH_TO_TEXT = "SPEECH_TO_TEXT",
+  DECISION = "DECISION",
+  SPEECH_TO_SPEECH = "SPEECH_TO_SPEECH",
 }
 
 export enum PromptType {
@@ -153,6 +164,7 @@ export enum WidgetAggregation {
   AVG_LATENCY = "AVG_LATENCY",
   AVG_RATING = "AVG_RATING",
   AVG_SCORE = "AVG_SCORE",
+  AVG_VALUE = "AVG_VALUE",
   COUNT = "COUNT",
   ERROR_COUNT = "ERROR_COUNT",
   ERROR_RATE = "ERROR_RATE",
@@ -224,6 +236,8 @@ export enum WidgetDimension {
   POLARITY = "polarity",
   CLASSIFIER_LABEL = "classifier_label",
   VERSION = "version",
+  VALUE = "value",
+  FAILURE_SUB_MODE = "failure_sub_mode",
 }
 
 export enum WidgetGranularity {
@@ -280,8 +294,8 @@ export interface UserReference {
 
 export interface AnnotationSummary {
   id: string;
-  rating: number;
-  type: AnnotationType;
+  fieldType: AnnotationFieldType;
+  value: string | number | boolean | string[] | null;
   name: string | null;
   explanation: string | null;
   expectedOutcome: string | null;
@@ -357,6 +371,31 @@ export interface MetricDag {
   nodes: Record<string, unknown>;
 }
 
+export interface JevQuestionJevQuestion0 {
+  type: "noul";
+  question: string;
+  weight?: number;
+  trueDescription?: string;
+  falseDescription?: string;
+}
+
+export interface JevQuestionJevQuestion1 {
+  type: "score";
+  question: string;
+  weight?: number;
+  levels: string[];
+}
+
+export interface JevQuestionJevQuestion2 {
+  type: "choice";
+  question: string;
+  weight?: number;
+  options: Record<string, number | null>;
+}
+
+export type JevQuestion =
+  JevQuestionJevQuestion0 | JevQuestionJevQuestion1 | JevQuestionJevQuestion2;
+
 export interface CreateMetricRequest {
   name: string;
   multiTurn?: boolean;
@@ -366,6 +405,7 @@ export interface CreateMetricRequest {
   rubric?: Rubric[];
   algorithm?: MetricAlgorithm;
   dag?: MetricDag;
+  questions?: JevQuestion[];
 }
 
 export interface CreateOrUpdatePolicyRequest {
@@ -410,6 +450,7 @@ export interface WidgetTopK {
     | "stddev_score"
     | "median_score"
     | "avg_rating"
+    | "avg_value"
     | "score_histogram"
     | "created_at"
     | "start_time"
@@ -443,9 +484,16 @@ export interface FilterSetGroupFilter {
     | "Span Status"
     | "Metrics Status"
     | "Error Status"
+    | "Called tool"
+    | "Handed off to"
+    | "Handed off by"
+    | "Nearest parent of type"
+    | "Anywhere under"
+    | "Top level"
     | "Model"
     | "Provider"
     | "Integration"
+    | "Input argument"
     | "Embedder"
     | "Chunk Size"
     | "Top-K"
@@ -471,8 +519,12 @@ export interface FilterSetGroupFilter {
     | "End User"
     | "Annotation Type"
     | "Annotation Name"
-    | "Criteria"
     | "Annotation Date"
+    | "Annotation Rating"
+    | "Annotation Thumbs"
+    | "Annotation Choice"
+    | "Annotation Yes / No"
+    | "Annotation Text"
     | "Metric Score"
     | "Metric Status"
     | "Metadata"
@@ -504,6 +556,11 @@ export interface FilterSetGroupFilter {
     | "Prompt Commit Hash"
     | "Prompt"
     | "Annotations"
+    | "Failure Mode"
+    | "Recommended"
+    | "Sub-mode Name"
+    | "Sub-mode Recommended"
+    | "Sub-mode Certainty"
     | "Status Code"
     | "Actor Type";
   condition:
@@ -642,6 +699,7 @@ export interface Metric {
   evaluationSteps: string[] | null;
   rubric: Rubric[] | null;
   dag: MetricDag | null;
+  questions: JevQuestion[] | null;
   multiTurn: boolean;
   requiredParameters: MetricEvaluationParam[];
 }
@@ -694,6 +752,8 @@ export interface ModelCredentials {
   deepSeekApiKey: string | null;
   mistralApiKey: string | null;
   perplexityApiKey: string | null;
+  typeSafeApiKey: string | null;
+  falApiKey: string | null;
   bedrockModelConfig: Record<string, unknown> | null;
   vertexAiModelConfig: Record<string, unknown> | null;
   azureModelConfig: Record<string, unknown> | null;

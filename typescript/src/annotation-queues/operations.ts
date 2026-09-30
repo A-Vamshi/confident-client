@@ -54,17 +54,21 @@ export class AnnotationQueuesOperations {
    *
    * @param name The name of the queue, which must be unique in the project.
    * @param formId The id of an annotation form in this project to ask of every
-   *   item in the queue.
+   *   item in the queue. Forms are created and managed in the Confident AI
+   *   platform.
+   * @param tags Tags to put on the queue. A tag that does not exist in the
+   *   project yet is created.
    */
   async create(
     name: string,
     type: AnnotationQueueType,
     formId?: string,
+    tags?: string[],
   ): Promise<AnnotationQueueRef> {
     return this.api.sendRequest<AnnotationQueueRef>(
       HttpMethods.POST,
       Endpoints.ANNOTATION_QUEUES_ENDPOINT,
-      { body: { name, type, formId } },
+      { body: { name, type, formId, tags } },
     );
   }
 
@@ -87,23 +91,27 @@ export class AnnotationQueuesOperations {
   /**
    * Update Annotation Queue
    *
-   * Renames an annotation queue or attaches a different annotation form to it,
-   * and returns the queue. Send `formId: null` to detach the current form.
+   * Renames an annotation queue, replaces its tags, or attaches a different
+   * annotation form to it, and returns the queue. Send `formId: null` to detach
+   * the current form.
    *
    * @param annotationQueueId The id of the annotation queue.
    * @param name The new name of the queue, which must be unique in the project.
-   * @param formId The id of an annotation form to ask of every item in the
-   *   queue. Send null to detach the current form.
+   * @param formId The id of an annotation form in this project to ask of every
+   *   item in the queue. Forms are created and managed in the Confident AI
+   *   platform. Send null to detach the current form.
+   * @param tags Replaces the tags on the queue. Send an empty array to remove
+   *   them all; omit it to leave them as they are.
    */
   async update(
     annotationQueueId: string,
-    name?: string,
-    formId?: string | null,
+    options: { name?: string; formId?: string | null; tags?: string[] } = {},
   ): Promise<AnnotationQueue> {
+    const { name, formId, tags } = options;
     return this.api.sendRequest<AnnotationQueue>(
       HttpMethods.PUT,
       Endpoints.ANNOTATION_QUEUE_ENDPOINT,
-      { body: { name, formId }, urlParams: { annotationQueueId } },
+      { body: { name, formId, tags }, urlParams: { annotationQueueId } },
     );
   }
 

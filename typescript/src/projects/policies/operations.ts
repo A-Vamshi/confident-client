@@ -12,13 +12,12 @@ export class PoliciesOperations extends ModelsOperations {
   /**
    * List Project Policies
    *
-   * Lists the custom access policies this project owns. Each one is a named set
-   * of project permissions, returned with every permission it grants as a
-   * `resource:action` pair such as `promptBranch:merge`. These are the policies
-   * you attach to this project's roles; the global, system-defined roles do not
+   * Lists the custom access policies this project owns. Each is a named set of
+   * project permissions, returned with every permission it grants as a
+   * `resource:action` pair such as `promptBranch:merge`. These are what you
+   * attach to this project's roles; the global, system-defined roles do not
    * draw their permissions from policies, so nothing here applies to them. A
-   * project's policies are separate from your organization's, and only these
-   * can be attached to a project role.
+   * project's policies are separate from your organization's.
    *
    * @param projectId The id of the project, which must belong to your
    *   organization.
@@ -37,9 +36,7 @@ export class PoliciesOperations extends ModelsOperations {
    * Creates a custom policy in this project from a set of permissions and
    * returns it. A policy on its own grants nobody anything: it takes effect
    * only once it is attached to a project role, and then applies to every
-   * member holding that role. Send the permission ids from `GET
-   * /v2/projects/{projectId}/permissions`, whose names are `resource:action`
-   * pairs such as `promptBranch:merge`.
+   * member holding that role.
    *
    * @param projectId The id of the project, which must belong to your
    *   organization.
@@ -73,11 +70,8 @@ export class PoliciesOperations extends ModelsOperations {
    *
    * Replaces a project policy's name, description, and granted permissions. The
    * change reaches people through the roles the policy is attached to, and it
-   * reaches them immediately: permissions are resolved from the role on each
-   * request, so every member holding any of those roles gains or loses the
-   * affected permissions on their next call. `permissionIds` is the policy's
-   * complete permission set rather than an addition to it, so sending an empty
-   * array makes the policy grant nothing.
+   * reaches them immediately: every member holding any of those roles gains or
+   * loses the affected permissions on their next call.
    *
    * @param projectId The id of the project the policy belongs to.
    * @param policyId The id of the project policy.
@@ -116,10 +110,9 @@ export class PoliciesOperations extends ModelsOperations {
    * Permanently deletes a project policy. Unlike a role, a policy in use is not
    * protected: it is detached from every project role holding it, and members
    * of those roles lose the permissions it granted on their next request. The
-   * permissions themselves are not deleted, and the roles survive with their
-   * remaining policies — a role left with none can do nothing in the project.
-   * Check `GET /v2/projects/{projectId}/roles` for the roles carrying this
-   * policy before deleting it. **Warning:** This action cannot be undone.
+   * permissions themselves survive, as do the roles — though a role left with
+   * no policies can do nothing in the project. List the project's roles first
+   * to see which carry this policy.
    *
    * @param projectId The id of the project the policy belongs to.
    * @param policyId The id of the project policy.

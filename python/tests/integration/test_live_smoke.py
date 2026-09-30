@@ -14,7 +14,7 @@ import uuid
 
 import pytest
 
-from confidentai import ConfidentApiError
+from confident_ai import ConfidentApiError
 
 pytestmark = pytest.mark.integration
 
@@ -41,10 +41,10 @@ def test_governance_policies_list_is_iterable(live_client):
 
 
 def test_project_create_get_delete_round_trip(live_client):
-    name = f"confidentai-sdk-itest-{int(time.time())}-{uuid.uuid4().hex[:8]}"
+    name = f"confident-ai-sdk-itest-{int(time.time())}-{uuid.uuid4().hex[:8]}"
     created = live_client.projects.create(
         name=name,
-        description="Created by the confidentai SDK integration suite; safe to delete.",
+        description="Created by the confident-ai SDK integration suite; safe to delete.",
     )
     project_id = created.project.id
     try:

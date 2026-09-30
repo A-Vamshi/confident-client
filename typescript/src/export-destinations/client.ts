@@ -10,6 +10,8 @@ import {
   ExportDestinationList,
   ExportDestinationRef,
   ExportDestinationType,
+  SnowflakeExportDestinationConfig,
+  UpdateSnowflakeExportDestinationConfig,
 } from "./types";
 
 export class ExportDestinationsClient {
@@ -43,14 +45,17 @@ export class ExportDestinationsClient {
    * authenticate. A project holds at most three destinations.
    *
    * @param name The name of the destination, as it appears in your project.
-   * @param bucket The name of the bucket exports are uploaded to.
-   * @param region The region the bucket lives in.
-   * @param accessKeyId The access key id Confident AI uploads with. Reads
-   *   return this masked, as fifteen asterisks followed by its last six
-   *   characters, so a masked value is rejected here — send the real key id.
-   * @param secretAccessKey The secret access key paired with `accessKeyId`.
-   *   Confident AI never returns it in full, so a masked value is rejected here
-   *   — send the real secret.
+   * @param bucket The name of the bucket exports are uploaded to. Required for
+   *   `S3` destinations and rejected for `SNOWFLAKE`.
+   * @param region The region the bucket lives in. Required for `S3`
+   *   destinations and rejected for `SNOWFLAKE`.
+   * @param accessKeyId Required for `S3` destinations. The access key id
+   *   Confident AI uploads with. Reads return this masked, as fifteen asterisks
+   *   followed by its last six characters, so a masked value is rejected here —
+   *   send the real key id.
+   * @param secretAccessKey Required for `S3` destinations. The secret access
+   *   key paired with `accessKeyId`. Confident AI never returns it in full, so
+   *   a masked value is rejected here — send the real secret.
    * @param pathPrefix A folder inside the bucket to write exports under. A
    *   leading slash is stripped and a trailing one added, so `/confident-ai` is
    *   stored as `confident-ai/`. Omit it, or send null or an empty string, to
@@ -60,29 +65,40 @@ export class ExportDestinationsClient {
    */
   async create(
     name: string,
-    bucket: string,
-    region: string,
-    accessKeyId: string,
-    secretAccessKey: string,
     options: {
       type?: ExportDestinationType;
+      bucket?: string;
+      region?: string;
+      accessKeyId?: string;
+      secretAccessKey?: string;
       pathPrefix?: string | null;
+      snowflakeConfig?: SnowflakeExportDestinationConfig;
       enabled?: boolean;
     } = {},
   ): Promise<ExportDestinationRef> {
-    const { type, pathPrefix, enabled } = options;
+    const {
+      type,
+      bucket,
+      region,
+      accessKeyId,
+      secretAccessKey,
+      pathPrefix,
+      snowflakeConfig,
+      enabled,
+    } = options;
     return this.api.sendRequest<ExportDestinationRef>(
       HttpMethods.POST,
       Endpoints.EXPORT_DESTINATIONS_ENDPOINT,
       {
         body: {
           name,
+          type,
           bucket,
           region,
           accessKeyId,
           secretAccessKey,
-          type,
           pathPrefix,
+          snowflakeConfig,
           enabled,
         },
       },
@@ -142,6 +158,7 @@ export class ExportDestinationsClient {
       accessKeyId?: string;
       secretAccessKey?: string;
       pathPrefix?: string | null;
+      snowflakeConfig?: UpdateSnowflakeExportDestinationConfig;
       enabled?: boolean;
     } = {},
   ): Promise<ExportDestination> {
@@ -153,6 +170,7 @@ export class ExportDestinationsClient {
       accessKeyId,
       secretAccessKey,
       pathPrefix,
+      snowflakeConfig,
       enabled,
     } = options;
     return this.api.sendRequest<ExportDestination>(
@@ -167,6 +185,7 @@ export class ExportDestinationsClient {
           accessKeyId,
           secretAccessKey,
           pathPrefix,
+          snowflakeConfig,
           enabled,
         },
         urlParams: { exportDestinationId },

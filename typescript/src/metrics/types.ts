@@ -3,11 +3,12 @@
 // Do not edit by hand — change the route in confident-cloud
 // and regenerate.
 
-import { MetricEvaluationParam, Rubric } from "../common/types";
+import { JevQuestion, MetricEvaluationParam, Rubric } from "../common/types";
 
 export interface UpdateMetricRequest {
   criteria?: string | null;
   evaluationSteps?: string[] | null;
   evaluationParams?: MetricEvaluationParam[];
   rubric?: Rubric[];
+  questions?: JevQuestion[];
 }

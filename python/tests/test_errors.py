@@ -1,4 +1,4 @@
-from confidentai.types import ApiResponse, ConfidentApiError
+from confident_ai.types import ApiResponse, ConfidentApiError
 
 
 def test_confident_api_error_preserves_link():

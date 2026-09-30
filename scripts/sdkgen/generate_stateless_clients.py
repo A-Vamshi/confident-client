@@ -11,6 +11,7 @@ from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Set, Tuple
 
 from .constants import (
+    PYTHON_PACKAGE,
     API_VERSION_SEGMENT,
     ENDPOINTS_CLASS,
     METHOD_ORDER,
@@ -257,8 +258,8 @@ def render_client(
         groups.setdefault(home[name], []).append(name)
 
     modules = {
-        "confidentai.api": ["Api", "HttpMethods"],
-        "confidentai.endpoints": [ENDPOINTS_CLASS],
+        f"{PYTHON_PACKAGE}.api": ["Api", "HttpMethods"],
+        f"{PYTHON_PACKAGE}.endpoints": [ENDPOINTS_CLASS],
     }
     for owner, names in groups.items():
         modules.setdefault(python_module_for(owner), []).extend(names)
@@ -409,14 +410,14 @@ def render_composition(
     module = RESOURCE_MODULES.get(resource, resource).replace("-", "_")
     mixins = [
         (
-            f"confidentai.{module}."
+            f"{PYTHON_PACKAGE}.{module}."
             + group_module(segments)[: -len(".py")].replace("/", "."),
             group_class(resource, segments, acronyms),
         )
         for segments, _ in groups
     ]
 
-    lines = ["from confidentai.api import Api"]
+    lines = [f"from {PYTHON_PACKAGE}.api import Api"]
     for path, name in mixins:
         lines.append(f"from {path} import {name}")
     lines.extend(
@@ -585,13 +586,13 @@ def render_stateless_clients(
     lines = [
         "from typing import TYPE_CHECKING",
         "",
-        "from confidentai.api import Api, ApiKeyKind",
+        f"from {PYTHON_PACKAGE}.api import Api, ApiKeyKind",
         "",
         "if TYPE_CHECKING:",
     ]
     for resource, module in modules.items():
         lines.append(
-            f"    from confidentai.{module}.client import {classes[resource]}"
+            f"    from {PYTHON_PACKAGE}.{module}.client import {classes[resource]}"
         )
     lines.extend(
         [
@@ -614,7 +615,7 @@ def render_stateless_clients(
                 "",
                 "    @property",
                 f'    def {module}(self) -> "{classes[resource]}":',
-                f"        from confidentai.{module}.client import "
+                f"        from {PYTHON_PACKAGE}.{module}.client import "
                 f"{classes[resource]}",
                 "",
                 f"        return {classes[resource]}("

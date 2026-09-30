@@ -29,6 +29,7 @@ export enum GovernanceControlAggregation {
   AVG_LATENCY = "Avg latency",
   AVG_RATING = "Avg rating",
   AVG_SCORE = "Avg score",
+  AVG_VALUE = "Avg value",
   COUNT = "Count",
   ERROR_COUNT = "Error count",
   ERROR_RATE = "Error rate",

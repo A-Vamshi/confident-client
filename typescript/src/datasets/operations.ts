@@ -34,11 +34,9 @@ export class DatasetsOperations {
   /**
    * Push Dataset
    *
-   * Adds goldens to the dataset with the given `alias`, creating the dataset
-   * first when it does not exist, and returns the dataset's id. Every golden in
-   * one request must be of the same kind — all single-turn, or all multi-turn —
-   * and that kind must match the dataset's `multiTurn`. Pushing to a `version`
-   * requires the Team plan or above.
+   * Adds goldens to a dataset, creating it when the `alias` names none yet, and
+   * returns the dataset's id. Pushing to a `version` requires the Team plan or
+   * above.
    *
    * @param alias The alias of the dataset, unique within your project. A new
    *   dataset is created when no dataset with this alias exists.
@@ -115,8 +113,7 @@ export class DatasetsOperations {
    * Queue Dataset Goldens
    *
    * Adds goldens to the dataset as unfinalized goldens, for review on the
-   * platform before they are used in evaluations. Every golden in one request
-   * must be of the same kind, matching the dataset's `multiTurn`.
+   * platform before they are used in evaluations.
    *
    * @param datasetId The unique id of the dataset.
    * @param goldens The goldens to queue for review. Every golden in one request
@@ -138,7 +135,7 @@ export class DatasetsOperations {
    * Run Dataset Evaluation
    *
    * Starts an evaluation of the dataset's finalized goldens against a metric
-   * collection and returns the test run it is evaluated in. The evaluation runs
+   * collection and returns the test run it is evaluated in. It runs
    * asynchronously, so this returns as soon as the run is created. By default
    * the goldens' stored actual outputs are evaluated; supply `aiConnectionId`
    * or `promptAlias`, never both, to generate them first.

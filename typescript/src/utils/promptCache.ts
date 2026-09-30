@@ -10,7 +10,7 @@ import {
 } from "./promptRefresh";
 
 export const CACHE_DIRECTORY_VARIABLE = "CONFIDENT_CACHE_DIR";
-export const DEFAULT_CACHE_DIRECTORY = ".confidentai";
+export const DEFAULT_CACHE_DIRECTORY = ".confident-ai";
 export const CACHE_FILENAME = "prompts.json";
 
 /** How a caller asked for the cache to behave on one pull. */

@@ -10,9 +10,9 @@ from enum import Enum
 
 import pytest
 
-from confidentai.api import Api, HttpMethods
-from confidentai.endpoints import Endpoints
-from confidentai.transformers.types import (
+from confident_ai.api import Api, HttpMethods
+from confident_ai.endpoints import Endpoints
+from confident_ai.transformers.types import (
     CreateTransformerRequest,
     TransformerCodeRunFailure,
     TransformerCodeRunResult,
@@ -20,7 +20,7 @@ from confidentai.transformers.types import (
     TransformerLanguage,
     TransformerRef,
 )
-from confidentai.types import ConfidentApiError
+from confident_ai.types import ConfidentApiError
 
 
 def run(coro):

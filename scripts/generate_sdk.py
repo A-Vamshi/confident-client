@@ -28,6 +28,7 @@ from sdkgen.generate_stateless_clients import (
     ts_resource_client_files,
 )
 from sdkgen.constants import (
+    PYTHON_PACKAGE,
     CANONICAL_SPEC_LOCATION,
     CLIENTS_PACKAGE,
     REPO_ROOT,
@@ -224,7 +225,7 @@ def render_shared(
     """The files no single resource owns: the endpoint enum, and the mixins
     that hang every client off ConfidentAI."""
     source = f"the routes in {CANONICAL_SPEC_LOCATION}/{MERGED_SPEC}"
-    clients = REPO_ROOT / "python" / "confidentai" / CLIENTS_PACKAGE
+    clients = REPO_ROOT / "python" / PYTHON_PACKAGE / CLIENTS_PACKAGE
     ts_clients = REPO_ROOT / "typescript" / "src" / CLIENTS_PACKAGE
 
     outputs: Outputs = [
@@ -263,7 +264,7 @@ def render_shared(
 
     outputs.append(
         (
-            REPO_ROOT / "python" / "confidentai" / "endpoints.py",
+            REPO_ROOT / "python" / PYTHON_PACKAGE / "endpoints.py",
             render_endpoints(generating, source, descriptive),
         )
     )

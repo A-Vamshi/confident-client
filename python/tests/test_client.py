@@ -1,7 +1,7 @@
 import pytest
 
-from confidentai import ConfidentAI
-from confidentai.api import (
+from confident_ai import ConfidentAI
+from confident_ai.api import (
     API_BASE_URL,
     API_BASE_URL_EU,
     ApiKeyKind,
@@ -57,8 +57,8 @@ def test_timeout_override():
 
 
 def test_generated_clients_are_reachable(client):
-    from confidentai.organization.client import OrganizationClient
-    from confidentai.projects.client import ProjectsClient
+    from confident_ai.organization.client import OrganizationClient
+    from confident_ai.projects.client import ProjectsClient
 
     assert isinstance(client.organization, OrganizationClient)
     assert isinstance(client.projects, ProjectsClient)

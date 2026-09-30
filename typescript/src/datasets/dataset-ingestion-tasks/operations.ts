@@ -17,9 +17,8 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
   /**
    * List Dataset Ingestion Tasks
    *
-   * Lists the ingestion tasks on the dataset, newest first, as summary rows.
-   * Get a single task for its full configuration. Requires the Starter plan or
-   * above.
+   * Lists the ingestion tasks on the dataset as summary rows. Retrieve one by
+   * id for its full configuration. Requires the Starter plan or above.
    *
    * @param datasetId The unique id of the dataset.
    * @param dataModel Only return tasks harvesting this kind of item. Omit it to

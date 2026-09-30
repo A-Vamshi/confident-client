@@ -10,6 +10,7 @@ import re
 from typing import Iterable, List, Set
 
 from ..constants import (
+    PYTHON_PACKAGE,
     API_VERSION_SEGMENT,
     PATH_PARAMETER,
     RESOURCE_MODULES,
@@ -88,7 +89,7 @@ def client_class_name(
 
 def python_module_for(resource: str) -> str:
     module = RESOURCE_MODULES.get(resource, resource).replace("-", "_")
-    return f"confidentai.{module}.types"
+    return f"{PYTHON_PACKAGE}.{module}.types"
 
 
 def ts_module_for(resource: str) -> str:

@@ -165,7 +165,7 @@ export class Api {
     this.headers = {
       "Content-Type": "application/json",
       [API_KEY_HEADER]: apiKey,
-      [SDK_VERSION_HEADER]: `confidentai-ts/${SDK_VERSION}`,
+      [SDK_VERSION_HEADER]: `confident-ai-ts/${SDK_VERSION}`,
     };
   }
 
