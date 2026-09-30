@@ -41,11 +41,6 @@ REFERENCE_PATH = REPO_ROOT / "sdk-reference.yml"
 
 # The module whose constants the reference cites: the environment variables a
 # caller sets, read from the SDK rather than restated here.
-# The package's own name, in the two spellings it takes: the Python import
-# name, which must be a module identifier and so uses an underscore, and the
-# npm package name, which is also the TypeScript import specifier and uses a
-# hyphen by npm convention. Every generated import is built from these, so a
-# rename is a change here plus moving `python/<PYTHON_PACKAGE>/`.
 PYTHON_PACKAGE = "confident_ai"
 TS_PACKAGE = "confident-ai"
 

@@ -120,10 +120,6 @@ def union_body_help(
         listed = f"a {branches[0]} or a {branches[1]}"
     else:
         listed = "one of " + ", ".join(branches)
-    # No module path: this sentence is rendered into both a Python docstring
-    # and a TypeScript JSDoc, so any path naming would be wrong in one of them.
-    # Both SDKs re-export these types from the resource's own module, so the
-    # names are enough to find them.
     return " ".join(
         part
         for part in (schema.get("description"), f"Pass {listed}.")
