@@ -20,7 +20,7 @@ coverage/
 *.log
 
 # Prompt cache written by the SDK at runtime
-.confidentai/
+.confident-ai/
 
 # Env / secrets
 .env

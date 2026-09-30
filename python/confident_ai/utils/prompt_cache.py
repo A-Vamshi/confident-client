@@ -14,7 +14,7 @@ from .prompt_refresh import start_refresh, stop_refresh
 logger = logging.getLogger(__name__)
 
 CACHE_DIRECTORY_VARIABLE = "CONFIDENT_CACHE_DIR"
-DEFAULT_CACHE_DIRECTORY = ".confidentai"
+DEFAULT_CACHE_DIRECTORY = ".confident-ai"
 CACHE_FILENAME = "prompts.json"
 
 _PAYLOAD = TypeAdapter(PromptPayload)
