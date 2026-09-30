@@ -36,8 +36,7 @@ export class PromptsOperations {
    *
    * @param prompt The commit to push. Send `text` for a text prompt or
    *   `messages` for a messages prompt, never both. The kind must match the
-   *   existing prompt's type. Pass a PushTextPrompt or a PushMessagesPrompt,
-   *   from confidentai.prompts.types.
+   *   existing prompt's type. Pass a PushTextPrompt or a PushMessagesPrompt.
    */
   async push(prompt: PushPromptRequest): Promise<PushPromptResult> {
     return this.api.sendRequest<PushPromptResult>(

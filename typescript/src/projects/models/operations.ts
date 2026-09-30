@@ -62,8 +62,7 @@ export class ModelsOperations extends MembersOperations {
    *   platform, simulation, and speech models also accept max input tokens.
    *   This replaces the whole configuration rather than patching it. `CUSTOM`
    *   is rejected. Pass one of UpdateEvaluationProjectModelRequest,
-   *   UpdateDecisionProjectModelRequest, UpdatePlatformProjectModelRequest,
-   *   from confidentai.projects.types.
+   *   UpdateDecisionProjectModelRequest, UpdatePlatformProjectModelRequest.
    */
   async updateModel(
     projectId: string,

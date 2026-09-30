@@ -20,6 +20,7 @@ from typing import Any, Dict, List, Optional, Sequence, Set, Tuple
 import yaml
 
 from .constants import (
+    PYTHON_PACKAGE,
     HELPERS_MODULE,
     METHOD_ORDER,
     ORGANIZATION_KEY_RESOURCES,
@@ -1635,7 +1636,7 @@ class Handle:
         lines: List[str] = []
         typing_names = typing_imports(self.annotations + ["Optional"])
         lines.extend([f"from typing import {', '.join(typing_names)}", ""])
-        lines.append("from confidentai.api import Api")
+        lines.append(f"from {PYTHON_PACKAGE}.api import Api")
         lines.append(f"from {self.client_module} import {self.client_class}")
         if helpers:
             lines.append(
@@ -1994,7 +1995,7 @@ def render_stateful_clients(
     lines = [
         "from typing import TYPE_CHECKING, Optional",
         "",
-        "from confidentai.api import Api, ApiKeyKind",
+        f"from {PYTHON_PACKAGE}.api import Api, ApiKeyKind",
         "",
         "if TYPE_CHECKING:",
     ]

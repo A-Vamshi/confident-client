@@ -26,6 +26,8 @@ import yaml
 from typing import Any, Dict, List, Optional, Sequence, Set, Tuple
 
 from .constants import (
+    PYTHON_PACKAGE,
+    TS_PACKAGE,
     CANONICAL_SPEC_LOCATION,
     DOCUMENTED_RESOURCES,
     MERGED_SPEC,
@@ -367,7 +369,7 @@ def _describe_modules(
     source: "_RenderedSource",
 ) -> List[Dict[str, Any]]:
     """One entry per operations module the resource generates."""
-    python_root = f"python/confidentai/{RESOURCE_MODULES.get(resource, resource).replace('-', '_')}"
+    python_root = f"python/{PYTHON_PACKAGE}/{RESOURCE_MODULES.get(resource, resource).replace('-', '_')}"
     typescript_root = f"typescript/src/{ts_module_for(resource)}"
     groups = flatten_groups(resource_groups(routes))
     single = len(groups) == 1
@@ -526,7 +528,7 @@ def _describe_handle(
     schemas: Dict[str, Any],
     source: "_RenderedSource",
 ) -> Dict[str, Any]:
-    python_root = f"python/confidentai/{RESOURCE_MODULES.get(resource, resource).replace('-', '_')}"
+    python_root = f"python/{PYTHON_PACKAGE}/{RESOURCE_MODULES.get(resource, resource).replace('-', '_')}"
     typescript_root = f"typescript/src/{ts_module_for(resource)}"
     python_file = f"{python_root}/{handle_module(config)}"
     typescript_file = f"{typescript_root}/{camel_case(config['class'])}.ts"
@@ -583,7 +585,7 @@ def _describe_handle(
         )
 
     opening = source.python_class(
-        "python/confidentai/clients/stateful.py", "StatefulClients"
+        f"python/{PYTHON_PACKAGE}/clients/stateful.py", "StatefulClients"
     ).methods[config["client_method"]["name"]]
     ts_opening = source.typescript_class(
         "typescript/src/clients/stateful.ts", "StatefulClients"
@@ -629,7 +631,7 @@ def _import_location(resource: str, name: str) -> Dict[str, Dict[str, str]]:
     The barrel each resource publishes, not the module the type is declared
     in. Generated code imports the module directly to keep the barrel out of
     its own import cycle; a caller has no such problem, and
-    `confidentai.datasets` is the import the package exists to offer.
+    `<package>.datasets` is the import the package exists to offer.
     """
     return {
         "python": {
@@ -637,7 +639,7 @@ def _import_location(resource: str, name: str) -> Dict[str, Dict[str, str]]:
             "name": name,
         },
         "typescript": {
-            "module": f"confidentai/{ts_module_for(resource)}",
+            "module": f"{TS_PACKAGE}/{ts_module_for(resource)}",
             "name": name,
         },
     }

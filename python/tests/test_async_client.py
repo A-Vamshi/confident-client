@@ -12,8 +12,8 @@ import asyncio
 
 import pytest
 
-from confidentai import ConfidentAI
-from confidentai.types import ConfidentApiError
+from confident_ai import ConfidentAI
+from confident_ai.types import ConfidentApiError
 
 
 def run(coro):
@@ -21,8 +21,8 @@ def run(coro):
 
 
 def test_factories_return_clients(async_client):
-    from confidentai.organization.client import OrganizationClient
-    from confidentai.projects.client import ProjectsClient
+    from confident_ai.organization.client import OrganizationClient
+    from confident_ai.projects.client import ProjectsClient
 
     assert isinstance(async_client.organization, OrganizationClient)
     assert isinstance(async_client.projects, ProjectsClient)

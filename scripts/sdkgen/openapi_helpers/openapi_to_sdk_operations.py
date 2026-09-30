@@ -21,7 +21,6 @@ from .openapi_to_sdk_names import (
     endpoint_member,
     method_name,
     pascal_case,
-    python_module_for,
     snake_case,
 )
 from .openapi_to_sdk_types import Resolver
@@ -117,17 +116,17 @@ def union_body_help(
         for branch in schema.get("anyOf") or []
         if "$ref" in branch
     ]
-    modules = sorted(
-        {python_module_for(home[b]) for b in branches if b in home}
-    )
     if len(branches) == 2:
         listed = f"a {branches[0]} or a {branches[1]}"
     else:
         listed = "one of " + ", ".join(branches)
-    where = f", from {' and '.join(modules)}" if modules else ""
+    # No module path: this sentence is rendered into both a Python docstring
+    # and a TypeScript JSDoc, so any path naming would be wrong in one of them.
+    # Both SDKs re-export these types from the resource's own module, so the
+    # names are enough to find them.
     return " ".join(
         part
-        for part in (schema.get("description"), f"Pass {listed}{where}.")
+        for part in (schema.get("description"), f"Pass {listed}.")
         if part
     )
 

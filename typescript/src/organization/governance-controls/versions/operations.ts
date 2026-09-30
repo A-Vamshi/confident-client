@@ -58,8 +58,7 @@ export class GovernanceControlsVersionsOperations extends GovernanceControlsOper
    *   takes the runtime config. Except for `extraQueryParams`, every field is
    *   required even when null, so a version is a complete definition rather
    *   than a patch of the one before it. Pass a GovernanceControlRuntimeConfig
-   *   or a GovernanceControlPreDeploymentConfig, from
-   *   confidentai.organization.types.
+   *   or a GovernanceControlPreDeploymentConfig.
    */
   async createGovernanceControlVersion(
     controlId: string,

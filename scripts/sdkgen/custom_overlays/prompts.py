@@ -6,9 +6,11 @@ private one-shot fetch, returning the payload it already loaded, and the
 `pull` a caller sees is written on top of it — which is also why a refresh can
 re-pull without a second copy of the dispatch to keep in step.
 
-The code these edits call lives in the SDK, in `confidentai/utils/`, where it
+The code these edits call lives in the SDK, in `<package>/utils/`, where it
 is typed and tested like the rest of the library.
 """
+
+from ..constants import PYTHON_PACKAGE
 
 import re
 from .overlay import Edit, Overlay
@@ -188,12 +190,12 @@ def _python_pull(descriptive: bool) -> str:
 
 def prompts_overlay(descriptive: bool) -> Overlay:
     return Overlay(
-        path="python/confidentai/prompts/prompt.py",
+        path=f"python/{PYTHON_PACKAGE}/prompts/prompt.py",
         edits=(
             Edit(
-                "from confidentai.utils.helpers import interpolate_prompt",
-                "from confidentai.utils.helpers import interpolate_prompt\n"
-                "from confidentai.utils.prompt_cache import (\n"
+                f"from {PYTHON_PACKAGE}.utils.helpers import interpolate_prompt",
+                f"from {PYTHON_PACKAGE}.utils.helpers import interpolate_prompt\n"
+                f"from {PYTHON_PACKAGE}.utils.prompt_cache import (\n"
                 "    a_pull_prompt,\n"
                 "    pull_prompt,\n"
                 ")",

@@ -14,7 +14,7 @@ import uuid
 
 import pytest
 
-from confidentai import ConfidentApiError
+from confident_ai import ConfidentApiError
 
 pytestmark = pytest.mark.integration
 

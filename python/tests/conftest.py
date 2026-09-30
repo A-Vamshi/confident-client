@@ -10,7 +10,7 @@ from typing import Any, Dict, List, Optional
 
 import pytest
 
-from confidentai.api import (
+from confident_ai.api import (
     CONFIDENT_BASE_URL_ENV_VAR,
     CONFIDENT_ORG_API_KEY_ENV_VAR,
     CONFIDENT_PROJ_API_KEY_ENV_VAR,
@@ -118,13 +118,13 @@ def http(monkeypatch) -> RequestRecorder:
 
 @pytest.fixture
 def client(http):
-    from confidentai import ConfidentAI
+    from confident_ai import ConfidentAI
 
     return ConfidentAI(api_key="confident_us_org_testkey")
 
 
 @pytest.fixture
 def async_client(http):
-    from confidentai import ConfidentAI
+    from confident_ai import ConfidentAI
 
     return ConfidentAI(api_key="confident_us_org_testkey")

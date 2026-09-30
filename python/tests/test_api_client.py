@@ -1,9 +1,9 @@
 import pytest
 import requests
 
-from confidentai.api import Api, HttpMethods
-from confidentai.endpoints import Endpoints
-from confidentai.types import ConfidentApiError
+from confident_ai.api import Api, HttpMethods
+from confident_ai.endpoints import Endpoints
+from confident_ai.types import ConfidentApiError
 
 
 @pytest.fixture

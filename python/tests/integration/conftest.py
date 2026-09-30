@@ -19,6 +19,6 @@ def live_client():
             "CONFIDENT_ORG_API_KEY not set; skipping live integration tests"
         )
 
-    from confidentai import ConfidentAI
+    from confident_ai import ConfidentAI
 
     return ConfidentAI()

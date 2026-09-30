@@ -60,8 +60,7 @@ export class ItemsOperations extends AnnotationQueuesOperations {
    *   `spanUuids` for a `SPAN` queue, `threadIds` for a `THREAD` queue — and
    *   every id must already exist in your project. Items already in the queue
    *   are skipped. Pass one of AddTraceQueueItemsRequest,
-   *   AddSpanQueueItemsRequest, AddThreadQueueItemsRequest, from
-   *   confidentai.annotation_queues.types.
+   *   AddSpanQueueItemsRequest, AddThreadQueueItemsRequest.
    */
   async addItems(
     annotationQueueId: string,

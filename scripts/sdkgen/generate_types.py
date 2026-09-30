@@ -3,6 +3,7 @@
 from typing import Any, Dict, List, Tuple
 
 from .constants import (
+    PYTHON_PACKAGE,
     RESOURCE_MODULES,
     PYTHON_LINE_LENGTH,
 )
@@ -134,7 +135,7 @@ def render_python_types(module: Module, source: str) -> str:
         (python_module_for(owner), list(names))
         for owner, names in module.imports.items()
     ]
-    first_party.append(("confidentai.types", ["ConfidentBaseModel"]))
+    first_party.append((f"{PYTHON_PACKAGE}.types", ["ConfidentBaseModel"]))
     third_party = [("pydantic", ["Field"])] if needs_field else []
 
     lines = banner("#", source)
@@ -274,8 +275,8 @@ def render_typescript_types(module: Module, source: str) -> str:
 
 
 def render_typescript_barrel(module: Module, source: str) -> str:
-    """The `render_python_barrel` twin: `from "confidentai/datasets"` instead
-    of `from "confidentai/datasets/types"`.
+    """The `render_python_barrel` twin: `from "<package>/datasets"` instead
+    of `from "<package>/datasets/types"`.
 
     `export *` carries exactly this resource's declarations, because a types
     module imports the shapes it shares without re-exporting them.

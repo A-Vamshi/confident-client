@@ -9,9 +9,9 @@ import json
 
 import pytest
 
-from confidentai.prompts.types import TextPrompt
-from confidentai.utils import prompt_cache, prompt_refresh
-from confidentai.utils.prompt_cache import (
+from confident_ai.prompts.types import TextPrompt
+from confident_ai.utils import prompt_cache, prompt_refresh
+from confident_ai.utils.prompt_cache import (
     CACHE_DIRECTORY_VARIABLE,
     CACHE_FILENAME,
     a_pull_prompt,
@@ -312,7 +312,7 @@ def test_a_refresh_that_fails_never_reaches_the_caller():
 def test_the_generated_handle_pulls_through_the_cache():
     import inspect
 
-    from confidentai.prompts.prompt import Prompt
+    from confident_ai.prompts.prompt import Prompt
 
     parameters = inspect.signature(Prompt.pull).parameters
     assert "refresh" in parameters
@@ -327,8 +327,8 @@ def test_the_generated_handle_pulls_through_the_cache():
 
 
 def test_the_refresh_loop_can_reach_what_it_needs_of_a_real_handle():
-    from confidentai.api import Api
-    from confidentai.prompts.prompt import Prompt
+    from confident_ai.api import Api
+    from confident_ai.prompts.prompt import Prompt
 
     handle = Prompt(
         Api(api_key="confident_us_proj_test"), prompt_id="<PROMPT-ID>"

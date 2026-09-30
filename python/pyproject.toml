@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "confidentai"
+name = "confident-ai"
 version = "0.2.1"
 description = "The official Python SDK for the Confident AI platform management API."
 authors = ["Jeffrey Ip <jeffreyip@confident-ai.com>"]
@@ -23,8 +23,8 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
-packages = [{ include = "confidentai" }]
-include = ["confidentai/py.typed", "LICENSE"]
+packages = [{ include = "confident_ai" }]
+include = ["confident_ai/py.typed", "LICENSE"]
 exclude = ["tests/*"]
 
 [tool.poetry.urls]

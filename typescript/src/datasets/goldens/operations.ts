@@ -64,7 +64,7 @@ export class GoldensOperations extends DatasetIngestionTasksOperations {
    * @param golden One golden to write: single-turn when it carries `input`,
    *   multi-turn when it carries `scenario`. A golden cannot be both, and its
    *   kind must match the dataset's `multiTurn`. Pass a SingleTurnGoldenRequest
-   *   or a MultiTurnGoldenRequest, from confidentai.datasets.types.
+   *   or a MultiTurnGoldenRequest.
    */
   async updateGolden(
     datasetId: string,

@@ -53,7 +53,7 @@
 #         <field>: <field>
 #
 #   helpers:                 methods with no operation behind them, written by
-#     <method>: <function>   hand in confidentai/utils/helpers.py and its
+#     <method>: <function>   hand in <package>/utils/helpers.py and its
 #                            TypeScript twin, and called with the object first
 #
 # Every block below `identity` is optional; a handle declares only the ones it

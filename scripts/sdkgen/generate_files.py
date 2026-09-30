@@ -19,6 +19,7 @@ from typing import Dict, Iterable, List, Optional, Tuple
 import black
 
 from .constants import (
+    PYTHON_PACKAGE,
     GENERATED_MARKER,
     REPO_ROOT,
     TS_IDENTIFIER,
@@ -37,7 +38,7 @@ class ResourcePaths:
     """A spec and the two modules it generates.
 
     The spec's filename is the resource name in both SDKs, so `datasets.yml`
-    generates `confidentai/datasets/types.py` and `src/datasets/types.ts`.
+    generates `<package>/datasets/types.py` and `src/datasets/types.ts`.
     A kebab-cased spec becomes a snake_cased Python package, which is the only
     difference the two languages' import rules force.
     """
@@ -57,7 +58,7 @@ class ResourcePaths:
         return (
             REPO_ROOT
             / "python"
-            / "confidentai"
+            / PYTHON_PACKAGE
             / self.python_module
             / "types.py"
         )

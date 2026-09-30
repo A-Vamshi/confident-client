@@ -100,7 +100,7 @@ export class AnnotationsClient {
    *   field that goes with it: `expectedOutput` for a trace or span,
    *   `expectedOutcome` for a thread. `fieldType` defaults to THUMBS_RATING.
    *   Pass one of TraceAnnotationRequest, SpanAnnotationRequest,
-   *   ThreadAnnotationRequest, from confidentai.annotations.types.
+   *   ThreadAnnotationRequest.
    */
   async create(annotation: CreateAnnotationRequest): Promise<AnnotationRef> {
     return this.api.sendRequest<AnnotationRef>(
