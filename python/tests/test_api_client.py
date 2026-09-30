@@ -17,7 +17,7 @@ def test_sets_auth_and_version_headers(api, http):
     headers = http.last["headers"]
     assert headers["CONFIDENT_API_KEY"] == "confident_us_org_k"
     assert headers["Content-Type"] == "application/json"
-    assert headers["X-Confident-SDK-Version"].startswith("confidentai-python/")
+    assert headers["X-Confident-SDK-Version"].startswith("confident-ai-python/")
 
 
 def test_get_unwraps_data_envelope(api, http):

@@ -42,7 +42,7 @@ def _background_loop() -> asyncio.AbstractEventLoop:
             loop.run_forever()
 
         threading.Thread(
-            target=run, name="confidentai-prompt-refresh", daemon=True
+            target=run, name="confident-ai-prompt-refresh", daemon=True
         ).start()
         ready.wait()
         _loop = created["loop"]

@@ -185,7 +185,7 @@ class Api:
         self._headers = {
             "Content-Type": "application/json",
             API_KEY_HEADER: api_key,
-            SDK_VERSION_HEADER: f"confidentai-python/{__version__}",
+            SDK_VERSION_HEADER: f"confident-ai-python/{__version__}",
         }
 
     @staticmethod
@@ -225,7 +225,7 @@ class Api:
             return response_data, None
 
         if api_response.deprecated:
-            deprecation_msg = "You are using a deprecated API endpoint. Please update your confidentai version."
+            deprecation_msg = "You are using a deprecated API endpoint. Please update your confident-ai version."
             if api_response.link:
                 deprecation_msg += f" See: {api_response.link}"
             logging.warning(deprecation_msg)
