@@ -56,11 +56,12 @@ export class ItemsOperations extends AnnotationQueuesOperations {
    *
    * @param annotationQueueId The id of the annotation queue.
    * @param items The production data to add to the queue. Send the list that
-   *   matches the queue's `type` — `traceUuids` for a TRACE queue, `spanUuids`
-   *   for a SPAN queue, `threadIds` for a THREAD queue — and every id must
-   *   already exist in your project. Items already in the queue are skipped.
-   *   Pass one of AddTraceQueueItemsRequest, AddSpanQueueItemsRequest,
-   *   AddThreadQueueItemsRequest, from confidentai.annotation_queues.types.
+   *   matches the queue's `type` — `traceUuids` for a `TRACE` queue,
+   *   `spanUuids` for a `SPAN` queue, `threadIds` for a `THREAD` queue — and
+   *   every id must already exist in your project. Items already in the queue
+   *   are skipped. Pass one of AddTraceQueueItemsRequest,
+   *   AddSpanQueueItemsRequest, AddThreadQueueItemsRequest, from
+   *   confidentai.annotation_queues.types.
    */
   async addItems(
     annotationQueueId: string,

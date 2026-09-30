@@ -127,7 +127,7 @@ class ReportsClient:
                 Required, since a report is read under its template.
             sections: The report's sections, in render order. At least one is
                 required.
-            error: Why the report failed, when creating it as ERRORED.
+            error: Why the report failed, when creating it as `ERRORED`.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -163,7 +163,7 @@ class ReportsClient:
                 Required, since a report is read under its template.
             sections: The report's sections, in render order. At least one is
                 required.
-            error: Why the report failed, when creating it as ERRORED.
+            error: Why the report failed, when creating it as `ERRORED`.
         """
         return await self._api.a_request(
             HttpMethods.POST,

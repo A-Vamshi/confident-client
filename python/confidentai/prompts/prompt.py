@@ -38,7 +38,7 @@ class Prompt:
     """One prompt of your project, held by its prompt_id.
 
     Its methods are PromptsClient's, minus the
-    `promptId` that this handle supplies.
+    `promptId` that this object supplies.
     """
 
     def __init__(
@@ -242,7 +242,7 @@ class Prompt:
         A single commit of a prompt, as pulled by version, commit hash, or
         label. It carries `text` when the prompt is a text prompt and `messages`
         when it is a messages prompt, never both. Pass at most one of commit,
-        version, label; the handle is filled in from the result.
+        version, label; this object is filled in from the result.
 
         Args:
             commit: The hash of the commit to pull. Defaults to `latest`.
@@ -293,7 +293,7 @@ class Prompt:
         A single commit of a prompt, as pulled by version, commit hash, or
         label. It carries `text` when the prompt is a text prompt and `messages`
         when it is a messages prompt, never both. Pass at most one of commit,
-        version, label; the handle is filled in from the result.
+        version, label; this object is filled in from the result.
 
         Args:
             commit: The hash of the commit to pull. Defaults to `latest`.
@@ -415,7 +415,7 @@ class Prompt:
         write_to_cache: bool = True,
         default_to_cache: bool = True,
     ) -> "Prompt":
-        """Pull the prompt into this handle, and keep it current.
+        """Pull the prompt from Confident AI, and keep it current.
 
         Pass at most one of commit, version, label. The commit that comes back
         is cached on disk and re-pulled in the background every `refresh`
@@ -465,7 +465,7 @@ class Prompt:
         write_to_cache: bool = True,
         default_to_cache: bool = True,
     ) -> "Prompt":
-        """Pull the prompt into this handle, and keep it current.
+        """Pull the prompt from Confident AI, and keep it current.
 
         Pass at most one of commit, version, label. The commit that comes back
         is cached on disk and re-pulled in the background every `refresh`

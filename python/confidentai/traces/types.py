@@ -128,6 +128,16 @@ class ThreadRequest(ConfidentBaseModel):
     tags: Optional[List[str]] = None
 
 
+class UserRequest(ConfidentBaseModel):
+    id: Optional[str] = None
+    name: Optional[str] = None
+
+
+class CustomerRequest(ConfidentBaseModel):
+    id: Optional[str] = None
+    name: Optional[str] = None
+
+
 class LlmSpanRequest(ConfidentBaseModel):
     type: Literal["LLM"]
     uuid: str
@@ -298,6 +308,9 @@ class CreateTraceRequest(ConfidentBaseModel):
     thread_id: Optional[str] = Field(default=None, alias="threadId")
     thread: Optional[ThreadRequest] = None
     user_id: Optional[str] = Field(default=None, alias="userId")
+    user: Optional[UserRequest] = None
+    customer_id: Optional[str] = Field(default=None, alias="customerId")
+    customer: Optional[CustomerRequest] = None
     metric_collection: Optional[str] = Field(
         default=None,
         alias="metricCollection",
@@ -337,6 +350,7 @@ class TraceSummary(ConfidentBaseModel):
     cost: Optional[float]
     thread_id: Optional[str] = Field(alias="threadId")
     user_id: Optional[str] = Field(alias="userId")
+    customer_id: Optional[str] = Field(alias="customerId")
     environment: Environment
     tags: Optional[List[str]]
     metadata: Optional[Dict[str, Any]]

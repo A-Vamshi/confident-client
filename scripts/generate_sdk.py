@@ -33,8 +33,10 @@ from sdkgen.constants import (
     REPO_ROOT,
     COMMON_RESOURCE,
     DEFAULT_SPEC_DIR,
+    REFERENCE_PATH,
     MERGED_SPEC,
 )
+from sdkgen.generate_sdk_reference import build_reference
 from sdkgen.errors import SpecError
 from sdkgen.openapi_helpers.openapi_to_sdk_names import acronyms_in
 from sdkgen.generate_files import (
@@ -329,6 +331,23 @@ def build(spec_dir: Path, descriptive: bool = True) -> Generated:
     # Overlaid last, over formatted text: the anchors an overlay matches are
     # then the lines a reader sees in the committed file.
     outputs = run_after_generation(outputs, descriptive)
+
+    # Built from the rendered text rather than the spec, which is the only way
+    # a method an overlay rewrote reaches the docs as it actually ships.
+    outputs.append(
+        (
+            REFERENCE_PATH,
+            build_reference(
+                outputs,
+                generating,
+                home,
+                components,
+                stateful,
+                acronyms,
+                REPO_ROOT,
+            ),
+        )
+    )
 
     # Measured against every tag, skipped ones included, so a resource waiting
     # to be generated does not read as drift in the spec.

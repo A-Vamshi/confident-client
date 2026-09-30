@@ -34,6 +34,15 @@ CANONICAL_SPEC_LOCATION = "packages/shared/openapi"
 # they are the one part of the generator a reader is expected to hand-edit.
 STATEFUL_CONFIG = Path(__file__).resolve().parents[1] / "stateful_config.yml"
 
+# What this run publishes for confident-landing: every callable the SDK
+# exposes, in both languages. Committed like the SDKs themselves, so the docs
+# build reads a file rather than running this generator.
+REFERENCE_PATH = REPO_ROOT / "sdk-reference.yml"
+
+# The module whose constants the reference cites: the environment variables a
+# caller sets, read from the SDK rather than restated here.
+PYTHON_API_MODULE = REPO_ROOT / "python" / "confidentai" / "api.py"
+
 
 # ===== Which routes are generated =====
 
@@ -46,6 +55,11 @@ GENERATED_RESOURCES: FrozenSet[str] = frozenset()
 # A resource listed here generates only these operations. One absent from it
 # generates all of them.
 GENERATED_OPERATIONS: Dict[str, FrozenSet[str]] = {}
+
+# The resources the published reference covers. Empty means every generated
+# resource; a resource named here narrows it, and one outside the set is
+# generated as usual and simply goes undocumented.
+DOCUMENTED_RESOURCES: FrozenSet[str] = frozenset()
 
 # Operations we ignore instead of generating. Naming one the spec no longer
 # declares stops the generator, so a rename upstream cannot slip past.

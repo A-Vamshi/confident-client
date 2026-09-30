@@ -130,7 +130,7 @@ export class TransformersClient {
    * not exist in this project, and a 400 means it has no code saved to run.
    *
    * @param transformerId The id of the transformer.
-   * @param inputData The value to pass to the transformer's `transform`
+   * @param inputData The value to pass to the transformer's `transformer`
    *   function. Any JSON value is accepted; send the shape the transformer
    *   expects to see in production.
    */

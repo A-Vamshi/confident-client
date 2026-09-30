@@ -41,9 +41,9 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
    *
    * Creates a standing rule that harvests matching production traces, spans or
    * threads into the dataset as goldens, starting immediately unless `enabled`
-   * is false, and returns its id. `dataModel` must match the dataset: THREAD
-   * for multi-turn, TRACE or SPAN for single-turn. Requires the Starter plan or
-   * above.
+   * is false, and returns its id. `dataModel` must match the dataset: `THREAD`
+   * for multi-turn, `TRACE` or `SPAN` for single-turn. Requires the Starter
+   * plan or above.
    *
    * @param datasetId The unique id of the dataset.
    * @param name A name for the task, unique within the dataset.

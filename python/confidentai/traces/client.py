@@ -15,6 +15,7 @@ from confidentai.common.types import (
 from confidentai.endpoints import Endpoints
 from confidentai.traces.types import (
     CreateTraceRequest,
+    CustomerRequest,
     MetricDataConfig,
     SpanRequest,
     ThreadRequest,
@@ -22,6 +23,7 @@ from confidentai.traces.types import (
     TraceList,
     TraceRef,
     TraceSortBy,
+    UserRequest,
 )
 
 
@@ -161,6 +163,9 @@ class TracesClient:
         thread_id: Optional[str] = None,
         thread: Optional[ThreadRequest] = None,
         user_id: Optional[str] = None,
+        user: Optional[UserRequest] = None,
+        customer_id: Optional[str] = None,
+        customer: Optional[CustomerRequest] = None,
         metric_collection: Optional[str] = None,
         test_run_id: Optional[str] = None,
         test_case_id: Optional[str] = None,
@@ -203,6 +208,9 @@ class TracesClient:
                 conversation.
             user_id: This is the unique identifier for your end user for the
                 trace.
+            customer_id: This is the unique identifier of the customer the trace
+                belongs to — the account, tenant or organization your end user
+                belongs to.
             metric_collection: This is the metric collection you wish to use to
                 evaluate the trace.
             test_run_id: This is the unique identifier of the test run to
@@ -252,6 +260,9 @@ class TracesClient:
                 "threadId": thread_id,
                 "thread": thread,
                 "userId": user_id,
+                "user": user,
+                "customerId": customer_id,
+                "customer": customer,
                 "metricCollection": metric_collection,
                 "testRunId": test_run_id,
                 "testCaseId": test_case_id,
@@ -283,6 +294,9 @@ class TracesClient:
         thread_id: Optional[str] = None,
         thread: Optional[ThreadRequest] = None,
         user_id: Optional[str] = None,
+        user: Optional[UserRequest] = None,
+        customer_id: Optional[str] = None,
+        customer: Optional[CustomerRequest] = None,
         metric_collection: Optional[str] = None,
         test_run_id: Optional[str] = None,
         test_case_id: Optional[str] = None,
@@ -325,6 +339,9 @@ class TracesClient:
                 conversation.
             user_id: This is the unique identifier for your end user for the
                 trace.
+            customer_id: This is the unique identifier of the customer the trace
+                belongs to — the account, tenant or organization your end user
+                belongs to.
             metric_collection: This is the metric collection you wish to use to
                 evaluate the trace.
             test_run_id: This is the unique identifier of the test run to
@@ -374,6 +391,9 @@ class TracesClient:
                 "threadId": thread_id,
                 "thread": thread,
                 "userId": user_id,
+                "user": user,
+                "customerId": customer_id,
+                "customer": customer,
                 "metricCollection": metric_collection,
                 "testRunId": test_run_id,
                 "testCaseId": test_case_id,

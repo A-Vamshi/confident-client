@@ -20,7 +20,7 @@ export interface CreateEvaluationRuleRequest {
   sampleRate?: number;
   spanType?: SpanType | null;
   filters?: FilterSet | null;
-  threadTimelimit?: number;
+  threadTimelimit?: number | null;
   overwriteEvals?: boolean;
 }
 
@@ -33,7 +33,7 @@ export interface EvaluationRule {
   dataModel: EvaluationRuleDataModel;
   spanType: SpanType | null;
   filters: FilterSet | null;
-  threadTimelimit: number;
+  threadTimelimit: number | null;
   overwriteEvals: boolean;
   metricCollectionId: string;
   createdAt: string;
@@ -67,6 +67,6 @@ export interface UpdateEvaluationRuleRequest {
   sampleRate?: number;
   spanType?: SpanType | null;
   filters?: FilterSet | null;
-  threadTimelimit?: number;
+  threadTimelimit?: number | null;
   overwriteEvals?: boolean;
 }

@@ -96,8 +96,8 @@ class DatasetIngestionTasksOperations:
         Creates a standing rule that harvests matching production traces, spans
         or threads into the dataset as goldens, starting immediately unless
         `enabled` is false, and returns its id. `dataModel` must match the
-        dataset: THREAD for multi-turn, TRACE or SPAN for single-turn. Requires
-        the Starter plan or above.
+        dataset: `THREAD` for multi-turn, `TRACE` or `SPAN` for single-turn.
+        Requires the Starter plan or above.
 
         Args:
             dataset_id: The unique id of the dataset.
@@ -183,8 +183,8 @@ class DatasetIngestionTasksOperations:
         Creates a standing rule that harvests matching production traces, spans
         or threads into the dataset as goldens, starting immediately unless
         `enabled` is false, and returns its id. `dataModel` must match the
-        dataset: THREAD for multi-turn, TRACE or SPAN for single-turn. Requires
-        the Starter plan or above.
+        dataset: `THREAD` for multi-turn, `TRACE` or `SPAN` for single-turn.
+        Requires the Starter plan or above.
 
         Args:
             dataset_id: The unique id of the dataset.

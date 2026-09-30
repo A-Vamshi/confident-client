@@ -13,9 +13,9 @@ export class MetricsDataClient {
   /**
    * List Metric Data
    *
-   * Lists the metric results in your Confident AI project one page at a time.
-   * Only results recorded against single-turn test cases are listed; multi-turn
-   * results are read through the test run they belong to.
+   * Lists every metric result in your Confident AI project one page at a time,
+   * newest first, across all evaluations on traces, spans, threads and test
+   * cases.
    *
    * @param page The page of metric data to return. Defaults to 1.
    * @param pageSize The number of results per page, at most 100. Defaults to
@@ -23,6 +23,10 @@ export class MetricsDataClient {
    * @param start Returns only results recorded at or after this ISO 8601
    *   datetime.
    * @param end Returns only results recorded before this ISO 8601 datetime.
+   * @param multiTurn Filter for results evaluated on your test case type, true
+   *   for multi-turn, false for single-turn. Returns both if not specified.
+   * @param searchTerm Returns only results whose metric name contains this
+   *   text, case-insensitively.
    */
   async list(
     options: {
@@ -30,13 +34,15 @@ export class MetricsDataClient {
       pageSize?: number;
       start?: string;
       end?: string;
+      multiTurn?: "true" | "false";
+      searchTerm?: string;
     } = {},
   ): Promise<MetricDataList> {
-    const { page, pageSize, start, end } = options;
+    const { page, pageSize, start, end, multiTurn, searchTerm } = options;
     return this.api.sendRequest<MetricDataList>(
       HttpMethods.GET,
       Endpoints.METRICS_DATA_ENDPOINT,
-      { params: { page, pageSize, start, end } },
+      { params: { page, pageSize, start, end, multiTurn, searchTerm } },
     );
   }
 }

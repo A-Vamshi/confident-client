@@ -3,7 +3,7 @@
 # Do not edit by hand — change the route in confident-cloud
 # and regenerate.
 
-from typing import Optional
+from typing import Literal, Optional
 
 from confidentai.api import Api, HttpMethods
 from confidentai.endpoints import Endpoints
@@ -20,13 +20,15 @@ class MetricsDataClient:
         page: Optional[int] = None,
         page_size: Optional[int] = None,
         start: Optional[str] = None,
-        end: Optional[str] = None
+        end: Optional[str] = None,
+        multi_turn: Optional[Literal["true", "false"]] = None,
+        search_term: Optional[str] = None
     ) -> MetricDataList:
         """List Metric Data
 
-        Lists the metric results in your Confident AI project one page at a
-        time. Only results recorded against single-turn test cases are listed;
-        multi-turn results are read through the test run they belong to.
+        Lists every metric result in your Confident AI project one page at a
+        time, newest first, across all evaluations on traces, spans, threads and
+        test cases.
 
         Args:
             page: The page of metric data to return. Defaults to 1.
@@ -35,6 +37,11 @@ class MetricsDataClient:
             start: Returns only results recorded at or after this ISO 8601
                 datetime.
             end: Returns only results recorded before this ISO 8601 datetime.
+            multi_turn: Filter for results evaluated on your test case type,
+                true for multi-turn, false for single-turn. Returns both if not
+                specified.
+            search_term: Returns only results whose metric name contains this
+                text, case-insensitively.
         """
         return self._api.request(
             HttpMethods.GET,
@@ -45,6 +52,8 @@ class MetricsDataClient:
                 "pageSize": page_size,
                 "start": start,
                 "end": end,
+                "multiTurn": multi_turn,
+                "searchTerm": search_term,
             },
         )
 
@@ -54,13 +63,15 @@ class MetricsDataClient:
         page: Optional[int] = None,
         page_size: Optional[int] = None,
         start: Optional[str] = None,
-        end: Optional[str] = None
+        end: Optional[str] = None,
+        multi_turn: Optional[Literal["true", "false"]] = None,
+        search_term: Optional[str] = None
     ) -> MetricDataList:
         """List Metric Data
 
-        Lists the metric results in your Confident AI project one page at a
-        time. Only results recorded against single-turn test cases are listed;
-        multi-turn results are read through the test run they belong to.
+        Lists every metric result in your Confident AI project one page at a
+        time, newest first, across all evaluations on traces, spans, threads and
+        test cases.
 
         Args:
             page: The page of metric data to return. Defaults to 1.
@@ -69,6 +80,11 @@ class MetricsDataClient:
             start: Returns only results recorded at or after this ISO 8601
                 datetime.
             end: Returns only results recorded before this ISO 8601 datetime.
+            multi_turn: Filter for results evaluated on your test case type,
+                true for multi-turn, false for single-turn. Returns both if not
+                specified.
+            search_term: Returns only results whose metric name contains this
+                text, case-insensitively.
         """
         return await self._api.a_request(
             HttpMethods.GET,
@@ -79,5 +95,7 @@ class MetricsDataClient:
                 "pageSize": page_size,
                 "start": start,
                 "end": end,
+                "multiTurn": multi_turn,
+                "searchTerm": search_term,
             },
         )

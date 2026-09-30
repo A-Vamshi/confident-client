@@ -26,12 +26,11 @@ class GovernancePoliciesSkillOperations:
         control and nothing about it is assessed: it is the instructions
         Confident AI serves to coding agents working on the projects this policy
         governs. Confident AI publishes a per-project Agent Skills git
-        repository at `https://app.confident-ai.com/skills.git`, and a project
-        enrolled in this policy finds the skill there as
-        `skills/governance/SKILL.md`, with `description` in the YAML frontmatter
-        and `body` as the Markdown beneath it. Answers with null when the policy
-        has none, in which case agents working on its projects receive no
-        governance skill.
+        repository, and a project enrolled in this policy finds the skill there
+        as `skills/governance/SKILL.md`, with `description` in the YAML
+        frontmatter and `body` as the Markdown beneath it. Answers with null
+        when the policy has none, in which case agents working on its projects
+        receive no governance skill.
 
         Args:
             policy_id: The id of the governance policy.
@@ -52,12 +51,11 @@ class GovernancePoliciesSkillOperations:
         control and nothing about it is assessed: it is the instructions
         Confident AI serves to coding agents working on the projects this policy
         governs. Confident AI publishes a per-project Agent Skills git
-        repository at `https://app.confident-ai.com/skills.git`, and a project
-        enrolled in this policy finds the skill there as
-        `skills/governance/SKILL.md`, with `description` in the YAML frontmatter
-        and `body` as the Markdown beneath it. Answers with null when the policy
-        has none, in which case agents working on its projects receive no
-        governance skill.
+        repository, and a project enrolled in this policy finds the skill there
+        as `skills/governance/SKILL.md`, with `description` in the YAML
+        frontmatter and `body` as the Markdown beneath it. Answers with null
+        when the policy has none, in which case agents working on its projects
+        receive no governance skill.
 
         Args:
             policy_id: The id of the governance policy.

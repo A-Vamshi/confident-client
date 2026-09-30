@@ -46,7 +46,7 @@ class Project:
     """One project of your project, held by its project_id.
 
     Its methods are ProjectsClient's, minus the
-    `projectId` that this handle supplies.
+    `projectId` that this object supplies.
     """
 
     def __init__(

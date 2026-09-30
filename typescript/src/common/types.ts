@@ -206,6 +206,7 @@ export enum WidgetDimension {
   TEST_CASE_ID = "test_case_id",
   TEST_RUN_ID = "test_run_id",
   END_USER = "end_user",
+  CUSTOMER = "customer",
   SOURCE = "source",
   ANNOTATOR = "annotator",
   NAME = "name",
@@ -321,6 +322,7 @@ export interface AuditLogExport {
     | "CONVERSATIONS"
     | "CONVERSATION_METRICS"
     | "ANNOTATIONS"
+    | "TEST_RUNS"
     | "AUDIT_LOGS";
   startTime: string | null;
   endTime: string | null;
@@ -425,6 +427,8 @@ export interface WidgetLayout {
 export interface FilterSetGroupFilter {
   category:
     | "User Id"
+    | "Customer Id"
+    | "Customer Name"
     | "Thread Id"
     | "Trace UUID"
     | "Trace Name"
@@ -659,6 +663,11 @@ export interface MetricData {
   createdAt: string;
   evaluatedAt: string | null;
   multiTurn: boolean;
+  traceUuid: string | null;
+  spanUuid: string | null;
+  threadId: string | null;
+  testCaseId: string | null;
+  testRunId: string | null;
 }
 
 export interface MetricList {
@@ -815,6 +824,7 @@ export interface Trace {
   cost: number | null;
   threadId: string | null;
   userId: string | null;
+  customerId: string | null;
   environment: Environment;
   tags: string[] | null;
   metadata: Record<string, unknown> | null;

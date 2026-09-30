@@ -18,6 +18,7 @@ export enum ClassifierLabelStatus {
 export enum ClassifierPreset {
   CUSTOM = "CUSTOM",
   SENTIMENT = "SENTIMENT",
+  TOPICS = "TOPICS",
   USE_CASES = "USE_CASES",
   ISSUES = "ISSUES",
 }

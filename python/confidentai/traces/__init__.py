@@ -7,6 +7,7 @@ from confidentai.traces.types import (
     AgentSpanRequest,
     BaseSpanRequest,
     CreateTraceRequest,
+    CustomerRequest,
     LlmSpanRequest,
     MetricDataConfig,
     RetrieverSpanRequest,
@@ -18,12 +19,14 @@ from confidentai.traces.types import (
     TraceRef,
     TraceSortBy,
     TraceSummary,
+    UserRequest,
 )
 
 __all__ = [
     "AgentSpanRequest",
     "BaseSpanRequest",
     "CreateTraceRequest",
+    "CustomerRequest",
     "LlmSpanRequest",
     "MetricDataConfig",
     "RetrieverSpanRequest",
@@ -35,4 +38,5 @@ __all__ = [
     "TraceRef",
     "TraceSortBy",
     "TraceSummary",
+    "UserRequest",
 ]

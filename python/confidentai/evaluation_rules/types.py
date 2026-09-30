@@ -46,7 +46,7 @@ class EvaluationRule(ConfidentBaseModel):
     data_model: EvaluationRuleDataModel = Field(alias="dataModel")
     span_type: Optional[SpanType] = Field(alias="spanType")
     filters: Optional[FilterSet]
-    thread_timelimit: int = Field(alias="threadTimelimit")
+    thread_timelimit: Optional[int] = Field(alias="threadTimelimit")
     overwrite_evals: bool = Field(alias="overwriteEvals")
     metric_collection_id: str = Field(alias="metricCollectionId")
     created_at: str = Field(alias="createdAt")
