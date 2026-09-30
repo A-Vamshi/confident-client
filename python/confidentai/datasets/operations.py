@@ -301,8 +301,8 @@ class DatasetsOperations:
         """Run Dataset Evaluation
 
         Starts an evaluation of the dataset's finalized goldens against a metric
-        collection and returns the test run it is evaluated in. The evaluation
-        runs asynchronously, so this returns as soon as the run is created. By
+        collection and returns the test run it is evaluated in. It runs
+        asynchronously, so this returns as soon as the run is created. By
         default the goldens' stored actual outputs are evaluated; supply
         `aiConnectionId` or `promptAlias`, never both, to generate them first.
 
@@ -389,8 +389,8 @@ class DatasetsOperations:
         """Run Dataset Evaluation
 
         Starts an evaluation of the dataset's finalized goldens against a metric
-        collection and returns the test run it is evaluated in. The evaluation
-        runs asynchronously, so this returns as soon as the run is created. By
+        collection and returns the test run it is evaluated in. It runs
+        asynchronously, so this returns as soon as the run is created. By
         default the goldens' stored actual outputs are evaluated; supply
         `aiConnectionId` or `promptAlias`, never both, to generate them first.
 

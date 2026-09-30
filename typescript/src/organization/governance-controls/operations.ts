@@ -54,10 +54,10 @@ export class GovernanceControlsOperations extends GovernanceControlGroupsOperati
    *
    * Creates a governance control and returns its id. Supplying the config that
    * matches the control's `type` snapshots its first version in the same call;
-   * omitting it creates the control with no definition, which assesses as ERROR
-   * until you add a version. Operational controls are seeded by Confident AI
-   * and cannot be created here. A new control governs nothing until a
-   * governance policy holds it.
+   * omitting it creates the control with no definition, which assesses as
+   * `ERROR` until you add a version. Operational controls are seeded by
+   * Confident AI and cannot be created here. A new control governs nothing
+   * until a policy holds it.
    *
    * @param name The name of the control, unique within your organization.
    * @param description What the control checks and why. Send null to leave it
@@ -118,11 +118,11 @@ export class GovernanceControlsOperations extends GovernanceControlGroupsOperati
   /**
    * Update Governance Control
    *
-   * Updates a governance control's name or description and returns it as
-   * stored. Both live on the control itself rather than on a version, so this
-   * does not snapshot a new version and does not change what the control checks
-   * — append a version for that. An operational control's name and description
-   * come from Confident AI's registry and cannot be edited.
+   * Updates a governance control's name or description and returns it. Both
+   * live on the control rather than on a version, so this does not snapshot a
+   * new version and does not change what the control checks — append a version
+   * for that. An operational control's name and description come from Confident
+   * AI's registry and cannot be edited.
    *
    * @param controlId The id of the governance control.
    * @param name The name of the control, unique within your organization.
@@ -164,25 +164,16 @@ export class GovernanceControlsOperations extends GovernanceControlGroupsOperati
   /**
    * Assess Governance Control
    *
-   * Runs a governance control now against every project it governs and records
-   * a fresh verdict per project, rather than waiting for the scheduled sweep. A
-   * project is governed when its policy holds the control or extends a base
-   * policy that holds it, and the run always uses the control's current
-   * version. Each project resolves to one verdict. A RUNTIME control aggregates
-   * its data model over the trailing 24 hours and returns FAIL when the result
-   * sits on the threshold's `direction` side of it, PASS when it does not, and
-   * NO_DATA when the window produced nothing to measure. A pre-deployment
-   * control returns PASS when the newest completed run in its window satisfies
-   * the control's filters, FAIL when it does not, and NO_DATA when there is no
-   * such run. An OPERATIONAL control returns whatever the platform check finds.
-   * Any control that is not fully configured, or whose aggregation does not fit
-   * its data model, returns ERROR with the reason on the assessment. Every
-   * verdict is stored, so it becomes the project's current status for this
-   * control and appears in the control's assessment history. Assessments are
-   * append-only — running this repeatedly adds rows rather than replacing them.
-   * It consumes evaluation resources proportional to the number of governed
-   * projects. A control attached to no policy, or one with no version yet,
-   * governs nothing and returns zero counts.
+   * Runs a governance control now against every project it governs, rather than
+   * waiting for the scheduled sweep, recording one verdict per project against
+   * the control's current version. A project is governed when its policy holds
+   * the control, or extends a base policy that does. Verdicts are append-only:
+   * each becomes that project's current status and a row in the control's
+   * history, and running this again adds rows rather than replacing them. A
+   * project with nothing to measure resolves to `NO_DATA`, one whose control is
+   * not fully configured to `ERROR`. A control in no policy, or with no
+   * version, governs nothing and returns zero counts. Cost scales with the
+   * number of governed projects.
    *
    * @param controlId The id of the governance control.
    */
@@ -200,15 +191,13 @@ export class GovernanceControlsOperations extends GovernanceControlGroupsOperati
    * List Governance Assessments
    *
    * Lists a governance control's recorded verdicts, one per project per run,
-   * ordered newest recorded first with ties broken by assessment id. Verdicts
-   * belong to the version of the definition they were computed against, so they
-   * are read one version at a time: send `version` to read a past version's
-   * verdicts, or omit it to read the current version, which the response echoes
-   * back. There is no time window — every verdict ever recorded against that
-   * version is paginated here, so a control assessed daily across five projects
-   * returns five rows per day rather than a single current state. The newest
-   * verdict for a project is that project's current status; everything older is
-   * history. A control with no versions yet is a 404 rather than an empty list.
+   * newest first. Verdicts belong to the version they were computed against, so
+   * they are read one version at a time. There is no time window — every
+   * verdict ever recorded against that version is paginated here, so a control
+   * assessed daily across five projects returns five rows per day rather than a
+   * single current state. The newest verdict for a project is that project's
+   * current status; everything older is history. A control with no versions yet
+   * is a `404` rather than an empty list.
    *
    * @param controlId The id of the governance control.
    * @param version The `version` label of the control version to read verdicts

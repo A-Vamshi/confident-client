@@ -132,6 +132,11 @@ class ProjectRoleList(ConfidentBaseModel):
     roles: List[ProjectRole]
 
 
+class UpdateDecisionProjectModelRequest(ConfidentBaseModel):
+    provider: ModelProvider
+    name: Optional[str] = None
+
+
 class UpdateEvaluationProjectModelRequest(ConfidentBaseModel):
     provider: ModelProvider
     name: Optional[str] = None
@@ -159,5 +164,7 @@ class UpdateProjectRequest(ConfidentBaseModel):
 
 
 UpdateProjectModelRequest = Union[
-    UpdateEvaluationProjectModelRequest, UpdatePlatformProjectModelRequest
+    UpdateEvaluationProjectModelRequest,
+    UpdateDecisionProjectModelRequest,
+    UpdatePlatformProjectModelRequest,
 ]

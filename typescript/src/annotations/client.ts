@@ -5,12 +5,13 @@
 
 import { Api, HttpMethods } from "../api";
 import { Endpoints } from "../endpoints";
-import { AnnotationType, MLLMImage } from "../common/types";
+import { AnnotationFieldType, MLLMImage } from "../common/types";
 import {
   Annotation,
   AnnotationList,
   AnnotationRef,
   AnnotationSortBy,
+  AnnotationValue,
   CreateAnnotationRequest,
 } from "./types";
 
@@ -39,7 +40,7 @@ export class AnnotationsClient {
    * @param traceUuid Returns only annotations left on this trace.
    * @param spanUuid Returns only annotations left on this span.
    * @param threadId Returns only annotations left on this thread.
-   * @param type Returns only annotations recorded on this scale.
+   * @param fieldType Returns only annotations of this field type.
    */
   async list(
     options: {
@@ -52,7 +53,7 @@ export class AnnotationsClient {
       traceUuid?: string;
       spanUuid?: string;
       threadId?: string;
-      type?: AnnotationType;
+      fieldType?: AnnotationFieldType;
     } = {},
   ): Promise<AnnotationList> {
     const {
@@ -65,7 +66,7 @@ export class AnnotationsClient {
       traceUuid,
       spanUuid,
       threadId,
-      type,
+      fieldType,
     } = options;
     return this.api.sendRequest<AnnotationList>(
       HttpMethods.GET,
@@ -81,7 +82,7 @@ export class AnnotationsClient {
           traceUuid,
           spanUuid,
           threadId,
-          type,
+          fieldType,
         },
       },
     );
@@ -94,11 +95,11 @@ export class AnnotationsClient {
    * id. The target must already exist in your project. A rating on a
    * THUMBS_RATING scale is 0 or 1; on a FIVE_STAR_RATING scale it is 1 to 5.
    *
-   * @param annotation A rating to record against exactly one target. Send
+   * @param annotation An annotation to record against exactly one target. Send
    *   `traceUuid`, `spanUuid` or `threadId` — never more than one — and the
    *   field that goes with it: `expectedOutput` for a trace or span,
-   *   `expectedOutcome` for a thread. `type` defaults to THUMBS_RATING. Pass
-   *   one of TraceAnnotationRequest, SpanAnnotationRequest,
+   *   `expectedOutcome` for a thread. `fieldType` defaults to THUMBS_RATING.
+   *   Pass one of TraceAnnotationRequest, SpanAnnotationRequest,
    *   ThreadAnnotationRequest, from confidentai.annotations.types.
    */
   async create(annotation: CreateAnnotationRequest): Promise<AnnotationRef> {
@@ -134,9 +135,7 @@ export class AnnotationsClient {
    * thread annotation, and `expectedOutcome` on a trace or span annotation.
    *
    * @param annotationId The id of the annotation.
-   * @param rating The rating to record: 0 or 1 for a THUMBS_RATING, 1 to 5 for
-   *   a FIVE_STAR_RATING.
-   * @param explanation Why the rating was given.
+   * @param explanation Why the annotation was given.
    * @param expectedOutput The output the target should have produced. Only for
    *   an annotation left on a trace or span.
    * @param expectedOutcome The outcome the conversation should have reached.
@@ -147,8 +146,8 @@ export class AnnotationsClient {
   async update(
     annotationId: string,
     options: {
-      rating?: number;
-      type?: AnnotationType;
+      fieldType?: AnnotationFieldType;
+      value?: AnnotationValue;
       explanation?: string;
       expectedOutput?: string;
       expectedOutcome?: string;
@@ -156,8 +155,8 @@ export class AnnotationsClient {
     } = {},
   ): Promise<AnnotationRef> {
     const {
-      rating,
-      type,
+      fieldType,
+      value,
       explanation,
       expectedOutput,
       expectedOutcome,
@@ -168,8 +167,8 @@ export class AnnotationsClient {
       Endpoints.ANNOTATION_ENDPOINT,
       {
         body: {
-          rating,
-          type,
+          fieldType,
+          value,
           explanation,
           expectedOutput,
           expectedOutcome,

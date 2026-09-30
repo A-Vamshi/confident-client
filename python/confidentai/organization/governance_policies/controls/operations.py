@@ -24,12 +24,10 @@ class GovernancePoliciesControlsOperations:
 
         Lists every control the governance policy applies, with each control's
         current definition and its latest verdict in each enrolled project.
-        Controls the policy inherits from the policies it extends are included
-        and carry a `baseGovernancePolicy` naming where they come from. A
-        control your organization owns but has not attached to this policy does
-        not appear here — creating a control does not attach it to anything.
-        `totalGovernancePolicyControls` is the length of the list; this response
-        is not paginated.
+        Inherited controls are included and carry a `baseGovernancePolicy`
+        naming where they come from. A control your organization owns but has
+        not attached to this policy does not appear — creating a control does
+        not attach it to anything. This response is not paginated.
 
         Args:
             policy_id: The id of the governance policy.
@@ -48,12 +46,10 @@ class GovernancePoliciesControlsOperations:
 
         Lists every control the governance policy applies, with each control's
         current definition and its latest verdict in each enrolled project.
-        Controls the policy inherits from the policies it extends are included
-        and carry a `baseGovernancePolicy` naming where they come from. A
-        control your organization owns but has not attached to this policy does
-        not appear here — creating a control does not attach it to anything.
-        `totalGovernancePolicyControls` is the length of the list; this response
-        is not paginated.
+        Inherited controls are included and carry a `baseGovernancePolicy`
+        naming where they come from. A control your organization owns but has
+        not attached to this policy does not appear — creating a control does
+        not attach it to anything. This response is not paginated.
 
         Args:
             policy_id: The id of the governance policy.
@@ -72,16 +68,12 @@ class GovernancePoliciesControlsOperations:
 
         Replaces the set of controls the governance policy attaches directly,
         changing what it gates its projects on from the next assessment onward.
-        This is how a control comes to govern anything: creating a control
-        leaves it attached to no policy, so it gates no project and is never
-        assessed until a policy attaches it here. `controlIds` is the complete
-        set: anything the policy currently attaches and you leave out is
-        detached, and an empty array detaches all of them. Every id must name a
-        control in your organization, or the whole request is rejected. An
-        inherited control cannot be listed here — it is attached on the base
-        policy that owns it, and naming it would silently turn an inherited
-        control into a direct attachment. Returns the policy's controls as they
-        now stand, inherited ones included.
+        This is how a control comes to govern anything: a newly created control
+        is attached to no policy, so it gates nothing until a policy attaches it
+        here. Every id must name a control in your organization, or the whole
+        request is rejected, and an inherited control cannot be listed — it is
+        attached on the base policy that owns it. Returns the policy's controls
+        as they now stand, inherited ones included.
 
         Args:
             policy_id: The id of the governance policy.
@@ -107,16 +99,12 @@ class GovernancePoliciesControlsOperations:
 
         Replaces the set of controls the governance policy attaches directly,
         changing what it gates its projects on from the next assessment onward.
-        This is how a control comes to govern anything: creating a control
-        leaves it attached to no policy, so it gates no project and is never
-        assessed until a policy attaches it here. `controlIds` is the complete
-        set: anything the policy currently attaches and you leave out is
-        detached, and an empty array detaches all of them. Every id must name a
-        control in your organization, or the whole request is rejected. An
-        inherited control cannot be listed here — it is attached on the base
-        policy that owns it, and naming it would silently turn an inherited
-        control into a direct attachment. Returns the policy's controls as they
-        now stand, inherited ones included.
+        This is how a control comes to govern anything: a newly created control
+        is attached to no policy, so it gates nothing until a policy attaches it
+        here. Every id must name a control in your organization, or the whole
+        request is rejected, and an inherited control cannot be listed — it is
+        attached on the base policy that owns it. Returns the policy's controls
+        as they now stand, inherited ones included.
 
         Args:
             policy_id: The id of the governance policy.
@@ -141,12 +129,12 @@ class GovernancePoliciesControlsOperations:
         """Remove Governance Policy Controls
 
         Detaches the named controls from the governance policy, leaving its
-        other controls in place, so the policy stops gating its projects on
-        them. The controls themselves are not deleted and stay available to
-        other policies, and verdicts already recorded are kept. An inherited
-        control cannot be detached here: it is managed on the base policy that
-        owns it, and the request is rejected naming that policy rather than
-        silently doing nothing. Returns the policy's controls as they now stand.
+        others in place, so the policy stops gating its projects on them. The
+        controls themselves are not deleted and stay available to other
+        policies, and verdicts already recorded are kept. An inherited control
+        cannot be detached here: it is managed on the base policy that owns it,
+        and the request is rejected naming that policy rather than silently
+        doing nothing.
 
         Args:
             policy_id: The id of the governance policy.
@@ -169,12 +157,12 @@ class GovernancePoliciesControlsOperations:
         """Remove Governance Policy Controls
 
         Detaches the named controls from the governance policy, leaving its
-        other controls in place, so the policy stops gating its projects on
-        them. The controls themselves are not deleted and stay available to
-        other policies, and verdicts already recorded are kept. An inherited
-        control cannot be detached here: it is managed on the base policy that
-        owns it, and the request is rejected naming that policy rather than
-        silently doing nothing. Returns the policy's controls as they now stand.
+        others in place, so the policy stops gating its projects on them. The
+        controls themselves are not deleted and stay available to other
+        policies, and verdicts already recorded are kept. An inherited control
+        cannot be detached here: it is managed on the base policy that owns it,
+        and the request is rejected naming that policy rather than silently
+        doing nothing.
 
         Args:
             policy_id: The id of the governance policy.

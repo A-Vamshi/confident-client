@@ -66,11 +66,9 @@ class ProjectsOperations:
         Creates a project in your organization and provisions a project-scoped
         API key for it. The key's full `value` is returned **once**, in this
         response, and is redacted on every later read — so capture it here. The
-        new project is seeded with Confident AI's default classifiers, online
-        metric and trace alert, and pass `email` to assign an existing
-        organization member as its Owner. How many projects you may hold depends
-        on your plan, so this call can be refused on entitlement grounds even
-        when the name is free.
+        project is seeded with Confident AI's default classifiers, online metric
+        and trace alert. How many projects you may hold depends on your plan, so
+        this can be refused on entitlement grounds even when the name is free.
 
         Args:
             name: The name of the project, which must not already be taken by
@@ -102,11 +100,9 @@ class ProjectsOperations:
         Creates a project in your organization and provisions a project-scoped
         API key for it. The key's full `value` is returned **once**, in this
         response, and is redacted on every later read — so capture it here. The
-        new project is seeded with Confident AI's default classifiers, online
-        metric and trace alert, and pass `email` to assign an existing
-        organization member as its Owner. How many projects you may hold depends
-        on your plan, so this call can be refused on entitlement grounds even
-        when the name is free.
+        project is seeded with Confident AI's default classifiers, online metric
+        and trace alert. How many projects you may hold depends on your plan, so
+        this can be refused on entitlement grounds even when the name is free.
 
         Args:
             name: The name of the project, which must not already be taken by
@@ -226,16 +222,13 @@ class ProjectsOperations:
         """Delete Project
 
         Permanently deletes a project. **This cannot be undone, and it
-        cascades:** everything held under the project goes with it — its API
-        keys (including the one an SDK may be configured with), its members and
-        their role assignments, pending invitations, datasets, prompts and their
-        versions, metrics and metric collections, test runs and their results,
-        dashboards, annotation queues and forms, red teaming frameworks and risk
-        assessments, policies, alerts and export schedules. Ingested traces and
-        spans stop being reachable once the project is gone. There is no
-        confirmation step and no recovery, so the safe way to retire a project
-        is to deactivate its API keys first. The project's name becomes
-        available for reuse within the organization.
+        cascades** to everything held under it: API keys (including one an SDK
+        may be configured with), members and role assignments, invitations,
+        datasets, prompts, metrics, test runs, dashboards, annotation queues,
+        red teaming frameworks, policies, alerts and export schedules. Ingested
+        traces and spans stop being reachable. There is no confirmation step, so
+        the safe way to retire a project is to deactivate its API keys first.
+        Its name becomes available for reuse.
 
         Args:
             project_id: The id of the project. It must belong to the
@@ -252,16 +245,13 @@ class ProjectsOperations:
         """Delete Project
 
         Permanently deletes a project. **This cannot be undone, and it
-        cascades:** everything held under the project goes with it — its API
-        keys (including the one an SDK may be configured with), its members and
-        their role assignments, pending invitations, datasets, prompts and their
-        versions, metrics and metric collections, test runs and their results,
-        dashboards, annotation queues and forms, red teaming frameworks and risk
-        assessments, policies, alerts and export schedules. Ingested traces and
-        spans stop being reachable once the project is gone. There is no
-        confirmation step and no recovery, so the safe way to retire a project
-        is to deactivate its API keys first. The project's name becomes
-        available for reuse within the organization.
+        cascades** to everything held under it: API keys (including one an SDK
+        may be configured with), members and role assignments, invitations,
+        datasets, prompts, metrics, test runs, dashboards, annotation queues,
+        red teaming frameworks, policies, alerts and export schedules. Ingested
+        traces and spans stop being reachable. There is no confirmation step, so
+        the safe way to retire a project is to deactivate its API keys first.
+        Its name becomes available for reuse.
 
         Args:
             project_id: The id of the project. It must belong to the
@@ -286,16 +276,13 @@ class ProjectsOperations:
 
         Sets, replaces, or clears a project's stored credential for a single
         model provider. While the project is still inheriting your
-        organization's credentials, the first write creates a standalone
-        credential set for the project and severs that inheritance rather than
-        writing to the organization's record — so the project then holds only
-        the provider you just sent, and any other provider it was relying on has
-        to be set again here. This is a write-only surface: there is no read
-        endpoint, and the response returns every credential masked. Send
-        `apiKey` for an API-key provider or `modelConfig` for a configuration
-        provider, and null in either to clear what is stored. A provider your
-        organization's model provider policy does not allow cannot have a
-        credential set (403), though clearing one is always permitted.
+        organization's credentials, the first write creates a standalone set for
+        the project and severs that inheritance — so the project then holds only
+        the provider you just sent, and any other provider it relied on has to
+        be set again here. This is a write-only surface: there is no read
+        endpoint, and the response returns every credential masked. A provider
+        your organization's model provider policy does not allow cannot have a
+        credential set (`403`), though clearing one is always permitted.
 
         Args:
             project_id: The id of the project, which must belong to the
@@ -347,16 +334,13 @@ class ProjectsOperations:
 
         Sets, replaces, or clears a project's stored credential for a single
         model provider. While the project is still inheriting your
-        organization's credentials, the first write creates a standalone
-        credential set for the project and severs that inheritance rather than
-        writing to the organization's record — so the project then holds only
-        the provider you just sent, and any other provider it was relying on has
-        to be set again here. This is a write-only surface: there is no read
-        endpoint, and the response returns every credential masked. Send
-        `apiKey` for an API-key provider or `modelConfig` for a configuration
-        provider, and null in either to clear what is stored. A provider your
-        organization's model provider policy does not allow cannot have a
-        credential set (403), though clearing one is always permitted.
+        organization's credentials, the first write creates a standalone set for
+        the project and severs that inheritance — so the project then holds only
+        the provider you just sent, and any other provider it relied on has to
+        be set again here. This is a write-only surface: there is no read
+        endpoint, and the response returns every credential masked. A provider
+        your organization's model provider policy does not allow cannot have a
+        credential set (`403`), though clearing one is always permitted.
 
         Args:
             project_id: The id of the project, which must belong to the
@@ -400,12 +384,11 @@ class ProjectsOperations:
         """List Project Permissions
 
         Lists every project permission a project policy can grant. Each is named
-        `resource:action` — `dataset:read`, `golden:create`, `user:manage` — and
-        its id is what you send in a policy's `permissionIds`. The list is
-        Confident AI's whole project catalog, not only the permissions this
-        project already uses, and it is returned in no particular order. It is
-        the same catalog for every project in your organization; organization
-        permissions are a separate catalog with its own endpoint.
+        `resource:action` — `dataset:read`, `golden:create` — and its id is what
+        you send in a policy's `permissionIds`. This is Confident AI's whole
+        project catalog, not only the permissions this project already uses, and
+        it is the same catalog for every project in your organization.
+        Organization permissions are a separate catalog with its own endpoint.
 
         Args:
             project_id: The id of the project, which must belong to the
@@ -422,12 +405,11 @@ class ProjectsOperations:
         """List Project Permissions
 
         Lists every project permission a project policy can grant. Each is named
-        `resource:action` — `dataset:read`, `golden:create`, `user:manage` — and
-        its id is what you send in a policy's `permissionIds`. The list is
-        Confident AI's whole project catalog, not only the permissions this
-        project already uses, and it is returned in no particular order. It is
-        the same catalog for every project in your organization; organization
-        permissions are a separate catalog with its own endpoint.
+        `resource:action` — `dataset:read`, `golden:create` — and its id is what
+        you send in a policy's `permissionIds`. This is Confident AI's whole
+        project catalog, not only the permissions this project already uses, and
+        it is the same catalog for every project in your organization.
+        Organization permissions are a separate catalog with its own endpoint.
 
         Args:
             project_id: The id of the project, which must belong to the

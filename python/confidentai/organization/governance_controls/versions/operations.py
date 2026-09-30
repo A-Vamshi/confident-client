@@ -26,10 +26,9 @@ class GovernanceControlsVersionsOperations:
     ) -> GovernanceControlVersionList:
         """List Governance Control Versions
 
-        Lists a governance control's definition history, newest version first,
-        so the first entry is the rule the control evaluates today. Versions are
-        append-only, which makes this the record of how the check has changed
-        and which definition each past verdict was computed against — pass a
+        Lists a governance control's definition history, newest first, so the
+        first entry is the rule it evaluates today. Versions are append-only,
+        which makes this the record of how the check has changed — pass a
         version's `version` label to the assessments endpoint to read the
         verdicts it produced.
 
@@ -56,10 +55,9 @@ class GovernanceControlsVersionsOperations:
     ) -> GovernanceControlVersionList:
         """List Governance Control Versions
 
-        Lists a governance control's definition history, newest version first,
-        so the first entry is the rule the control evaluates today. Versions are
-        append-only, which makes this the record of how the check has changed
-        and which definition each past verdict was computed against — pass a
+        Lists a governance control's definition history, newest first, so the
+        first entry is the rule it evaluates today. Versions are append-only,
+        which makes this the record of how the check has changed — pass a
         version's `version` label to the assessments endpoint to read the
         verdicts it produced.
 
@@ -85,17 +83,13 @@ class GovernanceControlsVersionsOperations:
         """Create Governance Control Version
 
         Changes what a governance control checks by appending a new version of
-        its definition. The version that was current is not edited or removed —
-        it stays in the history with the verdicts computed against it, and the
-        new version becomes the current one, which is what the next assessment
-        runs against. Existing verdicts are neither recomputed nor migrated, so
-        a control's assessment history is read one version at a time. Which
-        request shape is expected follows the control's own `type`: a pre-
-        deployment control takes the pre-deployment config, and every other type
-        takes the runtime config. Every field is required even when null — the
-        only field carried over from the previous version is `extraQueryParams`,
-        and only when you omit it — so send the definition you want in full
-        rather than a patch.
+        its definition. The version that was current stays in the history with
+        the verdicts computed against it, and the new one becomes what the next
+        assessment runs against; existing verdicts are never recomputed or
+        migrated. Which request shape is expected follows the control's own
+        `type` — a pre-deployment control takes the pre-deployment config, every
+        other type the runtime config — and every field is required even when
+        null, so send the definition in full rather than a patch.
 
         Args:
             control_id: The id of the governance control.
@@ -127,17 +121,13 @@ class GovernanceControlsVersionsOperations:
         """Create Governance Control Version
 
         Changes what a governance control checks by appending a new version of
-        its definition. The version that was current is not edited or removed —
-        it stays in the history with the verdicts computed against it, and the
-        new version becomes the current one, which is what the next assessment
-        runs against. Existing verdicts are neither recomputed nor migrated, so
-        a control's assessment history is read one version at a time. Which
-        request shape is expected follows the control's own `type`: a pre-
-        deployment control takes the pre-deployment config, and every other type
-        takes the runtime config. Every field is required even when null — the
-        only field carried over from the previous version is `extraQueryParams`,
-        and only when you omit it — so send the definition you want in full
-        rather than a patch.
+        its definition. The version that was current stays in the history with
+        the verdicts computed against it, and the new one becomes what the next
+        assessment runs against; existing verdicts are never recomputed or
+        migrated. Which request shape is expected follows the control's own
+        `type` — a pre-deployment control takes the pre-deployment config, every
+        other type the runtime config — and every field is required even when
+        null, so send the definition in full rather than a patch.
 
         Args:
             control_id: The id of the governance control.

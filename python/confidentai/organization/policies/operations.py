@@ -21,12 +21,11 @@ class PoliciesOperations:
     def list_policies(self) -> PolicyList:
         """List Organization Policies
 
-        Lists the custom access policies your organization owns. Each one is a
-        named set of organization permissions, returned with every permission it
-        grants as a `resource:action` pair such as `billing:read`. These are the
-        policies you attach to organization roles; the global, system-defined
-        roles do not draw their permissions from policies, so nothing here
-        applies to them.
+        Lists the custom access policies your organization owns. Each is a named
+        set of organization permissions, returned with every permission it
+        grants as a `resource:action` pair such as `billing:read`. These are
+        what you attach to organization roles; the global, system-defined roles
+        do not draw their permissions from policies.
         """
         return self._api.request(
             HttpMethods.GET,
@@ -37,12 +36,11 @@ class PoliciesOperations:
     async def a_list_policies(self) -> PolicyList:
         """List Organization Policies
 
-        Lists the custom access policies your organization owns. Each one is a
-        named set of organization permissions, returned with every permission it
-        grants as a `resource:action` pair such as `billing:read`. These are the
-        policies you attach to organization roles; the global, system-defined
-        roles do not draw their permissions from policies, so nothing here
-        applies to them.
+        Lists the custom access policies your organization owns. Each is a named
+        set of organization permissions, returned with every permission it
+        grants as a `resource:action` pair such as `billing:read`. These are
+        what you attach to organization roles; the global, system-defined roles
+        do not draw their permissions from policies.
         """
         return await self._api.a_request(
             HttpMethods.GET,
@@ -62,9 +60,7 @@ class PoliciesOperations:
         Creates a custom organization policy from a set of permissions and
         returns it. A policy on its own grants nobody anything: it takes effect
         only once it is attached to an organization role, and then applies to
-        every member holding that role. Send the permission ids from `GET
-        /v2/organization/permissions`, whose names are `resource:action` pairs
-        such as `billing:read`.
+        every member holding that role.
 
         Args:
             name: The name of the policy, unique within the organization or
@@ -104,9 +100,7 @@ class PoliciesOperations:
         Creates a custom organization policy from a set of permissions and
         returns it. A policy on its own grants nobody anything: it takes effect
         only once it is attached to an organization role, and then applies to
-        every member holding that role. Send the permission ids from `GET
-        /v2/organization/permissions`, whose names are `resource:action` pairs
-        such as `billing:read`.
+        every member holding that role.
 
         Args:
             name: The name of the policy, unique within the organization or
@@ -146,11 +140,10 @@ class PoliciesOperations:
 
         Replaces an organization policy's name, description, and granted
         permissions. The change reaches people through the roles the policy is
-        attached to, and it reaches them immediately: permissions are resolved
-        from the role on each request, so every member holding any of those
-        roles gains or loses the affected permissions on their next call.
-        `permissionIds` is the policy's complete permission set rather than an
-        addition to it, so sending an empty array makes the policy grant
+        attached to, and it reaches them immediately: every member holding any
+        of those roles gains or loses the affected permissions on their next
+        call. `permissionIds` is the policy's complete permission set rather
+        than an addition to it, so an empty array makes the policy grant
         nothing.
 
         Args:
@@ -193,11 +186,10 @@ class PoliciesOperations:
 
         Replaces an organization policy's name, description, and granted
         permissions. The change reaches people through the roles the policy is
-        attached to, and it reaches them immediately: permissions are resolved
-        from the role on each request, so every member holding any of those
-        roles gains or loses the affected permissions on their next call.
-        `permissionIds` is the policy's complete permission set rather than an
-        addition to it, so sending an empty array makes the policy grant
+        attached to, and it reaches them immediately: every member holding any
+        of those roles gains or loses the affected permissions on their next
+        call. `permissionIds` is the policy's complete permission set rather
+        than an addition to it, so an empty array makes the policy grant
         nothing.
 
         Args:
@@ -234,11 +226,9 @@ class PoliciesOperations:
         Permanently deletes an organization policy. Unlike a role, a policy in
         use is not protected: it is detached from every organization role
         holding it, and members of those roles lose the permissions it granted
-        on their next request. The permissions themselves are not deleted, and
-        the roles survive with their remaining policies — a role left with none
-        can do nothing. Check `GET /v2/organization/roles` for the roles
-        carrying this policy before deleting it. **Warning:** This action cannot
-        be undone.
+        on their next request. The permissions themselves survive, as do the
+        roles — though a role left with no policies can do nothing. List the
+        organization's roles first to see which carry this policy.
 
         Args:
             policy_id: The id of the policy.
@@ -256,11 +246,9 @@ class PoliciesOperations:
         Permanently deletes an organization policy. Unlike a role, a policy in
         use is not protected: it is detached from every organization role
         holding it, and members of those roles lose the permissions it granted
-        on their next request. The permissions themselves are not deleted, and
-        the roles survive with their remaining policies — a role left with none
-        can do nothing. Check `GET /v2/organization/roles` for the roles
-        carrying this policy before deleting it. **Warning:** This action cannot
-        be undone.
+        on their next request. The permissions themselves survive, as do the
+        roles — though a role left with no policies can do nothing. List the
+        organization's roles first to see which carry this policy.
 
         Args:
             policy_id: The id of the policy.

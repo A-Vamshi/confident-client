@@ -27,8 +27,7 @@ class MembersOperations:
         role that decides what they can do inside it. Project members are drawn
         from the organization's members: someone can belong to the organization
         and not appear here, and being here is what gives them access to this
-        project's data. Removing a member from the organization removes them
-        from every project in it, this one included.
+        project's data.
 
         Args:
             project_id: The id of the project, which must belong to your
@@ -58,8 +57,7 @@ class MembersOperations:
         role that decides what they can do inside it. Project members are drawn
         from the organization's members: someone can belong to the organization
         and not appear here, and being here is what gives them access to this
-        project's data. Removing a member from the organization removes them
-        from every project in it, this one included.
+        project's data.
 
         Args:
             project_id: The id of the project, which must belong to your
@@ -86,8 +84,7 @@ class MembersOperations:
         their roles in other projects are untouched. Assigning the `Owner` role
         transfers ownership of the project: the member becomes Owner and the
         previous Owner is demoted to `Manager` in the same transaction, which is
-        the only way the project Owner's role changes. A role id belonging to
-        another project is rejected.
+        the only way the project Owner's role changes.
 
         Args:
             project_id: The id of the project, which must belong to your
@@ -117,8 +114,7 @@ class MembersOperations:
         their roles in other projects are untouched. Assigning the `Owner` role
         transfers ownership of the project: the member becomes Owner and the
         previous Owner is demoted to `Manager` in the same transaction, which is
-        the only way the project Owner's role changes. A role id belonging to
-        another project is rejected.
+        the only way the project Owner's role changes.
 
         Args:
             project_id: The id of the project, which must belong to your
@@ -142,14 +138,12 @@ class MembersOperations:
         """Remove Project Member
 
         Revokes a member's access to this project only: they are disconnected
-        from it, their project role is deleted, and any invitation still
-        outstanding for their email address on this project is cleared. They
-        keep their organization membership and their access to every other
-        project, so this does not free up a seat. The project Owner cannot be
-        removed, so transfer ownership first. Removal is not reversible through
-        this endpoint — invite the same address to the project again to bring
-        them back, which returns them with the default role rather than the one
-        they had.
+        from it, their project role is deleted, and any outstanding invitation
+        for their email on this project is cleared. They keep their organization
+        membership and access to every other project, so this does not free up a
+        seat. The project Owner cannot be removed, so transfer ownership first.
+        Inviting the same address again brings them back with the default role
+        rather than the one they had.
 
         Args:
             project_id: The id of the project, which must belong to your
@@ -168,14 +162,12 @@ class MembersOperations:
         """Remove Project Member
 
         Revokes a member's access to this project only: they are disconnected
-        from it, their project role is deleted, and any invitation still
-        outstanding for their email address on this project is cleared. They
-        keep their organization membership and their access to every other
-        project, so this does not free up a seat. The project Owner cannot be
-        removed, so transfer ownership first. Removal is not reversible through
-        this endpoint — invite the same address to the project again to bring
-        them back, which returns them with the default role rather than the one
-        they had.
+        from it, their project role is deleted, and any outstanding invitation
+        for their email on this project is cleared. They keep their organization
+        membership and access to every other project, so this does not free up a
+        seat. The project Owner cannot be removed, so transfer ownership first.
+        Inviting the same address again brings them back with the default role
+        rather than the one they had.
 
         Args:
             project_id: The id of the project, which must belong to your

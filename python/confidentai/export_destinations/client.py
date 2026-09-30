@@ -13,7 +13,9 @@ from confidentai.export_destinations.types import (
     ExportDestinationList,
     ExportDestinationRef,
     ExportDestinationType,
+    SnowflakeExportDestinationConfig,
     UpdateExportDestinationRequest,
+    UpdateSnowflakeExportDestinationConfig,
 )
 
 
@@ -66,13 +68,14 @@ class ExportDestinationsClient:
     def create(
         self,
         name: str,
-        bucket: str,
-        region: str,
-        access_key_id: str,
-        secret_access_key: str,
         *,
         type: Optional[ExportDestinationType] = None,
+        bucket: Optional[str] = None,
+        region: Optional[str] = None,
+        access_key_id: Optional[str] = None,
+        secret_access_key: Optional[str] = None,
         path_prefix: Optional[str] = None,
+        snowflake_config: Optional[SnowflakeExportDestinationConfig] = None,
         enabled: Optional[bool] = None
     ) -> ExportDestinationRef:
         """Create Export Destination
@@ -84,15 +87,17 @@ class ExportDestinationsClient:
 
         Args:
             name: The name of the destination, as it appears in your project.
-            bucket: The name of the bucket exports are uploaded to.
-            region: The region the bucket lives in.
-            access_key_id: The access key id Confident AI uploads with. Reads
-                return this masked, as fifteen asterisks followed by its last
-                six characters, so a masked value is rejected here — send the
-                real key id.
-            secret_access_key: The secret access key paired with `accessKeyId`.
-                Confident AI never returns it in full, so a masked value is
-                rejected here — send the real secret.
+            bucket: The name of the bucket exports are uploaded to. Required for
+                `S3` destinations and rejected for `SNOWFLAKE`.
+            region: The region the bucket lives in. Required for `S3`
+                destinations and rejected for `SNOWFLAKE`.
+            access_key_id: Required for `S3` destinations. The access key id
+                Confident AI uploads with. Reads return this masked, as fifteen
+                asterisks followed by its last six characters, so a masked value
+                is rejected here — send the real key id.
+            secret_access_key: Required for `S3` destinations. The secret access
+                key paired with `accessKeyId`. Confident AI never returns it in
+                full, so a masked value is rejected here — send the real secret.
             path_prefix: A folder inside the bucket to write exports under. A
                 leading slash is stripped and a trailing one added, so
                 `/confident-ai` is stored as `confident-ai/`. Omit it, or send
@@ -107,12 +112,13 @@ class ExportDestinationsClient:
             request_schema=CreateExportDestinationRequest,
             body={
                 "name": name,
+                "type": type,
                 "bucket": bucket,
                 "region": region,
                 "accessKeyId": access_key_id,
                 "secretAccessKey": secret_access_key,
-                "type": type,
                 "pathPrefix": path_prefix,
+                "snowflakeConfig": snowflake_config,
                 "enabled": enabled,
             },
         )
@@ -120,13 +126,14 @@ class ExportDestinationsClient:
     async def a_create(
         self,
         name: str,
-        bucket: str,
-        region: str,
-        access_key_id: str,
-        secret_access_key: str,
         *,
         type: Optional[ExportDestinationType] = None,
+        bucket: Optional[str] = None,
+        region: Optional[str] = None,
+        access_key_id: Optional[str] = None,
+        secret_access_key: Optional[str] = None,
         path_prefix: Optional[str] = None,
+        snowflake_config: Optional[SnowflakeExportDestinationConfig] = None,
         enabled: Optional[bool] = None
     ) -> ExportDestinationRef:
         """Create Export Destination
@@ -138,15 +145,17 @@ class ExportDestinationsClient:
 
         Args:
             name: The name of the destination, as it appears in your project.
-            bucket: The name of the bucket exports are uploaded to.
-            region: The region the bucket lives in.
-            access_key_id: The access key id Confident AI uploads with. Reads
-                return this masked, as fifteen asterisks followed by its last
-                six characters, so a masked value is rejected here — send the
-                real key id.
-            secret_access_key: The secret access key paired with `accessKeyId`.
-                Confident AI never returns it in full, so a masked value is
-                rejected here — send the real secret.
+            bucket: The name of the bucket exports are uploaded to. Required for
+                `S3` destinations and rejected for `SNOWFLAKE`.
+            region: The region the bucket lives in. Required for `S3`
+                destinations and rejected for `SNOWFLAKE`.
+            access_key_id: Required for `S3` destinations. The access key id
+                Confident AI uploads with. Reads return this masked, as fifteen
+                asterisks followed by its last six characters, so a masked value
+                is rejected here — send the real key id.
+            secret_access_key: Required for `S3` destinations. The secret access
+                key paired with `accessKeyId`. Confident AI never returns it in
+                full, so a masked value is rejected here — send the real secret.
             path_prefix: A folder inside the bucket to write exports under. A
                 leading slash is stripped and a trailing one added, so
                 `/confident-ai` is stored as `confident-ai/`. Omit it, or send
@@ -161,12 +170,13 @@ class ExportDestinationsClient:
             request_schema=CreateExportDestinationRequest,
             body={
                 "name": name,
+                "type": type,
                 "bucket": bucket,
                 "region": region,
                 "accessKeyId": access_key_id,
                 "secretAccessKey": secret_access_key,
-                "type": type,
                 "pathPrefix": path_prefix,
+                "snowflakeConfig": snowflake_config,
                 "enabled": enabled,
             },
         )
@@ -218,6 +228,9 @@ class ExportDestinationsClient:
         access_key_id: Optional[str] = None,
         secret_access_key: Optional[str] = None,
         path_prefix: Optional[str] = None,
+        snowflake_config: Optional[
+            UpdateSnowflakeExportDestinationConfig
+        ] = None,
         enabled: Optional[bool] = None
     ) -> ExportDestination:
         """Update Export Destination
@@ -262,6 +275,7 @@ class ExportDestinationsClient:
                 "accessKeyId": access_key_id,
                 "secretAccessKey": secret_access_key,
                 "pathPrefix": path_prefix,
+                "snowflakeConfig": snowflake_config,
                 "enabled": enabled,
             },
             path={"exportDestinationId": export_destination_id},
@@ -278,6 +292,9 @@ class ExportDestinationsClient:
         access_key_id: Optional[str] = None,
         secret_access_key: Optional[str] = None,
         path_prefix: Optional[str] = None,
+        snowflake_config: Optional[
+            UpdateSnowflakeExportDestinationConfig
+        ] = None,
         enabled: Optional[bool] = None
     ) -> ExportDestination:
         """Update Export Destination
@@ -322,6 +339,7 @@ class ExportDestinationsClient:
                 "accessKeyId": access_key_id,
                 "secretAccessKey": secret_access_key,
                 "pathPrefix": path_prefix,
+                "snowflakeConfig": snowflake_config,
                 "enabled": enabled,
             },
             path={"exportDestinationId": export_destination_id},

@@ -3,7 +3,7 @@
 # Do not edit by hand — change the route in confident-cloud
 # and regenerate.
 
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 from pydantic import Field
 
@@ -13,12 +13,14 @@ from confidentai.types import ConfidentBaseModel
 class CreatePersonaRequest(ConfidentBaseModel):
     name: str
     characteristics: str
+    metadata: Optional[Dict[str, Any]] = None
 
 
 class Persona(ConfidentBaseModel):
     id: str
     name: str
     characteristics: str
+    metadata: Optional[Dict[str, Any]]
     created_at: str = Field(alias="createdAt")
     updated_at: str = Field(alias="updatedAt")
 
@@ -42,3 +44,4 @@ class PersonaRef(ConfidentBaseModel):
 class UpdatePersonaRequest(ConfidentBaseModel):
     name: Optional[str] = None
     characteristics: Optional[str] = None
+    metadata: Optional[Dict[str, Any]] = None

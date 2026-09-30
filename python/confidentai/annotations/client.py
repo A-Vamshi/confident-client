@@ -10,11 +10,12 @@ from confidentai.annotations.types import (
     AnnotationList,
     AnnotationRef,
     AnnotationSortBy,
+    AnnotationValue,
     CreateAnnotationRequest,
     UpdateAnnotationRequest,
 )
 from confidentai.api import Api, HttpMethods
-from confidentai.common.types import AnnotationType, MLLMImage
+from confidentai.common.types import AnnotationFieldType, MLLMImage
 from confidentai.endpoints import Endpoints
 
 
@@ -34,7 +35,7 @@ class AnnotationsClient:
         trace_uuid: Optional[str] = None,
         span_uuid: Optional[str] = None,
         thread_id: Optional[str] = None,
-        type: Optional[AnnotationType] = None
+        field_type: Optional[AnnotationFieldType] = None
     ) -> AnnotationList:
         """List Annotations
 
@@ -58,7 +59,7 @@ class AnnotationsClient:
             trace_uuid: Returns only annotations left on this trace.
             span_uuid: Returns only annotations left on this span.
             thread_id: Returns only annotations left on this thread.
-            type: Returns only annotations recorded on this scale.
+            field_type: Returns only annotations of this field type.
         """
         return self._api.request(
             HttpMethods.GET,
@@ -74,7 +75,7 @@ class AnnotationsClient:
                 "traceUuid": trace_uuid,
                 "spanUuid": span_uuid,
                 "threadId": thread_id,
-                "type": type,
+                "fieldType": field_type,
             },
         )
 
@@ -90,7 +91,7 @@ class AnnotationsClient:
         trace_uuid: Optional[str] = None,
         span_uuid: Optional[str] = None,
         thread_id: Optional[str] = None,
-        type: Optional[AnnotationType] = None
+        field_type: Optional[AnnotationFieldType] = None
     ) -> AnnotationList:
         """List Annotations
 
@@ -114,7 +115,7 @@ class AnnotationsClient:
             trace_uuid: Returns only annotations left on this trace.
             span_uuid: Returns only annotations left on this span.
             thread_id: Returns only annotations left on this thread.
-            type: Returns only annotations recorded on this scale.
+            field_type: Returns only annotations of this field type.
         """
         return await self._api.a_request(
             HttpMethods.GET,
@@ -130,7 +131,7 @@ class AnnotationsClient:
                 "traceUuid": trace_uuid,
                 "spanUuid": span_uuid,
                 "threadId": thread_id,
-                "type": type,
+                "fieldType": field_type,
             },
         )
 
@@ -142,10 +143,10 @@ class AnnotationsClient:
         THUMBS_RATING scale is 0 or 1; on a FIVE_STAR_RATING scale it is 1 to 5.
 
         Args:
-            annotation: A rating to record against exactly one target. Send
+            annotation: An annotation to record against exactly one target. Send
                 `traceUuid`, `spanUuid` or `threadId` — never more than one —
                 and the field that goes with it: `expectedOutput` for a trace or
-                span, `expectedOutcome` for a thread. `type` defaults to
+                span, `expectedOutcome` for a thread. `fieldType` defaults to
                 THUMBS_RATING. Pass one of TraceAnnotationRequest,
                 SpanAnnotationRequest, ThreadAnnotationRequest, from
                 confidentai.annotations.types.
@@ -168,10 +169,10 @@ class AnnotationsClient:
         THUMBS_RATING scale is 0 or 1; on a FIVE_STAR_RATING scale it is 1 to 5.
 
         Args:
-            annotation: A rating to record against exactly one target. Send
+            annotation: An annotation to record against exactly one target. Send
                 `traceUuid`, `spanUuid` or `threadId` — never more than one —
                 and the field that goes with it: `expectedOutput` for a trace or
-                span, `expectedOutcome` for a thread. `type` defaults to
+                span, `expectedOutcome` for a thread. `fieldType` defaults to
                 THUMBS_RATING. Pass one of TraceAnnotationRequest,
                 SpanAnnotationRequest, ThreadAnnotationRequest, from
                 confidentai.annotations.types.
@@ -222,8 +223,8 @@ class AnnotationsClient:
         self,
         annotation_id: str,
         *,
-        rating: Optional[int] = None,
-        type: Optional[AnnotationType] = None,
+        field_type: Optional[AnnotationFieldType] = None,
+        value: Optional[AnnotationValue] = None,
         explanation: Optional[str] = None,
         expected_output: Optional[str] = None,
         expected_outcome: Optional[str] = None,
@@ -238,9 +239,7 @@ class AnnotationsClient:
 
         Args:
             annotation_id: The id of the annotation.
-            rating: The rating to record: 0 or 1 for a THUMBS_RATING, 1 to 5 for
-                a FIVE_STAR_RATING.
-            explanation: Why the rating was given.
+            explanation: Why the annotation was given.
             expected_output: The output the target should have produced. Only
                 for an annotation left on a trace or span.
             expected_outcome: The outcome the conversation should have reached.
@@ -254,8 +253,8 @@ class AnnotationsClient:
             response_schema=AnnotationRef,
             request_schema=UpdateAnnotationRequest,
             body={
-                "rating": rating,
-                "type": type,
+                "fieldType": field_type,
+                "value": value,
                 "explanation": explanation,
                 "expectedOutput": expected_output,
                 "expectedOutcome": expected_outcome,
@@ -268,8 +267,8 @@ class AnnotationsClient:
         self,
         annotation_id: str,
         *,
-        rating: Optional[int] = None,
-        type: Optional[AnnotationType] = None,
+        field_type: Optional[AnnotationFieldType] = None,
+        value: Optional[AnnotationValue] = None,
         explanation: Optional[str] = None,
         expected_output: Optional[str] = None,
         expected_outcome: Optional[str] = None,
@@ -284,9 +283,7 @@ class AnnotationsClient:
 
         Args:
             annotation_id: The id of the annotation.
-            rating: The rating to record: 0 or 1 for a THUMBS_RATING, 1 to 5 for
-                a FIVE_STAR_RATING.
-            explanation: Why the rating was given.
+            explanation: Why the annotation was given.
             expected_output: The output the target should have produced. Only
                 for an annotation left on a trace or span.
             expected_outcome: The outcome the conversation should have reached.
@@ -300,8 +297,8 @@ class AnnotationsClient:
             response_schema=AnnotationRef,
             request_schema=UpdateAnnotationRequest,
             body={
-                "rating": rating,
-                "type": type,
+                "fieldType": field_type,
+                "value": value,
                 "explanation": explanation,
                 "expectedOutput": expected_output,
                 "expectedOutcome": expected_outcome,

@@ -6,12 +6,14 @@
 export interface CreatePersonaRequest {
   name: string;
   characteristics: string;
+  metadata?: Record<string, unknown> | null;
 }
 
 export interface Persona {
   id: string;
   name: string;
   characteristics: string;
+  metadata: Record<string, unknown> | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -35,4 +37,5 @@ export interface PersonaRef {
 export interface UpdatePersonaRequest {
   name?: string;
   characteristics?: string;
+  metadata?: Record<string, unknown> | null;
 }

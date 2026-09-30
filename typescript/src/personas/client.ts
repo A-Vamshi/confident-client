@@ -49,12 +49,20 @@ export class PersonasClient {
    *   every turn, so describe a person rather than a task — what the
    *   conversation is about and when it is finished come from the golden's
    *   scenario and expected outcome, not from here.
+   * @param metadata Structured facts the persona can draw on, such as an
+   *   account, a resume or an order. The simulator reads it alongside the
+   *   characteristics, and it is available to your AI connection payload as
+   *   conversationalGolden.persona.metadata.
    */
-  async create(name: string, characteristics: string): Promise<PersonaRef> {
+  async create(
+    name: string,
+    characteristics: string,
+    metadata?: Record<string, unknown> | null,
+  ): Promise<PersonaRef> {
     return this.api.sendRequest<PersonaRef>(
       HttpMethods.POST,
       Endpoints.PERSONAS_ENDPOINT,
-      { body: { name, characteristics } },
+      { body: { name, characteristics, metadata } },
     );
   }
 
@@ -92,16 +100,23 @@ export class PersonasClient {
    *   simulator reads it on every user turn. The text replaces the stored one
    *   outright rather than being appended to, so send the whole description.
    *   Omit it to keep the current one.
+   * @param metadata Structured facts the persona can draw on. The object
+   *   replaces the stored one outright, so send the whole object. Send null to
+   *   clear it, or omit it to keep the current one.
    */
   async update(
     personaId: string,
-    name?: string,
-    characteristics?: string,
+    options: {
+      name?: string;
+      characteristics?: string;
+      metadata?: Record<string, unknown> | null;
+    } = {},
   ): Promise<Persona> {
+    const { name, characteristics, metadata } = options;
     return this.api.sendRequest<Persona>(
       HttpMethods.PUT,
       Endpoints.PERSONA_ENDPOINT,
-      { body: { name, characteristics }, urlParams: { personaId } },
+      { body: { name, characteristics, metadata }, urlParams: { personaId } },
     );
   }
 

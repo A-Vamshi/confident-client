@@ -4,8 +4,8 @@
 # and regenerate.
 
 from confidentai.common.types import (
+    AnnotationFieldType,
     AnnotationSummary,
-    AnnotationType,
     ApiKey,
     ApiKeyList,
     ApiKeyRef,
@@ -32,6 +32,10 @@ from confidentai.common.types import (
     IngestionDataModel,
     InvitationRef,
     InvitationStatus,
+    JevQuestion,
+    JevQuestionJevQuestion0,
+    JevQuestionJevQuestion1,
+    JevQuestionJevQuestion2,
     Level,
     MLLMImage,
     MemberRef,
@@ -98,8 +102,8 @@ from confidentai.common.types import (
 )
 
 __all__ = [
+    "AnnotationFieldType",
     "AnnotationSummary",
-    "AnnotationType",
     "ApiKey",
     "ApiKeyList",
     "ApiKeyRef",
@@ -126,6 +130,10 @@ __all__ = [
     "IngestionDataModel",
     "InvitationRef",
     "InvitationStatus",
+    "JevQuestion",
+    "JevQuestionJevQuestion0",
+    "JevQuestionJevQuestion1",
+    "JevQuestionJevQuestion2",
     "Level",
     "MLLMImage",
     "MemberRef",

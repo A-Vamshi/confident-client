@@ -18,12 +18,11 @@ export class ApiKeysOperations extends OrganizationOperations {
   /**
    * List Organization API Keys
    *
-   * Lists every organization-scoped API key in your Confident AI organization,
-   * newest first. Each key's `value` is masked (only its last six characters
-   * are shown) — the full value is only ever returned once, by the response
-   * that issues it. A rotation whose grace period has already run out is
-   * completed before the list is read, so a `shadowValue` here is always still
-   * in flight.
+   * Lists every organization-scoped API key in your organization, newest first.
+   * Each key's `value` is masked — the full value is only ever returned once,
+   * by the response that issues it. A rotation whose grace period has already
+   * run out is completed before the list is read, so a `shadowValue` here is
+   * always still in flight.
    */
   async listApiKeys(): Promise<ApiKeyList> {
     return this.api.sendRequest<ApiKeyList>(
@@ -59,9 +58,8 @@ export class ApiKeysOperations extends OrganizationOperations {
   /**
    * Get Organization API Key
    *
-   * Retrieves one organization-scoped API key by id. Its `value` is masked —
-   * the full value is only ever returned once, by the response that issues it.
-   * A `rotatesAt` in the past means the grace period is over and the outgoing
+   * Retrieves one organization-scoped API key by id, with its `value` masked. A
+   * `rotatesAt` in the past means the grace period is over and the outgoing
    * value is already rejected on authentication, even though this endpoint
    * still shows it; listing the keys completes the rotation.
    *
@@ -116,20 +114,11 @@ export class ApiKeysOperations extends OrganizationOperations {
   /**
    * Rotate Organization API Key
    *
-   * Rotates an organization-scoped API key in place — the key keeps its id,
-   * name and history, and no second key is created. The new value is returned
-   * **exactly once**, in this response, and can never be retrieved again —
-   * store it securely. With `gracePeriodInHours: 0` (the default) the key's
-   * `value` is replaced as this request is served and the outgoing value stops
-   * authenticating at once. With a grace period, the new value comes back as
-   * `shadowValue` and both values authenticate until `rotatesAt`, after which
-   * the new value becomes `value` and the outgoing one is rejected; requests
-   * made with the outgoing value in the meantime carry `Sunset` and `X-Api-Key-
-   * Warning` headers announcing when it stops working. The key's expiry is left
-   * alone unless `expiresInDays` is sent. Rotating an **expired** key revives
-   * it: `expiresInDays` is then required (send null for no expiry) and a grace
-   * period is not allowed. A rotation whose grace period has already run out is
-   * completed before this one starts.
+   * Rotates an organization-scoped API key in place — same id, name and
+   * history, and no second key is created. The new value is returned **exactly
+   * once**, in this response. Requests made with the outgoing value during a
+   * grace period carry `Sunset` and `X-Api-Key-Warning` headers. Reviving an
+   * expired key cannot take a grace period.
    *
    * @param apiKeyId The id of the API key.
    * @param gracePeriodInHours How long the current value keeps authenticating

@@ -98,14 +98,12 @@ class OrganizationOperations:
         """Set Organization Model Credentials
 
         Sets, replaces, or clears your organization's stored credential for a
-        single model provider. Every project that has not been given credentials
-        of its own uses these for its evaluation and platform models. This is a
-        write-only surface: there is no read endpoint, and the response returns
-        every credential masked. Send `apiKey` for an API-key provider or
-        `modelConfig` for a configuration provider, and null in either to clear
-        what is stored. A provider your organization's model provider policy
-        does not allow cannot have a credential set (403), though clearing one
-        is always permitted.
+        single model provider, which every project without credentials of its
+        own then uses. TypeSafe credentials are project scoped and are rejected
+        here. This is a write-only surface: there is no read endpoint, and the
+        response returns every credential masked. A provider your organization's
+        model provider policy does not allow cannot have a credential set
+        (`403`), though clearing one is always permitted.
 
         Args:
             api_key: The provider's API key, for the API-key providers only.
@@ -152,14 +150,12 @@ class OrganizationOperations:
         """Set Organization Model Credentials
 
         Sets, replaces, or clears your organization's stored credential for a
-        single model provider. Every project that has not been given credentials
-        of its own uses these for its evaluation and platform models. This is a
-        write-only surface: there is no read endpoint, and the response returns
-        every credential masked. Send `apiKey` for an API-key provider or
-        `modelConfig` for a configuration provider, and null in either to clear
-        what is stored. A provider your organization's model provider policy
-        does not allow cannot have a credential set (403), though clearing one
-        is always permitted.
+        single model provider, which every project without credentials of its
+        own then uses. TypeSafe credentials are project scoped and are rejected
+        here. This is a write-only surface: there is no read endpoint, and the
+        response returns every credential masked. A provider your organization's
+        model provider policy does not allow cannot have a credential set
+        (`403`), though clearing one is always permitted.
 
         Args:
             api_key: The provider's API key, for the API-key providers only.
@@ -200,14 +196,12 @@ class OrganizationOperations:
         """List Organization Permissions
 
         Lists every organization permission an organization policy can grant.
-        Each is named `resource:action` — `billing:read`, `user:manage`,
-        `modelCredential:manage` — and its id is what you send in a policy's
-        `permissionIds`. The list is Confident AI's whole organization catalog,
-        not only the permissions your organization already uses, and it is
-        returned in no particular order. Project permissions are a separate
-        catalog with its own endpoint; an organization policy that references a
-        project permission id is stored but never matches an organization
-        permission check.
+        Each is named `resource:action` — `billing:read`, `user:manage` — and
+        its id is what you send in a policy's `permissionIds`. This is Confident
+        AI's whole organization catalog, not only the permissions you already
+        use. Project permissions are a separate catalog with its own endpoint;
+        an organization policy referencing a project permission id is stored but
+        never matches.
         """
         return self._api.request(
             HttpMethods.GET,
@@ -219,14 +213,12 @@ class OrganizationOperations:
         """List Organization Permissions
 
         Lists every organization permission an organization policy can grant.
-        Each is named `resource:action` — `billing:read`, `user:manage`,
-        `modelCredential:manage` — and its id is what you send in a policy's
-        `permissionIds`. The list is Confident AI's whole organization catalog,
-        not only the permissions your organization already uses, and it is
-        returned in no particular order. Project permissions are a separate
-        catalog with its own endpoint; an organization policy that references a
-        project permission id is stored but never matches an organization
-        permission check.
+        Each is named `resource:action` — `billing:read`, `user:manage` — and
+        its id is what you send in a policy's `permissionIds`. This is Confident
+        AI's whole organization catalog, not only the permissions you already
+        use. Project permissions are a separate catalog with its own endpoint;
+        an organization policy referencing a project permission id is stored but
+        never matches.
         """
         return await self._api.a_request(
             HttpMethods.GET,

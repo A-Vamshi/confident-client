@@ -115,10 +115,8 @@ export class McpServersClient {
    *
    * Updates an MCP server and returns it. Only the fields you send change, and
    * the merged result must be valid — switching `transport` needs that
-   * transport's required field in the same call. Omit `authConfig.clientSecret`
-   * to keep the stored secret; the masked `clientSecretPreview` you read back
-   * is ignored if you send it. Any successful update resets `connected` to
-   * false, so connect again afterwards.
+   * transport's required field in the same call. Any successful update resets
+   * `connected` to false, so connect again afterwards.
    *
    * @param mcpServerId The id of the MCP server.
    * @param name The name of the MCP server, unique within the project.
@@ -202,8 +200,8 @@ export class McpServersClient {
    * Connects to the MCP server, lists the tools it exposes, and replaces its
    * stored `connected` and `availableTools` with the result. This reaches out
    * to your own server and can take a few seconds. A server that fails to
-   * connect is not an error: the response is still 200 with `connected` false
-   * and `error` set to what went wrong, so read `connected` for the verdict.
+   * connect is not an error: the response is still `200` with `connected` false
+   * and `error` set, so read `connected` for the verdict.
    *
    * @param mcpServerId The id of the MCP server.
    */

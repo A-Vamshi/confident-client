@@ -20,11 +20,7 @@ export class GovernanceProjectsOperations extends GovernancePoliciesSkillOperati
    * ordered by project name, alongside an organization-wide roll-up of how many
    * projects fall into each status. Projects enrolled in no governance policy
    * are included, with a `status` of `not_enrolled` and a null `health`, since
-   * the inventory is what tells you which projects are ungoverned. Filter with
-   * `status` to narrow the list; `totalGovernanceProjects` then counts the
-   * projects that match the filter, while `governanceProjectPortfolio` keeps
-   * covering the whole organization so the roll-up does not move as you page or
-   * filter.
+   * the inventory is what tells you which projects are ungoverned.
    *
    * @param status Only return projects with this status. The
    *   `governanceProjectPortfolio` roll-up always covers the whole organization
@@ -52,14 +48,12 @@ export class GovernanceProjectsOperations extends GovernancePoliciesSkillOperati
    * Get Project
    *
    * Retrieves one project's governance view in full: every control its policy
-   * applies, including the ones that policy inherits from the policies it
-   * extends, and the project's verdict history over the last 30 days, newest
-   * first. Several assessments of the same control on the same day are
-   * collapsed to the last one, so each control appears at most once per day
-   * however often it was recomputed. A project enrolled in no governance policy
-   * has no controls to be assessed against and is reported as not found, so use
-   * the inventory listing to tell an ungoverned project from one that does not
-   * exist.
+   * applies, inherited ones included, and the project's verdict history over
+   * the last 30 days, newest first. Several assessments of the same control on
+   * the same day collapse to the last one, so a control appears at most once
+   * per day however often it was recomputed. A project enrolled in no policy is
+   * reported as not found, so use the inventory listing to tell an ungoverned
+   * project from one that does not exist.
    *
    * @param projectId The id of the project.
    */

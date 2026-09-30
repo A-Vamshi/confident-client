@@ -5,7 +5,6 @@
 
 import { Api, ApiKeyKind } from "../api";
 import { AIConnectionsClient } from "../ai-connections/client";
-import { AnnotationFormsClient } from "../annotation-forms/client";
 import { AnnotationQueuesClient } from "../annotation-queues/client";
 import { AnnotationsClient } from "../annotations/client";
 import { AttackMethodsClient } from "../attack-methods/client";
@@ -45,10 +44,6 @@ export abstract class StatelessClients {
 
   get aiConnections(): AIConnectionsClient {
     return new AIConnectionsClient(this.api(ApiKeyKind.PROJECT));
-  }
-
-  get annotationForms(): AnnotationFormsClient {
-    return new AnnotationFormsClient(this.api(ApiKeyKind.PROJECT));
   }
 
   get annotationQueues(): AnnotationQueuesClient {

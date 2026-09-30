@@ -262,10 +262,9 @@ class TransformersClient:
 
         Runs the transformer's stored code against a sample value and returns
         what it produced. Code that raises or times out is a completed test, so
-        it comes back with a 200 and `success: false` carrying `error` and
-        `reason` — branch on `success` rather than on the status. A 404 means
-        the transformer does not exist in this project, and a 400 means it has
-        no code saved to run.
+        it comes back with a `200` and `success: false` carrying `error` and
+        `reason` — branch on `success` rather than on the status. A `400` means
+        the transformer has no code saved to run.
 
         Args:
             transformer_id: The id of the transformer.
@@ -289,10 +288,9 @@ class TransformersClient:
 
         Runs the transformer's stored code against a sample value and returns
         what it produced. Code that raises or times out is a completed test, so
-        it comes back with a 200 and `success: false` carrying `error` and
-        `reason` — branch on `success` rather than on the status. A 404 means
-        the transformer does not exist in this project, and a 400 means it has
-        no code saved to run.
+        it comes back with a `200` and `success: false` carrying `error` and
+        `reason` — branch on `success` rather than on the status. A `400` means
+        the transformer has no code saved to run.
 
         Args:
             transformer_id: The id of the transformer.

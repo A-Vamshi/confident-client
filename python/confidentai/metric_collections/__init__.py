@@ -5,6 +5,7 @@
 
 from confidentai.metric_collections.types import (
     CreateMetricCollectionRequest,
+    EvalMode,
     MetricCollection,
     MetricCollectionList,
     MetricCollectionRef,
@@ -17,6 +18,7 @@ from confidentai.metric_collections.types import (
 
 __all__ = [
     "CreateMetricCollectionRequest",
+    "EvalMode",
     "MetricCollection",
     "MetricCollectionList",
     "MetricCollectionRef",

@@ -28,23 +28,17 @@ class ModelsOperations:
             "SIMULATION",
             "TEXT_TO_SPEECH",
             "SPEECH_TO_TEXT",
+            "DECISION",
+            "SPEECH_TO_SPEECH",
         ]
     ) -> ProjectModel:
         """Get Project Model
 
         Returns the model in effect for the project, selected by the required
-        `type` query parameter. `EVALUATION` is the LLM judge that scores this
-        project's metrics. `PLATFORM` is the model behind Confident AI's own AI
-        features, like classification, summaries and report generation.
-        `SIMULATION` is the model that simulates user turns in conversation
-        simulations, including multi-turn test runs and red teaming. `source`
-        tells you where the returned model comes from: `project` when the
-        project has an override of its own, `organization` when it follows the
-        organization's default. The evaluation model is always project scoped,
-        so it always reports `project`. Reading never creates configuration, so
-        `model` is null when nothing has been set for that type — which for
-        `PLATFORM` and `SIMULATION` means neither the project nor the
-        organization has configured one.
+        `type` query parameter. `PLATFORM` and `SIMULATION` fall back to the
+        organization's default when the project has no override of its own;
+        `EVALUATION` is always project scoped. Reading never creates
+        configuration, so the model is null until one is set.
 
         Args:
             project_id: The id of the project, which must belong to the
@@ -69,23 +63,17 @@ class ModelsOperations:
             "SIMULATION",
             "TEXT_TO_SPEECH",
             "SPEECH_TO_TEXT",
+            "DECISION",
+            "SPEECH_TO_SPEECH",
         ]
     ) -> ProjectModel:
         """Get Project Model
 
         Returns the model in effect for the project, selected by the required
-        `type` query parameter. `EVALUATION` is the LLM judge that scores this
-        project's metrics. `PLATFORM` is the model behind Confident AI's own AI
-        features, like classification, summaries and report generation.
-        `SIMULATION` is the model that simulates user turns in conversation
-        simulations, including multi-turn test runs and red teaming. `source`
-        tells you where the returned model comes from: `project` when the
-        project has an override of its own, `organization` when it follows the
-        organization's default. The evaluation model is always project scoped,
-        so it always reports `project`. Reading never creates configuration, so
-        `model` is null when nothing has been set for that type — which for
-        `PLATFORM` and `SIMULATION` means neither the project nor the
-        organization has configured one.
+        `type` query parameter. `PLATFORM` and `SIMULATION` fall back to the
+        organization's default when the project has no override of its own;
+        `EVALUATION` is always project scoped. Reading never creates
+        configuration, so the model is null until one is set.
 
         Args:
             project_id: The id of the project, which must belong to the
@@ -109,35 +97,24 @@ class ModelsOperations:
         """Set Project Model
 
         Sets one of the project's models, selected by the `modelType` path
-        segment. `evaluation` configures the LLM judge that scores this
-        project's metrics. `platform` configures the model behind Confident AI's
-        own AI features, like classification, summaries and report generation.
-        `simulation` configures the model that simulates user turns in
-        conversation simulations, including multi-turn test runs and red
-        teaming. Setting `platform` or `simulation` creates a project override,
-        so the project stops following the organization's default and `source`
-        becomes `project`; remove it with the DELETE method to fall back to that
-        default. The provider's credential must already be configured on the
-        project or the organization; set it first through the model credentials
-        endpoints. A provider your organization's model provider policy does not
-        allow is rejected with a 403. `CONFIDENT_AI` needs no credential and
-        stores a null model name. `maxInputTokens` applies to the platform and
-        simulation models only and is rejected on the `evaluation` path.
+        segment; `decision` configures the model used by JEVAL metrics. The
+        provider's credential must already be configured on the project or
+        organization, and a provider blocked by the organization's model
+        provider policy is rejected. `CONFIDENT_AI` needs no credential and
+        stores a null model name.
 
         Args:
             project_id: The id of the project, which must belong to the
                 organization your API key is scoped to.
             model_type: Which of the project's models to act on.
-            model_config: The model to run for the type named in the path. Which
-                of the two shapes is expected is decided by that `modelType`,
-                not by what you send: `evaluation` takes the shape without
-                `maxInputTokens`, and every other type — `platform`,
-                `simulation`, `text-to-speech` and `speech-to-text` alike —
-                takes the one with it. This replaces the whole configuration
-                rather than patching it, so a field you omit is stored as null.
-                `CUSTOM` is rejected: a custom model can only be configured on
-                the Confident AI platform. Pass a
-                UpdateEvaluationProjectModelRequest or a
+            model_config: The model to run for the type named in the path. The
+                accepted shape is determined by `modelType`: `decision` accepts
+                only provider and name, `evaluation` also accepts max
+                concurrency, and platform, simulation, and speech models also
+                accept max input tokens. This replaces the whole configuration
+                rather than patching it. `CUSTOM` is rejected. Pass one of
+                UpdateEvaluationProjectModelRequest,
+                UpdateDecisionProjectModelRequest,
                 UpdatePlatformProjectModelRequest, from
                 confidentai.projects.types.
         """
@@ -159,35 +136,24 @@ class ModelsOperations:
         """Set Project Model
 
         Sets one of the project's models, selected by the `modelType` path
-        segment. `evaluation` configures the LLM judge that scores this
-        project's metrics. `platform` configures the model behind Confident AI's
-        own AI features, like classification, summaries and report generation.
-        `simulation` configures the model that simulates user turns in
-        conversation simulations, including multi-turn test runs and red
-        teaming. Setting `platform` or `simulation` creates a project override,
-        so the project stops following the organization's default and `source`
-        becomes `project`; remove it with the DELETE method to fall back to that
-        default. The provider's credential must already be configured on the
-        project or the organization; set it first through the model credentials
-        endpoints. A provider your organization's model provider policy does not
-        allow is rejected with a 403. `CONFIDENT_AI` needs no credential and
-        stores a null model name. `maxInputTokens` applies to the platform and
-        simulation models only and is rejected on the `evaluation` path.
+        segment; `decision` configures the model used by JEVAL metrics. The
+        provider's credential must already be configured on the project or
+        organization, and a provider blocked by the organization's model
+        provider policy is rejected. `CONFIDENT_AI` needs no credential and
+        stores a null model name.
 
         Args:
             project_id: The id of the project, which must belong to the
                 organization your API key is scoped to.
             model_type: Which of the project's models to act on.
-            model_config: The model to run for the type named in the path. Which
-                of the two shapes is expected is decided by that `modelType`,
-                not by what you send: `evaluation` takes the shape without
-                `maxInputTokens`, and every other type — `platform`,
-                `simulation`, `text-to-speech` and `speech-to-text` alike —
-                takes the one with it. This replaces the whole configuration
-                rather than patching it, so a field you omit is stored as null.
-                `CUSTOM` is rejected: a custom model can only be configured on
-                the Confident AI platform. Pass a
-                UpdateEvaluationProjectModelRequest or a
+            model_config: The model to run for the type named in the path. The
+                accepted shape is determined by `modelType`: `decision` accepts
+                only provider and name, `evaluation` also accepts max
+                concurrency, and platform, simulation, and speech models also
+                accept max input tokens. This replaces the whole configuration
+                rather than patching it. `CUSTOM` is rejected. Pass one of
+                UpdateEvaluationProjectModelRequest,
+                UpdateDecisionProjectModelRequest,
                 UpdatePlatformProjectModelRequest, from
                 confidentai.projects.types.
         """
@@ -205,11 +171,9 @@ class ModelsOperations:
     ) -> ClearProjectModelResult:
         """Clear Project Model Override
 
-        Removes the project's platform or simulation model override, so the
-        project falls back to the organization's default for that type and the
-        override toggle in its model settings shows as off. The evaluation model
-        cannot be cleared, so the `evaluation` path segment is rejected.
-        Idempotent: it succeeds even when no override exists.
+        Removes a project model override and falls back to the organization's
+        default. Evaluation and decision models cannot be cleared. Idempotent
+        when no override exists.
 
         Args:
             project_id: The id of the project, which must belong to the
@@ -228,11 +192,9 @@ class ModelsOperations:
     ) -> ClearProjectModelResult:
         """Clear Project Model Override
 
-        Removes the project's platform or simulation model override, so the
-        project falls back to the organization's default for that type and the
-        override toggle in its model settings shows as off. The evaluation model
-        cannot be cleared, so the `evaluation` path segment is rejected.
-        Idempotent: it succeeds even when no override exists.
+        Removes a project model override and falls back to the organization's
+        default. Evaluation and decision models cannot be cleared. Idempotent
+        when no override exists.
 
         Args:
             project_id: The id of the project, which must belong to the

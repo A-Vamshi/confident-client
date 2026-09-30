@@ -100,11 +100,10 @@ class EvaluationRulesClient:
 
         Creates a standing rule that runs a metric collection against matching
         production traces, spans or threads as they arrive, and returns its id.
-        Running metrics consumes LLM usage. The metric collection's turn type
-        must match the rule: `THREAD` rules require a multi-turn collection,
-        `TRACE` and `SPAN` rules a single-turn one, and only one enabled
-        `THREAD` rule may target a given collection. Requires the Starter plan
-        or above.
+        Running metrics consumes LLM usage. The collection's turn type must
+        match the rule — `THREAD` rules need a multi-turn collection, `TRACE`
+        and `SPAN` rules a single-turn one — and only one enabled `THREAD` rule
+        may target a given collection. Requires the Starter plan or above.
 
         Args:
             name: A name for the rule, unique within the project.
@@ -168,11 +167,10 @@ class EvaluationRulesClient:
 
         Creates a standing rule that runs a metric collection against matching
         production traces, spans or threads as they arrive, and returns its id.
-        Running metrics consumes LLM usage. The metric collection's turn type
-        must match the rule: `THREAD` rules require a multi-turn collection,
-        `TRACE` and `SPAN` rules a single-turn one, and only one enabled
-        `THREAD` rule may target a given collection. Requires the Starter plan
-        or above.
+        Running metrics consumes LLM usage. The collection's turn type must
+        match the rule — `THREAD` rules need a multi-turn collection, `TRACE`
+        and `SPAN` rules a single-turn one — and only one enabled `THREAD` rule
+        may target a given collection. Requires the Starter plan or above.
 
         Args:
             name: A name for the rule, unique within the project.

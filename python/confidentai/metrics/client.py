@@ -8,6 +8,7 @@ from typing import List, Optional
 from confidentai.api import Api, HttpMethods
 from confidentai.common.types import (
     CreateMetricRequest,
+    JevQuestion,
     Metric,
     MetricAlgorithm,
     MetricDag,
@@ -55,7 +56,8 @@ class MetricsClient:
         evaluation_params: Optional[List[MetricEvaluationParam]] = None,
         rubric: Optional[List[Rubric]] = None,
         algorithm: Optional[MetricAlgorithm] = None,
-        dag: Optional[MetricDag] = None
+        dag: Optional[MetricDag] = None,
+        questions: Optional[List[JevQuestion]] = None
     ) -> Metric:
         """Create Metric
 
@@ -76,6 +78,8 @@ class MetricsClient:
                 single-turn metric needs at least one, and every field must
                 match `multiTurn`.
             rubric: Score ranges that anchor how the metric scores.
+            questions: The questions a JEVAL metric asks the decision model.
+                Required when `algorithm` is JEVAL.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -91,6 +95,7 @@ class MetricsClient:
                 "rubric": rubric,
                 "algorithm": algorithm,
                 "dag": dag,
+                "questions": questions,
             },
         )
 
@@ -104,7 +109,8 @@ class MetricsClient:
         evaluation_params: Optional[List[MetricEvaluationParam]] = None,
         rubric: Optional[List[Rubric]] = None,
         algorithm: Optional[MetricAlgorithm] = None,
-        dag: Optional[MetricDag] = None
+        dag: Optional[MetricDag] = None,
+        questions: Optional[List[JevQuestion]] = None
     ) -> Metric:
         """Create Metric
 
@@ -125,6 +131,8 @@ class MetricsClient:
                 single-turn metric needs at least one, and every field must
                 match `multiTurn`.
             rubric: Score ranges that anchor how the metric scores.
+            questions: The questions a JEVAL metric asks the decision model.
+                Required when `algorithm` is JEVAL.
         """
         return await self._api.a_request(
             HttpMethods.POST,
@@ -140,6 +148,7 @@ class MetricsClient:
                 "rubric": rubric,
                 "algorithm": algorithm,
                 "dag": dag,
+                "questions": questions,
             },
         )
 
@@ -184,7 +193,8 @@ class MetricsClient:
         criteria: Optional[str] = None,
         evaluation_steps: Optional[List[str]] = None,
         evaluation_params: Optional[List[MetricEvaluationParam]] = None,
-        rubric: Optional[List[Rubric]] = None
+        rubric: Optional[List[Rubric]] = None,
+        questions: Optional[List[JevQuestion]] = None
     ) -> Metric:
         """Update Metric
 
@@ -201,6 +211,8 @@ class MetricsClient:
             evaluation_params: The test case fields the metric evaluates. Each
                 must match the metric's `multiTurn`.
             rubric: Score ranges that anchor how the metric scores.
+            questions: The new questions for a JEVAL metric. Only accepted on
+                JEVAL metrics.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -212,6 +224,7 @@ class MetricsClient:
                 "evaluationSteps": evaluation_steps,
                 "evaluationParams": evaluation_params,
                 "rubric": rubric,
+                "questions": questions,
             },
             path={"metricId": metric_id},
         )
@@ -223,7 +236,8 @@ class MetricsClient:
         criteria: Optional[str] = None,
         evaluation_steps: Optional[List[str]] = None,
         evaluation_params: Optional[List[MetricEvaluationParam]] = None,
-        rubric: Optional[List[Rubric]] = None
+        rubric: Optional[List[Rubric]] = None,
+        questions: Optional[List[JevQuestion]] = None
     ) -> Metric:
         """Update Metric
 
@@ -240,6 +254,8 @@ class MetricsClient:
             evaluation_params: The test case fields the metric evaluates. Each
                 must match the metric's `multiTurn`.
             rubric: Score ranges that anchor how the metric scores.
+            questions: The new questions for a JEVAL metric. Only accepted on
+                JEVAL metrics.
         """
         return await self._api.a_request(
             HttpMethods.PUT,
@@ -251,6 +267,7 @@ class MetricsClient:
                 "evaluationSteps": evaluation_steps,
                 "evaluationParams": evaluation_params,
                 "rubric": rubric,
+                "questions": questions,
             },
             path={"metricId": metric_id},
         )

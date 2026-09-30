@@ -10,7 +10,10 @@ from confidentai.export_destinations.types import (
     ExportDestinationRef,
     ExportDestinationSummary,
     ExportDestinationType,
+    SnowflakeExportDestinationConfig,
+    SnowflakeExportDestinationMaskedConfig,
     UpdateExportDestinationRequest,
+    UpdateSnowflakeExportDestinationConfig,
 )
 
 __all__ = [
@@ -20,5 +23,8 @@ __all__ = [
     "ExportDestinationRef",
     "ExportDestinationSummary",
     "ExportDestinationType",
+    "SnowflakeExportDestinationConfig",
+    "SnowflakeExportDestinationMaskedConfig",
     "UpdateExportDestinationRequest",
+    "UpdateSnowflakeExportDestinationConfig",
 ]

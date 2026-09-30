@@ -9,11 +9,18 @@ from typing import List, Optional
 from pydantic import Field
 
 from confidentai.common.types import (
+    Environment,
     FilterSet,
     ScheduleIntervalUnit,
     ScheduleRecurrenceType,
 )
 from confidentai.types import ConfidentBaseModel
+
+
+class AnnotationSelectionType(Enum):
+    SPANS = "Spans"
+    THREADS = "Threads"
+    TRACES = "Traces"
 
 
 class SchedulableExportType(Enum):
@@ -40,6 +47,11 @@ class CreateExportScheduleRequest(ConfidentBaseModel):
     description: Optional[str] = None
     export_type: SchedulableExportType = Field(alias="exportType")
     filters: Optional[FilterSet] = None
+    environment: Optional[Environment] = None
+    annotation_selection_type: Optional[AnnotationSelectionType] = Field(
+        default=None,
+        alias="annotationSelectionType",
+    )
     destination_id: Optional[str] = Field(default=None, alias="destinationId")
     enabled: Optional[bool] = None
 
@@ -62,6 +74,10 @@ class ExportSchedule(ConfidentBaseModel):
     description: Optional[str]
     export_type: SchedulableExportType = Field(alias="exportType")
     filters: FilterSet
+    environment: Optional[Environment]
+    annotation_selection_type: Optional[AnnotationSelectionType] = Field(
+        alias="annotationSelectionType",
+    )
     destination_id: Optional[str] = Field(alias="destinationId")
     schedule_settings: Optional[ExportScheduleSettings] = Field(
         alias="scheduleSettings",
@@ -103,5 +119,10 @@ class UpdateExportScheduleRequest(ConfidentBaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     filters: Optional[FilterSet] = None
+    environment: Optional[Environment] = None
+    annotation_selection_type: Optional[AnnotationSelectionType] = Field(
+        default=None,
+        alias="annotationSelectionType",
+    )
     destination_id: Optional[str] = Field(default=None, alias="destinationId")
     enabled: Optional[bool] = None

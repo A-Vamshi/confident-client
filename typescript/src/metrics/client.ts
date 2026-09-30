@@ -6,6 +6,7 @@
 import { Api, HttpMethods } from "../api";
 import { Endpoints } from "../endpoints";
 import {
+  JevQuestion,
   Metric,
   MetricAlgorithm,
   MetricDag,
@@ -48,6 +49,8 @@ export class MetricsClient {
    *   single-turn metric needs at least one, and every field must match
    *   `multiTurn`.
    * @param rubric Score ranges that anchor how the metric scores.
+   * @param questions The questions a JEVAL metric asks the decision model.
+   *   Required when `algorithm` is JEVAL.
    */
   async create(
     name: string,
@@ -59,6 +62,7 @@ export class MetricsClient {
       rubric?: Rubric[];
       algorithm?: MetricAlgorithm;
       dag?: MetricDag;
+      questions?: JevQuestion[];
     } = {},
   ): Promise<Metric> {
     const {
@@ -69,6 +73,7 @@ export class MetricsClient {
       rubric,
       algorithm,
       dag,
+      questions,
     } = options;
     return this.api.sendRequest<Metric>(
       HttpMethods.POST,
@@ -83,6 +88,7 @@ export class MetricsClient {
           rubric,
           algorithm,
           dag,
+          questions,
         },
       },
     );
@@ -120,6 +126,8 @@ export class MetricsClient {
    * @param evaluationParams The test case fields the metric evaluates. Each
    *   must match the metric's `multiTurn`.
    * @param rubric Score ranges that anchor how the metric scores.
+   * @param questions The new questions for a JEVAL metric. Only accepted on
+   *   JEVAL metrics.
    */
   async update(
     metricId: string,
@@ -128,14 +136,22 @@ export class MetricsClient {
       evaluationSteps?: string[] | null;
       evaluationParams?: MetricEvaluationParam[];
       rubric?: Rubric[];
+      questions?: JevQuestion[];
     } = {},
   ): Promise<Metric> {
-    const { criteria, evaluationSteps, evaluationParams, rubric } = options;
+    const { criteria, evaluationSteps, evaluationParams, rubric, questions } =
+      options;
     return this.api.sendRequest<Metric>(
       HttpMethods.PUT,
       Endpoints.METRIC_ENDPOINT,
       {
-        body: { criteria, evaluationSteps, evaluationParams, rubric },
+        body: {
+          criteria,
+          evaluationSteps,
+          evaluationParams,
+          rubric,
+          questions,
+        },
         urlParams: { metricId },
       },
     );

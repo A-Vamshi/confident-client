@@ -3,7 +3,7 @@
 # Do not edit by hand — change the route in confident-cloud
 # and regenerate.
 
-from typing import Optional
+from typing import Any, Dict, Optional
 
 from confidentai.api import Api, HttpMethods
 from confidentai.endpoints import Endpoints
@@ -64,7 +64,13 @@ class PersonasClient:
             query={"page": page, "pageSize": page_size},
         )
 
-    def create(self, name: str, characteristics: str) -> PersonaRef:
+    def create(
+        self,
+        name: str,
+        characteristics: str,
+        *,
+        metadata: Optional[Dict[str, Any]] = None
+    ) -> PersonaRef:
         """Create Persona
 
         Creates a persona in your Confident AI project and returns its id. A
@@ -85,16 +91,30 @@ class PersonasClient:
                 task — what the conversation is about and when it is finished
                 come from the golden's scenario and expected outcome, not from
                 here.
+            metadata: Structured facts the persona can draw on, such as an
+                account, a resume or an order. The simulator reads it alongside
+                the characteristics, and it is available to your AI connection
+                payload as conversationalGolden.persona.metadata.
         """
         return self._api.request(
             HttpMethods.POST,
             Endpoints.PERSONAS_ENDPOINT,
             response_schema=PersonaRef,
             request_schema=CreatePersonaRequest,
-            body={"name": name, "characteristics": characteristics},
+            body={
+                "name": name,
+                "characteristics": characteristics,
+                "metadata": metadata,
+            },
         )
 
-    async def a_create(self, name: str, characteristics: str) -> PersonaRef:
+    async def a_create(
+        self,
+        name: str,
+        characteristics: str,
+        *,
+        metadata: Optional[Dict[str, Any]] = None
+    ) -> PersonaRef:
         """Create Persona
 
         Creates a persona in your Confident AI project and returns its id. A
@@ -115,13 +135,21 @@ class PersonasClient:
                 task — what the conversation is about and when it is finished
                 come from the golden's scenario and expected outcome, not from
                 here.
+            metadata: Structured facts the persona can draw on, such as an
+                account, a resume or an order. The simulator reads it alongside
+                the characteristics, and it is available to your AI connection
+                payload as conversationalGolden.persona.metadata.
         """
         return await self._api.a_request(
             HttpMethods.POST,
             Endpoints.PERSONAS_ENDPOINT,
             response_schema=PersonaRef,
             request_schema=CreatePersonaRequest,
-            body={"name": name, "characteristics": characteristics},
+            body={
+                "name": name,
+                "characteristics": characteristics,
+                "metadata": metadata,
+            },
         )
 
     def get(self, persona_id: str) -> Persona:
@@ -165,7 +193,8 @@ class PersonasClient:
         persona_id: str,
         *,
         name: Optional[str] = None,
-        characteristics: Optional[str] = None
+        characteristics: Optional[str] = None,
+        metadata: Optional[Dict[str, Any]] = None
     ) -> Persona:
         """Update Persona
 
@@ -183,13 +212,20 @@ class PersonasClient:
                 simulator reads it on every user turn. The text replaces the
                 stored one outright rather than being appended to, so send the
                 whole description. Omit it to keep the current one.
+            metadata: Structured facts the persona can draw on. The object
+                replaces the stored one outright, so send the whole object. Send
+                null to clear it, or omit it to keep the current one.
         """
         return self._api.request(
             HttpMethods.PUT,
             Endpoints.PERSONA_ENDPOINT,
             response_schema=Persona,
             request_schema=UpdatePersonaRequest,
-            body={"name": name, "characteristics": characteristics},
+            body={
+                "name": name,
+                "characteristics": characteristics,
+                "metadata": metadata,
+            },
             path={"personaId": persona_id},
         )
 
@@ -198,7 +234,8 @@ class PersonasClient:
         persona_id: str,
         *,
         name: Optional[str] = None,
-        characteristics: Optional[str] = None
+        characteristics: Optional[str] = None,
+        metadata: Optional[Dict[str, Any]] = None
     ) -> Persona:
         """Update Persona
 
@@ -216,13 +253,20 @@ class PersonasClient:
                 simulator reads it on every user turn. The text replaces the
                 stored one outright rather than being appended to, so send the
                 whole description. Omit it to keep the current one.
+            metadata: Structured facts the persona can draw on. The object
+                replaces the stored one outright, so send the whole object. Send
+                null to clear it, or omit it to keep the current one.
         """
         return await self._api.a_request(
             HttpMethods.PUT,
             Endpoints.PERSONA_ENDPOINT,
             response_schema=Persona,
             request_schema=UpdatePersonaRequest,
-            body={"name": name, "characteristics": characteristics},
+            body={
+                "name": name,
+                "characteristics": characteristics,
+                "metadata": metadata,
+            },
             path={"personaId": persona_id},
         )
 

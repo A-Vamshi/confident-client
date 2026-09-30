@@ -29,11 +29,10 @@ class WidgetsClient:
         """Query Ad Hoc Widget
 
         Computes the data for a widget you define inline, without saving it to a
-        dashboard. Use it to chart your observability data on demand. Branch on
-        `data.kind` to read the result: the widget's `type` and `mode` say how
-        it is drawn, not how the payload is shaped. A query accepts at most 20
-        lines, a `topK.limit` of at most 100, and a range no longer than 366
-        days.
+        dashboard. Branch on `data.kind` to read the result: the widget's `type`
+        and `mode` say how it is drawn, not how the payload is shaped. A query
+        accepts at most 20 lines, a `topK.limit` of at most 100, and a range no
+        longer than 366 days.
 
         Args:
             start_time: The start of the range to compute over, as an ISO 8601
@@ -67,11 +66,10 @@ class WidgetsClient:
         """Query Ad Hoc Widget
 
         Computes the data for a widget you define inline, without saving it to a
-        dashboard. Use it to chart your observability data on demand. Branch on
-        `data.kind` to read the result: the widget's `type` and `mode` say how
-        it is drawn, not how the payload is shaped. A query accepts at most 20
-        lines, a `topK.limit` of at most 100, and a range no longer than 366
-        days.
+        dashboard. Branch on `data.kind` to read the result: the widget's `type`
+        and `mode` say how it is drawn, not how the payload is shaped. A query
+        accepts at most 20 lines, a `topK.limit` of at most 100, and a range no
+        longer than 366 days.
 
         Args:
             start_time: The start of the range to compute over, as an ISO 8601

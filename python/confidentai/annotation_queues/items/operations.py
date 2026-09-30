@@ -156,8 +156,7 @@ class ItemsOperations:
         Records your team's annotation of one queue item and marks it complete,
         returning the ids of what was written. Send `annotations` for criteria
         ratings, `formResponses` for answers to the queue's annotation form, or
-        both; answering the form requires `annotatorEmail`. Send
-        `markAsCompleted: false` to leave the item in the pending list.
+        both; answering the form requires `annotatorEmail`.
 
         Args:
             annotation_queue_id: The id of the annotation queue the item belongs
@@ -165,8 +164,8 @@ class ItemsOperations:
             queue_item_id: The id of the queue item.
             annotations: The criteria ratings to record on the item, one entry
                 per criterion.
-            form_responses: The answers to the fields of the queue's annotation
-                form. Sending them requires `annotatorEmail`.
+            form_responses: The annotations for the fields of the queue's
+                annotation form. Sending them requires `annotatorEmail`.
             annotator_email: The email address of the project member the work is
                 credited to. Required when `formResponses` are sent, and what
                 makes the annotation visible on the platform.
@@ -208,8 +207,7 @@ class ItemsOperations:
         Records your team's annotation of one queue item and marks it complete,
         returning the ids of what was written. Send `annotations` for criteria
         ratings, `formResponses` for answers to the queue's annotation form, or
-        both; answering the form requires `annotatorEmail`. Send
-        `markAsCompleted: false` to leave the item in the pending list.
+        both; answering the form requires `annotatorEmail`.
 
         Args:
             annotation_queue_id: The id of the annotation queue the item belongs
@@ -217,8 +215,8 @@ class ItemsOperations:
             queue_item_id: The id of the queue item.
             annotations: The criteria ratings to record on the item, one entry
                 per criterion.
-            form_responses: The answers to the fields of the queue's annotation
-                form. Sending them requires `annotatorEmail`.
+            form_responses: The annotations for the fields of the queue's
+                annotation form. Sending them requires `annotatorEmail`.
             annotator_email: The email address of the project member the work is
                 credited to. Required when `formResponses` are sent, and what
                 makes the annotation visible on the platform.

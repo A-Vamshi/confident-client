@@ -9,10 +9,6 @@ export enum Endpoints {
   AI_CONNECTION_ENDPOINT = "/v2/ai-connections/:aiConnectionId",
   AI_CONNECTION_PING_ENDPOINT = "/v2/ai-connections/:aiConnectionId/ping",
 
-  // annotation-forms
-  ANNOTATION_FORMS_ENDPOINT = "/v2/annotation-forms",
-  ANNOTATION_FORM_ENDPOINT = "/v2/annotation-forms/:annotationFormId",
-
   // annotation-queues
   ANNOTATION_QUEUES_ENDPOINT = "/v2/annotation-queues",
   ANNOTATION_QUEUE_ENDPOINT = "/v2/annotation-queues/:annotationQueueId",

@@ -14,13 +14,12 @@ export class RolesOperations extends PoliciesOperations {
    * List Project Roles
    *
    * Lists every role a member of this project can be given: the custom roles
-   * the project owns, plus the global, system-defined roles (`projectId` is
-   * null) that every project can assign. Each role is returned with the project
-   * policies attached to it, which is where its permissions come from — a
-   * global role's permissions are system-defined instead, so it comes back with
-   * an empty `policies` array. Project roles govern access inside this project
-   * only; access to organization-wide settings comes from the member's
-   * organization role.
+   * the project owns, plus the global, system-defined ones (`projectId` is
+   * null). Each comes with the project policies attached to it, which is where
+   * its permissions come from — a global role's permissions are system-defined
+   * instead, so it returns an empty `policies` array. Project roles govern
+   * access inside this project only; organization-wide settings come from the
+   * member's organization role.
    *
    * @param projectId The id of the project, which must belong to your
    *   organization.
@@ -37,11 +36,10 @@ export class RolesOperations extends PoliciesOperations {
    * Create Project Role
    *
    * Creates a custom role in this project from a set of project policies and
-   * returns the role. Its permissions are the union of the permissions granted
-   * by the policies in `policyIds`, so a role created with an empty list can do
-   * nothing until you attach one. The role grants nobody anything until a
-   * project member is assigned to it. The name must be unique among the roles
-   * the project can use, including the global, system-defined ones.
+   * returns the role. Its permissions are the union of what those policies
+   * grant, so a role created with an empty `policyIds` can do nothing until you
+   * attach one, and it grants nobody anything until a project member is
+   * assigned to it.
    *
    * @param projectId The id of the project, which must belong to your
    *   organization.
@@ -74,13 +72,11 @@ export class RolesOperations extends PoliciesOperations {
    * Update Project Role
    *
    * Replaces a custom project role's name, description, and attached policies.
-   * Every member already holding the role is affected immediately: permissions
-   * are resolved from the role on each request, so anything the new policy set
-   * no longer grants stops working on their next call, and anything it adds
-   * becomes available at once. `policyIds` is the role's complete policy set
-   * rather than an addition to it, so sending an empty array leaves every
-   * member holding the role with no permissions in this project. Only roles the
-   * project owns can be updated; a global, system-defined role responds 404.
+   * Every member holding the role is affected immediately, since permissions
+   * are resolved on each request. `policyIds` is the role's complete policy set
+   * rather than an addition to it, so an empty array leaves every member
+   * holding the role with no permissions in this project. A global, system-
+   * defined role responds `404`.
    *
    * @param projectId The id of the project the role belongs to.
    * @param roleId The id of the project role. It must be a role the project
@@ -117,13 +113,12 @@ export class RolesOperations extends PoliciesOperations {
   /**
    * Delete Project Role
    *
-   * Permanently deletes a custom project role. A role that is still assigned to
-   * at least one member cannot be deleted — the request fails and you must
-   * first move those members onto another role — so deleting a role never
-   * silently strips anyone of their access. The policies that were attached to
-   * it are not deleted and stay available to other roles in the project. Only
-   * roles the project owns can be deleted; a global, system-defined role
-   * responds 404. **Warning:** This action cannot be undone.
+   * Permanently deletes a custom project role. A role still assigned to at
+   * least one member cannot be deleted — move those members onto another role
+   * first — so deleting a role never silently strips anyone of their access.
+   * The policies attached to it are not deleted and stay available to other
+   * roles in the project. A global, system-defined role responds `404`. **This
+   * cannot be undone.**
    *
    * @param projectId The id of the project the role belongs to.
    * @param roleId The id of the project role. It must be a role the project

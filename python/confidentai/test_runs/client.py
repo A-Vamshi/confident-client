@@ -204,14 +204,13 @@ class TestRunsClient:
         """Submit Test Case Result
 
         Submits the result for a single test case in a long-running agent
-        evaluation. Confident AI evaluates the test case and finalizes the test
-        run once every result has been received; a repeated submission for the
-        same test case is ignored and reported as `already_received`. Long-
-        running mode is available for single-turn AI connection evaluations
-        only. Responds 410 when the `testCaseId` is unknown or its result window
-        has closed, 404 when its test run is not in this project, 409 when the
-        test run is no longer accepting results, and 400 when the test run is
-        multi-turn or has no metric collection.
+        evaluation. Confident AI evaluates it and finalizes the test run once
+        every result has been received; a repeated submission for the same test
+        case is ignored and reported as `already_received`. Long-running mode is
+        available for single-turn AI connection evaluations only. Responds `410`
+        when the `testCaseId` is unknown or its result window has closed, `409`
+        when the test run is no longer accepting results, and `400` when the
+        test run is multi-turn or has no metric collection.
 
         Args:
             test_case_id: The test case id Confident AI sent to your AI
@@ -265,14 +264,13 @@ class TestRunsClient:
         """Submit Test Case Result
 
         Submits the result for a single test case in a long-running agent
-        evaluation. Confident AI evaluates the test case and finalizes the test
-        run once every result has been received; a repeated submission for the
-        same test case is ignored and reported as `already_received`. Long-
-        running mode is available for single-turn AI connection evaluations
-        only. Responds 410 when the `testCaseId` is unknown or its result window
-        has closed, 404 when its test run is not in this project, 409 when the
-        test run is no longer accepting results, and 400 when the test run is
-        multi-turn or has no metric collection.
+        evaluation. Confident AI evaluates it and finalizes the test run once
+        every result has been received; a repeated submission for the same test
+        case is ignored and reported as `already_received`. Long-running mode is
+        available for single-turn AI connection evaluations only. Responds `410`
+        when the `testCaseId` is unknown or its result window has closed, `409`
+        when the test run is no longer accepting results, and `400` when the
+        test run is multi-turn or has no metric collection.
 
         Args:
             test_case_id: The test case id Confident AI sent to your AI

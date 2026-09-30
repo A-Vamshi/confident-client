@@ -23,11 +23,10 @@ class InvitationsOperations:
 
         Lists the invitations to this project that are still outstanding — those
         the invitee has not answered, and those they declined. An invitation
-        drops off this list once it is accepted, since the invitee is a project
-        member from then on, and once it is revoked. Invitations do not expire
-        on their own. Every entry carries the token from the invitee's invite
-        link, so treat the response as sensitive. Invitations to the
-        organization as a whole are listed separately.
+        drops off this list once it is accepted or revoked, and invitations do
+        not expire on their own. Every entry carries the token from the
+        invitee's invite link, so treat the response as sensitive. Invitations
+        to the organization as a whole are listed separately.
 
         Args:
             project_id: The id of the project, which must belong to your
@@ -47,11 +46,10 @@ class InvitationsOperations:
 
         Lists the invitations to this project that are still outstanding — those
         the invitee has not answered, and those they declined. An invitation
-        drops off this list once it is accepted, since the invitee is a project
-        member from then on, and once it is revoked. Invitations do not expire
-        on their own. Every entry carries the token from the invitee's invite
-        link, so treat the response as sensitive. Invitations to the
-        organization as a whole are listed separately.
+        drops off this list once it is accepted or revoked, and invitations do
+        not expire on their own. Every entry carries the token from the
+        invitee's invite link, so treat the response as sensitive. Invitations
+        to the organization as a whole are listed separately.
 
         Args:
             project_id: The id of the project, which must belong to your
@@ -73,19 +71,14 @@ class InvitationsOperations:
     ) -> ProjectInvitationList:
         """Create Project Invitations
 
-        Invites people to this project by email and emails each of them a link.
-        Accepting it adds the invitee to the project and, if they are not
-        already in it, to the organization the project belongs to — so this
-        endpoint can grow the organization, not just the project. Addresses are
-        lowercased and must be company addresses. An address that already has an
-        invitation to this project is dropped from the batch, and so is one that
-        is already a member of it; if that leaves nothing to invite, the whole
-        request is refused as a conflict instead. Note that someone who already
-        belongs to the organization but not to this project is still invitable.
-        `projectRoleId` sets the role every invitee lands on, and the `Owner`
-        role cannot be handed out this way. On the Free plan, the organization's
-        members plus new invitations cannot exceed 2 users. Only the invitations
-        that were created are returned, each with its token.
+        Invites people to this project by email, each with a link. Accepting
+        adds the invitee to the project and, if needed, to the organization it
+        belongs to — so this can grow the organization, not just the project.
+        Addresses that already have an invitation to this project, or already
+        belong to it, are dropped from the batch; if that leaves nothing, the
+        request is refused as a conflict. The `Owner` role cannot be handed out
+        this way, and the Free plan caps the organization's members plus
+        invitations at 2. Only the invitations created are returned.
 
         Args:
             project_id: The id of the project, which must belong to your
@@ -115,19 +108,14 @@ class InvitationsOperations:
     ) -> ProjectInvitationList:
         """Create Project Invitations
 
-        Invites people to this project by email and emails each of them a link.
-        Accepting it adds the invitee to the project and, if they are not
-        already in it, to the organization the project belongs to — so this
-        endpoint can grow the organization, not just the project. Addresses are
-        lowercased and must be company addresses. An address that already has an
-        invitation to this project is dropped from the batch, and so is one that
-        is already a member of it; if that leaves nothing to invite, the whole
-        request is refused as a conflict instead. Note that someone who already
-        belongs to the organization but not to this project is still invitable.
-        `projectRoleId` sets the role every invitee lands on, and the `Owner`
-        role cannot be handed out this way. On the Free plan, the organization's
-        members plus new invitations cannot exceed 2 users. Only the invitations
-        that were created are returned, each with its token.
+        Invites people to this project by email, each with a link. Accepting
+        adds the invitee to the project and, if needed, to the organization it
+        belongs to — so this can grow the organization, not just the project.
+        Addresses that already have an invitation to this project, or already
+        belong to it, are dropped from the batch; if that leaves nothing, the
+        request is refused as a conflict. The `Owner` role cannot be handed out
+        this way, and the Free plan caps the organization's members plus
+        invitations at 2. Only the invitations created are returned.
 
         Args:
             project_id: The id of the project, which must belong to your
@@ -153,16 +141,13 @@ class InvitationsOperations:
     ) -> ProjectInvitation:
         """Resend Project Invitation
 
-        Emails the project invitation again and returns it. The invitation is
-        reset in the process: its status goes back to `PENDING`, it is stamped
-        with a new creation time, and a fresh token is issued — so any link sent
-        for it earlier stops working. That reset is what revives an invitation
-        the invitee declined. An invitation that was already accepted is reset
-        the same way, which mails the member a link they no longer need without
-        touching the access they already have; revoke the invitation or remove
-        the member instead if that is what you meant. Invitations never expire
-        on their own, so resending is about a link that was lost, not one that
-        timed out.
+        Emails the project invitation again and returns it, resetting it in the
+        process: the status goes back to `PENDING`, a fresh token is issued, and
+        any link sent earlier stops working. That reset is what revives an
+        invitation the invitee declined. An invitation that was already accepted
+        is reset the same way, mailing the member a link they no longer need
+        without touching the access they have — revoke the invitation or remove
+        the member instead if that is what you meant.
 
         Args:
             project_id: The id of the project, which must belong to your
@@ -181,16 +166,13 @@ class InvitationsOperations:
     ) -> ProjectInvitation:
         """Resend Project Invitation
 
-        Emails the project invitation again and returns it. The invitation is
-        reset in the process: its status goes back to `PENDING`, it is stamped
-        with a new creation time, and a fresh token is issued — so any link sent
-        for it earlier stops working. That reset is what revives an invitation
-        the invitee declined. An invitation that was already accepted is reset
-        the same way, which mails the member a link they no longer need without
-        touching the access they already have; revoke the invitation or remove
-        the member instead if that is what you meant. Invitations never expire
-        on their own, so resending is about a link that was lost, not one that
-        timed out.
+        Emails the project invitation again and returns it, resetting it in the
+        process: the status goes back to `PENDING`, a fresh token is issued, and
+        any link sent earlier stops working. That reset is what revives an
+        invitation the invitee declined. An invitation that was already accepted
+        is reset the same way, mailing the member a link they no longer need
+        without touching the access they have — revoke the invitation or remove
+        the member instead if that is what you meant.
 
         Args:
             project_id: The id of the project, which must belong to your
@@ -210,12 +192,11 @@ class InvitationsOperations:
         """Revoke Project Invitation
 
         Deletes the project invitation, whatever its status, so its link can no
-        longer be accepted and it disappears from the project's invitation list.
-        Only the invitation goes: an invitee who already accepted keeps their
-        place in the project and in the organization, so revoke access by
-        removing them from the project's members instead. Revoking cannot be
-        undone — invite the address again to issue a new invitation with a new
-        token.
+        longer be accepted. Only the invitation goes: an invitee who already
+        accepted keeps their place in the project and the organization, so
+        revoke access by removing them from the project's members instead. This
+        cannot be undone — invite the address again to issue a new invitation
+        with a new token.
 
         Args:
             project_id: The id of the project, which must belong to your
@@ -235,12 +216,11 @@ class InvitationsOperations:
         """Revoke Project Invitation
 
         Deletes the project invitation, whatever its status, so its link can no
-        longer be accepted and it disappears from the project's invitation list.
-        Only the invitation goes: an invitee who already accepted keeps their
-        place in the project and in the organization, so revoke access by
-        removing them from the project's members instead. Revoking cannot be
-        undone — invite the address again to issue a new invitation with a new
-        token.
+        longer be accepted. Only the invitation goes: an invitee who already
+        accepted keeps their place in the project and the organization, so
+        revoke access by removing them from the project's members instead. This
+        cannot be undone — invite the address again to issue a new invitation
+        with a new token.
 
         Args:
             project_id: The id of the project, which must belong to your

@@ -10,26 +10,50 @@ export enum ExportDestinationType {
   SNOWFLAKE = "SNOWFLAKE",
 }
 
+export interface SnowflakeExportDestinationConfig {
+  account: string;
+  username: string;
+  role: string;
+  warehouse: string;
+  database: string;
+  schema: string;
+  privateKey: string;
+  privateKeyPassphrase?: string | null;
+}
+
 export interface CreateExportDestinationRequest {
   name: string;
   type?: ExportDestinationType;
-  bucket: string;
-  region: string;
-  accessKeyId: string;
-  secretAccessKey: string;
+  bucket?: string;
+  region?: string;
+  accessKeyId?: string;
+  secretAccessKey?: string;
   pathPrefix?: string | null;
+  snowflakeConfig?: SnowflakeExportDestinationConfig;
   enabled?: boolean;
+}
+
+export interface SnowflakeExportDestinationMaskedConfig {
+  account: string;
+  username: string;
+  role: string;
+  warehouse: string;
+  database: string;
+  schema: string;
+  privateKey: string;
+  privateKeyPassphrase: string | null;
 }
 
 export interface ExportDestination {
   id: string;
   name: string;
   type: ExportDestinationType;
-  bucket: string;
-  region: string;
-  accessKeyId: string;
-  secretAccessKey: string;
+  bucket: string | null;
+  region: string | null;
+  accessKeyId: string | null;
+  secretAccessKey: string | null;
   pathPrefix: string | null;
+  snowflakeConfig: SnowflakeExportDestinationMaskedConfig | null;
   enabled: boolean;
   createdAt: string;
   updatedAt: string;
@@ -39,7 +63,7 @@ export interface ExportDestinationSummary {
   id: string;
   name: string;
   type: ExportDestinationType;
-  bucket: string;
+  bucket: string | null;
   enabled: boolean;
 }
 
@@ -54,6 +78,17 @@ export interface ExportDestinationRef {
   id: string;
 }
 
+export interface UpdateSnowflakeExportDestinationConfig {
+  account?: string;
+  username?: string;
+  role?: string;
+  warehouse?: string;
+  database?: string;
+  schema?: string;
+  privateKey?: string;
+  privateKeyPassphrase?: string | null;
+}
+
 export interface UpdateExportDestinationRequest {
   name?: string;
   type?: ExportDestinationType;
@@ -62,5 +97,6 @@ export interface UpdateExportDestinationRequest {
   accessKeyId?: string;
   secretAccessKey?: string;
   pathPrefix?: string | null;
+  snowflakeConfig?: UpdateSnowflakeExportDestinationConfig;
   enabled?: boolean;
 }

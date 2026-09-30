@@ -12,15 +12,12 @@ export class GovernancePoliciesSkillOperations extends GovernancePoliciesControl
   /**
    * Get Governance Policy Skill
    *
-   * Retrieves the Agent Skill attached to a governance policy. This is not a
-   * control and nothing about it is assessed: it is the instructions Confident
-   * AI serves to coding agents working on the projects this policy governs.
-   * Confident AI publishes a per-project Agent Skills git repository, and a
-   * project enrolled in this policy finds the skill there as
-   * `skills/governance/SKILL.md`, with `description` in the YAML frontmatter
-   * and `body` as the Markdown beneath it. Answers with null when the policy
-   * has none, in which case agents working on its projects receive no
-   * governance skill.
+   * Retrieves the Agent Skill attached to a governance policy — not a control,
+   * and nothing about it is assessed: it is the instructions Confident AI
+   * serves to coding agents working on the projects this policy governs. A
+   * project enrolled in this policy finds it in its Agent Skills git repository
+   * as `skills/governance/SKILL.md`. Answers with null when the policy has
+   * none, in which case agents receive no governance skill.
    *
    * @param policyId The id of the governance policy.
    */
@@ -39,11 +36,10 @@ export class GovernancePoliciesSkillOperations extends GovernancePoliciesControl
    *
    * Sets the Agent Skill served to coding agents working on the projects this
    * governance policy governs, creating it when the policy has none and
-   * replacing it outright otherwise. Both `description` and `body` are required
-   * and must not be blank, so there is no way to patch one and leave the other.
-   * The new text reaches an agent the next time it clones the project's Agent
-   * Skills repository, where it appears as `skills/governance/SKILL.md`.
-   * Returns the skill as it now stands, which is never null.
+   * replacing it outright otherwise. Both `description` and `body` are
+   * required, so there is no way to patch one and leave the other. The new text
+   * reaches an agent the next time it clones the project's Agent Skills
+   * repository.
    *
    * @param policyId The id of the governance policy.
    * @param description One line on what the skill covers, which is how a coding
@@ -66,12 +62,11 @@ export class GovernancePoliciesSkillOperations extends GovernancePoliciesControl
   /**
    * Delete Governance Policy Skill
    *
-   * Permanently deletes the Agent Skill attached to a governance policy and
-   * returns the policy's id. Coding agents working on the projects it governs
-   * stop receiving `skills/governance/SKILL.md` on their next clone. The
-   * policy, its controls and its projects are untouched, since the skill
-   * instructs agents rather than gating anything. A policy that has no skill is
-   * reported as not found. **Warning:** This action cannot be undone.
+   * Permanently deletes the Agent Skill attached to a governance policy. Coding
+   * agents working on the projects it governs stop receiving
+   * `skills/governance/SKILL.md` on their next clone. The policy, its controls
+   * and its projects are untouched, since the skill instructs agents rather
+   * than gating anything. A policy that has no skill is reported as not found.
    *
    * @param policyId The id of the governance policy.
    */

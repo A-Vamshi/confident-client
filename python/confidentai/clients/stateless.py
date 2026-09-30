@@ -9,7 +9,6 @@ from confidentai.api import Api, ApiKeyKind
 
 if TYPE_CHECKING:
     from confidentai.ai_connections.client import AIConnectionsClient
-    from confidentai.annotation_forms.client import AnnotationFormsClient
     from confidentai.annotation_queues.client import AnnotationQueuesClient
     from confidentai.annotations.client import AnnotationsClient
     from confidentai.attack_methods.client import AttackMethodsClient
@@ -56,12 +55,6 @@ class StatelessClients:
         from confidentai.ai_connections.client import AIConnectionsClient
 
         return AIConnectionsClient(self._api(ApiKeyKind.PROJECT))
-
-    @property
-    def annotation_forms(self) -> "AnnotationFormsClient":
-        from confidentai.annotation_forms.client import AnnotationFormsClient
-
-        return AnnotationFormsClient(self._api(ApiKeyKind.PROJECT))
 
     @property
     def annotation_queues(self) -> "AnnotationQueuesClient":

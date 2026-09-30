@@ -123,6 +123,11 @@ export interface ProjectRoleList {
   roles: ProjectRole[];
 }
 
+export interface UpdateDecisionProjectModelRequest {
+  provider: ModelProvider;
+  name?: string;
+}
+
 export interface UpdateEvaluationProjectModelRequest {
   provider: ModelProvider;
   name?: string;
@@ -147,4 +152,6 @@ export interface UpdateProjectRequest {
 }
 
 export type UpdateProjectModelRequest =
-  UpdateEvaluationProjectModelRequest | UpdatePlatformProjectModelRequest;
+  | UpdateEvaluationProjectModelRequest
+  | UpdateDecisionProjectModelRequest
+  | UpdatePlatformProjectModelRequest;

@@ -7,12 +7,14 @@ from typing import Literal, Optional
 
 from confidentai.api import Api, HttpMethods
 from confidentai.common.types import (
+    Environment,
     FilterSet,
     ScheduleIntervalUnit,
     ScheduleRecurrenceType,
 )
 from confidentai.endpoints import Endpoints
 from confidentai.export_schedules.types import (
+    AnnotationSelectionType,
     CreateExportScheduleRequest,
     ExportSchedule,
     ExportScheduleList,
@@ -105,6 +107,8 @@ class ExportSchedulesClient:
         end_at: Optional[str] = None,
         description: Optional[str] = None,
         filters: Optional[FilterSet] = None,
+        environment: Optional[Environment] = None,
+        annotation_selection_type: Optional[AnnotationSelectionType] = None,
         destination_id: Optional[str] = None,
         enabled: Optional[bool] = None
     ) -> ExportScheduleRef:
@@ -128,6 +132,12 @@ class ExportSchedulesClient:
             end_at: When the schedule stops running, as an ISO 8601 datetime.
                 Send null to leave it open-ended.
             description: What the schedule exports. Send null to leave it unset.
+            environment: The environment each run exports data from. Omit it, or
+                send null, to export data from every environment. Ignored for
+                `TEST_RUNS` exports, which have no environment.
+            annotation_selection_type: The annotation source for each
+                `ANNOTATIONS` export run. Omit it, or send null, to export
+                annotations from every source. Ignored for other export types.
             destination_id: The id of the export destination each run delivers
                 its file to. A scheduled run has no recipient of its own, so a
                 schedule created without a destination produces files that go
@@ -151,6 +161,8 @@ class ExportSchedulesClient:
                 "endAt": end_at,
                 "description": description,
                 "filters": filters,
+                "environment": environment,
+                "annotationSelectionType": annotation_selection_type,
                 "destinationId": destination_id,
                 "enabled": enabled,
             },
@@ -169,6 +181,8 @@ class ExportSchedulesClient:
         end_at: Optional[str] = None,
         description: Optional[str] = None,
         filters: Optional[FilterSet] = None,
+        environment: Optional[Environment] = None,
+        annotation_selection_type: Optional[AnnotationSelectionType] = None,
         destination_id: Optional[str] = None,
         enabled: Optional[bool] = None
     ) -> ExportScheduleRef:
@@ -192,6 +206,12 @@ class ExportSchedulesClient:
             end_at: When the schedule stops running, as an ISO 8601 datetime.
                 Send null to leave it open-ended.
             description: What the schedule exports. Send null to leave it unset.
+            environment: The environment each run exports data from. Omit it, or
+                send null, to export data from every environment. Ignored for
+                `TEST_RUNS` exports, which have no environment.
+            annotation_selection_type: The annotation source for each
+                `ANNOTATIONS` export run. Omit it, or send null, to export
+                annotations from every source. Ignored for other export types.
             destination_id: The id of the export destination each run delivers
                 its file to. A scheduled run has no recipient of its own, so a
                 schedule created without a destination produces files that go
@@ -215,6 +235,8 @@ class ExportSchedulesClient:
                 "endAt": end_at,
                 "description": description,
                 "filters": filters,
+                "environment": environment,
+                "annotationSelectionType": annotation_selection_type,
                 "destinationId": destination_id,
                 "enabled": enabled,
             },
@@ -267,6 +289,8 @@ class ExportSchedulesClient:
         name: Optional[str] = None,
         description: Optional[str] = None,
         filters: Optional[FilterSet] = None,
+        environment: Optional[Environment] = None,
+        annotation_selection_type: Optional[AnnotationSelectionType] = None,
         destination_id: Optional[str] = None,
         enabled: Optional[bool] = None
     ) -> ExportSchedule:
@@ -290,6 +314,12 @@ class ExportSchedulesClient:
                 Send null to leave it open-ended.
             name: The name of the schedule.
             description: What the schedule exports. Send null to clear it.
+            environment: The environment each run exports data from. Send null
+                to export data from every environment. Ignored for `TEST_RUNS`
+                exports, which have no environment.
+            annotation_selection_type: The annotation source for each
+                `ANNOTATIONS` export run. Send null to export annotations from
+                every source. Ignored for other export types.
             destination_id: The id of the export destination each run delivers
                 its file to. Send null to leave the schedule without one.
             enabled: Whether the schedule runs. Send false to pause it without
@@ -310,6 +340,8 @@ class ExportSchedulesClient:
                 "name": name,
                 "description": description,
                 "filters": filters,
+                "environment": environment,
+                "annotationSelectionType": annotation_selection_type,
                 "destinationId": destination_id,
                 "enabled": enabled,
             },
@@ -329,6 +361,8 @@ class ExportSchedulesClient:
         name: Optional[str] = None,
         description: Optional[str] = None,
         filters: Optional[FilterSet] = None,
+        environment: Optional[Environment] = None,
+        annotation_selection_type: Optional[AnnotationSelectionType] = None,
         destination_id: Optional[str] = None,
         enabled: Optional[bool] = None
     ) -> ExportSchedule:
@@ -352,6 +386,12 @@ class ExportSchedulesClient:
                 Send null to leave it open-ended.
             name: The name of the schedule.
             description: What the schedule exports. Send null to clear it.
+            environment: The environment each run exports data from. Send null
+                to export data from every environment. Ignored for `TEST_RUNS`
+                exports, which have no environment.
+            annotation_selection_type: The annotation source for each
+                `ANNOTATIONS` export run. Send null to export annotations from
+                every source. Ignored for other export types.
             destination_id: The id of the export destination each run delivers
                 its file to. Send null to leave the schedule without one.
             enabled: Whether the schedule runs. Send false to pause it without
@@ -372,6 +412,8 @@ class ExportSchedulesClient:
                 "name": name,
                 "description": description,
                 "filters": filters,
+                "environment": environment,
+                "annotationSelectionType": annotation_selection_type,
                 "destinationId": destination_id,
                 "enabled": enabled,
             },

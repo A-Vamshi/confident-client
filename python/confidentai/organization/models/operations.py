@@ -20,14 +20,10 @@ class ModelsOperations:
         """Get Organization Model
 
         Returns one of your organization's default models, selected by the
-        required `type` query parameter. `PLATFORM` is the model behind
-        Confident AI's own AI features, like classification, summaries and
-        report generation. `SIMULATION` is the model that simulates user turns
-        in conversation simulations, including multi-turn test runs and red
-        teaming. Each default applies to every project that has no override of
-        its own for that type; read a single project's effective model with the
-        project models endpoint. Reading never creates configuration, so this
-        answers with null until the organization sets one.
+        required `type` query parameter. Each default applies to every project
+        with no override of its own; read a single project's effective model
+        with the project models endpoint. Reading never creates configuration,
+        so this answers with null until the organization sets one.
 
         Args:
             type: Which of the organization's models to read. The organization
@@ -47,14 +43,10 @@ class ModelsOperations:
         """Get Organization Model
 
         Returns one of your organization's default models, selected by the
-        required `type` query parameter. `PLATFORM` is the model behind
-        Confident AI's own AI features, like classification, summaries and
-        report generation. `SIMULATION` is the model that simulates user turns
-        in conversation simulations, including multi-turn test runs and red
-        teaming. Each default applies to every project that has no override of
-        its own for that type; read a single project's effective model with the
-        project models endpoint. Reading never creates configuration, so this
-        answers with null until the organization sets one.
+        required `type` query parameter. Each default applies to every project
+        with no override of its own; read a single project's effective model
+        with the project models endpoint. Reading never creates configuration,
+        so this answers with null until the organization sets one.
 
         Args:
             type: Which of the organization's models to read. The organization
@@ -80,15 +72,12 @@ class ModelsOperations:
         """Set Organization Model
 
         Sets one of your organization's default models, selected by the
-        `modelType` path segment. `platform` is the model behind Confident AI's
-        own AI features, like classification, summaries and report generation.
-        `simulation` is the model that simulates user turns in conversation
-        simulations, including multi-turn test runs and red teaming. Each
-        applies to every project that has no override of its own for that type.
-        The provider's credential must already be configured on the organization
-        through the model credentials endpoint. A provider your organization's
-        model provider policy does not allow is rejected with a 403.
-        `CONFIDENT_AI` needs no credential and stores a null model name.
+        `modelType` path segment. Each applies to every project that has no
+        override of its own for that type. The provider's credential must
+        already be configured on the organization through the model credentials
+        endpoint, and a provider your organization's model provider policy does
+        not allow is rejected with `403`. `CONFIDENT_AI` needs no credential and
+        stores a null model name.
 
         Args:
             model_type: Which of the organization's models to set.
@@ -129,15 +118,12 @@ class ModelsOperations:
         """Set Organization Model
 
         Sets one of your organization's default models, selected by the
-        `modelType` path segment. `platform` is the model behind Confident AI's
-        own AI features, like classification, summaries and report generation.
-        `simulation` is the model that simulates user turns in conversation
-        simulations, including multi-turn test runs and red teaming. Each
-        applies to every project that has no override of its own for that type.
-        The provider's credential must already be configured on the organization
-        through the model credentials endpoint. A provider your organization's
-        model provider policy does not allow is rejected with a 403.
-        `CONFIDENT_AI` needs no credential and stores a null model name.
+        `modelType` path segment. Each applies to every project that has no
+        override of its own for that type. The provider's credential must
+        already be configured on the organization through the model credentials
+        endpoint, and a provider your organization's model provider policy does
+        not allow is rejected with `403`. `CONFIDENT_AI` needs no credential and
+        stores a null model name.
 
         Args:
             model_type: Which of the organization's models to set.

@@ -94,7 +94,8 @@ class AnnotationQueuesOperations:
         name: str,
         type: AnnotationQueueType,
         *,
-        form_id: Optional[str] = None
+        form_id: Optional[str] = None,
+        tags: Optional[List[str]] = None
     ) -> AnnotationQueueRef:
         """Create Annotation Queue
 
@@ -105,14 +106,17 @@ class AnnotationQueuesOperations:
         Args:
             name: The name of the queue, which must be unique in the project.
             form_id: The id of an annotation form in this project to ask of
-                every item in the queue.
+                every item in the queue. Forms are created and managed in the
+                Confident AI platform.
+            tags: Tags to put on the queue. A tag that does not exist in the
+                project yet is created.
         """
         return self._api.request(
             HttpMethods.POST,
             Endpoints.ANNOTATION_QUEUES_ENDPOINT,
             response_schema=AnnotationQueueRef,
             request_schema=CreateAnnotationQueueRequest,
-            body={"name": name, "type": type, "formId": form_id},
+            body={"name": name, "type": type, "formId": form_id, "tags": tags},
         )
 
     async def a_create(
@@ -120,7 +124,8 @@ class AnnotationQueuesOperations:
         name: str,
         type: AnnotationQueueType,
         *,
-        form_id: Optional[str] = None
+        form_id: Optional[str] = None,
+        tags: Optional[List[str]] = None
     ) -> AnnotationQueueRef:
         """Create Annotation Queue
 
@@ -131,14 +136,17 @@ class AnnotationQueuesOperations:
         Args:
             name: The name of the queue, which must be unique in the project.
             form_id: The id of an annotation form in this project to ask of
-                every item in the queue.
+                every item in the queue. Forms are created and managed in the
+                Confident AI platform.
+            tags: Tags to put on the queue. A tag that does not exist in the
+                project yet is created.
         """
         return await self._api.a_request(
             HttpMethods.POST,
             Endpoints.ANNOTATION_QUEUES_ENDPOINT,
             response_schema=AnnotationQueueRef,
             request_schema=CreateAnnotationQueueRequest,
-            body={"name": name, "type": type, "formId": form_id},
+            body={"name": name, "type": type, "formId": form_id, "tags": tags},
         )
 
     def get(self, annotation_queue_id: str) -> AnnotationQueue:
@@ -178,27 +186,31 @@ class AnnotationQueuesOperations:
         annotation_queue_id: str,
         *,
         name: Optional[str] = None,
-        form_id: Optional[str] = None
+        form_id: Optional[str] = None,
+        tags: Optional[List[str]] = None
     ) -> AnnotationQueue:
         """Update Annotation Queue
 
-        Renames an annotation queue or attaches a different annotation form to
-        it, and returns the queue. Send `formId: null` to detach the current
-        form.
+        Renames an annotation queue, replaces its tags, or attaches a different
+        annotation form to it, and returns the queue. Send `formId: null` to
+        detach the current form.
 
         Args:
             annotation_queue_id: The id of the annotation queue.
             name: The new name of the queue, which must be unique in the
                 project.
-            form_id: The id of an annotation form to ask of every item in the
-                queue. Send null to detach the current form.
+            form_id: The id of an annotation form in this project to ask of
+                every item in the queue. Forms are created and managed in the
+                Confident AI platform. Send null to detach the current form.
+            tags: Replaces the tags on the queue. Send an empty array to remove
+                them all; omit it to leave them as they are.
         """
         return self._api.request(
             HttpMethods.PUT,
             Endpoints.ANNOTATION_QUEUE_ENDPOINT,
             response_schema=AnnotationQueue,
             request_schema=UpdateAnnotationQueueRequest,
-            body={"name": name, "formId": form_id},
+            body={"name": name, "formId": form_id, "tags": tags},
             path={"annotationQueueId": annotation_queue_id},
         )
 
@@ -207,27 +219,31 @@ class AnnotationQueuesOperations:
         annotation_queue_id: str,
         *,
         name: Optional[str] = None,
-        form_id: Optional[str] = None
+        form_id: Optional[str] = None,
+        tags: Optional[List[str]] = None
     ) -> AnnotationQueue:
         """Update Annotation Queue
 
-        Renames an annotation queue or attaches a different annotation form to
-        it, and returns the queue. Send `formId: null` to detach the current
-        form.
+        Renames an annotation queue, replaces its tags, or attaches a different
+        annotation form to it, and returns the queue. Send `formId: null` to
+        detach the current form.
 
         Args:
             annotation_queue_id: The id of the annotation queue.
             name: The new name of the queue, which must be unique in the
                 project.
-            form_id: The id of an annotation form to ask of every item in the
-                queue. Send null to detach the current form.
+            form_id: The id of an annotation form in this project to ask of
+                every item in the queue. Forms are created and managed in the
+                Confident AI platform. Send null to detach the current form.
+            tags: Replaces the tags on the queue. Send an empty array to remove
+                them all; omit it to leave them as they are.
         """
         return await self._api.a_request(
             HttpMethods.PUT,
             Endpoints.ANNOTATION_QUEUE_ENDPOINT,
             response_schema=AnnotationQueue,
             request_schema=UpdateAnnotationQueueRequest,
-            body={"name": name, "formId": form_id},
+            body={"name": name, "formId": form_id, "tags": tags},
             path={"annotationQueueId": annotation_queue_id},
         )
 

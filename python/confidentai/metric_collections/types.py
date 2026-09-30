@@ -3,12 +3,19 @@
 # Do not edit by hand — change the route in confident-cloud
 # and regenerate.
 
+from enum import Enum
 from typing import List, Optional
 
 from pydantic import Field
 
 from confidentai.common.types import ModelProvider
 from confidentai.types import ConfidentBaseModel
+
+
+class EvalMode(Enum):
+    LLM = "LLM"
+    HYBRID = "HYBRID"
+    DECISION = "DECISION"
 
 
 class MetricRef(ConfidentBaseModel):
@@ -30,6 +37,15 @@ class MetricSettingConfig(ConfidentBaseModel):
         default=None,
         alias="evaluationModelName",
     )
+    decision_model_provider: Optional[ModelProvider] = Field(
+        default=None,
+        alias="decisionModelProvider",
+    )
+    decision_model_name: Optional[str] = Field(
+        default=None,
+        alias="decisionModelName",
+    )
+    eval_mode: Optional[EvalMode] = Field(default=None, alias="evalMode")
 
 
 class CreateMetricCollectionRequest(ConfidentBaseModel):
@@ -66,6 +82,11 @@ class MetricSetting(ConfidentBaseModel):
         alias="evaluationModelProvider",
     )
     evaluation_model_name: Optional[str] = Field(alias="evaluationModelName")
+    decision_model_provider: Optional[ModelProvider] = Field(
+        alias="decisionModelProvider",
+    )
+    decision_model_name: Optional[str] = Field(alias="decisionModelName")
+    eval_mode: Optional[EvalMode] = Field(alias="evalMode")
 
 
 class MetricCollection(ConfidentBaseModel):

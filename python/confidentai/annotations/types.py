@@ -8,7 +8,11 @@ from typing import Dict, List, Optional, Union
 
 from pydantic import Field
 
-from confidentai.common.types import AnnotationType, MLLMImage, UserReference
+from confidentai.common.types import (
+    AnnotationFieldType,
+    MLLMImage,
+    UserReference,
+)
 from confidentai.types import ConfidentBaseModel
 
 
@@ -19,8 +23,8 @@ class AnnotationSortBy(Enum):
 
 class Annotation(ConfidentBaseModel):
     id: str
-    rating: int
-    type: AnnotationType
+    field_type: AnnotationFieldType = Field(alias="fieldType")
+    value: Optional[Union[str, float, bool, List[str]]]
     name: Optional[str]
     explanation: Optional[str]
     expected_outcome: Optional[str] = Field(alias="expectedOutcome")
@@ -44,11 +48,17 @@ class AnnotationRef(ConfidentBaseModel):
     id: str
 
 
+AnnotationValue = Union[str, float, bool, List[str]]
+
+
 class SpanAnnotationRequest(ConfidentBaseModel):
     span_uuid: str = Field(alias="spanUuid")
     expected_output: Optional[str] = Field(default=None, alias="expectedOutput")
-    rating: int
-    type: Optional[AnnotationType] = None
+    field_type: Optional[AnnotationFieldType] = Field(
+        default=None,
+        alias="fieldType",
+    )
+    value: AnnotationValue
     name: Optional[str] = None
     explanation: Optional[str] = None
     user_id: Optional[str] = Field(default=None, alias="userId")
@@ -64,8 +74,11 @@ class ThreadAnnotationRequest(ConfidentBaseModel):
         default=None,
         alias="expectedOutcome",
     )
-    rating: int
-    type: Optional[AnnotationType] = None
+    field_type: Optional[AnnotationFieldType] = Field(
+        default=None,
+        alias="fieldType",
+    )
+    value: AnnotationValue
     name: Optional[str] = None
     explanation: Optional[str] = None
     user_id: Optional[str] = Field(default=None, alias="userId")
@@ -78,8 +91,11 @@ class ThreadAnnotationRequest(ConfidentBaseModel):
 class TraceAnnotationRequest(ConfidentBaseModel):
     trace_uuid: str = Field(alias="traceUuid")
     expected_output: Optional[str] = Field(default=None, alias="expectedOutput")
-    rating: int
-    type: Optional[AnnotationType] = None
+    field_type: Optional[AnnotationFieldType] = Field(
+        default=None,
+        alias="fieldType",
+    )
+    value: AnnotationValue
     name: Optional[str] = None
     explanation: Optional[str] = None
     user_id: Optional[str] = Field(default=None, alias="userId")
@@ -90,8 +106,11 @@ class TraceAnnotationRequest(ConfidentBaseModel):
 
 
 class UpdateAnnotationRequest(ConfidentBaseModel):
-    rating: Optional[int] = None
-    type: Optional[AnnotationType] = None
+    field_type: Optional[AnnotationFieldType] = Field(
+        default=None,
+        alias="fieldType",
+    )
+    value: Optional[AnnotationValue] = None
     explanation: Optional[str] = None
     expected_output: Optional[str] = Field(default=None, alias="expectedOutput")
     expected_outcome: Optional[str] = Field(

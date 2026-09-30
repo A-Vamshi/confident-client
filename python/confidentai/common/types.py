@@ -11,7 +11,13 @@ from pydantic import Field
 from confidentai.types import ConfidentBaseModel
 
 
-class AnnotationType(Enum):
+class AnnotationFieldType(Enum):
+    TEXT = "TEXT"
+    NUMBER = "NUMBER"
+    FLOAT = "FLOAT"
+    BOOLEAN = "BOOLEAN"
+    CHOICE = "CHOICE"
+    MULTIPLE_CHOICE = "MULTIPLE_CHOICE"
     FIVE_STAR_RATING = "FIVE_STAR_RATING"
     THUMBS_RATING = "THUMBS_RATING"
 
@@ -64,6 +70,7 @@ class MetricAlgorithm(Enum):
     DEFAULT = "DEFAULT"
     DAG = "DAG"
     GEVAL = "GEVAL"
+    JEVAL = "JEVAL"
     CODE = "CODE"
 
 
@@ -103,6 +110,8 @@ class ModelProvider(Enum):
     LITE_LLM = "LITE_LLM"
     TRUE_FOUNDRY = "TRUE_FOUNDRY"
     HUGGING_FACE = "HUGGING_FACE"
+    TYPE_SAFE = "TYPE_SAFE"
+    FAL = "FAL"
 
 
 class ModelType(Enum):
@@ -112,6 +121,8 @@ class ModelType(Enum):
     SIMULATION = "SIMULATION"
     TEXT_TO_SPEECH = "TEXT_TO_SPEECH"
     SPEECH_TO_TEXT = "SPEECH_TO_TEXT"
+    DECISION = "DECISION"
+    SPEECH_TO_SPEECH = "SPEECH_TO_SPEECH"
 
 
 class PromptType(Enum):
@@ -161,6 +172,7 @@ class WidgetAggregation(Enum):
     AVG_LATENCY = "AVG_LATENCY"
     AVG_RATING = "AVG_RATING"
     AVG_SCORE = "AVG_SCORE"
+    AVG_VALUE = "AVG_VALUE"
     COUNT = "COUNT"
     ERROR_COUNT = "ERROR_COUNT"
     ERROR_RATE = "ERROR_RATE"
@@ -232,6 +244,8 @@ class WidgetDimension(Enum):
     POLARITY = "polarity"
     CLASSIFIER_LABEL = "classifier_label"
     VERSION = "version"
+    VALUE = "value"
+    FAILURE_SUB_MODE = "failure_sub_mode"
 
 
 class WidgetGranularity(Enum):
@@ -288,8 +302,8 @@ class UserReference(ConfidentBaseModel):
 
 class AnnotationSummary(ConfidentBaseModel):
     id: str
-    rating: int
-    type: AnnotationType
+    field_type: AnnotationFieldType = Field(alias="fieldType")
+    value: Optional[Union[str, float, bool, List[str]]]
     name: Optional[str]
     explanation: Optional[str]
     expected_outcome: Optional[str] = Field(alias="expectedOutcome")
@@ -368,6 +382,39 @@ class MetricDag(ConfidentBaseModel):
     nodes: Dict[str, Any]
 
 
+class JevQuestionJevQuestion0(ConfidentBaseModel):
+    type: Literal["noul"]
+    question: str
+    weight: Optional[float] = None
+    true_description: Optional[str] = Field(
+        default=None,
+        alias="trueDescription",
+    )
+    false_description: Optional[str] = Field(
+        default=None,
+        alias="falseDescription",
+    )
+
+
+class JevQuestionJevQuestion1(ConfidentBaseModel):
+    type: Literal["score"]
+    question: str
+    weight: Optional[float] = None
+    levels: List[str]
+
+
+class JevQuestionJevQuestion2(ConfidentBaseModel):
+    type: Literal["choice"]
+    question: str
+    weight: Optional[float] = None
+    options: Dict[str, float]
+
+
+JevQuestion = Union[
+    JevQuestionJevQuestion0, JevQuestionJevQuestion1, JevQuestionJevQuestion2
+]
+
+
 class CreateMetricRequest(ConfidentBaseModel):
     name: str
     multi_turn: Optional[bool] = Field(default=None, alias="multiTurn")
@@ -383,6 +430,7 @@ class CreateMetricRequest(ConfidentBaseModel):
     rubric: Optional[List[Rubric]] = None
     algorithm: Optional[MetricAlgorithm] = None
     dag: Optional[MetricDag] = None
+    questions: Optional[List[JevQuestion]] = None
 
 
 class CreateOrUpdatePolicyRequest(ConfidentBaseModel):
@@ -428,6 +476,7 @@ class WidgetTopK(ConfidentBaseModel):
             "stddev_score",
             "median_score",
             "avg_rating",
+            "avg_value",
             "score_histogram",
             "created_at",
             "start_time",
@@ -466,9 +515,16 @@ class FilterSetGroupFilter(ConfidentBaseModel):
         "Span Status",
         "Metrics Status",
         "Error Status",
+        "Called tool",
+        "Handed off to",
+        "Handed off by",
+        "Nearest parent of type",
+        "Anywhere under",
+        "Top level",
         "Model",
         "Provider",
         "Integration",
+        "Input argument",
         "Embedder",
         "Chunk Size",
         "Top-K",
@@ -494,8 +550,12 @@ class FilterSetGroupFilter(ConfidentBaseModel):
         "End User",
         "Annotation Type",
         "Annotation Name",
-        "Criteria",
         "Annotation Date",
+        "Annotation Rating",
+        "Annotation Thumbs",
+        "Annotation Choice",
+        "Annotation Yes / No",
+        "Annotation Text",
         "Metric Score",
         "Metric Status",
         "Metadata",
@@ -527,6 +587,11 @@ class FilterSetGroupFilter(ConfidentBaseModel):
         "Prompt Commit Hash",
         "Prompt",
         "Annotations",
+        "Failure Mode",
+        "Recommended",
+        "Sub-mode Name",
+        "Sub-mode Recommended",
+        "Sub-mode Certainty",
         "Status Code",
         "Actor Type",
     ]
@@ -678,6 +743,7 @@ class Metric(ConfidentBaseModel):
     evaluation_steps: Optional[List[str]] = Field(alias="evaluationSteps")
     rubric: Optional[List[Rubric]]
     dag: Optional[MetricDag]
+    questions: Optional[List[JevQuestion]]
     multi_turn: bool = Field(alias="multiTurn")
     required_parameters: List[MetricEvaluationParam] = Field(
         alias="requiredParameters",
@@ -732,6 +798,8 @@ class ModelCredentials(ConfidentBaseModel):
     deep_seek_api_key: Optional[str] = Field(alias="deepSeekApiKey")
     mistral_api_key: Optional[str] = Field(alias="mistralApiKey")
     perplexity_api_key: Optional[str] = Field(alias="perplexityApiKey")
+    type_safe_api_key: Optional[str] = Field(alias="typeSafeApiKey")
+    fal_api_key: Optional[str] = Field(alias="falApiKey")
     bedrock_model_config: Optional[Dict[str, Any]] = Field(
         alias="bedrockModelConfig",
     )

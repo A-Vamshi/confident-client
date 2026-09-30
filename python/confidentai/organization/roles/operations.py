@@ -20,12 +20,11 @@ class RolesOperations:
     def list_roles(self) -> OrganizationRoleList:
         """List Organization Roles
 
-        Lists every organization role a member of your organization can be
-        given: the custom roles your organization owns, plus the global, system-
-        defined roles (`organizationId` is null) that every organization can
-        assign. Each role is returned with the policies attached to it, which is
-        where its permissions come from — a global role's permissions are
-        system-defined instead, so it comes back with an empty `policies` array.
+        Lists every organization role a member can be given: the custom roles
+        your organization owns, plus the global, system-defined ones
+        (`organizationId` is null). Each comes with the policies attached to it,
+        which is where its permissions come from — a global role's permissions
+        are system-defined instead, so it returns an empty `policies` array.
         """
         return self._api.request(
             HttpMethods.GET,
@@ -36,12 +35,11 @@ class RolesOperations:
     async def a_list_roles(self) -> OrganizationRoleList:
         """List Organization Roles
 
-        Lists every organization role a member of your organization can be
-        given: the custom roles your organization owns, plus the global, system-
-        defined roles (`organizationId` is null) that every organization can
-        assign. Each role is returned with the policies attached to it, which is
-        where its permissions come from — a global role's permissions are
-        system-defined instead, so it comes back with an empty `policies` array.
+        Lists every organization role a member can be given: the custom roles
+        your organization owns, plus the global, system-defined ones
+        (`organizationId` is null). Each comes with the policies attached to it,
+        which is where its permissions come from — a global role's permissions
+        are system-defined instead, so it returns an empty `policies` array.
         """
         return await self._api.a_request(
             HttpMethods.GET,
@@ -59,12 +57,10 @@ class RolesOperations:
         """Create Organization Role
 
         Creates a custom organization role from a set of organization policies
-        and returns the role. Its permissions are the union of the permissions
-        granted by the policies in `policyIds`, so a role created with an empty
-        list can do nothing until you attach one. The role grants nobody
-        anything until a member is assigned to it. The name must be unique among
-        the roles your organization can use, including the global, system-
-        defined ones.
+        and returns the role. Its permissions are the union of what those
+        policies grant, so a role created with an empty `policyIds` can do
+        nothing until you attach one, and it grants nobody anything until a
+        member is assigned to it.
 
         Args:
             name: The name of the role, unique among the roles the organization
@@ -101,12 +97,10 @@ class RolesOperations:
         """Create Organization Role
 
         Creates a custom organization role from a set of organization policies
-        and returns the role. Its permissions are the union of the permissions
-        granted by the policies in `policyIds`, so a role created with an empty
-        list can do nothing until you attach one. The role grants nobody
-        anything until a member is assigned to it. The name must be unique among
-        the roles your organization can use, including the global, system-
-        defined ones.
+        and returns the role. Its permissions are the union of what those
+        policies grant, so a role created with an empty `policyIds` can do
+        nothing until you attach one, and it grants nobody anything until a
+        member is assigned to it.
 
         Args:
             name: The name of the role, unique among the roles the organization
@@ -144,14 +138,11 @@ class RolesOperations:
         """Update Organization Role
 
         Replaces a custom organization role's name, description, and attached
-        policies. Every member already holding the role is affected immediately:
-        permissions are resolved from the role on each request, so anything the
-        new policy set no longer grants stops working on their next call, and
-        anything it adds becomes available at once. `policyIds` is the role's
-        complete policy set rather than an addition to it, so sending an empty
-        array leaves every member holding the role with no organization
-        permissions. Only roles your organization owns can be updated; a global,
-        system-defined role responds 404.
+        policies. Every member holding the role is affected immediately, since
+        permissions are resolved on each request. `policyIds` is the role's
+        complete policy set rather than an addition to it, so an empty array
+        leaves every member holding the role with no organization permissions. A
+        global, system-defined role responds `404`.
 
         Args:
             role_id: The id of the role. It must be a role the organization or
@@ -193,14 +184,11 @@ class RolesOperations:
         """Update Organization Role
 
         Replaces a custom organization role's name, description, and attached
-        policies. Every member already holding the role is affected immediately:
-        permissions are resolved from the role on each request, so anything the
-        new policy set no longer grants stops working on their next call, and
-        anything it adds becomes available at once. `policyIds` is the role's
-        complete policy set rather than an addition to it, so sending an empty
-        array leaves every member holding the role with no organization
-        permissions. Only roles your organization owns can be updated; a global,
-        system-defined role responds 404.
+        policies. Every member holding the role is affected immediately, since
+        permissions are resolved on each request. `policyIds` is the role's
+        complete policy set rather than an addition to it, so an empty array
+        leaves every member holding the role with no organization permissions. A
+        global, system-defined role responds `404`.
 
         Args:
             role_id: The id of the role. It must be a role the organization or
@@ -234,13 +222,12 @@ class RolesOperations:
     def delete_role(self, role_id: str) -> RoleRef:
         """Delete Organization Role
 
-        Permanently deletes a custom organization role. A role that is still
-        assigned to at least one member cannot be deleted — the request fails
-        and you must first move those members onto another role — so deleting a
-        role never silently strips anyone of their access. The policies that
-        were attached to it are not deleted and stay available to other roles.
-        Only roles your organization owns can be deleted; a global, system-
-        defined role responds 404. **Warning:** This action cannot be undone.
+        Permanently deletes a custom organization role. A role still assigned to
+        at least one member cannot be deleted — move those members onto another
+        role first — so deleting a role never silently strips anyone of their
+        access. The policies attached to it are not deleted and stay available
+        to other roles. A global, system-defined role responds `404`. **This
+        cannot be undone.**
 
         Args:
             role_id: The id of the role. It must be a role the organization or
@@ -257,13 +244,12 @@ class RolesOperations:
     async def a_delete_role(self, role_id: str) -> RoleRef:
         """Delete Organization Role
 
-        Permanently deletes a custom organization role. A role that is still
-        assigned to at least one member cannot be deleted — the request fails
-        and you must first move those members onto another role — so deleting a
-        role never silently strips anyone of their access. The policies that
-        were attached to it are not deleted and stay available to other roles.
-        Only roles your organization owns can be deleted; a global, system-
-        defined role responds 404. **Warning:** This action cannot be undone.
+        Permanently deletes a custom organization role. A role still assigned to
+        at least one member cannot be deleted — move those members onto another
+        role first — so deleting a role never silently strips anyone of their
+        access. The policies attached to it are not deleted and stay available
+        to other roles. A global, system-defined role responds `404`. **This
+        cannot be undone.**
 
         Args:
             role_id: The id of the role. It must be a role the organization or

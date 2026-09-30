@@ -4,12 +4,11 @@
 # and regenerate.
 
 from enum import Enum
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 
 from pydantic import Field
 
 from confidentai.common.types import (
-    AnnotationType,
     FilterSet,
     IngestionDataModel,
     MLLMImage,
@@ -34,6 +33,7 @@ class AssignmentStrategy(Enum):
 
 class QueueItemStatus(Enum):
     IN_PROGRESS = "IN_PROGRESS"
+    DRAFT = "DRAFT"
     DEFERRED = "DEFERRED"
     COMPLETED = "COMPLETED"
 
@@ -55,8 +55,11 @@ class AddedQueueItems(ConfidentBaseModel):
 
 
 class QueueItemAnnotation(ConfidentBaseModel):
-    rating: int
-    type: Optional[AnnotationType] = None
+    field_type: Optional[Literal["THUMBS_RATING", "FIVE_STAR_RATING"]] = Field(
+        default=None,
+        alias="fieldType",
+    )
+    value: Union[bool, int]
     name: Optional[str] = None
     explanation: Optional[str] = None
     expected_output: Optional[str] = Field(default=None, alias="expectedOutput")
@@ -107,6 +110,7 @@ class AnnotationQueue(ConfidentBaseModel):
     updated_at: str = Field(alias="updatedAt")
     test_run_id: Optional[str] = Field(alias="testRunId")
     form_id: Optional[str] = Field(alias="formId")
+    tags: List[str]
     total_items: int = Field(alias="totalItems")
     completed_items: int = Field(alias="completedItems")
     pending_items: int = Field(alias="pendingItems")
@@ -143,6 +147,7 @@ class AnnotationQueueSummary(ConfidentBaseModel):
     updated_at: str = Field(alias="updatedAt")
     test_run_id: Optional[str] = Field(alias="testRunId")
     form_id: Optional[str] = Field(alias="formId")
+    tags: List[str]
     total_items: int = Field(alias="totalItems")
     completed_items: int = Field(alias="completedItems")
     pending_items: int = Field(alias="pendingItems")
@@ -207,6 +212,7 @@ class CreateAnnotationQueueRequest(ConfidentBaseModel):
     name: str
     type: AnnotationQueueType
     form_id: Optional[str] = Field(default=None, alias="formId")
+    tags: Optional[List[str]] = None
 
 
 class CreateQueueIngestionTaskRequest(ConfidentBaseModel):
@@ -262,6 +268,7 @@ class QueueIngestionTaskRef(ConfidentBaseModel):
 class UpdateAnnotationQueueRequest(ConfidentBaseModel):
     name: Optional[str] = None
     form_id: Optional[str] = Field(default=None, alias="formId")
+    tags: Optional[List[str]] = None
 
 
 class UpdateQueueIngestionTaskRequest(ConfidentBaseModel):

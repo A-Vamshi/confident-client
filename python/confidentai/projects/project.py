@@ -71,16 +71,13 @@ class Project:
         """Delete Project
 
         Permanently deletes a project. **This cannot be undone, and it
-        cascades:** everything held under the project goes with it — its API
-        keys (including the one an SDK may be configured with), its members and
-        their role assignments, pending invitations, datasets, prompts and their
-        versions, metrics and metric collections, test runs and their results,
-        dashboards, annotation queues and forms, red teaming frameworks and risk
-        assessments, policies, alerts and export schedules. Ingested traces and
-        spans stop being reachable once the project is gone. There is no
-        confirmation step and no recovery, so the safe way to retire a project
-        is to deactivate its API keys first. The project's name becomes
-        available for reuse within the organization.
+        cascades** to everything held under it: API keys (including one an SDK
+        may be configured with), members and role assignments, invitations,
+        datasets, prompts, metrics, test runs, dashboards, annotation queues,
+        red teaming frameworks, policies, alerts and export schedules. Ingested
+        traces and spans stop being reachable. There is no confirmation step, so
+        the safe way to retire a project is to deactivate its API keys first.
+        Its name becomes available for reuse.
         """
         return self._client.delete(self._project_id())
 
@@ -88,16 +85,13 @@ class Project:
         """Delete Project
 
         Permanently deletes a project. **This cannot be undone, and it
-        cascades:** everything held under the project goes with it — its API
-        keys (including the one an SDK may be configured with), its members and
-        their role assignments, pending invitations, datasets, prompts and their
-        versions, metrics and metric collections, test runs and their results,
-        dashboards, annotation queues and forms, red teaming frameworks and risk
-        assessments, policies, alerts and export schedules. Ingested traces and
-        spans stop being reachable once the project is gone. There is no
-        confirmation step and no recovery, so the safe way to retire a project
-        is to deactivate its API keys first. The project's name becomes
-        available for reuse within the organization.
+        cascades** to everything held under it: API keys (including one an SDK
+        may be configured with), members and role assignments, invitations,
+        datasets, prompts, metrics, test runs, dashboards, annotation queues,
+        red teaming frameworks, policies, alerts and export schedules. Ingested
+        traces and spans stop being reachable. There is no confirmation step, so
+        the safe way to retire a project is to deactivate its API keys first.
+        Its name becomes available for reuse.
         """
         return await self._client.a_delete(self._project_id())
 
@@ -105,10 +99,10 @@ class Project:
         """List Project API Keys
 
         Lists every API key scoped to the project, newest first. Each key's
-        `value` is masked (only its last six characters are shown) — the full
-        value is only ever returned once, by the response that issues it. A
-        rotation whose grace period has already run out is completed before the
-        list is read, so a `shadowValue` here is always still in flight.
+        `value` is masked — the full value is only ever returned once, by the
+        response that issues it. A rotation whose grace period has already run
+        out is completed before the list is read, so a `shadowValue` here is
+        always still in flight.
         """
         return self._client.list_api_keys(self._project_id())
 
@@ -116,10 +110,10 @@ class Project:
         """List Project API Keys
 
         Lists every API key scoped to the project, newest first. Each key's
-        `value` is masked (only its last six characters are shown) — the full
-        value is only ever returned once, by the response that issues it. A
-        rotation whose grace period has already run out is completed before the
-        list is read, so a `shadowValue` here is always still in flight.
+        `value` is masked — the full value is only ever returned once, by the
+        response that issues it. A rotation whose grace period has already run
+        out is completed before the list is read, so a `shadowValue` here is
+        always still in flight.
         """
         return await self._client.a_list_api_keys(self._project_id())
 
@@ -166,8 +160,7 @@ class Project:
     def get_api_key(self, api_key_id: str) -> ApiKey:
         """Get Project API Key
 
-        Retrieves one project-scoped API key by id. Its `value` is masked — the
-        full value is only ever returned once, by the response that issues it. A
+        Retrieves one project-scoped API key by id, with its `value` masked. A
         `rotatesAt` in the past means the grace period is over and the outgoing
         value is already rejected on authentication, even though this endpoint
         still shows it; listing the keys completes the rotation.
@@ -180,8 +173,7 @@ class Project:
     async def a_get_api_key(self, api_key_id: str) -> ApiKey:
         """Get Project API Key
 
-        Retrieves one project-scoped API key by id. Its `value` is masked — the
-        full value is only ever returned once, by the response that issues it. A
+        Retrieves one project-scoped API key by id, with its `value` masked. A
         `rotatesAt` in the past means the grace period is over and the outgoing
         value is already rejected on authentication, even though this endpoint
         still shows it; listing the keys completes the rotation.
@@ -266,22 +258,12 @@ class Project:
     ) -> RotatedApiKey:
         """Rotate Project API Key
 
-        Rotates a project-scoped API key in place — the key keeps its id, name
-        and history, and no second key is created. The new value is returned
-        **exactly once**, in this response, and can never be retrieved again —
-        store it securely. With `gracePeriodInHours: 0` (the default) the key's
-        `value` is replaced as this request is served and the outgoing value
-        stops authenticating at once, so anything still sending traces with it
-        starts failing. With a grace period, the new value comes back as
-        `shadowValue` and both values authenticate until `rotatesAt`, which is
-        the window to redeploy; after it the new value becomes `value` and the
-        outgoing one is rejected. Requests made with the outgoing value in the
-        meantime carry `Sunset` and `X-Api-Key-Warning` headers announcing when
-        it stops working. The key's expiry is left alone unless `expiresInDays`
-        is sent. Rotating an **expired** key revives it: `expiresInDays` is then
-        required (send null for no expiry) and a grace period is not allowed. A
-        rotation whose grace period has already run out is completed before this
-        one starts.
+        Rotates a project-scoped API key in place — same id, name and history,
+        and no second key is created. The new value is returned **exactly
+        once**, in this response. Requests made with the outgoing value during a
+        grace period carry `Sunset` and `X-Api-Key-Warning` headers, which is
+        the window to redeploy. Reviving an expired key cannot take a grace
+        period.
 
         Args:
             api_key_id: The id of the API key.
@@ -312,22 +294,12 @@ class Project:
     ) -> RotatedApiKey:
         """Rotate Project API Key
 
-        Rotates a project-scoped API key in place — the key keeps its id, name
-        and history, and no second key is created. The new value is returned
-        **exactly once**, in this response, and can never be retrieved again —
-        store it securely. With `gracePeriodInHours: 0` (the default) the key's
-        `value` is replaced as this request is served and the outgoing value
-        stops authenticating at once, so anything still sending traces with it
-        starts failing. With a grace period, the new value comes back as
-        `shadowValue` and both values authenticate until `rotatesAt`, which is
-        the window to redeploy; after it the new value becomes `value` and the
-        outgoing one is rejected. Requests made with the outgoing value in the
-        meantime carry `Sunset` and `X-Api-Key-Warning` headers announcing when
-        it stops working. The key's expiry is left alone unless `expiresInDays`
-        is sent. Rotating an **expired** key revives it: `expiresInDays` is then
-        required (send null for no expiry) and a grace period is not allowed. A
-        rotation whose grace period has already run out is completed before this
-        one starts.
+        Rotates a project-scoped API key in place — same id, name and history,
+        and no second key is created. The new value is returned **exactly
+        once**, in this response. Requests made with the outgoing value during a
+        grace period carry `Sunset` and `X-Api-Key-Warning` headers, which is
+        the window to redeploy. Reviving an expired key cannot take a grace
+        period.
 
         Args:
             api_key_id: The id of the API key.
@@ -358,8 +330,7 @@ class Project:
         role that decides what they can do inside it. Project members are drawn
         from the organization's members: someone can belong to the organization
         and not appear here, and being here is what gives them access to this
-        project's data. Removing a member from the organization removes them
-        from every project in it, this one included.
+        project's data.
 
         Args:
             page: The page to return. Defaults to 1.
@@ -379,8 +350,7 @@ class Project:
         role that decides what they can do inside it. Project members are drawn
         from the organization's members: someone can belong to the organization
         and not appear here, and being here is what gives them access to this
-        project's data. Removing a member from the organization removes them
-        from every project in it, this one included.
+        project's data.
 
         Args:
             page: The page to return. Defaults to 1.
@@ -399,8 +369,7 @@ class Project:
         their roles in other projects are untouched. Assigning the `Owner` role
         transfers ownership of the project: the member becomes Owner and the
         previous Owner is demoted to `Manager` in the same transaction, which is
-        the only way the project Owner's role changes. A role id belonging to
-        another project is rejected.
+        the only way the project Owner's role changes.
 
         Args:
             user_id: The id of the user whose membership of this project to
@@ -423,8 +392,7 @@ class Project:
         their roles in other projects are untouched. Assigning the `Owner` role
         transfers ownership of the project: the member becomes Owner and the
         previous Owner is demoted to `Manager` in the same transaction, which is
-        the only way the project Owner's role changes. A role id belonging to
-        another project is rejected.
+        the only way the project Owner's role changes.
 
         Args:
             user_id: The id of the user whose membership of this project to
@@ -441,14 +409,12 @@ class Project:
         """Remove Project Member
 
         Revokes a member's access to this project only: they are disconnected
-        from it, their project role is deleted, and any invitation still
-        outstanding for their email address on this project is cleared. They
-        keep their organization membership and their access to every other
-        project, so this does not free up a seat. The project Owner cannot be
-        removed, so transfer ownership first. Removal is not reversible through
-        this endpoint — invite the same address to the project again to bring
-        them back, which returns them with the default role rather than the one
-        they had.
+        from it, their project role is deleted, and any outstanding invitation
+        for their email on this project is cleared. They keep their organization
+        membership and access to every other project, so this does not free up a
+        seat. The project Owner cannot be removed, so transfer ownership first.
+        Inviting the same address again brings them back with the default role
+        rather than the one they had.
 
         Args:
             user_id: The id of the user whose membership of this project to
@@ -460,14 +426,12 @@ class Project:
         """Remove Project Member
 
         Revokes a member's access to this project only: they are disconnected
-        from it, their project role is deleted, and any invitation still
-        outstanding for their email address on this project is cleared. They
-        keep their organization membership and their access to every other
-        project, so this does not free up a seat. The project Owner cannot be
-        removed, so transfer ownership first. Removal is not reversible through
-        this endpoint — invite the same address to the project again to bring
-        them back, which returns them with the default role rather than the one
-        they had.
+        from it, their project role is deleted, and any outstanding invitation
+        for their email on this project is cleared. They keep their organization
+        membership and access to every other project, so this does not free up a
+        seat. The project Owner cannot be removed, so transfer ownership first.
+        Inviting the same address again brings them back with the default role
+        rather than the one they had.
 
         Args:
             user_id: The id of the user whose membership of this project to
@@ -480,11 +444,10 @@ class Project:
 
         Lists the invitations to this project that are still outstanding — those
         the invitee has not answered, and those they declined. An invitation
-        drops off this list once it is accepted, since the invitee is a project
-        member from then on, and once it is revoked. Invitations do not expire
-        on their own. Every entry carries the token from the invitee's invite
-        link, so treat the response as sensitive. Invitations to the
-        organization as a whole are listed separately.
+        drops off this list once it is accepted or revoked, and invitations do
+        not expire on their own. Every entry carries the token from the
+        invitee's invite link, so treat the response as sensitive. Invitations
+        to the organization as a whole are listed separately.
         """
         return self._client.list_invitations(self._project_id())
 
@@ -493,11 +456,10 @@ class Project:
 
         Lists the invitations to this project that are still outstanding — those
         the invitee has not answered, and those they declined. An invitation
-        drops off this list once it is accepted, since the invitee is a project
-        member from then on, and once it is revoked. Invitations do not expire
-        on their own. Every entry carries the token from the invitee's invite
-        link, so treat the response as sensitive. Invitations to the
-        organization as a whole are listed separately.
+        drops off this list once it is accepted or revoked, and invitations do
+        not expire on their own. Every entry carries the token from the
+        invitee's invite link, so treat the response as sensitive. Invitations
+        to the organization as a whole are listed separately.
         """
         return await self._client.a_list_invitations(self._project_id())
 
@@ -506,19 +468,14 @@ class Project:
     ) -> ProjectInvitationList:
         """Create Project Invitations
 
-        Invites people to this project by email and emails each of them a link.
-        Accepting it adds the invitee to the project and, if they are not
-        already in it, to the organization the project belongs to — so this
-        endpoint can grow the organization, not just the project. Addresses are
-        lowercased and must be company addresses. An address that already has an
-        invitation to this project is dropped from the batch, and so is one that
-        is already a member of it; if that leaves nothing to invite, the whole
-        request is refused as a conflict instead. Note that someone who already
-        belongs to the organization but not to this project is still invitable.
-        `projectRoleId` sets the role every invitee lands on, and the `Owner`
-        role cannot be handed out this way. On the Free plan, the organization's
-        members plus new invitations cannot exceed 2 users. Only the invitations
-        that were created are returned, each with its token.
+        Invites people to this project by email, each with a link. Accepting
+        adds the invitee to the project and, if needed, to the organization it
+        belongs to — so this can grow the organization, not just the project.
+        Addresses that already have an invitation to this project, or already
+        belong to it, are dropped from the batch; if that leaves nothing, the
+        request is refused as a conflict. The `Owner` role cannot be handed out
+        this way, and the Free plan caps the organization's members plus
+        invitations at 2. Only the invitations created are returned.
 
         Args:
             emails: The email addresses to invite, between 1 and 50 of them.
@@ -537,19 +494,14 @@ class Project:
     ) -> ProjectInvitationList:
         """Create Project Invitations
 
-        Invites people to this project by email and emails each of them a link.
-        Accepting it adds the invitee to the project and, if they are not
-        already in it, to the organization the project belongs to — so this
-        endpoint can grow the organization, not just the project. Addresses are
-        lowercased and must be company addresses. An address that already has an
-        invitation to this project is dropped from the batch, and so is one that
-        is already a member of it; if that leaves nothing to invite, the whole
-        request is refused as a conflict instead. Note that someone who already
-        belongs to the organization but not to this project is still invitable.
-        `projectRoleId` sets the role every invitee lands on, and the `Owner`
-        role cannot be handed out this way. On the Free plan, the organization's
-        members plus new invitations cannot exceed 2 users. Only the invitations
-        that were created are returned, each with its token.
+        Invites people to this project by email, each with a link. Accepting
+        adds the invitee to the project and, if needed, to the organization it
+        belongs to — so this can grow the organization, not just the project.
+        Addresses that already have an invitation to this project, or already
+        belong to it, are dropped from the batch; if that leaves nothing, the
+        request is refused as a conflict. The `Owner` role cannot be handed out
+        this way, and the Free plan caps the organization's members plus
+        invitations at 2. Only the invitations created are returned.
 
         Args:
             emails: The email addresses to invite, between 1 and 50 of them.
@@ -566,16 +518,13 @@ class Project:
     def resend_invitation(self, invitation_id: str) -> ProjectInvitation:
         """Resend Project Invitation
 
-        Emails the project invitation again and returns it. The invitation is
-        reset in the process: its status goes back to `PENDING`, it is stamped
-        with a new creation time, and a fresh token is issued — so any link sent
-        for it earlier stops working. That reset is what revives an invitation
-        the invitee declined. An invitation that was already accepted is reset
-        the same way, which mails the member a link they no longer need without
-        touching the access they already have; revoke the invitation or remove
-        the member instead if that is what you meant. Invitations never expire
-        on their own, so resending is about a link that was lost, not one that
-        timed out.
+        Emails the project invitation again and returns it, resetting it in the
+        process: the status goes back to `PENDING`, a fresh token is issued, and
+        any link sent earlier stops working. That reset is what revives an
+        invitation the invitee declined. An invitation that was already accepted
+        is reset the same way, mailing the member a link they no longer need
+        without touching the access they have — revoke the invitation or remove
+        the member instead if that is what you meant.
 
         Args:
             invitation_id: The id of the project invitation.
@@ -587,16 +536,13 @@ class Project:
     ) -> ProjectInvitation:
         """Resend Project Invitation
 
-        Emails the project invitation again and returns it. The invitation is
-        reset in the process: its status goes back to `PENDING`, it is stamped
-        with a new creation time, and a fresh token is issued — so any link sent
-        for it earlier stops working. That reset is what revives an invitation
-        the invitee declined. An invitation that was already accepted is reset
-        the same way, which mails the member a link they no longer need without
-        touching the access they already have; revoke the invitation or remove
-        the member instead if that is what you meant. Invitations never expire
-        on their own, so resending is about a link that was lost, not one that
-        timed out.
+        Emails the project invitation again and returns it, resetting it in the
+        process: the status goes back to `PENDING`, a fresh token is issued, and
+        any link sent earlier stops working. That reset is what revives an
+        invitation the invitee declined. An invitation that was already accepted
+        is reset the same way, mailing the member a link they no longer need
+        without touching the access they have — revoke the invitation or remove
+        the member instead if that is what you meant.
 
         Args:
             invitation_id: The id of the project invitation.
@@ -609,12 +555,11 @@ class Project:
         """Revoke Project Invitation
 
         Deletes the project invitation, whatever its status, so its link can no
-        longer be accepted and it disappears from the project's invitation list.
-        Only the invitation goes: an invitee who already accepted keeps their
-        place in the project and in the organization, so revoke access by
-        removing them from the project's members instead. Revoking cannot be
-        undone — invite the address again to issue a new invitation with a new
-        token.
+        longer be accepted. Only the invitation goes: an invitee who already
+        accepted keeps their place in the project and the organization, so
+        revoke access by removing them from the project's members instead. This
+        cannot be undone — invite the address again to issue a new invitation
+        with a new token.
 
         Args:
             invitation_id: The id of the project invitation.
@@ -625,12 +570,11 @@ class Project:
         """Revoke Project Invitation
 
         Deletes the project invitation, whatever its status, so its link can no
-        longer be accepted and it disappears from the project's invitation list.
-        Only the invitation goes: an invitee who already accepted keeps their
-        place in the project and in the organization, so revoke access by
-        removing them from the project's members instead. Revoking cannot be
-        undone — invite the address again to issue a new invitation with a new
-        token.
+        longer be accepted. Only the invitation goes: an invitee who already
+        accepted keeps their place in the project and the organization, so
+        revoke access by removing them from the project's members instead. This
+        cannot be undone — invite the address again to issue a new invitation
+        with a new token.
 
         Args:
             invitation_id: The id of the project invitation.
@@ -643,12 +587,11 @@ class Project:
         """List Project Permissions
 
         Lists every project permission a project policy can grant. Each is named
-        `resource:action` — `dataset:read`, `golden:create`, `user:manage` — and
-        its id is what you send in a policy's `permissionIds`. The list is
-        Confident AI's whole project catalog, not only the permissions this
-        project already uses, and it is returned in no particular order. It is
-        the same catalog for every project in your organization; organization
-        permissions are a separate catalog with its own endpoint.
+        `resource:action` — `dataset:read`, `golden:create` — and its id is what
+        you send in a policy's `permissionIds`. This is Confident AI's whole
+        project catalog, not only the permissions this project already uses, and
+        it is the same catalog for every project in your organization.
+        Organization permissions are a separate catalog with its own endpoint.
         """
         return self._client.list_permissions(self._project_id())
 
@@ -656,38 +599,35 @@ class Project:
         """List Project Permissions
 
         Lists every project permission a project policy can grant. Each is named
-        `resource:action` — `dataset:read`, `golden:create`, `user:manage` — and
-        its id is what you send in a policy's `permissionIds`. The list is
-        Confident AI's whole project catalog, not only the permissions this
-        project already uses, and it is returned in no particular order. It is
-        the same catalog for every project in your organization; organization
-        permissions are a separate catalog with its own endpoint.
+        `resource:action` — `dataset:read`, `golden:create` — and its id is what
+        you send in a policy's `permissionIds`. This is Confident AI's whole
+        project catalog, not only the permissions this project already uses, and
+        it is the same catalog for every project in your organization.
+        Organization permissions are a separate catalog with its own endpoint.
         """
         return await self._client.a_list_permissions(self._project_id())
 
     def list_policies(self) -> PolicyList:
         """List Project Policies
 
-        Lists the custom access policies this project owns. Each one is a named
-        set of project permissions, returned with every permission it grants as
-        a `resource:action` pair such as `promptBranch:merge`. These are the
-        policies you attach to this project's roles; the global, system-defined
-        roles do not draw their permissions from policies, so nothing here
-        applies to them. A project's policies are separate from your
-        organization's, and only these can be attached to a project role.
+        Lists the custom access policies this project owns. Each is a named set
+        of project permissions, returned with every permission it grants as a
+        `resource:action` pair such as `promptBranch:merge`. These are what you
+        attach to this project's roles; the global, system-defined roles do not
+        draw their permissions from policies, so nothing here applies to them. A
+        project's policies are separate from your organization's.
         """
         return self._client.list_policies(self._project_id())
 
     async def a_list_policies(self) -> PolicyList:
         """List Project Policies
 
-        Lists the custom access policies this project owns. Each one is a named
-        set of project permissions, returned with every permission it grants as
-        a `resource:action` pair such as `promptBranch:merge`. These are the
-        policies you attach to this project's roles; the global, system-defined
-        roles do not draw their permissions from policies, so nothing here
-        applies to them. A project's policies are separate from your
-        organization's, and only these can be attached to a project role.
+        Lists the custom access policies this project owns. Each is a named set
+        of project permissions, returned with every permission it grants as a
+        `resource:action` pair such as `promptBranch:merge`. These are what you
+        attach to this project's roles; the global, system-defined roles do not
+        draw their permissions from policies, so nothing here applies to them. A
+        project's policies are separate from your organization's.
         """
         return await self._client.a_list_policies(self._project_id())
 
@@ -703,9 +643,7 @@ class Project:
         Creates a custom policy in this project from a set of permissions and
         returns it. A policy on its own grants nobody anything: it takes effect
         only once it is attached to a project role, and then applies to every
-        member holding that role. Send the permission ids from `GET
-        /v2/projects/{projectId}/permissions`, whose names are `resource:action`
-        pairs such as `promptBranch:merge`.
+        member holding that role.
 
         Args:
             name: The name of the policy, unique within the organization or
@@ -737,9 +675,7 @@ class Project:
         Creates a custom policy in this project from a set of permissions and
         returns it. A policy on its own grants nobody anything: it takes effect
         only once it is attached to a project role, and then applies to every
-        member holding that role. Send the permission ids from `GET
-        /v2/projects/{projectId}/permissions`, whose names are `resource:action`
-        pairs such as `promptBranch:merge`.
+        member holding that role.
 
         Args:
             name: The name of the policy, unique within the organization or
@@ -771,11 +707,10 @@ class Project:
 
         Replaces a project policy's name, description, and granted permissions.
         The change reaches people through the roles the policy is attached to,
-        and it reaches them immediately: permissions are resolved from the role
-        on each request, so every member holding any of those roles gains or
-        loses the affected permissions on their next call. `permissionIds` is
-        the policy's complete permission set rather than an addition to it, so
-        sending an empty array makes the policy grant nothing.
+        and it reaches them immediately: every member holding any of those roles
+        gains or loses the affected permissions on their next call.
+        `permissionIds` is the policy's complete permission set rather than an
+        addition to it, so an empty array makes the policy grant nothing.
 
         Args:
             policy_id: The id of the project policy.
@@ -812,11 +747,10 @@ class Project:
 
         Replaces a project policy's name, description, and granted permissions.
         The change reaches people through the roles the policy is attached to,
-        and it reaches them immediately: permissions are resolved from the role
-        on each request, so every member holding any of those roles gains or
-        loses the affected permissions on their next call. `permissionIds` is
-        the policy's complete permission set rather than an addition to it, so
-        sending an empty array makes the policy grant nothing.
+        and it reaches them immediately: every member holding any of those roles
+        gains or loses the affected permissions on their next call.
+        `permissionIds` is the policy's complete permission set rather than an
+        addition to it, so an empty array makes the policy grant nothing.
 
         Args:
             policy_id: The id of the project policy.
@@ -847,11 +781,9 @@ class Project:
         Permanently deletes a project policy. Unlike a role, a policy in use is
         not protected: it is detached from every project role holding it, and
         members of those roles lose the permissions it granted on their next
-        request. The permissions themselves are not deleted, and the roles
-        survive with their remaining policies — a role left with none can do
-        nothing in the project. Check `GET /v2/projects/{projectId}/roles` for
-        the roles carrying this policy before deleting it. **Warning:** This
-        action cannot be undone.
+        request. The permissions themselves survive, as do the roles — though a
+        role left with no policies can do nothing in the project. List the
+        project's roles first to see which carry this policy.
 
         Args:
             policy_id: The id of the project policy.
@@ -864,11 +796,9 @@ class Project:
         Permanently deletes a project policy. Unlike a role, a policy in use is
         not protected: it is detached from every project role holding it, and
         members of those roles lose the permissions it granted on their next
-        request. The permissions themselves are not deleted, and the roles
-        survive with their remaining policies — a role left with none can do
-        nothing in the project. Check `GET /v2/projects/{projectId}/roles` for
-        the roles carrying this policy before deleting it. **Warning:** This
-        action cannot be undone.
+        request. The permissions themselves survive, as do the roles — though a
+        role left with no policies can do nothing in the project. List the
+        project's roles first to see which carry this policy.
 
         Args:
             policy_id: The id of the project policy.
@@ -879,13 +809,12 @@ class Project:
         """List Project Roles
 
         Lists every role a member of this project can be given: the custom roles
-        the project owns, plus the global, system-defined roles (`projectId` is
-        null) that every project can assign. Each role is returned with the
-        project policies attached to it, which is where its permissions come
-        from — a global role's permissions are system-defined instead, so it
-        comes back with an empty `policies` array. Project roles govern access
-        inside this project only; access to organization-wide settings comes
-        from the member's organization role.
+        the project owns, plus the global, system-defined ones (`projectId` is
+        null). Each comes with the project policies attached to it, which is
+        where its permissions come from — a global role's permissions are
+        system-defined instead, so it returns an empty `policies` array. Project
+        roles govern access inside this project only; organization-wide settings
+        come from the member's organization role.
         """
         return self._client.list_roles(self._project_id())
 
@@ -893,13 +822,12 @@ class Project:
         """List Project Roles
 
         Lists every role a member of this project can be given: the custom roles
-        the project owns, plus the global, system-defined roles (`projectId` is
-        null) that every project can assign. Each role is returned with the
-        project policies attached to it, which is where its permissions come
-        from — a global role's permissions are system-defined instead, so it
-        comes back with an empty `policies` array. Project roles govern access
-        inside this project only; access to organization-wide settings comes
-        from the member's organization role.
+        the project owns, plus the global, system-defined ones (`projectId` is
+        null). Each comes with the project policies attached to it, which is
+        where its permissions come from — a global role's permissions are
+        system-defined instead, so it returns an empty `policies` array. Project
+        roles govern access inside this project only; organization-wide settings
+        come from the member's organization role.
         """
         return await self._client.a_list_roles(self._project_id())
 
@@ -913,12 +841,10 @@ class Project:
         """Create Project Role
 
         Creates a custom role in this project from a set of project policies and
-        returns the role. Its permissions are the union of the permissions
-        granted by the policies in `policyIds`, so a role created with an empty
-        list can do nothing until you attach one. The role grants nobody
-        anything until a project member is assigned to it. The name must be
-        unique among the roles the project can use, including the global,
-        system-defined ones.
+        returns the role. Its permissions are the union of what those policies
+        grant, so a role created with an empty `policyIds` can do nothing until
+        you attach one, and it grants nobody anything until a project member is
+        assigned to it.
 
         Args:
             name: The name of the role, unique among the roles the organization
@@ -947,12 +873,10 @@ class Project:
         """Create Project Role
 
         Creates a custom role in this project from a set of project policies and
-        returns the role. Its permissions are the union of the permissions
-        granted by the policies in `policyIds`, so a role created with an empty
-        list can do nothing until you attach one. The role grants nobody
-        anything until a project member is assigned to it. The name must be
-        unique among the roles the project can use, including the global,
-        system-defined ones.
+        returns the role. Its permissions are the union of what those policies
+        grant, so a role created with an empty `policyIds` can do nothing until
+        you attach one, and it grants nobody anything until a project member is
+        assigned to it.
 
         Args:
             name: The name of the role, unique among the roles the organization
@@ -982,14 +906,11 @@ class Project:
         """Update Project Role
 
         Replaces a custom project role's name, description, and attached
-        policies. Every member already holding the role is affected immediately:
-        permissions are resolved from the role on each request, so anything the
-        new policy set no longer grants stops working on their next call, and
-        anything it adds becomes available at once. `policyIds` is the role's
-        complete policy set rather than an addition to it, so sending an empty
-        array leaves every member holding the role with no permissions in this
-        project. Only roles the project owns can be updated; a global, system-
-        defined role responds 404.
+        policies. Every member holding the role is affected immediately, since
+        permissions are resolved on each request. `policyIds` is the role's
+        complete policy set rather than an addition to it, so an empty array
+        leaves every member holding the role with no permissions in this
+        project. A global, system-defined role responds `404`.
 
         Args:
             role_id: The id of the project role. It must be a role the project
@@ -1025,14 +946,11 @@ class Project:
         """Update Project Role
 
         Replaces a custom project role's name, description, and attached
-        policies. Every member already holding the role is affected immediately:
-        permissions are resolved from the role on each request, so anything the
-        new policy set no longer grants stops working on their next call, and
-        anything it adds becomes available at once. `policyIds` is the role's
-        complete policy set rather than an addition to it, so sending an empty
-        array leaves every member holding the role with no permissions in this
-        project. Only roles the project owns can be updated; a global, system-
-        defined role responds 404.
+        policies. Every member holding the role is affected immediately, since
+        permissions are resolved on each request. `policyIds` is the role's
+        complete policy set rather than an addition to it, so an empty array
+        leaves every member holding the role with no permissions in this
+        project. A global, system-defined role responds `404`.
 
         Args:
             role_id: The id of the project role. It must be a role the project
@@ -1060,13 +978,12 @@ class Project:
     def delete_role(self, role_id: str) -> RoleRef:
         """Delete Project Role
 
-        Permanently deletes a custom project role. A role that is still assigned
-        to at least one member cannot be deleted — the request fails and you
-        must first move those members onto another role — so deleting a role
-        never silently strips anyone of their access. The policies that were
-        attached to it are not deleted and stay available to other roles in the
-        project. Only roles the project owns can be deleted; a global, system-
-        defined role responds 404. **Warning:** This action cannot be undone.
+        Permanently deletes a custom project role. A role still assigned to at
+        least one member cannot be deleted — move those members onto another
+        role first — so deleting a role never silently strips anyone of their
+        access. The policies attached to it are not deleted and stay available
+        to other roles in the project. A global, system-defined role responds
+        `404`. **This cannot be undone.**
 
         Args:
             role_id: The id of the project role. It must be a role the project
@@ -1077,13 +994,12 @@ class Project:
     async def a_delete_role(self, role_id: str) -> RoleRef:
         """Delete Project Role
 
-        Permanently deletes a custom project role. A role that is still assigned
-        to at least one member cannot be deleted — the request fails and you
-        must first move those members onto another role — so deleting a role
-        never silently strips anyone of their access. The policies that were
-        attached to it are not deleted and stay available to other roles in the
-        project. Only roles the project owns can be deleted; a global, system-
-        defined role responds 404. **Warning:** This action cannot be undone.
+        Permanently deletes a custom project role. A role still assigned to at
+        least one member cannot be deleted — move those members onto another
+        role first — so deleting a role never silently strips anyone of their
+        access. The policies attached to it are not deleted and stay available
+        to other roles in the project. A global, system-defined role responds
+        `404`. **This cannot be undone.**
 
         Args:
             role_id: The id of the project role. It must be a role the project
@@ -1100,23 +1016,17 @@ class Project:
             "SIMULATION",
             "TEXT_TO_SPEECH",
             "SPEECH_TO_TEXT",
+            "DECISION",
+            "SPEECH_TO_SPEECH",
         ],
     ) -> ProjectModel:
         """Get Project Model
 
         Returns the model in effect for the project, selected by the required
-        `type` query parameter. `EVALUATION` is the LLM judge that scores this
-        project's metrics. `PLATFORM` is the model behind Confident AI's own AI
-        features, like classification, summaries and report generation.
-        `SIMULATION` is the model that simulates user turns in conversation
-        simulations, including multi-turn test runs and red teaming. `source`
-        tells you where the returned model comes from: `project` when the
-        project has an override of its own, `organization` when it follows the
-        organization's default. The evaluation model is always project scoped,
-        so it always reports `project`. Reading never creates configuration, so
-        `model` is null when nothing has been set for that type — which for
-        `PLATFORM` and `SIMULATION` means neither the project nor the
-        organization has configured one.
+        `type` query parameter. `PLATFORM` and `SIMULATION` fall back to the
+        organization's default when the project has no override of its own;
+        `EVALUATION` is always project scoped. Reading never creates
+        configuration, so the model is null until one is set.
 
         Args:
             type: Which of the project's models to read.
@@ -1132,23 +1042,17 @@ class Project:
             "SIMULATION",
             "TEXT_TO_SPEECH",
             "SPEECH_TO_TEXT",
+            "DECISION",
+            "SPEECH_TO_SPEECH",
         ],
     ) -> ProjectModel:
         """Get Project Model
 
         Returns the model in effect for the project, selected by the required
-        `type` query parameter. `EVALUATION` is the LLM judge that scores this
-        project's metrics. `PLATFORM` is the model behind Confident AI's own AI
-        features, like classification, summaries and report generation.
-        `SIMULATION` is the model that simulates user turns in conversation
-        simulations, including multi-turn test runs and red teaming. `source`
-        tells you where the returned model comes from: `project` when the
-        project has an override of its own, `organization` when it follows the
-        organization's default. The evaluation model is always project scoped,
-        so it always reports `project`. Reading never creates configuration, so
-        `model` is null when nothing has been set for that type — which for
-        `PLATFORM` and `SIMULATION` means neither the project nor the
-        organization has configured one.
+        `type` query parameter. `PLATFORM` and `SIMULATION` fall back to the
+        organization's default when the project has no override of its own;
+        `EVALUATION` is always project scoped. Reading never creates
+        configuration, so the model is null until one is set.
 
         Args:
             type: Which of the project's models to read.
@@ -1161,33 +1065,22 @@ class Project:
         """Set Project Model
 
         Sets one of the project's models, selected by the `modelType` path
-        segment. `evaluation` configures the LLM judge that scores this
-        project's metrics. `platform` configures the model behind Confident AI's
-        own AI features, like classification, summaries and report generation.
-        `simulation` configures the model that simulates user turns in
-        conversation simulations, including multi-turn test runs and red
-        teaming. Setting `platform` or `simulation` creates a project override,
-        so the project stops following the organization's default and `source`
-        becomes `project`; remove it with the DELETE method to fall back to that
-        default. The provider's credential must already be configured on the
-        project or the organization; set it first through the model credentials
-        endpoints. A provider your organization's model provider policy does not
-        allow is rejected with a 403. `CONFIDENT_AI` needs no credential and
-        stores a null model name. `maxInputTokens` applies to the platform and
-        simulation models only and is rejected on the `evaluation` path.
+        segment; `decision` configures the model used by JEVAL metrics. The
+        provider's credential must already be configured on the project or
+        organization, and a provider blocked by the organization's model
+        provider policy is rejected. `CONFIDENT_AI` needs no credential and
+        stores a null model name.
 
         Args:
             model_type: Which of the project's models to act on.
-            model_config: The model to run for the type named in the path. Which
-                of the two shapes is expected is decided by that `modelType`,
-                not by what you send: `evaluation` takes the shape without
-                `maxInputTokens`, and every other type — `platform`,
-                `simulation`, `text-to-speech` and `speech-to-text` alike —
-                takes the one with it. This replaces the whole configuration
-                rather than patching it, so a field you omit is stored as null.
-                `CUSTOM` is rejected: a custom model can only be configured on
-                the Confident AI platform. Pass a
-                UpdateEvaluationProjectModelRequest or a
+            model_config: The model to run for the type named in the path. The
+                accepted shape is determined by `modelType`: `decision` accepts
+                only provider and name, `evaluation` also accepts max
+                concurrency, and platform, simulation, and speech models also
+                accept max input tokens. This replaces the whole configuration
+                rather than patching it. `CUSTOM` is rejected. Pass one of
+                UpdateEvaluationProjectModelRequest,
+                UpdateDecisionProjectModelRequest,
                 UpdatePlatformProjectModelRequest, from
                 confidentai.projects.types.
         """
@@ -1201,33 +1094,22 @@ class Project:
         """Set Project Model
 
         Sets one of the project's models, selected by the `modelType` path
-        segment. `evaluation` configures the LLM judge that scores this
-        project's metrics. `platform` configures the model behind Confident AI's
-        own AI features, like classification, summaries and report generation.
-        `simulation` configures the model that simulates user turns in
-        conversation simulations, including multi-turn test runs and red
-        teaming. Setting `platform` or `simulation` creates a project override,
-        so the project stops following the organization's default and `source`
-        becomes `project`; remove it with the DELETE method to fall back to that
-        default. The provider's credential must already be configured on the
-        project or the organization; set it first through the model credentials
-        endpoints. A provider your organization's model provider policy does not
-        allow is rejected with a 403. `CONFIDENT_AI` needs no credential and
-        stores a null model name. `maxInputTokens` applies to the platform and
-        simulation models only and is rejected on the `evaluation` path.
+        segment; `decision` configures the model used by JEVAL metrics. The
+        provider's credential must already be configured on the project or
+        organization, and a provider blocked by the organization's model
+        provider policy is rejected. `CONFIDENT_AI` needs no credential and
+        stores a null model name.
 
         Args:
             model_type: Which of the project's models to act on.
-            model_config: The model to run for the type named in the path. Which
-                of the two shapes is expected is decided by that `modelType`,
-                not by what you send: `evaluation` takes the shape without
-                `maxInputTokens`, and every other type — `platform`,
-                `simulation`, `text-to-speech` and `speech-to-text` alike —
-                takes the one with it. This replaces the whole configuration
-                rather than patching it, so a field you omit is stored as null.
-                `CUSTOM` is rejected: a custom model can only be configured on
-                the Confident AI platform. Pass a
-                UpdateEvaluationProjectModelRequest or a
+            model_config: The model to run for the type named in the path. The
+                accepted shape is determined by `modelType`: `decision` accepts
+                only provider and name, `evaluation` also accepts max
+                concurrency, and platform, simulation, and speech models also
+                accept max input tokens. This replaces the whole configuration
+                rather than patching it. `CUSTOM` is rejected. Pass one of
+                UpdateEvaluationProjectModelRequest,
+                UpdateDecisionProjectModelRequest,
                 UpdatePlatformProjectModelRequest, from
                 confidentai.projects.types.
         """
@@ -1238,11 +1120,9 @@ class Project:
     def delete_model(self, model_type: str) -> ClearProjectModelResult:
         """Clear Project Model Override
 
-        Removes the project's platform or simulation model override, so the
-        project falls back to the organization's default for that type and the
-        override toggle in its model settings shows as off. The evaluation model
-        cannot be cleared, so the `evaluation` path segment is rejected.
-        Idempotent: it succeeds even when no override exists.
+        Removes a project model override and falls back to the organization's
+        default. Evaluation and decision models cannot be cleared. Idempotent
+        when no override exists.
 
         Args:
             model_type: Which of the project's models to act on.
@@ -1252,11 +1132,9 @@ class Project:
     async def a_delete_model(self, model_type: str) -> ClearProjectModelResult:
         """Clear Project Model Override
 
-        Removes the project's platform or simulation model override, so the
-        project falls back to the organization's default for that type and the
-        override toggle in its model settings shows as off. The evaluation model
-        cannot be cleared, so the `evaluation` path segment is rejected.
-        Idempotent: it succeeds even when no override exists.
+        Removes a project model override and falls back to the organization's
+        default. Evaluation and decision models cannot be cleared. Idempotent
+        when no override exists.
 
         Args:
             model_type: Which of the project's models to act on.
@@ -1274,16 +1152,13 @@ class Project:
 
         Sets, replaces, or clears a project's stored credential for a single
         model provider. While the project is still inheriting your
-        organization's credentials, the first write creates a standalone
-        credential set for the project and severs that inheritance rather than
-        writing to the organization's record — so the project then holds only
-        the provider you just sent, and any other provider it was relying on has
-        to be set again here. This is a write-only surface: there is no read
-        endpoint, and the response returns every credential masked. Send
-        `apiKey` for an API-key provider or `modelConfig` for a configuration
-        provider, and null in either to clear what is stored. A provider your
-        organization's model provider policy does not allow cannot have a
-        credential set (403), though clearing one is always permitted.
+        organization's credentials, the first write creates a standalone set for
+        the project and severs that inheritance — so the project then holds only
+        the provider you just sent, and any other provider it relied on has to
+        be set again here. This is a write-only surface: there is no read
+        endpoint, and the response returns every credential masked. A provider
+        your organization's model provider policy does not allow cannot have a
+        credential set (`403`), though clearing one is always permitted.
 
         Args:
             api_key: The provider's API key, for the API-key providers only.
@@ -1326,16 +1201,13 @@ class Project:
 
         Sets, replaces, or clears a project's stored credential for a single
         model provider. While the project is still inheriting your
-        organization's credentials, the first write creates a standalone
-        credential set for the project and severs that inheritance rather than
-        writing to the organization's record — so the project then holds only
-        the provider you just sent, and any other provider it was relying on has
-        to be set again here. This is a write-only surface: there is no read
-        endpoint, and the response returns every credential masked. Send
-        `apiKey` for an API-key provider or `modelConfig` for a configuration
-        provider, and null in either to clear what is stored. A provider your
-        organization's model provider policy does not allow cannot have a
-        credential set (403), though clearing one is always permitted.
+        organization's credentials, the first write creates a standalone set for
+        the project and severs that inheritance — so the project then holds only
+        the provider you just sent, and any other provider it relied on has to
+        be set again here. This is a write-only surface: there is no read
+        endpoint, and the response returns every credential masked. A provider
+        your organization's model provider policy does not allow cannot have a
+        credential set (`403`), though clearing one is always permitted.
 
         Args:
             api_key: The provider's API key, for the API-key providers only.
@@ -1376,30 +1248,15 @@ class Project:
     ) -> AuditLogExport:
         """Create Project Audit Log Export
 
-        Starts an export of one project's audit logs — every audited action
-        recorded against that project — as a gzipped CSV, and returns the export
-        to poll. Use the organization endpoint instead to cover every project at
-        once. Send an empty body (`{}`) to export every audit log ever recorded
-        for the project. Send `startTime` and `endTime` together to export a
-        single period instead: both ends are inclusive, `endTime` must be after
-        `startTime`, and an audit log export has no cap on how long that period
-        may be. `searchTerm` narrows it further. The `startTime` and `endTime`
-        on the returned export are the period its file will cover — for an all-
-        time export, the timestamps of the oldest and newest audit log matched.
-        The export runs in the background, so this responds `202` with `status:
-        IN_PROGRESS` as soon as the job is queued. Poll `GET
-        /v2/projects/{projectId}/audit-logs/exports/{exportId}` until `status`
-        is `COMPLETED`; there is nothing to fetch before then. Then call `GET
-        /v2/projects/{projectId}/audit-logs/exports/{exportId}/download`, which
-        responds `302` with a `Location` header pointing at a pre-signed object
-        storage URL valid for 15 minutes — follow the redirect to receive the
-        file, and call the endpoint again rather than storing that URL.
-        `ERRORED` is terminal: read `errorMessage` and start a new export rather
-        than polling on. One audit log export runs at a time per project and
-        caller, so starting a second while one is `IN_PROGRESS` returns `409`. A
-        period matching no audit logs, or matching more than 10,000,000 audit
-        logs, is rejected with `400` — narrow it with `searchTerm` or a shorter
-        period.
+        Starts a background export of one project's audit logs — every audited
+        action recorded against that project — as a gzipped CSV, and responds
+        `202` with the export to poll. Use the organization endpoint to cover
+        every project at once. Poll `GET /v2/projects/{projectId}/audit-
+        logs/exports/{exportId}` until `status` is `COMPLETED`, then call `GET
+        /v2/projects/{projectId}/audit-logs/exports/{exportId}/download` for the
+        file; `ERRORED` is terminal. One export runs at a time per project and
+        caller, so starting a second returns `409`, and a period matching no
+        audit logs, or more than 10,000,000 audit logs, is rejected with `400`.
 
         Args:
             start_time: Start of the period to export, inclusive, as an ISO 8601
@@ -1428,30 +1285,15 @@ class Project:
     ) -> AuditLogExport:
         """Create Project Audit Log Export
 
-        Starts an export of one project's audit logs — every audited action
-        recorded against that project — as a gzipped CSV, and returns the export
-        to poll. Use the organization endpoint instead to cover every project at
-        once. Send an empty body (`{}`) to export every audit log ever recorded
-        for the project. Send `startTime` and `endTime` together to export a
-        single period instead: both ends are inclusive, `endTime` must be after
-        `startTime`, and an audit log export has no cap on how long that period
-        may be. `searchTerm` narrows it further. The `startTime` and `endTime`
-        on the returned export are the period its file will cover — for an all-
-        time export, the timestamps of the oldest and newest audit log matched.
-        The export runs in the background, so this responds `202` with `status:
-        IN_PROGRESS` as soon as the job is queued. Poll `GET
-        /v2/projects/{projectId}/audit-logs/exports/{exportId}` until `status`
-        is `COMPLETED`; there is nothing to fetch before then. Then call `GET
-        /v2/projects/{projectId}/audit-logs/exports/{exportId}/download`, which
-        responds `302` with a `Location` header pointing at a pre-signed object
-        storage URL valid for 15 minutes — follow the redirect to receive the
-        file, and call the endpoint again rather than storing that URL.
-        `ERRORED` is terminal: read `errorMessage` and start a new export rather
-        than polling on. One audit log export runs at a time per project and
-        caller, so starting a second while one is `IN_PROGRESS` returns `409`. A
-        period matching no audit logs, or matching more than 10,000,000 audit
-        logs, is rejected with `400` — narrow it with `searchTerm` or a shorter
-        period.
+        Starts a background export of one project's audit logs — every audited
+        action recorded against that project — as a gzipped CSV, and responds
+        `202` with the export to poll. Use the organization endpoint to cover
+        every project at once. Poll `GET /v2/projects/{projectId}/audit-
+        logs/exports/{exportId}` until `status` is `COMPLETED`, then call `GET
+        /v2/projects/{projectId}/audit-logs/exports/{exportId}/download` for the
+        file; `ERRORED` is terminal. One export runs at a time per project and
+        caller, so starting a second returns `409`, and a period matching no
+        audit logs, or more than 10,000,000 audit logs, is rejected with `400`.
 
         Args:
             start_time: Start of the period to export, inclusive, as an ISO 8601
@@ -1474,19 +1316,12 @@ class Project:
     def get_audit_log_export(self, export_id: str) -> AuditLogExport:
         """Get Project Audit Log Export
 
-        Retrieves a project audit log export, so that a caller can poll one it
-        started. `status` is `IN_PROGRESS` while the file is being written,
-        `COMPLETED` once the file is in storage and ready to download, or
-        `ERRORED` if the run failed, in which case `errorMessage` says why.
-        `rowCount` is null until the export completes and then reports how many
-        audit logs its file holds, and `startTime` and `endTime` are the period
-        that file covers. Poll here rather than at the download endpoint, which
-        has nothing to serve until `status` is `COMPLETED`. An export is kept
-        for 24 hours after it was created, or 5 minutes once it has failed,
-        after which this returns `404`. The lookup is by id among the exports
-        you started in this project and is not restricted to audit log exports,
-        so an id belonging to another kind of export comes back with its own
-        `exportType`.
+        Retrieves a project audit log export, so you can poll one you started —
+        poll here rather than at the download endpoint, which has nothing to
+        serve until `status` is `COMPLETED`. An export is kept for 24 hours, or
+        5 minutes once it has failed, after which this returns `404`. The lookup
+        is not restricted to audit log exports, so another kind of export id
+        comes back with its own `exportType`.
 
         Args:
             export_id: The id of the audit log export, as returned when it was
@@ -1497,19 +1332,12 @@ class Project:
     async def a_get_audit_log_export(self, export_id: str) -> AuditLogExport:
         """Get Project Audit Log Export
 
-        Retrieves a project audit log export, so that a caller can poll one it
-        started. `status` is `IN_PROGRESS` while the file is being written,
-        `COMPLETED` once the file is in storage and ready to download, or
-        `ERRORED` if the run failed, in which case `errorMessage` says why.
-        `rowCount` is null until the export completes and then reports how many
-        audit logs its file holds, and `startTime` and `endTime` are the period
-        that file covers. Poll here rather than at the download endpoint, which
-        has nothing to serve until `status` is `COMPLETED`. An export is kept
-        for 24 hours after it was created, or 5 minutes once it has failed,
-        after which this returns `404`. The lookup is by id among the exports
-        you started in this project and is not restricted to audit log exports,
-        so an id belonging to another kind of export comes back with its own
-        `exportType`.
+        Retrieves a project audit log export, so you can poll one you started —
+        poll here rather than at the download endpoint, which has nothing to
+        serve until `status` is `COMPLETED`. An export is kept for 24 hours, or
+        5 minutes once it has failed, after which this returns `404`. The lookup
+        is not restricted to audit log exports, so another kind of export id
+        comes back with its own `exportType`.
 
         Args:
             export_id: The id of the audit log export, as returned when it was

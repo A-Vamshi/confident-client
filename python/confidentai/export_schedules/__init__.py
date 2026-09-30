@@ -4,6 +4,7 @@
 # and regenerate.
 
 from confidentai.export_schedules.types import (
+    AnnotationSelectionType,
     CreateExportScheduleRequest,
     ExportSchedule,
     ExportScheduleList,
@@ -15,6 +16,7 @@ from confidentai.export_schedules.types import (
 )
 
 __all__ = [
+    "AnnotationSelectionType",
     "CreateExportScheduleRequest",
     "ExportSchedule",
     "ExportScheduleList",

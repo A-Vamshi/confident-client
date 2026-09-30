@@ -19,10 +19,9 @@ export class ApiKeysOperations extends ProjectsOperations {
    * List Project API Keys
    *
    * Lists every API key scoped to the project, newest first. Each key's `value`
-   * is masked (only its last six characters are shown) — the full value is only
-   * ever returned once, by the response that issues it. A rotation whose grace
-   * period has already run out is completed before the list is read, so a
-   * `shadowValue` here is always still in flight.
+   * is masked — the full value is only ever returned once, by the response that
+   * issues it. A rotation whose grace period has already run out is completed
+   * before the list is read, so a `shadowValue` here is always still in flight.
    *
    * @param projectId The id of the project the key belongs to.
    */
@@ -63,8 +62,7 @@ export class ApiKeysOperations extends ProjectsOperations {
   /**
    * Get Project API Key
    *
-   * Retrieves one project-scoped API key by id. Its `value` is masked — the
-   * full value is only ever returned once, by the response that issues it. A
+   * Retrieves one project-scoped API key by id, with its `value` masked. A
    * `rotatesAt` in the past means the grace period is over and the outgoing
    * value is already rejected on authentication, even though this endpoint
    * still shows it; listing the keys completes the rotation.
@@ -129,21 +127,11 @@ export class ApiKeysOperations extends ProjectsOperations {
   /**
    * Rotate Project API Key
    *
-   * Rotates a project-scoped API key in place — the key keeps its id, name and
-   * history, and no second key is created. The new value is returned **exactly
-   * once**, in this response, and can never be retrieved again — store it
-   * securely. With `gracePeriodInHours: 0` (the default) the key's `value` is
-   * replaced as this request is served and the outgoing value stops
-   * authenticating at once, so anything still sending traces with it starts
-   * failing. With a grace period, the new value comes back as `shadowValue` and
-   * both values authenticate until `rotatesAt`, which is the window to
-   * redeploy; after it the new value becomes `value` and the outgoing one is
-   * rejected. Requests made with the outgoing value in the meantime carry
-   * `Sunset` and `X-Api-Key-Warning` headers announcing when it stops working.
-   * The key's expiry is left alone unless `expiresInDays` is sent. Rotating an
-   * **expired** key revives it: `expiresInDays` is then required (send null for
-   * no expiry) and a grace period is not allowed. A rotation whose grace period
-   * has already run out is completed before this one starts.
+   * Rotates a project-scoped API key in place — same id, name and history, and
+   * no second key is created. The new value is returned **exactly once**, in
+   * this response. Requests made with the outgoing value during a grace period
+   * carry `Sunset` and `X-Api-Key-Warning` headers, which is the window to
+   * redeploy. Reviving an expired key cannot take a grace period.
    *
    * @param projectId The id of the project the key belongs to.
    * @param apiKeyId The id of the API key.

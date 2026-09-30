@@ -52,11 +52,10 @@ export class ClassifiersOperations {
    * Creates a classifier that tags incoming traces or threads with labels, and
    * returns its id. A name is unique per data model within the project. Sending
    * a `preset` seeds the classifier with a description, a generation config,
-   * and a starting set of labels; any field you send explicitly overrides what
-   * the preset would have set. `SENTIMENT` arrives with its labels ready, while
-   * `TOPICS`, `USE_CASES` and `ISSUES` ship with none and expect a generation
-   * run next. Retrieve the classifier by id to read back what the preset
-   * seeded. Requires the Starter plan or above.
+   * and a starting set of labels, and any field you send explicitly overrides
+   * what the preset would have set — `SENTIMENT` arrives with its labels ready,
+   * while `TOPICS`, `USE_CASES` and `ISSUES` ship with none and expect a
+   * generation run next. Requires the Starter plan or above.
    *
    * @param name The name of the classifier, unique per data model within the
    *   project.
@@ -208,18 +207,14 @@ export class ClassifiersOperations {
    * Generate Classifier Labels
    *
    * Discovers labels for a classifier from your project's real traffic: it
-   * samples recent traces (or threads), clusters them using the classifier's
-   * `autoGenerationConfig`, and writes the themes it finds back as labels with
-   * status RECOMMENDED for a human to review. The run is asynchronous and
-   * returns no job handle: `started` true means it was dispatched, not that
-   * labels exist yet, so poll the labels endpoint for the results. Each run
-   * first deletes every existing RECOMMENDED label on the classifier; labels
-   * already promoted to ACTIVE are kept and passed to the generator so it does
-   * not propose them again. Reading production traffic and running the model
-   * consumes usage. `autoGenerationConfig` must already have both
-   * `summaryPrompt` and `nClusters` set, otherwise the request is rejected. A
-   * `started` false response is not an error — it means there was too little
-   * traffic to sample, or sampling was briefly unavailable. Requires the
+   * samples recent traces or threads, clusters them with the classifier's
+   * `autoGenerationConfig`, and writes the themes it finds back as
+   * `RECOMMENDED` labels for a human to review. The run is asynchronous, so
+   * poll the labels endpoint for results. Each run first deletes every existing
+   * `RECOMMENDED` label, while labels already promoted to `ACTIVE` are kept and
+   * passed to the generator so it does not propose them again.
+   * `autoGenerationConfig` must already have `summaryPrompt` and `nClusters`
+   * set. Reading traffic and running the model consumes usage. Requires the
    * Starter plan or above.
    *
    * @param classifierId The id of the classifier.

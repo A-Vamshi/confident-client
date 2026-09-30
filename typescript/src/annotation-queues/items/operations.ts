@@ -80,16 +80,15 @@ export class ItemsOperations extends AnnotationQueuesOperations {
    * Records your team's annotation of one queue item and marks it complete,
    * returning the ids of what was written. Send `annotations` for criteria
    * ratings, `formResponses` for answers to the queue's annotation form, or
-   * both; answering the form requires `annotatorEmail`. Send `markAsCompleted:
-   * false` to leave the item in the pending list.
+   * both; answering the form requires `annotatorEmail`.
    *
    * @param annotationQueueId The id of the annotation queue the item belongs
    *   to.
    * @param queueItemId The id of the queue item.
    * @param annotations The criteria ratings to record on the item, one entry
    *   per criterion.
-   * @param formResponses The answers to the fields of the queue's annotation
-   *   form. Sending them requires `annotatorEmail`.
+   * @param formResponses The annotations for the fields of the queue's
+   *   annotation form. Sending them requires `annotatorEmail`.
    * @param annotatorEmail The email address of the project member the work is
    *   credited to. Required when `formResponses` are sent, and what makes the
    *   annotation visible on the platform.
