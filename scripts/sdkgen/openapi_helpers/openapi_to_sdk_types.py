@@ -261,7 +261,7 @@ class Resolver:
         nullable: bool,
     ) -> FieldType:
         schema_type = schema.get("type")
-        if schema_type in (None, "string", "integer", "number"):
+        if schema_type in (None, "string", "integer", "number", "boolean"):
             return literal_of(list(schema["enum"]), nullable)
 
         primitive = PRIMITIVES.get(schema_type)

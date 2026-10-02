@@ -143,7 +143,7 @@ export interface AnnotationQueueRef {
 
 export interface BatchAnnotateFailure {
   queueItemId: string;
-  success: boolean;
+  success: false;
   error: string;
 }
 
@@ -164,7 +164,7 @@ export interface BatchAnnotateRequest {
 
 export interface BatchAnnotateSuccess {
   queueItemId: string;
-  success: boolean;
+  success: true;
   annotationIds: string[];
   formResponseIds: string[];
 }

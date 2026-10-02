@@ -28971,8 +28971,8 @@ types:
     python: success
     typescript: success
     type:
-      python: bool
-      typescript: boolean
+      python: Literal[False]
+      typescript: 'false'
     required: true
     description: False when the entry could not be annotated.
     example: false
@@ -29165,8 +29165,8 @@ types:
     python: success
     typescript: success
     type:
-      python: bool
-      typescript: boolean
+      python: Literal[True]
+      typescript: 'true'
     required: true
     description: True when the item was annotated.
     example: true
@@ -57172,8 +57172,8 @@ types:
     python: success
     typescript: success
     type:
-      python: bool
-      typescript: boolean
+      python: Literal[False]
+      typescript: 'false'
     required: true
     description: Marks the run as failed.
     example: false
@@ -57246,8 +57246,8 @@ types:
     python: success
     typescript: success
     type:
-      python: bool
-      typescript: boolean
+      python: Literal[True]
+      typescript: 'true'
     required: true
     description: Marks the run as successful.
     example: true

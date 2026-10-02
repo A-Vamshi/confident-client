@@ -169,7 +169,7 @@ class AnnotationQueueRef(ConfidentBaseModel):
 
 class BatchAnnotateFailure(ConfidentBaseModel):
     queue_item_id: str = Field(alias="queueItemId")
-    success: bool
+    success: Literal[False]
     error: str
 
 
@@ -199,7 +199,7 @@ class BatchAnnotateRequest(ConfidentBaseModel):
 
 class BatchAnnotateSuccess(ConfidentBaseModel):
     queue_item_id: str = Field(alias="queueItemId")
-    success: bool
+    success: Literal[True]
     annotation_ids: List[str] = Field(alias="annotationIds")
     form_response_ids: List[str] = Field(alias="formResponseIds")
 

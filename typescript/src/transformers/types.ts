@@ -32,14 +32,14 @@ export interface Transformer {
 }
 
 export interface TransformerCodeRunFailure {
-  success: boolean;
+  success: false;
   error: string | null;
   reason: string | null;
   verboseLogs: string | null;
 }
 
 export interface TransformerCodeRunSuccess {
-  success: boolean;
+  success: true;
   output?: unknown;
   verboseLogs: string | null;
 }
