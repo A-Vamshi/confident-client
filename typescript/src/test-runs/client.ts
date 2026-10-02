@@ -35,8 +35,8 @@ export class TestRunsClient {
    * @param ascending This determines if the field specified in `sortBy` should
    *   be in ascending order. Defaults to `false`.
    * @param status Returns only test runs with this status.
-   * @param multiTurn When true, returns only multi-turn test runs; when false,
-   *   only single-turn test runs. Omit to return both.
+   * @param multiTurn When `true`, returns only multi-turn test runs; when
+   *   `false`, only single-turn test runs. Omit to return both.
    */
   async list(
     options: {

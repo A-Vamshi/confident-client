@@ -41,18 +41,18 @@ export class QueueIngestionTasksOperations extends ItemsOperations {
    * Create Queue Ingestion Task
    *
    * Creates a rule that keeps an annotation queue filled from your production
-   * data, and returns its id. A task only harvests once `enabled` is true.
+   * data, and returns its id. A task only harvests once `enabled` is `true`.
    *
    * @param annotationQueueId The id of the annotation queue.
    * @param name The name of the task.
-   * @param description A note about what the task harvests. Send null to clear
-   *   it.
+   * @param description A note about what the task harvests. Send `null` to
+   *   clear it.
    * @param enabled Whether the task runs. Disabling it stops new items
-   *   arriving; items already queued are kept. Defaults to false.
+   *   arriving; items already queued are kept. Defaults to `false`.
    * @param sampleRate The fraction of matching items to queue, between 0 and 1.
    *   Defaults to 1, all of them.
    * @param maxItems The maximum number of items this task will ever queue. Send
-   *   null to remove the cap.
+   *   `null` to remove the cap.
    * @param reviewerEmails The project members harvested items are assigned to,
    *   following `assignmentStrategy`.
    */
@@ -128,14 +128,14 @@ export class QueueIngestionTasksOperations extends ItemsOperations {
    * @param annotationQueueId The id of the annotation queue the task fills.
    * @param queueIngestionTaskId The id of the queue ingestion task.
    * @param name The name of the task.
-   * @param description A note about what the task harvests. Send null to clear
-   *   it.
+   * @param description A note about what the task harvests. Send `null` to
+   *   clear it.
    * @param enabled Whether the task runs. Disabling it stops new items
-   *   arriving; items already queued are kept. Defaults to false.
+   *   arriving; items already queued are kept. Defaults to `false`.
    * @param sampleRate The fraction of matching items to queue, between 0 and 1.
    *   Defaults to 1, all of them.
    * @param maxItems The maximum number of items this task will ever queue. Send
-   *   null to remove the cap.
+   *   `null` to remove the cap.
    * @param reviewerEmails The project members harvested items are assigned to,
    *   following `assignmentStrategy`.
    */

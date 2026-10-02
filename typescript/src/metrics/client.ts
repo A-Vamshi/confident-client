@@ -34,14 +34,14 @@ export class MetricsClient {
    * Create Metric
    *
    * Creates a custom metric in your Confident AI project and returns it. A
-   * GEVAL metric scores against `criteria` or `evaluationSteps`; a DAG metric
-   * needs `algorithm` set to DAG and a `dag`.
+   * `GEVAL` metric scores against `criteria` or `evaluationSteps`; a `DAG`
+   * metric needs `algorithm` set to `DAG` and a `dag`.
    *
    * @param name The name of the metric, unique within your project.
-   * @param multiTurn This is true when the metric evaluates conversations
+   * @param multiTurn This is `true` when the metric evaluates conversations
    *   rather than single test cases. It decides which `evaluationParams` are
    *   valid and cannot be changed later.
-   * @param criteria The criteria the metric scores against. A GEVAL metric
+   * @param criteria The criteria the metric scores against. A `GEVAL` metric
    *   needs `criteria` or `evaluationSteps`.
    * @param evaluationSteps The steps the metric follows to score, as an
    *   alternative to `criteria`.
@@ -49,8 +49,8 @@ export class MetricsClient {
    *   single-turn metric needs at least one, and every field must match
    *   `multiTurn`.
    * @param rubric Score ranges that anchor how the metric scores.
-   * @param questions The questions a JEVAL metric asks the decision model.
-   *   Required when `algorithm` is JEVAL.
+   * @param questions The questions a `JEVAL` metric asks the decision model.
+   *   Required when `algorithm` is `JEVAL`.
    */
   async create(
     name: string,
@@ -99,7 +99,7 @@ export class MetricsClient {
    *
    * Retrieves a custom metric by id so it can be run locally. The metric must
    * have criteria or evaluation steps and at least one evaluation parameter, or
-   * be a valid DAG.
+   * be a valid `DAG`.
    *
    * @param metricId The unique id of the metric.
    */
@@ -115,19 +115,19 @@ export class MetricsClient {
    * Update Metric
    *
    * Updates a custom metric and returns it. Only the fields you send are
-   * changed; send null to clear `criteria` or `evaluationSteps`, as long as one
-   * of them remains. Every update creates a new metric version.
+   * changed; send `null` to clear `criteria` or `evaluationSteps`, as long as
+   * one of them remains. Every update creates a new metric version.
    *
    * @param metricId The unique id of the metric.
-   * @param criteria The new criteria, or null to clear it. One of `criteria` or
-   *   `evaluationSteps` must remain set.
-   * @param evaluationSteps The new evaluation steps, or null to clear them. One
-   *   of `criteria` or `evaluationSteps` must remain set.
+   * @param criteria The new criteria, or `null` to clear it. One of `criteria`
+   *   or `evaluationSteps` must remain set.
+   * @param evaluationSteps The new evaluation steps, or `null` to clear them.
+   *   One of `criteria` or `evaluationSteps` must remain set.
    * @param evaluationParams The test case fields the metric evaluates. Each
    *   must match the metric's `multiTurn`.
    * @param rubric Score ranges that anchor how the metric scores.
-   * @param questions The new questions for a JEVAL metric. Only accepted on
-   *   JEVAL metrics.
+   * @param questions The new questions for a `JEVAL` metric. Only accepted on
+   *   `JEVAL` metrics.
    */
   async update(
     metricId: string,

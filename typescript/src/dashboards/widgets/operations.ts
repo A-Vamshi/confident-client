@@ -29,7 +29,7 @@ export class WidgetsOperations extends DashboardsOperations {
    *
    * @param dashboardId The id of the dashboard.
    * @param name The name shown as the widget's title.
-   * @param description What the widget shows. Send null to leave it unset.
+   * @param description What the widget shows. Send `null` to leave it unset.
    * @param type The visualization to draw the widget as.
    * @param unit The unit the widget's values are labelled with.
    * @param mode How the widget aggregates its lines. `DIMENSION_SERIES`
@@ -38,14 +38,14 @@ export class WidgetsOperations extends DashboardsOperations {
    *   when omitted.
    * @param dimension The property to break the widget's data down by. Required
    *   when `mode` is `DIMENSION_SERIES`.
-   * @param topK Caps a dimension breakdown at its top values. Send null, or
+   * @param topK Caps a dimension breakdown at its top values. Send `null`, or
    *   omit it, to plot every value.
    * @param startTime The start of the widget's own time range, as an ISO 8601
-   *   datetime. Send null to let the query decide the range.
+   *   datetime. Send `null` to let the query decide the range.
    * @param endTime The end of the widget's own time range, as an ISO 8601
-   *   datetime. Send null to let the query decide the range.
+   *   datetime. Send `null` to let the query decide the range.
    * @param layout Where the widget sits on the dashboard grid. Omit it, or send
-   *   null, and Confident AI packs the widget into the first free space.
+   *   `null`, and Confident AI packs the widget into the first free space.
    * @param lines The series the widget plots.
    */
   async createWidget(
@@ -112,7 +112,7 @@ export class WidgetsOperations extends DashboardsOperations {
    * @param dashboardId The id of the dashboard the widget is on.
    * @param widgetId The id of the widget.
    * @param name The name shown as the widget's title.
-   * @param description What the widget shows. Send null to leave it unset.
+   * @param description What the widget shows. Send `null` to leave it unset.
    * @param type The visualization to draw the widget as.
    * @param unit The unit the widget's values are labelled with.
    * @param mode How the widget aggregates its lines. `DIMENSION_SERIES`
@@ -121,14 +121,14 @@ export class WidgetsOperations extends DashboardsOperations {
    *   when omitted.
    * @param dimension The property to break the widget's data down by. Required
    *   when `mode` is `DIMENSION_SERIES`.
-   * @param topK Caps a dimension breakdown at its top values. Send null, or
+   * @param topK Caps a dimension breakdown at its top values. Send `null`, or
    *   omit it, to plot every value.
    * @param startTime The start of the widget's own time range, as an ISO 8601
-   *   datetime. Send null to let the query decide the range.
+   *   datetime. Send `null` to let the query decide the range.
    * @param endTime The end of the widget's own time range, as an ISO 8601
-   *   datetime. Send null to let the query decide the range.
+   *   datetime. Send `null` to let the query decide the range.
    * @param layout Where the widget sits on the dashboard grid. Omit it, or send
-   *   null, and Confident AI packs the widget into the first free space.
+   *   `null`, and Confident AI packs the widget into the first free space.
    * @param lines The series the widget plots.
    */
   async updateWidget(

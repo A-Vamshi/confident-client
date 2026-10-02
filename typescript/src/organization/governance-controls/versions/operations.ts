@@ -47,18 +47,18 @@ export class GovernanceControlsVersionsOperations extends GovernanceControlsOper
    * assessment runs against; existing verdicts are never recomputed or
    * migrated. Which request shape is expected follows the control's own `type`
    * — a pre-deployment control takes the pre-deployment config, every other
-   * type the runtime config — and every field is required even when null, so
+   * type the runtime config — and every field is required even when `null`, so
    * send the definition in full rather than a patch.
    *
    * @param controlId The id of the governance control.
    * @param controlConfig The definition to snapshot as the control's next
    *   version. Which of the two shapes is expected is decided by the control's
    *   own `type`, not by what you send: a pre-deployment control takes the pre-
-   *   deployment config, and every other type — RUNTIME and OPERATIONAL alike —
-   *   takes the runtime config. Except for `extraQueryParams`, every field is
-   *   required even when null, so a version is a complete definition rather
-   *   than a patch of the one before it. Pass a GovernanceControlRuntimeConfig
-   *   or a GovernanceControlPreDeploymentConfig.
+   *   deployment config, and every other type — `RUNTIME` and `OPERATIONAL`
+   *   alike — takes the runtime config. Except for `extraQueryParams`, every
+   *   field is required even when `null`, so a version is a complete definition
+   *   rather than a patch of the one before it. Pass a
+   *   GovernanceControlRuntimeConfig or a GovernanceControlPreDeploymentConfig.
    */
   async createGovernanceControlVersion(
     controlId: string,

@@ -194,8 +194,8 @@ class Project:
 
         Args:
             api_key_id: The id of the API key.
-            valid: Send false to deactivate the key, true to reactivate it. A
-                deactivated key is rejected on every request, and deactivating
+            valid: Send `false` to deactivate the key, `true` to reactivate it.
+                A deactivated key is rejected on every request, and deactivating
                 one takes effect immediately.
         """
         return self._client.update_api_key(
@@ -213,8 +213,8 @@ class Project:
 
         Args:
             api_key_id: The id of the API key.
-            valid: Send false to deactivate the key, true to reactivate it. A
-                deactivated key is rejected on every request, and deactivating
+            valid: Send `false` to deactivate the key, `true` to reactivate it.
+                A deactivated key is rejected on every request, and deactivating
                 one takes effect immediately.
         """
         return await self._client.a_update_api_key(
@@ -274,7 +274,7 @@ class Project:
                 immediately and stops the old one at once.
             expires_in_days: A new lifetime for the key, in days from now — a
                 duration, not a date, stored on the key as `expiresAt`. Omit it
-                to keep the current expiry, or send null to remove the expiry
+                to keep the current expiry, or send `null` to remove the expiry
                 altogether. Required when rotating a key that has already
                 expired.
         """
@@ -310,7 +310,7 @@ class Project:
                 immediately and stops the old one at once.
             expires_in_days: A new lifetime for the key, in days from now — a
                 duration, not a date, stored on the key as `expiresAt`. Omit it
-                to keep the current expiry, or send null to remove the expiry
+                to keep the current expiry, or send `null` to remove the expiry
                 altogether. Required when rotating a key that has already
                 expired.
         """
@@ -651,7 +651,7 @@ class Project:
                 the other scope's catalog is stored but never matches a
                 permission check here.
             description: What the policy is for. On an update, omit it to leave
-                the stored description unchanged, or send null to clear it.
+                the stored description unchanged, or send `null` to clear it.
         """
         return self._client.create_policy(
             self._project_id(), name, permission_ids, description=description
@@ -683,7 +683,7 @@ class Project:
                 the other scope's catalog is stored but never matches a
                 permission check here.
             description: What the policy is for. On an update, omit it to leave
-                the stored description unchanged, or send null to clear it.
+                the stored description unchanged, or send `null` to clear it.
         """
         return await self._client.a_create_policy(
             self._project_id(), name, permission_ids, description=description
@@ -717,7 +717,7 @@ class Project:
                 the other scope's catalog is stored but never matches a
                 permission check here.
             description: What the policy is for. On an update, omit it to leave
-                the stored description unchanged, or send null to clear it.
+                the stored description unchanged, or send `null` to clear it.
         """
         return self._client.update_policy(
             self._project_id(),
@@ -755,7 +755,7 @@ class Project:
                 the other scope's catalog is stored but never matches a
                 permission check here.
             description: What the policy is for. On an update, omit it to leave
-                the stored description unchanged, or send null to clear it.
+                the stored description unchanged, or send `null` to clear it.
         """
         return await self._client.a_update_policy(
             self._project_id(),
@@ -800,7 +800,7 @@ class Project:
 
         Lists every role a member of this project can be given: the custom roles
         the project owns, plus the global, system-defined ones (`projectId` is
-        null). Project roles govern access inside this project only;
+        `null`). Project roles govern access inside this project only;
         organization-wide settings come from the member's organization role.
         """
         return self._client.list_roles(self._project_id())
@@ -810,7 +810,7 @@ class Project:
 
         Lists every role a member of this project can be given: the custom roles
         the project owns, plus the global, system-defined ones (`projectId` is
-        null). Project roles govern access inside this project only;
+        `null`). Project roles govern access inside this project only;
         organization-wide settings come from the member's organization role.
         """
         return await self._client.a_list_roles(self._project_id())
@@ -841,7 +841,7 @@ class Project:
                 permissions at all. Discover assignable policies with the
                 policies endpoint of the same scope.
             description: What the role is for. On an update, omit it to leave
-                the stored description unchanged, or send null to clear it.
+                the stored description unchanged, or send `null` to clear it.
         """
         return self._client.create_role(
             self._project_id(), name, policy_ids, description=description
@@ -873,7 +873,7 @@ class Project:
                 permissions at all. Discover assignable policies with the
                 policies endpoint of the same scope.
             description: What the role is for. On an update, omit it to leave
-                the stored description unchanged, or send null to clear it.
+                the stored description unchanged, or send `null` to clear it.
         """
         return await self._client.a_create_role(
             self._project_id(), name, policy_ids, description=description
@@ -907,7 +907,7 @@ class Project:
                 permissions at all. Discover assignable policies with the
                 policies endpoint of the same scope.
             description: What the role is for. On an update, omit it to leave
-                the stored description unchanged, or send null to clear it.
+                the stored description unchanged, or send `null` to clear it.
         """
         return self._client.update_role(
             self._project_id(),
@@ -945,7 +945,7 @@ class Project:
                 permissions at all. Discover assignable policies with the
                 policies endpoint of the same scope.
             description: What the role is for. On an update, omit it to leave
-                the stored description unchanged, or send null to clear it.
+                the stored description unchanged, or send `null` to clear it.
         """
         return await self._client.a_update_role(
             self._project_id(),
@@ -1043,11 +1043,11 @@ class Project:
         """Set Project Model
 
         Sets one of the project's models, selected by the `modelType` path
-        segment; `decision` configures the model used by JEVAL metrics. The
+        segment; `decision` configures the model used by `JEVAL` metrics. The
         provider's credential must already be configured on the project or
         organization, and a provider blocked by the organization's model
         provider policy is rejected. `CONFIDENT_AI` needs no credential and
-        stores a null model name.
+        stores a `null` model name.
 
         Args:
             model_type: Which of the project's models to act on.
@@ -1071,11 +1071,11 @@ class Project:
         """Set Project Model
 
         Sets one of the project's models, selected by the `modelType` path
-        segment; `decision` configures the model used by JEVAL metrics. The
+        segment; `decision` configures the model used by `JEVAL` metrics. The
         provider's credential must already be configured on the project or
         organization, and a provider blocked by the organization's model
         provider policy is rejected. `CONFIDENT_AI` needs no credential and
-        stores a null model name.
+        stores a `null` model name.
 
         Args:
             model_type: Which of the project's models to act on.
@@ -1138,7 +1138,7 @@ class Project:
 
         Args:
             api_key: The provider's API key, for the API-key providers only.
-                Send the raw secret to set it, or null to clear it; a masked
+                Send the raw secret to set it, or `null` to clear it; a masked
                 value read back from a response is rejected. Sending it for a
                 configuration provider is rejected.
             model_config: The provider's configuration, for the configuration
@@ -1146,18 +1146,19 @@ class Project:
                 `azureDeploymentName`, `azureApiVersion` and `azureApiKey` for
                 `AZURE`. It replaces the stored configuration wholesale rather
                 than merging into it, so send every key the provider needs; send
-                null to clear it. It must not be empty and must not carry masked
-                values read back from a response. Sending it for an API-key
-                provider is rejected. For `BEDROCK`, always send `regionName`
-                and `modelId`, then authenticate with either `ACCESS_KEYS`
-                (`awsAccessKeyId` and `awsSecretAccessKey`) or, when calling the
-                OpenAI-compatible Mantle API by setting `api` to `MANTLE`, an
-                `authType` of `API_KEY` together with `apiKey`, an optional
-                `apiBase`, and an optional `projectId` (sent as the `OpenAI-
-                Project` header so AWS attributes usage and cost to that Mantle
-                project; letters, numbers, hyphens and underscores only). An API
-                key only works with the Mantle API, and assume-role Bedrock
-                configurations can only be managed on the Confident AI platform.
+                `null` to clear it. It must not be empty and must not carry
+                masked values read back from a response. Sending it for an API-
+                key provider is rejected. For `BEDROCK`, always send
+                `regionName` and `modelId`, then authenticate with either
+                `ACCESS_KEYS` (`awsAccessKeyId` and `awsSecretAccessKey`) or,
+                when calling the OpenAI-compatible Mantle API by setting `api`
+                to `MANTLE`, an `authType` of `API_KEY` together with `apiKey`,
+                an optional `apiBase`, and an optional `projectId` (sent as the
+                `OpenAI-Project` header so AWS attributes usage and cost to that
+                Mantle project; letters, numbers, hyphens and underscores only).
+                An API key only works with the Mantle API, and assume-role
+                Bedrock configurations can only be managed on the Confident AI
+                platform.
         """
         return self._client.update_model_credentials(
             self._project_id(),
@@ -1187,7 +1188,7 @@ class Project:
 
         Args:
             api_key: The provider's API key, for the API-key providers only.
-                Send the raw secret to set it, or null to clear it; a masked
+                Send the raw secret to set it, or `null` to clear it; a masked
                 value read back from a response is rejected. Sending it for a
                 configuration provider is rejected.
             model_config: The provider's configuration, for the configuration
@@ -1195,18 +1196,19 @@ class Project:
                 `azureDeploymentName`, `azureApiVersion` and `azureApiKey` for
                 `AZURE`. It replaces the stored configuration wholesale rather
                 than merging into it, so send every key the provider needs; send
-                null to clear it. It must not be empty and must not carry masked
-                values read back from a response. Sending it for an API-key
-                provider is rejected. For `BEDROCK`, always send `regionName`
-                and `modelId`, then authenticate with either `ACCESS_KEYS`
-                (`awsAccessKeyId` and `awsSecretAccessKey`) or, when calling the
-                OpenAI-compatible Mantle API by setting `api` to `MANTLE`, an
-                `authType` of `API_KEY` together with `apiKey`, an optional
-                `apiBase`, and an optional `projectId` (sent as the `OpenAI-
-                Project` header so AWS attributes usage and cost to that Mantle
-                project; letters, numbers, hyphens and underscores only). An API
-                key only works with the Mantle API, and assume-role Bedrock
-                configurations can only be managed on the Confident AI platform.
+                `null` to clear it. It must not be empty and must not carry
+                masked values read back from a response. Sending it for an API-
+                key provider is rejected. For `BEDROCK`, always send
+                `regionName` and `modelId`, then authenticate with either
+                `ACCESS_KEYS` (`awsAccessKeyId` and `awsSecretAccessKey`) or,
+                when calling the OpenAI-compatible Mantle API by setting `api`
+                to `MANTLE`, an `authType` of `API_KEY` together with `apiKey`,
+                an optional `apiBase`, and an optional `projectId` (sent as the
+                `OpenAI-Project` header so AWS attributes usage and cost to that
+                Mantle project; letters, numbers, hyphens and underscores only).
+                An API key only works with the Mantle API, and assume-role
+                Bedrock configurations can only be managed on the Confident AI
+                platform.
         """
         return await self._client.a_update_model_credentials(
             self._project_id(),

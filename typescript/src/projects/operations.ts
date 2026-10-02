@@ -140,16 +140,16 @@ export class ProjectsOperations {
    * @param projectId The id of the project, which must belong to the
    *   organization your API key is scoped to.
    * @param apiKey The provider's API key, for the API-key providers only. Send
-   *   the raw secret to set it, or null to clear it; a masked value read back
+   *   the raw secret to set it, or `null` to clear it; a masked value read back
    *   from a response is rejected. Sending it for a configuration provider is
    *   rejected.
    * @param modelConfig The provider's configuration, for the configuration
    *   providers only — for example `azureApiBase`, `azureDeploymentName`,
    *   `azureApiVersion` and `azureApiKey` for `AZURE`. It replaces the stored
    *   configuration wholesale rather than merging into it, so send every key
-   *   the provider needs; send null to clear it. It must not be empty and must
-   *   not carry masked values read back from a response. Sending it for an API-
-   *   key provider is rejected. For `BEDROCK`, always send `regionName` and
+   *   the provider needs; send `null` to clear it. It must not be empty and
+   *   must not carry masked values read back from a response. Sending it for an
+   *   API-key provider is rejected. For `BEDROCK`, always send `regionName` and
    *   `modelId`, then authenticate with either `ACCESS_KEYS` (`awsAccessKeyId`
    *   and `awsSecretAccessKey`) or, when calling the OpenAI-compatible Mantle
    *   API by setting `api` to `MANTLE`, an `authType` of `API_KEY` together

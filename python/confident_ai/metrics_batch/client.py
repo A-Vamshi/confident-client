@@ -18,14 +18,14 @@ class MetricsBatchClient:
     def create(self, metrics: List[CreateMetricRequest]) -> MetricList:
         """Batch Create Metrics
 
-        Creates several GEVAL metrics at once and returns the ones created.
-        Metrics whose name already exists in the project are skipped. DAG
+        Creates several `GEVAL` metrics at once and returns the ones created.
+        Metrics whose name already exists in the project are skipped. `DAG`
         metrics must be created one at a time.
 
         Args:
             metrics: The metrics to create. Names must be unique within the
-                batch for the same `multiTurn`, and DAG metrics are not accepted
-                here.
+                batch for the same `multiTurn`, and `DAG` metrics are not
+                accepted here.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -38,14 +38,14 @@ class MetricsBatchClient:
     async def a_create(self, metrics: List[CreateMetricRequest]) -> MetricList:
         """Batch Create Metrics
 
-        Creates several GEVAL metrics at once and returns the ones created.
-        Metrics whose name already exists in the project are skipped. DAG
+        Creates several `GEVAL` metrics at once and returns the ones created.
+        Metrics whose name already exists in the project are skipped. `DAG`
         metrics must be created one at a time.
 
         Args:
             metrics: The metrics to create. Names must be unique within the
-                batch for the same `multiTurn`, and DAG metrics are not accepted
-                here.
+                batch for the same `multiTurn`, and `DAG` metrics are not
+                accepted here.
         """
         return await self._api.a_request(
             HttpMethods.POST,

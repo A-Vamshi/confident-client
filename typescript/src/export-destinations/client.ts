@@ -58,10 +58,10 @@ export class ExportDestinationsClient {
    *   a masked value is rejected here — send the real secret.
    * @param pathPrefix A folder inside the bucket to write exports under. A
    *   leading slash is stripped and a trailing one added, so `/confident-ai` is
-   *   stored as `confident-ai/`. Omit it, or send null or an empty string, to
+   *   stored as `confident-ai/`. Omit it, or send `null` or an empty string, to
    *   write to the root of the bucket.
    * @param enabled Whether export schedules may upload to this destination.
-   *   Defaults to true.
+   *   Defaults to `true`.
    */
   async create(
     name: string,
@@ -143,10 +143,10 @@ export class ExportDestinationsClient {
    *   returned leaves it untouched too; the mask is never written into storage.
    * @param pathPrefix A folder inside the bucket to write exports under. A
    *   leading slash is stripped and a trailing one added, so `/confident-ai` is
-   *   stored as `confident-ai/`. Send null to clear it and write to the root of
-   *   the bucket; an empty string is ignored.
+   *   stored as `confident-ai/`. Send `null` to clear it and write to the root
+   *   of the bucket; an empty string is ignored.
    * @param enabled Whether export schedules may upload to this destination. Set
-   *   it to false to stop uploads without deleting the destination.
+   *   it to `false` to stop uploads without deleting the destination.
    */
   async update(
     exportDestinationId: string,

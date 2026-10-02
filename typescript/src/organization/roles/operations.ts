@@ -15,7 +15,7 @@ export class RolesOperations extends PoliciesOperations {
    *
    * Lists every organization role a member can be given: the custom roles your
    * organization owns, plus the global, system-defined ones (`organizationId`
-   * is null). Each comes with the policies attached to it.
+   * is `null`). Each comes with the policies attached to it.
    */
   async listRoles(): Promise<OrganizationRoleList> {
     return this.api.sendRequest<OrganizationRoleList>(
@@ -42,7 +42,7 @@ export class RolesOperations extends PoliciesOperations {
    *   Discover assignable policies with the policies endpoint of the same
    *   scope.
    * @param description What the role is for. On an update, omit it to leave the
-   *   stored description unchanged, or send null to clear it.
+   *   stored description unchanged, or send `null` to clear it.
    */
   async createRole(
     name: string,
@@ -76,7 +76,7 @@ export class RolesOperations extends PoliciesOperations {
    *   Discover assignable policies with the policies endpoint of the same
    *   scope.
    * @param description What the role is for. On an update, omit it to leave the
-   *   stored description unchanged, or send null to clear it.
+   *   stored description unchanged, or send `null` to clear it.
    */
   async updateRole(
     roleId: string,

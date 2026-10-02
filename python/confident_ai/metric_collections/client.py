@@ -64,7 +64,7 @@ class MetricCollectionsClient:
         Args:
             name: The name of the metric collection, which must be unique within
                 your project.
-            multi_turn: This is true if the collection is multi-turn, which
+            multi_turn: This is `true` if the collection is multi-turn, which
                 contains only multi-turn metrics. It cannot be changed once the
                 collection exists.
             metrics_settings: The metrics in the collection with their settings.
@@ -73,9 +73,9 @@ class MetricCollectionsClient:
                 run against, between 0 and 1. Applied on top of each metric's
                 own `sampleRate`. Defaults to 1.
             input_transformer_id: The id of a transformer that reshapes the
-                payload before evaluation. Send null to unset it.
+                payload before evaluation. Send `null` to unset it.
             output_transformer_id: The id of a transformer that reshapes the
-                result after evaluation. Send null to unset it.
+                result after evaluation. Send `null` to unset it.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -111,7 +111,7 @@ class MetricCollectionsClient:
         Args:
             name: The name of the metric collection, which must be unique within
                 your project.
-            multi_turn: This is true if the collection is multi-turn, which
+            multi_turn: This is `true` if the collection is multi-turn, which
                 contains only multi-turn metrics. It cannot be changed once the
                 collection exists.
             metrics_settings: The metrics in the collection with their settings.
@@ -120,9 +120,9 @@ class MetricCollectionsClient:
                 run against, between 0 and 1. Applied on top of each metric's
                 own `sampleRate`. Defaults to 1.
             input_transformer_id: The id of a transformer that reshapes the
-                payload before evaluation. Send null to unset it.
+                payload before evaluation. Send `null` to unset it.
             output_transformer_id: The id of a transformer that reshapes the
-                result after evaluation. Send null to unset it.
+                result after evaluation. Send `null` to unset it.
         """
         return await self._api.a_request(
             HttpMethods.POST,
@@ -198,9 +198,9 @@ class MetricCollectionsClient:
                 run against, between 0 and 1. Applied on top of each metric's
                 own `sampleRate`. Defaults to 1.
             input_transformer_id: The id of a transformer that reshapes the
-                payload before evaluation. Send null to unset it.
+                payload before evaluation. Send `null` to unset it.
             output_transformer_id: The id of a transformer that reshapes the
-                result after evaluation. Send null to unset it.
+                result after evaluation. Send `null` to unset it.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -244,9 +244,9 @@ class MetricCollectionsClient:
                 run against, between 0 and 1. Applied on top of each metric's
                 own `sampleRate`. Defaults to 1.
             input_transformer_id: The id of a transformer that reshapes the
-                payload before evaluation. Send null to unset it.
+                payload before evaluation. Send `null` to unset it.
             output_transformer_id: The id of a transformer that reshapes the
-                result after evaluation. Send null to unset it.
+                result after evaluation. Send `null` to unset it.
         """
         return await self._api.a_request(
             HttpMethods.PUT,

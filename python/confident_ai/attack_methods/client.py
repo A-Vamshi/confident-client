@@ -37,8 +37,8 @@ class AttackMethodsClient:
             page: The page of attack methods to return. Defaults to 1.
             page_size: The number of attack methods per page, at most 100.
                 Defaults to 25.
-            multi_turn: When true, returns only multi-turn attack methods; when
-                false, only single-turn ones. Omit to return both.
+            multi_turn: When `true`, returns only multi-turn attack methods;
+                when `false`, only single-turn ones. Omit to return both.
         """
         return self._api.request(
             HttpMethods.GET,
@@ -69,8 +69,8 @@ class AttackMethodsClient:
             page: The page of attack methods to return. Defaults to 1.
             page_size: The number of attack methods per page, at most 100.
                 Defaults to 25.
-            multi_turn: When true, returns only multi-turn attack methods; when
-                false, only single-turn ones. Omit to return both.
+            multi_turn: When `true`, returns only multi-turn attack methods;
+                when `false`, only single-turn ones. Omit to return both.
         """
         return await self._api.a_request(
             HttpMethods.GET,

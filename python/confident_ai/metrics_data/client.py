@@ -38,8 +38,8 @@ class MetricsDataClient:
                 datetime.
             end: Returns only results recorded before this ISO 8601 datetime.
             multi_turn: Filter for results evaluated on your test case type,
-                true for multi-turn, false for single-turn. Returns both if not
-                specified.
+                `true` for multi-turn, `false` for single-turn. Returns both if
+                not specified.
             search_term: Returns only results whose metric name contains this
                 text, case-insensitively.
         """
@@ -81,8 +81,8 @@ class MetricsDataClient:
                 datetime.
             end: Returns only results recorded before this ISO 8601 datetime.
             multi_turn: Filter for results evaluated on your test case type,
-                true for multi-turn, false for single-turn. Returns both if not
-                specified.
+                `true` for multi-turn, `false` for single-turn. Returns both if
+                not specified.
             search_term: Returns only results whose metric name contains this
                 text, case-insensitively.
         """

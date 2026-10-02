@@ -15,8 +15,8 @@ export class RolesOperations extends PoliciesOperations {
    *
    * Lists every role a member of this project can be given: the custom roles
    * the project owns, plus the global, system-defined ones (`projectId` is
-   * null). Project roles govern access inside this project only; organization-
-   * wide settings come from the member's organization role.
+   * `null`). Project roles govern access inside this project only;
+   * organization-wide settings come from the member's organization role.
    *
    * @param projectId The id of the project, which must belong to your
    *   organization.
@@ -50,7 +50,7 @@ export class RolesOperations extends PoliciesOperations {
    *   Discover assignable policies with the policies endpoint of the same
    *   scope.
    * @param description What the role is for. On an update, omit it to leave the
-   *   stored description unchanged, or send null to clear it.
+   *   stored description unchanged, or send `null` to clear it.
    */
   async createRole(
     projectId: string,
@@ -85,7 +85,7 @@ export class RolesOperations extends PoliciesOperations {
    *   Discover assignable policies with the policies endpoint of the same
    *   scope.
    * @param description What the role is for. On an update, omit it to leave the
-   *   stored description unchanged, or send null to clear it.
+   *   stored description unchanged, or send `null` to clear it.
    */
   async updateRole(
     projectId: string,

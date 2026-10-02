@@ -23,7 +23,7 @@ class ModelsOperations:
         required `type` query parameter. Each default applies to every project
         with no override of its own; read a single project's effective model
         with the project models endpoint. Reading never creates configuration,
-        so this answers with null until the organization sets one.
+        so this answers with `null` until the organization sets one.
 
         Args:
             type: Which of the organization's models to read. The organization
@@ -46,7 +46,7 @@ class ModelsOperations:
         required `type` query parameter. Each default applies to every project
         with no override of its own; read a single project's effective model
         with the project models endpoint. Reading never creates configuration,
-        so this answers with null until the organization sets one.
+        so this answers with `null` until the organization sets one.
 
         Args:
             type: Which of the organization's models to read. The organization
@@ -77,19 +77,19 @@ class ModelsOperations:
         already be configured on the organization through the model credentials
         endpoint, and a provider your organization's model provider policy does
         not allow is rejected with `403`. `CONFIDENT_AI` needs no credential and
-        stores a null model name.
+        stores a `null` model name.
 
         Args:
             model_type: Which of the organization's models to set.
             name: The model to call at that provider, for example
                 `gemini-2.0-flash`. Omit it to fall back to the provider's
                 default; it is ignored for `CONFIDENT_AI`, which always stores a
-                null name. A Portkey model must be written as the saved
+                `null` name. A Portkey model must be written as the saved
                 integration slug, for example `@openai-prod/gpt-4o`.
             max_concurrency: How many calls Confident AI may make to this model
-                at once. Omit it or send null for no limit of its own.
+                at once. Omit it or send `null` for no limit of its own.
             max_input_tokens: How many input tokens Confident AI may send to
-                this model per call. Omit it or send null for no limit of its
+                this model per call. Omit it or send `null` for no limit of its
                 own.
         """
         return self._api.request(
@@ -123,19 +123,19 @@ class ModelsOperations:
         already be configured on the organization through the model credentials
         endpoint, and a provider your organization's model provider policy does
         not allow is rejected with `403`. `CONFIDENT_AI` needs no credential and
-        stores a null model name.
+        stores a `null` model name.
 
         Args:
             model_type: Which of the organization's models to set.
             name: The model to call at that provider, for example
                 `gemini-2.0-flash`. Omit it to fall back to the provider's
                 default; it is ignored for `CONFIDENT_AI`, which always stores a
-                null name. A Portkey model must be written as the saved
+                `null` name. A Portkey model must be written as the saved
                 integration slug, for example `@openai-prod/gpt-4o`.
             max_concurrency: How many calls Confident AI may make to this model
-                at once. Omit it or send null for no limit of its own.
+                at once. Omit it or send `null` for no limit of its own.
             max_input_tokens: How many input tokens Confident AI may send to
-                this model per call. Omit it or send null for no limit of its
+                this model per call. Omit it or send `null` for no limit of its
                 own.
         """
         return await self._api.a_request(

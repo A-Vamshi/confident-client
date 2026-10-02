@@ -41,8 +41,8 @@ class VulnerabilitiesClient:
                 Defaults to 25.
             category: Returns only vulnerabilities in this catalog category. An
                 unknown category is rejected with the list of valid ones.
-            built_in: When true, returns only the vulnerabilities Confident AI
-                ships; when false, only the ones your project defined. Omit to
+            built_in: When `true`, returns only the vulnerabilities Confident AI
+                ships; when `false`, only the ones your project defined. Omit to
                 return both.
         """
         return self._api.request(
@@ -77,8 +77,8 @@ class VulnerabilitiesClient:
                 Defaults to 25.
             category: Returns only vulnerabilities in this catalog category. An
                 unknown category is rejected with the list of valid ones.
-            built_in: When true, returns only the vulnerabilities Confident AI
-                ships; when false, only the ones your project defined. Omit to
+            built_in: When `true`, returns only the vulnerabilities Confident AI
+                ships; when `false`, only the ones your project defined. Omit to
                 return both.
         """
         return await self._api.a_request(

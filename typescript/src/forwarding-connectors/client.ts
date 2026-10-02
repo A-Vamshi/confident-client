@@ -61,7 +61,7 @@ export class ForwardingConnectorsClient {
    * @param environments The environments whose traces this connector forwards.
    *   An empty list forwards traces from every environment. Omit this field to
    *   leave the stored environments unchanged.
-   * @param enabled Whether the connector forwards traces. Defaults to true on
+   * @param enabled Whether the connector forwards traces. Defaults to `true` on
    *   create; omit it on an update to leave it unchanged.
    */
   async create(
@@ -118,7 +118,7 @@ export class ForwardingConnectorsClient {
    * @param environments The environments whose traces this connector forwards.
    *   An empty list forwards traces from every environment. Omit this field to
    *   leave the stored environments unchanged.
-   * @param enabled Whether the connector forwards traces. Defaults to true on
+   * @param enabled Whether the connector forwards traces. Defaults to `true` on
    *   create; omit it on an update to leave it unchanged.
    */
   async update(

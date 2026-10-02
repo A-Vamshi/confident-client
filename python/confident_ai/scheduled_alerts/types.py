@@ -4,7 +4,7 @@
 # and regenerate.
 
 from enum import Enum
-from typing import List, Optional
+from typing import List, Literal, Optional, Union
 
 from pydantic import Field
 
@@ -39,9 +39,70 @@ class AlertThresholdDirection(Enum):
     BELOW = "below"
 
 
+class ScheduledAlertType(Enum):
+    THRESHOLD = "THRESHOLD"
+    REGRESSION = "REGRESSION"
+    ANOMALY = "ANOMALY"
+    SIGNAL_SPIKE = "SIGNAL_SPIKE"
+
+
 class AlertThresholdSettings(ConfidentBaseModel):
     value: float
     direction: AlertThresholdDirection
+
+
+class ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings0(
+    ConfidentBaseModel
+):
+    trace_name: Optional[str] = Field(default=None, alias="traceName")
+    metrics: Optional[
+        List[
+            Literal[
+                "avg_score",
+                "error_rate",
+                "avg_latency",
+                "avg_cost",
+                "negative_label_rate",
+            ]
+        ]
+    ] = None
+    direction: Literal["WORSENED", "ANY"]
+    min_affected_count: int = Field(alias="minAffectedCount")
+    significant_only: bool = Field(alias="significantOnly")
+
+
+class ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings1(
+    ConfidentBaseModel
+):
+    trace_name: Optional[str] = Field(default=None, alias="traceName")
+    metrics: Optional[
+        List[
+            Literal[
+                "avg_score",
+                "error_rate",
+                "avg_latency",
+                "avg_cost",
+                "negative_label_rate",
+            ]
+        ]
+    ] = None
+    direction: Literal["WORSENED", "ANY"]
+    min_affected_count: int = Field(alias="minAffectedCount")
+
+
+class ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings2(
+    ConfidentBaseModel
+):
+    classifier_ids: List[str] = Field(alias="classifierIds")
+    direction: Literal["WORSENED", "ANY"]
+    min_affected_count: int = Field(alias="minAffectedCount")
+
+
+ScheduledAlertDetectionSettings = Union[
+    ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings0,
+    ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings1,
+    ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings2,
+]
 
 
 class CreateScheduledAlertRequest(ConfidentBaseModel):
@@ -58,12 +119,59 @@ class CreateScheduledAlertRequest(ConfidentBaseModel):
     filters: Optional[FilterSet] = None
     severity: Optional[AlertSeverity] = None
     name: str
+    type: Optional[ScheduledAlertType] = None
     data_model: AlertDataModel = Field(alias="dataModel")
-    aggregation: str
-    threshold_settings: AlertThresholdSettings = Field(
+    aggregation: Optional[str] = None
+    threshold_settings: Optional[AlertThresholdSettings] = Field(
+        default=None,
         alias="thresholdSettings",
     )
+    detection_settings: Optional[ScheduledAlertDetectionSettings] = Field(
+        default=None,
+        alias="detectionSettings",
+    )
     enabled: Optional[bool] = None
+
+
+class ScheduledAlertDetectionSettings0(ConfidentBaseModel):
+    trace_name: Optional[str] = Field(default=None, alias="traceName")
+    metrics: Optional[
+        List[
+            Literal[
+                "avg_score",
+                "error_rate",
+                "avg_latency",
+                "avg_cost",
+                "negative_label_rate",
+            ]
+        ]
+    ] = None
+    direction: Literal["WORSENED", "ANY"]
+    min_affected_count: int = Field(alias="minAffectedCount")
+    significant_only: bool = Field(alias="significantOnly")
+
+
+class ScheduledAlertDetectionSettings1(ConfidentBaseModel):
+    trace_name: Optional[str] = Field(default=None, alias="traceName")
+    metrics: Optional[
+        List[
+            Literal[
+                "avg_score",
+                "error_rate",
+                "avg_latency",
+                "avg_cost",
+                "negative_label_rate",
+            ]
+        ]
+    ] = None
+    direction: Literal["WORSENED", "ANY"]
+    min_affected_count: int = Field(alias="minAffectedCount")
+
+
+class ScheduledAlertDetectionSettings2(ConfidentBaseModel):
+    classifier_ids: List[str] = Field(alias="classifierIds")
+    direction: Literal["WORSENED", "ANY"]
+    min_affected_count: int = Field(alias="minAffectedCount")
 
 
 class ScheduledAlertScheduleSettings(ConfidentBaseModel):
@@ -82,11 +190,21 @@ class ScheduledAlert(ConfidentBaseModel):
     id: str
     name: str
     description: Optional[str]
+    type: ScheduledAlertType
     data_model: AlertDataModel = Field(alias="dataModel")
-    aggregation: str
+    aggregation: Optional[str]
     filters: FilterSet
-    threshold_settings: AlertThresholdSettings = Field(
+    threshold_settings: Optional[AlertThresholdSettings] = Field(
         alias="thresholdSettings",
+    )
+    detection_settings: Optional[
+        Union[
+            ScheduledAlertDetectionSettings0,
+            ScheduledAlertDetectionSettings1,
+            ScheduledAlertDetectionSettings2,
+        ]
+    ] = Field(
+        alias="detectionSettings",
     )
     severity: AlertSeverity
     schedule_settings: Optional[ScheduledAlertScheduleSettings] = Field(
@@ -97,6 +215,7 @@ class ScheduledAlert(ConfidentBaseModel):
 class ScheduledAlertSummary(ConfidentBaseModel):
     id: str
     name: str
+    type: ScheduledAlertType
     data_model: AlertDataModel = Field(alias="dataModel")
     enabled: bool
 
@@ -128,6 +247,7 @@ class UpdateScheduledAlertRequest(ConfidentBaseModel):
     filters: Optional[FilterSet] = None
     severity: Optional[AlertSeverity] = None
     name: Optional[str] = None
+    type: Optional[ScheduledAlertType] = None
     data_model: Optional[AlertDataModel] = Field(
         default=None,
         alias="dataModel",
@@ -136,5 +256,9 @@ class UpdateScheduledAlertRequest(ConfidentBaseModel):
     threshold_settings: Optional[AlertThresholdSettings] = Field(
         default=None,
         alias="thresholdSettings",
+    )
+    detection_settings: Optional[ScheduledAlertDetectionSettings] = Field(
+        default=None,
+        alias="detectionSettings",
     )
     enabled: Optional[bool] = None

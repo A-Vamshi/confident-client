@@ -137,7 +137,7 @@ export class Project {
    * change the value.
    *
    * @param apiKeyId The id of the API key.
-   * @param valid Send false to deactivate the key, true to reactivate it. A
+   * @param valid Send `false` to deactivate the key, `true` to reactivate it. A
    *   deactivated key is rejected on every request, and deactivating one takes
    *   effect immediately.
    */
@@ -175,7 +175,7 @@ export class Project {
    *   which replaces the value immediately and stops the old one at once.
    * @param expiresInDays A new lifetime for the key, in days from now — a
    *   duration, not a date, stored on the key as `expiresAt`. Omit it to keep
-   *   the current expiry, or send null to remove the expiry altogether.
+   *   the current expiry, or send `null` to remove the expiry altogether.
    *   Required when rotating a key that has already expired.
    */
   async rotateApiKey(
@@ -375,7 +375,7 @@ export class Project {
    *   of the same scope; an id from the other scope's catalog is stored but
    *   never matches a permission check here.
    * @param description What the policy is for. On an update, omit it to leave
-   *   the stored description unchanged, or send null to clear it.
+   *   the stored description unchanged, or send `null` to clear it.
    */
   async createPolicy(
     name: string,
@@ -409,7 +409,7 @@ export class Project {
    *   of the same scope; an id from the other scope's catalog is stored but
    *   never matches a permission check here.
    * @param description What the policy is for. On an update, omit it to leave
-   *   the stored description unchanged, or send null to clear it.
+   *   the stored description unchanged, or send `null` to clear it.
    */
   async updatePolicy(
     policyId: string,
@@ -447,8 +447,8 @@ export class Project {
    *
    * Lists every role a member of this project can be given: the custom roles
    * the project owns, plus the global, system-defined ones (`projectId` is
-   * null). Project roles govern access inside this project only; organization-
-   * wide settings come from the member's organization role.
+   * `null`). Project roles govern access inside this project only;
+   * organization-wide settings come from the member's organization role.
    */
   async listRoles(): Promise<ProjectRoleList> {
     return this.client.listRoles(this.projectIdOrThrow());
@@ -473,7 +473,7 @@ export class Project {
    *   Discover assignable policies with the policies endpoint of the same
    *   scope.
    * @param description What the role is for. On an update, omit it to leave the
-   *   stored description unchanged, or send null to clear it.
+   *   stored description unchanged, or send `null` to clear it.
    */
   async createRole(
     name: string,
@@ -507,7 +507,7 @@ export class Project {
    *   Discover assignable policies with the policies endpoint of the same
    *   scope.
    * @param description What the role is for. On an update, omit it to leave the
-   *   stored description unchanged, or send null to clear it.
+   *   stored description unchanged, or send `null` to clear it.
    */
   async updateRole(
     roleId: string,
@@ -568,10 +568,10 @@ export class Project {
    * Set Project Model
    *
    * Sets one of the project's models, selected by the `modelType` path segment;
-   * `decision` configures the model used by JEVAL metrics. The provider's
+   * `decision` configures the model used by `JEVAL` metrics. The provider's
    * credential must already be configured on the project or organization, and a
    * provider blocked by the organization's model provider policy is rejected.
-   * `CONFIDENT_AI` needs no credential and stores a null model name.
+   * `CONFIDENT_AI` needs no credential and stores a `null` model name.
    *
    * @param modelType Which of the project's models to act on.
    * @param modelConfig The model to run for the type named in the path. The
@@ -620,16 +620,16 @@ export class Project {
    * clearing one is always permitted.
    *
    * @param apiKey The provider's API key, for the API-key providers only. Send
-   *   the raw secret to set it, or null to clear it; a masked value read back
+   *   the raw secret to set it, or `null` to clear it; a masked value read back
    *   from a response is rejected. Sending it for a configuration provider is
    *   rejected.
    * @param modelConfig The provider's configuration, for the configuration
    *   providers only — for example `azureApiBase`, `azureDeploymentName`,
    *   `azureApiVersion` and `azureApiKey` for `AZURE`. It replaces the stored
    *   configuration wholesale rather than merging into it, so send every key
-   *   the provider needs; send null to clear it. It must not be empty and must
-   *   not carry masked values read back from a response. Sending it for an API-
-   *   key provider is rejected. For `BEDROCK`, always send `regionName` and
+   *   the provider needs; send `null` to clear it. It must not be empty and
+   *   must not carry masked values read back from a response. Sending it for an
+   *   API-key provider is rejected. For `BEDROCK`, always send `regionName` and
    *   `modelId`, then authenticate with either `ACCESS_KEYS` (`awsAccessKeyId`
    *   and `awsSecretAccessKey`) or, when calling the OpenAI-compatible Mantle
    *   API by setting `api` to `MANTLE`, an `authType` of `API_KEY` together

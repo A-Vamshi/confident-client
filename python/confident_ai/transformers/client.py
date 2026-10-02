@@ -80,7 +80,7 @@ class TransformersClient:
 
         Args:
             name: The name of the transformer, unique within the project.
-            description: What the transformer extracts. Send null to leave it
+            description: What the transformer extracts. Send `null` to leave it
                 unset.
         """
         return self._api.request(
@@ -110,7 +110,7 @@ class TransformersClient:
 
         Args:
             name: The name of the transformer, unique within the project.
-            description: What the transformer extracts. Send null to leave it
+            description: What the transformer extracts. Send `null` to leave it
                 unset.
         """
         return await self._api.a_request(
@@ -129,7 +129,7 @@ class TransformersClient:
         """Get Transformer
 
         Retrieves a transformer by id, including the code it runs. A transformer
-        saved without code returns `codeDefinition` as null.
+        saved without code returns `codeDefinition` as `null`.
 
         Args:
             transformer_id: The id of the transformer.
@@ -145,7 +145,7 @@ class TransformersClient:
         """Get Transformer
 
         Retrieves a transformer by id, including the code it runs. A transformer
-        saved without code returns `codeDefinition` as null.
+        saved without code returns `codeDefinition` as `null`.
 
         Args:
             transformer_id: The id of the transformer.
@@ -175,7 +175,7 @@ class TransformersClient:
         Args:
             transformer_id: The id of the transformer.
             name: The name of the transformer, unique within the project.
-            description: What the transformer extracts. Send null to clear it.
+            description: What the transformer extracts. Send `null` to clear it.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -208,7 +208,7 @@ class TransformersClient:
         Args:
             transformer_id: The id of the transformer.
             name: The name of the transformer, unique within the project.
-            description: What the transformer extracts. Send null to clear it.
+            description: What the transformer extracts. Send `null` to clear it.
         """
         return await self._api.a_request(
             HttpMethods.PUT,

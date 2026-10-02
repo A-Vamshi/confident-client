@@ -89,7 +89,7 @@ class McpServersClient:
 
         Args:
             name: The name of the MCP server, unique within the project.
-            description: What the MCP server is for. Send null to leave it
+            description: What the MCP server is for. Send `null` to leave it
                 unset.
             url: The URL of the server. Required when `transport` is `HTTP`, and
                 cleared otherwise.
@@ -98,7 +98,7 @@ class McpServersClient:
                 stored as a whole rather than merged, so send every header you
                 want to keep.
             auth_config: The credentials for a non-`HEADERS` auth type. Send
-                null to clear them.
+                `null` to clear them.
             command: The command that launches the server. Required when
                 `transport` is `STDIO`, and cleared otherwise.
             args: The arguments passed to `command`. `STDIO` transport only.
@@ -143,7 +143,7 @@ class McpServersClient:
 
         Args:
             name: The name of the MCP server, unique within the project.
-            description: What the MCP server is for. Send null to leave it
+            description: What the MCP server is for. Send `null` to leave it
                 unset.
             url: The URL of the server. Required when `transport` is `HTTP`, and
                 cleared otherwise.
@@ -152,7 +152,7 @@ class McpServersClient:
                 stored as a whole rather than merged, so send every header you
                 want to keep.
             auth_config: The credentials for a non-`HEADERS` auth type. Send
-                null to clear them.
+                `null` to clear them.
             command: The command that launches the server. Required when
                 `transport` is `STDIO`, and cleared otherwise.
             args: The arguments passed to `command`. `STDIO` transport only.
@@ -231,12 +231,12 @@ class McpServersClient:
         Updates an MCP server and returns it. Only the fields you send change,
         and the merged result must be valid — switching `transport` needs that
         transport's required field in the same call. Any successful update
-        resets `connected` to false, so connect again afterwards.
+        resets `connected` to `false`, so connect again afterwards.
 
         Args:
             mcp_server_id: The id of the MCP server.
             name: The name of the MCP server, unique within the project.
-            description: What the MCP server is for. Send null to leave it
+            description: What the MCP server is for. Send `null` to leave it
                 unset.
             url: The URL of the server. Required when `transport` is `HTTP`, and
                 cleared otherwise.
@@ -245,7 +245,7 @@ class McpServersClient:
                 stored as a whole rather than merged, so send every header you
                 want to keep.
             auth_config: The credentials for a non-`HEADERS` auth type. Send
-                null to clear them.
+                `null` to clear them.
             command: The command that launches the server. Required when
                 `transport` is `STDIO`, and cleared otherwise.
             args: The arguments passed to `command`. `STDIO` transport only.
@@ -289,12 +289,12 @@ class McpServersClient:
         Updates an MCP server and returns it. Only the fields you send change,
         and the merged result must be valid — switching `transport` needs that
         transport's required field in the same call. Any successful update
-        resets `connected` to false, so connect again afterwards.
+        resets `connected` to `false`, so connect again afterwards.
 
         Args:
             mcp_server_id: The id of the MCP server.
             name: The name of the MCP server, unique within the project.
-            description: What the MCP server is for. Send null to leave it
+            description: What the MCP server is for. Send `null` to leave it
                 unset.
             url: The URL of the server. Required when `transport` is `HTTP`, and
                 cleared otherwise.
@@ -303,7 +303,7 @@ class McpServersClient:
                 stored as a whole rather than merged, so send every header you
                 want to keep.
             auth_config: The credentials for a non-`HEADERS` auth type. Send
-                null to clear them.
+                `null` to clear them.
             command: The command that launches the server. Required when
                 `transport` is `STDIO`, and cleared otherwise.
             args: The arguments passed to `command`. `STDIO` transport only.
@@ -369,7 +369,7 @@ class McpServersClient:
         stored `connected` and `availableTools` with the result. This reaches
         out to your own server and can take a few seconds. A server that fails
         to connect is not an error: the response is still `200` with `connected`
-        false and `error` set, so read `connected` for the verdict.
+        `false` and `error` set, so read `connected` for the verdict.
 
         Args:
             mcp_server_id: The id of the MCP server.
@@ -388,7 +388,7 @@ class McpServersClient:
         stored `connected` and `availableTools` with the result. This reaches
         out to your own server and can take a few seconds. A server that fails
         to connect is not an error: the response is still `200` with `connected`
-        false and `error` set, so read `connected` for the verdict.
+        `false` and `error` set, so read `connected` for the verdict.
 
         Args:
             mcp_server_id: The id of the MCP server.

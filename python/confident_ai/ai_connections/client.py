@@ -119,116 +119,119 @@ class AIConnectionsClient:
         Args:
             name: The name of the AI connection, unique within the project.
             endpoint: The `https://` URL Confident AI calls to reach your LLM
-                application, or a `wss://` URL when `responseMode` is WEBSOCKET.
-                An AGENT_HANDLER connection needs none. Send null to clear it.
-            response_mode: How your application replies. Send null to clear it,
-                which reads the answer out of a completed HTTP response body.
+                application, or a `wss://` URL when `responseMode` is
+                `WEBSOCKET`. An `AGENT_HANDLER` connection needs none. Send
+                `null` to clear it.
+            response_mode: How your application replies. Send `null` to clear
+                it, which reads the answer out of a completed HTTP response
+                body.
             async_response: Whether your application acknowledges the request
                 and posts the result back later instead of answering inline.
                 Only a non-streaming `responseMode` supports this.
             timeout: How many seconds to wait for your application to answer
                 before giving up on a request. Defaults to 60 when the
-                connection is created. Send null to clear it.
+                connection is created. Send `null` to clear it.
             max_concurrency: The most requests Confident AI sends to your
-                application at the same time. Send null to leave it unbounded.
+                application at the same time. Send `null` to leave it unbounded.
             max_retries: How many times a failed request is retried before the
-                test case is recorded as errored. Send null to clear it.
+                test case is recorded as errored. Send `null` to clear it.
             default_num_generations: How many times your application is called
                 per test case, so one unlucky output does not decide the result.
                 At most 50.
             headers: The headers sent with every request. The list replaces the
                 stored headers rather than merging into them, so include every
-                header the connection should keep. Send null to clear them.
+                header the connection should keep. Send `null` to clear them.
             query_params: The query parameters appended to every request. The
                 list replaces the stored parameters rather than merging into
-                them. Send null to clear them.
+                them. Send `null` to clear them.
             payload: The request body template Confident AI sends. Placeholders
                 such as `{{input}}` are filled from the test case, and any key
-                in `prompts` is filled with that prompt's text. Send null to
+                in `prompts` is filled with that prompt's text. Send `null` to
                 clear it.
             hyperparameters: Free-form settings recorded against every test run
                 made through this connection, so results can be compared across
-                configurations. They are not sent to your application. Send null
-                to clear them.
+                configurations. They are not sent to your application. Send
+                `null` to clear them.
             authentication: The authentication configuration Confident AI
                 applies when calling your application, such as Auth0, HMAC or
                 Azure AD settings. Its shape follows the scheme you configure,
-                and it is stored as sent and read back as stored. Send null to
+                and it is stored as sent and read back as stored. Send `null` to
                 clear it.
             cloud_provider: The cloud vault configuration Confident AI uses to
                 pull credentials at call time instead of holding them itself.
                 Its shape follows the provider you configure, and it is stored
-                as sent and read back as stored. Send null to clear it.
+                as sent and read back as stored. Send `null` to clear it.
             actual_output_key_path: Where your application's answer sits in its
                 response. Each element is an object key or an array index,
                 walked in order, so `["choices", 0, "message", "content"]` reads
                 `choices[0].message.content`. A connection needs this or
-                `actualOutputTransformerId` before it can be used. Send null or
-                an empty list to clear it.
+                `actualOutputTransformerId` before it can be used. Send `null`
+                or an empty list to clear it.
             retrieval_context_key_path: Where the retrieved context sits in your
                 application's response, walked the same way as
                 `actualOutputKeyPath`. Set it for RAG applications so retrieval
-                metrics have something to score. Send null or an empty list to
+                metrics have something to score. Send `null` or an empty list to
                 clear it.
             tools_called_key_path: Where the list of tools your application
                 called sits in its response, walked the same way as
                 `actualOutputKeyPath`. Set it for agents so tool-use metrics
-                have something to score. Send null or an empty list to clear it.
+                have something to score. Send `null` or an empty list to clear
+                it.
             state_key_path: Where the conversation state sits in your
                 application's response, walked the same way as
                 `actualOutputKeyPath`. Confident AI reads it after each
-                simulated turn and sends it back on the next one. Send null or
+                simulated turn and sends it back on the next one. Send `null` or
                 an empty list to clear it.
             input_token_count_key_path: Where the prompt token count sits in
                 your application's response, walked the same way as
-                `actualOutputKeyPath`. Send null or an empty list to clear it.
+                `actualOutputKeyPath`. Send `null` or an empty list to clear it.
             output_token_count_key_path: Where the completion token count sits
                 in your application's response, walked the same way as
-                `actualOutputKeyPath`. Send null or an empty list to clear it.
+                `actualOutputKeyPath`. Send `null` or an empty list to clear it.
             token_cost_key_path: Where the cost of the call sits in your
                 application's response, walked the same way as
-                `actualOutputKeyPath`. Send null or an empty list to clear it.
+                `actualOutputKeyPath`. Send `null` or an empty list to clear it.
             actual_output_event: For a streaming `responseMode`, the name of the
                 event carrying your application's answer. Confident AI reads the
                 value out of the events with this name instead of out of a
                 completed body, applying `actualOutputKeyPath` to each one. Send
-                null to clear it.
+                `null` to clear it.
             retrieval_context_event: For a streaming `responseMode`, the name of
                 the event carrying the retrieved context, read the same way as
-                `actualOutputEvent`. Send null to clear it.
+                `actualOutputEvent`. Send `null` to clear it.
             tools_called_event: For a streaming `responseMode`, the name of the
                 event carrying the tools called, read the same way as
-                `actualOutputEvent`. Send null to clear it.
+                `actualOutputEvent`. Send `null` to clear it.
             state_event: For a streaming `responseMode`, the name of the event
                 carrying the conversation state, read the same way as
-                `actualOutputEvent`. Send null to clear it.
+                `actualOutputEvent`. Send `null` to clear it.
             actual_output_accumulate: For a streaming `responseMode`, whether
                 the chunks arriving on `actualOutputEvent` are joined into one
-                answer. Set it to false when each event already carries the
+                answer. Set it to `false` when each event already carries the
                 whole answer and only the last one counts.
             actual_output_transformer_id: The id of a transformer that extracts
                 the answer by running your code over the response, for shapes a
                 key path cannot reach. Send this or `actualOutputKeyPath`, never
-                both. The transformer must belong to this project. Send null to
-                clear it.
+                both. The transformer must belong to this project. Send `null`
+                to clear it.
             retrieval_context_transformer_id: The id of a transformer that
                 extracts the retrieved context. Send this or
-                `retrievalContextKeyPath`, never both. Send null to clear it.
+                `retrievalContextKeyPath`, never both. Send `null` to clear it.
             tools_called_transformer_id: The id of a transformer that extracts
                 the tools called. Send this or `toolsCalledKeyPath`, never both.
-                Send null to clear it.
+                Send `null` to clear it.
             state_transformer_id: The id of a transformer that extracts the
                 conversation state. Send this or `stateKeyPath`, never both.
-                Send null to clear it.
+                Send `null` to clear it.
             input_token_count_transformer_id: The id of a transformer that
                 extracts the prompt token count. Send this or
-                `inputTokenCountKeyPath`, never both. Send null to clear it.
+                `inputTokenCountKeyPath`, never both. Send `null` to clear it.
             output_token_count_transformer_id: The id of a transformer that
                 extracts the completion token count. Send this or
-                `outputTokenCountKeyPath`, never both. Send null to clear it.
+                `outputTokenCountKeyPath`, never both. Send `null` to clear it.
             token_cost_transformer_id: The id of a transformer that extracts the
                 cost of the call. Send this or `tokenCostKeyPath`, never both.
-                Send null to clear it.
+                Send `null` to clear it.
             prompts: The prompts to substitute into the request body, keyed by
                 the placeholder they fill in `payload`. The map replaces the
                 connection's current prompts rather than merging into them.
@@ -326,116 +329,119 @@ class AIConnectionsClient:
         Args:
             name: The name of the AI connection, unique within the project.
             endpoint: The `https://` URL Confident AI calls to reach your LLM
-                application, or a `wss://` URL when `responseMode` is WEBSOCKET.
-                An AGENT_HANDLER connection needs none. Send null to clear it.
-            response_mode: How your application replies. Send null to clear it,
-                which reads the answer out of a completed HTTP response body.
+                application, or a `wss://` URL when `responseMode` is
+                `WEBSOCKET`. An `AGENT_HANDLER` connection needs none. Send
+                `null` to clear it.
+            response_mode: How your application replies. Send `null` to clear
+                it, which reads the answer out of a completed HTTP response
+                body.
             async_response: Whether your application acknowledges the request
                 and posts the result back later instead of answering inline.
                 Only a non-streaming `responseMode` supports this.
             timeout: How many seconds to wait for your application to answer
                 before giving up on a request. Defaults to 60 when the
-                connection is created. Send null to clear it.
+                connection is created. Send `null` to clear it.
             max_concurrency: The most requests Confident AI sends to your
-                application at the same time. Send null to leave it unbounded.
+                application at the same time. Send `null` to leave it unbounded.
             max_retries: How many times a failed request is retried before the
-                test case is recorded as errored. Send null to clear it.
+                test case is recorded as errored. Send `null` to clear it.
             default_num_generations: How many times your application is called
                 per test case, so one unlucky output does not decide the result.
                 At most 50.
             headers: The headers sent with every request. The list replaces the
                 stored headers rather than merging into them, so include every
-                header the connection should keep. Send null to clear them.
+                header the connection should keep. Send `null` to clear them.
             query_params: The query parameters appended to every request. The
                 list replaces the stored parameters rather than merging into
-                them. Send null to clear them.
+                them. Send `null` to clear them.
             payload: The request body template Confident AI sends. Placeholders
                 such as `{{input}}` are filled from the test case, and any key
-                in `prompts` is filled with that prompt's text. Send null to
+                in `prompts` is filled with that prompt's text. Send `null` to
                 clear it.
             hyperparameters: Free-form settings recorded against every test run
                 made through this connection, so results can be compared across
-                configurations. They are not sent to your application. Send null
-                to clear them.
+                configurations. They are not sent to your application. Send
+                `null` to clear them.
             authentication: The authentication configuration Confident AI
                 applies when calling your application, such as Auth0, HMAC or
                 Azure AD settings. Its shape follows the scheme you configure,
-                and it is stored as sent and read back as stored. Send null to
+                and it is stored as sent and read back as stored. Send `null` to
                 clear it.
             cloud_provider: The cloud vault configuration Confident AI uses to
                 pull credentials at call time instead of holding them itself.
                 Its shape follows the provider you configure, and it is stored
-                as sent and read back as stored. Send null to clear it.
+                as sent and read back as stored. Send `null` to clear it.
             actual_output_key_path: Where your application's answer sits in its
                 response. Each element is an object key or an array index,
                 walked in order, so `["choices", 0, "message", "content"]` reads
                 `choices[0].message.content`. A connection needs this or
-                `actualOutputTransformerId` before it can be used. Send null or
-                an empty list to clear it.
+                `actualOutputTransformerId` before it can be used. Send `null`
+                or an empty list to clear it.
             retrieval_context_key_path: Where the retrieved context sits in your
                 application's response, walked the same way as
                 `actualOutputKeyPath`. Set it for RAG applications so retrieval
-                metrics have something to score. Send null or an empty list to
+                metrics have something to score. Send `null` or an empty list to
                 clear it.
             tools_called_key_path: Where the list of tools your application
                 called sits in its response, walked the same way as
                 `actualOutputKeyPath`. Set it for agents so tool-use metrics
-                have something to score. Send null or an empty list to clear it.
+                have something to score. Send `null` or an empty list to clear
+                it.
             state_key_path: Where the conversation state sits in your
                 application's response, walked the same way as
                 `actualOutputKeyPath`. Confident AI reads it after each
-                simulated turn and sends it back on the next one. Send null or
+                simulated turn and sends it back on the next one. Send `null` or
                 an empty list to clear it.
             input_token_count_key_path: Where the prompt token count sits in
                 your application's response, walked the same way as
-                `actualOutputKeyPath`. Send null or an empty list to clear it.
+                `actualOutputKeyPath`. Send `null` or an empty list to clear it.
             output_token_count_key_path: Where the completion token count sits
                 in your application's response, walked the same way as
-                `actualOutputKeyPath`. Send null or an empty list to clear it.
+                `actualOutputKeyPath`. Send `null` or an empty list to clear it.
             token_cost_key_path: Where the cost of the call sits in your
                 application's response, walked the same way as
-                `actualOutputKeyPath`. Send null or an empty list to clear it.
+                `actualOutputKeyPath`. Send `null` or an empty list to clear it.
             actual_output_event: For a streaming `responseMode`, the name of the
                 event carrying your application's answer. Confident AI reads the
                 value out of the events with this name instead of out of a
                 completed body, applying `actualOutputKeyPath` to each one. Send
-                null to clear it.
+                `null` to clear it.
             retrieval_context_event: For a streaming `responseMode`, the name of
                 the event carrying the retrieved context, read the same way as
-                `actualOutputEvent`. Send null to clear it.
+                `actualOutputEvent`. Send `null` to clear it.
             tools_called_event: For a streaming `responseMode`, the name of the
                 event carrying the tools called, read the same way as
-                `actualOutputEvent`. Send null to clear it.
+                `actualOutputEvent`. Send `null` to clear it.
             state_event: For a streaming `responseMode`, the name of the event
                 carrying the conversation state, read the same way as
-                `actualOutputEvent`. Send null to clear it.
+                `actualOutputEvent`. Send `null` to clear it.
             actual_output_accumulate: For a streaming `responseMode`, whether
                 the chunks arriving on `actualOutputEvent` are joined into one
-                answer. Set it to false when each event already carries the
+                answer. Set it to `false` when each event already carries the
                 whole answer and only the last one counts.
             actual_output_transformer_id: The id of a transformer that extracts
                 the answer by running your code over the response, for shapes a
                 key path cannot reach. Send this or `actualOutputKeyPath`, never
-                both. The transformer must belong to this project. Send null to
-                clear it.
+                both. The transformer must belong to this project. Send `null`
+                to clear it.
             retrieval_context_transformer_id: The id of a transformer that
                 extracts the retrieved context. Send this or
-                `retrievalContextKeyPath`, never both. Send null to clear it.
+                `retrievalContextKeyPath`, never both. Send `null` to clear it.
             tools_called_transformer_id: The id of a transformer that extracts
                 the tools called. Send this or `toolsCalledKeyPath`, never both.
-                Send null to clear it.
+                Send `null` to clear it.
             state_transformer_id: The id of a transformer that extracts the
                 conversation state. Send this or `stateKeyPath`, never both.
-                Send null to clear it.
+                Send `null` to clear it.
             input_token_count_transformer_id: The id of a transformer that
                 extracts the prompt token count. Send this or
-                `inputTokenCountKeyPath`, never both. Send null to clear it.
+                `inputTokenCountKeyPath`, never both. Send `null` to clear it.
             output_token_count_transformer_id: The id of a transformer that
                 extracts the completion token count. Send this or
-                `outputTokenCountKeyPath`, never both. Send null to clear it.
+                `outputTokenCountKeyPath`, never both. Send `null` to clear it.
             token_cost_transformer_id: The id of a transformer that extracts the
                 cost of the call. Send this or `tokenCostKeyPath`, never both.
-                Send null to clear it.
+                Send `null` to clear it.
             prompts: The prompts to substitute into the request body, keyed by
                 the placeholder they fill in `payload`. The map replaces the
                 connection's current prompts rather than merging into them.
@@ -572,116 +578,119 @@ class AIConnectionsClient:
             ai_connection_id: The id of the AI connection.
             name: The name of the AI connection, unique within the project.
             endpoint: The `https://` URL Confident AI calls to reach your LLM
-                application, or a `wss://` URL when `responseMode` is WEBSOCKET.
-                An AGENT_HANDLER connection needs none. Send null to clear it.
-            response_mode: How your application replies. Send null to clear it,
-                which reads the answer out of a completed HTTP response body.
+                application, or a `wss://` URL when `responseMode` is
+                `WEBSOCKET`. An `AGENT_HANDLER` connection needs none. Send
+                `null` to clear it.
+            response_mode: How your application replies. Send `null` to clear
+                it, which reads the answer out of a completed HTTP response
+                body.
             async_response: Whether your application acknowledges the request
                 and posts the result back later instead of answering inline.
                 Only a non-streaming `responseMode` supports this.
             timeout: How many seconds to wait for your application to answer
                 before giving up on a request. Defaults to 60 when the
-                connection is created. Send null to clear it.
+                connection is created. Send `null` to clear it.
             max_concurrency: The most requests Confident AI sends to your
-                application at the same time. Send null to leave it unbounded.
+                application at the same time. Send `null` to leave it unbounded.
             max_retries: How many times a failed request is retried before the
-                test case is recorded as errored. Send null to clear it.
+                test case is recorded as errored. Send `null` to clear it.
             default_num_generations: How many times your application is called
                 per test case, so one unlucky output does not decide the result.
                 At most 50.
             headers: The headers sent with every request. The list replaces the
                 stored headers rather than merging into them, so include every
-                header the connection should keep. Send null to clear them.
+                header the connection should keep. Send `null` to clear them.
             query_params: The query parameters appended to every request. The
                 list replaces the stored parameters rather than merging into
-                them. Send null to clear them.
+                them. Send `null` to clear them.
             payload: The request body template Confident AI sends. Placeholders
                 such as `{{input}}` are filled from the test case, and any key
-                in `prompts` is filled with that prompt's text. Send null to
+                in `prompts` is filled with that prompt's text. Send `null` to
                 clear it.
             hyperparameters: Free-form settings recorded against every test run
                 made through this connection, so results can be compared across
-                configurations. They are not sent to your application. Send null
-                to clear them.
+                configurations. They are not sent to your application. Send
+                `null` to clear them.
             authentication: The authentication configuration Confident AI
                 applies when calling your application, such as Auth0, HMAC or
                 Azure AD settings. Its shape follows the scheme you configure,
-                and it is stored as sent and read back as stored. Send null to
+                and it is stored as sent and read back as stored. Send `null` to
                 clear it.
             cloud_provider: The cloud vault configuration Confident AI uses to
                 pull credentials at call time instead of holding them itself.
                 Its shape follows the provider you configure, and it is stored
-                as sent and read back as stored. Send null to clear it.
+                as sent and read back as stored. Send `null` to clear it.
             actual_output_key_path: Where your application's answer sits in its
                 response. Each element is an object key or an array index,
                 walked in order, so `["choices", 0, "message", "content"]` reads
                 `choices[0].message.content`. A connection needs this or
-                `actualOutputTransformerId` before it can be used. Send null or
-                an empty list to clear it.
+                `actualOutputTransformerId` before it can be used. Send `null`
+                or an empty list to clear it.
             retrieval_context_key_path: Where the retrieved context sits in your
                 application's response, walked the same way as
                 `actualOutputKeyPath`. Set it for RAG applications so retrieval
-                metrics have something to score. Send null or an empty list to
+                metrics have something to score. Send `null` or an empty list to
                 clear it.
             tools_called_key_path: Where the list of tools your application
                 called sits in its response, walked the same way as
                 `actualOutputKeyPath`. Set it for agents so tool-use metrics
-                have something to score. Send null or an empty list to clear it.
+                have something to score. Send `null` or an empty list to clear
+                it.
             state_key_path: Where the conversation state sits in your
                 application's response, walked the same way as
                 `actualOutputKeyPath`. Confident AI reads it after each
-                simulated turn and sends it back on the next one. Send null or
+                simulated turn and sends it back on the next one. Send `null` or
                 an empty list to clear it.
             input_token_count_key_path: Where the prompt token count sits in
                 your application's response, walked the same way as
-                `actualOutputKeyPath`. Send null or an empty list to clear it.
+                `actualOutputKeyPath`. Send `null` or an empty list to clear it.
             output_token_count_key_path: Where the completion token count sits
                 in your application's response, walked the same way as
-                `actualOutputKeyPath`. Send null or an empty list to clear it.
+                `actualOutputKeyPath`. Send `null` or an empty list to clear it.
             token_cost_key_path: Where the cost of the call sits in your
                 application's response, walked the same way as
-                `actualOutputKeyPath`. Send null or an empty list to clear it.
+                `actualOutputKeyPath`. Send `null` or an empty list to clear it.
             actual_output_event: For a streaming `responseMode`, the name of the
                 event carrying your application's answer. Confident AI reads the
                 value out of the events with this name instead of out of a
                 completed body, applying `actualOutputKeyPath` to each one. Send
-                null to clear it.
+                `null` to clear it.
             retrieval_context_event: For a streaming `responseMode`, the name of
                 the event carrying the retrieved context, read the same way as
-                `actualOutputEvent`. Send null to clear it.
+                `actualOutputEvent`. Send `null` to clear it.
             tools_called_event: For a streaming `responseMode`, the name of the
                 event carrying the tools called, read the same way as
-                `actualOutputEvent`. Send null to clear it.
+                `actualOutputEvent`. Send `null` to clear it.
             state_event: For a streaming `responseMode`, the name of the event
                 carrying the conversation state, read the same way as
-                `actualOutputEvent`. Send null to clear it.
+                `actualOutputEvent`. Send `null` to clear it.
             actual_output_accumulate: For a streaming `responseMode`, whether
                 the chunks arriving on `actualOutputEvent` are joined into one
-                answer. Set it to false when each event already carries the
+                answer. Set it to `false` when each event already carries the
                 whole answer and only the last one counts.
             actual_output_transformer_id: The id of a transformer that extracts
                 the answer by running your code over the response, for shapes a
                 key path cannot reach. Send this or `actualOutputKeyPath`, never
-                both. The transformer must belong to this project. Send null to
-                clear it.
+                both. The transformer must belong to this project. Send `null`
+                to clear it.
             retrieval_context_transformer_id: The id of a transformer that
                 extracts the retrieved context. Send this or
-                `retrievalContextKeyPath`, never both. Send null to clear it.
+                `retrievalContextKeyPath`, never both. Send `null` to clear it.
             tools_called_transformer_id: The id of a transformer that extracts
                 the tools called. Send this or `toolsCalledKeyPath`, never both.
-                Send null to clear it.
+                Send `null` to clear it.
             state_transformer_id: The id of a transformer that extracts the
                 conversation state. Send this or `stateKeyPath`, never both.
-                Send null to clear it.
+                Send `null` to clear it.
             input_token_count_transformer_id: The id of a transformer that
                 extracts the prompt token count. Send this or
-                `inputTokenCountKeyPath`, never both. Send null to clear it.
+                `inputTokenCountKeyPath`, never both. Send `null` to clear it.
             output_token_count_transformer_id: The id of a transformer that
                 extracts the completion token count. Send this or
-                `outputTokenCountKeyPath`, never both. Send null to clear it.
+                `outputTokenCountKeyPath`, never both. Send `null` to clear it.
             token_cost_transformer_id: The id of a transformer that extracts the
                 cost of the call. Send this or `tokenCostKeyPath`, never both.
-                Send null to clear it.
+                Send `null` to clear it.
             prompts: The prompts to substitute into the request body, keyed by
                 the placeholder they fill in `payload`. The map replaces the
                 connection's current prompts rather than merging into them.
@@ -783,116 +792,119 @@ class AIConnectionsClient:
             ai_connection_id: The id of the AI connection.
             name: The name of the AI connection, unique within the project.
             endpoint: The `https://` URL Confident AI calls to reach your LLM
-                application, or a `wss://` URL when `responseMode` is WEBSOCKET.
-                An AGENT_HANDLER connection needs none. Send null to clear it.
-            response_mode: How your application replies. Send null to clear it,
-                which reads the answer out of a completed HTTP response body.
+                application, or a `wss://` URL when `responseMode` is
+                `WEBSOCKET`. An `AGENT_HANDLER` connection needs none. Send
+                `null` to clear it.
+            response_mode: How your application replies. Send `null` to clear
+                it, which reads the answer out of a completed HTTP response
+                body.
             async_response: Whether your application acknowledges the request
                 and posts the result back later instead of answering inline.
                 Only a non-streaming `responseMode` supports this.
             timeout: How many seconds to wait for your application to answer
                 before giving up on a request. Defaults to 60 when the
-                connection is created. Send null to clear it.
+                connection is created. Send `null` to clear it.
             max_concurrency: The most requests Confident AI sends to your
-                application at the same time. Send null to leave it unbounded.
+                application at the same time. Send `null` to leave it unbounded.
             max_retries: How many times a failed request is retried before the
-                test case is recorded as errored. Send null to clear it.
+                test case is recorded as errored. Send `null` to clear it.
             default_num_generations: How many times your application is called
                 per test case, so one unlucky output does not decide the result.
                 At most 50.
             headers: The headers sent with every request. The list replaces the
                 stored headers rather than merging into them, so include every
-                header the connection should keep. Send null to clear them.
+                header the connection should keep. Send `null` to clear them.
             query_params: The query parameters appended to every request. The
                 list replaces the stored parameters rather than merging into
-                them. Send null to clear them.
+                them. Send `null` to clear them.
             payload: The request body template Confident AI sends. Placeholders
                 such as `{{input}}` are filled from the test case, and any key
-                in `prompts` is filled with that prompt's text. Send null to
+                in `prompts` is filled with that prompt's text. Send `null` to
                 clear it.
             hyperparameters: Free-form settings recorded against every test run
                 made through this connection, so results can be compared across
-                configurations. They are not sent to your application. Send null
-                to clear them.
+                configurations. They are not sent to your application. Send
+                `null` to clear them.
             authentication: The authentication configuration Confident AI
                 applies when calling your application, such as Auth0, HMAC or
                 Azure AD settings. Its shape follows the scheme you configure,
-                and it is stored as sent and read back as stored. Send null to
+                and it is stored as sent and read back as stored. Send `null` to
                 clear it.
             cloud_provider: The cloud vault configuration Confident AI uses to
                 pull credentials at call time instead of holding them itself.
                 Its shape follows the provider you configure, and it is stored
-                as sent and read back as stored. Send null to clear it.
+                as sent and read back as stored. Send `null` to clear it.
             actual_output_key_path: Where your application's answer sits in its
                 response. Each element is an object key or an array index,
                 walked in order, so `["choices", 0, "message", "content"]` reads
                 `choices[0].message.content`. A connection needs this or
-                `actualOutputTransformerId` before it can be used. Send null or
-                an empty list to clear it.
+                `actualOutputTransformerId` before it can be used. Send `null`
+                or an empty list to clear it.
             retrieval_context_key_path: Where the retrieved context sits in your
                 application's response, walked the same way as
                 `actualOutputKeyPath`. Set it for RAG applications so retrieval
-                metrics have something to score. Send null or an empty list to
+                metrics have something to score. Send `null` or an empty list to
                 clear it.
             tools_called_key_path: Where the list of tools your application
                 called sits in its response, walked the same way as
                 `actualOutputKeyPath`. Set it for agents so tool-use metrics
-                have something to score. Send null or an empty list to clear it.
+                have something to score. Send `null` or an empty list to clear
+                it.
             state_key_path: Where the conversation state sits in your
                 application's response, walked the same way as
                 `actualOutputKeyPath`. Confident AI reads it after each
-                simulated turn and sends it back on the next one. Send null or
+                simulated turn and sends it back on the next one. Send `null` or
                 an empty list to clear it.
             input_token_count_key_path: Where the prompt token count sits in
                 your application's response, walked the same way as
-                `actualOutputKeyPath`. Send null or an empty list to clear it.
+                `actualOutputKeyPath`. Send `null` or an empty list to clear it.
             output_token_count_key_path: Where the completion token count sits
                 in your application's response, walked the same way as
-                `actualOutputKeyPath`. Send null or an empty list to clear it.
+                `actualOutputKeyPath`. Send `null` or an empty list to clear it.
             token_cost_key_path: Where the cost of the call sits in your
                 application's response, walked the same way as
-                `actualOutputKeyPath`. Send null or an empty list to clear it.
+                `actualOutputKeyPath`. Send `null` or an empty list to clear it.
             actual_output_event: For a streaming `responseMode`, the name of the
                 event carrying your application's answer. Confident AI reads the
                 value out of the events with this name instead of out of a
                 completed body, applying `actualOutputKeyPath` to each one. Send
-                null to clear it.
+                `null` to clear it.
             retrieval_context_event: For a streaming `responseMode`, the name of
                 the event carrying the retrieved context, read the same way as
-                `actualOutputEvent`. Send null to clear it.
+                `actualOutputEvent`. Send `null` to clear it.
             tools_called_event: For a streaming `responseMode`, the name of the
                 event carrying the tools called, read the same way as
-                `actualOutputEvent`. Send null to clear it.
+                `actualOutputEvent`. Send `null` to clear it.
             state_event: For a streaming `responseMode`, the name of the event
                 carrying the conversation state, read the same way as
-                `actualOutputEvent`. Send null to clear it.
+                `actualOutputEvent`. Send `null` to clear it.
             actual_output_accumulate: For a streaming `responseMode`, whether
                 the chunks arriving on `actualOutputEvent` are joined into one
-                answer. Set it to false when each event already carries the
+                answer. Set it to `false` when each event already carries the
                 whole answer and only the last one counts.
             actual_output_transformer_id: The id of a transformer that extracts
                 the answer by running your code over the response, for shapes a
                 key path cannot reach. Send this or `actualOutputKeyPath`, never
-                both. The transformer must belong to this project. Send null to
-                clear it.
+                both. The transformer must belong to this project. Send `null`
+                to clear it.
             retrieval_context_transformer_id: The id of a transformer that
                 extracts the retrieved context. Send this or
-                `retrievalContextKeyPath`, never both. Send null to clear it.
+                `retrievalContextKeyPath`, never both. Send `null` to clear it.
             tools_called_transformer_id: The id of a transformer that extracts
                 the tools called. Send this or `toolsCalledKeyPath`, never both.
-                Send null to clear it.
+                Send `null` to clear it.
             state_transformer_id: The id of a transformer that extracts the
                 conversation state. Send this or `stateKeyPath`, never both.
-                Send null to clear it.
+                Send `null` to clear it.
             input_token_count_transformer_id: The id of a transformer that
                 extracts the prompt token count. Send this or
-                `inputTokenCountKeyPath`, never both. Send null to clear it.
+                `inputTokenCountKeyPath`, never both. Send `null` to clear it.
             output_token_count_transformer_id: The id of a transformer that
                 extracts the completion token count. Send this or
-                `outputTokenCountKeyPath`, never both. Send null to clear it.
+                `outputTokenCountKeyPath`, never both. Send `null` to clear it.
             token_cost_transformer_id: The id of a transformer that extracts the
                 cost of the call. Send this or `tokenCostKeyPath`, never both.
-                Send null to clear it.
+                Send `null` to clear it.
             prompts: The prompts to substitute into the request body, keyed by
                 the placeholder they fill in `payload`. The map replaces the
                 connection's current prompts rather than merging into them.
@@ -987,7 +999,7 @@ class AIConnectionsClient:
         Args:
             ai_connection_id: The id of the AI connection.
             multiturn: Whether to test the connection over a simulated multi-
-                turn conversation instead of a single call. Defaults to false.
+                turn conversation instead of a single call. Defaults to `false`.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -1011,7 +1023,7 @@ class AIConnectionsClient:
         Args:
             ai_connection_id: The id of the AI connection.
             multiturn: Whether to test the connection over a simulated multi-
-                turn conversation instead of a single call. Defaults to false.
+                turn conversation instead of a single call. Defaults to `false`.
         """
         return await self._api.a_request(
             HttpMethods.POST,

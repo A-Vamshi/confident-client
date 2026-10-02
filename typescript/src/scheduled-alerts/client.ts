@@ -15,8 +15,10 @@ import {
   AlertSeverity,
   AlertThresholdSettings,
   ScheduledAlert,
+  ScheduledAlertDetectionSettings,
   ScheduledAlertList,
   ScheduledAlertRef,
+  ScheduledAlertType,
 } from "./types";
 
 export class ScheduledAlertsClient {
@@ -62,50 +64,51 @@ export class ScheduledAlertsClient {
    * still evaluates but reaches nobody.
    *
    * @param name A name for the alert, shown in the notification.
-   * @param aggregation What to measure, as an aggregation token. Which tokens
-   *   are valid depends on `dataModel`: `TRACE` accepts COUNT, ERROR_RATE,
-   *   PASS_RATE, UNIQUE_END_USERS, UNIQUE_THREADS, AVG_LATENCY, P50_LATENCY,
-   *   P90_LATENCY, P99_LATENCY, TOTAL_COST, AVG_COST, UNIQUE_METADATA_VALUES;
-   *   `SPAN` accepts COUNT, AVG_LATENCY, P50_LATENCY, P90_LATENCY, P99_LATENCY,
-   *   ERROR_RATE, ERROR_COUNT, INPUT_COST, OUTPUT_COST, TOTAL_COST, AVG_COST,
-   *   INPUT_TOKENS, OUTPUT_TOKENS, TOTAL_TOKENS, UNIQUE_METADATA_VALUES;
-   *   `LLM_SPAN` accepts COUNT, AVG_LATENCY, P50_LATENCY, P90_LATENCY,
-   *   P99_LATENCY, ERROR_RATE, ERROR_COUNT, INPUT_COST, OUTPUT_COST,
-   *   TOTAL_COST, AVG_COST, INPUT_TOKENS, OUTPUT_TOKENS, TOTAL_TOKENS,
-   *   UNIQUE_METADATA_VALUES; `AGENT_SPAN` accepts COUNT, AVG_LATENCY,
-   *   P50_LATENCY, P90_LATENCY, P99_LATENCY, ERROR_RATE, ERROR_COUNT,
-   *   INPUT_COST, OUTPUT_COST, TOTAL_COST, AVG_COST, UNIQUE_METADATA_VALUES;
-   *   `RETRIEVER_SPAN` accepts COUNT, AVG_LATENCY, P50_LATENCY, P90_LATENCY,
-   *   P99_LATENCY, ERROR_RATE, ERROR_COUNT, INPUT_COST, OUTPUT_COST,
-   *   TOTAL_COST, AVG_COST, UNIQUE_METADATA_VALUES; `TOOL_SPAN` accepts COUNT,
-   *   AVG_LATENCY, P50_LATENCY, P90_LATENCY, P99_LATENCY, ERROR_RATE,
-   *   ERROR_COUNT, INPUT_COST, OUTPUT_COST, TOTAL_COST, AVG_COST,
-   *   UNIQUE_METADATA_VALUES; `CUSTOM_SPAN` accepts COUNT, AVG_LATENCY,
-   *   P50_LATENCY, P90_LATENCY, P99_LATENCY, ERROR_RATE, ERROR_COUNT,
-   *   INPUT_COST, OUTPUT_COST, TOTAL_COST, AVG_COST, UNIQUE_METADATA_VALUES;
-   *   `THREAD` accepts COUNT, UNIQUE_USERS, UNIQUE_METADATA_VALUES.
    * @param repeatEvery How many `repeatUnit`s apart the runs are, for an
-   *   INTERVAL schedule. Send null to clear it.
-   * @param repeatUnit The unit `repeatEvery` counts, for an INTERVAL schedule.
-   *   Send null to clear it.
+   *   `INTERVAL` schedule. Send `null` to clear it.
+   * @param repeatUnit The unit `repeatEvery` counts, for an `INTERVAL`
+   *   schedule. Send `null` to clear it.
    * @param startAt When the schedule first runs, as an ISO 8601 datetime. Send
-   *   null to start it immediately.
-   * @param maxRuns How many times the schedule runs before it stops. Send null
-   *   to let it run indefinitely.
+   *   `null` to start it immediately.
+   * @param maxRuns How many times the schedule runs before it stops. Send
+   *   `null` to let it run indefinitely.
    * @param endAt When the schedule stops running, as an ISO 8601 datetime. Send
-   *   null to leave it open-ended.
+   *   `null` to leave it open-ended.
    * @param description What the alert means and what to do about it, included
-   *   in the notification. Send null to clear it.
+   *   in the notification. Send `null` to clear it.
    * @param filters Narrows what the alert measures over, so an alert can watch
-   *   one route rather than the whole project. Send null to clear the filters
+   *   one route rather than the whole project. Send `null` to clear the filters
    *   and measure everything.
-   * @param enabled Whether the schedule runs. Defaults to true.
+   * @param aggregation What to measure, as an aggregation token. Which tokens
+   *   are valid depends on `dataModel`: `TRACE` accepts `COUNT`, `ERROR_RATE`,
+   *   `PASS_RATE`, `UNIQUE_END_USERS`, `UNIQUE_THREADS`, `AVG_LATENCY`,
+   *   `P50_LATENCY`, `P90_LATENCY`, `P99_LATENCY`, `TOTAL_COST`, `AVG_COST`,
+   *   `UNIQUE_METADATA_VALUES`; `SPAN` accepts `COUNT`, `AVG_LATENCY`,
+   *   `P50_LATENCY`, `P90_LATENCY`, `P99_LATENCY`, `ERROR_RATE`, `ERROR_COUNT`,
+   *   `INPUT_COST`, `OUTPUT_COST`, `TOTAL_COST`, `AVG_COST`, `INPUT_TOKENS`,
+   *   `OUTPUT_TOKENS`, `TOTAL_TOKENS`, `UNIQUE_METADATA_VALUES`; `LLM_SPAN`
+   *   accepts `COUNT`, `AVG_LATENCY`, `P50_LATENCY`, `P90_LATENCY`,
+   *   `P99_LATENCY`, `ERROR_RATE`, `ERROR_COUNT`, `INPUT_COST`, `OUTPUT_COST`,
+   *   `TOTAL_COST`, `AVG_COST`, `INPUT_TOKENS`, `OUTPUT_TOKENS`,
+   *   `TOTAL_TOKENS`, `UNIQUE_METADATA_VALUES`; `AGENT_SPAN` accepts `COUNT`,
+   *   `AVG_LATENCY`, `P50_LATENCY`, `P90_LATENCY`, `P99_LATENCY`, `ERROR_RATE`,
+   *   `ERROR_COUNT`, `INPUT_COST`, `OUTPUT_COST`, `TOTAL_COST`, `AVG_COST`,
+   *   `UNIQUE_METADATA_VALUES`; `RETRIEVER_SPAN` accepts `COUNT`,
+   *   `AVG_LATENCY`, `P50_LATENCY`, `P90_LATENCY`, `P99_LATENCY`, `ERROR_RATE`,
+   *   `ERROR_COUNT`, `INPUT_COST`, `OUTPUT_COST`, `TOTAL_COST`, `AVG_COST`,
+   *   `UNIQUE_METADATA_VALUES`; `TOOL_SPAN` accepts `COUNT`, `AVG_LATENCY`,
+   *   `P50_LATENCY`, `P90_LATENCY`, `P99_LATENCY`, `ERROR_RATE`, `ERROR_COUNT`,
+   *   `INPUT_COST`, `OUTPUT_COST`, `TOTAL_COST`, `AVG_COST`,
+   *   `UNIQUE_METADATA_VALUES`; `CUSTOM_SPAN` accepts `COUNT`, `AVG_LATENCY`,
+   *   `P50_LATENCY`, `P90_LATENCY`, `P99_LATENCY`, `ERROR_RATE`, `ERROR_COUNT`,
+   *   `INPUT_COST`, `OUTPUT_COST`, `TOTAL_COST`, `AVG_COST`,
+   *   `UNIQUE_METADATA_VALUES`; `THREAD` accepts `COUNT`, `UNIQUE_USERS`,
+   *   `UNIQUE_METADATA_VALUES`. Required for `THRESHOLD` alerts only.
+   * @param enabled Whether the schedule runs. Defaults to `true`.
    */
   async create(
     name: string,
     dataModel: AlertDataModel,
-    aggregation: string,
-    thresholdSettings: AlertThresholdSettings,
     options: {
       recurrence?: ScheduleRecurrenceType;
       repeatEvery?: number | null;
@@ -116,6 +119,10 @@ export class ScheduledAlertsClient {
       description?: string | null;
       filters?: FilterSet | null;
       severity?: AlertSeverity;
+      type?: ScheduledAlertType;
+      aggregation?: string;
+      thresholdSettings?: AlertThresholdSettings;
+      detectionSettings?: ScheduledAlertDetectionSettings;
       enabled?: boolean;
     } = {},
   ): Promise<ScheduledAlertRef> {
@@ -129,6 +136,10 @@ export class ScheduledAlertsClient {
       description,
       filters,
       severity,
+      type,
+      aggregation,
+      thresholdSettings,
+      detectionSettings,
       enabled,
     } = options;
     return this.api.sendRequest<ScheduledAlertRef>(
@@ -138,8 +149,6 @@ export class ScheduledAlertsClient {
         body: {
           name,
           dataModel,
-          aggregation,
-          thresholdSettings,
           recurrence,
           repeatEvery,
           repeatUnit,
@@ -149,6 +158,10 @@ export class ScheduledAlertsClient {
           description,
           filters,
           severity,
+          type,
+          aggregation,
+          thresholdSettings,
+          detectionSettings,
           enabled,
         },
       },
@@ -175,50 +188,53 @@ export class ScheduledAlertsClient {
    * Update Scheduled Alert
    *
    * Updates a scheduled alert and returns it. Only the fields you send are
-   * changed; omitting a field leaves it untouched, and sending null clears it.
-   * Because each `dataModel` accepts a different set of aggregations, send
+   * changed; omitting a field leaves it untouched, and sending `null` clears
+   * it. Because each `dataModel` accepts a different set of aggregations, send
    * `aggregation` alongside `dataModel` when moving an alert between data
    * models.
    *
    * @param scheduledAlertId The id of the scheduled alert.
    * @param repeatEvery How many `repeatUnit`s apart the runs are, for an
-   *   INTERVAL schedule. Send null to clear it.
-   * @param repeatUnit The unit `repeatEvery` counts, for an INTERVAL schedule.
-   *   Send null to clear it.
+   *   `INTERVAL` schedule. Send `null` to clear it.
+   * @param repeatUnit The unit `repeatEvery` counts, for an `INTERVAL`
+   *   schedule. Send `null` to clear it.
    * @param startAt When the schedule first runs, as an ISO 8601 datetime. Send
-   *   null to start it immediately.
-   * @param maxRuns How many times the schedule runs before it stops. Send null
-   *   to let it run indefinitely.
+   *   `null` to start it immediately.
+   * @param maxRuns How many times the schedule runs before it stops. Send
+   *   `null` to let it run indefinitely.
    * @param endAt When the schedule stops running, as an ISO 8601 datetime. Send
-   *   null to leave it open-ended.
+   *   `null` to leave it open-ended.
    * @param description What the alert means and what to do about it, included
-   *   in the notification. Send null to clear it.
+   *   in the notification. Send `null` to clear it.
    * @param filters Narrows what the alert measures over, so an alert can watch
-   *   one route rather than the whole project. Send null to clear the filters
+   *   one route rather than the whole project. Send `null` to clear the filters
    *   and measure everything.
    * @param name A new name for the alert, shown in the notification.
    * @param aggregation What to measure, as an aggregation token. Which tokens
-   *   are valid depends on `dataModel`: `TRACE` accepts COUNT, ERROR_RATE,
-   *   PASS_RATE, UNIQUE_END_USERS, UNIQUE_THREADS, AVG_LATENCY, P50_LATENCY,
-   *   P90_LATENCY, P99_LATENCY, TOTAL_COST, AVG_COST, UNIQUE_METADATA_VALUES;
-   *   `SPAN` accepts COUNT, AVG_LATENCY, P50_LATENCY, P90_LATENCY, P99_LATENCY,
-   *   ERROR_RATE, ERROR_COUNT, INPUT_COST, OUTPUT_COST, TOTAL_COST, AVG_COST,
-   *   INPUT_TOKENS, OUTPUT_TOKENS, TOTAL_TOKENS, UNIQUE_METADATA_VALUES;
-   *   `LLM_SPAN` accepts COUNT, AVG_LATENCY, P50_LATENCY, P90_LATENCY,
-   *   P99_LATENCY, ERROR_RATE, ERROR_COUNT, INPUT_COST, OUTPUT_COST,
-   *   TOTAL_COST, AVG_COST, INPUT_TOKENS, OUTPUT_TOKENS, TOTAL_TOKENS,
-   *   UNIQUE_METADATA_VALUES; `AGENT_SPAN` accepts COUNT, AVG_LATENCY,
-   *   P50_LATENCY, P90_LATENCY, P99_LATENCY, ERROR_RATE, ERROR_COUNT,
-   *   INPUT_COST, OUTPUT_COST, TOTAL_COST, AVG_COST, UNIQUE_METADATA_VALUES;
-   *   `RETRIEVER_SPAN` accepts COUNT, AVG_LATENCY, P50_LATENCY, P90_LATENCY,
-   *   P99_LATENCY, ERROR_RATE, ERROR_COUNT, INPUT_COST, OUTPUT_COST,
-   *   TOTAL_COST, AVG_COST, UNIQUE_METADATA_VALUES; `TOOL_SPAN` accepts COUNT,
-   *   AVG_LATENCY, P50_LATENCY, P90_LATENCY, P99_LATENCY, ERROR_RATE,
-   *   ERROR_COUNT, INPUT_COST, OUTPUT_COST, TOTAL_COST, AVG_COST,
-   *   UNIQUE_METADATA_VALUES; `CUSTOM_SPAN` accepts COUNT, AVG_LATENCY,
-   *   P50_LATENCY, P90_LATENCY, P99_LATENCY, ERROR_RATE, ERROR_COUNT,
-   *   INPUT_COST, OUTPUT_COST, TOTAL_COST, AVG_COST, UNIQUE_METADATA_VALUES;
-   *   `THREAD` accepts COUNT, UNIQUE_USERS, UNIQUE_METADATA_VALUES.
+   *   are valid depends on `dataModel`: `TRACE` accepts `COUNT`, `ERROR_RATE`,
+   *   `PASS_RATE`, `UNIQUE_END_USERS`, `UNIQUE_THREADS`, `AVG_LATENCY`,
+   *   `P50_LATENCY`, `P90_LATENCY`, `P99_LATENCY`, `TOTAL_COST`, `AVG_COST`,
+   *   `UNIQUE_METADATA_VALUES`; `SPAN` accepts `COUNT`, `AVG_LATENCY`,
+   *   `P50_LATENCY`, `P90_LATENCY`, `P99_LATENCY`, `ERROR_RATE`, `ERROR_COUNT`,
+   *   `INPUT_COST`, `OUTPUT_COST`, `TOTAL_COST`, `AVG_COST`, `INPUT_TOKENS`,
+   *   `OUTPUT_TOKENS`, `TOTAL_TOKENS`, `UNIQUE_METADATA_VALUES`; `LLM_SPAN`
+   *   accepts `COUNT`, `AVG_LATENCY`, `P50_LATENCY`, `P90_LATENCY`,
+   *   `P99_LATENCY`, `ERROR_RATE`, `ERROR_COUNT`, `INPUT_COST`, `OUTPUT_COST`,
+   *   `TOTAL_COST`, `AVG_COST`, `INPUT_TOKENS`, `OUTPUT_TOKENS`,
+   *   `TOTAL_TOKENS`, `UNIQUE_METADATA_VALUES`; `AGENT_SPAN` accepts `COUNT`,
+   *   `AVG_LATENCY`, `P50_LATENCY`, `P90_LATENCY`, `P99_LATENCY`, `ERROR_RATE`,
+   *   `ERROR_COUNT`, `INPUT_COST`, `OUTPUT_COST`, `TOTAL_COST`, `AVG_COST`,
+   *   `UNIQUE_METADATA_VALUES`; `RETRIEVER_SPAN` accepts `COUNT`,
+   *   `AVG_LATENCY`, `P50_LATENCY`, `P90_LATENCY`, `P99_LATENCY`, `ERROR_RATE`,
+   *   `ERROR_COUNT`, `INPUT_COST`, `OUTPUT_COST`, `TOTAL_COST`, `AVG_COST`,
+   *   `UNIQUE_METADATA_VALUES`; `TOOL_SPAN` accepts `COUNT`, `AVG_LATENCY`,
+   *   `P50_LATENCY`, `P90_LATENCY`, `P99_LATENCY`, `ERROR_RATE`, `ERROR_COUNT`,
+   *   `INPUT_COST`, `OUTPUT_COST`, `TOTAL_COST`, `AVG_COST`,
+   *   `UNIQUE_METADATA_VALUES`; `CUSTOM_SPAN` accepts `COUNT`, `AVG_LATENCY`,
+   *   `P50_LATENCY`, `P90_LATENCY`, `P99_LATENCY`, `ERROR_RATE`, `ERROR_COUNT`,
+   *   `INPUT_COST`, `OUTPUT_COST`, `TOTAL_COST`, `AVG_COST`,
+   *   `UNIQUE_METADATA_VALUES`; `THREAD` accepts `COUNT`, `UNIQUE_USERS`,
+   *   `UNIQUE_METADATA_VALUES`.
    * @param enabled Whether the schedule runs. An alert whose run limit or end
    *   date has passed cannot be re-enabled without also moving `maxRuns` or
    *   `endAt`.
@@ -236,9 +252,11 @@ export class ScheduledAlertsClient {
       filters?: FilterSet | null;
       severity?: AlertSeverity;
       name?: string;
+      type?: ScheduledAlertType;
       dataModel?: AlertDataModel;
       aggregation?: string;
       thresholdSettings?: AlertThresholdSettings;
+      detectionSettings?: ScheduledAlertDetectionSettings;
       enabled?: boolean;
     } = {},
   ): Promise<ScheduledAlert> {
@@ -253,9 +271,11 @@ export class ScheduledAlertsClient {
       filters,
       severity,
       name,
+      type,
       dataModel,
       aggregation,
       thresholdSettings,
+      detectionSettings,
       enabled,
     } = options;
     return this.api.sendRequest<ScheduledAlert>(
@@ -273,9 +293,11 @@ export class ScheduledAlertsClient {
           filters,
           severity,
           name,
+          type,
           dataModel,
           aggregation,
           thresholdSettings,
+          detectionSettings,
           enabled,
         },
         urlParams: { scheduledAlertId },
@@ -287,7 +309,7 @@ export class ScheduledAlertsClient {
    * Delete Scheduled Alert
    *
    * Permanently deletes a scheduled alert and unregisters its next run. To stop
-   * an alert temporarily, update it with `enabled` set to false instead. This
+   * an alert temporarily, update it with `enabled` set to `false` instead. This
    * action cannot be undone.
    *
    * @param scheduledAlertId The id of the scheduled alert.

@@ -29,7 +29,7 @@ class GovernanceProjectsOperations:
         Lists every project in your organization with its governance standing,
         ordered by project name, alongside an organization-wide roll-up of how
         many projects fall into each status. Projects enrolled in no governance
-        policy are included, with a `status` of `not_enrolled` and a null
+        policy are included, with a `status` of `not_enrolled` and a `null`
         `health`, since the inventory is what tells you which projects are
         ungoverned.
 
@@ -60,7 +60,7 @@ class GovernanceProjectsOperations:
         Lists every project in your organization with its governance standing,
         ordered by project name, alongside an organization-wide roll-up of how
         many projects fall into each status. Projects enrolled in no governance
-        policy are included, with a `status` of `not_enrolled` and a null
+        policy are included, with a `status` of `not_enrolled` and a `null`
         `health`, since the inventory is what tells you which projects are
         ungoverned.
 

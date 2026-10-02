@@ -97,17 +97,18 @@ class ReportTemplatesClient:
                 Omit it to let the generator choose the structure from
                 `description`.
             enabled: Whether to start generating on the schedule. Defaults to
-                true; send false to create the template without scheduling it.
+                `true`; send `false` to create the template without scheduling
+                it.
             repeat_every: How many `repeatUnit`s apart the runs are, for an
-                INTERVAL schedule. Send null to clear it.
-            repeat_unit: The unit `repeatEvery` counts, for an INTERVAL
-                schedule. Send null to clear it.
+                `INTERVAL` schedule. Send `null` to clear it.
+            repeat_unit: The unit `repeatEvery` counts, for an `INTERVAL`
+                schedule. Send `null` to clear it.
             start_at: When the schedule first runs, as an ISO 8601 datetime.
-                Send null to start it immediately.
+                Send `null` to start it immediately.
             max_runs: How many times the schedule runs before it stops. Send
-                null to let it run indefinitely.
+                `null` to let it run indefinitely.
             end_at: When the schedule stops running, as an ISO 8601 datetime.
-                Send null to leave it open-ended.
+                Send `null` to leave it open-ended.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -158,17 +159,18 @@ class ReportTemplatesClient:
                 Omit it to let the generator choose the structure from
                 `description`.
             enabled: Whether to start generating on the schedule. Defaults to
-                true; send false to create the template without scheduling it.
+                `true`; send `false` to create the template without scheduling
+                it.
             repeat_every: How many `repeatUnit`s apart the runs are, for an
-                INTERVAL schedule. Send null to clear it.
-            repeat_unit: The unit `repeatEvery` counts, for an INTERVAL
-                schedule. Send null to clear it.
+                `INTERVAL` schedule. Send `null` to clear it.
+            repeat_unit: The unit `repeatEvery` counts, for an `INTERVAL`
+                schedule. Send `null` to clear it.
             start_at: When the schedule first runs, as an ISO 8601 datetime.
-                Send null to start it immediately.
+                Send `null` to start it immediately.
             max_runs: How many times the schedule runs before it stops. Send
-                null to let it run indefinitely.
+                `null` to let it run indefinitely.
             end_at: When the schedule stops running, as an ISO 8601 datetime.
-                Send null to leave it open-ended.
+                Send `null` to leave it open-ended.
         """
         return await self._api.a_request(
             HttpMethods.POST,
@@ -240,13 +242,13 @@ class ReportTemplatesClient:
 
         Updates a report template and returns it. Only the fields you send are
         changed, and `templateSections` replaces the whole list. Set `enabled`
-        to false to pause generation, or send cadence fields to retime it.
+        to `false` to pause generation, or send cadence fields to retime it.
 
         Args:
             report_template_id: The id of the report template.
             name: The template's new name, also used as the report's title.
             description: The question the report should answer, which drives
-                what data the generator retrieves. Send null to clear it.
+                what data the generator retrieves. Send `null` to clear it.
             template_sections: The report's exact sections, in render order. The
                 list replaces the template's current sections, so a section you
                 leave out is removed; omit the field to leave them alone.
@@ -255,15 +257,15 @@ class ReportTemplatesClient:
                 `maxRuns` or `endAt` can only be re-enabled by a request that
                 also raises or clears them.
             repeat_every: How many `repeatUnit`s apart the runs are, for an
-                INTERVAL schedule. Send null to clear it.
-            repeat_unit: The unit `repeatEvery` counts, for an INTERVAL
-                schedule. Send null to clear it.
+                `INTERVAL` schedule. Send `null` to clear it.
+            repeat_unit: The unit `repeatEvery` counts, for an `INTERVAL`
+                schedule. Send `null` to clear it.
             start_at: When the schedule first runs, as an ISO 8601 datetime.
-                Send null to start it immediately.
+                Send `null` to start it immediately.
             max_runs: How many times the schedule runs before it stops. Send
-                null to let it run indefinitely.
+                `null` to let it run indefinitely.
             end_at: When the schedule stops running, as an ISO 8601 datetime.
-                Send null to leave it open-ended.
+                Send `null` to leave it open-ended.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -304,13 +306,13 @@ class ReportTemplatesClient:
 
         Updates a report template and returns it. Only the fields you send are
         changed, and `templateSections` replaces the whole list. Set `enabled`
-        to false to pause generation, or send cadence fields to retime it.
+        to `false` to pause generation, or send cadence fields to retime it.
 
         Args:
             report_template_id: The id of the report template.
             name: The template's new name, also used as the report's title.
             description: The question the report should answer, which drives
-                what data the generator retrieves. Send null to clear it.
+                what data the generator retrieves. Send `null` to clear it.
             template_sections: The report's exact sections, in render order. The
                 list replaces the template's current sections, so a section you
                 leave out is removed; omit the field to leave them alone.
@@ -319,15 +321,15 @@ class ReportTemplatesClient:
                 `maxRuns` or `endAt` can only be re-enabled by a request that
                 also raises or clears them.
             repeat_every: How many `repeatUnit`s apart the runs are, for an
-                INTERVAL schedule. Send null to clear it.
-            repeat_unit: The unit `repeatEvery` counts, for an INTERVAL
-                schedule. Send null to clear it.
+                `INTERVAL` schedule. Send `null` to clear it.
+            repeat_unit: The unit `repeatEvery` counts, for an `INTERVAL`
+                schedule. Send `null` to clear it.
             start_at: When the schedule first runs, as an ISO 8601 datetime.
-                Send null to start it immediately.
+                Send `null` to start it immediately.
             max_runs: How many times the schedule runs before it stops. Send
-                null to let it run indefinitely.
+                `null` to let it run indefinitely.
             end_at: When the schedule stops running, as an ISO 8601 datetime.
-                Send null to leave it open-ended.
+                Send `null` to leave it open-ended.
         """
         return await self._api.a_request(
             HttpMethods.PUT,
@@ -354,7 +356,7 @@ class ReportTemplatesClient:
 
         Permanently deletes a report template and the schedule that generates
         it. This cannot be undone, and every report it generated becomes
-        unreachable — set `enabled` to false instead to pause generation while
+        unreachable — set `enabled` to `false` instead to pause generation while
         keeping past reports readable.
 
         Args:
@@ -372,7 +374,7 @@ class ReportTemplatesClient:
 
         Permanently deletes a report template and the schedule that generates
         it. This cannot be undone, and every report it generated becomes
-        unreachable — set `enabled` to false instead to pause generation while
+        unreachable — set `enabled` to `false` instead to pause generation while
         keeping past reports readable.
 
         Args:

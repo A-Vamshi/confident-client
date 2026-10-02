@@ -57,17 +57,17 @@ export class ClassifiersOperations {
    *
    * @param name The name of the classifier, unique per data model within the
    *   project.
-   * @param description What this classifier is for. Send null to clear it.
-   * @param enabled Whether the classifier runs at all. Defaults to true.
+   * @param description What this classifier is for. Send `null` to clear it.
+   * @param enabled Whether the classifier runs at all. Defaults to `true`.
    * @param autoClassify Whether incoming items are classified automatically as
-   *   they arrive. Defaults to true.
+   *   they arrive. Defaults to `true`.
    * @param filters Narrows which traces or threads the classifier runs on, so
    *   it can watch one route rather than the whole project. Only the groups are
    *   stored, so the set's top-level operator is dropped and the groups are
-   *   combined by the platform. Send null to clear the filters and classify
+   *   combined by the platform. Send `null` to clear the filters and classify
    *   everything of this data model.
    * @param autoGenerationConfig How a generation run samples and clusters your
-   *   traffic to discover labels. Send null to clear it.
+   *   traffic to discover labels. Send `null` to clear it.
    */
   async create(
     name: string,
@@ -128,7 +128,7 @@ export class ClassifiersOperations {
    * Update Classifier
    *
    * Updates a classifier and returns it. Only the fields you send are changed:
-   * omitting a field leaves it untouched, and sending null clears it.
+   * omitting a field leaves it untouched, and sending `null` clears it.
    * `dataModel` cannot be changed after creation and a preset can only be
    * applied when creating one; labels are managed through their own endpoints.
    * Requires the Starter plan or above.
@@ -136,17 +136,17 @@ export class ClassifiersOperations {
    * @param classifierId The id of the classifier.
    * @param name The name of the classifier, unique per data model within the
    *   project.
-   * @param description What this classifier is for. Send null to clear it.
-   * @param enabled Whether the classifier runs at all. Defaults to true.
+   * @param description What this classifier is for. Send `null` to clear it.
+   * @param enabled Whether the classifier runs at all. Defaults to `true`.
    * @param autoClassify Whether incoming items are classified automatically as
-   *   they arrive. Defaults to true.
+   *   they arrive. Defaults to `true`.
    * @param filters Narrows which traces or threads the classifier runs on, so
    *   it can watch one route rather than the whole project. Only the groups are
    *   stored, so the set's top-level operator is dropped and the groups are
-   *   combined by the platform. Send null to clear the filters and classify
+   *   combined by the platform. Send `null` to clear the filters and classify
    *   everything of this data model.
    * @param autoGenerationConfig How a generation run samples and clusters your
-   *   traffic to discover labels. Send null to clear it.
+   *   traffic to discover labels. Send `null` to clear it.
    */
   async update(
     classifierId: string,

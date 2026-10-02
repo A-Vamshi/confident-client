@@ -32,10 +32,55 @@ export enum AlertThresholdDirection {
   BELOW = "below",
 }
 
+export enum ScheduledAlertType {
+  THRESHOLD = "THRESHOLD",
+  REGRESSION = "REGRESSION",
+  ANOMALY = "ANOMALY",
+  SIGNAL_SPIKE = "SIGNAL_SPIKE",
+}
+
 export interface AlertThresholdSettings {
   value: number;
   direction: AlertThresholdDirection;
 }
+
+export interface ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings0 {
+  traceName?: string;
+  metrics?: (
+    | "avg_score"
+    | "error_rate"
+    | "avg_latency"
+    | "avg_cost"
+    | "negative_label_rate"
+  )[];
+  direction: "WORSENED" | "ANY";
+  minAffectedCount: number;
+  significantOnly: boolean;
+}
+
+export interface ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings1 {
+  traceName?: string;
+  metrics?: (
+    | "avg_score"
+    | "error_rate"
+    | "avg_latency"
+    | "avg_cost"
+    | "negative_label_rate"
+  )[];
+  direction: "WORSENED" | "ANY";
+  minAffectedCount: number;
+}
+
+export interface ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings2 {
+  classifierIds: string[];
+  direction: "WORSENED" | "ANY";
+  minAffectedCount: number;
+}
+
+export type ScheduledAlertDetectionSettings =
+  | ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings0
+  | ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings1
+  | ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings2;
 
 export interface CreateScheduledAlertRequest {
   recurrence?: ScheduleRecurrenceType;
@@ -48,10 +93,45 @@ export interface CreateScheduledAlertRequest {
   filters?: FilterSet | null;
   severity?: AlertSeverity;
   name: string;
+  type?: ScheduledAlertType;
   dataModel: AlertDataModel;
-  aggregation: string;
-  thresholdSettings: AlertThresholdSettings;
+  aggregation?: string;
+  thresholdSettings?: AlertThresholdSettings;
+  detectionSettings?: ScheduledAlertDetectionSettings;
   enabled?: boolean;
+}
+
+export interface ScheduledAlertDetectionSettings0 {
+  traceName?: string;
+  metrics?: (
+    | "avg_score"
+    | "error_rate"
+    | "avg_latency"
+    | "avg_cost"
+    | "negative_label_rate"
+  )[];
+  direction: "WORSENED" | "ANY";
+  minAffectedCount: number;
+  significantOnly: boolean;
+}
+
+export interface ScheduledAlertDetectionSettings1 {
+  traceName?: string;
+  metrics?: (
+    | "avg_score"
+    | "error_rate"
+    | "avg_latency"
+    | "avg_cost"
+    | "negative_label_rate"
+  )[];
+  direction: "WORSENED" | "ANY";
+  minAffectedCount: number;
+}
+
+export interface ScheduledAlertDetectionSettings2 {
+  classifierIds: string[];
+  direction: "WORSENED" | "ANY";
+  minAffectedCount: number;
 }
 
 export interface ScheduledAlertScheduleSettings {
@@ -70,10 +150,16 @@ export interface ScheduledAlert {
   id: string;
   name: string;
   description: string | null;
+  type: ScheduledAlertType;
   dataModel: AlertDataModel;
-  aggregation: string;
+  aggregation: string | null;
   filters: FilterSet;
-  thresholdSettings: AlertThresholdSettings;
+  thresholdSettings: AlertThresholdSettings | null;
+  detectionSettings:
+    | ScheduledAlertDetectionSettings0
+    | ScheduledAlertDetectionSettings1
+    | ScheduledAlertDetectionSettings2
+    | null;
   severity: AlertSeverity;
   scheduleSettings: ScheduledAlertScheduleSettings | null;
 }
@@ -81,6 +167,7 @@ export interface ScheduledAlert {
 export interface ScheduledAlertSummary {
   id: string;
   name: string;
+  type: ScheduledAlertType;
   dataModel: AlertDataModel;
   enabled: boolean;
 }
@@ -107,8 +194,10 @@ export interface UpdateScheduledAlertRequest {
   filters?: FilterSet | null;
   severity?: AlertSeverity;
   name?: string;
+  type?: ScheduledAlertType;
   dataModel?: AlertDataModel;
   aggregation?: string;
   thresholdSettings?: AlertThresholdSettings;
+  detectionSettings?: ScheduledAlertDetectionSettings;
   enabled?: boolean;
 }

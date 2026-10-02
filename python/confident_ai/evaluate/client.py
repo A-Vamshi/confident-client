@@ -117,7 +117,7 @@ class EvaluateClient:
             span_uuid: The unique identifier of the span.
             metric_collection: The name of the single-turn metric collection you
                 wish to use for evaluation.
-            overwrite_metrics: Set this to true to re-run every metric in the
+            overwrite_metrics: Set this to `true` to re-run every metric in the
                 collection and replace the results already stored, and omit this
                 field to keep those results and only run the metrics that have
                 none yet.
@@ -152,7 +152,7 @@ class EvaluateClient:
             span_uuid: The unique identifier of the span.
             metric_collection: The name of the single-turn metric collection you
                 wish to use for evaluation.
-            overwrite_metrics: Set this to true to re-run every metric in the
+            overwrite_metrics: Set this to `true` to re-run every metric in the
                 collection and replace the results already stored, and omit this
                 field to keep those results and only run the metrics that have
                 none yet.
@@ -192,7 +192,7 @@ class EvaluateClient:
             chatbot_role: This is the role of the chatbot in the thread, which
                 the multi-turn metrics that judge role adherence evaluate the
                 thread against.
-            overwrite_metrics: Set this to true to re-run every metric in the
+            overwrite_metrics: Set this to `true` to re-run every metric in the
                 collection and replace the results already stored, and omit this
                 field to keep those results and only run the metrics that have
                 none yet.
@@ -233,7 +233,7 @@ class EvaluateClient:
             chatbot_role: This is the role of the chatbot in the thread, which
                 the multi-turn metrics that judge role adherence evaluate the
                 thread against.
-            overwrite_metrics: Set this to true to re-run every metric in the
+            overwrite_metrics: Set this to `true` to re-run every metric in the
                 collection and replace the results already stored, and omit this
                 field to keep those results and only run the metrics that have
                 none yet.
@@ -269,7 +269,7 @@ class EvaluateClient:
             trace_uuid: The unique identifier of the trace.
             metric_collection: The name of the single-turn metric collection you
                 wish to use for evaluation.
-            overwrite_metrics: Set this to true to re-run every metric in the
+            overwrite_metrics: Set this to `true` to re-run every metric in the
                 collection and replace the results already stored, and omit this
                 field to keep those results and only run the metrics that have
                 none yet.
@@ -304,7 +304,7 @@ class EvaluateClient:
             trace_uuid: The unique identifier of the trace.
             metric_collection: The name of the single-turn metric collection you
                 wish to use for evaluation.
-            overwrite_metrics: Set this to true to re-run every metric in the
+            overwrite_metrics: Set this to `true` to re-run every metric in the
                 collection and replace the results already stored, and omit this
                 field to keep those results and only run the metrics that have
                 none yet.

@@ -97,7 +97,7 @@ export class ReportsClient {
    * Get Report
    *
    * Retrieves a report by id, with every section it renders in order. A section
-   * Confident AI is still writing comes back with null `content`.
+   * Confident AI is still writing comes back with `null` `content`.
    *
    * @param reportId The id of the report.
    */
@@ -117,8 +117,8 @@ export class ReportsClient {
    * replaces its section list wholesale.
    *
    * @param reportId The id of the report.
-   * @param error Why the report failed. Pair it with a status of ERRORED, or
-   *   send null to clear it.
+   * @param error Why the report failed. Pair it with a status of `ERRORED`, or
+   *   send `null` to clear it.
    * @param sections The report's sections, in render order. The list replaces
    *   the report's current sections rather than adding to them.
    */

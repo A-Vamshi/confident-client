@@ -32,7 +32,7 @@ class ModelCostsClient:
         Lists the custom model prices your Confident AI project uses one page at
         a time, newest first. When the project inherits its pricing from the
         organization the response carries the organization's model costs and
-        `inherit` is true, in which case they can only be changed from the
+        `inherit` is `true`, in which case they can only be changed from the
         organization's own project.
 
         Args:
@@ -65,7 +65,7 @@ class ModelCostsClient:
         Lists the custom model prices your Confident AI project uses one page at
         a time, newest first. When the project inherits its pricing from the
         organization the response carries the organization's model costs and
-        `inherit` is true, in which case they can only be changed from the
+        `inherit` is `true`, in which case they can only be changed from the
         organization's own project.
 
         Args:
@@ -106,14 +106,14 @@ class ModelCostsClient:
                 must match for this cost to apply.
             provider: The model provider this cost applies to, matched case-
                 insensitively against the provider recorded on the LLM span.
-                Send null or omit it for a cost that applies whatever the
+                Send `null` or omit it for a cost that applies whatever the
                 provider, which is only used when no provider-specific cost
                 matches.
-            input_cost_per_million_tokens: The cost in USD of one million input
-                tokens. Send null when only the output rate is priced; input
-                tokens are then costed at zero.
-            output_cost_per_million_tokens: The cost in USD of one million
-                output tokens. Send null when only the input rate is priced;
+            input_cost_per_million_tokens: The cost in `USD` of one million
+                input tokens. Send `null` when only the output rate is priced;
+                input tokens are then costed at zero.
+            output_cost_per_million_tokens: The cost in `USD` of one million
+                output tokens. Send `null` when only the input rate is priced;
                 output tokens are then costed at zero.
         """
         return self._api.request(
@@ -149,14 +149,14 @@ class ModelCostsClient:
                 must match for this cost to apply.
             provider: The model provider this cost applies to, matched case-
                 insensitively against the provider recorded on the LLM span.
-                Send null or omit it for a cost that applies whatever the
+                Send `null` or omit it for a cost that applies whatever the
                 provider, which is only used when no provider-specific cost
                 matches.
-            input_cost_per_million_tokens: The cost in USD of one million input
-                tokens. Send null when only the output rate is priced; input
-                tokens are then costed at zero.
-            output_cost_per_million_tokens: The cost in USD of one million
-                output tokens. Send null when only the input rate is priced;
+            input_cost_per_million_tokens: The cost in `USD` of one million
+                input tokens. Send `null` when only the output rate is priced;
+                input tokens are then costed at zero.
+            output_cost_per_million_tokens: The cost in `USD` of one million
+                output tokens. Send `null` when only the input rate is priced;
                 output tokens are then costed at zero.
         """
         return await self._api.a_request(
@@ -194,14 +194,14 @@ class ModelCostsClient:
                 must match for this cost to apply.
             provider: The model provider this cost applies to, matched case-
                 insensitively against the provider recorded on the LLM span.
-                Send null or omit it for a cost that applies whatever the
+                Send `null` or omit it for a cost that applies whatever the
                 provider, which is only used when no provider-specific cost
                 matches.
-            input_cost_per_million_tokens: The cost in USD of one million input
-                tokens. Send null when only the output rate is priced; input
-                tokens are then costed at zero.
-            output_cost_per_million_tokens: The cost in USD of one million
-                output tokens. Send null when only the input rate is priced;
+            input_cost_per_million_tokens: The cost in `USD` of one million
+                input tokens. Send `null` when only the output rate is priced;
+                input tokens are then costed at zero.
+            output_cost_per_million_tokens: The cost in `USD` of one million
+                output tokens. Send `null` when only the input rate is priced;
                 output tokens are then costed at zero.
         """
         return self._api.request(
@@ -240,14 +240,14 @@ class ModelCostsClient:
                 must match for this cost to apply.
             provider: The model provider this cost applies to, matched case-
                 insensitively against the provider recorded on the LLM span.
-                Send null or omit it for a cost that applies whatever the
+                Send `null` or omit it for a cost that applies whatever the
                 provider, which is only used when no provider-specific cost
                 matches.
-            input_cost_per_million_tokens: The cost in USD of one million input
-                tokens. Send null when only the output rate is priced; input
-                tokens are then costed at zero.
-            output_cost_per_million_tokens: The cost in USD of one million
-                output tokens. Send null when only the input rate is priced;
+            input_cost_per_million_tokens: The cost in `USD` of one million
+                input tokens. Send `null` when only the output rate is priced;
+                input tokens are then costed at zero.
+            output_cost_per_million_tokens: The cost in `USD` of one million
+                output tokens. Send `null` when only the input rate is priced;
                 output tokens are then costed at zero.
         """
         return await self._api.a_request(

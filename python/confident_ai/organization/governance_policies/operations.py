@@ -74,8 +74,8 @@ class GovernancePoliciesOperations:
         Args:
             name: The name of the governance policy, unique within your
                 organization.
-            description: What the policy covers. Omit it, or send null, to leave
-                it unset.
+            description: What the policy covers. Omit it, or send `null`, to
+                leave it unset.
             base_policy_ids: The policies this policy extends, whose controls
                 then also apply to its projects. Omit for a standalone policy.
                 Inheritance is exactly two levels deep, so every id here must
@@ -111,8 +111,8 @@ class GovernancePoliciesOperations:
         Args:
             name: The name of the governance policy, unique within your
                 organization.
-            description: What the policy covers. Omit it, or send null, to leave
-                it unset.
+            description: What the policy covers. Omit it, or send `null`, to
+                leave it unset.
             base_policy_ids: The policies this policy extends, whose controls
                 then also apply to its projects. Omit for a standalone policy.
                 Inheritance is exactly two levels deep, so every id here must
@@ -187,17 +187,17 @@ class GovernancePoliciesOperations:
         policies extend cannot itself start extending anything, and no id you
         send may name a policy that already extends another. That check and the
         write run in one serializable transaction, so a concurrent edit cannot
-        slip a cycle past a guard that was true a moment earlier; the loser of
+        slip a cycle past a guard that was `true` a moment earlier; the loser of
         such a collision is rejected and can be retried.
 
         Args:
             policy_id: The id of the governance policy.
             name: The name of the governance policy, unique within your
                 organization.
-            description: What the policy covers. Send null to clear it.
+            description: What the policy covers. Send `null` to clear it.
             owner_email: The email address of the organization member who should
                 own the policy. They must already be a member of this
-                organization. Send null to leave the policy unowned.
+                organization. Send `null` to leave the policy unowned.
             base_policy_ids: Replaces the full list of policies this policy
                 extends, so send every id you want kept and an empty array to
                 stop extending anything. Inheritance is exactly two levels deep:
@@ -235,17 +235,17 @@ class GovernancePoliciesOperations:
         policies extend cannot itself start extending anything, and no id you
         send may name a policy that already extends another. That check and the
         write run in one serializable transaction, so a concurrent edit cannot
-        slip a cycle past a guard that was true a moment earlier; the loser of
+        slip a cycle past a guard that was `true` a moment earlier; the loser of
         such a collision is rejected and can be retried.
 
         Args:
             policy_id: The id of the governance policy.
             name: The name of the governance policy, unique within your
                 organization.
-            description: What the policy covers. Send null to clear it.
+            description: What the policy covers. Send `null` to clear it.
             owner_email: The email address of the organization member who should
                 own the policy. They must already be a member of this
-                organization. Send null to leave the policy unowned.
+                organization. Send `null` to leave the policy unowned.
             base_policy_ids: Replaces the full list of policies this policy
                 extends, so send every id you want kept and an empty array to
                 stop extending anything. Inheritance is exactly two levels deep:

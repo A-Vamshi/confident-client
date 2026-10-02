@@ -89,19 +89,19 @@ class QueueIngestionTasksOperations:
 
         Creates a rule that keeps an annotation queue filled from your
         production data, and returns its id. A task only harvests once `enabled`
-        is true.
+        is `true`.
 
         Args:
             annotation_queue_id: The id of the annotation queue.
             name: The name of the task.
-            description: A note about what the task harvests. Send null to clear
-                it.
+            description: A note about what the task harvests. Send `null` to
+                clear it.
             enabled: Whether the task runs. Disabling it stops new items
-                arriving; items already queued are kept. Defaults to false.
+                arriving; items already queued are kept. Defaults to `false`.
             sample_rate: The fraction of matching items to queue, between 0 and
                 1. Defaults to 1, all of them.
             max_items: The maximum number of items this task will ever queue.
-                Send null to remove the cap.
+                Send `null` to remove the cap.
             reviewer_emails: The project members harvested items are assigned
                 to, following `assignmentStrategy`.
         """
@@ -142,19 +142,19 @@ class QueueIngestionTasksOperations:
 
         Creates a rule that keeps an annotation queue filled from your
         production data, and returns its id. A task only harvests once `enabled`
-        is true.
+        is `true`.
 
         Args:
             annotation_queue_id: The id of the annotation queue.
             name: The name of the task.
-            description: A note about what the task harvests. Send null to clear
-                it.
+            description: A note about what the task harvests. Send `null` to
+                clear it.
             enabled: Whether the task runs. Disabling it stops new items
-                arriving; items already queued are kept. Defaults to false.
+                arriving; items already queued are kept. Defaults to `false`.
             sample_rate: The fraction of matching items to queue, between 0 and
                 1. Defaults to 1, all of them.
             max_items: The maximum number of items this task will ever queue.
-                Send null to remove the cap.
+                Send `null` to remove the cap.
             reviewer_emails: The project members harvested items are assigned
                 to, following `assignmentStrategy`.
         """
@@ -246,14 +246,14 @@ class QueueIngestionTasksOperations:
             annotation_queue_id: The id of the annotation queue the task fills.
             queue_ingestion_task_id: The id of the queue ingestion task.
             name: The name of the task.
-            description: A note about what the task harvests. Send null to clear
-                it.
+            description: A note about what the task harvests. Send `null` to
+                clear it.
             enabled: Whether the task runs. Disabling it stops new items
-                arriving; items already queued are kept. Defaults to false.
+                arriving; items already queued are kept. Defaults to `false`.
             sample_rate: The fraction of matching items to queue, between 0 and
                 1. Defaults to 1, all of them.
             max_items: The maximum number of items this task will ever queue.
-                Send null to remove the cap.
+                Send `null` to remove the cap.
             reviewer_emails: The project members harvested items are assigned
                 to, following `assignmentStrategy`.
         """
@@ -304,14 +304,14 @@ class QueueIngestionTasksOperations:
             annotation_queue_id: The id of the annotation queue the task fills.
             queue_ingestion_task_id: The id of the queue ingestion task.
             name: The name of the task.
-            description: A note about what the task harvests. Send null to clear
-                it.
+            description: A note about what the task harvests. Send `null` to
+                clear it.
             enabled: Whether the task runs. Disabling it stops new items
-                arriving; items already queued are kept. Defaults to false.
+                arriving; items already queued are kept. Defaults to `false`.
             sample_rate: The fraction of matching items to queue, between 0 and
                 1. Defaults to 1, all of them.
             max_items: The maximum number of items this task will ever queue.
-                Send null to remove the cap.
+                Send `null` to remove the cap.
             reviewer_emails: The project members harvested items are assigned
                 to, following `assignmentStrategy`.
         """

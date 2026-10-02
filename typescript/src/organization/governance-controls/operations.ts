@@ -5,7 +5,7 @@
 
 import { HttpMethods } from "../../api";
 import { Endpoints } from "../../endpoints";
-import { GovernanceControlGroupsOperations } from "../governance-control-groups/operations";
+import { AuditLogsExportsOperations } from "../audit-logs-exports/operations";
 import {
   AssessGovernanceControlResult,
   CreatableGovernanceControlType,
@@ -19,7 +19,7 @@ import {
   GovernanceControlType,
 } from "../types";
 
-export class GovernanceControlsOperations extends GovernanceControlGroupsOperations {
+export class GovernanceControlsOperations extends AuditLogsExportsOperations {
   /**
    * List Governance Controls
    *
@@ -60,7 +60,7 @@ export class GovernanceControlsOperations extends GovernanceControlGroupsOperati
    * until a policy holds it.
    *
    * @param name The name of the control, unique within your organization.
-   * @param description What the control checks and why. Send null to leave it
+   * @param description What the control checks and why. Send `null` to leave it
    *   unset.
    * @param governancePolicyId Accepted but not acted on: the control is created
    *   unattached whether or not you send it. Attach it through the governance
@@ -126,7 +126,8 @@ export class GovernanceControlsOperations extends GovernanceControlGroupsOperati
    *
    * @param controlId The id of the governance control.
    * @param name The name of the control, unique within your organization.
-   * @param description What the control checks and why. Send null to clear it.
+   * @param description What the control checks and why. Send `null` to clear
+   *   it.
    */
   async updateGovernanceControl(
     controlId: string,

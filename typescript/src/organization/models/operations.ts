@@ -16,7 +16,7 @@ export class ModelsOperations extends MembersOperations {
    * `type` query parameter. Each default applies to every project with no
    * override of its own; read a single project's effective model with the
    * project models endpoint. Reading never creates configuration, so this
-   * answers with null until the organization sets one.
+   * answers with `null` until the organization sets one.
    *
    * @param type Which of the organization's models to read. The organization
    *   has no evaluation model of its own; that one is always configured per
@@ -38,18 +38,18 @@ export class ModelsOperations extends MembersOperations {
    * for that type. The provider's credential must already be configured on the
    * organization through the model credentials endpoint, and a provider your
    * organization's model provider policy does not allow is rejected with `403`.
-   * `CONFIDENT_AI` needs no credential and stores a null model name.
+   * `CONFIDENT_AI` needs no credential and stores a `null` model name.
    *
    * @param modelType Which of the organization's models to set.
    * @param name The model to call at that provider, for example
    *   `gemini-2.0-flash`. Omit it to fall back to the provider's default; it is
-   *   ignored for `CONFIDENT_AI`, which always stores a null name. A Portkey
+   *   ignored for `CONFIDENT_AI`, which always stores a `null` name. A Portkey
    *   model must be written as the saved integration slug, for example
    *   `@openai-prod/gpt-4o`.
    * @param maxConcurrency How many calls Confident AI may make to this model at
-   *   once. Omit it or send null for no limit of its own.
+   *   once. Omit it or send `null` for no limit of its own.
    * @param maxInputTokens How many input tokens Confident AI may send to this
-   *   model per call. Omit it or send null for no limit of its own.
+   *   model per call. Omit it or send `null` for no limit of its own.
    */
   async updateModel(
     modelType: string,

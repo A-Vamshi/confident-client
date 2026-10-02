@@ -130,12 +130,6 @@ class Endpoints(Enum):
     ORGANIZATION_AUDIT_LOGS_EXPORT_ENDPOINT = (
         "/v2/organization/audit-logs/exports/:exportId"
     )
-    ORGANIZATION_GOVERNANCE_CONTROL_GROUPS_ENDPOINT = (
-        "/v2/organization/governance-control-groups"
-    )
-    ORGANIZATION_GOVERNANCE_CONTROL_GROUP_ENDPOINT = (
-        "/v2/organization/governance-control-groups/:controlGroupId"
-    )
     ORGANIZATION_GOVERNANCE_CONTROLS_ENDPOINT = (
         "/v2/organization/governance-controls"
     )

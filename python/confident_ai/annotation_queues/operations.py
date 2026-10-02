@@ -201,7 +201,7 @@ class AnnotationQueuesOperations:
                 project.
             form_id: The id of an annotation form in this project to ask of
                 every item in the queue. Forms are created and managed in the
-                Confident AI platform. Send null to detach the current form.
+                Confident AI platform. Send `null` to detach the current form.
             tags: Replaces the tags on the queue. Send an empty array to remove
                 them all; omit it to leave them as they are.
         """
@@ -234,7 +234,7 @@ class AnnotationQueuesOperations:
                 project.
             form_id: The id of an annotation form in this project to ask of
                 every item in the queue. Forms are created and managed in the
-                Confident AI platform. Send null to detach the current form.
+                Confident AI platform. Send `null` to detach the current form.
             tags: Replaces the tags on the queue. Send an empty array to remove
                 them all; omit it to leave them as they are.
         """
@@ -302,7 +302,7 @@ class AnnotationQueuesOperations:
             annotator_email: The email address credited for every entry that
                 does not name its own annotator.
             mark_as_completed: Whether to mark the items annotated, for every
-                entry that does not say otherwise. Defaults to true.
+                entry that does not say otherwise. Defaults to `true`.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -340,7 +340,7 @@ class AnnotationQueuesOperations:
             annotator_email: The email address credited for every entry that
                 does not name its own annotator.
             mark_as_completed: Whether to mark the items annotated, for every
-                entry that does not say otherwise. Defaults to true.
+                entry that does not say otherwise. Defaults to `true`.
         """
         return await self._api.a_request(
             HttpMethods.POST,

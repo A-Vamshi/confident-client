@@ -115,8 +115,8 @@ class GovernanceControlsOperations:
 
         Args:
             name: The name of the control, unique within your organization.
-            description: What the control checks and why. Send null to leave it
-                unset.
+            description: What the control checks and why. Send `null` to leave
+                it unset.
             governance_policy_id: Accepted but not acted on: the control is
                 created unattached whether or not you send it. Attach it through
                 the governance policy's own controls endpoint.
@@ -159,8 +159,8 @@ class GovernanceControlsOperations:
 
         Args:
             name: The name of the control, unique within your organization.
-            description: What the control checks and why. Send null to leave it
-                unset.
+            description: What the control checks and why. Send `null` to leave
+                it unset.
             governance_policy_id: Accepted but not acted on: the control is
                 created unattached whether or not you send it. Attach it through
                 the governance policy's own controls endpoint.
@@ -236,7 +236,8 @@ class GovernanceControlsOperations:
         Args:
             control_id: The id of the governance control.
             name: The name of the control, unique within your organization.
-            description: What the control checks and why. Send null to clear it.
+            description: What the control checks and why. Send `null` to clear
+                it.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -265,7 +266,8 @@ class GovernanceControlsOperations:
         Args:
             control_id: The id of the governance control.
             name: The name of the control, unique within your organization.
-            description: What the control checks and why. Send null to clear it.
+            description: What the control checks and why. Send `null` to clear
+                it.
         """
         return await self._api.a_request(
             HttpMethods.PUT,

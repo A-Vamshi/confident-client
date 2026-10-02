@@ -32,8 +32,8 @@ class LabelsOperations:
 
         Lists a classifier's labels one page at a time, ordered by name. This is
         also how you read the results of a generation run — generated
-        suggestions arrive with status RECOMMENDED. Each label is returned as a
-        summary row; retrieve one by id for its description and polarity.
+        suggestions arrive with status `RECOMMENDED`. Each label is returned as
+        a summary row; retrieve one by id for its description and polarity.
         Requires the Starter plan or above.
 
         Args:
@@ -61,8 +61,8 @@ class LabelsOperations:
 
         Lists a classifier's labels one page at a time, ordered by name. This is
         also how you read the results of a generation run — generated
-        suggestions arrive with status RECOMMENDED. Each label is returned as a
-        summary row; retrieve one by id for its description and polarity.
+        suggestions arrive with status `RECOMMENDED`. Each label is returned as
+        a summary row; retrieve one by id for its description and polarity.
         Requires the Starter plan or above.
 
         Args:
@@ -103,7 +103,7 @@ class LabelsOperations:
             description: When this label applies. It is the instruction the
                 classifying model reads, so state the condition rather than
                 restating the name.
-            enabled: Whether the label can be applied. Defaults to true.
+            enabled: Whether the label can be applied. Defaults to `true`.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -144,7 +144,7 @@ class LabelsOperations:
             description: When this label applies. It is the instruction the
                 classifying model reads, so state the condition rather than
                 restating the name.
-            enabled: Whether the label can be applied. Defaults to true.
+            enabled: Whether the label can be applied. Defaults to `true`.
         """
         return await self._api.a_request(
             HttpMethods.POST,
@@ -214,7 +214,7 @@ class LabelsOperations:
 
         Updates a label on a classifier and returns it. Only the fields you send
         are changed. Promoting a generated suggestion is an update to status
-        ACTIVE, which also enables the label. Requires the Starter plan or
+        `ACTIVE`, which also enables the label. Requires the Starter plan or
         above.
 
         Args:
@@ -222,7 +222,7 @@ class LabelsOperations:
             label_id: The id of the label.
             name: The name of the label, unique within the classifier.
             description: When this label applies. It cannot be cleared.
-            enabled: Whether the label can be applied. Defaults to true.
+            enabled: Whether the label can be applied. Defaults to `true`.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -254,7 +254,7 @@ class LabelsOperations:
 
         Updates a label on a classifier and returns it. Only the fields you send
         are changed. Promoting a generated suggestion is an update to status
-        ACTIVE, which also enables the label. Requires the Starter plan or
+        `ACTIVE`, which also enables the label. Requires the Starter plan or
         above.
 
         Args:
@@ -262,7 +262,7 @@ class LabelsOperations:
             label_id: The id of the label.
             name: The name of the label, unique within the classifier.
             description: When this label applies. It cannot be cleared.
-            enabled: Whether the label can be applied. Defaults to true.
+            enabled: Whether the label can be applied. Defaults to `true`.
         """
         return await self._api.a_request(
             HttpMethods.PUT,

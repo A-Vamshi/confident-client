@@ -101,9 +101,9 @@ class ExportDestinationsClient:
             path_prefix: A folder inside the bucket to write exports under. A
                 leading slash is stripped and a trailing one added, so
                 `/confident-ai` is stored as `confident-ai/`. Omit it, or send
-                null or an empty string, to write to the root of the bucket.
+                `null` or an empty string, to write to the root of the bucket.
             enabled: Whether export schedules may upload to this destination.
-                Defaults to true.
+                Defaults to `true`.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -159,9 +159,9 @@ class ExportDestinationsClient:
             path_prefix: A folder inside the bucket to write exports under. A
                 leading slash is stripped and a trailing one added, so
                 `/confident-ai` is stored as `confident-ai/`. Omit it, or send
-                null or an empty string, to write to the root of the bucket.
+                `null` or an empty string, to write to the root of the bucket.
             enabled: Whether export schedules may upload to this destination.
-                Defaults to true.
+                Defaults to `true`.
         """
         return await self._api.a_request(
             HttpMethods.POST,
@@ -255,11 +255,11 @@ class ExportDestinationsClient:
                 written into storage.
             path_prefix: A folder inside the bucket to write exports under. A
                 leading slash is stripped and a trailing one added, so
-                `/confident-ai` is stored as `confident-ai/`. Send null to clear
-                it and write to the root of the bucket; an empty string is
+                `/confident-ai` is stored as `confident-ai/`. Send `null` to
+                clear it and write to the root of the bucket; an empty string is
                 ignored.
             enabled: Whether export schedules may upload to this destination.
-                Set it to false to stop uploads without deleting the
+                Set it to `false` to stop uploads without deleting the
                 destination.
         """
         return self._api.request(
@@ -319,11 +319,11 @@ class ExportDestinationsClient:
                 written into storage.
             path_prefix: A folder inside the bucket to write exports under. A
                 leading slash is stripped and a trailing one added, so
-                `/confident-ai` is stored as `confident-ai/`. Send null to clear
-                it and write to the root of the bucket; an empty string is
+                `/confident-ai` is stored as `confident-ai/`. Send `null` to
+                clear it and write to the root of the bucket; an empty string is
                 ignored.
             enabled: Whether export schedules may upload to this destination.
-                Set it to false to stop uploads without deleting the
+                Set it to `false` to stop uploads without deleting the
                 destination.
         """
         return await self._api.a_request(

@@ -113,11 +113,6 @@ export interface AssessGovernanceControlResult {
   statusCounts: Record<string, number>;
 }
 
-export interface CreateGovernanceControlGroupRequest {
-  name: string;
-  description?: string | null;
-}
-
 export interface GovernanceControlThresholdSettings {
   value: number;
   direction: GovernanceControlThresholdDirection;
@@ -225,43 +220,6 @@ export interface GovernanceControlAssessmentList {
   version: string;
   page: number;
   pageSize: number;
-}
-
-export interface GovernanceControlGroupMember {
-  id: string;
-  name: string;
-  description: string | null;
-  type: GovernanceControlType;
-}
-
-export interface GovernanceControlGroup {
-  id: string;
-  name: string;
-  description: string | null;
-  controlsCount: number;
-  createdAt: string;
-  updatedAt: string;
-  controls: GovernanceControlGroupMember[];
-}
-
-export interface GovernanceControlGroupSummary {
-  id: string;
-  name: string;
-  description: string | null;
-  controlsCount: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface GovernanceControlGroupList {
-  governanceControlGroups: GovernanceControlGroupSummary[];
-  totalGovernanceControlGroups: number;
-  page: number;
-  pageSize: number;
-}
-
-export interface GovernanceControlGroupRef {
-  id: string;
 }
 
 export interface GovernanceControlSummary {

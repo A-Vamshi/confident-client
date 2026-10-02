@@ -95,11 +95,11 @@ class ModelsOperations:
         """Set Project Model
 
         Sets one of the project's models, selected by the `modelType` path
-        segment; `decision` configures the model used by JEVAL metrics. The
+        segment; `decision` configures the model used by `JEVAL` metrics. The
         provider's credential must already be configured on the project or
         organization, and a provider blocked by the organization's model
         provider policy is rejected. `CONFIDENT_AI` needs no credential and
-        stores a null model name.
+        stores a `null` model name.
 
         Args:
             project_id: The id of the project, which must belong to the
@@ -133,11 +133,11 @@ class ModelsOperations:
         """Set Project Model
 
         Sets one of the project's models, selected by the `modelType` path
-        segment; `decision` configures the model used by JEVAL metrics. The
+        segment; `decision` configures the model used by `JEVAL` metrics. The
         provider's credential must already be configured on the project or
         organization, and a provider blocked by the organization's model
         provider policy is rejected. `CONFIDENT_AI` needs no credential and
-        stores a null model name.
+        stores a `null` model name.
 
         Args:
             project_id: The id of the project, which must belong to the

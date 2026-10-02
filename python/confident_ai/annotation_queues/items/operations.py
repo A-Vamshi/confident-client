@@ -169,7 +169,7 @@ class ItemsOperations:
                 makes the annotation visible on the platform.
             flagged: Whether to flag the item for a second opinion.
             mark_as_completed: Whether to mark the item annotated, taking it out
-                of the pending list. Defaults to true.
+                of the pending list. Defaults to `true`.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -220,7 +220,7 @@ class ItemsOperations:
                 makes the annotation visible on the platform.
             flagged: Whether to flag the item for a second opinion.
             mark_as_completed: Whether to mark the item annotated, taking it out
-                of the pending list. Defaults to true.
+                of the pending list. Defaults to `true`.
         """
         return await self._api.a_request(
             HttpMethods.POST,

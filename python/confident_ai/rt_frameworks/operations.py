@@ -82,7 +82,8 @@ class RTFrameworksOperations:
 
         Args:
             name: The name of the framework, unique within the project.
-            description: What the framework covers. Send null to leave it unset.
+            description: What the framework covers. Send `null` to leave it
+                unset.
             template: A Confident AI template to fill the framework from, which
                 creates its risk categories with vulnerability types and attack
                 methods already selected. Omit it for an empty framework.
@@ -114,7 +115,8 @@ class RTFrameworksOperations:
 
         Args:
             name: The name of the framework, unique within the project.
-            description: What the framework covers. Send null to leave it unset.
+            description: What the framework covers. Send `null` to leave it
+                unset.
             template: A Confident AI template to fill the framework from, which
                 creates its risk categories with vulnerability types and attack
                 methods already selected. Omit it for an empty framework.
@@ -180,7 +182,7 @@ class RTFrameworksOperations:
         Args:
             rt_framework_id: The id of the red teaming framework.
             name: The name of the framework, unique within the project.
-            description: What the framework covers. Send null to clear it.
+            description: What the framework covers. Send `null` to clear it.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -206,7 +208,7 @@ class RTFrameworksOperations:
         Args:
             rt_framework_id: The id of the red teaming framework.
             name: The name of the framework, unique within the project.
-            description: What the framework covers. Send null to clear it.
+            description: What the framework covers. Send `null` to clear it.
         """
         return await self._api.a_request(
             HttpMethods.PUT,

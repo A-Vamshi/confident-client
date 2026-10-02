@@ -82,7 +82,7 @@ export class ApiKeysOperations extends OrganizationOperations {
    * only way to change the value.
    *
    * @param apiKeyId The id of the API key.
-   * @param valid Send false to deactivate the key, true to reactivate it. A
+   * @param valid Send `false` to deactivate the key, `true` to reactivate it. A
    *   deactivated key is rejected on every request, and deactivating one takes
    *   effect immediately.
    */
@@ -127,7 +127,7 @@ export class ApiKeysOperations extends OrganizationOperations {
    *   which replaces the value immediately and stops the old one at once.
    * @param expiresInDays A new lifetime for the key, in days from now — a
    *   duration, not a date, stored on the key as `expiresAt`. Omit it to keep
-   *   the current expiry, or send null to remove the expiry altogether.
+   *   the current expiry, or send `null` to remove the expiry altogether.
    *   Required when rotating a key that has already expired.
    */
   async rotateApiKey(

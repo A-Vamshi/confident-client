@@ -48,10 +48,10 @@ export class ModelsOperations extends MembersOperations {
    * Set Project Model
    *
    * Sets one of the project's models, selected by the `modelType` path segment;
-   * `decision` configures the model used by JEVAL metrics. The provider's
+   * `decision` configures the model used by `JEVAL` metrics. The provider's
    * credential must already be configured on the project or organization, and a
    * provider blocked by the organization's model provider policy is rejected.
-   * `CONFIDENT_AI` needs no credential and stores a null model name.
+   * `CONFIDENT_AI` needs no credential and stores a `null` model name.
    *
    * @param projectId The id of the project, which must belong to the
    *   organization your API key is scoped to.

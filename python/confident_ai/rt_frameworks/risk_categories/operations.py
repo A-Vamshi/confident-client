@@ -93,14 +93,15 @@ class RiskCategoriesOperations:
         Args:
             rt_framework_id: The id of the red teaming framework.
             name: The name of the risk category, unique within the framework.
-            description: What this risk category covers. Send null to clear it.
+            description: What this risk category covers. Send `null` to clear
+                it.
             vulnerability_type_ids: The ids of the vulnerability types to probe
                 for. The list replaces the category's current selection.
             attack_method_ids: The ids of the attack methods to probe with. The
                 list replaces the category's current selection.
             vulnerability_id_to_priority_level: How much of the assessment each
                 vulnerability gets, keyed by vulnerability id, from 0 to 3. Send
-                null to clear every weight.
+                `null` to clear every weight.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -137,14 +138,15 @@ class RiskCategoriesOperations:
         Args:
             rt_framework_id: The id of the red teaming framework.
             name: The name of the risk category, unique within the framework.
-            description: What this risk category covers. Send null to clear it.
+            description: What this risk category covers. Send `null` to clear
+                it.
             vulnerability_type_ids: The ids of the vulnerability types to probe
                 for. The list replaces the category's current selection.
             attack_method_ids: The ids of the attack methods to probe with. The
                 list replaces the category's current selection.
             vulnerability_id_to_priority_level: How much of the assessment each
                 vulnerability gets, keyed by vulnerability id, from 0 to 3. Send
-                null to clear every weight.
+                `null` to clear every weight.
         """
         return await self._api.a_request(
             HttpMethods.POST,
@@ -232,14 +234,15 @@ class RiskCategoriesOperations:
                 belongs to.
             risk_category_id: The id of the risk category.
             name: The name of the risk category, unique within the framework.
-            description: What this risk category covers. Send null to clear it.
+            description: What this risk category covers. Send `null` to clear
+                it.
             vulnerability_type_ids: The ids of the vulnerability types to probe
                 for. The list replaces the category's current selection.
             attack_method_ids: The ids of the attack methods to probe with. The
                 list replaces the category's current selection.
             vulnerability_id_to_priority_level: How much of the assessment each
                 vulnerability gets, keyed by vulnerability id, from 0 to 3. Send
-                null to clear every weight.
+                `null` to clear every weight.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -282,14 +285,15 @@ class RiskCategoriesOperations:
                 belongs to.
             risk_category_id: The id of the risk category.
             name: The name of the risk category, unique within the framework.
-            description: What this risk category covers. Send null to clear it.
+            description: What this risk category covers. Send `null` to clear
+                it.
             vulnerability_type_ids: The ids of the vulnerability types to probe
                 for. The list replaces the category's current selection.
             attack_method_ids: The ids of the attack methods to probe with. The
                 list replaces the category's current selection.
             vulnerability_id_to_priority_level: How much of the assessment each
                 vulnerability gets, keyed by vulnerability id, from 0 to 3. Send
-                null to clear every weight.
+                `null` to clear every weight.
         """
         return await self._api.a_request(
             HttpMethods.PUT,
