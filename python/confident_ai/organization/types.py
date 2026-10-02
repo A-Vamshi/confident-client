@@ -628,6 +628,10 @@ class UpdateOrganizationModelRequest(ConfidentBaseModel):
         default=None,
         alias="maxInputTokens",
     )
+    model_credential_id: Optional[str] = Field(
+        default=None,
+        alias="modelCredentialId",
+    )
 
 
 class UpdateOrganizationRequest(ConfidentBaseModel):

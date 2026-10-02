@@ -37,6 +37,10 @@ class MetricSettingConfig(ConfidentBaseModel):
         default=None,
         alias="evaluationModelName",
     )
+    evaluation_model_credential_id: Optional[str] = Field(
+        default=None,
+        alias="evaluationModelCredentialId",
+    )
     decision_model_provider: Optional[ModelProvider] = Field(
         default=None,
         alias="decisionModelProvider",
@@ -82,6 +86,9 @@ class MetricSetting(ConfidentBaseModel):
         alias="evaluationModelProvider",
     )
     evaluation_model_name: Optional[str] = Field(alias="evaluationModelName")
+    evaluation_model_credential_id: Optional[str] = Field(
+        alias="evaluationModelCredentialId",
+    )
     decision_model_provider: Optional[ModelProvider] = Field(
         alias="decisionModelProvider",
     )

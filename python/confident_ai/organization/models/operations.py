@@ -67,7 +67,8 @@ class ModelsOperations:
         *,
         name: Optional[str] = None,
         max_concurrency: Optional[int] = None,
-        max_input_tokens: Optional[int] = None
+        max_input_tokens: Optional[int] = None,
+        model_credential_id: Optional[str] = None
     ) -> Model:
         """Set Organization Model
 
@@ -91,6 +92,9 @@ class ModelsOperations:
             max_input_tokens: How many input tokens Confident AI may send to
                 this model per call. Omit it or send `null` for no limit of its
                 own.
+            model_credential_id: For `BEDROCK` and `AZURE`, the id of the stored
+                credential to call the provider with. Omit it or send null to
+                use the provider's default credential.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -102,6 +106,7 @@ class ModelsOperations:
                 "name": name,
                 "maxConcurrency": max_concurrency,
                 "maxInputTokens": max_input_tokens,
+                "modelCredentialId": model_credential_id,
             },
             path={"modelType": model_type},
         )
@@ -113,7 +118,8 @@ class ModelsOperations:
         *,
         name: Optional[str] = None,
         max_concurrency: Optional[int] = None,
-        max_input_tokens: Optional[int] = None
+        max_input_tokens: Optional[int] = None,
+        model_credential_id: Optional[str] = None
     ) -> Model:
         """Set Organization Model
 
@@ -137,6 +143,9 @@ class ModelsOperations:
             max_input_tokens: How many input tokens Confident AI may send to
                 this model per call. Omit it or send `null` for no limit of its
                 own.
+            model_credential_id: For `BEDROCK` and `AZURE`, the id of the stored
+                credential to call the provider with. Omit it or send null to
+                use the provider's default credential.
         """
         return await self._api.a_request(
             HttpMethods.PUT,
@@ -148,6 +157,7 @@ class ModelsOperations:
                 "name": name,
                 "maxConcurrency": max_concurrency,
                 "maxInputTokens": max_input_tokens,
+                "modelCredentialId": model_credential_id,
             },
             path={"modelType": model_type},
         )

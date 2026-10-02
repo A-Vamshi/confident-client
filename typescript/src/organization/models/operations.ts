@@ -50,6 +50,9 @@ export class ModelsOperations extends MembersOperations {
    *   once. Omit it or send `null` for no limit of its own.
    * @param maxInputTokens How many input tokens Confident AI may send to this
    *   model per call. Omit it or send `null` for no limit of its own.
+   * @param modelCredentialId For `BEDROCK` and `AZURE`, the id of the stored
+   *   credential to call the provider with. Omit it or send null to use the
+   *   provider's default credential.
    */
   async updateModel(
     modelType: string,
@@ -58,14 +61,21 @@ export class ModelsOperations extends MembersOperations {
       name?: string;
       maxConcurrency?: number | null;
       maxInputTokens?: number | null;
+      modelCredentialId?: string | null;
     } = {},
   ): Promise<Model> {
-    const { name, maxConcurrency, maxInputTokens } = options;
+    const { name, maxConcurrency, maxInputTokens, modelCredentialId } = options;
     return this.api.sendRequest<Model>(
       HttpMethods.PUT,
       Endpoints.ORGANIZATION_MODEL_ENDPOINT,
       {
-        body: { provider, name, maxConcurrency, maxInputTokens },
+        body: {
+          provider,
+          name,
+          maxConcurrency,
+          maxInputTokens,
+          modelCredentialId,
+        },
         urlParams: { modelType },
       },
     );

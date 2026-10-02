@@ -1132,9 +1132,12 @@ class Project:
         the project and severs that inheritance — so the project then holds only
         the provider you just sent, and any other provider it relied on has to
         be set again here. This is a write-only surface: there is no read
-        endpoint, and the response returns every credential masked. A provider
-        your organization's model provider policy does not allow cannot have a
-        credential set (`403`), though clearing one is always permitted.
+        endpoint, and the response returns every credential masked. For
+        `BEDROCK` and `AZURE` it writes the provider's default credential and
+        leaves any other credentials stored on the Confident AI platform in
+        place. A provider your organization's model provider policy does not
+        allow cannot have a credential set (`403`), though clearing one is
+        always permitted.
 
         Args:
             api_key: The provider's API key, for the API-key providers only.
@@ -1182,9 +1185,12 @@ class Project:
         the project and severs that inheritance — so the project then holds only
         the provider you just sent, and any other provider it relied on has to
         be set again here. This is a write-only surface: there is no read
-        endpoint, and the response returns every credential masked. A provider
-        your organization's model provider policy does not allow cannot have a
-        credential set (`403`), though clearing one is always permitted.
+        endpoint, and the response returns every credential masked. For
+        `BEDROCK` and `AZURE` it writes the provider's default credential and
+        leaves any other credentials stored on the Confident AI platform in
+        place. A provider your organization's model provider policy does not
+        allow cannot have a credential set (`403`), though clearing one is
+        always permitted.
 
         Args:
             api_key: The provider's API key, for the API-key providers only.

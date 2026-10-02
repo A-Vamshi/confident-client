@@ -529,6 +529,7 @@ export interface UpdateOrganizationModelRequest {
   name?: string;
   maxConcurrency?: number | null;
   maxInputTokens?: number | null;
+  modelCredentialId?: string | null;
 }
 
 export interface UpdateOrganizationRequest {

@@ -785,6 +785,7 @@ class Model(ConfidentBaseModel):
     name: Optional[str]
     max_concurrency: Optional[int] = Field(alias="maxConcurrency")
     max_input_tokens: Optional[int] = Field(alias="maxInputTokens")
+    model_credential_id: Optional[str] = Field(alias="modelCredentialId")
     project_id: Optional[str] = Field(alias="projectId")
     organization_id: Optional[str] = Field(alias="organizationId")
 

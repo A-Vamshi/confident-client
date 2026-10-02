@@ -55,7 +55,9 @@ export class OrganizationOperations {
    * single model provider, which every project without credentials of its own
    * then uses. TypeSafe credentials are project scoped and are rejected here.
    * This is a write-only surface: there is no read endpoint, and the response
-   * returns every credential masked. A provider your organization's model
+   * returns every credential masked. For `BEDROCK` and `AZURE` it writes the
+   * provider's default credential and leaves any other credentials stored on
+   * the Confident AI platform in place. A provider your organization's model
    * provider policy does not allow cannot have a credential set (`403`), though
    * clearing one is always permitted.
    *

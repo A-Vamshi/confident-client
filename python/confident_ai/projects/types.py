@@ -135,12 +135,20 @@ class ProjectRoleList(ConfidentBaseModel):
 class UpdateDecisionProjectModelRequest(ConfidentBaseModel):
     provider: ModelProvider
     name: Optional[str] = None
+    model_credential_id: Optional[str] = Field(
+        default=None,
+        alias="modelCredentialId",
+    )
 
 
 class UpdateEvaluationProjectModelRequest(ConfidentBaseModel):
     provider: ModelProvider
     name: Optional[str] = None
     max_concurrency: Optional[int] = Field(default=None, alias="maxConcurrency")
+    model_credential_id: Optional[str] = Field(
+        default=None,
+        alias="modelCredentialId",
+    )
 
 
 class UpdatePlatformProjectModelRequest(ConfidentBaseModel):
@@ -150,6 +158,10 @@ class UpdatePlatformProjectModelRequest(ConfidentBaseModel):
     max_input_tokens: Optional[int] = Field(
         default=None,
         alias="maxInputTokens",
+    )
+    model_credential_id: Optional[str] = Field(
+        default=None,
+        alias="modelCredentialId",
     )
 
 

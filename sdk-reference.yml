@@ -11874,9 +11874,11 @@ resources:
         for a single model provider, which every project without credentials of its
         own then uses. TypeSafe credentials are project scoped and are rejected here.
         This is a write-only surface: there is no read endpoint, and the response
-        returns every credential masked. A provider your organization''s model provider
-        policy does not allow cannot have a credential set (`403`), though clearing
-        one is always permitted.'
+        returns every credential masked. For `BEDROCK` and `AZURE` it writes the
+        provider''s default credential and leaves any other credentials stored on
+        the Confident AI platform in place. A provider your organization''s model
+        provider policy does not allow cannot have a credential set (`403`), though
+        clearing one is always permitted.'
       operations:
       - id: updateOrganizationModelCredentials
         method: PUT
@@ -14397,6 +14399,21 @@ resources:
           call. Omit it or send `null` for no limit of its own.
         example: 128000
         references: []
+      - python: model_credential_id
+        typescript: modelCredentialId
+        wire: modelCredentialId
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string | null
+        required: false
+        keyword: true
+        default: None
+        description: For `BEDROCK` and `AZURE`, the id of the stored credential to
+          call the provider with. Omit it or send null to use the provider's default
+          credential.
+        example: <MODEL-CREDENTIAL-ID>
+        references: []
       order:
         python:
         - model_type
@@ -14404,12 +14421,14 @@ resources:
         - name
         - max_concurrency
         - max_input_tokens
+        - model_credential_id
         typescript:
         - modelType
         - provider
         - name
         - maxConcurrency
         - maxInputTokens
+        - modelCredentialId
   - segments:
     - policies
     python:
@@ -15443,9 +15462,11 @@ resources:
         severs that inheritance — so the project then holds only the provider you
         just sent, and any other provider it relied on has to be set again here.
         This is a write-only surface: there is no read endpoint, and the response
-        returns every credential masked. A provider your organization''s model provider
-        policy does not allow cannot have a credential set (`403`), though clearing
-        one is always permitted.'
+        returns every credential masked. For `BEDROCK` and `AZURE` it writes the
+        provider''s default credential and leaves any other credentials stored on
+        the Confident AI platform in place. A provider your organization''s model
+        provider policy does not allow cannot have a credential set (`403`), though
+        clearing one is always permitted.'
       operations:
       - id: updateProjectModelCredentials
         method: PUT
@@ -18635,9 +18656,11 @@ resources:
         severs that inheritance — so the project then holds only the provider you
         just sent, and any other provider it relied on has to be set again here.
         This is a write-only surface: there is no read endpoint, and the response
-        returns every credential masked. A provider your organization''s model provider
-        policy does not allow cannot have a credential set (`403`), though clearing
-        one is always permitted.'
+        returns every credential masked. For `BEDROCK` and `AZURE` it writes the
+        provider''s default credential and leaves any other credentials stored on
+        the Confident AI platform in place. A provider your organization''s model
+        provider policy does not allow cannot have a credential set (`403`), though
+        clearing one is always permitted.'
       operations:
       - id: updateProjectModelCredentials
         method: PUT
@@ -42862,6 +42885,17 @@ types:
       the project's default evaluation model is used.
     example: gpt-4o
     references: []
+  - wire: evaluationModelCredentialId
+    python: evaluation_model_credential_id
+    typescript: evaluationModelCredentialId
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: For `BEDROCK` and `AZURE`, the id of the stored credential this
+      metric is evaluated with, or null when it uses the provider's default credential.
+    example: null
+    references: []
   - wire: decisionModelProvider
     python: decision_model_provider
     typescript: decisionModelProvider
@@ -43000,6 +43034,18 @@ types:
       `evaluationModelProvider` is set to anything other than `CONFIDENT_AI`, and
       has no effect without a provider.
     example: gpt-4o
+    references: []
+  - wire: evaluationModelCredentialId
+    python: evaluation_model_credential_id
+    typescript: evaluationModelCredentialId
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: For `BEDROCK` and `AZURE`, the id of the stored credential this
+      metric is evaluated with. Omit it or send null to use the provider's default
+      credential.
+    example: <MODEL-CREDENTIAL-ID>
     references: []
   - wire: decisionModelProvider
     python: decision_model_provider
@@ -43148,6 +43194,17 @@ types:
     description: How many input tokens Confident AI sends to this model per call,
       or `null` for no limit of its own.
     example: 128000
+    references: []
+  - wire: modelCredentialId
+    python: model_credential_id
+    typescript: modelCredentialId
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: For `BEDROCK` and `AZURE`, the id of the stored credential the model
+      is called with, or null when it uses the provider's default credential.
+    example: null
     references: []
   - wire: projectId
     python: project_id
@@ -58582,6 +58639,17 @@ types:
       AI default.
     example: jev-latest
     references: []
+  - wire: modelCredentialId
+    python: model_credential_id
+    typescript: modelCredentialId
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: For `BEDROCK` and `AZURE`, the id of the stored credential to call
+      the provider with. Omit it or send null to use the provider's default credential.
+    example: <MODEL-CREDENTIAL-ID>
+    references: []
 - name: UpdateEvaluationProjectModelRequest
   description: The model to run as the project's evaluation model. It takes no `maxInputTokens`,
     which is rejected on this path.
@@ -58629,6 +58697,17 @@ types:
     description: How many calls Confident AI may make to this model at once. Omit
       it or send `null` for no limit of its own.
     example: 5
+    references: []
+  - wire: modelCredentialId
+    python: model_credential_id
+    typescript: modelCredentialId
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: For `BEDROCK` and `AZURE`, the id of the stored credential to call
+      the provider with. Omit it or send null to use the provider's default credential.
+    example: <MODEL-CREDENTIAL-ID>
     references: []
 - name: UpdateEvaluationRuleRequest
   description: The fields of an evaluation rule to change. Send at least one; every
@@ -59746,6 +59825,17 @@ types:
       Omit it or send `null` for no limit of its own.
     example: 128000
     references: []
+  - wire: modelCredentialId
+    python: model_credential_id
+    typescript: modelCredentialId
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: For `BEDROCK` and `AZURE`, the id of the stored credential to call
+      the provider with. Omit it or send null to use the provider's default credential.
+    example: <MODEL-CREDENTIAL-ID>
+    references: []
 - name: UpdateOrganizationRequest
   description: The fields of the organization to change. The name is the only field
     the API can set; the plan is changed through billing, not here.
@@ -59881,6 +59971,17 @@ types:
       The platform, simulation and speech models only: sending it on the `evaluation`
       path is rejected. Omit it or send `null` for no limit of its own.'
     example: 128000
+    references: []
+  - wire: modelCredentialId
+    python: model_credential_id
+    typescript: modelCredentialId
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: For `BEDROCK` and `AZURE`, the id of the stored credential to call
+      the provider with. Omit it or send null to use the provider's default credential.
+    example: <MODEL-CREDENTIAL-ID>
     references: []
 - name: UpdateProjectModelRequest
   description: 'The model to run for the type named in the path. The accepted shape
