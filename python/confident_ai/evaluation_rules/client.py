@@ -111,7 +111,8 @@ class EvaluationRulesClient:
             description: A note about what the rule checks. Send `null` to clear
                 it.
             sample_rate: The fraction of matching items to evaluate, between 0
-                and 1. Defaults to 1, all of them.
+                and 1. On create it defaults to 1, all of them; omit it on an
+                update to leave it unchanged.
             span_type: Only evaluate spans of this kind. Allowed only when
                 `dataModel` is `SPAN`, and cleared automatically if the rule
                 moves off `SPAN`. Send `null` to evaluate every span.
@@ -124,7 +125,7 @@ class EvaluationRulesClient:
                 thread timelimit, which defaults to 300.
             overwrite_evals: Re-evaluate items that already have results for
                 this metric collection instead of skipping them. Defaults to
-                `false`.
+                `false` on create; omit it on an update to leave it unchanged.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -178,7 +179,8 @@ class EvaluationRulesClient:
             description: A note about what the rule checks. Send `null` to clear
                 it.
             sample_rate: The fraction of matching items to evaluate, between 0
-                and 1. Defaults to 1, all of them.
+                and 1. On create it defaults to 1, all of them; omit it on an
+                update to leave it unchanged.
             span_type: Only evaluate spans of this kind. Allowed only when
                 `dataModel` is `SPAN`, and cleared automatically if the rule
                 moves off `SPAN`. Send `null` to evaluate every span.
@@ -191,7 +193,7 @@ class EvaluationRulesClient:
                 thread timelimit, which defaults to 300.
             overwrite_evals: Re-evaluate items that already have results for
                 this metric collection instead of skipping them. Defaults to
-                `false`.
+                `false` on create; omit it on an update to leave it unchanged.
         """
         return await self._api.a_request(
             HttpMethods.POST,
@@ -278,7 +280,8 @@ class EvaluationRulesClient:
             description: A note about what the rule checks. Send `null` to clear
                 it.
             sample_rate: The fraction of matching items to evaluate, between 0
-                and 1. Defaults to 1, all of them.
+                and 1. On create it defaults to 1, all of them; omit it on an
+                update to leave it unchanged.
             span_type: Only evaluate spans of this kind. Allowed only when
                 `dataModel` is `SPAN`, and cleared automatically if the rule
                 moves off `SPAN`. Send `null` to evaluate every span.
@@ -291,7 +294,7 @@ class EvaluationRulesClient:
                 thread timelimit, which defaults to 300.
             overwrite_evals: Re-evaluate items that already have results for
                 this metric collection instead of skipping them. Defaults to
-                `false`.
+                `false` on create; omit it on an update to leave it unchanged.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -345,7 +348,8 @@ class EvaluationRulesClient:
             description: A note about what the rule checks. Send `null` to clear
                 it.
             sample_rate: The fraction of matching items to evaluate, between 0
-                and 1. Defaults to 1, all of them.
+                and 1. On create it defaults to 1, all of them; omit it on an
+                update to leave it unchanged.
             span_type: Only evaluate spans of this kind. Allowed only when
                 `dataModel` is `SPAN`, and cleared automatically if the rule
                 moves off `SPAN`. Send `null` to evaluate every span.
@@ -358,7 +362,7 @@ class EvaluationRulesClient:
                 thread timelimit, which defaults to 300.
             overwrite_evals: Re-evaluate items that already have results for
                 this metric collection instead of skipping them. Defaults to
-                `false`.
+                `false` on create; omit it on an update to leave it unchanged.
         """
         return await self._api.a_request(
             HttpMethods.PUT,

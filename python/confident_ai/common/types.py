@@ -407,7 +407,7 @@ class JevQuestionJevQuestion2(ConfidentBaseModel):
     type: Literal["choice"]
     question: str
     weight: Optional[float] = None
-    options: Dict[str, float]
+    options: Dict[str, Optional[float]]
 
 
 JevQuestion = Union[
@@ -1041,7 +1041,7 @@ class WidgetTableColumn(ConfidentBaseModel):
 class WidgetTableData(ConfidentBaseModel):
     kind: Literal["TABLE"]
     columns: List[WidgetTableColumn]
-    rows: List[Dict[str, Union[str, float]]]
+    rows: List[Dict[str, Optional[Union[str, float]]]]
 
 
 class WidgetTimeSeriesData(ConfidentBaseModel):

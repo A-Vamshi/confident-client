@@ -54,7 +54,8 @@ export class LabelsOperations extends ClassifiersOperations {
    * @param description When this label applies. It is the instruction the
    *   classifying model reads, so state the condition rather than restating the
    *   name.
-   * @param enabled Whether the label can be applied. Defaults to `true`.
+   * @param enabled Whether the label can be applied. Defaults to `true` on
+   *   create; omit it on an update to leave it unchanged.
    */
   async createLabel(
     classifierId: string,
@@ -109,7 +110,8 @@ export class LabelsOperations extends ClassifiersOperations {
    * @param labelId The id of the label.
    * @param name The name of the label, unique within the classifier.
    * @param description When this label applies. It cannot be cleared.
-   * @param enabled Whether the label can be applied. Defaults to `true`.
+   * @param enabled Whether the label can be applied. Defaults to `true` on
+   *   create; omit it on an update to leave it unchanged.
    */
   async updateLabel(
     classifierId: string,

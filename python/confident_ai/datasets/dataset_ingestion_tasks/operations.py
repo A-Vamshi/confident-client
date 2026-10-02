@@ -104,9 +104,11 @@ class DatasetIngestionTasksOperations:
                 clear it.
             enabled: Whether the task runs. Disabling it unschedules the
                 harvesting job, and goldens already created are kept. Defaults
-                to `false`.
+                to `false` on create; omit it on an update to leave it
+                unchanged.
             sample_rate: The fraction of matching items to ingest, between 0 and
-                1. Defaults to 1, all of them.
+                1. On create it defaults to 1, all of them; omit it on an update
+                to leave it unchanged.
             max_goldens: The maximum number of goldens this task will ever
                 create. Send `null` to remove the cap.
             input_transformer_id: The id of a transformer that reshapes the
@@ -114,8 +116,9 @@ class DatasetIngestionTasksOperations:
             output_transformer_id: The id of a transformer that reshapes the
                 harvested output before it is stored. Send `null` to detach it.
             include_input: Populate the golden's `input` from the harvested
-                item. Defaults to `true`; every other include flag defaults to
-                `false`.
+                item. On create it defaults to `true` and every other include
+                flag defaults to `false`; omit it on an update to leave it
+                unchanged.
             include_actual_output: Populate the golden's `actualOutput` from the
                 harvested item.
             include_expected_output: Populate the golden's `expectedOutput` from
@@ -191,9 +194,11 @@ class DatasetIngestionTasksOperations:
                 clear it.
             enabled: Whether the task runs. Disabling it unschedules the
                 harvesting job, and goldens already created are kept. Defaults
-                to `false`.
+                to `false` on create; omit it on an update to leave it
+                unchanged.
             sample_rate: The fraction of matching items to ingest, between 0 and
-                1. Defaults to 1, all of them.
+                1. On create it defaults to 1, all of them; omit it on an update
+                to leave it unchanged.
             max_goldens: The maximum number of goldens this task will ever
                 create. Send `null` to remove the cap.
             input_transformer_id: The id of a transformer that reshapes the
@@ -201,8 +206,9 @@ class DatasetIngestionTasksOperations:
             output_transformer_id: The id of a transformer that reshapes the
                 harvested output before it is stored. Send `null` to detach it.
             include_input: Populate the golden's `input` from the harvested
-                item. Defaults to `true`; every other include flag defaults to
-                `false`.
+                item. On create it defaults to `true` and every other include
+                flag defaults to `false`; omit it on an update to leave it
+                unchanged.
             include_actual_output: Populate the golden's `actualOutput` from the
                 harvested item.
             include_expected_output: Populate the golden's `expectedOutput` from
@@ -322,9 +328,11 @@ class DatasetIngestionTasksOperations:
                 clear it.
             enabled: Whether the task runs. Disabling it unschedules the
                 harvesting job, and goldens already created are kept. Defaults
-                to `false`.
+                to `false` on create; omit it on an update to leave it
+                unchanged.
             sample_rate: The fraction of matching items to ingest, between 0 and
-                1. Defaults to 1, all of them.
+                1. On create it defaults to 1, all of them; omit it on an update
+                to leave it unchanged.
             max_goldens: The maximum number of goldens this task will ever
                 create. Send `null` to remove the cap.
             input_transformer_id: The id of a transformer that reshapes the
@@ -332,8 +340,9 @@ class DatasetIngestionTasksOperations:
             output_transformer_id: The id of a transformer that reshapes the
                 harvested output before it is stored. Send `null` to detach it.
             include_input: Populate the golden's `input` from the harvested
-                item. Defaults to `true`; every other include flag defaults to
-                `false`.
+                item. On create it defaults to `true` and every other include
+                flag defaults to `false`; omit it on an update to leave it
+                unchanged.
             include_actual_output: Populate the golden's `actualOutput` from the
                 harvested item.
             include_expected_output: Populate the golden's `expectedOutput` from
@@ -412,9 +421,11 @@ class DatasetIngestionTasksOperations:
                 clear it.
             enabled: Whether the task runs. Disabling it unschedules the
                 harvesting job, and goldens already created are kept. Defaults
-                to `false`.
+                to `false` on create; omit it on an update to leave it
+                unchanged.
             sample_rate: The fraction of matching items to ingest, between 0 and
-                1. Defaults to 1, all of them.
+                1. On create it defaults to 1, all of them; omit it on an update
+                to leave it unchanged.
             max_goldens: The maximum number of goldens this task will ever
                 create. Send `null` to remove the cap.
             input_transformer_id: The id of a transformer that reshapes the
@@ -422,8 +433,9 @@ class DatasetIngestionTasksOperations:
             output_transformer_id: The id of a transformer that reshapes the
                 harvested output before it is stored. Send `null` to detach it.
             include_input: Populate the golden's `input` from the harvested
-                item. Defaults to `true`; every other include flag defaults to
-                `false`.
+                item. On create it defaults to `true` and every other include
+                flag defaults to `false`; omit it on an update to leave it
+                unchanged.
             include_actual_output: Populate the golden's `actualOutput` from the
                 harvested item.
             include_expected_output: Populate the golden's `expectedOutput` from

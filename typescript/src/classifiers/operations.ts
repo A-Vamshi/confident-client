@@ -58,9 +58,11 @@ export class ClassifiersOperations {
    * @param name The name of the classifier, unique per data model within the
    *   project.
    * @param description What this classifier is for. Send `null` to clear it.
-   * @param enabled Whether the classifier runs at all. Defaults to `true`.
+   * @param enabled Whether the classifier runs at all. Defaults to `true` on
+   *   create; omit it on an update to leave it unchanged.
    * @param autoClassify Whether incoming items are classified automatically as
-   *   they arrive. Defaults to `true`.
+   *   they arrive. Defaults to `true` on create; omit it on an update to leave
+   *   it unchanged.
    * @param filters Narrows which traces or threads the classifier runs on, so
    *   it can watch one route rather than the whole project. Only the groups are
    *   stored, so the set's top-level operator is dropped and the groups are
@@ -137,9 +139,11 @@ export class ClassifiersOperations {
    * @param name The name of the classifier, unique per data model within the
    *   project.
    * @param description What this classifier is for. Send `null` to clear it.
-   * @param enabled Whether the classifier runs at all. Defaults to `true`.
+   * @param enabled Whether the classifier runs at all. Defaults to `true` on
+   *   create; omit it on an update to leave it unchanged.
    * @param autoClassify Whether incoming items are classified automatically as
-   *   they arrive. Defaults to `true`.
+   *   they arrive. Defaults to `true` on create; omit it on an update to leave
+   *   it unchanged.
    * @param filters Narrows which traces or threads the classifier runs on, so
    *   it can watch one route rather than the whole project. Only the groups are
    *   stored, so the set's top-level operator is dropped and the groups are

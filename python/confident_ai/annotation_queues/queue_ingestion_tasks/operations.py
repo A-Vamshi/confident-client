@@ -97,9 +97,11 @@ class QueueIngestionTasksOperations:
             description: A note about what the task harvests. Send `null` to
                 clear it.
             enabled: Whether the task runs. Disabling it stops new items
-                arriving; items already queued are kept. Defaults to `false`.
+                arriving; items already queued are kept. Defaults to `false` on
+                create; omit it on an update to leave it unchanged.
             sample_rate: The fraction of matching items to queue, between 0 and
-                1. Defaults to 1, all of them.
+                1. On create it defaults to 1, all of them; omit it on an update
+                to leave it unchanged.
             max_items: The maximum number of items this task will ever queue.
                 Send `null` to remove the cap.
             reviewer_emails: The project members harvested items are assigned
@@ -150,9 +152,11 @@ class QueueIngestionTasksOperations:
             description: A note about what the task harvests. Send `null` to
                 clear it.
             enabled: Whether the task runs. Disabling it stops new items
-                arriving; items already queued are kept. Defaults to `false`.
+                arriving; items already queued are kept. Defaults to `false` on
+                create; omit it on an update to leave it unchanged.
             sample_rate: The fraction of matching items to queue, between 0 and
-                1. Defaults to 1, all of them.
+                1. On create it defaults to 1, all of them; omit it on an update
+                to leave it unchanged.
             max_items: The maximum number of items this task will ever queue.
                 Send `null` to remove the cap.
             reviewer_emails: The project members harvested items are assigned
@@ -249,9 +253,11 @@ class QueueIngestionTasksOperations:
             description: A note about what the task harvests. Send `null` to
                 clear it.
             enabled: Whether the task runs. Disabling it stops new items
-                arriving; items already queued are kept. Defaults to `false`.
+                arriving; items already queued are kept. Defaults to `false` on
+                create; omit it on an update to leave it unchanged.
             sample_rate: The fraction of matching items to queue, between 0 and
-                1. Defaults to 1, all of them.
+                1. On create it defaults to 1, all of them; omit it on an update
+                to leave it unchanged.
             max_items: The maximum number of items this task will ever queue.
                 Send `null` to remove the cap.
             reviewer_emails: The project members harvested items are assigned
@@ -307,9 +313,11 @@ class QueueIngestionTasksOperations:
             description: A note about what the task harvests. Send `null` to
                 clear it.
             enabled: Whether the task runs. Disabling it stops new items
-                arriving; items already queued are kept. Defaults to `false`.
+                arriving; items already queued are kept. Defaults to `false` on
+                create; omit it on an update to leave it unchanged.
             sample_rate: The fraction of matching items to queue, between 0 and
-                1. Defaults to 1, all of them.
+                1. On create it defaults to 1, all of them; omit it on an update
+                to leave it unchanged.
             max_items: The maximum number of items this task will ever queue.
                 Send `null` to remove the cap.
             reviewer_emails: The project members harvested items are assigned

@@ -48,9 +48,11 @@ export class QueueIngestionTasksOperations extends ItemsOperations {
    * @param description A note about what the task harvests. Send `null` to
    *   clear it.
    * @param enabled Whether the task runs. Disabling it stops new items
-   *   arriving; items already queued are kept. Defaults to `false`.
+   *   arriving; items already queued are kept. Defaults to `false` on create;
+   *   omit it on an update to leave it unchanged.
    * @param sampleRate The fraction of matching items to queue, between 0 and 1.
-   *   Defaults to 1, all of them.
+   *   On create it defaults to 1, all of them; omit it on an update to leave it
+   *   unchanged.
    * @param maxItems The maximum number of items this task will ever queue. Send
    *   `null` to remove the cap.
    * @param reviewerEmails The project members harvested items are assigned to,
@@ -131,9 +133,11 @@ export class QueueIngestionTasksOperations extends ItemsOperations {
    * @param description A note about what the task harvests. Send `null` to
    *   clear it.
    * @param enabled Whether the task runs. Disabling it stops new items
-   *   arriving; items already queued are kept. Defaults to `false`.
+   *   arriving; items already queued are kept. Defaults to `false` on create;
+   *   omit it on an update to leave it unchanged.
    * @param sampleRate The fraction of matching items to queue, between 0 and 1.
-   *   Defaults to 1, all of them.
+   *   On create it defaults to 1, all of them; omit it on an update to leave it
+   *   unchanged.
    * @param maxItems The maximum number of items this task will ever queue. Send
    *   `null` to remove the cap.
    * @param reviewerEmails The project members harvested items are assigned to,

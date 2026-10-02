@@ -60,7 +60,8 @@ export class EvaluationRulesClient {
    * @param description A note about what the rule checks. Send `null` to clear
    *   it.
    * @param sampleRate The fraction of matching items to evaluate, between 0 and
-   *   1. Defaults to 1, all of them.
+   *   1. On create it defaults to 1, all of them; omit it on an update to leave
+   *   it unchanged.
    * @param spanType Only evaluate spans of this kind. Allowed only when
    *   `dataModel` is `SPAN`, and cleared automatically if the rule moves off
    *   `SPAN`. Send `null` to evaluate every span.
@@ -72,7 +73,8 @@ export class EvaluationRulesClient {
    *   to be stored. Send `null` to use the project's thread timelimit, which
    *   defaults to 300.
    * @param overwriteEvals Re-evaluate items that already have results for this
-   *   metric collection instead of skipping them. Defaults to `false`.
+   *   metric collection instead of skipping them. Defaults to `false` on
+   *   create; omit it on an update to leave it unchanged.
    */
   async create(
     name: string,
@@ -149,7 +151,8 @@ export class EvaluationRulesClient {
    * @param description A note about what the rule checks. Send `null` to clear
    *   it.
    * @param sampleRate The fraction of matching items to evaluate, between 0 and
-   *   1. Defaults to 1, all of them.
+   *   1. On create it defaults to 1, all of them; omit it on an update to leave
+   *   it unchanged.
    * @param spanType Only evaluate spans of this kind. Allowed only when
    *   `dataModel` is `SPAN`, and cleared automatically if the rule moves off
    *   `SPAN`. Send `null` to evaluate every span.
@@ -161,7 +164,8 @@ export class EvaluationRulesClient {
    *   to be stored. Send `null` to use the project's thread timelimit, which
    *   defaults to 300.
    * @param overwriteEvals Re-evaluate items that already have results for this
-   *   metric collection instead of skipping them. Defaults to `false`.
+   *   metric collection instead of skipping them. Defaults to `false` on
+   *   create; omit it on an update to leave it unchanged.
    */
   async update(
     evaluationRuleId: string,

@@ -108,9 +108,11 @@ class ClassifiersOperations:
             name: The name of the classifier, unique per data model within the
                 project.
             description: What this classifier is for. Send `null` to clear it.
-            enabled: Whether the classifier runs at all. Defaults to `true`.
+            enabled: Whether the classifier runs at all. Defaults to `true` on
+                create; omit it on an update to leave it unchanged.
             auto_classify: Whether incoming items are classified automatically
-                as they arrive. Defaults to `true`.
+                as they arrive. Defaults to `true` on create; omit it on an
+                update to leave it unchanged.
             filters: Narrows which traces or threads the classifier runs on, so
                 it can watch one route rather than the whole project. Only the
                 groups are stored, so the set's top-level operator is dropped
@@ -160,9 +162,11 @@ class ClassifiersOperations:
             name: The name of the classifier, unique per data model within the
                 project.
             description: What this classifier is for. Send `null` to clear it.
-            enabled: Whether the classifier runs at all. Defaults to `true`.
+            enabled: Whether the classifier runs at all. Defaults to `true` on
+                create; omit it on an update to leave it unchanged.
             auto_classify: Whether incoming items are classified automatically
-                as they arrive. Defaults to `true`.
+                as they arrive. Defaults to `true` on create; omit it on an
+                update to leave it unchanged.
             filters: Narrows which traces or threads the classifier runs on, so
                 it can watch one route rather than the whole project. Only the
                 groups are stored, so the set's top-level operator is dropped
@@ -246,9 +250,11 @@ class ClassifiersOperations:
             name: The name of the classifier, unique per data model within the
                 project.
             description: What this classifier is for. Send `null` to clear it.
-            enabled: Whether the classifier runs at all. Defaults to `true`.
+            enabled: Whether the classifier runs at all. Defaults to `true` on
+                create; omit it on an update to leave it unchanged.
             auto_classify: Whether incoming items are classified automatically
-                as they arrive. Defaults to `true`.
+                as they arrive. Defaults to `true` on create; omit it on an
+                update to leave it unchanged.
             filters: Narrows which traces or threads the classifier runs on, so
                 it can watch one route rather than the whole project. Only the
                 groups are stored, so the set's top-level operator is dropped
@@ -297,9 +303,11 @@ class ClassifiersOperations:
             name: The name of the classifier, unique per data model within the
                 project.
             description: What this classifier is for. Send `null` to clear it.
-            enabled: Whether the classifier runs at all. Defaults to `true`.
+            enabled: Whether the classifier runs at all. Defaults to `true` on
+                create; omit it on an update to leave it unchanged.
             auto_classify: Whether incoming items are classified automatically
-                as they arrive. Defaults to `true`.
+                as they arrive. Defaults to `true` on create; omit it on an
+                update to leave it unchanged.
             filters: Narrows which traces or threads the classifier runs on, so
                 it can watch one route rather than the whole project. Only the
                 groups are stored, so the set's top-level operator is dropped

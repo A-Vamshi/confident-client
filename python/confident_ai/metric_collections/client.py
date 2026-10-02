@@ -71,7 +71,8 @@ class MetricCollectionsClient:
                 Each metric must exist in your project and match `multiTurn`.
             sample_rate: The share of eligible entities the whole collection is
                 run against, between 0 and 1. Applied on top of each metric's
-                own `sampleRate`. Defaults to 1.
+                own `sampleRate`. Defaults to 1 on create; omit it on an update
+                to leave it unchanged.
             input_transformer_id: The id of a transformer that reshapes the
                 payload before evaluation. Send `null` to unset it.
             output_transformer_id: The id of a transformer that reshapes the
@@ -118,7 +119,8 @@ class MetricCollectionsClient:
                 Each metric must exist in your project and match `multiTurn`.
             sample_rate: The share of eligible entities the whole collection is
                 run against, between 0 and 1. Applied on top of each metric's
-                own `sampleRate`. Defaults to 1.
+                own `sampleRate`. Defaults to 1 on create; omit it on an update
+                to leave it unchanged.
             input_transformer_id: The id of a transformer that reshapes the
                 payload before evaluation. Send `null` to unset it.
             output_transformer_id: The id of a transformer that reshapes the
@@ -196,7 +198,8 @@ class MetricCollectionsClient:
                 collection first and resend each metric it should keep.
             sample_rate: The share of eligible entities the whole collection is
                 run against, between 0 and 1. Applied on top of each metric's
-                own `sampleRate`. Defaults to 1.
+                own `sampleRate`. Defaults to 1 on create; omit it on an update
+                to leave it unchanged.
             input_transformer_id: The id of a transformer that reshapes the
                 payload before evaluation. Send `null` to unset it.
             output_transformer_id: The id of a transformer that reshapes the
@@ -242,7 +245,8 @@ class MetricCollectionsClient:
                 collection first and resend each metric it should keep.
             sample_rate: The share of eligible entities the whole collection is
                 run against, between 0 and 1. Applied on top of each metric's
-                own `sampleRate`. Defaults to 1.
+                own `sampleRate`. Defaults to 1 on create; omit it on an update
+                to leave it unchanged.
             input_transformer_id: The id of a transformer that reshapes the
                 payload before evaluation. Send `null` to unset it.
             output_transformer_id: The id of a transformer that reshapes the

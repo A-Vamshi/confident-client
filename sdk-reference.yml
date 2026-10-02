@@ -2370,7 +2370,8 @@ resources:
         keyword: true
         default: None
         description: Whether the task runs. Disabling it stops new items arriving;
-          items already queued are kept. Defaults to `false`.
+          items already queued are kept. Defaults to `false` on create; omit it on
+          an update to leave it unchanged.
         example: true
         references: []
       - python: sample_rate
@@ -2383,8 +2384,9 @@ resources:
         required: false
         keyword: true
         default: None
-        description: The fraction of matching items to queue, between 0 and 1. Defaults
-          to 1, all of them.
+        description: The fraction of matching items to queue, between 0 and 1. On
+          create it defaults to 1, all of them; omit it on an update to leave it
+          unchanged.
         example: 0.1
         references: []
       - python: filters
@@ -2617,7 +2619,8 @@ resources:
         keyword: true
         default: None
         description: Whether the task runs. Disabling it stops new items arriving;
-          items already queued are kept. Defaults to `false`.
+          items already queued are kept. Defaults to `false` on create; omit it on
+          an update to leave it unchanged.
         example: true
         references: []
       - python: sample_rate
@@ -2630,8 +2633,9 @@ resources:
         required: false
         keyword: true
         default: None
-        description: The fraction of matching items to queue, between 0 and 1. Defaults
-          to 1, all of them.
+        description: The fraction of matching items to queue, between 0 and 1. On
+          create it defaults to 1, all of them; omit it on an update to leave it
+          unchanged.
         example: 0.1
         references: []
       - python: filters
@@ -3548,7 +3552,8 @@ resources:
         required: false
         keyword: true
         default: None
-        description: Whether the classifier runs at all. Defaults to `true`.
+        description: Whether the classifier runs at all. Defaults to `true` on create;
+          omit it on an update to leave it unchanged.
         example: true
         references: []
       - python: auto_classify
@@ -3562,7 +3567,8 @@ resources:
         keyword: true
         default: None
         description: Whether incoming items are classified automatically as they
-          arrive. Defaults to `true`.
+          arrive. Defaults to `true` on create; omit it on an update to leave it
+          unchanged.
         example: true
         references: []
       - python: filters
@@ -3728,7 +3734,8 @@ resources:
         required: false
         keyword: true
         default: None
-        description: Whether the classifier runs at all. Defaults to `true`.
+        description: Whether the classifier runs at all. Defaults to `true` on create;
+          omit it on an update to leave it unchanged.
         example: true
         references: []
       - python: auto_classify
@@ -3742,7 +3749,8 @@ resources:
         keyword: true
         default: None
         description: Whether incoming items are classified automatically as they
-          arrive. Defaults to `true`.
+          arrive. Defaults to `true` on create; omit it on an update to leave it
+          unchanged.
         example: true
         references: []
       - python: filters
@@ -4022,7 +4030,8 @@ resources:
         required: false
         keyword: true
         default: None
-        description: Whether the label can be applied. Defaults to `true`.
+        description: Whether the label can be applied. Defaults to `true` on create;
+          omit it on an update to leave it unchanged.
         example: true
         references: []
       - python: status
@@ -4197,7 +4206,8 @@ resources:
         required: false
         keyword: true
         default: None
-        description: Whether the label can be applied. Defaults to `true`.
+        description: Whether the label can be applied. Defaults to `true` on create;
+          omit it on an update to leave it unchanged.
         example: true
         references: []
       - python: status
@@ -6001,7 +6011,8 @@ resources:
         keyword: true
         default: None
         description: Whether the task runs. Disabling it unschedules the harvesting
-          job, and goldens already created are kept. Defaults to `false`.
+          job, and goldens already created are kept. Defaults to `false` on create;
+          omit it on an update to leave it unchanged.
         example: true
         references: []
       - python: sample_rate
@@ -6014,8 +6025,9 @@ resources:
         required: false
         keyword: true
         default: None
-        description: The fraction of matching items to ingest, between 0 and 1. Defaults
-          to 1, all of them.
+        description: The fraction of matching items to ingest, between 0 and 1. On
+          create it defaults to 1, all of them; omit it on an update to leave it
+          unchanged.
         example: 0.1
         references: []
       - python: filters
@@ -6091,8 +6103,9 @@ resources:
         required: false
         keyword: true
         default: None
-        description: Populate the golden's `input` from the harvested item. Defaults
-          to `true`; every other include flag defaults to `false`.
+        description: Populate the golden's `input` from the harvested item. On create
+          it defaults to `true` and every other include flag defaults to `false`;
+          omit it on an update to leave it unchanged.
         example: true
         references: []
       - python: include_actual_output
@@ -6354,7 +6367,8 @@ resources:
         keyword: true
         default: None
         description: Whether the task runs. Disabling it unschedules the harvesting
-          job, and goldens already created are kept. Defaults to `false`.
+          job, and goldens already created are kept. Defaults to `false` on create;
+          omit it on an update to leave it unchanged.
         example: true
         references: []
       - python: sample_rate
@@ -6367,8 +6381,9 @@ resources:
         required: false
         keyword: true
         default: None
-        description: The fraction of matching items to ingest, between 0 and 1. Defaults
-          to 1, all of them.
+        description: The fraction of matching items to ingest, between 0 and 1. On
+          create it defaults to 1, all of them; omit it on an update to leave it
+          unchanged.
         example: 0.1
         references: []
       - python: filters
@@ -6444,8 +6459,9 @@ resources:
         required: false
         keyword: true
         default: None
-        description: Populate the golden's `input` from the harvested item. Defaults
-          to `true`; every other include flag defaults to `false`.
+        description: Populate the golden's `input` from the harvested item. On create
+          it defaults to `true` and every other include flag defaults to `false`;
+          omit it on an update to leave it unchanged.
         example: true
         references: []
       - python: include_actual_output
@@ -8148,7 +8164,8 @@ resources:
         keyword: true
         default: None
         description: The fraction of matching items to evaluate, between 0 and 1.
-          Defaults to 1, all of them.
+          On create it defaults to 1, all of them; omit it on an update to leave
+          it unchanged.
         example: 0.2
         references: []
       - python: span_type
@@ -8216,7 +8233,8 @@ resources:
         keyword: true
         default: None
         description: Re-evaluate items that already have results for this metric
-          collection instead of skipping them. Defaults to `false`.
+          collection instead of skipping them. Defaults to `false` on create; omit
+          it on an update to leave it unchanged.
         example: false
         references: []
       order:
@@ -8386,7 +8404,8 @@ resources:
         keyword: true
         default: None
         description: The fraction of matching items to evaluate, between 0 and 1.
-          Defaults to 1, all of them.
+          On create it defaults to 1, all of them; omit it on an update to leave
+          it unchanged.
         example: 0.2
         references: []
       - python: span_type
@@ -8454,7 +8473,8 @@ resources:
         keyword: true
         default: None
         description: Re-evaluate items that already have results for this metric
-          collection instead of skipping them. Defaults to `false`.
+          collection instead of skipping them. Defaults to `false` on create; omit
+          it on an update to leave it unchanged.
         example: false
         references: []
       order:
@@ -10712,7 +10732,7 @@ resources:
         default: None
         description: The share of eligible entities the whole collection is run against,
           between 0 and 1. Applied on top of each metric's own `sampleRate`. Defaults
-          to 1.
+          to 1 on create; omit it on an update to leave it unchanged.
         example: 1
         references: []
       - python: input_transformer_id
@@ -10864,7 +10884,7 @@ resources:
         default: None
         description: The share of eligible entities the whole collection is run against,
           between 0 and 1. Applied on top of each metric's own `sampleRate`. Defaults
-          to 1.
+          to 1 on create; omit it on an update to leave it unchanged.
         example: 1
         references: []
       - python: input_transformer_id
@@ -30552,7 +30572,8 @@ types:
       python: Optional[bool]
       typescript: boolean
     required: false
-    description: Whether the label can be applied. Defaults to `true`.
+    description: Whether the label can be applied. Defaults to `true` on create;
+      omit it on an update to leave it unchanged.
     example: true
     references: []
   - wire: status
@@ -30644,7 +30665,8 @@ types:
       python: Optional[bool]
       typescript: boolean
     required: false
-    description: Whether the classifier runs at all. Defaults to `true`.
+    description: Whether the classifier runs at all. Defaults to `true` on create;
+      omit it on an update to leave it unchanged.
     example: true
     references: []
   - wire: autoClassify
@@ -30655,7 +30677,7 @@ types:
       typescript: boolean
     required: false
     description: Whether incoming items are classified automatically as they arrive.
-      Defaults to `true`.
+      Defaults to `true` on create; omit it on an update to leave it unchanged.
     example: true
     references: []
   - wire: filters
@@ -30802,7 +30824,8 @@ types:
       typescript: boolean
     required: false
     description: Whether the task runs. Disabling it unschedules the harvesting job,
-      and goldens already created are kept. Defaults to `false`.
+      and goldens already created are kept. Defaults to `false` on create; omit it
+      on an update to leave it unchanged.
     example: true
     references: []
   - wire: sampleRate
@@ -30812,8 +30835,8 @@ types:
       python: Optional[float]
       typescript: number
     required: false
-    description: The fraction of matching items to ingest, between 0 and 1. Defaults
-      to 1, all of them.
+    description: The fraction of matching items to ingest, between 0 and 1. On create
+      it defaults to 1, all of them; omit it on an update to leave it unchanged.
     example: 0.1
     references: []
   - wire: filters
@@ -30874,8 +30897,9 @@ types:
       python: Optional[bool]
       typescript: boolean
     required: false
-    description: Populate the golden's `input` from the harvested item. Defaults
-      to `true`; every other include flag defaults to `false`.
+    description: Populate the golden's `input` from the harvested item. On create
+      it defaults to `true` and every other include flag defaults to `false`; omit
+      it on an update to leave it unchanged.
     example: true
     references: []
   - wire: includeActualOutput
@@ -31046,8 +31070,8 @@ types:
       python: Optional[float]
       typescript: number
     required: false
-    description: The fraction of matching items to evaluate, between 0 and 1. Defaults
-      to 1, all of them.
+    description: The fraction of matching items to evaluate, between 0 and 1. On
+      create it defaults to 1, all of them; omit it on an update to leave it unchanged.
     example: 0.2
     references: []
   - wire: spanType
@@ -31103,7 +31127,8 @@ types:
       typescript: boolean
     required: false
     description: Re-evaluate items that already have results for this metric collection
-      instead of skipping them. Defaults to `false`.
+      instead of skipping them. Defaults to `false` on create; omit it on an update
+      to leave it unchanged.
     example: false
     references: []
 - name: CreateExportDestinationRequest
@@ -31848,7 +31873,7 @@ types:
     required: false
     description: The share of eligible entities the whole collection is run against,
       between 0 and 1. Applied on top of each metric's own `sampleRate`. Defaults
-      to 1.
+      to 1 on create; omit it on an update to leave it unchanged.
     example: 1
     references: []
   - wire: inputTransformerId
@@ -32524,7 +32549,8 @@ types:
       typescript: boolean
     required: false
     description: Whether the task runs. Disabling it stops new items arriving; items
-      already queued are kept. Defaults to `false`.
+      already queued are kept. Defaults to `false` on create; omit it on an update
+      to leave it unchanged.
     example: true
     references: []
   - wire: sampleRate
@@ -32534,8 +32560,8 @@ types:
       python: Optional[float]
       typescript: number
     required: false
-    description: The fraction of matching items to queue, between 0 and 1. Defaults
-      to 1, all of them.
+    description: The fraction of matching items to queue, between 0 and 1. On create
+      it defaults to 1, all of them; omit it on an update to leave it unchanged.
     example: 0.1
     references: []
   - wire: filters
@@ -40682,7 +40708,7 @@ types:
     python: options
     typescript: options
     type:
-      python: Dict[str, float]
+      python: Dict[str, Optional[float]]
       typescript: Record<string, number | null>
     required: true
     description: null
@@ -41618,7 +41644,8 @@ types:
       python: Optional[str]
       typescript: string | null
     required: true
-    description: What the tool does, or `null` when the server describes it.
+    description: What the tool does, or `null` when the server does not describe
+      it.
     example: Search issues in a repository
     references: []
   - wire: inputSchema
@@ -58258,7 +58285,8 @@ types:
       python: Optional[bool]
       typescript: boolean
     required: false
-    description: Whether the label can be applied. Defaults to `true`.
+    description: Whether the label can be applied. Defaults to `true` on create;
+      omit it on an update to leave it unchanged.
     example: true
     references: []
   - wire: status
@@ -58325,7 +58353,8 @@ types:
       python: Optional[bool]
       typescript: boolean
     required: false
-    description: Whether the classifier runs at all. Defaults to `true`.
+    description: Whether the classifier runs at all. Defaults to `true` on create;
+      omit it on an update to leave it unchanged.
     example: true
     references: []
   - wire: autoClassify
@@ -58336,7 +58365,7 @@ types:
       typescript: boolean
     required: false
     description: Whether incoming items are classified automatically as they arrive.
-      Defaults to `true`.
+      Defaults to `true` on create; omit it on an update to leave it unchanged.
     example: true
     references: []
   - wire: filters
@@ -58468,7 +58497,8 @@ types:
       typescript: boolean
     required: false
     description: Whether the task runs. Disabling it unschedules the harvesting job,
-      and goldens already created are kept. Defaults to `false`.
+      and goldens already created are kept. Defaults to `false` on create; omit it
+      on an update to leave it unchanged.
     example: true
     references: []
   - wire: sampleRate
@@ -58478,8 +58508,8 @@ types:
       python: Optional[float]
       typescript: number
     required: false
-    description: The fraction of matching items to ingest, between 0 and 1. Defaults
-      to 1, all of them.
+    description: The fraction of matching items to ingest, between 0 and 1. On create
+      it defaults to 1, all of them; omit it on an update to leave it unchanged.
     example: 0.1
     references: []
   - wire: filters
@@ -58540,8 +58570,9 @@ types:
       python: Optional[bool]
       typescript: boolean
     required: false
-    description: Populate the golden's `input` from the harvested item. Defaults
-      to `true`; every other include flag defaults to `false`.
+    description: Populate the golden's `input` from the harvested item. On create
+      it defaults to `true` and every other include flag defaults to `false`; omit
+      it on an update to leave it unchanged.
     example: true
     references: []
   - wire: includeActualOutput
@@ -58783,8 +58814,8 @@ types:
       python: Optional[float]
       typescript: number
     required: false
-    description: The fraction of matching items to evaluate, between 0 and 1. Defaults
-      to 1, all of them.
+    description: The fraction of matching items to evaluate, between 0 and 1. On
+      create it defaults to 1, all of them; omit it on an update to leave it unchanged.
     example: 0.2
     references: []
   - wire: spanType
@@ -58840,7 +58871,8 @@ types:
       typescript: boolean
     required: false
     description: Re-evaluate items that already have results for this metric collection
-      instead of skipping them. Defaults to `false`.
+      instead of skipping them. Defaults to `false` on create; omit it on an update
+      to leave it unchanged.
     example: false
     references: []
 - name: UpdateExportDestinationRequest
@@ -59534,7 +59566,7 @@ types:
     required: false
     description: The share of eligible entities the whole collection is run against,
       between 0 and 1. Applied on top of each metric's own `sampleRate`. Defaults
-      to 1.
+      to 1 on create; omit it on an update to leave it unchanged.
     example: 1
     references: []
   - wire: inputTransformerId
@@ -60156,7 +60188,8 @@ types:
       typescript: boolean
     required: false
     description: Whether the task runs. Disabling it stops new items arriving; items
-      already queued are kept. Defaults to `false`.
+      already queued are kept. Defaults to `false` on create; omit it on an update
+      to leave it unchanged.
     example: true
     references: []
   - wire: sampleRate
@@ -60166,8 +60199,8 @@ types:
       python: Optional[float]
       typescript: number
     required: false
-    description: The fraction of matching items to queue, between 0 and 1. Defaults
-      to 1, all of them.
+    description: The fraction of matching items to queue, between 0 and 1. On create
+      it defaults to 1, all of them; omit it on an update to leave it unchanged.
     example: 0.1
     references: []
   - wire: filters
@@ -62768,7 +62801,7 @@ types:
     python: rows
     typescript: rows
     type:
-      python: List[Dict[str, Union[str, float]]]
+      python: List[Dict[str, Optional[Union[str, float]]]]
       typescript: (Record<string, string | number | null>)[]
     required: true
     description: One row per dimension value. Each row holds its values under the

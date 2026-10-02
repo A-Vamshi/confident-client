@@ -103,7 +103,8 @@ class LabelsOperations:
             description: When this label applies. It is the instruction the
                 classifying model reads, so state the condition rather than
                 restating the name.
-            enabled: Whether the label can be applied. Defaults to `true`.
+            enabled: Whether the label can be applied. Defaults to `true` on
+                create; omit it on an update to leave it unchanged.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -144,7 +145,8 @@ class LabelsOperations:
             description: When this label applies. It is the instruction the
                 classifying model reads, so state the condition rather than
                 restating the name.
-            enabled: Whether the label can be applied. Defaults to `true`.
+            enabled: Whether the label can be applied. Defaults to `true` on
+                create; omit it on an update to leave it unchanged.
         """
         return await self._api.a_request(
             HttpMethods.POST,
@@ -222,7 +224,8 @@ class LabelsOperations:
             label_id: The id of the label.
             name: The name of the label, unique within the classifier.
             description: When this label applies. It cannot be cleared.
-            enabled: Whether the label can be applied. Defaults to `true`.
+            enabled: Whether the label can be applied. Defaults to `true` on
+                create; omit it on an update to leave it unchanged.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -262,7 +265,8 @@ class LabelsOperations:
             label_id: The id of the label.
             name: The name of the label, unique within the classifier.
             description: When this label applies. It cannot be cleared.
-            enabled: Whether the label can be applied. Defaults to `true`.
+            enabled: Whether the label can be applied. Defaults to `true` on
+                create; omit it on an update to leave it unchanged.
         """
         return await self._api.a_request(
             HttpMethods.PUT,
