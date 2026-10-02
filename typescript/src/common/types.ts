@@ -20,13 +20,6 @@ export enum AuditLogExportStatus {
   ERRORED = "ERRORED",
 }
 
-export enum Environment {
-  PRODUCTION = "production",
-  DEVELOPMENT = "development",
-  STAGING = "staging",
-  TESTING = "testing",
-}
-
 export enum EvaluationErrorType {
   AI_CONNECTION_ERROR = "AI_CONNECTION_ERROR",
   TRANSFORMER_ERROR = "TRANSFORMER_ERROR",
@@ -886,7 +879,7 @@ export interface Trace {
   threadId: string | null;
   userId: string | null;
   customerId: string | null;
-  environment: Environment;
+  environment: string;
   tags: string[] | null;
   metadata: Record<string, unknown> | null;
   input: string | null;

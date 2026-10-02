@@ -28,13 +28,6 @@ class AuditLogExportStatus(Enum):
     ERRORED = "ERRORED"
 
 
-class Environment(Enum):
-    PRODUCTION = "production"
-    DEVELOPMENT = "development"
-    STAGING = "staging"
-    TESTING = "testing"
-
-
 class EvaluationErrorType(Enum):
     AI_CONNECTION_ERROR = "AI_CONNECTION_ERROR"
     TRANSFORMER_ERROR = "TRANSFORMER_ERROR"
@@ -948,7 +941,7 @@ class Trace(ConfidentBaseModel):
     thread_id: Optional[str] = Field(alias="threadId")
     user_id: Optional[str] = Field(alias="userId")
     customer_id: Optional[str] = Field(alias="customerId")
-    environment: Environment
+    environment: str
     tags: Optional[List[str]]
     metadata: Optional[Dict[str, Any]]
     input: Optional[str]

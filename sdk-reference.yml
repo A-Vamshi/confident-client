@@ -9401,8 +9401,8 @@ resources:
         wire: environment
         in: body
         type:
-          python: Optional[Environment]
-          typescript: Environment | null
+          python: Optional[str]
+          typescript: string | null
         required: false
         keyword: true
         default: None
@@ -9410,8 +9410,7 @@ resources:
           `null`, to export data from every environment. Ignored for `TEST_RUNS`
           exports, which have no environment.
         example: production
-        references:
-        - Environment
+        references: []
       - python: annotation_selection_type
         typescript: annotationSelectionType
         wire: annotationSelectionType
@@ -9691,8 +9690,8 @@ resources:
         wire: environment
         in: body
         type:
-          python: Optional[Environment]
-          typescript: Environment | null
+          python: Optional[str]
+          typescript: string | null
         required: false
         keyword: true
         default: None
@@ -9700,8 +9699,7 @@ resources:
           data from every environment. Ignored for `TEST_RUNS` exports, which have
           no environment.
         example: production
-        references:
-        - Environment
+        references: []
       - python: annotation_selection_type
         typescript: annotationSelectionType
         wire: annotationSelectionType
@@ -9953,8 +9951,8 @@ resources:
         wire: environments
         in: body
         type:
-          python: Optional[List[Environment]]
-          typescript: Environment[]
+          python: Optional[List[str]]
+          typescript: string[]
         required: false
         keyword: true
         default: None
@@ -9963,8 +9961,7 @@ resources:
           stored environments unchanged.
         example:
         - production
-        references:
-        - Environment
+        references: []
       - python: enabled
         typescript: enabled
         wire: enabled
@@ -10112,8 +10109,8 @@ resources:
         wire: environments
         in: body
         type:
-          python: Optional[List[Environment]]
-          typescript: Environment[]
+          python: Optional[List[str]]
+          typescript: string[]
         required: false
         keyword: true
         default: None
@@ -10122,8 +10119,7 @@ resources:
           stored environments unchanged.
         example:
         - production
-        references:
-        - Environment
+        references: []
       - python: enabled
         typescript: enabled
         wire: enabled
@@ -23152,16 +23148,15 @@ resources:
         wire: environment
         in: query
         type:
-          python: Optional[Environment]
-          typescript: Environment
+          python: Optional[str]
+          typescript: string
         required: false
         keyword: true
         default: None
         description: This filters the spans by the environment where their trace
           was created, and returns spans from all environments if not specified.
-        example: null
-        references:
-        - Environment
+        example: production
+        references: []
       - python: type
         typescript: type
         wire: type
@@ -23933,16 +23928,15 @@ resources:
         wire: environment
         in: query
         type:
-          python: Optional[Environment]
-          typescript: Environment
+          python: Optional[str]
+          typescript: string
         required: false
         keyword: true
         default: None
         description: This filters the threads by the environment where their traces
           were created, and returns threads from all environments if not specified.
-        example: null
-        references:
-        - Environment
+        example: production
+        references: []
       order:
         python:
         - page_size
@@ -24118,16 +24112,15 @@ resources:
         wire: environment
         in: query
         type:
-          python: Optional[Environment]
-          typescript: Environment
+          python: Optional[str]
+          typescript: string
         required: false
         keyword: true
         default: None
         description: This filters the traces by the environment where the trace was
           created, and returns traces from all environments if not specified.
-        example: null
-        references:
-        - Environment
+        example: production
+        references: []
       - python: metadata
         typescript: metadata
         wire: metadata
@@ -24279,15 +24272,17 @@ resources:
         wire: environment
         in: body
         type:
-          python: Optional[Environment]
-          typescript: Environment
+          python: Optional[str]
+          typescript: string
         required: false
         keyword: true
         default: None
-        description: null
-        example: null
-        references:
-        - Environment
+        description: This is the environment where your trace was posted, which helps
+          with separating and debugging traces from different environments on the
+          Confident AI platform. Any name up to 64 characters is accepted, for example
+          production, staging or eu- prod.
+        example: production
+        references: []
       - python: metadata
         typescript: metadata
         wire: metadata
@@ -31752,7 +31747,6 @@ types:
   - ScheduleIntervalUnit
   - SchedulableExportType
   - FilterSet
-  - Environment
   - AnnotationSelectionType
   kind: object
   fields:
@@ -31876,15 +31870,14 @@ types:
     python: environment
     typescript: environment
     type:
-      python: Optional[Environment]
-      typescript: Environment | null
+      python: Optional[str]
+      typescript: string | null
     required: false
     description: The environment each run exports data from. Omit it, or send `null`,
       to export data from every environment. Ignored for `TEST_RUNS` exports, which
       have no environment.
     example: production
-    references:
-    - Environment
+    references: []
   - wire: annotationSelectionType
     python: annotation_selection_type
     typescript: annotationSelectionType
@@ -31933,7 +31926,6 @@ types:
     name: CreateForwardingConnectorRequest
   references:
   - ForwardingConnectorHeaderConfig
-  - Environment
   kind: object
   fields:
   - wire: name
@@ -31980,16 +31972,15 @@ types:
     python: environments
     typescript: environments
     type:
-      python: Optional[List[Environment]]
-      typescript: Environment[]
+      python: Optional[List[str]]
+      typescript: string[]
     required: false
     description: The environments whose traces this connector forwards. An empty
       list forwards traces from every environment. Omit this field to leave the stored
       environments unchanged.
     example:
     - production
-    references:
-    - Environment
+    references: []
   - wire: enabled
     python: enabled
     typescript: enabled
@@ -33743,7 +33734,6 @@ types:
     name: CreateTraceRequest
   references:
   - TraceSpanStatus
-  - Environment
   - ThreadRequest
   - UserRequest
   - CustomerRequest
@@ -33830,13 +33820,15 @@ types:
     python: environment
     typescript: environment
     type:
-      python: Optional[Environment]
-      typescript: Environment
+      python: Optional[str]
+      typescript: string
     required: false
-    description: null
-    example: null
-    references:
-    - Environment
+    description: This is the environment where your trace was posted, which helps
+      with separating and debugging traces from different environments on the Confident
+      AI platform. Any name up to 64 characters is accepted, for example production,
+      staging or eu-prod.
+    example: production
+    references: []
   - wire: metadata
     python: metadata
     typescript: metadata
@@ -35557,27 +35549,6 @@ types:
     example:
     - <GOVERNANCE-CONTROL-ID>
     references: []
-- name: Environment
-  kind: enum
-  description: This is the environment where your trace was posted, which helps with
-    separating and debugging traces from different environments on the Confident
-    AI platform.
-  python:
-    module: confident_ai.common
-    name: Environment
-  typescript:
-    module: confident-ai/common
-    name: Environment
-  members:
-  - name: PRODUCTION
-    value: production
-  - name: DEVELOPMENT
-    value: development
-  - name: STAGING
-    value: staging
-  - name: TESTING
-    value: testing
-  references: []
 - name: ErrorResponse
   description: null
   example: null
@@ -36620,7 +36591,6 @@ types:
   references:
   - SchedulableExportType
   - FilterSet
-  - Environment
   - AnnotationSelectionType
   - ExportScheduleSettings
   kind: object
@@ -36681,14 +36651,13 @@ types:
     python: environment
     typescript: environment
     type:
-      python: Optional[Environment]
-      typescript: Environment | null
+      python: Optional[str]
+      typescript: string | null
     required: true
     description: The environment each run exports data from, or `null` when it exports
       data from every environment.
     example: production
-    references:
-    - Environment
+    references: []
   - wire: annotationSelectionType
     python: annotation_selection_type
     typescript: annotationSelectionType
@@ -37166,7 +37135,6 @@ types:
     name: ForwardingConnector
   references:
   - ForwardingConnectorHeader
-  - Environment
   kind: object
   fields:
   - wire: id
@@ -37219,15 +37187,14 @@ types:
     python: environments
     typescript: environments
     type:
-      python: List[Environment]
-      typescript: Environment[]
+      python: List[str]
+      typescript: string[]
     required: true
     description: The environments whose traces this connector forwards. An empty
       list forwards traces from every environment.
     example:
     - production
-    references:
-    - Environment
+    references: []
   - wire: enabled
     python: enabled
     typescript: enabled
@@ -54948,7 +54915,6 @@ types:
     module: confident-ai/test-runs
     name: TestCaseTrace
   references:
-  - Environment
   - ToolCall
   kind: object
   fields:
@@ -55016,13 +54982,15 @@ types:
     python: environment
     typescript: environment
     type:
-      python: Environment
-      typescript: Environment
+      python: str
+      typescript: string
     required: true
-    description: null
-    example: null
-    references:
-    - Environment
+    description: This is the environment where your trace was posted, which helps
+      with separating and debugging traces from different environments on the Confident
+      AI platform. Any name up to 64 characters is accepted, for example production,
+      staging or eu-prod.
+    example: production
+    references: []
   - wire: metadata
     python: metadata
     typescript: metadata
@@ -57117,7 +57085,6 @@ types:
     name: Trace
   references:
   - TraceSpanStatus
-  - Environment
   - ToolCall
   - Classification
   - Span
@@ -57234,13 +57201,15 @@ types:
     python: environment
     typescript: environment
     type:
-      python: Environment
-      typescript: Environment
+      python: str
+      typescript: string
     required: true
-    description: null
-    example: null
-    references:
-    - Environment
+    description: This is the environment where your trace was posted, which helps
+      with separating and debugging traces from different environments on the Confident
+      AI platform. Any name up to 64 characters is accepted, for example production,
+      staging or eu-prod.
+    example: production
+    references: []
   - wire: tags
     python: tags
     typescript: tags
@@ -57674,7 +57643,6 @@ types:
     name: TraceSummary
   references:
   - TraceSpanStatus
-  - Environment
   kind: object
   fields:
   - wire: uuid
@@ -57786,13 +57754,15 @@ types:
     python: environment
     typescript: environment
     type:
-      python: Environment
-      typescript: Environment
+      python: str
+      typescript: string
     required: true
-    description: null
-    example: null
-    references:
-    - Environment
+    description: This is the environment where your trace was posted, which helps
+      with separating and debugging traces from different environments on the Confident
+      AI platform. Any name up to 64 characters is accepted, for example production,
+      staging or eu-prod.
+    example: production
+    references: []
   - wire: tags
     python: tags
     typescript: tags
@@ -59736,7 +59706,6 @@ types:
   - ScheduleRecurrenceType
   - ScheduleIntervalUnit
   - FilterSet
-  - Environment
   - AnnotationSelectionType
   kind: object
   fields:
@@ -59849,15 +59818,14 @@ types:
     python: environment
     typescript: environment
     type:
-      python: Optional[Environment]
-      typescript: Environment | null
+      python: Optional[str]
+      typescript: string | null
     required: false
     description: The environment each run exports data from. Send `null` to export
       data from every environment. Ignored for `TEST_RUNS` exports, which have no
       environment.
     example: production
-    references:
-    - Environment
+    references: []
   - wire: annotationSelectionType
     python: annotation_selection_type
     typescript: annotationSelectionType
@@ -59905,7 +59873,6 @@ types:
     name: UpdateForwardingConnectorRequest
   references:
   - ForwardingConnectorHeaderConfig
-  - Environment
   kind: object
   fields:
   - wire: name
@@ -59951,16 +59918,15 @@ types:
     python: environments
     typescript: environments
     type:
-      python: Optional[List[Environment]]
-      typescript: Environment[]
+      python: Optional[List[str]]
+      typescript: string[]
     required: false
     description: The environments whose traces this connector forwards. An empty
       list forwards traces from every environment. Omit this field to leave the stored
       environments unchanged.
     example:
     - production
-    references:
-    - Environment
+    references: []
   - wire: enabled
     python: enabled
     typescript: enabled
