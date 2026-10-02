@@ -382,7 +382,7 @@ class MetricDag(ConfidentBaseModel):
     nodes: Dict[str, Any]
 
 
-class JevQuestionJevQuestion0(ConfidentBaseModel):
+class JevNoulQuestion(ConfidentBaseModel):
     type: Literal["noul"]
     question: str
     weight: Optional[float] = None
@@ -396,23 +396,21 @@ class JevQuestionJevQuestion0(ConfidentBaseModel):
     )
 
 
-class JevQuestionJevQuestion1(ConfidentBaseModel):
+class JevScoreQuestion(ConfidentBaseModel):
     type: Literal["score"]
     question: str
     weight: Optional[float] = None
     levels: List[str]
 
 
-class JevQuestionJevQuestion2(ConfidentBaseModel):
+class JevChoiceQuestion(ConfidentBaseModel):
     type: Literal["choice"]
     question: str
     weight: Optional[float] = None
     options: Dict[str, Optional[float]]
 
 
-JevQuestion = Union[
-    JevQuestionJevQuestion0, JevQuestionJevQuestion1, JevQuestionJevQuestion2
-]
+JevQuestion = Union[JevNoulQuestion, JevScoreQuestion, JevChoiceQuestion]
 
 
 class CreateMetricRequest(ConfidentBaseModel):
