@@ -261,7 +261,7 @@ class Resolver:
         nullable: bool,
     ) -> FieldType:
         schema_type = schema.get("type")
-        if schema_type in (None, "string", "integer", "number"):
+        if schema_type in (None, "string", "integer", "number", "boolean"):
             return literal_of(list(schema["enum"]), nullable)
 
         primitive = PRIMITIVES.get(schema_type)
@@ -284,7 +284,7 @@ class Resolver:
                 for index, item in enumerate(schema["prefixItems"])
             ]
             return FieldType(
-                f"Tuple[{', '.join(m.python for m in members)}]",
+                f"Tuple[{', '.join(m.as_python(False) for m in members)}]",
                 f"[{', '.join(m.as_typescript() for m in members)}]",
                 nullable,
                 tuple(dep for m in members for dep in m.deps),
@@ -301,7 +301,7 @@ class Resolver:
         if "|" in element or element.startswith("["):
             element = f"({element})"
         return FieldType(
-            f"List[{inner.python}]",
+            f"List[{inner.as_python(False)}]",
             f"{element}[]",
             nullable,
             inner.deps,
@@ -322,7 +322,7 @@ class Resolver:
         if isinstance(values, dict) and values:
             value = self.resolve(values, f"{context}{{}}", parent)
             return FieldType(
-                f"Dict[str, {value.python}]",
+                f"Dict[str, {value.as_python(False)}]",
                 f"Record<string, {value.as_typescript()}>",
                 nullable,
                 value.deps,

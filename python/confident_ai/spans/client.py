@@ -65,8 +65,8 @@ class SpansClient:
             type: Filter by the specific type of span.
             trace_uuid: Filter spans that belong to the trace with this uuid.
             name: Filter spans by their exact name.
-            has_error: Filter for spans that either failed (true) or succeeded
-                (false).
+            has_error: Filter for spans that either failed (`true`) or succeeded
+                (`false`).
             model: Filter LLM spans by the model used.
             prompt_alias: This filters the spans by the prompt alias used.
             prompt_version: This filters the spans by the prompt version used.
@@ -74,7 +74,7 @@ class SpansClient:
             prompt_commit_hash: This filters the spans by the exact prompt
                 commit hash used.
             embedder: Filter retriever spans by the embedder model used.
-            top_k: Filter retriever spans by the topK value.
+            top_k: Filter retriever spans by the `topK` value.
             chunk_size: Filter retriever spans by the chunk size.
         """
         return self._api.request(
@@ -154,8 +154,8 @@ class SpansClient:
             type: Filter by the specific type of span.
             trace_uuid: Filter spans that belong to the trace with this uuid.
             name: Filter spans by their exact name.
-            has_error: Filter for spans that either failed (true) or succeeded
-                (false).
+            has_error: Filter for spans that either failed (`true`) or succeeded
+                (`false`).
             model: Filter LLM spans by the model used.
             prompt_alias: This filters the spans by the prompt alias used.
             prompt_version: This filters the spans by the prompt version used.
@@ -163,7 +163,7 @@ class SpansClient:
             prompt_commit_hash: This filters the spans by the exact prompt
                 commit hash used.
             embedder: Filter retriever spans by the embedder model used.
-            top_k: Filter retriever spans by the topK value.
+            top_k: Filter retriever spans by the `topK` value.
             chunk_size: Filter retriever spans by the chunk size.
         """
         return await self._api.a_request(

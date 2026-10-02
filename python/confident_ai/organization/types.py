@@ -120,11 +120,6 @@ class AssessGovernanceControlResult(ConfidentBaseModel):
     status_counts: Dict[str, int] = Field(alias="statusCounts")
 
 
-class CreateGovernanceControlGroupRequest(ConfidentBaseModel):
-    name: str
-    description: Optional[str] = None
-
-
 class GovernanceControlThresholdSettings(ConfidentBaseModel):
     value: float
     direction: GovernanceControlThresholdDirection
@@ -260,47 +255,6 @@ class GovernanceControlAssessmentList(ConfidentBaseModel):
     version: str
     page: int
     page_size: int = Field(alias="pageSize")
-
-
-class GovernanceControlGroupMember(ConfidentBaseModel):
-    id: str
-    name: str
-    description: Optional[str]
-    type: GovernanceControlType
-
-
-class GovernanceControlGroup(ConfidentBaseModel):
-    id: str
-    name: str
-    description: Optional[str]
-    controls_count: int = Field(alias="controlsCount")
-    created_at: str = Field(alias="createdAt")
-    updated_at: str = Field(alias="updatedAt")
-    controls: List[GovernanceControlGroupMember]
-
-
-class GovernanceControlGroupSummary(ConfidentBaseModel):
-    id: str
-    name: str
-    description: Optional[str]
-    controls_count: int = Field(alias="controlsCount")
-    created_at: str = Field(alias="createdAt")
-    updated_at: str = Field(alias="updatedAt")
-
-
-class GovernanceControlGroupList(ConfidentBaseModel):
-    governance_control_groups: List[GovernanceControlGroupSummary] = Field(
-        alias="governanceControlGroups",
-    )
-    total_governance_control_groups: int = Field(
-        alias="totalGovernanceControlGroups",
-    )
-    page: int
-    page_size: int = Field(alias="pageSize")
-
-
-class GovernanceControlGroupRef(ConfidentBaseModel):
-    id: str
 
 
 class GovernanceControlSummary(ConfidentBaseModel):
@@ -673,6 +627,10 @@ class UpdateOrganizationModelRequest(ConfidentBaseModel):
     max_input_tokens: Optional[int] = Field(
         default=None,
         alias="maxInputTokens",
+    )
+    model_credential_id: Optional[str] = Field(
+        default=None,
+        alias="modelCredentialId",
     )
 
 

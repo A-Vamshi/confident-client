@@ -149,10 +149,10 @@ export class DatasetsOperations {
    *   the latest version.
    * @param aiConnectionId The id of the AI connection used to generate the
    *   actual outputs before evaluating them. Required when `generationMode` is
-   *   AI_CONNECTION, and not allowed together with `promptAlias`.
+   *   `AI_CONNECTION`, and not allowed together with `promptAlias`.
    * @param promptAlias The alias of the prompt used to generate the actual
-   *   outputs before evaluating them. Required when `generationMode` is PROMPT,
-   *   and not allowed together with `aiConnectionId`.
+   *   outputs before evaluating them. Required when `generationMode` is
+   *   `PROMPT`, and not allowed together with `aiConnectionId`.
    * @param promptCommit The prompt commit hash to generate with. Requires
    *   `promptAlias`. Omit this field to generate with the latest commit on the
    *   prompt's main branch.

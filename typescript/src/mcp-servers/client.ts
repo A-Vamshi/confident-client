@@ -46,14 +46,15 @@ export class McpServersClient {
    * and discover its tools.
    *
    * @param name The name of the MCP server, unique within the project.
-   * @param description What the MCP server is for. Send null to leave it unset.
+   * @param description What the MCP server is for. Send `null` to leave it
+   *   unset.
    * @param url The URL of the server. Required when `transport` is `HTTP`, and
    *   cleared otherwise.
    * @param headers Static headers sent with every request. Only used when
    *   `authType` is `HEADERS`, and cleared otherwise. This map is stored as a
    *   whole rather than merged, so send every header you want to keep.
-   * @param authConfig The credentials for a non-`HEADERS` auth type. Send null
-   *   to clear them.
+   * @param authConfig The credentials for a non-`HEADERS` auth type. Send
+   *   `null` to clear them.
    * @param command The command that launches the server. Required when
    *   `transport` is `STDIO`, and cleared otherwise.
    * @param args The arguments passed to `command`. `STDIO` transport only. This
@@ -116,18 +117,19 @@ export class McpServersClient {
    * Updates an MCP server and returns it. Only the fields you send change, and
    * the merged result must be valid — switching `transport` needs that
    * transport's required field in the same call. Any successful update resets
-   * `connected` to false, so connect again afterwards.
+   * `connected` to `false`, so connect again afterwards.
    *
    * @param mcpServerId The id of the MCP server.
    * @param name The name of the MCP server, unique within the project.
-   * @param description What the MCP server is for. Send null to leave it unset.
+   * @param description What the MCP server is for. Send `null` to leave it
+   *   unset.
    * @param url The URL of the server. Required when `transport` is `HTTP`, and
    *   cleared otherwise.
    * @param headers Static headers sent with every request. Only used when
    *   `authType` is `HEADERS`, and cleared otherwise. This map is stored as a
    *   whole rather than merged, so send every header you want to keep.
-   * @param authConfig The credentials for a non-`HEADERS` auth type. Send null
-   *   to clear them.
+   * @param authConfig The credentials for a non-`HEADERS` auth type. Send
+   *   `null` to clear them.
    * @param command The command that launches the server. Required when
    *   `transport` is `STDIO`, and cleared otherwise.
    * @param args The arguments passed to `command`. `STDIO` transport only. This
@@ -200,8 +202,8 @@ export class McpServersClient {
    * Connects to the MCP server, lists the tools it exposes, and replaces its
    * stored `connected` and `availableTools` with the result. This reaches out
    * to your own server and can take a few seconds. A server that fails to
-   * connect is not an error: the response is still `200` with `connected` false
-   * and `error` set, so read `connected` for the verdict.
+   * connect is not an error: the response is still `200` with `connected`
+   * `false` and `error` set, so read `connected` for the verdict.
    *
    * @param mcpServerId The id of the MCP server.
    */

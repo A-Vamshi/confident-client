@@ -93,7 +93,7 @@ export class ItemsOperations extends AnnotationQueuesOperations {
    *   annotation visible on the platform.
    * @param flagged Whether to flag the item for a second opinion.
    * @param markAsCompleted Whether to mark the item annotated, taking it out of
-   *   the pending list. Defaults to true.
+   *   the pending list. Defaults to `true`.
    */
   async annotateItem(
     annotationQueueId: string,

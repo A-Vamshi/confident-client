@@ -122,28 +122,29 @@ class ExportSchedulesClient:
         Args:
             name: The name of the schedule.
             repeat_every: How many `repeatUnit`s apart the runs are, for an
-                INTERVAL schedule. Send null to clear it.
-            repeat_unit: The unit `repeatEvery` counts, for an INTERVAL
-                schedule. Send null to clear it.
+                `INTERVAL` schedule. Send `null` to clear it.
+            repeat_unit: The unit `repeatEvery` counts, for an `INTERVAL`
+                schedule. Send `null` to clear it.
             start_at: When the schedule first runs, as an ISO 8601 datetime.
-                Send null to start it immediately.
+                Send `null` to start it immediately.
             max_runs: How many times the schedule runs before it stops. Send
-                null to let it run indefinitely.
+                `null` to let it run indefinitely.
             end_at: When the schedule stops running, as an ISO 8601 datetime.
-                Send null to leave it open-ended.
-            description: What the schedule exports. Send null to leave it unset.
+                Send `null` to leave it open-ended.
+            description: What the schedule exports. Send `null` to leave it
+                unset.
             environment: The environment each run exports data from. Omit it, or
-                send null, to export data from every environment. Ignored for
+                send `null`, to export data from every environment. Ignored for
                 `TEST_RUNS` exports, which have no environment.
             annotation_selection_type: The annotation source for each
-                `ANNOTATIONS` export run. Omit it, or send null, to export
+                `ANNOTATIONS` export run. Omit it, or send `null`, to export
                 annotations from every source. Ignored for other export types.
             destination_id: The id of the export destination each run delivers
                 its file to. A scheduled run has no recipient of its own, so a
                 schedule created without a destination produces files that go
                 nowhere.
             enabled: Whether the schedule starts running as soon as it is
-                created. Defaults to true.
+                created. Defaults to `true`.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -196,28 +197,29 @@ class ExportSchedulesClient:
         Args:
             name: The name of the schedule.
             repeat_every: How many `repeatUnit`s apart the runs are, for an
-                INTERVAL schedule. Send null to clear it.
-            repeat_unit: The unit `repeatEvery` counts, for an INTERVAL
-                schedule. Send null to clear it.
+                `INTERVAL` schedule. Send `null` to clear it.
+            repeat_unit: The unit `repeatEvery` counts, for an `INTERVAL`
+                schedule. Send `null` to clear it.
             start_at: When the schedule first runs, as an ISO 8601 datetime.
-                Send null to start it immediately.
+                Send `null` to start it immediately.
             max_runs: How many times the schedule runs before it stops. Send
-                null to let it run indefinitely.
+                `null` to let it run indefinitely.
             end_at: When the schedule stops running, as an ISO 8601 datetime.
-                Send null to leave it open-ended.
-            description: What the schedule exports. Send null to leave it unset.
+                Send `null` to leave it open-ended.
+            description: What the schedule exports. Send `null` to leave it
+                unset.
             environment: The environment each run exports data from. Omit it, or
-                send null, to export data from every environment. Ignored for
+                send `null`, to export data from every environment. Ignored for
                 `TEST_RUNS` exports, which have no environment.
             annotation_selection_type: The annotation source for each
-                `ANNOTATIONS` export run. Omit it, or send null, to export
+                `ANNOTATIONS` export run. Omit it, or send `null`, to export
                 annotations from every source. Ignored for other export types.
             destination_id: The id of the export destination each run delivers
                 its file to. A scheduled run has no recipient of its own, so a
                 schedule created without a destination produces files that go
                 nowhere.
             enabled: Whether the schedule starts running as soon as it is
-                created. Defaults to true.
+                created. Defaults to `true`.
         """
         return await self._api.a_request(
             HttpMethods.POST,
@@ -301,26 +303,26 @@ class ExportSchedulesClient:
         Args:
             export_schedule_id: The id of the export schedule.
             repeat_every: How many `repeatUnit`s apart the runs are, for an
-                INTERVAL schedule. Send null to clear it.
-            repeat_unit: The unit `repeatEvery` counts, for an INTERVAL
-                schedule. Send null to clear it.
+                `INTERVAL` schedule. Send `null` to clear it.
+            repeat_unit: The unit `repeatEvery` counts, for an `INTERVAL`
+                schedule. Send `null` to clear it.
             start_at: When the schedule first runs, as an ISO 8601 datetime.
-                Send null to start it immediately.
+                Send `null` to start it immediately.
             max_runs: How many times the schedule runs before it stops. Send
-                null to let it run indefinitely.
+                `null` to let it run indefinitely.
             end_at: When the schedule stops running, as an ISO 8601 datetime.
-                Send null to leave it open-ended.
+                Send `null` to leave it open-ended.
             name: The name of the schedule.
-            description: What the schedule exports. Send null to clear it.
-            environment: The environment each run exports data from. Send null
+            description: What the schedule exports. Send `null` to clear it.
+            environment: The environment each run exports data from. Send `null`
                 to export data from every environment. Ignored for `TEST_RUNS`
                 exports, which have no environment.
             annotation_selection_type: The annotation source for each
-                `ANNOTATIONS` export run. Send null to export annotations from
+                `ANNOTATIONS` export run. Send `null` to export annotations from
                 every source. Ignored for other export types.
             destination_id: The id of the export destination each run delivers
-                its file to. Send null to leave the schedule without one.
-            enabled: Whether the schedule runs. Send false to pause it without
+                its file to. Send `null` to leave the schedule without one.
+            enabled: Whether the schedule runs. Send `false` to pause it without
                 deleting it.
         """
         return self._api.request(
@@ -373,26 +375,26 @@ class ExportSchedulesClient:
         Args:
             export_schedule_id: The id of the export schedule.
             repeat_every: How many `repeatUnit`s apart the runs are, for an
-                INTERVAL schedule. Send null to clear it.
-            repeat_unit: The unit `repeatEvery` counts, for an INTERVAL
-                schedule. Send null to clear it.
+                `INTERVAL` schedule. Send `null` to clear it.
+            repeat_unit: The unit `repeatEvery` counts, for an `INTERVAL`
+                schedule. Send `null` to clear it.
             start_at: When the schedule first runs, as an ISO 8601 datetime.
-                Send null to start it immediately.
+                Send `null` to start it immediately.
             max_runs: How many times the schedule runs before it stops. Send
-                null to let it run indefinitely.
+                `null` to let it run indefinitely.
             end_at: When the schedule stops running, as an ISO 8601 datetime.
-                Send null to leave it open-ended.
+                Send `null` to leave it open-ended.
             name: The name of the schedule.
-            description: What the schedule exports. Send null to clear it.
-            environment: The environment each run exports data from. Send null
+            description: What the schedule exports. Send `null` to clear it.
+            environment: The environment each run exports data from. Send `null`
                 to export data from every environment. Ignored for `TEST_RUNS`
                 exports, which have no environment.
             annotation_selection_type: The annotation source for each
-                `ANNOTATIONS` export run. Send null to export annotations from
+                `ANNOTATIONS` export run. Send `null` to export annotations from
                 every source. Ignored for other export types.
             destination_id: The id of the export destination each run delivers
-                its file to. Send null to leave the schedule without one.
-            enabled: Whether the schedule runs. Send false to pause it without
+                its file to. Send `null` to leave the schedule without one.
+            enabled: Whether the schedule runs. Send `false` to pause it without
                 deleting it.
         """
         return await self._api.a_request(

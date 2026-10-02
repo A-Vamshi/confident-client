@@ -183,7 +183,7 @@ class ReportsClient:
         """Get Report
 
         Retrieves a report by id, with every section it renders in order. A
-        section Confident AI is still writing comes back with null `content`.
+        section Confident AI is still writing comes back with `null` `content`.
 
         Args:
             report_id: The id of the report.
@@ -199,7 +199,7 @@ class ReportsClient:
         """Get Report
 
         Retrieves a report by id, with every section it renders in order. A
-        section Confident AI is still writing comes back with null `content`.
+        section Confident AI is still writing comes back with `null` `content`.
 
         Args:
             report_id: The id of the report.
@@ -228,8 +228,8 @@ class ReportsClient:
 
         Args:
             report_id: The id of the report.
-            error: Why the report failed. Pair it with a status of ERRORED, or
-                send null to clear it.
+            error: Why the report failed. Pair it with a status of `ERRORED`, or
+                send `null` to clear it.
             sections: The report's sections, in render order. The list replaces
                 the report's current sections rather than adding to them.
         """
@@ -264,8 +264,8 @@ class ReportsClient:
 
         Args:
             report_id: The id of the report.
-            error: Why the report failed. Pair it with a status of ERRORED, or
-                send null to clear it.
+            error: Why the report failed. Pair it with a status of `ERRORED`, or
+                send `null` to clear it.
             sections: The report's sections, in render order. The list replaces
                 the report's current sections rather than adding to them.
         """

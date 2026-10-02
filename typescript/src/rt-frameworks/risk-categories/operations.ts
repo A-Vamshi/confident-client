@@ -42,14 +42,14 @@ export class RiskCategoriesOperations extends RTFrameworksOperations {
    *
    * @param rtFrameworkId The id of the red teaming framework.
    * @param name The name of the risk category, unique within the framework.
-   * @param description What this risk category covers. Send null to clear it.
+   * @param description What this risk category covers. Send `null` to clear it.
    * @param vulnerabilityTypeIds The ids of the vulnerability types to probe
    *   for. The list replaces the category's current selection.
    * @param attackMethodIds The ids of the attack methods to probe with. The
    *   list replaces the category's current selection.
    * @param vulnerabilityIdToPriorityLevel How much of the assessment each
-   *   vulnerability gets, keyed by vulnerability id, from 0 to 3. Send null to
-   *   clear every weight.
+   *   vulnerability gets, keyed by vulnerability id, from 0 to 3. Send `null`
+   *   to clear every weight.
    */
   async createRiskCategory(
     rtFrameworkId: string,
@@ -116,14 +116,14 @@ export class RiskCategoriesOperations extends RTFrameworksOperations {
    *   belongs to.
    * @param riskCategoryId The id of the risk category.
    * @param name The name of the risk category, unique within the framework.
-   * @param description What this risk category covers. Send null to clear it.
+   * @param description What this risk category covers. Send `null` to clear it.
    * @param vulnerabilityTypeIds The ids of the vulnerability types to probe
    *   for. The list replaces the category's current selection.
    * @param attackMethodIds The ids of the attack methods to probe with. The
    *   list replaces the category's current selection.
    * @param vulnerabilityIdToPriorityLevel How much of the assessment each
-   *   vulnerability gets, keyed by vulnerability id, from 0 to 3. Send null to
-   *   clear every weight.
+   *   vulnerability gets, keyed by vulnerability id, from 0 to 3. Send `null`
+   *   to clear every weight.
    */
   async updateRiskCategory(
     rtFrameworkId: string,

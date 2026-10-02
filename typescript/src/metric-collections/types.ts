@@ -24,6 +24,7 @@ export interface MetricSettingConfig {
   sampleRate?: number;
   evaluationModelProvider?: ModelProvider | null;
   evaluationModelName?: string | null;
+  evaluationModelCredentialId?: string | null;
   decisionModelProvider?: ModelProvider | null;
   decisionModelName?: string | null;
   evalMode?: EvalMode | null;
@@ -52,6 +53,7 @@ export interface MetricSetting {
   sampleRate: number;
   evaluationModelProvider: ModelProvider | null;
   evaluationModelName: string | null;
+  evaluationModelCredentialId: string | null;
   decisionModelProvider: ModelProvider | null;
   decisionModelName: string | null;
   evalMode: EvalMode | null;

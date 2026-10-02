@@ -44,7 +44,8 @@ export class RTFrameworksOperations {
    * starting empty.
    *
    * @param name The name of the framework, unique within the project.
-   * @param description What the framework covers. Send null to leave it unset.
+   * @param description What the framework covers. Send `null` to leave it
+   *   unset.
    * @param template A Confident AI template to fill the framework from, which
    *   creates its risk categories with vulnerability types and attack methods
    *   already selected. Omit it for an empty framework.
@@ -86,7 +87,7 @@ export class RTFrameworksOperations {
    *
    * @param rtFrameworkId The id of the red teaming framework.
    * @param name The name of the framework, unique within the project.
-   * @param description What the framework covers. Send null to clear it.
+   * @param description What the framework covers. Send `null` to clear it.
    */
   async update(
     rtFrameworkId: string,

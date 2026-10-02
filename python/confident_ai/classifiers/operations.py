@@ -107,17 +107,19 @@ class ClassifiersOperations:
         Args:
             name: The name of the classifier, unique per data model within the
                 project.
-            description: What this classifier is for. Send null to clear it.
-            enabled: Whether the classifier runs at all. Defaults to true.
+            description: What this classifier is for. Send `null` to clear it.
+            enabled: Whether the classifier runs at all. Defaults to `true` on
+                create; omit it on an update to leave it unchanged.
             auto_classify: Whether incoming items are classified automatically
-                as they arrive. Defaults to true.
+                as they arrive. Defaults to `true` on create; omit it on an
+                update to leave it unchanged.
             filters: Narrows which traces or threads the classifier runs on, so
                 it can watch one route rather than the whole project. Only the
                 groups are stored, so the set's top-level operator is dropped
-                and the groups are combined by the platform. Send null to clear
-                the filters and classify everything of this data model.
+                and the groups are combined by the platform. Send `null` to
+                clear the filters and classify everything of this data model.
             auto_generation_config: How a generation run samples and clusters
-                your traffic to discover labels. Send null to clear it.
+                your traffic to discover labels. Send `null` to clear it.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -159,17 +161,19 @@ class ClassifiersOperations:
         Args:
             name: The name of the classifier, unique per data model within the
                 project.
-            description: What this classifier is for. Send null to clear it.
-            enabled: Whether the classifier runs at all. Defaults to true.
+            description: What this classifier is for. Send `null` to clear it.
+            enabled: Whether the classifier runs at all. Defaults to `true` on
+                create; omit it on an update to leave it unchanged.
             auto_classify: Whether incoming items are classified automatically
-                as they arrive. Defaults to true.
+                as they arrive. Defaults to `true` on create; omit it on an
+                update to leave it unchanged.
             filters: Narrows which traces or threads the classifier runs on, so
                 it can watch one route rather than the whole project. Only the
                 groups are stored, so the set's top-level operator is dropped
-                and the groups are combined by the platform. Send null to clear
-                the filters and classify everything of this data model.
+                and the groups are combined by the platform. Send `null` to
+                clear the filters and classify everything of this data model.
             auto_generation_config: How a generation run samples and clusters
-                your traffic to discover labels. Send null to clear it.
+                your traffic to discover labels. Send `null` to clear it.
         """
         return await self._api.a_request(
             HttpMethods.POST,
@@ -236,7 +240,7 @@ class ClassifiersOperations:
         """Update Classifier
 
         Updates a classifier and returns it. Only the fields you send are
-        changed: omitting a field leaves it untouched, and sending null clears
+        changed: omitting a field leaves it untouched, and sending `null` clears
         it. `dataModel` cannot be changed after creation and a preset can only
         be applied when creating one; labels are managed through their own
         endpoints. Requires the Starter plan or above.
@@ -245,17 +249,19 @@ class ClassifiersOperations:
             classifier_id: The id of the classifier.
             name: The name of the classifier, unique per data model within the
                 project.
-            description: What this classifier is for. Send null to clear it.
-            enabled: Whether the classifier runs at all. Defaults to true.
+            description: What this classifier is for. Send `null` to clear it.
+            enabled: Whether the classifier runs at all. Defaults to `true` on
+                create; omit it on an update to leave it unchanged.
             auto_classify: Whether incoming items are classified automatically
-                as they arrive. Defaults to true.
+                as they arrive. Defaults to `true` on create; omit it on an
+                update to leave it unchanged.
             filters: Narrows which traces or threads the classifier runs on, so
                 it can watch one route rather than the whole project. Only the
                 groups are stored, so the set's top-level operator is dropped
-                and the groups are combined by the platform. Send null to clear
-                the filters and classify everything of this data model.
+                and the groups are combined by the platform. Send `null` to
+                clear the filters and classify everything of this data model.
             auto_generation_config: How a generation run samples and clusters
-                your traffic to discover labels. Send null to clear it.
+                your traffic to discover labels. Send `null` to clear it.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -287,7 +293,7 @@ class ClassifiersOperations:
         """Update Classifier
 
         Updates a classifier and returns it. Only the fields you send are
-        changed: omitting a field leaves it untouched, and sending null clears
+        changed: omitting a field leaves it untouched, and sending `null` clears
         it. `dataModel` cannot be changed after creation and a preset can only
         be applied when creating one; labels are managed through their own
         endpoints. Requires the Starter plan or above.
@@ -296,17 +302,19 @@ class ClassifiersOperations:
             classifier_id: The id of the classifier.
             name: The name of the classifier, unique per data model within the
                 project.
-            description: What this classifier is for. Send null to clear it.
-            enabled: Whether the classifier runs at all. Defaults to true.
+            description: What this classifier is for. Send `null` to clear it.
+            enabled: Whether the classifier runs at all. Defaults to `true` on
+                create; omit it on an update to leave it unchanged.
             auto_classify: Whether incoming items are classified automatically
-                as they arrive. Defaults to true.
+                as they arrive. Defaults to `true` on create; omit it on an
+                update to leave it unchanged.
             filters: Narrows which traces or threads the classifier runs on, so
                 it can watch one route rather than the whole project. Only the
                 groups are stored, so the set's top-level operator is dropped
-                and the groups are combined by the platform. Send null to clear
-                the filters and classify everything of this data model.
+                and the groups are combined by the platform. Send `null` to
+                clear the filters and classify everything of this data model.
             auto_generation_config: How a generation run samples and clusters
-                your traffic to discover labels. Send null to clear it.
+                your traffic to discover labels. Send `null` to clear it.
         """
         return await self._api.a_request(
             HttpMethods.PUT,

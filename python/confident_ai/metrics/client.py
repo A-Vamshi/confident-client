@@ -62,15 +62,15 @@ class MetricsClient:
         """Create Metric
 
         Creates a custom metric in your Confident AI project and returns it. A
-        GEVAL metric scores against `criteria` or `evaluationSteps`; a DAG
-        metric needs `algorithm` set to DAG and a `dag`.
+        `GEVAL` metric scores against `criteria` or `evaluationSteps`; a `DAG`
+        metric needs `algorithm` set to `DAG` and a `dag`.
 
         Args:
             name: The name of the metric, unique within your project.
-            multi_turn: This is true when the metric evaluates conversations
+            multi_turn: This is `true` when the metric evaluates conversations
                 rather than single test cases. It decides which
                 `evaluationParams` are valid and cannot be changed later.
-            criteria: The criteria the metric scores against. A GEVAL metric
+            criteria: The criteria the metric scores against. A `GEVAL` metric
                 needs `criteria` or `evaluationSteps`.
             evaluation_steps: The steps the metric follows to score, as an
                 alternative to `criteria`.
@@ -78,8 +78,8 @@ class MetricsClient:
                 single-turn metric needs at least one, and every field must
                 match `multiTurn`.
             rubric: Score ranges that anchor how the metric scores.
-            questions: The questions a JEVAL metric asks the decision model.
-                Required when `algorithm` is JEVAL.
+            questions: The questions a `JEVAL` metric asks the decision model.
+                Required when `algorithm` is `JEVAL`.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -115,15 +115,15 @@ class MetricsClient:
         """Create Metric
 
         Creates a custom metric in your Confident AI project and returns it. A
-        GEVAL metric scores against `criteria` or `evaluationSteps`; a DAG
-        metric needs `algorithm` set to DAG and a `dag`.
+        `GEVAL` metric scores against `criteria` or `evaluationSteps`; a `DAG`
+        metric needs `algorithm` set to `DAG` and a `dag`.
 
         Args:
             name: The name of the metric, unique within your project.
-            multi_turn: This is true when the metric evaluates conversations
+            multi_turn: This is `true` when the metric evaluates conversations
                 rather than single test cases. It decides which
                 `evaluationParams` are valid and cannot be changed later.
-            criteria: The criteria the metric scores against. A GEVAL metric
+            criteria: The criteria the metric scores against. A `GEVAL` metric
                 needs `criteria` or `evaluationSteps`.
             evaluation_steps: The steps the metric follows to score, as an
                 alternative to `criteria`.
@@ -131,8 +131,8 @@ class MetricsClient:
                 single-turn metric needs at least one, and every field must
                 match `multiTurn`.
             rubric: Score ranges that anchor how the metric scores.
-            questions: The questions a JEVAL metric asks the decision model.
-                Required when `algorithm` is JEVAL.
+            questions: The questions a `JEVAL` metric asks the decision model.
+                Required when `algorithm` is `JEVAL`.
         """
         return await self._api.a_request(
             HttpMethods.POST,
@@ -157,7 +157,7 @@ class MetricsClient:
 
         Retrieves a custom metric by id so it can be run locally. The metric
         must have criteria or evaluation steps and at least one evaluation
-        parameter, or be a valid DAG.
+        parameter, or be a valid `DAG`.
 
         Args:
             metric_id: The unique id of the metric.
@@ -174,7 +174,7 @@ class MetricsClient:
 
         Retrieves a custom metric by id so it can be run locally. The metric
         must have criteria or evaluation steps and at least one evaluation
-        parameter, or be a valid DAG.
+        parameter, or be a valid `DAG`.
 
         Args:
             metric_id: The unique id of the metric.
@@ -199,20 +199,20 @@ class MetricsClient:
         """Update Metric
 
         Updates a custom metric and returns it. Only the fields you send are
-        changed; send null to clear `criteria` or `evaluationSteps`, as long as
-        one of them remains. Every update creates a new metric version.
+        changed; send `null` to clear `criteria` or `evaluationSteps`, as long
+        as one of them remains. Every update creates a new metric version.
 
         Args:
             metric_id: The unique id of the metric.
-            criteria: The new criteria, or null to clear it. One of `criteria`
+            criteria: The new criteria, or `null` to clear it. One of `criteria`
                 or `evaluationSteps` must remain set.
-            evaluation_steps: The new evaluation steps, or null to clear them.
+            evaluation_steps: The new evaluation steps, or `null` to clear them.
                 One of `criteria` or `evaluationSteps` must remain set.
             evaluation_params: The test case fields the metric evaluates. Each
                 must match the metric's `multiTurn`.
             rubric: Score ranges that anchor how the metric scores.
-            questions: The new questions for a JEVAL metric. Only accepted on
-                JEVAL metrics.
+            questions: The new questions for a `JEVAL` metric. Only accepted on
+                `JEVAL` metrics.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -242,20 +242,20 @@ class MetricsClient:
         """Update Metric
 
         Updates a custom metric and returns it. Only the fields you send are
-        changed; send null to clear `criteria` or `evaluationSteps`, as long as
-        one of them remains. Every update creates a new metric version.
+        changed; send `null` to clear `criteria` or `evaluationSteps`, as long
+        as one of them remains. Every update creates a new metric version.
 
         Args:
             metric_id: The unique id of the metric.
-            criteria: The new criteria, or null to clear it. One of `criteria`
+            criteria: The new criteria, or `null` to clear it. One of `criteria`
                 or `evaluationSteps` must remain set.
-            evaluation_steps: The new evaluation steps, or null to clear them.
+            evaluation_steps: The new evaluation steps, or `null` to clear them.
                 One of `criteria` or `evaluationSteps` must remain set.
             evaluation_params: The test case fields the metric evaluates. Each
                 must match the metric's `multiTurn`.
             rubric: Score ranges that anchor how the metric scores.
-            questions: The new questions for a JEVAL metric. Only accepted on
-                JEVAL metrics.
+            questions: The new questions for a `JEVAL` metric. Only accepted on
+                `JEVAL` metrics.
         """
         return await self._api.a_request(
             HttpMethods.PUT,

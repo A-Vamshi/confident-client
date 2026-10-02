@@ -107,24 +107,25 @@ class EvaluationRulesClient:
                 must be multi-turn for `THREAD` rules and single-turn for
                 `TRACE` and `SPAN` rules.
             enabled: Whether the rule evaluates matching items as they arrive.
-                Defaults to true.
-            description: A note about what the rule checks. Send null to clear
+                Defaults to `true`.
+            description: A note about what the rule checks. Send `null` to clear
                 it.
             sample_rate: The fraction of matching items to evaluate, between 0
-                and 1. Defaults to 1, all of them.
+                and 1. On create it defaults to 1, all of them; omit it on an
+                update to leave it unchanged.
             span_type: Only evaluate spans of this kind. Allowed only when
                 `dataModel` is `SPAN`, and cleared automatically if the rule
-                moves off `SPAN`. Send null to evaluate every span.
-            filters: Only evaluate items matching these filters. Send null to
+                moves off `SPAN`. Send `null` to evaluate every span.
+            filters: Only evaluate items matching these filters. Send `null` to
                 evaluate every item the rule's `dataModel` covers.
             thread_timelimit: For `THREAD` rules, the seconds of inactivity to
                 wait before evaluating a thread, so an in-progress conversation
                 is not scored halfway. The minimum is 120, which leaves time for
-                the last traces to be stored. Send null to use the project's
+                the last traces to be stored. Send `null` to use the project's
                 thread timelimit, which defaults to 300.
             overwrite_evals: Re-evaluate items that already have results for
                 this metric collection instead of skipping them. Defaults to
-                false.
+                `false` on create; omit it on an update to leave it unchanged.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -174,24 +175,25 @@ class EvaluationRulesClient:
                 must be multi-turn for `THREAD` rules and single-turn for
                 `TRACE` and `SPAN` rules.
             enabled: Whether the rule evaluates matching items as they arrive.
-                Defaults to true.
-            description: A note about what the rule checks. Send null to clear
+                Defaults to `true`.
+            description: A note about what the rule checks. Send `null` to clear
                 it.
             sample_rate: The fraction of matching items to evaluate, between 0
-                and 1. Defaults to 1, all of them.
+                and 1. On create it defaults to 1, all of them; omit it on an
+                update to leave it unchanged.
             span_type: Only evaluate spans of this kind. Allowed only when
                 `dataModel` is `SPAN`, and cleared automatically if the rule
-                moves off `SPAN`. Send null to evaluate every span.
-            filters: Only evaluate items matching these filters. Send null to
+                moves off `SPAN`. Send `null` to evaluate every span.
+            filters: Only evaluate items matching these filters. Send `null` to
                 evaluate every item the rule's `dataModel` covers.
             thread_timelimit: For `THREAD` rules, the seconds of inactivity to
                 wait before evaluating a thread, so an in-progress conversation
                 is not scored halfway. The minimum is 120, which leaves time for
-                the last traces to be stored. Send null to use the project's
+                the last traces to be stored. Send `null` to use the project's
                 thread timelimit, which defaults to 300.
             overwrite_evals: Re-evaluate items that already have results for
                 this metric collection instead of skipping them. Defaults to
-                false.
+                `false` on create; omit it on an update to leave it unchanged.
         """
         return await self._api.a_request(
             HttpMethods.POST,
@@ -264,7 +266,7 @@ class EvaluationRulesClient:
         """Update Evaluation Rule
 
         Updates an evaluation rule and returns it. Only the fields you send are
-        changed; omitting a field leaves it untouched, and sending null clears
+        changed; omitting a field leaves it untouched, and sending `null` clears
         it. Constraints are re-checked against the rule the update produces, not
         just the fields you sent, so switching a rule to `THREAD` still requires
         a multi-turn metric collection.
@@ -275,23 +277,24 @@ class EvaluationRulesClient:
             enabled: Whether the rule evaluates matching items as they arrive.
             metric_collection_id: The id of a different metric collection to
                 run.
-            description: A note about what the rule checks. Send null to clear
+            description: A note about what the rule checks. Send `null` to clear
                 it.
             sample_rate: The fraction of matching items to evaluate, between 0
-                and 1. Defaults to 1, all of them.
+                and 1. On create it defaults to 1, all of them; omit it on an
+                update to leave it unchanged.
             span_type: Only evaluate spans of this kind. Allowed only when
                 `dataModel` is `SPAN`, and cleared automatically if the rule
-                moves off `SPAN`. Send null to evaluate every span.
-            filters: Only evaluate items matching these filters. Send null to
+                moves off `SPAN`. Send `null` to evaluate every span.
+            filters: Only evaluate items matching these filters. Send `null` to
                 evaluate every item the rule's `dataModel` covers.
             thread_timelimit: For `THREAD` rules, the seconds of inactivity to
                 wait before evaluating a thread, so an in-progress conversation
                 is not scored halfway. The minimum is 120, which leaves time for
-                the last traces to be stored. Send null to use the project's
+                the last traces to be stored. Send `null` to use the project's
                 thread timelimit, which defaults to 300.
             overwrite_evals: Re-evaluate items that already have results for
                 this metric collection instead of skipping them. Defaults to
-                false.
+                `false` on create; omit it on an update to leave it unchanged.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -331,7 +334,7 @@ class EvaluationRulesClient:
         """Update Evaluation Rule
 
         Updates an evaluation rule and returns it. Only the fields you send are
-        changed; omitting a field leaves it untouched, and sending null clears
+        changed; omitting a field leaves it untouched, and sending `null` clears
         it. Constraints are re-checked against the rule the update produces, not
         just the fields you sent, so switching a rule to `THREAD` still requires
         a multi-turn metric collection.
@@ -342,23 +345,24 @@ class EvaluationRulesClient:
             enabled: Whether the rule evaluates matching items as they arrive.
             metric_collection_id: The id of a different metric collection to
                 run.
-            description: A note about what the rule checks. Send null to clear
+            description: A note about what the rule checks. Send `null` to clear
                 it.
             sample_rate: The fraction of matching items to evaluate, between 0
-                and 1. Defaults to 1, all of them.
+                and 1. On create it defaults to 1, all of them; omit it on an
+                update to leave it unchanged.
             span_type: Only evaluate spans of this kind. Allowed only when
                 `dataModel` is `SPAN`, and cleared automatically if the rule
-                moves off `SPAN`. Send null to evaluate every span.
-            filters: Only evaluate items matching these filters. Send null to
+                moves off `SPAN`. Send `null` to evaluate every span.
+            filters: Only evaluate items matching these filters. Send `null` to
                 evaluate every item the rule's `dataModel` covers.
             thread_timelimit: For `THREAD` rules, the seconds of inactivity to
                 wait before evaluating a thread, so an in-progress conversation
                 is not scored halfway. The minimum is 120, which leaves time for
-                the last traces to be stored. Send null to use the project's
+                the last traces to be stored. Send `null` to use the project's
                 thread timelimit, which defaults to 300.
             overwrite_evals: Re-evaluate items that already have results for
                 this metric collection instead of skipping them. Defaults to
-                false.
+                `false` on create; omit it on an update to leave it unchanged.
         """
         return await self._api.a_request(
             HttpMethods.PUT,

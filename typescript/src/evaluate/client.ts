@@ -56,7 +56,7 @@ export class EvaluateClient {
    * @param spanUuid The unique identifier of the span.
    * @param metricCollection The name of the single-turn metric collection you
    *   wish to use for evaluation.
-   * @param overwriteMetrics Set this to true to re-run every metric in the
+   * @param overwriteMetrics Set this to `true` to re-run every metric in the
    *   collection and replace the results already stored, and omit this field to
    *   keep those results and only run the metrics that have none yet.
    */
@@ -86,7 +86,7 @@ export class EvaluateClient {
    *   wish to use for evaluation.
    * @param chatbotRole This is the role of the chatbot in the thread, which the
    *   multi-turn metrics that judge role adherence evaluate the thread against.
-   * @param overwriteMetrics Set this to true to re-run every metric in the
+   * @param overwriteMetrics Set this to `true` to re-run every metric in the
    *   collection and replace the results already stored, and omit this field to
    *   keep those results and only run the metrics that have none yet.
    */
@@ -116,7 +116,7 @@ export class EvaluateClient {
    * @param traceUuid The unique identifier of the trace.
    * @param metricCollection The name of the single-turn metric collection you
    *   wish to use for evaluation.
-   * @param overwriteMetrics Set this to true to re-run every metric in the
+   * @param overwriteMetrics Set this to `true` to re-run every metric in the
    *   collection and replace the results already stored, and omit this field to
    *   keep those results and only run the metrics that have none yet.
    */

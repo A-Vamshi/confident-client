@@ -49,17 +49,17 @@ export class ReportTemplatesClient {
    * @param templateSections The report's exact sections, in render order. Omit
    *   it to let the generator choose the structure from `description`.
    * @param enabled Whether to start generating on the schedule. Defaults to
-   *   true; send false to create the template without scheduling it.
+   *   `true`; send `false` to create the template without scheduling it.
    * @param repeatEvery How many `repeatUnit`s apart the runs are, for an
-   *   INTERVAL schedule. Send null to clear it.
-   * @param repeatUnit The unit `repeatEvery` counts, for an INTERVAL schedule.
-   *   Send null to clear it.
+   *   `INTERVAL` schedule. Send `null` to clear it.
+   * @param repeatUnit The unit `repeatEvery` counts, for an `INTERVAL`
+   *   schedule. Send `null` to clear it.
    * @param startAt When the schedule first runs, as an ISO 8601 datetime. Send
-   *   null to start it immediately.
-   * @param maxRuns How many times the schedule runs before it stops. Send null
-   *   to let it run indefinitely.
+   *   `null` to start it immediately.
+   * @param maxRuns How many times the schedule runs before it stops. Send
+   *   `null` to let it run indefinitely.
    * @param endAt When the schedule stops running, as an ISO 8601 datetime. Send
-   *   null to leave it open-ended.
+   *   `null` to leave it open-ended.
    */
   async create(
     name: string,
@@ -127,12 +127,12 @@ export class ReportTemplatesClient {
    *
    * Updates a report template and returns it. Only the fields you send are
    * changed, and `templateSections` replaces the whole list. Set `enabled` to
-   * false to pause generation, or send cadence fields to retime it.
+   * `false` to pause generation, or send cadence fields to retime it.
    *
    * @param reportTemplateId The id of the report template.
    * @param name The template's new name, also used as the report's title.
    * @param description The question the report should answer, which drives what
-   *   data the generator retrieves. Send null to clear it.
+   *   data the generator retrieves. Send `null` to clear it.
    * @param templateSections The report's exact sections, in render order. The
    *   list replaces the template's current sections, so a section you leave out
    *   is removed; omit the field to leave them alone.
@@ -141,15 +141,15 @@ export class ReportTemplatesClient {
    *   `endAt` can only be re-enabled by a request that also raises or clears
    *   them.
    * @param repeatEvery How many `repeatUnit`s apart the runs are, for an
-   *   INTERVAL schedule. Send null to clear it.
-   * @param repeatUnit The unit `repeatEvery` counts, for an INTERVAL schedule.
-   *   Send null to clear it.
+   *   `INTERVAL` schedule. Send `null` to clear it.
+   * @param repeatUnit The unit `repeatEvery` counts, for an `INTERVAL`
+   *   schedule. Send `null` to clear it.
    * @param startAt When the schedule first runs, as an ISO 8601 datetime. Send
-   *   null to start it immediately.
-   * @param maxRuns How many times the schedule runs before it stops. Send null
-   *   to let it run indefinitely.
+   *   `null` to start it immediately.
+   * @param maxRuns How many times the schedule runs before it stops. Send
+   *   `null` to let it run indefinitely.
    * @param endAt When the schedule stops running, as an ISO 8601 datetime. Send
-   *   null to leave it open-ended.
+   *   `null` to leave it open-ended.
    */
   async update(
     reportTemplateId: string,
@@ -204,7 +204,7 @@ export class ReportTemplatesClient {
    *
    * Permanently deletes a report template and the schedule that generates it.
    * This cannot be undone, and every report it generated becomes unreachable —
-   * set `enabled` to false instead to pause generation while keeping past
+   * set `enabled` to `false` instead to pause generation while keeping past
    * reports readable.
    *
    * @param reportTemplateId The id of the report template.

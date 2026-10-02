@@ -61,27 +61,28 @@ export class ExportSchedulesClient {
    *
    * @param name The name of the schedule.
    * @param repeatEvery How many `repeatUnit`s apart the runs are, for an
-   *   INTERVAL schedule. Send null to clear it.
-   * @param repeatUnit The unit `repeatEvery` counts, for an INTERVAL schedule.
-   *   Send null to clear it.
+   *   `INTERVAL` schedule. Send `null` to clear it.
+   * @param repeatUnit The unit `repeatEvery` counts, for an `INTERVAL`
+   *   schedule. Send `null` to clear it.
    * @param startAt When the schedule first runs, as an ISO 8601 datetime. Send
-   *   null to start it immediately.
-   * @param maxRuns How many times the schedule runs before it stops. Send null
-   *   to let it run indefinitely.
+   *   `null` to start it immediately.
+   * @param maxRuns How many times the schedule runs before it stops. Send
+   *   `null` to let it run indefinitely.
    * @param endAt When the schedule stops running, as an ISO 8601 datetime. Send
-   *   null to leave it open-ended.
-   * @param description What the schedule exports. Send null to leave it unset.
+   *   `null` to leave it open-ended.
+   * @param description What the schedule exports. Send `null` to leave it
+   *   unset.
    * @param environment The environment each run exports data from. Omit it, or
-   *   send null, to export data from every environment. Ignored for `TEST_RUNS`
-   *   exports, which have no environment.
+   *   send `null`, to export data from every environment. Ignored for
+   *   `TEST_RUNS` exports, which have no environment.
    * @param annotationSelectionType The annotation source for each `ANNOTATIONS`
-   *   export run. Omit it, or send null, to export annotations from every
+   *   export run. Omit it, or send `null`, to export annotations from every
    *   source. Ignored for other export types.
    * @param destinationId The id of the export destination each run delivers its
    *   file to. A scheduled run has no recipient of its own, so a schedule
    *   created without a destination produces files that go nowhere.
    * @param enabled Whether the schedule starts running as soon as it is
-   *   created. Defaults to true.
+   *   created. Defaults to `true`.
    */
   async create(
     name: string,
@@ -164,26 +165,26 @@ export class ExportSchedulesClient {
    *
    * @param exportScheduleId The id of the export schedule.
    * @param repeatEvery How many `repeatUnit`s apart the runs are, for an
-   *   INTERVAL schedule. Send null to clear it.
-   * @param repeatUnit The unit `repeatEvery` counts, for an INTERVAL schedule.
-   *   Send null to clear it.
+   *   `INTERVAL` schedule. Send `null` to clear it.
+   * @param repeatUnit The unit `repeatEvery` counts, for an `INTERVAL`
+   *   schedule. Send `null` to clear it.
    * @param startAt When the schedule first runs, as an ISO 8601 datetime. Send
-   *   null to start it immediately.
-   * @param maxRuns How many times the schedule runs before it stops. Send null
-   *   to let it run indefinitely.
+   *   `null` to start it immediately.
+   * @param maxRuns How many times the schedule runs before it stops. Send
+   *   `null` to let it run indefinitely.
    * @param endAt When the schedule stops running, as an ISO 8601 datetime. Send
-   *   null to leave it open-ended.
+   *   `null` to leave it open-ended.
    * @param name The name of the schedule.
-   * @param description What the schedule exports. Send null to clear it.
-   * @param environment The environment each run exports data from. Send null to
-   *   export data from every environment. Ignored for `TEST_RUNS` exports,
+   * @param description What the schedule exports. Send `null` to clear it.
+   * @param environment The environment each run exports data from. Send `null`
+   *   to export data from every environment. Ignored for `TEST_RUNS` exports,
    *   which have no environment.
    * @param annotationSelectionType The annotation source for each `ANNOTATIONS`
-   *   export run. Send null to export annotations from every source. Ignored
+   *   export run. Send `null` to export annotations from every source. Ignored
    *   for other export types.
    * @param destinationId The id of the export destination each run delivers its
-   *   file to. Send null to leave the schedule without one.
-   * @param enabled Whether the schedule runs. Send false to pause it without
+   *   file to. Send `null` to leave the schedule without one.
+   * @param enabled Whether the schedule runs. Send `false` to pause it without
    *   deleting it.
    */
   async update(

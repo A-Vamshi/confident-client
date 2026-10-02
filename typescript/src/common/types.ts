@@ -739,6 +739,7 @@ export interface Model {
   name: string | null;
   maxConcurrency: number | null;
   maxInputTokens: number | null;
+  modelCredentialId: string | null;
   projectId: string | null;
   organizationId: string | null;
 }

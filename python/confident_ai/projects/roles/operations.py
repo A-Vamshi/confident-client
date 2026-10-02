@@ -19,7 +19,7 @@ class RolesOperations:
 
         Lists every role a member of this project can be given: the custom roles
         the project owns, plus the global, system-defined ones (`projectId` is
-        null). Project roles govern access inside this project only;
+        `null`). Project roles govern access inside this project only;
         organization-wide settings come from the member's organization role.
 
         Args:
@@ -38,7 +38,7 @@ class RolesOperations:
 
         Lists every role a member of this project can be given: the custom roles
         the project owns, plus the global, system-defined ones (`projectId` is
-        null). Project roles govern access inside this project only;
+        `null`). Project roles govern access inside this project only;
         organization-wide settings come from the member's organization role.
 
         Args:
@@ -81,7 +81,7 @@ class RolesOperations:
                 permissions at all. Discover assignable policies with the
                 policies endpoint of the same scope.
             description: What the role is for. On an update, omit it to leave
-                the stored description unchanged, or send null to clear it.
+                the stored description unchanged, or send `null` to clear it.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -125,7 +125,7 @@ class RolesOperations:
                 permissions at all. Discover assignable policies with the
                 policies endpoint of the same scope.
             description: What the role is for. On an update, omit it to leave
-                the stored description unchanged, or send null to clear it.
+                the stored description unchanged, or send `null` to clear it.
         """
         return await self._api.a_request(
             HttpMethods.POST,
@@ -170,7 +170,7 @@ class RolesOperations:
                 permissions at all. Discover assignable policies with the
                 policies endpoint of the same scope.
             description: What the role is for. On an update, omit it to leave
-                the stored description unchanged, or send null to clear it.
+                the stored description unchanged, or send `null` to clear it.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -215,7 +215,7 @@ class RolesOperations:
                 permissions at all. Discover assignable policies with the
                 policies endpoint of the same scope.
             description: What the role is for. On an update, omit it to leave
-                the stored description unchanged, or send null to clear it.
+                the stored description unchanged, or send `null` to clear it.
         """
         return await self._api.a_request(
             HttpMethods.PUT,

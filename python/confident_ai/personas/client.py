@@ -214,7 +214,7 @@ class PersonasClient:
                 whole description. Omit it to keep the current one.
             metadata: Structured facts the persona can draw on. The object
                 replaces the stored one outright, so send the whole object. Send
-                null to clear it, or omit it to keep the current one.
+                `null` to clear it, or omit it to keep the current one.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -255,7 +255,7 @@ class PersonasClient:
                 whole description. Omit it to keep the current one.
             metadata: Structured facts the persona can draw on. The object
                 replaces the stored one outright, so send the whole object. Send
-                null to clear it, or omit it to keep the current one.
+                `null` to clear it, or omit it to keep the current one.
         """
         return await self._api.a_request(
             HttpMethods.PUT,

@@ -27,8 +27,8 @@ export class VulnerabilitiesClient {
    *   Defaults to 25.
    * @param category Returns only vulnerabilities in this catalog category. An
    *   unknown category is rejected with the list of valid ones.
-   * @param builtIn When true, returns only the vulnerabilities Confident AI
-   *   ships; when false, only the ones your project defined. Omit to return
+   * @param builtIn When `true`, returns only the vulnerabilities Confident AI
+   *   ships; when `false`, only the ones your project defined. Omit to return
    *   both.
    */
   async list(

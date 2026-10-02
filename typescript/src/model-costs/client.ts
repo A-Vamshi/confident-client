@@ -16,7 +16,7 @@ export class ModelCostsClient {
    * Lists the custom model prices your Confident AI project uses one page at a
    * time, newest first. When the project inherits its pricing from the
    * organization the response carries the organization's model costs and
-   * `inherit` is true, in which case they can only be changed from the
+   * `inherit` is `true`, in which case they can only be changed from the
    * organization's own project.
    *
    * @param page The page to return. Defaults to 1.
@@ -47,14 +47,14 @@ export class ModelCostsClient {
    * @param matchPattern The case-insensitive regular expression a model name
    *   must match for this cost to apply.
    * @param provider The model provider this cost applies to, matched case-
-   *   insensitively against the provider recorded on the LLM span. Send null or
-   *   omit it for a cost that applies whatever the provider, which is only used
-   *   when no provider-specific cost matches.
-   * @param inputCostPerMillionTokens The cost in USD of one million input
-   *   tokens. Send null when only the output rate is priced; input tokens are
+   *   insensitively against the provider recorded on the LLM span. Send `null`
+   *   or omit it for a cost that applies whatever the provider, which is only
+   *   used when no provider-specific cost matches.
+   * @param inputCostPerMillionTokens The cost in `USD` of one million input
+   *   tokens. Send `null` when only the output rate is priced; input tokens are
    *   then costed at zero.
-   * @param outputCostPerMillionTokens The cost in USD of one million output
-   *   tokens. Send null when only the input rate is priced; output tokens are
+   * @param outputCostPerMillionTokens The cost in `USD` of one million output
+   *   tokens. Send `null` when only the input rate is priced; output tokens are
    *   then costed at zero.
    */
   async create(
@@ -93,14 +93,14 @@ export class ModelCostsClient {
    * @param matchPattern The case-insensitive regular expression a model name
    *   must match for this cost to apply.
    * @param provider The model provider this cost applies to, matched case-
-   *   insensitively against the provider recorded on the LLM span. Send null or
-   *   omit it for a cost that applies whatever the provider, which is only used
-   *   when no provider-specific cost matches.
-   * @param inputCostPerMillionTokens The cost in USD of one million input
-   *   tokens. Send null when only the output rate is priced; input tokens are
+   *   insensitively against the provider recorded on the LLM span. Send `null`
+   *   or omit it for a cost that applies whatever the provider, which is only
+   *   used when no provider-specific cost matches.
+   * @param inputCostPerMillionTokens The cost in `USD` of one million input
+   *   tokens. Send `null` when only the output rate is priced; input tokens are
    *   then costed at zero.
-   * @param outputCostPerMillionTokens The cost in USD of one million output
-   *   tokens. Send null when only the input rate is priced; output tokens are
+   * @param outputCostPerMillionTokens The cost in `USD` of one million output
+   *   tokens. Send `null` when only the input rate is priced; output tokens are
    *   then costed at zero.
    */
   async update(

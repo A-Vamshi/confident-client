@@ -21,8 +21,8 @@ export class AttackMethodsClient {
    * @param page The page of attack methods to return. Defaults to 1.
    * @param pageSize The number of attack methods per page, at most 100.
    *   Defaults to 25.
-   * @param multiTurn When true, returns only multi-turn attack methods; when
-   *   false, only single-turn ones. Omit to return both.
+   * @param multiTurn When `true`, returns only multi-turn attack methods; when
+   *   `false`, only single-turn ones. Omit to return both.
    */
   async list(
     options: {

@@ -126,12 +126,14 @@ export interface ProjectRoleList {
 export interface UpdateDecisionProjectModelRequest {
   provider: ModelProvider;
   name?: string;
+  modelCredentialId?: string | null;
 }
 
 export interface UpdateEvaluationProjectModelRequest {
   provider: ModelProvider;
   name?: string;
   maxConcurrency?: number | null;
+  modelCredentialId?: string | null;
 }
 
 export interface UpdatePlatformProjectModelRequest {
@@ -139,6 +141,7 @@ export interface UpdatePlatformProjectModelRequest {
   name?: string;
   maxConcurrency?: number | null;
   maxInputTokens?: number | null;
+  modelCredentialId?: string | null;
 }
 
 export interface UpdateProjectModelResult {

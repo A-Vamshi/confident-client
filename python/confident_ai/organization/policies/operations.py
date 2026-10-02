@@ -72,7 +72,7 @@ class PoliciesOperations:
                 the other scope's catalog is stored but never matches a
                 permission check here.
             description: What the policy is for. On an update, omit it to leave
-                the stored description unchanged, or send null to clear it.
+                the stored description unchanged, or send `null` to clear it.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -112,7 +112,7 @@ class PoliciesOperations:
                 the other scope's catalog is stored but never matches a
                 permission check here.
             description: What the policy is for. On an update, omit it to leave
-                the stored description unchanged, or send null to clear it.
+                the stored description unchanged, or send `null` to clear it.
         """
         return await self._api.a_request(
             HttpMethods.POST,
@@ -155,7 +155,7 @@ class PoliciesOperations:
                 the other scope's catalog is stored but never matches a
                 permission check here.
             description: What the policy is for. On an update, omit it to leave
-                the stored description unchanged, or send null to clear it.
+                the stored description unchanged, or send `null` to clear it.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -199,7 +199,7 @@ class PoliciesOperations:
                 the other scope's catalog is stored but never matches a
                 permission check here.
             description: What the policy is for. On an update, omit it to leave
-                the stored description unchanged, or send null to clear it.
+                the stored description unchanged, or send `null` to clear it.
         """
         return await self._api.a_request(
             HttpMethods.PUT,

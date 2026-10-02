@@ -23,8 +23,9 @@ export class MetricsDataClient {
    * @param start Returns only results recorded at or after this ISO 8601
    *   datetime.
    * @param end Returns only results recorded before this ISO 8601 datetime.
-   * @param multiTurn Filter for results evaluated on your test case type, true
-   *   for multi-turn, false for single-turn. Returns both if not specified.
+   * @param multiTurn Filter for results evaluated on your test case type,
+   *   `true` for multi-turn, `false` for single-turn. Returns both if not
+   *   specified.
    * @param searchTerm Returns only results whose metric name contains this
    *   text, case-insensitively.
    */

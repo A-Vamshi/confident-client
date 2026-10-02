@@ -101,8 +101,8 @@ export class PersonasClient {
    *   outright rather than being appended to, so send the whole description.
    *   Omit it to keep the current one.
    * @param metadata Structured facts the persona can draw on. The object
-   *   replaces the stored one outright, so send the whole object. Send null to
-   *   clear it, or omit it to keep the current one.
+   *   replaces the stored one outright, so send the whole object. Send `null`
+   *   to clear it, or omit it to keep the current one.
    */
   async update(
     personaId: string,

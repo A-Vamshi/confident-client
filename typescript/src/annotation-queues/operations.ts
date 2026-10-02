@@ -99,7 +99,7 @@ export class AnnotationQueuesOperations {
    * @param name The new name of the queue, which must be unique in the project.
    * @param formId The id of an annotation form in this project to ask of every
    *   item in the queue. Forms are created and managed in the Confident AI
-   *   platform. Send null to detach the current form.
+   *   platform. Send `null` to detach the current form.
    * @param tags Replaces the tags on the queue. Send an empty array to remove
    *   them all; omit it to leave them as they are.
    */
@@ -146,7 +146,7 @@ export class AnnotationQueuesOperations {
    * @param annotatorEmail The email address credited for every entry that does
    *   not name its own annotator.
    * @param markAsCompleted Whether to mark the items annotated, for every entry
-   *   that does not say otherwise. Defaults to true.
+   *   that does not say otherwise. Defaults to `true`.
    */
   async batchAnnotateItems(
     annotationQueueId: string,

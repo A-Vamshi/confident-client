@@ -172,8 +172,8 @@ class ApiKeysOperations:
         Args:
             project_id: The id of the project the key belongs to.
             api_key_id: The id of the API key.
-            valid: Send false to deactivate the key, true to reactivate it. A
-                deactivated key is rejected on every request, and deactivating
+            valid: Send `false` to deactivate the key, `true` to reactivate it.
+                A deactivated key is rejected on every request, and deactivating
                 one takes effect immediately.
         """
         return self._api.request(
@@ -199,8 +199,8 @@ class ApiKeysOperations:
         Args:
             project_id: The id of the project the key belongs to.
             api_key_id: The id of the API key.
-            valid: Send false to deactivate the key, true to reactivate it. A
-                deactivated key is rejected on every request, and deactivating
+            valid: Send `false` to deactivate the key, `true` to reactivate it.
+                A deactivated key is rejected on every request, and deactivating
                 one takes effect immediately.
         """
         return await self._api.a_request(
@@ -279,7 +279,7 @@ class ApiKeysOperations:
                 immediately and stops the old one at once.
             expires_in_days: A new lifetime for the key, in days from now — a
                 duration, not a date, stored on the key as `expiresAt`. Omit it
-                to keep the current expiry, or send null to remove the expiry
+                to keep the current expiry, or send `null` to remove the expiry
                 altogether. Required when rotating a key that has already
                 expired.
         """
@@ -322,7 +322,7 @@ class ApiKeysOperations:
                 immediately and stops the old one at once.
             expires_in_days: A new lifetime for the key, in days from now — a
                 duration, not a date, stored on the key as `expiresAt`. Omit it
-                to keep the current expiry, or send null to remove the expiry
+                to keep the current expiry, or send `null` to remove the expiry
                 altogether. Required when rotating a key that has already
                 expired.
         """

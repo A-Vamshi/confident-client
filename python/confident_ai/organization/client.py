@@ -9,9 +9,6 @@ from confident_ai.organization.api_keys.operations import ApiKeysOperations
 from confident_ai.organization.audit_logs_exports.operations import (
     AuditLogsExportsOperations,
 )
-from confident_ai.organization.governance_control_groups.operations import (
-    GovernanceControlGroupsOperations,
-)
 from confident_ai.organization.governance_controls.operations import (
     GovernanceControlsOperations,
 )
@@ -43,7 +40,6 @@ class OrganizationClient(
     OrganizationOperations,
     ApiKeysOperations,
     AuditLogsExportsOperations,
-    GovernanceControlGroupsOperations,
     GovernanceControlsOperations,
     GovernanceControlsVersionsOperations,
     GovernancePoliciesOperations,

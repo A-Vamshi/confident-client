@@ -43,9 +43,10 @@ export class DashboardsOperations {
    * per widget.
    *
    * @param name The name of the dashboard.
-   * @param description What the dashboard covers. Send null to leave it unset.
+   * @param description What the dashboard covers. Send `null` to leave it
+   *   unset.
    * @param private Whether the dashboard is visible only to its creator.
-   *   Defaults to false, which shares it with the project.
+   *   Defaults to `false`, which shares it with the project.
    * @param widgets The widgets to create the dashboard with. Each one that
    *   sends no `layout` is packed onto the grid in the order given.
    */
@@ -90,7 +91,7 @@ export class DashboardsOperations {
    *
    * @param dashboardId The id of the dashboard.
    * @param name The name of the dashboard.
-   * @param description What the dashboard covers. Send null to clear it.
+   * @param description What the dashboard covers. Send `null` to clear it.
    * @param private Whether the dashboard is visible only to its creator.
    */
   async update(

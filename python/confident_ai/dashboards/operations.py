@@ -80,9 +80,10 @@ class DashboardsOperations:
 
         Args:
             name: The name of the dashboard.
-            description: What the dashboard covers. Send null to leave it unset.
+            description: What the dashboard covers. Send `null` to leave it
+                unset.
             private: Whether the dashboard is visible only to its creator.
-                Defaults to false, which shares it with the project.
+                Defaults to `false`, which shares it with the project.
             widgets: The widgets to create the dashboard with. Each one that
                 sends no `layout` is packed onto the grid in the order given.
         """
@@ -115,9 +116,10 @@ class DashboardsOperations:
 
         Args:
             name: The name of the dashboard.
-            description: What the dashboard covers. Send null to leave it unset.
+            description: What the dashboard covers. Send `null` to leave it
+                unset.
             private: Whether the dashboard is visible only to its creator.
-                Defaults to false, which shares it with the project.
+                Defaults to `false`, which shares it with the project.
             widgets: The widgets to create the dashboard with. Each one that
                 sends no `layout` is packed onto the grid in the order given.
         """
@@ -184,7 +186,7 @@ class DashboardsOperations:
         Args:
             dashboard_id: The id of the dashboard.
             name: The name of the dashboard.
-            description: What the dashboard covers. Send null to clear it.
+            description: What the dashboard covers. Send `null` to clear it.
             private: Whether the dashboard is visible only to its creator.
         """
         return self._api.request(
@@ -212,7 +214,7 @@ class DashboardsOperations:
         Args:
             dashboard_id: The id of the dashboard.
             name: The name of the dashboard.
-            description: What the dashboard covers. Send null to clear it.
+            description: What the dashboard covers. Send `null` to clear it.
             private: Whether the dashboard is visible only to its creator.
         """
         return await self._api.a_request(

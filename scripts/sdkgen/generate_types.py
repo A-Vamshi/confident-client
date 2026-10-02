@@ -107,11 +107,15 @@ def uses(module: Module, needle: str) -> bool:
 
 
 def render_python_types(module: Module, source: str) -> str:
-    uses_optional = any(
-        item.optional or item.type.nullable
-        for obj in module.objects
-        for item in obj.fields
-    ) or any(alias.type.nullable for alias in module.aliases)
+    uses_optional = (
+        any(
+            item.optional or item.type.nullable
+            for obj in module.objects
+            for item in obj.fields
+        )
+        or any(alias.type.nullable for alias in module.aliases)
+        or uses(module, "Optional[")
+    )
 
     typing_imports = [
         name

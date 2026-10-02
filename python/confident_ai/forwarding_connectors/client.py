@@ -97,8 +97,8 @@ class ForwardingConnectorsClient:
             environments: The environments whose traces this connector forwards.
                 An empty list forwards traces from every environment. Omit this
                 field to leave the stored environments unchanged.
-            enabled: Whether the connector forwards traces. Defaults to true on
-                create; omit it on an update to leave it unchanged.
+            enabled: Whether the connector forwards traces. Defaults to `true`
+                on create; omit it on an update to leave it unchanged.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -147,8 +147,8 @@ class ForwardingConnectorsClient:
             environments: The environments whose traces this connector forwards.
                 An empty list forwards traces from every environment. Omit this
                 field to leave the stored environments unchanged.
-            enabled: Whether the connector forwards traces. Defaults to true on
-                create; omit it on an update to leave it unchanged.
+            enabled: Whether the connector forwards traces. Defaults to `true`
+                on create; omit it on an update to leave it unchanged.
         """
         return await self._api.a_request(
             HttpMethods.POST,
@@ -229,8 +229,8 @@ class ForwardingConnectorsClient:
             environments: The environments whose traces this connector forwards.
                 An empty list forwards traces from every environment. Omit this
                 field to leave the stored environments unchanged.
-            enabled: Whether the connector forwards traces. Defaults to true on
-                create; omit it on an update to leave it unchanged.
+            enabled: Whether the connector forwards traces. Defaults to `true`
+                on create; omit it on an update to leave it unchanged.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -278,8 +278,8 @@ class ForwardingConnectorsClient:
             environments: The environments whose traces this connector forwards.
                 An empty list forwards traces from every environment. Omit this
                 field to leave the stored environments unchanged.
-            enabled: Whether the connector forwards traces. Defaults to true on
-                create; omit it on an update to leave it unchanged.
+            enabled: Whether the connector forwards traces. Defaults to `true`
+                on create; omit it on an update to leave it unchanged.
         """
         return await self._api.a_request(
             HttpMethods.PUT,

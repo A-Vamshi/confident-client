@@ -40,26 +40,29 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
    *
    * Creates a standing rule that harvests matching production traces, spans or
    * threads into the dataset as goldens, starting immediately unless `enabled`
-   * is false, and returns its id. `dataModel` must match the dataset: `THREAD`
-   * for multi-turn, `TRACE` or `SPAN` for single-turn. Requires the Starter
-   * plan or above.
+   * is `false`, and returns its id. `dataModel` must match the dataset:
+   * `THREAD` for multi-turn, `TRACE` or `SPAN` for single-turn. Requires the
+   * Starter plan or above.
    *
    * @param datasetId The unique id of the dataset.
    * @param name A name for the task, unique within the dataset.
-   * @param description A note about what the task harvests. Send null to clear
-   *   it.
+   * @param description A note about what the task harvests. Send `null` to
+   *   clear it.
    * @param enabled Whether the task runs. Disabling it unschedules the
-   *   harvesting job, and goldens already created are kept. Defaults to false.
+   *   harvesting job, and goldens already created are kept. Defaults to `false`
+   *   on create; omit it on an update to leave it unchanged.
    * @param sampleRate The fraction of matching items to ingest, between 0 and
-   *   1. Defaults to 1, all of them.
+   *   1. On create it defaults to 1, all of them; omit it on an update to leave
+   *   it unchanged.
    * @param maxGoldens The maximum number of goldens this task will ever create.
-   *   Send null to remove the cap.
+   *   Send `null` to remove the cap.
    * @param inputTransformerId The id of a transformer that reshapes the
-   *   harvested input before it is stored. Send null to detach it.
+   *   harvested input before it is stored. Send `null` to detach it.
    * @param outputTransformerId The id of a transformer that reshapes the
-   *   harvested output before it is stored. Send null to detach it.
+   *   harvested output before it is stored. Send `null` to detach it.
    * @param includeInput Populate the golden's `input` from the harvested item.
-   *   Defaults to true; every other include flag defaults to false.
+   *   On create it defaults to `true` and every other include flag defaults to
+   *   `false`; omit it on an update to leave it unchanged.
    * @param includeActualOutput Populate the golden's `actualOutput` from the
    *   harvested item.
    * @param includeExpectedOutput Populate the golden's `expectedOutput` from
@@ -161,26 +164,29 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
    * Update Dataset Ingestion Task
    *
    * Updates an ingestion task and returns it. Only the fields you send are
-   * changed, and at least one is required; send null to clear a nullable field.
-   * Toggling `enabled` schedules or unschedules the harvesting job.
+   * changed, and at least one is required; send `null` to clear a nullable
+   * field. Toggling `enabled` schedules or unschedules the harvesting job.
    *
    * @param datasetId The unique id of the dataset.
    * @param datasetIngestionTaskId The unique id of the ingestion task.
    * @param name A new name for the task, unique within the dataset.
-   * @param description A note about what the task harvests. Send null to clear
-   *   it.
+   * @param description A note about what the task harvests. Send `null` to
+   *   clear it.
    * @param enabled Whether the task runs. Disabling it unschedules the
-   *   harvesting job, and goldens already created are kept. Defaults to false.
+   *   harvesting job, and goldens already created are kept. Defaults to `false`
+   *   on create; omit it on an update to leave it unchanged.
    * @param sampleRate The fraction of matching items to ingest, between 0 and
-   *   1. Defaults to 1, all of them.
+   *   1. On create it defaults to 1, all of them; omit it on an update to leave
+   *   it unchanged.
    * @param maxGoldens The maximum number of goldens this task will ever create.
-   *   Send null to remove the cap.
+   *   Send `null` to remove the cap.
    * @param inputTransformerId The id of a transformer that reshapes the
-   *   harvested input before it is stored. Send null to detach it.
+   *   harvested input before it is stored. Send `null` to detach it.
    * @param outputTransformerId The id of a transformer that reshapes the
-   *   harvested output before it is stored. Send null to detach it.
+   *   harvested output before it is stored. Send `null` to detach it.
    * @param includeInput Populate the golden's `input` from the harvested item.
-   *   Defaults to true; every other include flag defaults to false.
+   *   On create it defaults to `true` and every other include flag defaults to
+   *   `false`; omit it on an update to leave it unchanged.
    * @param includeActualOutput Populate the golden's `actualOutput` from the
    *   harvested item.
    * @param includeExpectedOutput Populate the golden's `expectedOutput` from

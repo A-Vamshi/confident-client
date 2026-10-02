@@ -41,7 +41,7 @@ export class PoliciesOperations extends ModelsOperations {
    *   of the same scope; an id from the other scope's catalog is stored but
    *   never matches a permission check here.
    * @param description What the policy is for. On an update, omit it to leave
-   *   the stored description unchanged, or send null to clear it.
+   *   the stored description unchanged, or send `null` to clear it.
    */
   async createPolicy(
     name: string,
@@ -74,7 +74,7 @@ export class PoliciesOperations extends ModelsOperations {
    *   of the same scope; an id from the other scope's catalog is stored but
    *   never matches a permission check here.
    * @param description What the policy is for. On an update, omit it to leave
-   *   the stored description unchanged, or send null to clear it.
+   *   the stored description unchanged, or send `null` to clear it.
    */
   async updatePolicy(
     policyId: string,

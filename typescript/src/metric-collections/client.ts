@@ -37,18 +37,19 @@ export class MetricCollectionsClient {
    *
    * @param name The name of the metric collection, which must be unique within
    *   your project.
-   * @param multiTurn This is true if the collection is multi-turn, which
+   * @param multiTurn This is `true` if the collection is multi-turn, which
    *   contains only multi-turn metrics. It cannot be changed once the
    *   collection exists.
    * @param metricsSettings The metrics in the collection with their settings.
    *   Each metric must exist in your project and match `multiTurn`.
    * @param sampleRate The share of eligible entities the whole collection is
    *   run against, between 0 and 1. Applied on top of each metric's own
-   *   `sampleRate`. Defaults to 1.
+   *   `sampleRate`. Defaults to 1 on create; omit it on an update to leave it
+   *   unchanged.
    * @param inputTransformerId The id of a transformer that reshapes the payload
-   *   before evaluation. Send null to unset it.
+   *   before evaluation. Send `null` to unset it.
    * @param outputTransformerId The id of a transformer that reshapes the result
-   *   after evaluation. Send null to unset it.
+   *   after evaluation. Send `null` to unset it.
    */
   async create(
     name: string,
@@ -114,11 +115,12 @@ export class MetricCollectionsClient {
    *   first and resend each metric it should keep.
    * @param sampleRate The share of eligible entities the whole collection is
    *   run against, between 0 and 1. Applied on top of each metric's own
-   *   `sampleRate`. Defaults to 1.
+   *   `sampleRate`. Defaults to 1 on create; omit it on an update to leave it
+   *   unchanged.
    * @param inputTransformerId The id of a transformer that reshapes the payload
-   *   before evaluation. Send null to unset it.
+   *   before evaluation. Send `null` to unset it.
    * @param outputTransformerId The id of a transformer that reshapes the result
-   *   after evaluation. Send null to unset it.
+   *   after evaluation. Send `null` to unset it.
    */
   async update(
     metricCollectionId: string,

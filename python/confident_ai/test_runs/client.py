@@ -55,8 +55,8 @@ class TestRunsClient:
             ascending: This determines if the field specified in `sortBy` should
                 be in ascending order. Defaults to `false`.
             status: Returns only test runs with this status.
-            multi_turn: When true, returns only multi-turn test runs; when
-                false, only single-turn test runs. Omit to return both.
+            multi_turn: When `true`, returns only multi-turn test runs; when
+                `false`, only single-turn test runs. Omit to return both.
         """
         return self._api.request(
             HttpMethods.GET,
@@ -107,8 +107,8 @@ class TestRunsClient:
             ascending: This determines if the field specified in `sortBy` should
                 be in ascending order. Defaults to `false`.
             status: Returns only test runs with this status.
-            multi_turn: When true, returns only multi-turn test runs; when
-                false, only single-turn test runs. Omit to return both.
+            multi_turn: When `true`, returns only multi-turn test runs; when
+                `false`, only single-turn test runs. Omit to return both.
         """
         return await self._api.a_request(
             HttpMethods.GET,

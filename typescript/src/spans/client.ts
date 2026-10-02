@@ -38,8 +38,8 @@ export class SpansClient {
    * @param type Filter by the specific type of span.
    * @param traceUuid Filter spans that belong to the trace with this uuid.
    * @param name Filter spans by their exact name.
-   * @param hasError Filter for spans that either failed (true) or succeeded
-   *   (false).
+   * @param hasError Filter for spans that either failed (`true`) or succeeded
+   *   (`false`).
    * @param model Filter LLM spans by the model used.
    * @param promptAlias This filters the spans by the prompt alias used.
    * @param promptVersion This filters the spans by the prompt version used.
@@ -47,7 +47,7 @@ export class SpansClient {
    * @param promptCommitHash This filters the spans by the exact prompt commit
    *   hash used.
    * @param embedder Filter retriever spans by the embedder model used.
-   * @param topK Filter retriever spans by the topK value.
+   * @param topK Filter retriever spans by the `topK` value.
    * @param chunkSize Filter retriever spans by the chunk size.
    */
   async list(

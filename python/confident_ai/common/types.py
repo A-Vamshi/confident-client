@@ -407,7 +407,7 @@ class JevQuestionJevQuestion2(ConfidentBaseModel):
     type: Literal["choice"]
     question: str
     weight: Optional[float] = None
-    options: Dict[str, float]
+    options: Dict[str, Optional[float]]
 
 
 JevQuestion = Union[
@@ -785,6 +785,7 @@ class Model(ConfidentBaseModel):
     name: Optional[str]
     max_concurrency: Optional[int] = Field(alias="maxConcurrency")
     max_input_tokens: Optional[int] = Field(alias="maxInputTokens")
+    model_credential_id: Optional[str] = Field(alias="modelCredentialId")
     project_id: Optional[str] = Field(alias="projectId")
     organization_id: Optional[str] = Field(alias="organizationId")
 
@@ -1040,7 +1041,7 @@ class WidgetTableColumn(ConfidentBaseModel):
 class WidgetTableData(ConfidentBaseModel):
     kind: Literal["TABLE"]
     columns: List[WidgetTableColumn]
-    rows: List[Dict[str, Union[str, float]]]
+    rows: List[Dict[str, Optional[Union[str, float]]]]
 
 
 class WidgetTimeSeriesData(ConfidentBaseModel):

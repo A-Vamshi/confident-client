@@ -4,7 +4,7 @@
 # and regenerate.
 
 from enum import Enum
-from typing import Any, List, Optional, Union
+from typing import Any, List, Literal, Optional, Union
 
 from pydantic import Field
 
@@ -42,14 +42,14 @@ class Transformer(ConfidentBaseModel):
 
 
 class TransformerCodeRunFailure(ConfidentBaseModel):
-    success: bool
+    success: Literal[False]
     error: Optional[str]
     reason: Optional[str]
     verbose_logs: Optional[str] = Field(alias="verboseLogs")
 
 
 class TransformerCodeRunSuccess(ConfidentBaseModel):
-    success: bool
+    success: Literal[True]
     output: Optional[Any] = None
     verbose_logs: Optional[str] = Field(alias="verboseLogs")
 

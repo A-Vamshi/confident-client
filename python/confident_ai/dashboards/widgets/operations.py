@@ -57,7 +57,7 @@ class WidgetsOperations:
         Args:
             dashboard_id: The id of the dashboard.
             name: The name shown as the widget's title.
-            description: What the widget shows. Send null to leave it unset.
+            description: What the widget shows. Send `null` to leave it unset.
             type: The visualization to draw the widget as.
             unit: The unit the widget's values are labelled with.
             mode: How the widget aggregates its lines. `DIMENSION_SERIES`
@@ -66,15 +66,15 @@ class WidgetsOperations:
                 when omitted.
             dimension: The property to break the widget's data down by. Required
                 when `mode` is `DIMENSION_SERIES`.
-            top_k: Caps a dimension breakdown at its top values. Send null, or
+            top_k: Caps a dimension breakdown at its top values. Send `null`, or
                 omit it, to plot every value.
             start_time: The start of the widget's own time range, as an ISO 8601
-                datetime. Send null to let the query decide the range.
+                datetime. Send `null` to let the query decide the range.
             end_time: The end of the widget's own time range, as an ISO 8601
-                datetime. Send null to let the query decide the range.
+                datetime. Send `null` to let the query decide the range.
             layout: Where the widget sits on the dashboard grid. Omit it, or
-                send null, and Confident AI packs the widget into the first free
-                space.
+                send `null`, and Confident AI packs the widget into the first
+                free space.
             lines: The series the widget plots.
         """
         return self._api.request(
@@ -125,7 +125,7 @@ class WidgetsOperations:
         Args:
             dashboard_id: The id of the dashboard.
             name: The name shown as the widget's title.
-            description: What the widget shows. Send null to leave it unset.
+            description: What the widget shows. Send `null` to leave it unset.
             type: The visualization to draw the widget as.
             unit: The unit the widget's values are labelled with.
             mode: How the widget aggregates its lines. `DIMENSION_SERIES`
@@ -134,15 +134,15 @@ class WidgetsOperations:
                 when omitted.
             dimension: The property to break the widget's data down by. Required
                 when `mode` is `DIMENSION_SERIES`.
-            top_k: Caps a dimension breakdown at its top values. Send null, or
+            top_k: Caps a dimension breakdown at its top values. Send `null`, or
                 omit it, to plot every value.
             start_time: The start of the widget's own time range, as an ISO 8601
-                datetime. Send null to let the query decide the range.
+                datetime. Send `null` to let the query decide the range.
             end_time: The end of the widget's own time range, as an ISO 8601
-                datetime. Send null to let the query decide the range.
+                datetime. Send `null` to let the query decide the range.
             layout: Where the widget sits on the dashboard grid. Omit it, or
-                send null, and Confident AI packs the widget into the first free
-                space.
+                send `null`, and Confident AI packs the widget into the first
+                free space.
             lines: The series the widget plots.
         """
         return await self._api.a_request(
@@ -197,7 +197,7 @@ class WidgetsOperations:
             dashboard_id: The id of the dashboard the widget is on.
             widget_id: The id of the widget.
             name: The name shown as the widget's title.
-            description: What the widget shows. Send null to leave it unset.
+            description: What the widget shows. Send `null` to leave it unset.
             type: The visualization to draw the widget as.
             unit: The unit the widget's values are labelled with.
             mode: How the widget aggregates its lines. `DIMENSION_SERIES`
@@ -206,15 +206,15 @@ class WidgetsOperations:
                 when omitted.
             dimension: The property to break the widget's data down by. Required
                 when `mode` is `DIMENSION_SERIES`.
-            top_k: Caps a dimension breakdown at its top values. Send null, or
+            top_k: Caps a dimension breakdown at its top values. Send `null`, or
                 omit it, to plot every value.
             start_time: The start of the widget's own time range, as an ISO 8601
-                datetime. Send null to let the query decide the range.
+                datetime. Send `null` to let the query decide the range.
             end_time: The end of the widget's own time range, as an ISO 8601
-                datetime. Send null to let the query decide the range.
+                datetime. Send `null` to let the query decide the range.
             layout: Where the widget sits on the dashboard grid. Omit it, or
-                send null, and Confident AI packs the widget into the first free
-                space.
+                send `null`, and Confident AI packs the widget into the first
+                free space.
             lines: The series the widget plots.
         """
         return self._api.request(
@@ -269,7 +269,7 @@ class WidgetsOperations:
             dashboard_id: The id of the dashboard the widget is on.
             widget_id: The id of the widget.
             name: The name shown as the widget's title.
-            description: What the widget shows. Send null to leave it unset.
+            description: What the widget shows. Send `null` to leave it unset.
             type: The visualization to draw the widget as.
             unit: The unit the widget's values are labelled with.
             mode: How the widget aggregates its lines. `DIMENSION_SERIES`
@@ -278,15 +278,15 @@ class WidgetsOperations:
                 when omitted.
             dimension: The property to break the widget's data down by. Required
                 when `mode` is `DIMENSION_SERIES`.
-            top_k: Caps a dimension breakdown at its top values. Send null, or
+            top_k: Caps a dimension breakdown at its top values. Send `null`, or
                 omit it, to plot every value.
             start_time: The start of the widget's own time range, as an ISO 8601
-                datetime. Send null to let the query decide the range.
+                datetime. Send `null` to let the query decide the range.
             end_time: The end of the widget's own time range, as an ISO 8601
-                datetime. Send null to let the query decide the range.
+                datetime. Send `null` to let the query decide the range.
             layout: Where the widget sits on the dashboard grid. Omit it, or
-                send null, and Confident AI packs the widget into the first free
-                space.
+                send `null`, and Confident AI packs the widget into the first
+                free space.
             lines: The series the widget plots.
         """
         return await self._api.a_request(

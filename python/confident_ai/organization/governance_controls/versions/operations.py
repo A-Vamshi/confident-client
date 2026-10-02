@@ -89,7 +89,7 @@ class GovernanceControlsVersionsOperations:
         migrated. Which request shape is expected follows the control's own
         `type` — a pre-deployment control takes the pre-deployment config, every
         other type the runtime config — and every field is required even when
-        null, so send the definition in full rather than a patch.
+        `null`, so send the definition in full rather than a patch.
 
         Args:
             control_id: The id of the governance control.
@@ -97,10 +97,11 @@ class GovernanceControlsVersionsOperations:
                 version. Which of the two shapes is expected is decided by the
                 control's own `type`, not by what you send: a pre-deployment
                 control takes the pre-deployment config, and every other type —
-                RUNTIME and OPERATIONAL alike — takes the runtime config. Except
-                for `extraQueryParams`, every field is required even when null,
-                so a version is a complete definition rather than a patch of the
-                one before it. Pass a GovernanceControlRuntimeConfig or a
+                `RUNTIME` and `OPERATIONAL` alike — takes the runtime config.
+                Except for `extraQueryParams`, every field is required even when
+                `null`, so a version is a complete definition rather than a
+                patch of the one before it. Pass a
+                GovernanceControlRuntimeConfig or a
                 GovernanceControlPreDeploymentConfig.
         """
         return self._api.request(
@@ -126,7 +127,7 @@ class GovernanceControlsVersionsOperations:
         migrated. Which request shape is expected follows the control's own
         `type` — a pre-deployment control takes the pre-deployment config, every
         other type the runtime config — and every field is required even when
-        null, so send the definition in full rather than a patch.
+        `null`, so send the definition in full rather than a patch.
 
         Args:
             control_id: The id of the governance control.
@@ -134,10 +135,11 @@ class GovernanceControlsVersionsOperations:
                 version. Which of the two shapes is expected is decided by the
                 control's own `type`, not by what you send: a pre-deployment
                 control takes the pre-deployment config, and every other type —
-                RUNTIME and OPERATIONAL alike — takes the runtime config. Except
-                for `extraQueryParams`, every field is required even when null,
-                so a version is a complete definition rather than a patch of the
-                one before it. Pass a GovernanceControlRuntimeConfig or a
+                `RUNTIME` and `OPERATIONAL` alike — takes the runtime config.
+                Except for `extraQueryParams`, every field is required even when
+                `null`, so a version is a complete definition rather than a
+                patch of the one before it. Pass a
+                GovernanceControlRuntimeConfig or a
                 GovernanceControlPreDeploymentConfig.
         """
         return await self._api.a_request(

@@ -16,7 +16,7 @@ export class GovernancePoliciesSkillOperations extends GovernancePoliciesControl
    * and nothing about it is assessed: it is the instructions Confident AI
    * serves to coding agents working on the projects this policy governs. A
    * project enrolled in this policy finds it in its Agent Skills git repository
-   * as `skills/governance/SKILL.md`. Answers with null when the policy has
+   * as `skills/governance/SKILL.md`. Answers with `null` when the policy has
    * none, in which case agents receive no governance skill.
    *
    * @param policyId The id of the governance policy.

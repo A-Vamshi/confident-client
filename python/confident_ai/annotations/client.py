@@ -140,14 +140,15 @@ class AnnotationsClient:
 
         Records a rating against exactly one trace, span or thread, and returns
         its id. The target must already exist in your project. A rating on a
-        THUMBS_RATING scale is 0 or 1; on a FIVE_STAR_RATING scale it is 1 to 5.
+        `THUMBS_RATING` scale is 0 or 1; on a `FIVE_STAR_RATING` scale it is 1
+        to 5.
 
         Args:
             annotation: An annotation to record against exactly one target. Send
                 `traceUuid`, `spanUuid` or `threadId` — never more than one —
                 and the field that goes with it: `expectedOutput` for a trace or
                 span, `expectedOutcome` for a thread. `fieldType` defaults to
-                THUMBS_RATING. Pass one of TraceAnnotationRequest,
+                `THUMBS_RATING`. Pass one of TraceAnnotationRequest,
                 SpanAnnotationRequest, ThreadAnnotationRequest.
         """
         return self._api.request(
@@ -165,14 +166,15 @@ class AnnotationsClient:
 
         Records a rating against exactly one trace, span or thread, and returns
         its id. The target must already exist in your project. A rating on a
-        THUMBS_RATING scale is 0 or 1; on a FIVE_STAR_RATING scale it is 1 to 5.
+        `THUMBS_RATING` scale is 0 or 1; on a `FIVE_STAR_RATING` scale it is 1
+        to 5.
 
         Args:
             annotation: An annotation to record against exactly one target. Send
                 `traceUuid`, `spanUuid` or `threadId` — never more than one —
                 and the field that goes with it: `expectedOutput` for a trace or
                 span, `expectedOutcome` for a thread. `fieldType` defaults to
-                THUMBS_RATING. Pass one of TraceAnnotationRequest,
+                `THUMBS_RATING`. Pass one of TraceAnnotationRequest,
                 SpanAnnotationRequest, ThreadAnnotationRequest.
         """
         return await self._api.a_request(

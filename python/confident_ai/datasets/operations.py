@@ -310,11 +310,11 @@ class DatasetsOperations:
                 evaluate the latest version.
             ai_connection_id: The id of the AI connection used to generate the
                 actual outputs before evaluating them. Required when
-                `generationMode` is AI_CONNECTION, and not allowed together with
-                `promptAlias`.
+                `generationMode` is `AI_CONNECTION`, and not allowed together
+                with `promptAlias`.
             prompt_alias: The alias of the prompt used to generate the actual
                 outputs before evaluating them. Required when `generationMode`
-                is PROMPT, and not allowed together with `aiConnectionId`.
+                is `PROMPT`, and not allowed together with `aiConnectionId`.
             prompt_commit: The prompt commit hash to generate with. Requires
                 `promptAlias`. Omit this field to generate with the latest
                 commit on the prompt's main branch.
@@ -398,11 +398,11 @@ class DatasetsOperations:
                 evaluate the latest version.
             ai_connection_id: The id of the AI connection used to generate the
                 actual outputs before evaluating them. Required when
-                `generationMode` is AI_CONNECTION, and not allowed together with
-                `promptAlias`.
+                `generationMode` is `AI_CONNECTION`, and not allowed together
+                with `promptAlias`.
             prompt_alias: The alias of the prompt used to generate the actual
                 outputs before evaluating them. Required when `generationMode`
-                is PROMPT, and not allowed together with `aiConnectionId`.
+                is `PROMPT`, and not allowed together with `aiConnectionId`.
             prompt_commit: The prompt commit hash to generate with. Requires
                 `promptAlias`. Omit this field to generate with the latest
                 commit on the prompt's main branch.

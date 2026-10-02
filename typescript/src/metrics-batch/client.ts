@@ -13,12 +13,12 @@ export class MetricsBatchClient {
   /**
    * Batch Create Metrics
    *
-   * Creates several GEVAL metrics at once and returns the ones created. Metrics
-   * whose name already exists in the project are skipped. DAG metrics must be
-   * created one at a time.
+   * Creates several `GEVAL` metrics at once and returns the ones created.
+   * Metrics whose name already exists in the project are skipped. `DAG` metrics
+   * must be created one at a time.
    *
    * @param metrics The metrics to create. Names must be unique within the batch
-   *   for the same `multiTurn`, and DAG metrics are not accepted here.
+   *   for the same `multiTurn`, and `DAG` metrics are not accepted here.
    */
   async create(metrics: CreateMetricRequest[]): Promise<MetricList> {
     return this.api.sendRequest<MetricList>(

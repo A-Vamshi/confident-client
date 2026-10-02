@@ -45,8 +45,8 @@ export class GovernancePoliciesOperations extends GovernanceControlsVersionsOper
    *
    * @param name The name of the governance policy, unique within your
    *   organization.
-   * @param description What the policy covers. Omit it, or send null, to leave
-   *   it unset.
+   * @param description What the policy covers. Omit it, or send `null`, to
+   *   leave it unset.
    * @param basePolicyIds The policies this policy extends, whose controls then
    *   also apply to its projects. Omit for a standalone policy. Inheritance is
    *   exactly two levels deep, so every id here must name a policy that extends
@@ -93,16 +93,16 @@ export class GovernancePoliciesOperations extends GovernanceControlsVersionsOper
    * policies extend cannot itself start extending anything, and no id you send
    * may name a policy that already extends another. That check and the write
    * run in one serializable transaction, so a concurrent edit cannot slip a
-   * cycle past a guard that was true a moment earlier; the loser of such a
+   * cycle past a guard that was `true` a moment earlier; the loser of such a
    * collision is rejected and can be retried.
    *
    * @param policyId The id of the governance policy.
    * @param name The name of the governance policy, unique within your
    *   organization.
-   * @param description What the policy covers. Send null to clear it.
+   * @param description What the policy covers. Send `null` to clear it.
    * @param ownerEmail The email address of the organization member who should
    *   own the policy. They must already be a member of this organization. Send
-   *   null to leave the policy unowned.
+   *   `null` to leave the policy unowned.
    * @param basePolicyIds Replaces the full list of policies this policy
    *   extends, so send every id you want kept and an empty array to stop
    *   extending anything. Inheritance is exactly two levels deep: a policy that

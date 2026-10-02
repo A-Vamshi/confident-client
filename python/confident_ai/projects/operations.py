@@ -276,15 +276,18 @@ class ProjectsOperations:
         the project and severs that inheritance — so the project then holds only
         the provider you just sent, and any other provider it relied on has to
         be set again here. This is a write-only surface: there is no read
-        endpoint, and the response returns every credential masked. A provider
-        your organization's model provider policy does not allow cannot have a
-        credential set (`403`), though clearing one is always permitted.
+        endpoint, and the response returns every credential masked. For
+        `BEDROCK` and `AZURE` it writes the provider's default credential and
+        leaves any other credentials stored on the Confident AI platform in
+        place. A provider your organization's model provider policy does not
+        allow cannot have a credential set (`403`), though clearing one is
+        always permitted.
 
         Args:
             project_id: The id of the project, which must belong to the
                 organization your API key is scoped to.
             api_key: The provider's API key, for the API-key providers only.
-                Send the raw secret to set it, or null to clear it; a masked
+                Send the raw secret to set it, or `null` to clear it; a masked
                 value read back from a response is rejected. Sending it for a
                 configuration provider is rejected.
             model_config: The provider's configuration, for the configuration
@@ -292,18 +295,19 @@ class ProjectsOperations:
                 `azureDeploymentName`, `azureApiVersion` and `azureApiKey` for
                 `AZURE`. It replaces the stored configuration wholesale rather
                 than merging into it, so send every key the provider needs; send
-                null to clear it. It must not be empty and must not carry masked
-                values read back from a response. Sending it for an API-key
-                provider is rejected. For `BEDROCK`, always send `regionName`
-                and `modelId`, then authenticate with either `ACCESS_KEYS`
-                (`awsAccessKeyId` and `awsSecretAccessKey`) or, when calling the
-                OpenAI-compatible Mantle API by setting `api` to `MANTLE`, an
-                `authType` of `API_KEY` together with `apiKey`, an optional
-                `apiBase`, and an optional `projectId` (sent as the `OpenAI-
-                Project` header so AWS attributes usage and cost to that Mantle
-                project; letters, numbers, hyphens and underscores only). An API
-                key only works with the Mantle API, and assume-role Bedrock
-                configurations can only be managed on the Confident AI platform.
+                `null` to clear it. It must not be empty and must not carry
+                masked values read back from a response. Sending it for an API-
+                key provider is rejected. For `BEDROCK`, always send
+                `regionName` and `modelId`, then authenticate with either
+                `ACCESS_KEYS` (`awsAccessKeyId` and `awsSecretAccessKey`) or,
+                when calling the OpenAI-compatible Mantle API by setting `api`
+                to `MANTLE`, an `authType` of `API_KEY` together with `apiKey`,
+                an optional `apiBase`, and an optional `projectId` (sent as the
+                `OpenAI-Project` header so AWS attributes usage and cost to that
+                Mantle project; letters, numbers, hyphens and underscores only).
+                An API key only works with the Mantle API, and assume-role
+                Bedrock configurations can only be managed on the Confident AI
+                platform.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -334,15 +338,18 @@ class ProjectsOperations:
         the project and severs that inheritance — so the project then holds only
         the provider you just sent, and any other provider it relied on has to
         be set again here. This is a write-only surface: there is no read
-        endpoint, and the response returns every credential masked. A provider
-        your organization's model provider policy does not allow cannot have a
-        credential set (`403`), though clearing one is always permitted.
+        endpoint, and the response returns every credential masked. For
+        `BEDROCK` and `AZURE` it writes the provider's default credential and
+        leaves any other credentials stored on the Confident AI platform in
+        place. A provider your organization's model provider policy does not
+        allow cannot have a credential set (`403`), though clearing one is
+        always permitted.
 
         Args:
             project_id: The id of the project, which must belong to the
                 organization your API key is scoped to.
             api_key: The provider's API key, for the API-key providers only.
-                Send the raw secret to set it, or null to clear it; a masked
+                Send the raw secret to set it, or `null` to clear it; a masked
                 value read back from a response is rejected. Sending it for a
                 configuration provider is rejected.
             model_config: The provider's configuration, for the configuration
@@ -350,18 +357,19 @@ class ProjectsOperations:
                 `azureDeploymentName`, `azureApiVersion` and `azureApiKey` for
                 `AZURE`. It replaces the stored configuration wholesale rather
                 than merging into it, so send every key the provider needs; send
-                null to clear it. It must not be empty and must not carry masked
-                values read back from a response. Sending it for an API-key
-                provider is rejected. For `BEDROCK`, always send `regionName`
-                and `modelId`, then authenticate with either `ACCESS_KEYS`
-                (`awsAccessKeyId` and `awsSecretAccessKey`) or, when calling the
-                OpenAI-compatible Mantle API by setting `api` to `MANTLE`, an
-                `authType` of `API_KEY` together with `apiKey`, an optional
-                `apiBase`, and an optional `projectId` (sent as the `OpenAI-
-                Project` header so AWS attributes usage and cost to that Mantle
-                project; letters, numbers, hyphens and underscores only). An API
-                key only works with the Mantle API, and assume-role Bedrock
-                configurations can only be managed on the Confident AI platform.
+                `null` to clear it. It must not be empty and must not carry
+                masked values read back from a response. Sending it for an API-
+                key provider is rejected. For `BEDROCK`, always send
+                `regionName` and `modelId`, then authenticate with either
+                `ACCESS_KEYS` (`awsAccessKeyId` and `awsSecretAccessKey`) or,
+                when calling the OpenAI-compatible Mantle API by setting `api`
+                to `MANTLE`, an `authType` of `API_KEY` together with `apiKey`,
+                an optional `apiBase`, and an optional `projectId` (sent as the
+                `OpenAI-Project` header so AWS attributes usage and cost to that
+                Mantle project; letters, numbers, hyphens and underscores only).
+                An API key only works with the Mantle API, and assume-role
+                Bedrock configurations can only be managed on the Confident AI
+                platform.
         """
         return await self._api.a_request(
             HttpMethods.PUT,

@@ -42,7 +42,7 @@ export class TransformersClient {
    * the code against a sample before attaching the transformer to anything.
    *
    * @param name The name of the transformer, unique within the project.
-   * @param description What the transformer extracts. Send null to leave it
+   * @param description What the transformer extracts. Send `null` to leave it
    *   unset.
    */
   async create(
@@ -61,7 +61,7 @@ export class TransformersClient {
    * Get Transformer
    *
    * Retrieves a transformer by id, including the code it runs. A transformer
-   * saved without code returns `codeDefinition` as null.
+   * saved without code returns `codeDefinition` as `null`.
    *
    * @param transformerId The id of the transformer.
    */
@@ -83,7 +83,7 @@ export class TransformersClient {
    *
    * @param transformerId The id of the transformer.
    * @param name The name of the transformer, unique within the project.
-   * @param description What the transformer extracts. Send null to clear it.
+   * @param description What the transformer extracts. Send `null` to clear it.
    */
   async update(
     transformerId: string,

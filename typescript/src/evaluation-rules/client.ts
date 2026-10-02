@@ -56,23 +56,25 @@ export class EvaluationRulesClient {
    *   be multi-turn for `THREAD` rules and single-turn for `TRACE` and `SPAN`
    *   rules.
    * @param enabled Whether the rule evaluates matching items as they arrive.
-   *   Defaults to true.
-   * @param description A note about what the rule checks. Send null to clear
+   *   Defaults to `true`.
+   * @param description A note about what the rule checks. Send `null` to clear
    *   it.
    * @param sampleRate The fraction of matching items to evaluate, between 0 and
-   *   1. Defaults to 1, all of them.
+   *   1. On create it defaults to 1, all of them; omit it on an update to leave
+   *   it unchanged.
    * @param spanType Only evaluate spans of this kind. Allowed only when
    *   `dataModel` is `SPAN`, and cleared automatically if the rule moves off
-   *   `SPAN`. Send null to evaluate every span.
-   * @param filters Only evaluate items matching these filters. Send null to
+   *   `SPAN`. Send `null` to evaluate every span.
+   * @param filters Only evaluate items matching these filters. Send `null` to
    *   evaluate every item the rule's `dataModel` covers.
    * @param threadTimelimit For `THREAD` rules, the seconds of inactivity to
    *   wait before evaluating a thread, so an in-progress conversation is not
    *   scored halfway. The minimum is 120, which leaves time for the last traces
-   *   to be stored. Send null to use the project's thread timelimit, which
+   *   to be stored. Send `null` to use the project's thread timelimit, which
    *   defaults to 300.
    * @param overwriteEvals Re-evaluate items that already have results for this
-   *   metric collection instead of skipping them. Defaults to false.
+   *   metric collection instead of skipping them. Defaults to `false` on
+   *   create; omit it on an update to leave it unchanged.
    */
   async create(
     name: string,
@@ -137,31 +139,33 @@ export class EvaluationRulesClient {
    * Update Evaluation Rule
    *
    * Updates an evaluation rule and returns it. Only the fields you send are
-   * changed; omitting a field leaves it untouched, and sending null clears it.
-   * Constraints are re-checked against the rule the update produces, not just
-   * the fields you sent, so switching a rule to `THREAD` still requires a
+   * changed; omitting a field leaves it untouched, and sending `null` clears
+   * it. Constraints are re-checked against the rule the update produces, not
+   * just the fields you sent, so switching a rule to `THREAD` still requires a
    * multi-turn metric collection.
    *
    * @param evaluationRuleId The id of the evaluation rule.
    * @param name A new name for the rule, unique within the project.
    * @param enabled Whether the rule evaluates matching items as they arrive.
    * @param metricCollectionId The id of a different metric collection to run.
-   * @param description A note about what the rule checks. Send null to clear
+   * @param description A note about what the rule checks. Send `null` to clear
    *   it.
    * @param sampleRate The fraction of matching items to evaluate, between 0 and
-   *   1. Defaults to 1, all of them.
+   *   1. On create it defaults to 1, all of them; omit it on an update to leave
+   *   it unchanged.
    * @param spanType Only evaluate spans of this kind. Allowed only when
    *   `dataModel` is `SPAN`, and cleared automatically if the rule moves off
-   *   `SPAN`. Send null to evaluate every span.
-   * @param filters Only evaluate items matching these filters. Send null to
+   *   `SPAN`. Send `null` to evaluate every span.
+   * @param filters Only evaluate items matching these filters. Send `null` to
    *   evaluate every item the rule's `dataModel` covers.
    * @param threadTimelimit For `THREAD` rules, the seconds of inactivity to
    *   wait before evaluating a thread, so an in-progress conversation is not
    *   scored halfway. The minimum is 120, which leaves time for the last traces
-   *   to be stored. Send null to use the project's thread timelimit, which
+   *   to be stored. Send `null` to use the project's thread timelimit, which
    *   defaults to 300.
    * @param overwriteEvals Re-evaluate items that already have results for this
-   *   metric collection instead of skipping them. Defaults to false.
+   *   metric collection instead of skipping them. Defaults to `false` on
+   *   create; omit it on an update to leave it unchanged.
    */
   async update(
     evaluationRuleId: string,
