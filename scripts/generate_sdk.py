@@ -11,6 +11,7 @@ as it found it.
 
 import argparse
 import os
+import shutil
 import sys
 
 from dataclasses import dataclass, field
@@ -407,6 +408,47 @@ def classify(outputs: Outputs) -> Tuple[List[Path], Outputs]:
     return handwritten, changed
 
 
+NOT_OURS = frozenset(
+    {"node_modules", "dist", "build", "__pycache__", "venv", ".venv"}
+)
+
+
+def orphaned(outputs: Outputs) -> List[Path]:
+    """Generated files this run no longer produces."""
+    written = {path.resolve() for path, _ in outputs}
+    roots = (
+        REPO_ROOT / "python" / PYTHON_PACKAGE,
+        REPO_ROOT / "typescript" / "src",
+    )
+
+    found: List[Path] = []
+    for root in roots:
+        if not root.exists():
+            continue
+        for path in root.rglob("*"):
+            if path.suffix not in (".py", ".ts") or not path.is_file():
+                continue
+            if NOT_OURS.intersection(path.parts) or path.resolve() in written:
+                continue
+            if is_generated(path.read_text()):
+                found.append(path)
+    return sorted(found)
+
+
+def remove(paths: List[Path]) -> None:
+    """Delete each file, and any directory it leaves behind empty."""
+    roots = {REPO_ROOT / "python" / PYTHON_PACKAGE, REPO_ROOT / "typescript" / "src"}
+    for path in paths:
+        path.unlink()
+        directory = path.parent
+        while directory not in roots and directory.is_dir():
+            held = [one for one in directory.iterdir() if one.name != "__pycache__"]
+            if held:
+                break
+            shutil.rmtree(directory)
+            directory = directory.parent
+
+
 def as_boolean(value: str) -> bool:
     if value.lower() in ("true", "false"):
         return value.lower() == "true"
@@ -466,11 +508,18 @@ def main() -> int:
         )
         return 2
 
+    stale = orphaned(generated.outputs)
+
     if arguments.check:
-        if changed:
+        if changed or stale:
             print("Generated files are stale:", file=sys.stderr)
             for path, _ in changed:
                 print(f"  {path.relative_to(REPO_ROOT)}", file=sys.stderr)
+            for path in stale:
+                print(
+                    f"  {path.relative_to(REPO_ROOT)} (no longer generated)",
+                    file=sys.stderr,
+                )
             print(
                 "\nRun `poetry run python ../scripts/generate_sdk.py` from "
                 "python/ and commit the result.",
@@ -486,7 +535,10 @@ def main() -> int:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(content)
         print(f"wrote {path.relative_to(REPO_ROOT)}")
-    if not changed:
+    for path in stale:
+        print(f"deleted {path.relative_to(REPO_ROOT)}")
+    remove(stale)
+    if not changed and not stale:
         print("no changes")
     return 0
 
