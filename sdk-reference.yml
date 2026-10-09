@@ -36154,11 +36154,12 @@ types:
     python: metric_collection_id
     typescript: metricCollectionId
     type:
-      python: str
-      typescript: string
+      python: Optional[str]
+      typescript: string | null
     required: true
-    description: The id of the metric collection the rule runs. Retrieve it from
-      the metric collections endpoint to see the metrics it holds.
+    description: The id of the metric collection the rule runs, or null when the
+      rule runs individual metrics picked in the app. Retrieve it from the metric
+      collections endpoint to see the metrics it holds.
     example: <METRIC-COLLECTION-ID>
     references: []
   - wire: createdAt

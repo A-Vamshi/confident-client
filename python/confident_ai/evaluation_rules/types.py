@@ -48,7 +48,7 @@ class EvaluationRule(ConfidentBaseModel):
     filters: Optional[FilterSet]
     thread_timelimit: Optional[int] = Field(alias="threadTimelimit")
     overwrite_evals: bool = Field(alias="overwriteEvals")
-    metric_collection_id: str = Field(alias="metricCollectionId")
+    metric_collection_id: Optional[str] = Field(alias="metricCollectionId")
     created_at: str = Field(alias="createdAt")
     updated_at: str = Field(alias="updatedAt")
 
