@@ -7,7 +7,12 @@ from typing import List, Optional
 
 from pydantic import Field
 
-from confident_ai.common.types import JevQuestion, MetricEvaluationParam, Rubric
+from confident_ai.common.types import (
+    JevQuestion,
+    MetricEvaluationParam,
+    PromptMetricConfig,
+    Rubric,
+)
 from confident_ai.types import ConfidentBaseModel
 
 
@@ -23,3 +28,7 @@ class UpdateMetricRequest(ConfidentBaseModel):
     )
     rubric: Optional[List[Rubric]] = None
     questions: Optional[List[JevQuestion]] = None
+    prompt_config: Optional[PromptMetricConfig] = Field(
+        default=None,
+        alias="promptConfig",
+    )

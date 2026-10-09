@@ -4,7 +4,7 @@
 # and regenerate.
 
 from enum import Enum
-from typing import List, Optional, Union
+from typing import List, Literal, Optional, Union
 
 from pydantic import Field
 
@@ -68,9 +68,22 @@ class CreatePromptVersionResult(ConfidentBaseModel):
     hash: str
 
 
+class PromptMessageToolCallFunction(ConfidentBaseModel):
+    name: str
+    arguments: str
+
+
+class PromptMessageToolCall(ConfidentBaseModel):
+    id: str
+    type: Literal["function"]
+    function: PromptMessageToolCallFunction
+
+
 class PromptMessage(ConfidentBaseModel):
     role: str
     content: str
+    tool_calls: Optional[List[PromptMessageToolCall]] = None
+    tool_call_id: Optional[str] = None
 
 
 class ModelSettings(ConfidentBaseModel):

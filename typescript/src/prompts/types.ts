@@ -61,9 +61,22 @@ export interface CreatePromptVersionResult {
   hash: string;
 }
 
+export interface PromptMessageToolCallFunction {
+  name: string;
+  arguments: string;
+}
+
+export interface PromptMessageToolCall {
+  id: string;
+  type: "function";
+  function: PromptMessageToolCallFunction;
+}
+
 export interface PromptMessage {
   role: string;
   content: string;
+  tool_calls?: PromptMessageToolCall[];
+  tool_call_id?: string;
 }
 
 export interface ModelSettings {

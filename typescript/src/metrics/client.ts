@@ -12,6 +12,7 @@ import {
   MetricDag,
   MetricEvaluationParam,
   MetricList,
+  PromptMetricConfig,
   Rubric,
 } from "../common/types";
 
@@ -63,6 +64,7 @@ export class MetricsClient {
       algorithm?: MetricAlgorithm;
       dag?: MetricDag;
       questions?: JevQuestion[];
+      promptConfig?: PromptMetricConfig;
     } = {},
   ): Promise<Metric> {
     const {
@@ -74,6 +76,7 @@ export class MetricsClient {
       algorithm,
       dag,
       questions,
+      promptConfig,
     } = options;
     return this.api.sendRequest<Metric>(
       HttpMethods.POST,
@@ -89,6 +92,7 @@ export class MetricsClient {
           algorithm,
           dag,
           questions,
+          promptConfig,
         },
       },
     );
@@ -137,10 +141,17 @@ export class MetricsClient {
       evaluationParams?: MetricEvaluationParam[];
       rubric?: Rubric[];
       questions?: JevQuestion[];
+      promptConfig?: PromptMetricConfig;
     } = {},
   ): Promise<Metric> {
-    const { criteria, evaluationSteps, evaluationParams, rubric, questions } =
-      options;
+    const {
+      criteria,
+      evaluationSteps,
+      evaluationParams,
+      rubric,
+      questions,
+      promptConfig,
+    } = options;
     return this.api.sendRequest<Metric>(
       HttpMethods.PUT,
       Endpoints.METRIC_ENDPOINT,
@@ -151,6 +162,7 @@ export class MetricsClient {
           evaluationParams,
           rubric,
           questions,
+          promptConfig,
         },
         urlParams: { metricId },
       },

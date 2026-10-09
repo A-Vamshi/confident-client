@@ -22,7 +22,7 @@ class AnnotationQueueType(Enum):
     SPAN = "SPAN"
     THREAD = "THREAD"
     GOLDEN = "GOLDEN"
-    TEST_RUN = "TEST_RUN"
+    TEST_CASE = "TEST_CASE"
 
 
 class AssignmentStrategy(Enum):
@@ -108,7 +108,6 @@ class AnnotationQueue(ConfidentBaseModel):
     type: AnnotationQueueType
     created_at: str = Field(alias="createdAt")
     updated_at: str = Field(alias="updatedAt")
-    test_run_id: Optional[str] = Field(alias="testRunId")
     form_id: Optional[str] = Field(alias="formId")
     tags: List[str]
     total_items: int = Field(alias="totalItems")
@@ -127,6 +126,7 @@ class AnnotationQueueItem(ConfidentBaseModel):
     span_uuid: Optional[str] = Field(alias="spanUuid")
     thread_id: Optional[str] = Field(alias="threadId")
     test_case_id: Optional[str] = Field(alias="testCaseId")
+    test_run_id: Optional[str] = Field(alias="testRunId")
     added_at: str = Field(alias="addedAt")
     status: QueueItemStatus
     assigned_to_email: Optional[str] = Field(alias="assignedToEmail")
@@ -145,7 +145,6 @@ class AnnotationQueueSummary(ConfidentBaseModel):
     type: AnnotationQueueType
     created_at: str = Field(alias="createdAt")
     updated_at: str = Field(alias="updatedAt")
-    test_run_id: Optional[str] = Field(alias="testRunId")
     form_id: Optional[str] = Field(alias="formId")
     tags: List[str]
     total_items: int = Field(alias="totalItems")

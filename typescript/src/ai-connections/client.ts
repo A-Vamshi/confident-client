@@ -79,13 +79,17 @@ export class AIConnectionsClient {
    *   configurations. They are not sent to your application. Send `null` to
    *   clear them.
    * @param authentication The authentication configuration Confident AI applies
-   *   when calling your application, such as Auth0, HMAC or Azure AD settings.
-   *   Its shape follows the scheme you configure, and it is stored as sent and
-   *   read back as stored. Send `null` to clear it.
+   *   when calling your application. Set `authType` to `AUTH0`, `HMAC`,
+   *   `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS` or `LIVEKIT` and put that
+   *   scheme's settings in the matching object: `auth0Config`, `hmacConfig`,
+   *   `azureAdConfig`, `oauth2Config` or `livekitConfig`. A value that does not
+   *   match that shape is rejected. Send `null` to clear it.
    * @param cloudProvider The cloud vault configuration Confident AI uses to
-   *   pull credentials at call time instead of holding them itself. Its shape
-   *   follows the provider you configure, and it is stored as sent and read
-   *   back as stored. Send `null` to clear it.
+   *   pull credentials at call time instead of holding them itself. Set
+   *   `enabled`, `provider` to `AZURE_KEY_VAULT`, `vaultUrl` to your vault, and
+   *   `azureCredentials` with the `tenantId`, `clientId` and `clientSecret`
+   *   used to read from it. A value that does not match that shape is rejected.
+   *   Send `null` to clear it.
    * @param actualOutputKeyPath Where your application's answer sits in its
    *   response. Each element is an object key or an array index, walked in
    *   order, so `["choices", 0, "message", "content"]` reads
@@ -335,13 +339,17 @@ export class AIConnectionsClient {
    *   configurations. They are not sent to your application. Send `null` to
    *   clear them.
    * @param authentication The authentication configuration Confident AI applies
-   *   when calling your application, such as Auth0, HMAC or Azure AD settings.
-   *   Its shape follows the scheme you configure, and it is stored as sent and
-   *   read back as stored. Send `null` to clear it.
+   *   when calling your application. Set `authType` to `AUTH0`, `HMAC`,
+   *   `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS` or `LIVEKIT` and put that
+   *   scheme's settings in the matching object: `auth0Config`, `hmacConfig`,
+   *   `azureAdConfig`, `oauth2Config` or `livekitConfig`. A value that does not
+   *   match that shape is rejected. Send `null` to clear it.
    * @param cloudProvider The cloud vault configuration Confident AI uses to
-   *   pull credentials at call time instead of holding them itself. Its shape
-   *   follows the provider you configure, and it is stored as sent and read
-   *   back as stored. Send `null` to clear it.
+   *   pull credentials at call time instead of holding them itself. Set
+   *   `enabled`, `provider` to `AZURE_KEY_VAULT`, `vaultUrl` to your vault, and
+   *   `azureCredentials` with the `tenantId`, `clientId` and `clientSecret`
+   *   used to read from it. A value that does not match that shape is rejected.
+   *   Send `null` to clear it.
    * @param actualOutputKeyPath Where your application's answer sits in its
    *   response. Each element is an object key or an array index, walked in
    *   order, so `["choices", 0, "message", "content"]` reads

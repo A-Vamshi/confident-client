@@ -313,15 +313,18 @@ resources:
         required: false
         keyword: true
         default: None
-        description: The authentication configuration Confident AI applies when calling
-          your application, such as Auth0, HMAC or Azure AD settings. Its shape follows
-          the scheme you configure, and it is stored as sent and read back as stored.
-          Send `null` to clear it.
+        description: 'The authentication configuration Confident AI applies when
+          calling your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`,
+          `OAUTH2_CLIENT_CREDENTIALS` or `LIVEKIT` and put that scheme''s settings
+          in the matching object: `auth0Config`, `hmacConfig`, `azureAdConfig`, `oauth2Config`
+          or `livekitConfig`. A value that does not match that shape is rejected.
+          Send `null` to clear it.'
         example:
-          type: AUTH0
-          domain: acme.us.auth0.com
-          clientId: YOUR-CLIENT-ID
-          clientSecret: YOUR-CLIENT-SECRET
+          authType: HMAC
+          hmacConfig:
+            headerKey: X-Signature
+            signaturePrefix: sha256=
+            secret: YOUR-SIGNING-SECRET
         references: []
       - python: cloud_provider
         typescript: cloudProvider
@@ -334,13 +337,19 @@ resources:
         keyword: true
         default: None
         description: The cloud vault configuration Confident AI uses to pull credentials
-          at call time instead of holding them itself. Its shape follows the provider
-          you configure, and it is stored as sent and read back as stored. Send `null`
-          to clear it.
+          at call time instead of holding them itself. Set `enabled`, `provider`
+          to `AZURE_KEY_VAULT`, `vaultUrl` to your vault, and `azureCredentials`
+          with the `tenantId`, `clientId` and `clientSecret` used to read from it.
+          A value that does not match that shape is rejected. Send `null` to clear
+          it.
         example:
-          provider: AWS
-          region: us-east-1
-          secretName: chatbot/api-key
+          enabled: true
+          provider: AZURE_KEY_VAULT
+          vaultUrl: https://acme-vault.vault.azure.net/
+          azureCredentials:
+            tenantId: YOUR-TENANT-ID
+            clientId: YOUR-CLIENT-ID
+            clientSecret: YOUR-CLIENT-SECRET
         references: []
       - python: actual_output_key_path
         typescript: actualOutputKeyPath
@@ -1018,15 +1027,18 @@ resources:
         required: false
         keyword: true
         default: None
-        description: The authentication configuration Confident AI applies when calling
-          your application, such as Auth0, HMAC or Azure AD settings. Its shape follows
-          the scheme you configure, and it is stored as sent and read back as stored.
-          Send `null` to clear it.
+        description: 'The authentication configuration Confident AI applies when
+          calling your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`,
+          `OAUTH2_CLIENT_CREDENTIALS` or `LIVEKIT` and put that scheme''s settings
+          in the matching object: `auth0Config`, `hmacConfig`, `azureAdConfig`, `oauth2Config`
+          or `livekitConfig`. A value that does not match that shape is rejected.
+          Send `null` to clear it.'
         example:
-          type: AUTH0
-          domain: acme.us.auth0.com
-          clientId: YOUR-CLIENT-ID
-          clientSecret: YOUR-CLIENT-SECRET
+          authType: HMAC
+          hmacConfig:
+            headerKey: X-Signature
+            signaturePrefix: sha256=
+            secret: YOUR-SIGNING-SECRET
         references: []
       - python: cloud_provider
         typescript: cloudProvider
@@ -1039,13 +1051,19 @@ resources:
         keyword: true
         default: None
         description: The cloud vault configuration Confident AI uses to pull credentials
-          at call time instead of holding them itself. Its shape follows the provider
-          you configure, and it is stored as sent and read back as stored. Send `null`
-          to clear it.
+          at call time instead of holding them itself. Set `enabled`, `provider`
+          to `AZURE_KEY_VAULT`, `vaultUrl` to your vault, and `azureCredentials`
+          with the `tenantId`, `clientId` and `clientSecret` used to read from it.
+          A value that does not match that shape is rejected. Send `null` to clear
+          it.
         example:
-          provider: AWS
-          region: us-east-1
-          secretName: chatbot/api-key
+          enabled: true
+          provider: AZURE_KEY_VAULT
+          vaultUrl: https://acme-vault.vault.azure.net/
+          azureCredentials:
+            tenantId: YOUR-TENANT-ID
+            clientId: YOUR-CLIENT-ID
+            clientSecret: YOUR-CLIENT-SECRET
         references: []
       - python: actual_output_key_path
         typescript: actualOutputKeyPath
@@ -1597,15 +1615,14 @@ resources:
         wire: type
         in: query
         type:
-          python: Optional[AnnotationQueueType]
-          typescript: AnnotationQueueType
+          python: Optional[Literal['TRACE', 'SPAN', 'THREAD', 'GOLDEN', 'TEST_CASE']]
+          typescript: '"TRACE" | "SPAN" | "THREAD" | "GOLDEN" | "TEST_CASE"'
         required: false
         keyword: true
         default: None
         description: Returns only queues holding this kind of item.
         example: null
-        references:
-        - AnnotationQueueType
+        references: []
       - python: search_term
         typescript: searchTerm
         wire: searchTerm
@@ -11278,6 +11295,20 @@ resources:
         example: null
         references:
         - JevQuestion
+      - python: prompt_config
+        typescript: promptConfig
+        wire: promptConfig
+        in: body
+        type:
+          python: Optional[PromptMetricConfig]
+          typescript: PromptMetricConfig
+        required: false
+        keyword: true
+        default: None
+        description: null
+        example: null
+        references:
+        - PromptMetricConfig
       order:
         python:
         - name
@@ -11289,6 +11320,7 @@ resources:
         - algorithm
         - dag
         - questions
+        - prompt_config
         typescript:
         - name
         - multiTurn
@@ -11299,6 +11331,7 @@ resources:
         - algorithm
         - dag
         - questions
+        - promptConfig
     - name:
         python: get
         pythonAsync: a_get
@@ -11443,6 +11476,20 @@ resources:
         example: null
         references:
         - JevQuestion
+      - python: prompt_config
+        typescript: promptConfig
+        wire: promptConfig
+        in: body
+        type:
+          python: Optional[PromptMetricConfig]
+          typescript: PromptMetricConfig
+        required: false
+        keyword: true
+        default: None
+        description: null
+        example: null
+        references:
+        - PromptMetricConfig
       order:
         python:
         - metric_id
@@ -11451,6 +11498,7 @@ resources:
         - evaluation_params
         - rubric
         - questions
+        - prompt_config
         typescript:
         - metricId
         - criteria
@@ -11458,6 +11506,7 @@ resources:
         - evaluationParams
         - rubric
         - questions
+        - promptConfig
   handle: null
 - name: metrics-batch
   keyKind: project
@@ -25769,10 +25818,11 @@ types:
     description: The authentication configuration applied when calling your application,
       returned exactly as stored, or `null` when none is configured.
     example:
-      type: AUTH0
-      domain: acme.us.auth0.com
-      clientId: YOUR-CLIENT-ID
-      clientSecret: YOUR-CLIENT-SECRET
+      authType: HMAC
+      hmacConfig:
+        headerKey: X-Signature
+        signaturePrefix: sha256=
+        secret: YOUR-SIGNING-SECRET
     references: []
   - wire: cloudProvider
     python: cloud_provider
@@ -25784,9 +25834,13 @@ types:
     description: The cloud vault configuration used to pull credentials at call time,
       returned exactly as stored, or `null` when none is configured.
     example:
-      provider: AWS
-      region: us-east-1
-      secretName: chatbot/api-key
+      enabled: true
+      provider: AZURE_KEY_VAULT
+      vaultUrl: https://acme-vault.vault.azure.net/
+      azureCredentials:
+        tenantId: YOUR-TENANT-ID
+        clientId: YOUR-CLIENT-ID
+        clientSecret: YOUR-CLIENT-SECRET
     references: []
   - wire: actualOutputKeyPath
     python: actual_output_key_path
@@ -27681,17 +27735,6 @@ types:
     description: When the queue was last changed.
     example: '2025-01-16T09:00:00+00:00'
     references: []
-  - wire: testRunId
-    python: test_run_id
-    typescript: testRunId
-    type:
-      python: Optional[str]
-      typescript: string | null
-    required: true
-    description: The id of the test run this queue reviews, for a queue Confident
-      AI created from a test run. Null for a queue you created.
-    example: null
-    references: []
   - wire: formId
     python: form_id
     typescript: formId
@@ -27846,8 +27889,19 @@ types:
       python: Optional[str]
       typescript: string | null
     required: true
-    description: The id of the test case waiting to be annotated, for a queue Confident
-      AI created from a test run.
+    description: The id of the test case waiting to be annotated, or null for an
+      item of another kind.
+    example: null
+    references: []
+  - wire: testRunId
+    python: test_run_id
+    typescript: testRunId
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: The id of the test run the test case belongs to, or null for an
+      item of another kind.
     example: null
     references: []
   - wire: addedAt
@@ -28077,17 +28131,6 @@ types:
     description: When the queue was last changed.
     example: '2025-01-16T09:00:00+00:00'
     references: []
-  - wire: testRunId
-    python: test_run_id
-    typescript: testRunId
-    type:
-      python: Optional[str]
-      typescript: string | null
-    required: true
-    description: The id of the test run this queue reviews, for a queue Confident
-      AI created from a test run. Null for a queue you created.
-    example: null
-    references: []
   - wire: formId
     python: form_id
     typescript: formId
@@ -28156,8 +28199,9 @@ types:
 - name: AnnotationQueueType
   kind: enum
   description: 'What a queue holds, fixed when it is created: `TRACE`, `SPAN` or
-    `THREAD` queues are filled from your production data, while `GOLDEN` and `TEST_RUN`
-    queues are filled by Confident AI.'
+    `THREAD` queues are filled from your production data, while `GOLDEN` and `TEST_CASE`
+    queues are filled by Confident AI. `TEST_RUN` is still accepted as an input alias
+    for `TEST_CASE`.'
   python:
     module: confident_ai.annotation_queues
     name: AnnotationQueueType
@@ -28173,8 +28217,8 @@ types:
     value: THREAD
   - name: GOLDEN
     value: GOLDEN
-  - name: TEST_RUN
-    value: TEST_RUN
+  - name: TEST_CASE
+    value: TEST_CASE
   references: []
 - name: AnnotationRef
   description: A reference to an annotation by its id.
@@ -30555,15 +30599,17 @@ types:
       python: Optional[Dict[str, Any]]
       typescript: Record<string, unknown> | null
     required: false
-    description: The authentication configuration Confident AI applies when calling
-      your application, such as Auth0, HMAC or Azure AD settings. Its shape follows
-      the scheme you configure, and it is stored as sent and read back as stored.
-      Send `null` to clear it.
+    description: 'The authentication configuration Confident AI applies when calling
+      your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS`
+      or `LIVEKIT` and put that scheme''s settings in the matching object: `auth0Config`,
+      `hmacConfig`, `azureAdConfig`, `oauth2Config` or `livekitConfig`. A value that
+      does not match that shape is rejected. Send `null` to clear it.'
     example:
-      type: AUTH0
-      domain: acme.us.auth0.com
-      clientId: YOUR-CLIENT-ID
-      clientSecret: YOUR-CLIENT-SECRET
+      authType: HMAC
+      hmacConfig:
+        headerKey: X-Signature
+        signaturePrefix: sha256=
+        secret: YOUR-SIGNING-SECRET
     references: []
   - wire: cloudProvider
     python: cloud_provider
@@ -30573,13 +30619,18 @@ types:
       typescript: Record<string, unknown> | null
     required: false
     description: The cloud vault configuration Confident AI uses to pull credentials
-      at call time instead of holding them itself. Its shape follows the provider
-      you configure, and it is stored as sent and read back as stored. Send `null`
-      to clear it.
+      at call time instead of holding them itself. Set `enabled`, `provider` to `AZURE_KEY_VAULT`,
+      `vaultUrl` to your vault, and `azureCredentials` with the `tenantId`, `clientId`
+      and `clientSecret` used to read from it. A value that does not match that shape
+      is rejected. Send `null` to clear it.
     example:
-      provider: AWS
-      region: us-east-1
-      secretName: chatbot/api-key
+      enabled: true
+      provider: AZURE_KEY_VAULT
+      vaultUrl: https://acme-vault.vault.azure.net/
+      azureCredentials:
+        tenantId: YOUR-TENANT-ID
+        clientId: YOUR-CLIENT-ID
+        clientSecret: YOUR-CLIENT-SECRET
     references: []
   - wire: actualOutputKeyPath
     python: actual_output_key_path
@@ -32395,7 +32446,8 @@ types:
 - name: CreateMetricRequest
   description: A metric to create. `GEVAL` metrics need `criteria` or `evaluationSteps`;
     a `DAG` metric needs `algorithm` set to `DAG` and a `dag`; a `JEVAL` metric needs
-    `algorithm` set to `JEVAL` and `questions`.
+    `algorithm` set to `JEVAL` and `questions`; a `PROMPT` metric needs `algorithm`
+    set to `PROMPT` and a `promptConfig`.
   example:
     name: Correctness
     multiTurn: false
@@ -32415,6 +32467,7 @@ types:
   - MetricAlgorithm
   - MetricDag
   - JevQuestion
+  - PromptMetricConfig
   kind: object
   fields:
   - wire: name
@@ -32521,6 +32574,17 @@ types:
     example: null
     references:
     - JevQuestion
+  - wire: promptConfig
+    python: prompt_config
+    typescript: promptConfig
+    type:
+      python: Optional[PromptMetricConfig]
+      typescript: PromptMetricConfig
+    required: false
+    description: null
+    example: null
+    references:
+    - PromptMetricConfig
 - name: CreateMetricsBatchRequest
   description: null
   example: null
@@ -42565,6 +42629,7 @@ types:
   - Rubric
   - MetricDag
   - JevQuestion
+  - PromptMetricConfig
   - MetricEvaluationParam
   kind: object
   fields:
@@ -42656,6 +42721,18 @@ types:
     example: null
     references:
     - JevQuestion
+  - wire: promptConfig
+    python: prompt_config
+    typescript: promptConfig
+    type:
+      python: Optional[PromptMetricConfig]
+      typescript: PromptMetricConfig | null
+    required: true
+    description: This is the judge prompt of a `PROMPT` metric, or `null` for other
+      algorithms.
+    example: null
+    references:
+    - PromptMetricConfig
   - wire: multiTurn
     python: multi_turn
     typescript: multiTurn
@@ -42684,8 +42761,8 @@ types:
   kind: enum
   description: The algorithm the metric is evaluated with. `GEVAL` scores against
     criteria or evaluation steps, `DAG` walks a decision graph, `JEVAL` asks a decision
-    model bounded questions, `CODE` runs your own code, and `DEFAULT` is a built-in
-    metric.
+    model bounded questions, `PROMPT` sends your own judge prompt to the evaluation
+    model, `CODE` runs your own code, and `DEFAULT` is a built-in metric.
   python:
     module: confident_ai.common
     name: MetricAlgorithm
@@ -42703,6 +42780,8 @@ types:
     value: JEVAL
   - name: CODE
     value: CODE
+  - name: PROMPT
+    value: PROMPT
   references: []
 - name: MetricCollection
   description: 'A metric collection: its name, sampling and transformer configuration,
@@ -44199,6 +44278,17 @@ types:
     description: The stored Perplexity API key, masked, or `null` when none is stored.
     example: null
     references: []
+  - wire: zAiApiKey
+    python: z_ai_api_key
+    typescript: zAiApiKey
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: The stored Z.ai API key, masked, or `null` when none is stored.
+      It authenticates GLM models.
+    example: null
+    references: []
   - wire: typeSafeApiKey
     python: type_safe_api_key
     typescript: typeSafeApiKey
@@ -44374,6 +44464,8 @@ types:
     value: TYPE_SAFE
   - name: FAL
     value: FAL
+  - name: Z_AI
+    value: Z_AI
   references: []
 - name: ModelSettings
   description: This is the model settings the prompt was authored for.
@@ -47082,7 +47174,8 @@ types:
   typescript:
     module: confident-ai/prompts
     name: PromptMessage
-  references: []
+  references:
+  - PromptMessageToolCall
   kind: object
   fields:
   - wire: role
@@ -47105,6 +47198,220 @@ types:
     required: true
     description: This is the text content of the message.
     example: Hello, {{name}}! How can I help you today?
+    references: []
+  - wire: tool_calls
+    python: tool_calls
+    typescript: tool_calls
+    type:
+      python: Optional[List[PromptMessageToolCall]]
+      typescript: PromptMessageToolCall[]
+    required: false
+    description: Tool calls made by an assistant message, in the OpenAI chat format.
+    example: null
+    references:
+    - PromptMessageToolCall
+  - wire: tool_call_id
+    python: tool_call_id
+    typescript: tool_call_id
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: For tool messages, the id of the assistant tool call this result
+      answers.
+    example: call_abc123
+    references: []
+- name: PromptMessageToolCall
+  description: null
+  example: null
+  python:
+    module: confident_ai.prompts
+    name: PromptMessageToolCall
+  typescript:
+    module: confident-ai/prompts
+    name: PromptMessageToolCall
+  references: []
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: null
+    example: call_abc123
+    references: []
+  - wire: type
+    python: type
+    typescript: type
+    type:
+      python: Literal["function"]
+      typescript: '"function"'
+    required: true
+    description: null
+    example: null
+    references: []
+  - wire: function
+    python: function
+    typescript: function
+    type:
+      python: PromptMessageToolCallFunction
+      typescript: PromptMessageToolCallFunction
+    required: true
+    description: null
+    example: null
+    references: []
+- name: PromptMessageToolCallFunction
+  description: null
+  example: null
+  python:
+    module: confident_ai.prompts
+    name: PromptMessageToolCallFunction
+  typescript:
+    module: confident-ai/prompts
+    name: PromptMessageToolCallFunction
+  references: []
+  kind: object
+  fields:
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: null
+    example: null
+    references: []
+  - wire: arguments
+    python: arguments
+    typescript: arguments
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: null
+    example: null
+    references: []
+- name: PromptMetricConfig
+  description: The judge prompt of a `PROMPT` metric, and how its variables are filled.
+    The judge scores from 0 to 10 and the score is normalized to 0 to 1.
+  example:
+    messages:
+    - role: system
+      content: You grade support answers.
+    - role: user
+      content: 'QUESTION: {{question}}
+
+        ANSWER: {{answer}}'
+    variables:
+      question:
+        field: input
+        path:
+        - messages
+        - 0
+        - content
+      answer:
+        field: output
+        path:
+        - messages
+        - -1
+        - content
+  python:
+    module: confident_ai.common
+    name: PromptMetricConfig
+  typescript:
+    module: confident-ai/common
+    name: PromptMetricConfig
+  references: []
+  kind: object
+  fields:
+  - wire: messages
+    python: messages
+    typescript: messages
+    type:
+      python: List[PromptMetricConfigMessage]
+      typescript: PromptMetricConfigMessage[]
+    required: true
+    description: The judge prompt, as one or more messages.
+    example: null
+    references: []
+  - wire: variables
+    python: variables
+    typescript: variables
+    type:
+      python: Dict[str, PromptMetricConfigVariables]
+      typescript: Record<string, PromptMetricConfigVariables>
+    required: true
+    description: Maps every `{{name}}` used in the messages to the data it is filled
+      with.
+    example: null
+    references: []
+- name: PromptMetricConfigMessage
+  description: null
+  example: null
+  python:
+    module: confident_ai.common
+    name: PromptMetricConfigMessage
+  typescript:
+    module: confident-ai/common
+    name: PromptMetricConfigMessage
+  references: []
+  kind: object
+  fields:
+  - wire: role
+    python: role
+    typescript: role
+    type:
+      python: Literal["system", "user", "assistant"]
+      typescript: '"system" | "user" | "assistant"'
+    required: true
+    description: null
+    example: null
+    references: []
+  - wire: content
+    python: content
+    typescript: content
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: null
+    example: null
+    references: []
+- name: PromptMetricConfigVariables
+  description: null
+  example: null
+  python:
+    module: confident_ai.common
+    name: PromptMetricConfigVariables
+  typescript:
+    module: confident-ai/common
+    name: PromptMetricConfigVariables
+  references: []
+  kind: object
+  fields:
+  - wire: field
+    python: field
+    typescript: field
+    type:
+      python: Literal["input", "output", "metadata", "tools_called"]
+      typescript: '"input" | "output" | "metadata" | "tools_called"'
+    required: true
+    description: null
+    example: null
+    references: []
+  - wire: path
+    python: path
+    typescript: path
+    type:
+      python: List[Union[str, int]]
+      typescript: (string | number)[]
+    required: true
+    description: null
+    example: null
     references: []
 - name: PromptOutputType
   kind: enum
@@ -58470,15 +58777,17 @@ types:
       python: Optional[Dict[str, Any]]
       typescript: Record<string, unknown> | null
     required: false
-    description: The authentication configuration Confident AI applies when calling
-      your application, such as Auth0, HMAC or Azure AD settings. Its shape follows
-      the scheme you configure, and it is stored as sent and read back as stored.
-      Send `null` to clear it.
+    description: 'The authentication configuration Confident AI applies when calling
+      your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS`
+      or `LIVEKIT` and put that scheme''s settings in the matching object: `auth0Config`,
+      `hmacConfig`, `azureAdConfig`, `oauth2Config` or `livekitConfig`. A value that
+      does not match that shape is rejected. Send `null` to clear it.'
     example:
-      type: AUTH0
-      domain: acme.us.auth0.com
-      clientId: YOUR-CLIENT-ID
-      clientSecret: YOUR-CLIENT-SECRET
+      authType: HMAC
+      hmacConfig:
+        headerKey: X-Signature
+        signaturePrefix: sha256=
+        secret: YOUR-SIGNING-SECRET
     references: []
   - wire: cloudProvider
     python: cloud_provider
@@ -58488,13 +58797,18 @@ types:
       typescript: Record<string, unknown> | null
     required: false
     description: The cloud vault configuration Confident AI uses to pull credentials
-      at call time instead of holding them itself. Its shape follows the provider
-      you configure, and it is stored as sent and read back as stored. Send `null`
-      to clear it.
+      at call time instead of holding them itself. Set `enabled`, `provider` to `AZURE_KEY_VAULT`,
+      `vaultUrl` to your vault, and `azureCredentials` with the `tenantId`, `clientId`
+      and `clientSecret` used to read from it. A value that does not match that shape
+      is rejected. Send `null` to clear it.
     example:
-      provider: AWS
-      region: us-east-1
-      secretName: chatbot/api-key
+      enabled: true
+      provider: AZURE_KEY_VAULT
+      vaultUrl: https://acme-vault.vault.azure.net/
+      azureCredentials:
+        tenantId: YOUR-TENANT-ID
+        clientId: YOUR-CLIENT-ID
+        clientSecret: YOUR-CLIENT-SECRET
     references: []
   - wire: actualOutputKeyPath
     python: actual_output_key_path
@@ -60309,6 +60623,7 @@ types:
   - MetricEvaluationParam
   - Rubric
   - JevQuestion
+  - PromptMetricConfig
   kind: object
   fields:
   - wire: criteria
@@ -60372,6 +60687,17 @@ types:
     example: null
     references:
     - JevQuestion
+  - wire: promptConfig
+    python: prompt_config
+    typescript: promptConfig
+    type:
+      python: Optional[PromptMetricConfig]
+      typescript: PromptMetricConfig
+    required: false
+    description: null
+    example: null
+    references:
+    - PromptMetricConfig
 - name: UpdateModelCostRequest
   description: The model cost as it should read afterwards. This replaces the stored
     record rather than merging into it, so a field you omit is cleared; send at least
@@ -60435,8 +60761,8 @@ types:
 - name: UpdateModelCredentialsRequest
   description: 'The credential to store for one provider. Send exactly one of `apiKey`
     or `modelConfig`, whichever that provider takes: `OPEN_AI`, `ANTHROPIC`, `GEMINI`,
-    `X_AI`, `DEEPSEEK`, `MISTRAL`, `PERPLEXITY`, and `TYPE_SAFE` authenticate with
-    an `apiKey`, while `BEDROCK`, `VERTEX_AI`, `AZURE`, `PORTKEY`, `OPEN_ROUTER`,
+    `X_AI`, `DEEPSEEK`, `MISTRAL`, `PERPLEXITY`, `Z_AI`, and `TYPE_SAFE` authenticate
+    with an `apiKey`, while `BEDROCK`, `VERTEX_AI`, `AZURE`, `PORTKEY`, `OPEN_ROUTER`,
     `TRUE_FOUNDRY`, `LITE_LLM` and `HUGGING_FACE` take a `modelConfig`. Sending both,
     sending neither, or sending the wrong one for the provider is rejected, as is
     a provider that stores no credentials at all, such as `CONFIDENT_AI`.'

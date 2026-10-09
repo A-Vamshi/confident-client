@@ -65,6 +65,7 @@ class MetricAlgorithm(Enum):
     GEVAL = "GEVAL"
     JEVAL = "JEVAL"
     CODE = "CODE"
+    PROMPT = "PROMPT"
 
 
 class MetricEvaluationParam(Enum):
@@ -105,6 +106,7 @@ class ModelProvider(Enum):
     HUGGING_FACE = "HUGGING_FACE"
     TYPE_SAFE = "TYPE_SAFE"
     FAL = "FAL"
+    Z_AI = "Z_AI"
 
 
 class ModelType(Enum):
@@ -406,6 +408,21 @@ class JevChoiceQuestion(ConfidentBaseModel):
 JevQuestion = Union[JevNoulQuestion, JevScoreQuestion, JevChoiceQuestion]
 
 
+class PromptMetricConfigMessage(ConfidentBaseModel):
+    role: Literal["system", "user", "assistant"]
+    content: str
+
+
+class PromptMetricConfigVariables(ConfidentBaseModel):
+    field: Literal["input", "output", "metadata", "tools_called"]
+    path: List[Union[str, int]]
+
+
+class PromptMetricConfig(ConfidentBaseModel):
+    messages: List[PromptMetricConfigMessage]
+    variables: Dict[str, PromptMetricConfigVariables]
+
+
 class CreateMetricRequest(ConfidentBaseModel):
     name: str
     multi_turn: Optional[bool] = Field(default=None, alias="multiTurn")
@@ -422,6 +439,10 @@ class CreateMetricRequest(ConfidentBaseModel):
     algorithm: Optional[MetricAlgorithm] = None
     dag: Optional[MetricDag] = None
     questions: Optional[List[JevQuestion]] = None
+    prompt_config: Optional[PromptMetricConfig] = Field(
+        default=None,
+        alias="promptConfig",
+    )
 
 
 class CreateOrUpdatePolicyRequest(ConfidentBaseModel):
@@ -735,6 +756,7 @@ class Metric(ConfidentBaseModel):
     rubric: Optional[List[Rubric]]
     dag: Optional[MetricDag]
     questions: Optional[List[JevQuestion]]
+    prompt_config: Optional[PromptMetricConfig] = Field(alias="promptConfig")
     multi_turn: bool = Field(alias="multiTurn")
     required_parameters: List[MetricEvaluationParam] = Field(
         alias="requiredParameters",
@@ -790,6 +812,7 @@ class ModelCredentials(ConfidentBaseModel):
     deep_seek_api_key: Optional[str] = Field(alias="deepSeekApiKey")
     mistral_api_key: Optional[str] = Field(alias="mistralApiKey")
     perplexity_api_key: Optional[str] = Field(alias="perplexityApiKey")
+    z_ai_api_key: Optional[str] = Field(alias="zAiApiKey")
     type_safe_api_key: Optional[str] = Field(alias="typeSafeApiKey")
     fal_api_key: Optional[str] = Field(alias="falApiKey")
     bedrock_model_config: Optional[Dict[str, Any]] = Field(

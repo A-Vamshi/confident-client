@@ -57,6 +57,7 @@ export enum MetricAlgorithm {
   GEVAL = "GEVAL",
   JEVAL = "JEVAL",
   CODE = "CODE",
+  PROMPT = "PROMPT",
 }
 
 export enum MetricEvaluationParam {
@@ -97,6 +98,7 @@ export enum ModelProvider {
   HUGGING_FACE = "HUGGING_FACE",
   TYPE_SAFE = "TYPE_SAFE",
   FAL = "FAL",
+  Z_AI = "Z_AI",
 }
 
 export enum ModelType {
@@ -389,6 +391,21 @@ export interface JevChoiceQuestion {
 export type JevQuestion =
   JevNoulQuestion | JevScoreQuestion | JevChoiceQuestion;
 
+export interface PromptMetricConfigMessage {
+  role: "system" | "user" | "assistant";
+  content: string;
+}
+
+export interface PromptMetricConfigVariables {
+  field: "input" | "output" | "metadata" | "tools_called";
+  path: (string | number)[];
+}
+
+export interface PromptMetricConfig {
+  messages: PromptMetricConfigMessage[];
+  variables: Record<string, PromptMetricConfigVariables>;
+}
+
 export interface CreateMetricRequest {
   name: string;
   multiTurn?: boolean;
@@ -399,6 +416,7 @@ export interface CreateMetricRequest {
   algorithm?: MetricAlgorithm;
   dag?: MetricDag;
   questions?: JevQuestion[];
+  promptConfig?: PromptMetricConfig;
 }
 
 export interface CreateOrUpdatePolicyRequest {
@@ -693,6 +711,7 @@ export interface Metric {
   rubric: Rubric[] | null;
   dag: MetricDag | null;
   questions: JevQuestion[] | null;
+  promptConfig: PromptMetricConfig | null;
   multiTurn: boolean;
   requiredParameters: MetricEvaluationParam[];
 }
@@ -746,6 +765,7 @@ export interface ModelCredentials {
   deepSeekApiKey: string | null;
   mistralApiKey: string | null;
   perplexityApiKey: string | null;
+  zAiApiKey: string | null;
   typeSafeApiKey: string | null;
   falApiKey: string | null;
   bedrockModelConfig: Record<string, unknown> | null;

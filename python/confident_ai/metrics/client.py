@@ -14,6 +14,7 @@ from confident_ai.common.types import (
     MetricDag,
     MetricEvaluationParam,
     MetricList,
+    PromptMetricConfig,
     Rubric,
 )
 from confident_ai.endpoints import Endpoints
@@ -57,7 +58,8 @@ class MetricsClient:
         rubric: Optional[List[Rubric]] = None,
         algorithm: Optional[MetricAlgorithm] = None,
         dag: Optional[MetricDag] = None,
-        questions: Optional[List[JevQuestion]] = None
+        questions: Optional[List[JevQuestion]] = None,
+        prompt_config: Optional[PromptMetricConfig] = None
     ) -> Metric:
         """Create Metric
 
@@ -96,6 +98,7 @@ class MetricsClient:
                 "algorithm": algorithm,
                 "dag": dag,
                 "questions": questions,
+                "promptConfig": prompt_config,
             },
         )
 
@@ -110,7 +113,8 @@ class MetricsClient:
         rubric: Optional[List[Rubric]] = None,
         algorithm: Optional[MetricAlgorithm] = None,
         dag: Optional[MetricDag] = None,
-        questions: Optional[List[JevQuestion]] = None
+        questions: Optional[List[JevQuestion]] = None,
+        prompt_config: Optional[PromptMetricConfig] = None
     ) -> Metric:
         """Create Metric
 
@@ -149,6 +153,7 @@ class MetricsClient:
                 "algorithm": algorithm,
                 "dag": dag,
                 "questions": questions,
+                "promptConfig": prompt_config,
             },
         )
 
@@ -194,7 +199,8 @@ class MetricsClient:
         evaluation_steps: Optional[List[str]] = None,
         evaluation_params: Optional[List[MetricEvaluationParam]] = None,
         rubric: Optional[List[Rubric]] = None,
-        questions: Optional[List[JevQuestion]] = None
+        questions: Optional[List[JevQuestion]] = None,
+        prompt_config: Optional[PromptMetricConfig] = None
     ) -> Metric:
         """Update Metric
 
@@ -225,6 +231,7 @@ class MetricsClient:
                 "evaluationParams": evaluation_params,
                 "rubric": rubric,
                 "questions": questions,
+                "promptConfig": prompt_config,
             },
             path={"metricId": metric_id},
         )
@@ -237,7 +244,8 @@ class MetricsClient:
         evaluation_steps: Optional[List[str]] = None,
         evaluation_params: Optional[List[MetricEvaluationParam]] = None,
         rubric: Optional[List[Rubric]] = None,
-        questions: Optional[List[JevQuestion]] = None
+        questions: Optional[List[JevQuestion]] = None,
+        prompt_config: Optional[PromptMetricConfig] = None
     ) -> Metric:
         """Update Metric
 
@@ -268,6 +276,7 @@ class MetricsClient:
                 "evaluationParams": evaluation_params,
                 "rubric": rubric,
                 "questions": questions,
+                "promptConfig": prompt_config,
             },
             path={"metricId": metric_id},
         )
