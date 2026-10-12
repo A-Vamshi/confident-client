@@ -35285,7 +35285,7 @@ types:
     references:
     - ToolMode
   - wire: schema
-    python: schema
+    python: schema_
     typescript: schema
     type:
       python: Dict[str, Any]
@@ -50855,7 +50855,7 @@ types:
     references:
     - ToolMode
   - wire: schema
-    python: schema
+    python: schema_
     typescript: schema
     type:
       python: Optional[Dict[str, Any]]
@@ -56237,7 +56237,7 @@ types:
     example: ANALYTICS
     references: []
   - wire: schema
-    python: schema
+    python: schema_
     typescript: schema
     type:
       python: str
@@ -56341,7 +56341,7 @@ types:
     example: ANALYTICS
     references: []
   - wire: schema
-    python: schema
+    python: schema_
     typescript: schema
     type:
       python: str
@@ -59713,7 +59713,7 @@ types:
     example: 00.00.01
     references: []
   - wire: schema
-    python: schema
+    python: schema_
     typescript: schema
     type:
       python: Dict[str, Any]
@@ -60230,7 +60230,7 @@ types:
     references:
     - ToolMode
   - wire: schema
-    python: schema
+    python: schema_
     typescript: schema
     type:
       python: Dict[str, Any]
@@ -64931,7 +64931,7 @@ types:
     example: ANALYTICS
     references: []
   - wire: schema
-    python: schema
+    python: schema_
     typescript: schema
     type:
       python: Optional[str]
@@ -65015,7 +65015,7 @@ types:
     references:
     - ToolMode
   - wire: schema
-    python: schema
+    python: schema_
     typescript: schema
     type:
       python: Optional[Dict[str, Any]]

@@ -970,7 +970,7 @@ class Tool(ConfidentBaseModel):
     description: Optional[str]
     mode: ToolMode
     version: str
-    schema: Dict[str, Any]
+    schema_: Dict[str, Any] = Field(alias="schema")
 
 
 class Trace(ConfidentBaseModel):

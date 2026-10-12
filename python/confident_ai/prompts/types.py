@@ -191,7 +191,7 @@ class PushTool(ConfidentBaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     mode: Optional[ToolMode] = None
-    schema: Optional[Dict[str, Any]] = None
+    schema_: Optional[Dict[str, Any]] = Field(default=None, alias="schema")
 
 
 class PushMessagesPrompt(ConfidentBaseModel):

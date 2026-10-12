@@ -15,7 +15,7 @@ class CreateToolRequest(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     mode: ToolMode
-    schema: Dict[str, Any]
+    schema_: Dict[str, Any] = Field(alias="schema")
 
 
 class ToolSummary(ConfidentBaseModel):
@@ -38,7 +38,7 @@ class ToolRef(ConfidentBaseModel):
 class ToolVersion(ConfidentBaseModel):
     version: str
     mode: ToolMode
-    schema: Dict[str, Any]
+    schema_: Dict[str, Any] = Field(alias="schema")
     created_at: str = Field(alias="createdAt")
 
 
@@ -53,4 +53,4 @@ class UpdateToolRequest(ConfidentBaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     mode: Optional[ToolMode] = None
-    schema: Optional[Dict[str, Any]] = None
+    schema_: Optional[Dict[str, Any]] = Field(default=None, alias="schema")
