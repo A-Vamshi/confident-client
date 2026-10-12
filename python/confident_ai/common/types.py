@@ -39,6 +39,7 @@ class EvaluationErrorType(Enum):
 class GenerationMode(Enum):
     AI_CONNECTION = "AI_CONNECTION"
     PROMPT = "PROMPT"
+    VOICE_CONNECTION = "VOICE_CONNECTION"
 
 
 class IngestionDataModel(Enum):
@@ -151,6 +152,12 @@ class ToolCallType(Enum):
     MCP = "MCP"
 
 
+class ToolMode(Enum):
+    ALLOW_ADDITIONAL = "ALLOW_ADDITIONAL"
+    NO_ADDITIONAL = "NO_ADDITIONAL"
+    STRICT = "STRICT"
+
+
 class TraceSpanStatus(Enum):
     SUCCESS = "SUCCESS"
     ERRORED = "ERRORED"
@@ -238,7 +245,9 @@ class WidgetDimension(Enum):
     CLASSIFIER = "classifier"
     POLARITY = "polarity"
     CLASSIFIER_LABEL = "classifier_label"
+    CLASSIFIER_VERSION = "classifier_version"
     VERSION = "version"
+    METRIC_VERSION = "metric_version"
     VALUE = "value"
     FAILURE_SUB_MODE = "failure_sub_mode"
 
@@ -570,8 +579,10 @@ class FilterSetGroupFilter(ConfidentBaseModel):
         "Annotation Text",
         "Metric Score",
         "Metric Status",
+        "Metric Version",
         "Metadata",
         "Classifier",
+        "Classifier Version",
         "Metric",
         "Metric Name",
         "Trace Count",
@@ -951,6 +962,15 @@ class Span(ConfidentBaseModel):
     expected_tools: Optional[List[ToolCall]] = Field(alias="expectedTools")
     metrics_data: List[MetricData] = Field(alias="metricsData")
     annotations: List[AnnotationSummary]
+
+
+class Tool(ConfidentBaseModel):
+    id: str
+    name: str
+    description: Optional[str]
+    mode: ToolMode
+    version: str
+    schema: Dict[str, Any]
 
 
 class Trace(ConfidentBaseModel):

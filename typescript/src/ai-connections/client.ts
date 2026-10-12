@@ -80,10 +80,10 @@ export class AIConnectionsClient {
    *   clear them.
    * @param authentication The authentication configuration Confident AI applies
    *   when calling your application. Set `authType` to `AUTH0`, `HMAC`,
-   *   `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS` or `LIVEKIT` and put that
-   *   scheme's settings in the matching object: `auth0Config`, `hmacConfig`,
-   *   `azureAdConfig`, `oauth2Config` or `livekitConfig`. A value that does not
-   *   match that shape is rejected. Send `null` to clear it.
+   *   `AZURE_AD` or `OAUTH2_CLIENT_CREDENTIALS` and put that scheme's settings
+   *   in the matching object: `auth0Config`, `hmacConfig`, `azureAdConfig` or
+   *   `oauth2Config`. A value that does not match that shape is rejected. Send
+   *   `null` to clear it.
    * @param cloudProvider The cloud vault configuration Confident AI uses to
    *   pull credentials at call time instead of holding them itself. Set
    *   `enabled`, `provider` to `AZURE_KEY_VAULT`, `vaultUrl` to your vault, and
@@ -108,6 +108,11 @@ export class AIConnectionsClient {
    *   response, walked the same way as `actualOutputKeyPath`. Confident AI
    *   reads it after each simulated turn and sends it back on the next one.
    *   Send `null` or an empty list to clear it.
+   * @param metadataKeyPath Where an object of metadata sits in your
+   *   application's response, walked the same way as `actualOutputKeyPath`. Its
+   *   keys are written onto the generated test case's metadata, merged over the
+   *   golden's own metadata unless `mergeMetadata` is `false`. Send `null` or
+   *   an empty list to clear it.
    * @param inputTokenCountKeyPath Where the prompt token count sits in your
    *   application's response, walked the same way as `actualOutputKeyPath`.
    *   Send `null` or an empty list to clear it.
@@ -130,10 +135,16 @@ export class AIConnectionsClient {
    * @param stateEvent For a streaming `responseMode`, the name of the event
    *   carrying the conversation state, read the same way as
    *   `actualOutputEvent`. Send `null` to clear it.
+   * @param metadataEvent For a streaming `responseMode`, the name of the event
+   *   carrying the metadata, read the same way as `actualOutputEvent`. Send
+   *   `null` to clear it.
    * @param actualOutputAccumulate For a streaming `responseMode`, whether the
    *   chunks arriving on `actualOutputEvent` are joined into one answer. Set it
    *   to `false` when each event already carries the whole answer and only the
    *   last one counts.
+   * @param mergeMetadata Whether the extracted metadata is merged over the
+   *   golden's metadata, with the response winning on shared keys (`true`, the
+   *   default), or replaces it outright (`false`).
    * @param actualOutputTransformerId The id of a transformer that extracts the
    *   answer by running your code over the response, for shapes a key path
    *   cannot reach. Send this or `actualOutputKeyPath`, never both. The
@@ -146,6 +157,9 @@ export class AIConnectionsClient {
    *   to clear it.
    * @param stateTransformerId The id of a transformer that extracts the
    *   conversation state. Send this or `stateKeyPath`, never both. Send `null`
+   *   to clear it.
+   * @param metadataTransformerId The id of a transformer that extracts the
+   *   metadata object. Send this or `metadataKeyPath`, never both. Send `null`
    *   to clear it.
    * @param inputTokenCountTransformerId The id of a transformer that extracts
    *   the prompt token count. Send this or `inputTokenCountKeyPath`, never
@@ -181,6 +195,7 @@ export class AIConnectionsClient {
       retrievalContextKeyPath?: (string | number)[] | null;
       toolsCalledKeyPath?: (string | number)[] | null;
       stateKeyPath?: (string | number)[] | null;
+      metadataKeyPath?: (string | number)[] | null;
       inputTokenCountKeyPath?: (string | number)[] | null;
       outputTokenCountKeyPath?: (string | number)[] | null;
       tokenCostKeyPath?: (string | number)[] | null;
@@ -188,11 +203,14 @@ export class AIConnectionsClient {
       retrievalContextEvent?: string | null;
       toolsCalledEvent?: string | null;
       stateEvent?: string | null;
+      metadataEvent?: string | null;
       actualOutputAccumulate?: boolean;
+      mergeMetadata?: boolean;
       actualOutputTransformerId?: string | null;
       retrievalContextTransformerId?: string | null;
       toolsCalledTransformerId?: string | null;
       stateTransformerId?: string | null;
+      metadataTransformerId?: string | null;
       inputTokenCountTransformerId?: string | null;
       outputTokenCountTransformerId?: string | null;
       tokenCostTransformerId?: string | null;
@@ -218,6 +236,7 @@ export class AIConnectionsClient {
       retrievalContextKeyPath,
       toolsCalledKeyPath,
       stateKeyPath,
+      metadataKeyPath,
       inputTokenCountKeyPath,
       outputTokenCountKeyPath,
       tokenCostKeyPath,
@@ -225,11 +244,14 @@ export class AIConnectionsClient {
       retrievalContextEvent,
       toolsCalledEvent,
       stateEvent,
+      metadataEvent,
       actualOutputAccumulate,
+      mergeMetadata,
       actualOutputTransformerId,
       retrievalContextTransformerId,
       toolsCalledTransformerId,
       stateTransformerId,
+      metadataTransformerId,
       inputTokenCountTransformerId,
       outputTokenCountTransformerId,
       tokenCostTransformerId,
@@ -259,6 +281,7 @@ export class AIConnectionsClient {
           retrievalContextKeyPath,
           toolsCalledKeyPath,
           stateKeyPath,
+          metadataKeyPath,
           inputTokenCountKeyPath,
           outputTokenCountKeyPath,
           tokenCostKeyPath,
@@ -266,11 +289,14 @@ export class AIConnectionsClient {
           retrievalContextEvent,
           toolsCalledEvent,
           stateEvent,
+          metadataEvent,
           actualOutputAccumulate,
+          mergeMetadata,
           actualOutputTransformerId,
           retrievalContextTransformerId,
           toolsCalledTransformerId,
           stateTransformerId,
+          metadataTransformerId,
           inputTokenCountTransformerId,
           outputTokenCountTransformerId,
           tokenCostTransformerId,
@@ -340,10 +366,10 @@ export class AIConnectionsClient {
    *   clear them.
    * @param authentication The authentication configuration Confident AI applies
    *   when calling your application. Set `authType` to `AUTH0`, `HMAC`,
-   *   `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS` or `LIVEKIT` and put that
-   *   scheme's settings in the matching object: `auth0Config`, `hmacConfig`,
-   *   `azureAdConfig`, `oauth2Config` or `livekitConfig`. A value that does not
-   *   match that shape is rejected. Send `null` to clear it.
+   *   `AZURE_AD` or `OAUTH2_CLIENT_CREDENTIALS` and put that scheme's settings
+   *   in the matching object: `auth0Config`, `hmacConfig`, `azureAdConfig` or
+   *   `oauth2Config`. A value that does not match that shape is rejected. Send
+   *   `null` to clear it.
    * @param cloudProvider The cloud vault configuration Confident AI uses to
    *   pull credentials at call time instead of holding them itself. Set
    *   `enabled`, `provider` to `AZURE_KEY_VAULT`, `vaultUrl` to your vault, and
@@ -368,6 +394,11 @@ export class AIConnectionsClient {
    *   response, walked the same way as `actualOutputKeyPath`. Confident AI
    *   reads it after each simulated turn and sends it back on the next one.
    *   Send `null` or an empty list to clear it.
+   * @param metadataKeyPath Where an object of metadata sits in your
+   *   application's response, walked the same way as `actualOutputKeyPath`. Its
+   *   keys are written onto the generated test case's metadata, merged over the
+   *   golden's own metadata unless `mergeMetadata` is `false`. Send `null` or
+   *   an empty list to clear it.
    * @param inputTokenCountKeyPath Where the prompt token count sits in your
    *   application's response, walked the same way as `actualOutputKeyPath`.
    *   Send `null` or an empty list to clear it.
@@ -390,10 +421,16 @@ export class AIConnectionsClient {
    * @param stateEvent For a streaming `responseMode`, the name of the event
    *   carrying the conversation state, read the same way as
    *   `actualOutputEvent`. Send `null` to clear it.
+   * @param metadataEvent For a streaming `responseMode`, the name of the event
+   *   carrying the metadata, read the same way as `actualOutputEvent`. Send
+   *   `null` to clear it.
    * @param actualOutputAccumulate For a streaming `responseMode`, whether the
    *   chunks arriving on `actualOutputEvent` are joined into one answer. Set it
    *   to `false` when each event already carries the whole answer and only the
    *   last one counts.
+   * @param mergeMetadata Whether the extracted metadata is merged over the
+   *   golden's metadata, with the response winning on shared keys (`true`, the
+   *   default), or replaces it outright (`false`).
    * @param actualOutputTransformerId The id of a transformer that extracts the
    *   answer by running your code over the response, for shapes a key path
    *   cannot reach. Send this or `actualOutputKeyPath`, never both. The
@@ -406,6 +443,9 @@ export class AIConnectionsClient {
    *   to clear it.
    * @param stateTransformerId The id of a transformer that extracts the
    *   conversation state. Send this or `stateKeyPath`, never both. Send `null`
+   *   to clear it.
+   * @param metadataTransformerId The id of a transformer that extracts the
+   *   metadata object. Send this or `metadataKeyPath`, never both. Send `null`
    *   to clear it.
    * @param inputTokenCountTransformerId The id of a transformer that extracts
    *   the prompt token count. Send this or `inputTokenCountKeyPath`, never
@@ -442,6 +482,7 @@ export class AIConnectionsClient {
       retrievalContextKeyPath?: (string | number)[] | null;
       toolsCalledKeyPath?: (string | number)[] | null;
       stateKeyPath?: (string | number)[] | null;
+      metadataKeyPath?: (string | number)[] | null;
       inputTokenCountKeyPath?: (string | number)[] | null;
       outputTokenCountKeyPath?: (string | number)[] | null;
       tokenCostKeyPath?: (string | number)[] | null;
@@ -449,11 +490,14 @@ export class AIConnectionsClient {
       retrievalContextEvent?: string | null;
       toolsCalledEvent?: string | null;
       stateEvent?: string | null;
+      metadataEvent?: string | null;
       actualOutputAccumulate?: boolean;
+      mergeMetadata?: boolean;
       actualOutputTransformerId?: string | null;
       retrievalContextTransformerId?: string | null;
       toolsCalledTransformerId?: string | null;
       stateTransformerId?: string | null;
+      metadataTransformerId?: string | null;
       inputTokenCountTransformerId?: string | null;
       outputTokenCountTransformerId?: string | null;
       tokenCostTransformerId?: string | null;
@@ -480,6 +524,7 @@ export class AIConnectionsClient {
       retrievalContextKeyPath,
       toolsCalledKeyPath,
       stateKeyPath,
+      metadataKeyPath,
       inputTokenCountKeyPath,
       outputTokenCountKeyPath,
       tokenCostKeyPath,
@@ -487,11 +532,14 @@ export class AIConnectionsClient {
       retrievalContextEvent,
       toolsCalledEvent,
       stateEvent,
+      metadataEvent,
       actualOutputAccumulate,
+      mergeMetadata,
       actualOutputTransformerId,
       retrievalContextTransformerId,
       toolsCalledTransformerId,
       stateTransformerId,
+      metadataTransformerId,
       inputTokenCountTransformerId,
       outputTokenCountTransformerId,
       tokenCostTransformerId,
@@ -521,6 +569,7 @@ export class AIConnectionsClient {
           retrievalContextKeyPath,
           toolsCalledKeyPath,
           stateKeyPath,
+          metadataKeyPath,
           inputTokenCountKeyPath,
           outputTokenCountKeyPath,
           tokenCostKeyPath,
@@ -528,11 +577,14 @@ export class AIConnectionsClient {
           retrievalContextEvent,
           toolsCalledEvent,
           stateEvent,
+          metadataEvent,
           actualOutputAccumulate,
+          mergeMetadata,
           actualOutputTransformerId,
           retrievalContextTransformerId,
           toolsCalledTransformerId,
           stateTransformerId,
+          metadataTransformerId,
           inputTokenCountTransformerId,
           outputTokenCountTransformerId,
           tokenCostTransformerId,

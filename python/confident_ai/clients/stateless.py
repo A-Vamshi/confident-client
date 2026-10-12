@@ -40,8 +40,10 @@ if TYPE_CHECKING:
     from confident_ai.spans.client import SpansClient
     from confident_ai.test_runs.client import TestRunsClient
     from confident_ai.threads.client import ThreadsClient
+    from confident_ai.tools.client import ToolsClient
     from confident_ai.traces.client import TracesClient
     from confident_ai.transformers.client import TransformersClient
+    from confident_ai.voice_connections.client import VoiceConnectionsClient
     from confident_ai.vulnerabilities.client import VulnerabilitiesClient
     from confident_ai.widgets.client import WidgetsClient
 
@@ -237,6 +239,12 @@ class StatelessClients:
         return ThreadsClient(self._api(ApiKeyKind.PROJECT))
 
     @property
+    def tools(self) -> "ToolsClient":
+        from confident_ai.tools.client import ToolsClient
+
+        return ToolsClient(self._api(ApiKeyKind.PROJECT))
+
+    @property
     def traces(self) -> "TracesClient":
         from confident_ai.traces.client import TracesClient
 
@@ -247,6 +255,12 @@ class StatelessClients:
         from confident_ai.transformers.client import TransformersClient
 
         return TransformersClient(self._api(ApiKeyKind.PROJECT))
+
+    @property
+    def voice_connections(self) -> "VoiceConnectionsClient":
+        from confident_ai.voice_connections.client import VoiceConnectionsClient
+
+        return VoiceConnectionsClient(self._api(ApiKeyKind.PROJECT))
 
     @property
     def vulnerabilities(self) -> "VulnerabilitiesClient":

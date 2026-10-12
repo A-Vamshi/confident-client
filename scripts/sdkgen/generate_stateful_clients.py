@@ -457,28 +457,46 @@ class Handle:
             - set(properties_of(sends, self.schemas))
         )
 
-    def held_value(self, field: str, target: Optional[str]) -> str:
-        """How one held field is read into a body."""
+    def held_value(
+        self, field: str, target: Optional[str], optional: bool
+    ) -> str:
+        """How one held field is read into a body.
+
+        A field the body can omit may be unset on the handle, so its conversion
+        passes None through. A required one is checked for None beforehand.
+        """
         held = f"self.{snake_case(field)}"
         if target is None:
             return held
         carried = self.component_of(self.name, field)
         converter = self.converter(carried, target)
         if not self.holds_many(self.name, field):
-            return f"self.{converter}({held})"
-        item = snake_case(singular(field))
-        return f"[self.{converter}({item}) for {item} in {held}]"
+            converted = f"self.{converter}({held})"
+        else:
+            item = snake_case(singular(field))
+            converted = f"[self.{converter}({item}) for {item} in {held}]"
+        return (
+            f"None if {held} is None else {converted}"
+            if optional
+            else converted
+        )
 
-    def ts_held_value(self, field: str, target: Optional[str]) -> str:
+    def ts_held_value(
+        self, field: str, target: Optional[str], optional: bool
+    ) -> str:
         held = f"this.{camel_case(field)}"
         if target is None:
             return held
         carried = self.component_of(self.name, field)
         converter = camel_case(self.converter(carried, target))
         if not self.holds_many(self.name, field):
-            return f"this.{converter}({held})"
+            converted = f"this.{converter}({held})"
+            if not optional:
+                return converted
+            return f"{held} === undefined ? undefined : {converted}"
         item = camel_case(singular(field))
-        return f"{held}.map(({item}) => this.{converter}({item}))"
+        access = "?." if optional else "."
+        return f"{held}{access}map(({item}) => this.{converter}({item}))"
 
     def call_param_types(
         self, sends: str, arguments: Sequence[str]
@@ -1298,7 +1316,11 @@ class Handle:
         assigned = ", ".join(
             [
                 f'"{snake_case(field)}": '
-                + self.held_value(field, self.sent_shape(field, sends, convert))
+                + self.held_value(
+                    field,
+                    self.sent_shape(field, sends, convert),
+                    field not in required,
+                )
                 for field in shared
             ]
             + [f'"{snake_case(field)}": {field}' for field in arguments]
@@ -1389,7 +1411,9 @@ class Handle:
                 ts_key(
                     field,
                     self.ts_held_value(
-                        field, self.sent_shape(field, sends, convert)
+                        field,
+                        self.sent_shape(field, sends, convert),
+                        field not in required,
                     ),
                 )
                 for field in shared

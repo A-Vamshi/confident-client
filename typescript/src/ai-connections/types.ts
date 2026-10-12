@@ -13,9 +13,6 @@ export enum AIConnectionResponseMode {
   SSE_STREAMING = "SSE_STREAMING",
   HTTP_STREAMING = "HTTP_STREAMING",
   WEBSOCKET = "WEBSOCKET",
-  PHONE = "PHONE",
-  SIP = "SIP",
-  WEBRTC = "WEBRTC",
 }
 
 export enum AIConnectionType {
@@ -78,6 +75,7 @@ export interface AIConnection {
   retrievalContextKeyPath: (string | number)[];
   toolsCalledKeyPath: (string | number)[];
   stateKeyPath: (string | number)[];
+  metadataKeyPath: (string | number)[];
   inputTokenCountKeyPath: (string | number)[];
   outputTokenCountKeyPath: (string | number)[];
   tokenCostKeyPath: (string | number)[];
@@ -85,6 +83,7 @@ export interface AIConnection {
   retrievalContextTransformerId: string | null;
   toolsCalledTransformerId: string | null;
   stateTransformerId: string | null;
+  metadataTransformerId: string | null;
   inputTokenCountTransformerId: string | null;
   outputTokenCountTransformerId: string | null;
   tokenCostTransformerId: string | null;
@@ -92,7 +91,9 @@ export interface AIConnection {
   retrievalContextEvent: string | null;
   toolsCalledEvent: string | null;
   stateEvent: string | null;
+  metadataEvent: string | null;
   actualOutputAccumulate: boolean;
+  mergeMetadata: boolean;
   prompts: Record<string, AIConnectionPromptRef> | null;
 }
 
@@ -122,6 +123,7 @@ export interface AIConnectionPingResult {
   retrievalContext: string[] | null;
   toolsCalled: Record<string, unknown>[] | null;
   state: Record<string, unknown> | null;
+  metadata: Record<string, unknown> | null;
   inputTokenCount: number | null;
   outputTokenCount: number | null;
   tokenCost: number | null;
@@ -129,6 +131,7 @@ export interface AIConnectionPingResult {
   invalidRetrievalContext: boolean;
   invalidToolsCalled: boolean;
   invalidState: boolean;
+  invalidMetadata: boolean;
   invalidInputTokenCount: boolean;
   invalidOutputTokenCount: boolean;
   invalidTokenCost: boolean;
@@ -158,6 +161,7 @@ export interface CreateAIConnectionRequest {
   retrievalContextKeyPath?: (string | number)[] | null;
   toolsCalledKeyPath?: (string | number)[] | null;
   stateKeyPath?: (string | number)[] | null;
+  metadataKeyPath?: (string | number)[] | null;
   inputTokenCountKeyPath?: (string | number)[] | null;
   outputTokenCountKeyPath?: (string | number)[] | null;
   tokenCostKeyPath?: (string | number)[] | null;
@@ -165,11 +169,14 @@ export interface CreateAIConnectionRequest {
   retrievalContextEvent?: string | null;
   toolsCalledEvent?: string | null;
   stateEvent?: string | null;
+  metadataEvent?: string | null;
   actualOutputAccumulate?: boolean;
+  mergeMetadata?: boolean;
   actualOutputTransformerId?: string | null;
   retrievalContextTransformerId?: string | null;
   toolsCalledTransformerId?: string | null;
   stateTransformerId?: string | null;
+  metadataTransformerId?: string | null;
   inputTokenCountTransformerId?: string | null;
   outputTokenCountTransformerId?: string | null;
   tokenCostTransformerId?: string | null;
@@ -200,6 +207,7 @@ export interface UpdateAIConnectionRequest {
   retrievalContextKeyPath?: (string | number)[] | null;
   toolsCalledKeyPath?: (string | number)[] | null;
   stateKeyPath?: (string | number)[] | null;
+  metadataKeyPath?: (string | number)[] | null;
   inputTokenCountKeyPath?: (string | number)[] | null;
   outputTokenCountKeyPath?: (string | number)[] | null;
   tokenCostKeyPath?: (string | number)[] | null;
@@ -207,11 +215,14 @@ export interface UpdateAIConnectionRequest {
   retrievalContextEvent?: string | null;
   toolsCalledEvent?: string | null;
   stateEvent?: string | null;
+  metadataEvent?: string | null;
   actualOutputAccumulate?: boolean;
+  mergeMetadata?: boolean;
   actualOutputTransformerId?: string | null;
   retrievalContextTransformerId?: string | null;
   toolsCalledTransformerId?: string | null;
   stateTransformerId?: string | null;
+  metadataTransformerId?: string | null;
   inputTokenCountTransformerId?: string | null;
   outputTokenCountTransformerId?: string | null;
   tokenCostTransformerId?: string | null;

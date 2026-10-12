@@ -282,6 +282,7 @@ class DatasetsOperations:
         identifier: Optional[str] = None,
         version: Optional[str] = None,
         ai_connection_id: Optional[str] = None,
+        voice_connection_id: Optional[str] = None,
         prompt_alias: Optional[str] = None,
         prompt_commit: Optional[str] = None,
         generation_mode: Optional[GenerationMode] = None,
@@ -312,6 +313,11 @@ class DatasetsOperations:
                 actual outputs before evaluating them. Required when
                 `generationMode` is `AI_CONNECTION`, and not allowed together
                 with `promptAlias`.
+            voice_connection_id: The id of the voice connection to call while
+                simulating each golden's conversation. Required when
+                `generationMode` is `VOICE_CONNECTION`, needs a multi-turn
+                dataset with `includeSimulation` enabled, and is not allowed
+                together with `aiConnectionId` or `promptAlias`.
             prompt_alias: The alias of the prompt used to generate the actual
                 outputs before evaluating them. Required when `generationMode`
                 is `PROMPT`, and not allowed together with `aiConnectionId`.
@@ -349,6 +355,7 @@ class DatasetsOperations:
                 "identifier": identifier,
                 "version": version,
                 "aiConnectionId": ai_connection_id,
+                "voiceConnectionId": voice_connection_id,
                 "promptAlias": prompt_alias,
                 "promptCommit": prompt_commit,
                 "generationMode": generation_mode,
@@ -370,6 +377,7 @@ class DatasetsOperations:
         identifier: Optional[str] = None,
         version: Optional[str] = None,
         ai_connection_id: Optional[str] = None,
+        voice_connection_id: Optional[str] = None,
         prompt_alias: Optional[str] = None,
         prompt_commit: Optional[str] = None,
         generation_mode: Optional[GenerationMode] = None,
@@ -400,6 +408,11 @@ class DatasetsOperations:
                 actual outputs before evaluating them. Required when
                 `generationMode` is `AI_CONNECTION`, and not allowed together
                 with `promptAlias`.
+            voice_connection_id: The id of the voice connection to call while
+                simulating each golden's conversation. Required when
+                `generationMode` is `VOICE_CONNECTION`, needs a multi-turn
+                dataset with `includeSimulation` enabled, and is not allowed
+                together with `aiConnectionId` or `promptAlias`.
             prompt_alias: The alias of the prompt used to generate the actual
                 outputs before evaluating them. Required when `generationMode`
                 is `PROMPT`, and not allowed together with `aiConnectionId`.
@@ -437,6 +450,7 @@ class DatasetsOperations:
                 "identifier": identifier,
                 "version": version,
                 "aiConnectionId": ai_connection_id,
+                "voiceConnectionId": voice_connection_id,
                 "promptAlias": prompt_alias,
                 "promptCommit": prompt_commit,
                 "generationMode": generation_mode,

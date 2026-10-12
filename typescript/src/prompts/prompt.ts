@@ -7,7 +7,7 @@ import { Api } from "../api";
 import { PromptsClient } from "./client";
 import { interpolatePrompt } from "../utils/helpers";
 import { pullPrompt } from "../utils/promptCache";
-import { PromptType } from "../common/types";
+import { PromptType, Tool } from "../common/types";
 import {
   CreatePromptVersionResult,
   ModelSettings,
@@ -25,7 +25,7 @@ import {
   PushPromptRequest,
   PushPromptResult,
   PushTextPrompt,
-  Tool,
+  PushTool,
 } from "./types";
 
 /**
@@ -217,7 +217,7 @@ export class Prompt {
       modelSettings: this.modelSettings,
       outputType: this.outputType,
       outputSchema: this.outputSchema,
-      tools: this.tools,
+      tools: this.tools?.map((tool) => this.pushTool(tool)),
       branch,
     };
     const chosen = (["text", "messages"] as const).filter(
@@ -235,6 +235,12 @@ export class Prompt {
       ...fields,
       messages: this.messages,
     } as unknown as PushMessagesPrompt;
+  }
+
+  private pushTool(tool: Tool): PushTool {
+    const source = tool as unknown as Record<string, unknown>;
+    const fields = { ...source };
+    return fields as unknown as PushTool;
   }
 
   interpolate(values: Record<string, unknown>) {

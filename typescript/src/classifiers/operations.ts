@@ -14,6 +14,7 @@ import {
   ClassifierList,
   ClassifierPreset,
   ClassifierRef,
+  ClassifierVersionList,
 } from "./types";
 
 export class ClassifiersOperations {
@@ -228,6 +229,34 @@ export class ClassifiersOperations {
       HttpMethods.POST,
       Endpoints.CLASSIFIER_GENERATE_ENDPOINT,
       { urlParams: { classifierId } },
+    );
+  }
+
+  /**
+   * List Classifier Versions
+   *
+   * Lists a classifier's version history, newest first, so the first entry is
+   * what the classifying model is shown today. A version is appended whenever
+   * the description or the set of labels the model can apply changes, which
+   * includes RECOMMENDED labels added by a generation run or by the model
+   * itself while the classifier classifies automatically. A version can be
+   * restored in the app, not through this API. Requires the Starter plan or
+   * above.
+   *
+   * @param classifierId The id of the classifier.
+   * @param page The page to return. Defaults to 1.
+   * @param pageSize The number of versions per page, at most 100. Defaults to
+   *   25.
+   */
+  async listVersions(
+    classifierId: string,
+    page?: number,
+    pageSize?: number,
+  ): Promise<ClassifierVersionList> {
+    return this.api.sendRequest<ClassifierVersionList>(
+      HttpMethods.GET,
+      Endpoints.CLASSIFIER_VERSIONS_ENDPOINT,
+      { urlParams: { classifierId }, params: { page, pageSize } },
     );
   }
 }

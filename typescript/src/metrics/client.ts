@@ -15,6 +15,7 @@ import {
   PromptMetricConfig,
   Rubric,
 } from "../common/types";
+import { MetricVersionList } from "./types";
 
 export class MetricsClient {
   constructor(protected readonly api: Api) {}
@@ -120,7 +121,8 @@ export class MetricsClient {
    *
    * Updates a custom metric and returns it. Only the fields you send are
    * changed; send `null` to clear `criteria` or `evaluationSteps`, as long as
-   * one of them remains. Every update creates a new metric version.
+   * one of them remains. An update that changes the definition creates a new
+   * metric version; one that changes nothing creates none.
    *
    * @param metricId The unique id of the metric.
    * @param criteria The new criteria, or `null` to clear it. One of `criteria`
@@ -166,6 +168,31 @@ export class MetricsClient {
         },
         urlParams: { metricId },
       },
+    );
+  }
+
+  /**
+   * List Metric Versions
+   *
+   * Lists a custom metric's definition history, newest first, so the first
+   * entry is the definition new evaluations run. Versions are append-only:
+   * updating a metric with a changed definition adds one, and an update that
+   * changes nothing adds none.
+   *
+   * @param metricId The unique id of the metric.
+   * @param page The page to return. Defaults to 1.
+   * @param pageSize The number of versions per page, at most 100. Defaults to
+   *   25.
+   */
+  async listVersions(
+    metricId: string,
+    page?: number,
+    pageSize?: number,
+  ): Promise<MetricVersionList> {
+    return this.api.sendRequest<MetricVersionList>(
+      HttpMethods.GET,
+      Endpoints.METRIC_VERSIONS_ENDPOINT,
+      { urlParams: { metricId }, params: { page, pageSize } },
     );
   }
 }

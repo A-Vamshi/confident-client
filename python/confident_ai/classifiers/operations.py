@@ -14,6 +14,7 @@ from confident_ai.classifiers.types import (
     ClassifierList,
     ClassifierPreset,
     ClassifierRef,
+    ClassifierVersionList,
     CreateClassifierRequest,
     UpdateClassifierRequest,
 )
@@ -416,4 +417,66 @@ class ClassifiersOperations:
             Endpoints.CLASSIFIER_GENERATE_ENDPOINT,
             response_schema=ClassifierLabelGeneration,
             path={"classifierId": classifier_id},
+        )
+
+    def list_versions(
+        self,
+        classifier_id: str,
+        *,
+        page: Optional[int] = None,
+        page_size: Optional[int] = None
+    ) -> ClassifierVersionList:
+        """List Classifier Versions
+
+        Lists a classifier's version history, newest first, so the first entry
+        is what the classifying model is shown today. A version is appended
+        whenever the description or the set of labels the model can apply
+        changes, which includes RECOMMENDED labels added by a generation run or
+        by the model itself while the classifier classifies automatically. A
+        version can be restored in the app, not through this API. Requires the
+        Starter plan or above.
+
+        Args:
+            classifier_id: The id of the classifier.
+            page: The page to return. Defaults to 1.
+            page_size: The number of versions per page, at most 100. Defaults to
+                25.
+        """
+        return self._api.request(
+            HttpMethods.GET,
+            Endpoints.CLASSIFIER_VERSIONS_ENDPOINT,
+            response_schema=ClassifierVersionList,
+            path={"classifierId": classifier_id},
+            query={"page": page, "pageSize": page_size},
+        )
+
+    async def a_list_versions(
+        self,
+        classifier_id: str,
+        *,
+        page: Optional[int] = None,
+        page_size: Optional[int] = None
+    ) -> ClassifierVersionList:
+        """List Classifier Versions
+
+        Lists a classifier's version history, newest first, so the first entry
+        is what the classifying model is shown today. A version is appended
+        whenever the description or the set of labels the model can apply
+        changes, which includes RECOMMENDED labels added by a generation run or
+        by the model itself while the classifier classifies automatically. A
+        version can be restored in the app, not through this API. Requires the
+        Starter plan or above.
+
+        Args:
+            classifier_id: The id of the classifier.
+            page: The page to return. Defaults to 1.
+            page_size: The number of versions per page, at most 100. Defaults to
+                25.
+        """
+        return await self._api.a_request(
+            HttpMethods.GET,
+            Endpoints.CLASSIFIER_VERSIONS_ENDPOINT,
+            response_schema=ClassifierVersionList,
+            path={"classifierId": classifier_id},
+            query={"page": page, "pageSize": page_size},
         )

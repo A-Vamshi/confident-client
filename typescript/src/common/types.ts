@@ -31,6 +31,7 @@ export enum EvaluationErrorType {
 export enum GenerationMode {
   AI_CONNECTION = "AI_CONNECTION",
   PROMPT = "PROMPT",
+  VOICE_CONNECTION = "VOICE_CONNECTION",
 }
 
 export enum IngestionDataModel {
@@ -143,6 +144,12 @@ export enum ToolCallType {
   MCP = "MCP",
 }
 
+export enum ToolMode {
+  ALLOW_ADDITIONAL = "ALLOW_ADDITIONAL",
+  NO_ADDITIONAL = "NO_ADDITIONAL",
+  STRICT = "STRICT",
+}
+
 export enum TraceSpanStatus {
   SUCCESS = "SUCCESS",
   ERRORED = "ERRORED",
@@ -230,7 +237,9 @@ export enum WidgetDimension {
   CLASSIFIER = "classifier",
   POLARITY = "polarity",
   CLASSIFIER_LABEL = "classifier_label",
+  CLASSIFIER_VERSION = "classifier_version",
   VERSION = "version",
+  METRIC_VERSION = "metric_version",
   VALUE = "value",
   FAILURE_SUB_MODE = "failure_sub_mode",
 }
@@ -538,8 +547,10 @@ export interface FilterSetGroupFilter {
     | "Annotation Text"
     | "Metric Score"
     | "Metric Status"
+    | "Metric Version"
     | "Metadata"
     | "Classifier"
+    | "Classifier Version"
     | "Metric"
     | "Metric Name"
     | "Trace Count"
@@ -886,6 +897,15 @@ export interface Span {
   expectedTools: ToolCall[] | null;
   metricsData: MetricData[];
   annotations: AnnotationSummary[];
+}
+
+export interface Tool {
+  id: string;
+  name: string;
+  description: string | null;
+  mode: ToolMode;
+  version: string;
+  schema: Record<string, unknown>;
 }
 
 export interface Trace {

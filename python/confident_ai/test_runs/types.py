@@ -12,6 +12,17 @@ from confident_ai.common.types import EvaluationErrorType, ToolCall, Turn
 from confident_ai.types import ConfidentBaseModel
 
 
+class ExpectationKind(Enum):
+    MUST = "MUST"
+    MUST_NOT = "MUST_NOT"
+
+
+class ExpectationVerdictStatus(Enum):
+    PASS = "pass"
+    FAIL = "fail"
+    UNABLE_TO_EVALUATE = "unable_to_evaluate"
+
+
 class TestCaseResultStatus(Enum):
     ACCEPTED = "accepted"
     ALREADY_RECEIVED = "already_received"
@@ -52,6 +63,31 @@ class CreateTestRunRequest(ConfidentBaseModel):
         alias="metricCollection",
     )
     identifier: Optional[str] = None
+
+
+class ExpectationVerdict(ConfidentBaseModel):
+    kind: ExpectationKind
+    condition: str
+    status: Optional[ExpectationVerdictStatus]
+    reason: str
+    evidence: str
+
+
+class ExpectationsData(ConfidentBaseModel):
+    success: Optional[bool]
+    score: Optional[float]
+    reason: Optional[str]
+    verdicts: List[ExpectationVerdict]
+    evaluation_model: Optional[str] = Field(alias="evaluationModel")
+    evaluation_cost: Optional[float] = Field(alias="evaluationCost")
+    error: Optional[str]
+
+
+class ExpectationsScores(ConfidentBaseModel):
+    scores: List[float]
+    passes: int
+    fails: int
+    errors: int
 
 
 class MetricScores(ConfidentBaseModel):
@@ -152,6 +188,9 @@ class TestRunSingleTurnTestCase(ConfidentBaseModel):
         alias="additionalMetadata",
     )
     metrics_data: List[TestCaseMetricData] = Field(alias="metricsData")
+    expectations_data: Optional[ExpectationsData] = Field(
+        alias="expectationsData",
+    )
 
 
 class TestRunMultiTurnTestCase(ConfidentBaseModel):
@@ -170,6 +209,9 @@ class TestRunMultiTurnTestCase(ConfidentBaseModel):
         alias="additionalMetadata",
     )
     metrics_data: List[TestCaseMetricData] = Field(alias="metricsData")
+    expectations_data: Optional[ExpectationsData] = Field(
+        alias="expectationsData",
+    )
 
 
 class TestRunTraceTestCase(ConfidentBaseModel):
@@ -184,6 +226,9 @@ class TestRunTraceTestCase(ConfidentBaseModel):
         alias="additionalMetadata",
     )
     metrics_data: List[TestCaseMetricData] = Field(alias="metricsData")
+    expectations_data: Optional[ExpectationsData] = Field(
+        alias="expectationsData",
+    )
 
 
 TestRunTestCase = Union[
@@ -201,6 +246,9 @@ class TestRun(ConfidentBaseModel):
     tests_failed: int = Field(alias="testsFailed")
     total_tests: int = Field(alias="totalTests")
     metrics_scores: List[MetricScores] = Field(alias="metricsScores")
+    expectations_scores: Optional[ExpectationsScores] = Field(
+        alias="expectationsScores",
+    )
     run_duration: float = Field(alias="runDuration")
     evaluation_cost: Optional[float] = Field(alias="evaluationCost")
     dataset_alias: Optional[str] = Field(alias="datasetAlias")
@@ -219,6 +267,9 @@ class TestRunSummary(ConfidentBaseModel):
     tests_failed: int = Field(alias="testsFailed")
     total_tests: int = Field(alias="totalTests")
     metrics_scores: List[MetricScores] = Field(alias="metricsScores")
+    expectations_scores: Optional[ExpectationsScores] = Field(
+        alias="expectationsScores",
+    )
     run_duration: float = Field(alias="runDuration")
     evaluation_cost: Optional[float] = Field(alias="evaluationCost")
     dataset_alias: Optional[str] = Field(alias="datasetAlias")

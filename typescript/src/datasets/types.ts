@@ -36,6 +36,11 @@ export interface CreateDatasetVersionResult {
   version: string;
 }
 
+export interface SingleTurnGoldenRequestExpectations {
+  must: string[];
+  mustNot: string[];
+}
+
 export interface SingleTurnGoldenRequest {
   input: string;
   actualOutput?: string | null;
@@ -48,6 +53,7 @@ export interface SingleTurnGoldenRequest {
   inputTokenCount?: number | null;
   outputTokenCount?: number | null;
   additionalMetadata?: Record<string, unknown> | null;
+  expectations?: SingleTurnGoldenRequestExpectations | null;
   comments?: string | null;
   sourceFile?: string | null;
   sourceFiles?: string[];
@@ -57,6 +63,11 @@ export interface SingleTurnGoldenRequest {
   tags?: string[];
 }
 
+export interface MultiTurnGoldenRequestExpectations {
+  must: string[];
+  mustNot: string[];
+}
+
 export interface MultiTurnGoldenRequest {
   scenario: string;
   expectedOutcome?: string | null;
@@ -64,6 +75,7 @@ export interface MultiTurnGoldenRequest {
   turns?: Turn[] | null;
   context?: string[] | null;
   additionalMetadata?: Record<string, unknown> | null;
+  expectations?: MultiTurnGoldenRequestExpectations | null;
   comments?: string | null;
   sourceFile?: string | null;
   sourceFiles?: string[];
@@ -80,6 +92,11 @@ export interface CreateGoldenRequest {
   version?: string;
 }
 
+export interface SingleTurnGoldenExpectations {
+  must: string[];
+  mustNot: string[];
+}
+
 export interface SingleTurnGolden {
   input: string;
   actualOutput?: string | null;
@@ -93,12 +110,18 @@ export interface SingleTurnGolden {
   outputTokenCount?: number | null;
   id?: string;
   additionalMetadata?: Record<string, unknown> | null;
+  expectations?: SingleTurnGoldenExpectations | null;
   comments?: string | null;
   sourceFile?: string | null;
   sourceFiles?: string[];
   finalized?: boolean;
   customColumnKeyValues?: Record<string, string>;
   tags?: string[];
+}
+
+export interface MultiTurnGoldenExpectations {
+  must: string[];
+  mustNot: string[];
 }
 
 export interface MultiTurnGolden {
@@ -109,6 +132,7 @@ export interface MultiTurnGolden {
   context?: string[] | null;
   id?: string;
   additionalMetadata?: Record<string, unknown> | null;
+  expectations?: MultiTurnGoldenExpectations | null;
   comments?: string | null;
   sourceFile?: string | null;
   sourceFiles?: string[];
@@ -192,6 +216,11 @@ export interface GoldenRef {
   id: string;
 }
 
+export interface PushSingleTurnGoldenExpectations {
+  must: string[];
+  mustNot: string[];
+}
+
 export interface PushSingleTurnGolden {
   input: string;
   actualOutput?: string | null;
@@ -204,6 +233,7 @@ export interface PushSingleTurnGolden {
   inputTokenCount?: number | null;
   outputTokenCount?: number | null;
   additionalMetadata?: Record<string, unknown> | null;
+  expectations?: PushSingleTurnGoldenExpectations | null;
   comments?: string | null;
   sourceFile?: string | null;
   sourceFiles?: string[];
@@ -214,6 +244,11 @@ export interface PushSingleTurnGolden {
   id?: string;
 }
 
+export interface PushMultiTurnGoldenExpectations {
+  must: string[];
+  mustNot: string[];
+}
+
 export interface PushMultiTurnGolden {
   scenario: string;
   expectedOutcome?: string | null;
@@ -221,6 +256,7 @@ export interface PushMultiTurnGolden {
   turns?: Turn[] | null;
   context?: string[] | null;
   additionalMetadata?: Record<string, unknown> | null;
+  expectations?: PushMultiTurnGoldenExpectations | null;
   comments?: string | null;
   sourceFile?: string | null;
   sourceFiles?: string[];
@@ -249,6 +285,7 @@ export interface RunDatasetEvaluationRequest {
   identifier?: string;
   version?: string;
   aiConnectionId?: string;
+  voiceConnectionId?: string;
   promptAlias?: string;
   promptCommit?: string;
   generationMode?: GenerationMode;

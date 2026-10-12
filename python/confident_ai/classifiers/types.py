@@ -8,7 +8,7 @@ from typing import List, Optional
 
 from pydantic import Field
 
-from confident_ai.common.types import FilterSet
+from confident_ai.common.types import FilterSet, UserReference
 from confident_ai.types import ConfidentBaseModel
 
 
@@ -105,6 +105,29 @@ class ClassifierList(ConfidentBaseModel):
 
 class ClassifierRef(ConfidentBaseModel):
     id: str
+
+
+class ClassifierVersionLabel(ConfidentBaseModel):
+    name: str
+    description: str
+
+
+class ClassifierVersion(ConfidentBaseModel):
+    id: str
+    classifier_id: str = Field(alias="classifierId")
+    sequence: int
+    version: str
+    description: Optional[str]
+    labels: List[ClassifierVersionLabel]
+    created_at: str = Field(alias="createdAt")
+    author: Optional[UserReference]
+
+
+class ClassifierVersionList(ConfidentBaseModel):
+    versions: List[ClassifierVersion]
+    total_classifier_versions: int = Field(alias="totalClassifierVersions")
+    page: int
+    page_size: int = Field(alias="pageSize")
 
 
 class CreateClassifierLabelRequest(ConfidentBaseModel):

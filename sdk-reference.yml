@@ -6,6 +6,7 @@ acronyms:
 - AI
 - MLLM
 - RT
+- RTC
 keyKinds:
   organization:
     envVar: CONFIDENT_ORG_API_KEY
@@ -314,11 +315,11 @@ resources:
         keyword: true
         default: None
         description: 'The authentication configuration Confident AI applies when
-          calling your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`,
-          `OAUTH2_CLIENT_CREDENTIALS` or `LIVEKIT` and put that scheme''s settings
-          in the matching object: `auth0Config`, `hmacConfig`, `azureAdConfig`, `oauth2Config`
-          or `livekitConfig`. A value that does not match that shape is rejected.
-          Send `null` to clear it.'
+          calling your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`
+          or `OAUTH2_CLIENT_CREDENTIALS` and put that scheme''s settings in the matching
+          object: `auth0Config`, `hmacConfig`, `azureAdConfig` or `oauth2Config`.
+          A value that does not match that shape is rejected. Send `null` to clear
+          it.'
         example:
           authType: HMAC
           hmacConfig:
@@ -424,6 +425,24 @@ resources:
         example:
         - session
         - state
+        references: []
+      - python: metadata_key_path
+        typescript: metadataKeyPath
+        wire: metadataKeyPath
+        in: body
+        type:
+          python: Optional[List[Union[str, int]]]
+          typescript: (string | number)[] | null
+        required: false
+        keyword: true
+        default: None
+        description: Where an object of metadata sits in your application's response,
+          walked the same way as `actualOutputKeyPath`. Its keys are written onto
+          the generated test case's metadata, merged over the golden's own metadata
+          unless `mergeMetadata` is `false`. Send `null` or an empty list to clear
+          it.
+        example:
+        - metadata
         references: []
       - python: input_token_count_key_path
         typescript: inputTokenCountKeyPath
@@ -537,6 +556,21 @@ resources:
           `null` to clear it.
         example: state
         references: []
+      - python: metadata_event
+        typescript: metadataEvent
+        wire: metadataEvent
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string | null
+        required: false
+        keyword: true
+        default: None
+        description: For a streaming `responseMode`, the name of the event carrying
+          the metadata, read the same way as `actualOutputEvent`. Send `null` to
+          clear it.
+        example: metadata
+        references: []
       - python: actual_output_accumulate
         typescript: actualOutputAccumulate
         wire: actualOutputAccumulate
@@ -550,6 +584,21 @@ resources:
         description: For a streaming `responseMode`, whether the chunks arriving
           on `actualOutputEvent` are joined into one answer. Set it to `false` when
           each event already carries the whole answer and only the last one counts.
+        example: true
+        references: []
+      - python: merge_metadata
+        typescript: mergeMetadata
+        wire: mergeMetadata
+        in: body
+        type:
+          python: Optional[bool]
+          typescript: boolean
+        required: false
+        keyword: true
+        default: None
+        description: Whether the extracted metadata is merged over the golden's metadata,
+          with the response winning on shared keys (`true`, the default), or replaces
+          it outright (`false`).
         example: true
         references: []
       - python: actual_output_transformer_id
@@ -609,6 +658,20 @@ resources:
         default: None
         description: The id of a transformer that extracts the conversation state.
           Send this or `stateKeyPath`, never both. Send `null` to clear it.
+        example: <TRANSFORMER-ID>
+        references: []
+      - python: metadata_transformer_id
+        typescript: metadataTransformerId
+        wire: metadataTransformerId
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string | null
+        required: false
+        keyword: true
+        default: None
+        description: The id of a transformer that extracts the metadata object. Send
+          this or `metadataKeyPath`, never both. Send `null` to clear it.
         example: <TRANSFORMER-ID>
         references: []
       - python: input_token_count_transformer_id
@@ -695,6 +758,7 @@ resources:
         - retrieval_context_key_path
         - tools_called_key_path
         - state_key_path
+        - metadata_key_path
         - input_token_count_key_path
         - output_token_count_key_path
         - token_cost_key_path
@@ -702,11 +766,14 @@ resources:
         - retrieval_context_event
         - tools_called_event
         - state_event
+        - metadata_event
         - actual_output_accumulate
+        - merge_metadata
         - actual_output_transformer_id
         - retrieval_context_transformer_id
         - tools_called_transformer_id
         - state_transformer_id
+        - metadata_transformer_id
         - input_token_count_transformer_id
         - output_token_count_transformer_id
         - token_cost_transformer_id
@@ -731,6 +798,7 @@ resources:
         - retrievalContextKeyPath
         - toolsCalledKeyPath
         - stateKeyPath
+        - metadataKeyPath
         - inputTokenCountKeyPath
         - outputTokenCountKeyPath
         - tokenCostKeyPath
@@ -738,11 +806,14 @@ resources:
         - retrievalContextEvent
         - toolsCalledEvent
         - stateEvent
+        - metadataEvent
         - actualOutputAccumulate
+        - mergeMetadata
         - actualOutputTransformerId
         - retrievalContextTransformerId
         - toolsCalledTransformerId
         - stateTransformerId
+        - metadataTransformerId
         - inputTokenCountTransformerId
         - outputTokenCountTransformerId
         - tokenCostTransformerId
@@ -1028,11 +1099,11 @@ resources:
         keyword: true
         default: None
         description: 'The authentication configuration Confident AI applies when
-          calling your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`,
-          `OAUTH2_CLIENT_CREDENTIALS` or `LIVEKIT` and put that scheme''s settings
-          in the matching object: `auth0Config`, `hmacConfig`, `azureAdConfig`, `oauth2Config`
-          or `livekitConfig`. A value that does not match that shape is rejected.
-          Send `null` to clear it.'
+          calling your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`
+          or `OAUTH2_CLIENT_CREDENTIALS` and put that scheme''s settings in the matching
+          object: `auth0Config`, `hmacConfig`, `azureAdConfig` or `oauth2Config`.
+          A value that does not match that shape is rejected. Send `null` to clear
+          it.'
         example:
           authType: HMAC
           hmacConfig:
@@ -1138,6 +1209,24 @@ resources:
         example:
         - session
         - state
+        references: []
+      - python: metadata_key_path
+        typescript: metadataKeyPath
+        wire: metadataKeyPath
+        in: body
+        type:
+          python: Optional[List[Union[str, int]]]
+          typescript: (string | number)[] | null
+        required: false
+        keyword: true
+        default: None
+        description: Where an object of metadata sits in your application's response,
+          walked the same way as `actualOutputKeyPath`. Its keys are written onto
+          the generated test case's metadata, merged over the golden's own metadata
+          unless `mergeMetadata` is `false`. Send `null` or an empty list to clear
+          it.
+        example:
+        - metadata
         references: []
       - python: input_token_count_key_path
         typescript: inputTokenCountKeyPath
@@ -1251,6 +1340,21 @@ resources:
           `null` to clear it.
         example: state
         references: []
+      - python: metadata_event
+        typescript: metadataEvent
+        wire: metadataEvent
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string | null
+        required: false
+        keyword: true
+        default: None
+        description: For a streaming `responseMode`, the name of the event carrying
+          the metadata, read the same way as `actualOutputEvent`. Send `null` to
+          clear it.
+        example: metadata
+        references: []
       - python: actual_output_accumulate
         typescript: actualOutputAccumulate
         wire: actualOutputAccumulate
@@ -1264,6 +1368,21 @@ resources:
         description: For a streaming `responseMode`, whether the chunks arriving
           on `actualOutputEvent` are joined into one answer. Set it to `false` when
           each event already carries the whole answer and only the last one counts.
+        example: true
+        references: []
+      - python: merge_metadata
+        typescript: mergeMetadata
+        wire: mergeMetadata
+        in: body
+        type:
+          python: Optional[bool]
+          typescript: boolean
+        required: false
+        keyword: true
+        default: None
+        description: Whether the extracted metadata is merged over the golden's metadata,
+          with the response winning on shared keys (`true`, the default), or replaces
+          it outright (`false`).
         example: true
         references: []
       - python: actual_output_transformer_id
@@ -1323,6 +1442,20 @@ resources:
         default: None
         description: The id of a transformer that extracts the conversation state.
           Send this or `stateKeyPath`, never both. Send `null` to clear it.
+        example: <TRANSFORMER-ID>
+        references: []
+      - python: metadata_transformer_id
+        typescript: metadataTransformerId
+        wire: metadataTransformerId
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string | null
+        required: false
+        keyword: true
+        default: None
+        description: The id of a transformer that extracts the metadata object. Send
+          this or `metadataKeyPath`, never both. Send `null` to clear it.
         example: <TRANSFORMER-ID>
         references: []
       - python: input_token_count_transformer_id
@@ -1410,6 +1543,7 @@ resources:
         - retrieval_context_key_path
         - tools_called_key_path
         - state_key_path
+        - metadata_key_path
         - input_token_count_key_path
         - output_token_count_key_path
         - token_cost_key_path
@@ -1417,11 +1551,14 @@ resources:
         - retrieval_context_event
         - tools_called_event
         - state_event
+        - metadata_event
         - actual_output_accumulate
+        - merge_metadata
         - actual_output_transformer_id
         - retrieval_context_transformer_id
         - tools_called_transformer_id
         - state_transformer_id
+        - metadata_transformer_id
         - input_token_count_transformer_id
         - output_token_count_transformer_id
         - token_cost_transformer_id
@@ -1447,6 +1584,7 @@ resources:
         - retrievalContextKeyPath
         - toolsCalledKeyPath
         - stateKeyPath
+        - metadataKeyPath
         - inputTokenCountKeyPath
         - outputTokenCountKeyPath
         - tokenCostKeyPath
@@ -1454,11 +1592,14 @@ resources:
         - retrievalContextEvent
         - toolsCalledEvent
         - stateEvent
+        - metadataEvent
         - actualOutputAccumulate
+        - mergeMetadata
         - actualOutputTransformerId
         - retrievalContextTransformerId
         - toolsCalledTransformerId
         - stateTransformerId
+        - metadataTransformerId
         - inputTokenCountTransformerId
         - outputTokenCountTransformerId
         - tokenCostTransformerId
@@ -3955,6 +4096,75 @@ resources:
         - classifier_id
         typescript:
         - classifierId
+    - name:
+        python: list_versions
+        pythonAsync: a_list_versions
+        typescript: listVersions
+      summary: List Classifier Versions
+      description: Lists a classifier's version history, newest first, so the first
+        entry is what the classifying model is shown today. A version is appended
+        whenever the description or the set of labels the model can apply changes,
+        which includes RECOMMENDED labels added by a generation run or by the model
+        itself while the classifier classifies automatically. A version can be restored
+        in the app, not through this API. Requires the Starter plan or above.
+      operations:
+      - id: listClassifierVersions
+        method: GET
+        path: /v2/classifiers/{classifierId}/versions
+      returns:
+        python: ClassifierVersionList
+        typescript: Promise<ClassifierVersionList>
+        type: ClassifierVersionList
+      body: null
+      parameters:
+      - python: classifier_id
+        typescript: classifierId
+        wire: classifierId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword: false
+        default: null
+        description: The id of the classifier.
+        example: <CLASSIFIER-ID>
+        references: []
+      - python: page
+        typescript: page
+        wire: page
+        in: query
+        type:
+          python: Optional[int]
+          typescript: number
+        required: false
+        keyword: true
+        default: None
+        description: The page to return. Defaults to 1.
+        example: 1
+        references: []
+      - python: page_size
+        typescript: pageSize
+        wire: pageSize
+        in: query
+        type:
+          python: Optional[int]
+          typescript: number
+        required: false
+        keyword: true
+        default: None
+        description: The number of versions per page, at most 100. Defaults to 25.
+        example: 25
+        references: []
+      order:
+        python:
+        - classifier_id
+        - page
+        - page_size
+        typescript:
+        - classifierId
+        - page
+        - pageSize
   - segments:
     - labels
     python:
@@ -5794,6 +6004,22 @@ resources:
           and not allowed together with `promptAlias`.
         example: <AI-CONNECTION-ID>
         references: []
+      - python: voice_connection_id
+        typescript: voiceConnectionId
+        wire: voiceConnectionId
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string
+        required: false
+        keyword: true
+        default: None
+        description: The id of the voice connection to call while simulating each
+          golden's conversation. Required when `generationMode` is `VOICE_CONNECTION`,
+          needs a multi-turn dataset with `includeSimulation` enabled, and is not
+          allowed together with `aiConnectionId` or `promptAlias`.
+        example: <VOICE-CONNECTION-ID>
+        references: []
       - python: prompt_alias
         typescript: promptAlias
         wire: promptAlias
@@ -5935,6 +6161,7 @@ resources:
         - identifier
         - version
         - ai_connection_id
+        - voice_connection_id
         - prompt_alias
         - prompt_commit
         - generation_mode
@@ -5950,6 +6177,7 @@ resources:
         - identifier
         - version
         - aiConnectionId
+        - voiceConnectionId
         - promptAlias
         - promptCommit
         - generationMode
@@ -7321,6 +7549,22 @@ resources:
           and not allowed together with `promptAlias`.
         example: <AI-CONNECTION-ID>
         references: []
+      - python: voice_connection_id
+        typescript: voiceConnectionId
+        wire: voiceConnectionId
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string
+        required: false
+        keyword: true
+        default: None
+        description: The id of the voice connection to call while simulating each
+          golden's conversation. Required when `generationMode` is `VOICE_CONNECTION`,
+          needs a multi-turn dataset with `includeSimulation` enabled, and is not
+          allowed together with `aiConnectionId` or `promptAlias`.
+        example: <VOICE-CONNECTION-ID>
+        references: []
       - python: prompt_alias
         typescript: promptAlias
         wire: promptAlias
@@ -7461,6 +7705,7 @@ resources:
         - identifier
         - version
         - ai_connection_id
+        - voice_connection_id
         - prompt_alias
         - prompt_commit
         - generation_mode
@@ -7475,6 +7720,7 @@ resources:
         - identifier
         - version
         - aiConnectionId
+        - voiceConnectionId
         - promptAlias
         - promptCommit
         - generationMode
@@ -11375,7 +11621,8 @@ resources:
       summary: Update Metric
       description: Updates a custom metric and returns it. Only the fields you send
         are changed; send `null` to clear `criteria` or `evaluationSteps`, as long
-        as one of them remains. Every update creates a new metric version.
+        as one of them remains. An update that changes the definition creates a new
+        metric version; one that changes nothing creates none.
       operations:
       - id: updateMetric
         method: PUT
@@ -11507,6 +11754,73 @@ resources:
         - rubric
         - questions
         - promptConfig
+    - name:
+        python: list_versions
+        pythonAsync: a_list_versions
+        typescript: listVersions
+      summary: List Metric Versions
+      description: 'Lists a custom metric''s definition history, newest first, so
+        the first entry is the definition new evaluations run. Versions are append-only:
+        updating a metric with a changed definition adds one, and an update that
+        changes nothing adds none.'
+      operations:
+      - id: listMetricVersions
+        method: GET
+        path: /v2/metrics/{metricId}/versions
+      returns:
+        python: MetricVersionList
+        typescript: Promise<MetricVersionList>
+        type: MetricVersionList
+      body: null
+      parameters:
+      - python: metric_id
+        typescript: metricId
+        wire: metricId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword: false
+        default: null
+        description: The unique id of the metric.
+        example: <METRIC-ID>
+        references: []
+      - python: page
+        typescript: page
+        wire: page
+        in: query
+        type:
+          python: Optional[int]
+          typescript: number
+        required: false
+        keyword: true
+        default: None
+        description: The page to return. Defaults to 1.
+        example: 1
+        references: []
+      - python: page_size
+        typescript: pageSize
+        wire: pageSize
+        in: query
+        type:
+          python: Optional[int]
+          typescript: number
+        required: false
+        keyword: true
+        default: None
+        description: The number of versions per page, at most 100. Defaults to 25.
+        example: 25
+        references: []
+      order:
+        python:
+        - metric_id
+        - page
+        - page_size
+        typescript:
+        - metricId
+        - page
+        - pageSize
   handle: null
 - name: metrics-batch
   keyKind: project
@@ -20012,7 +20326,8 @@ resources:
       type:
         python: Optional[List[Tool]]
         typescript: Tool[]
-      description: This is the list of tools available to the prompt.
+      description: The tools available to the prompt, at the versions this commit
+        pinned.
       example: null
       references:
       - Tool
@@ -24040,6 +24355,373 @@ resources:
         typescript:
         - threadId
   handle: null
+- name: tools
+  keyKind: project
+  client:
+    python: client.tools
+    typescript: client.tools
+  modules:
+  - segments: []
+    python:
+      module: python/confident_ai/tools/client.py
+      class: ToolsClient
+    typescript:
+      module: typescript/src/tools/client.ts
+      class: ToolsClient
+    methods:
+    - name:
+        python: list
+        pythonAsync: a_list
+        typescript: list
+      summary: List Tools
+      description: Lists the tools in your Confident AI project one page at a time,
+        newest first. Retrieve a tool by id to read its input schema.
+      operations:
+      - id: listTools
+        method: GET
+        path: /v2/tools
+      returns:
+        python: ToolList
+        typescript: Promise<ToolList>
+        type: ToolList
+      body: null
+      parameters:
+      - python: page
+        typescript: page
+        wire: page
+        in: query
+        type:
+          python: Optional[int]
+          typescript: number
+        required: false
+        keyword: true
+        default: None
+        description: The page to return. Defaults to 1.
+        example: 1
+        references: []
+      - python: page_size
+        typescript: pageSize
+        wire: pageSize
+        in: query
+        type:
+          python: Optional[int]
+          typescript: number
+        required: false
+        keyword: true
+        default: None
+        description: The number of results per page, at most 100. Defaults to 25.
+        example: 25
+        references: []
+      - python: search_term
+        typescript: searchTerm
+        wire: searchTerm
+        in: query
+        type:
+          python: Optional[str]
+          typescript: string
+        required: false
+        keyword: true
+        default: None
+        description: Returns only tools whose name contains this text.
+        example: customer
+        references: []
+      order:
+        python:
+        - page
+        - page_size
+        - search_term
+        typescript:
+        - page
+        - pageSize
+        - searchTerm
+    - name:
+        python: create
+        pythonAsync: a_create
+        typescript: create
+      summary: Create Tool
+      description: Creates a tool in your Confident AI project and returns its id.
+        Names are unique within a project; reusing one returns a 409.
+      operations:
+      - id: createTool
+        method: POST
+        path: /v2/tools
+      returns:
+        python: ToolRef
+        typescript: Promise<ToolRef>
+        type: ToolRef
+      body: CreateToolRequest
+      parameters:
+      - python: name
+        typescript: name
+        wire: name
+        in: body
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword: false
+        default: null
+        description: The name of the tool, unique within the project. The model calls
+          the tool by this name.
+        example: get_customer_name
+        references: []
+      - python: mode
+        typescript: mode
+        wire: mode
+        in: body
+        type:
+          python: ToolMode
+          typescript: ToolMode
+        required: true
+        keyword: false
+        default: null
+        description: null
+        example: null
+        references:
+        - ToolMode
+      - python: schema
+        typescript: schema
+        wire: schema
+        in: body
+        type:
+          python: Dict[str, Any]
+          typescript: Record<string, unknown>
+        required: true
+        keyword: false
+        default: null
+        description: The JSON Schema for the tool's input. List each parameter under
+          `properties` with a `type`, and name the mandatory ones in `required`.
+          A parameter can also have a `description`, an `enum` of allowed values,
+          or `items` for an array. Whether extra properties are allowed is set by
+          `mode`.
+        example:
+          type: object
+          properties:
+            customerId:
+              type: string
+              description: The id of the customer to look up.
+            nameFormat:
+              type: string
+              enum:
+              - FULL
+              - FIRST
+              description: Whether to return the full name or only the first name.
+          required:
+          - customerId
+        references: []
+      - python: description
+        typescript: description
+        wire: description
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string | null
+        required: false
+        keyword: true
+        default: None
+        description: What the tool does. The model reads it to decide when to call
+          the tool.
+        example: Looks up the customer's name by id.
+        references: []
+      order:
+        python:
+        - name
+        - mode
+        - schema
+        - description
+        typescript:
+        - name
+        - mode
+        - schema
+        - description
+    - name:
+        python: get
+        pythonAsync: a_get
+        typescript: get
+      summary: Get Tool
+      description: Retrieves a tool by id at its latest version, including its input
+        schema.
+      operations:
+      - id: getTool
+        method: GET
+        path: /v2/tools/{toolId}
+      returns:
+        python: Tool
+        typescript: Promise<Tool>
+        type: Tool
+      body: null
+      parameters:
+      - python: tool_id
+        typescript: toolId
+        wire: toolId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword: false
+        default: null
+        description: The id of the tool.
+        example: <TOOL-ID>
+        references: []
+      order:
+        python:
+        - tool_id
+        typescript:
+        - toolId
+    - name:
+        python: update
+        pythonAsync: a_update
+        typescript: update
+      summary: Update Tool
+      description: Updates a tool and returns it at its latest version. A changed
+        `mode` or `schema` creates a new version, and prompt commits keep the version
+        they pinned. Names are unique within a project; taking another tool's name
+        returns a 409.
+      operations:
+      - id: updateTool
+        method: PUT
+        path: /v2/tools/{toolId}
+      returns:
+        python: Tool
+        typescript: Promise<Tool>
+        type: Tool
+      body: UpdateToolRequest
+      parameters:
+      - python: tool_id
+        typescript: toolId
+        wire: toolId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword: false
+        default: null
+        description: The id of the tool.
+        example: <TOOL-ID>
+        references: []
+      - python: name
+        typescript: name
+        wire: name
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string
+        required: false
+        keyword: true
+        default: None
+        description: The name of the tool, unique within the project. Omit it to
+          keep the current name.
+        example: get_customer_name
+        references: []
+      - python: description
+        typescript: description
+        wire: description
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string | null
+        required: false
+        keyword: true
+        default: None
+        description: What the tool does. Send `null` to clear it, or omit it to keep
+          the current one.
+        example: Looks up the customer's name by id.
+        references: []
+      - python: mode
+        typescript: mode
+        wire: mode
+        in: body
+        type:
+          python: Optional[ToolMode]
+          typescript: ToolMode
+        required: false
+        keyword: true
+        default: None
+        description: null
+        example: null
+        references:
+        - ToolMode
+      - python: schema
+        typescript: schema
+        wire: schema
+        in: body
+        type:
+          python: Optional[Dict[str, Any]]
+          typescript: Record<string, unknown>
+        required: false
+        keyword: true
+        default: None
+        description: The JSON Schema for the tool's input. List each parameter under
+          `properties` with a `type`, and name the mandatory ones in `required`.
+          A parameter can also have a `description`, an `enum` of allowed values,
+          or `items` for an array. Whether extra properties are allowed is set by
+          `mode`. Omit it to keep the current one.
+        example:
+          type: object
+          properties:
+            customerId:
+              type: string
+              description: The id of the customer to look up.
+            nameFormat:
+              type: string
+              enum:
+              - FULL
+              - FIRST
+              description: Whether to return the full name or only the first name.
+          required:
+          - customerId
+        references: []
+      order:
+        python:
+        - tool_id
+        - name
+        - description
+        - mode
+        - schema
+        typescript:
+        - toolId
+        - name
+        - description
+        - mode
+        - schema
+    - name:
+        python: delete
+        pythonAsync: a_delete
+        typescript: delete
+      summary: Delete Tool
+      description: Permanently deletes a tool and all its versions. Prompt commits
+        that pinned it no longer include it.
+      operations:
+      - id: deleteTool
+        method: DELETE
+        path: /v2/tools/{toolId}
+      returns:
+        python: ToolRef
+        typescript: Promise<ToolRef>
+        type: ToolRef
+      body: null
+      parameters:
+      - python: tool_id
+        typescript: toolId
+        wire: toolId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword: false
+        default: null
+        description: The id of the tool.
+        example: <TOOL-ID>
+        references: []
+      order:
+        python:
+        - tool_id
+        typescript:
+        - toolId
+  handle: null
 - name: traces
   keyKind: project
   client:
@@ -25073,6 +25755,396 @@ resources:
         - transformerId
         - inputData
   handle: null
+- name: voice-connections
+  keyKind: project
+  client:
+    python: client.voice_connections
+    typescript: client.voiceConnections
+  modules:
+  - segments: []
+    python:
+      module: python/confident_ai/voice_connections/client.py
+      class: VoiceConnectionsClient
+    typescript:
+      module: typescript/src/voice-connections/client.ts
+      class: VoiceConnectionsClient
+    methods:
+    - name:
+        python: list
+        pythonAsync: a_list
+        typescript: list
+      summary: List Voice Connections
+      description: Lists the voice connections in your Confident AI project one page
+        at a time, ordered by name. Requires the Starter plan or above.
+      operations:
+      - id: listVoiceConnections
+        method: GET
+        path: /v2/voice-connections
+      returns:
+        python: VoiceConnectionList
+        typescript: Promise<VoiceConnectionList>
+        type: VoiceConnectionList
+      body: null
+      parameters:
+      - python: page
+        typescript: page
+        wire: page
+        in: query
+        type:
+          python: Optional[int]
+          typescript: number
+        required: false
+        keyword: true
+        default: None
+        description: The page to return. Defaults to 1.
+        example: 1
+        references: []
+      - python: page_size
+        typescript: pageSize
+        wire: pageSize
+        in: query
+        type:
+          python: Optional[int]
+          typescript: number
+        required: false
+        keyword: true
+        default: None
+        description: The number of results per page, at most 100. Defaults to 25.
+        example: 25
+        references: []
+      order:
+        python:
+        - page
+        - page_size
+        typescript:
+        - page
+        - pageSize
+    - name:
+        python: create
+        pythonAsync: a_create
+        typescript: create
+      summary: Create Voice Connection
+      description: Registers a voice agent Confident AI can call during simulations
+        and returns it. The connection starts unverified; place a test call to verify
+        it. Requires the Starter plan or above.
+      operations:
+      - id: createVoiceConnection
+        method: POST
+        path: /v2/voice-connections
+      returns:
+        python: VoiceConnection
+        typescript: Promise<VoiceConnection>
+        type: VoiceConnection
+      body: CreateVoiceConnectionRequest
+      parameters:
+      - python: name
+        typescript: name
+        wire: name
+        in: body
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword: false
+        default: null
+        description: A name for the voice connection, unique within the project.
+        example: Support line
+        references: []
+      - python: config
+        typescript: config
+        wire: config
+        in: body
+        type:
+          python: VoiceTransportConfig
+          typescript: VoiceTransportConfig
+        required: true
+        keyword: false
+        default: null
+        description: null
+        example: null
+        references:
+        - VoiceTransportConfig
+      - python: call_settings
+        typescript: callSettings
+        wire: callSettings
+        in: body
+        type:
+          python: Optional[VoiceCallSettingsPatch]
+          typescript: VoiceCallSettingsPatch
+        required: false
+        keyword: true
+        default: None
+        description: null
+        example: null
+        references:
+        - VoiceCallSettingsPatch
+      order:
+        python:
+        - name
+        - config
+        - call_settings
+        typescript:
+        - name
+        - config
+        - callSettings
+    - name:
+        python: get
+        pythonAsync: a_get
+        typescript: get
+      summary: Get Voice Connection
+      description: Retrieves a voice connection by id with its full configuration.
+        Stored credentials are returned as saved, so treat the response as carrying
+        secrets.
+      operations:
+      - id: getVoiceConnection
+        method: GET
+        path: /v2/voice-connections/{voiceConnectionId}
+      returns:
+        python: VoiceConnection
+        typescript: Promise<VoiceConnection>
+        type: VoiceConnection
+      body: null
+      parameters:
+      - python: voice_connection_id
+        typescript: voiceConnectionId
+        wire: voiceConnectionId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword: false
+        default: null
+        description: The id of the voice connection.
+        example: <VOICE-CONNECTION-ID>
+        references: []
+      order:
+        python:
+        - voice_connection_id
+        typescript:
+        - voiceConnectionId
+    - name:
+        python: update
+        pythonAsync: a_update
+        typescript: update
+      summary: Update Voice Connection
+      description: Changes a voice connection and returns it. Only the fields you
+        send are touched. Sending `config` replaces it whole and marks the connection
+        unverified until its next test call.
+      operations:
+      - id: updateVoiceConnection
+        method: PUT
+        path: /v2/voice-connections/{voiceConnectionId}
+      returns:
+        python: VoiceConnection
+        typescript: Promise<VoiceConnection>
+        type: VoiceConnection
+      body: UpdateVoiceConnectionRequest
+      parameters:
+      - python: voice_connection_id
+        typescript: voiceConnectionId
+        wire: voiceConnectionId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword: false
+        default: null
+        description: The id of the voice connection.
+        example: <VOICE-CONNECTION-ID>
+        references: []
+      - python: name
+        typescript: name
+        wire: name
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string
+        required: false
+        keyword: true
+        default: None
+        description: A new name, unique within the project.
+        example: Support line
+        references: []
+      - python: config
+        typescript: config
+        wire: config
+        in: body
+        type:
+          python: Optional[VoiceTransportConfig]
+          typescript: VoiceTransportConfig
+        required: false
+        keyword: true
+        default: None
+        description: null
+        example: null
+        references:
+        - VoiceTransportConfig
+      - python: call_settings
+        typescript: callSettings
+        wire: callSettings
+        in: body
+        type:
+          python: Optional[VoiceCallSettingsPatch]
+          typescript: VoiceCallSettingsPatch
+        required: false
+        keyword: true
+        default: None
+        description: null
+        example: null
+        references:
+        - VoiceCallSettingsPatch
+      order:
+        python:
+        - voice_connection_id
+        - name
+        - config
+        - call_settings
+        typescript:
+        - voiceConnectionId
+        - name
+        - config
+        - callSettings
+    - name:
+        python: delete
+        pythonAsync: a_delete
+        typescript: delete
+      summary: Delete Voice Connection
+      description: Permanently deletes a voice connection. Dataset schedules that
+        call it stop running, and past test runs and call logs keep their results.
+      operations:
+      - id: deleteVoiceConnection
+        method: DELETE
+        path: /v2/voice-connections/{voiceConnectionId}
+      returns:
+        python: VoiceConnectionRef
+        typescript: Promise<VoiceConnectionRef>
+        type: VoiceConnectionRef
+      body: null
+      parameters:
+      - python: voice_connection_id
+        typescript: voiceConnectionId
+        wire: voiceConnectionId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword: false
+        default: null
+        description: The id of the voice connection.
+        example: <VOICE-CONNECTION-ID>
+        references: []
+      order:
+        python:
+        - voice_connection_id
+        typescript:
+        - voiceConnectionId
+    - name:
+        python: place_voice_call
+        pythonAsync: a_place_voice_call
+        typescript: placeVoiceCall
+      summary: Place Voice Test Call
+      description: Places a test call to a voice connection, listens for its greeting,
+        and returns the log of how the call went. The connection is marked verified
+        when the agent answers and unverified otherwise. The request stays open for
+        the length of the call.
+      operations:
+      - id: placeVoiceCall
+        method: POST
+        path: /v2/voice-connections/{voiceConnectionId}/calls
+      returns:
+        python: VoiceConnectionLog
+        typescript: Promise<VoiceConnectionLog>
+        type: VoiceConnectionLog
+      body: null
+      parameters:
+      - python: voice_connection_id
+        typescript: voiceConnectionId
+        wire: voiceConnectionId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword: false
+        default: null
+        description: The id of the voice connection.
+        example: <VOICE-CONNECTION-ID>
+        references: []
+      order:
+        python:
+        - voice_connection_id
+        typescript:
+        - voiceConnectionId
+    - name:
+        python: list_logs
+        pythonAsync: a_list_logs
+        typescript: listLogs
+      summary: List Voice Connection Logs
+      description: 'Lists every call placed to a voice connection, newest first:
+        test calls and calls made while evaluating datasets.'
+      operations:
+      - id: listVoiceConnectionLogs
+        method: GET
+        path: /v2/voice-connections/{voiceConnectionId}/logs
+      returns:
+        python: VoiceConnectionLogList
+        typescript: Promise<VoiceConnectionLogList>
+        type: VoiceConnectionLogList
+      body: null
+      parameters:
+      - python: voice_connection_id
+        typescript: voiceConnectionId
+        wire: voiceConnectionId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword: false
+        default: null
+        description: The id of the voice connection.
+        example: <VOICE-CONNECTION-ID>
+        references: []
+      - python: page_size
+        typescript: pageSize
+        wire: pageSize
+        in: query
+        type:
+          python: Optional[int]
+          typescript: number
+        required: false
+        keyword: true
+        default: None
+        description: The number of logs per page, at most 100. Defaults to 25.
+        example: 25
+        references: []
+      - python: cursor
+        typescript: cursor
+        wire: cursor
+        in: query
+        type:
+          python: Optional[str]
+          typescript: string
+        required: false
+        keyword: true
+        default: None
+        description: This is used for pagination, and should be set to the `nextCursor`
+          value returned in the previous response to get the next page of results.
+        example: <NEXT-CURSOR>
+        references: []
+      order:
+        python:
+        - voice_connection_id
+        - page_size
+        - cursor
+        typescript:
+        - voiceConnectionId
+        - pageSize
+        - cursor
+  handle: null
 - name: vulnerabilities
   keyKind: project
   client:
@@ -25896,6 +26968,18 @@ types:
     - session
     - state
     references: []
+  - wire: metadataKeyPath
+    python: metadata_key_path
+    typescript: metadataKeyPath
+    type:
+      python: List[Union[str, int]]
+      typescript: (string | number)[]
+    required: true
+    description: The path walked to find the metadata written onto generated test
+      cases. Empty when a transformer extracts it instead, or when nothing is configured.
+    example:
+    - metadata
+    references: []
   - wire: inputTokenCountKeyPath
     python: input_token_count_key_path
     typescript: inputTokenCountKeyPath
@@ -25979,6 +27063,17 @@ types:
       or `null` when a key path does it instead.
     example: null
     references: []
+  - wire: metadataTransformerId
+    python: metadata_transformer_id
+    typescript: metadataTransformerId
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: The id of the transformer that extracts the metadata object, or
+      `null` when a key path does it instead.
+    example: null
+    references: []
   - wire: inputTokenCountTransformerId
     python: input_token_count_transformer_id
     typescript: inputTokenCountTransformerId
@@ -26056,6 +27151,17 @@ types:
       conversation state, or `null` when it is read out of a completed body.
     example: null
     references: []
+  - wire: metadataEvent
+    python: metadata_event
+    typescript: metadataEvent
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: For a streaming `responseMode`, the event whose data carries the
+      metadata, or `null` when it is read out of a completed body.
+    example: null
+    references: []
   - wire: actualOutputAccumulate
     python: actual_output_accumulate
     typescript: actualOutputAccumulate
@@ -26065,6 +27171,17 @@ types:
     required: true
     description: For a streaming `responseMode`, whether the chunks arriving on `actualOutputEvent`
       are joined into one answer rather than only the last one being kept.
+    example: true
+    references: []
+  - wire: mergeMetadata
+    python: merge_metadata
+    typescript: mergeMetadata
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: Whether extracted metadata is merged over the golden's metadata,
+      the response winning on shared keys, rather than replacing it.
     example: true
     references: []
   - wire: prompts
@@ -26330,6 +27447,17 @@ types:
       connection extracts none.
     example: null
     references: []
+  - wire: metadata
+    python: metadata
+    typescript: metadata
+    type:
+      python: Optional[Dict[str, Any]]
+      typescript: Record<string, unknown> | null
+    required: true
+    description: What was pulled out as the metadata, or `null` when the connection
+      extracts none.
+    example: null
+    references: []
   - wire: inputTokenCount
     python: input_token_count
     typescript: inputTokenCount
@@ -26402,6 +27530,16 @@ types:
       typescript: boolean
     required: true
     description: Whether the conversation state was found but could not be read.
+    example: false
+    references: []
+  - wire: invalidMetadata
+    python: invalid_metadata
+    typescript: invalidMetadata
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: Whether the metadata was found but is not an object.
     example: false
     references: []
   - wire: invalidInputTokenCount
@@ -26618,8 +27756,8 @@ types:
   description: How your application replies. `HTTP_RESPONSE` returns one completed
     body. `SSE_STREAMING`, `HTTP_STREAMING` and `WEBSOCKET` stream the answer, so
     the values are read from named events as they arrive rather than out of a finished
-    body, and `WEBSOCKET` requires a `wss://` endpoint. `PHONE` and `SIP` are voice
-    connections placed over a telephony provider.
+    body, and `WEBSOCKET` requires a `wss://` endpoint. Voice agents are set up as
+    voice connections instead.
   python:
     module: confident_ai.ai_connections
     name: AIConnectionResponseMode
@@ -26635,12 +27773,6 @@ types:
     value: HTTP_STREAMING
   - name: WEBSOCKET
     value: WEBSOCKET
-  - name: PHONE
-    value: PHONE
-  - name: SIP
-    value: SIP
-  - name: WEBRTC
-    value: WEBRTC
   references: []
 - name: AIConnectionSummary
   description: 'An AI connection as it appears in a list: enough to pick one out.
@@ -30355,6 +31487,199 @@ types:
     example: null
     references:
     - ClassifierDataModel
+- name: ClassifierVersion
+  description: 'An immutable snapshot of what a classifier shows the classifying
+    model: its description and the labels it can apply. Changing either appends a
+    new version, and every classification records the version it was produced under.'
+  example: null
+  python:
+    module: confident_ai.classifiers
+    name: ClassifierVersion
+  typescript:
+    module: confident-ai/classifiers
+    name: ClassifierVersion
+  references:
+  - ClassifierVersionLabel
+  - UserReference
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the version, generated by Confident AI.
+    example: <CLASSIFIER-VERSION-ID>
+    references: []
+  - wire: classifierId
+    python: classifier_id
+    typescript: classifierId
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the classifier this version belongs to.
+    example: <CLASSIFIER-ID>
+    references: []
+  - wire: sequence
+    python: sequence
+    typescript: sequence
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The position of this version in the classifier's history, counting
+      from 1. The highest sequence is the current version, which is the one new classifications
+      run against.
+    example: 2
+    references: []
+  - wire: version
+    python: version
+    typescript: version
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The human-readable label for `sequence`, written as three two-digit
+      groups that roll over at 100, so sequence 2 is `00.00.02` and sequence 100
+      is `00.01.00`.
+    example: 00.00.02
+    references: []
+  - wire: description
+    python: description
+    typescript: description
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: The classifier description the model was shown, or null when it
+      had none.
+    example: Analyzes the emotional tone of user interactions.
+    references: []
+  - wire: labels
+    python: labels
+    typescript: labels
+    type:
+      python: List[ClassifierVersionLabel]
+      typescript: ClassifierVersionLabel[]
+    required: true
+    description: 'The labels the model could apply, ordered by name: enabled ACTIVE
+      labels, plus enabled RECOMMENDED ones when the classifier classifies automatically.'
+    example: null
+    references:
+    - ClassifierVersionLabel
+  - wire: createdAt
+    python: created_at
+    typescript: createdAt
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: When this version was snapshotted.
+    example: '2025-01-18T16:45:00+00:00'
+    references: []
+  - wire: author
+    python: author
+    typescript: author
+    type:
+      python: Optional[UserReference]
+      typescript: UserReference | null
+    required: true
+    description: Who made the change that created this version, or null when it came
+      from an API key or from Confident AI itself, such as a generated label.
+    example: null
+    references:
+    - UserReference
+- name: ClassifierVersionLabel
+  description: A label as the classifying model was shown it.
+  example: null
+  python:
+    module: confident_ai.classifiers
+    name: ClassifierVersionLabel
+  typescript:
+    module: confident-ai/classifiers
+    name: ClassifierVersionLabel
+  references: []
+  kind: object
+  fields:
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The name of the label.
+    example: Positive
+    references: []
+  - wire: description
+    python: description
+    typescript: description
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: When the label applies, as the classifying model read it.
+    example: User expresses satisfaction, gratitude, or positive sentiment.
+    references: []
+- name: ClassifierVersionList
+  description: One page of a classifier's version history, with the total across
+    all pages.
+  example: null
+  python:
+    module: confident_ai.classifiers
+    name: ClassifierVersionList
+  typescript:
+    module: confident-ai/classifiers
+    name: ClassifierVersionList
+  references:
+  - ClassifierVersion
+  kind: object
+  fields:
+  - wire: versions
+    python: versions
+    typescript: versions
+    type:
+      python: List[ClassifierVersion]
+      typescript: ClassifierVersion[]
+    required: true
+    description: The classifier's history for the current page, newest version first,
+      so the first entry of the first page is the current version.
+    example: null
+    references:
+    - ClassifierVersion
+  - wire: totalClassifierVersions
+    python: total_classifier_versions
+    typescript: totalClassifierVersions
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of versions this classifier has, across every page.
+    example: 2
+    references: []
+  - wire: page
+    python: page
+    typescript: page
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The page this response covers.
+    example: 1
+    references: []
+  - wire: pageSize
+    python: page_size
+    typescript: pageSize
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of versions per page.
+    example: 25
+    references: []
 - name: ClearProjectModelResult
   description: Confirmation that the project no longer overrides this model type.
     `source` is always `organization`, since the project now follows the organization's
@@ -30600,10 +31925,10 @@ types:
       typescript: Record<string, unknown> | null
     required: false
     description: 'The authentication configuration Confident AI applies when calling
-      your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS`
-      or `LIVEKIT` and put that scheme''s settings in the matching object: `auth0Config`,
-      `hmacConfig`, `azureAdConfig`, `oauth2Config` or `livekitConfig`. A value that
-      does not match that shape is rejected. Send `null` to clear it.'
+      your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD` or `OAUTH2_CLIENT_CREDENTIALS`
+      and put that scheme''s settings in the matching object: `auth0Config`, `hmacConfig`,
+      `azureAdConfig` or `oauth2Config`. A value that does not match that shape is
+      rejected. Send `null` to clear it.'
     example:
       authType: HMAC
       hmacConfig:
@@ -30692,6 +32017,20 @@ types:
     example:
     - session
     - state
+    references: []
+  - wire: metadataKeyPath
+    python: metadata_key_path
+    typescript: metadataKeyPath
+    type:
+      python: Optional[List[Union[str, int]]]
+      typescript: (string | number)[] | null
+    required: false
+    description: Where an object of metadata sits in your application's response,
+      walked the same way as `actualOutputKeyPath`. Its keys are written onto the
+      generated test case's metadata, merged over the golden's own metadata unless
+      `mergeMetadata` is `false`. Send `null` or an empty list to clear it.
+    example:
+    - metadata
     references: []
   - wire: inputTokenCountKeyPath
     python: input_token_count_key_path
@@ -30784,6 +32123,17 @@ types:
       clear it.
     example: state
     references: []
+  - wire: metadataEvent
+    python: metadata_event
+    typescript: metadataEvent
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: For a streaming `responseMode`, the name of the event carrying the
+      metadata, read the same way as `actualOutputEvent`. Send `null` to clear it.
+    example: metadata
+    references: []
   - wire: actualOutputAccumulate
     python: actual_output_accumulate
     typescript: actualOutputAccumulate
@@ -30794,6 +32144,18 @@ types:
     description: For a streaming `responseMode`, whether the chunks arriving on `actualOutputEvent`
       are joined into one answer. Set it to `false` when each event already carries
       the whole answer and only the last one counts.
+    example: true
+    references: []
+  - wire: mergeMetadata
+    python: merge_metadata
+    typescript: mergeMetadata
+    type:
+      python: Optional[bool]
+      typescript: boolean
+    required: false
+    description: Whether the extracted metadata is merged over the golden's metadata,
+      with the response winning on shared keys (`true`, the default), or replaces
+      it outright (`false`).
     example: true
     references: []
   - wire: actualOutputTransformerId
@@ -30840,6 +32202,17 @@ types:
     required: false
     description: The id of a transformer that extracts the conversation state. Send
       this or `stateKeyPath`, never both. Send `null` to clear it.
+    example: <TRANSFORMER-ID>
+    references: []
+  - wire: metadataTransformerId
+    python: metadata_transformer_id
+    typescript: metadataTransformerId
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: The id of a transformer that extracts the metadata object. Send
+      this or `metadataKeyPath`, never both. Send `null` to clear it.
     example: <TRANSFORMER-ID>
     references: []
   - wire: inputTokenCountTransformerId
@@ -33785,6 +35158,78 @@ types:
       the Confident AI platform.
     example: run-399-102
     references: []
+- name: CreateToolRequest
+  description: A tool to create in the project, starting at version 00.00.01.
+  example: null
+  python:
+    module: confident_ai.tools
+    name: CreateToolRequest
+  typescript:
+    module: confident-ai/tools
+    name: CreateToolRequest
+  references:
+  - ToolMode
+  kind: object
+  fields:
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The name of the tool, unique within the project. The model calls
+      the tool by this name.
+    example: get_customer_name
+    references: []
+  - wire: description
+    python: description
+    typescript: description
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: What the tool does. The model reads it to decide when to call the
+      tool.
+    example: Looks up the customer's name by id.
+    references: []
+  - wire: mode
+    python: mode
+    typescript: mode
+    type:
+      python: ToolMode
+      typescript: ToolMode
+    required: true
+    description: null
+    example: null
+    references:
+    - ToolMode
+  - wire: schema
+    python: schema
+    typescript: schema
+    type:
+      python: Dict[str, Any]
+      typescript: Record<string, unknown>
+    required: true
+    description: The JSON Schema for the tool's input. List each parameter under
+      `properties` with a `type`, and name the mandatory ones in `required`. A parameter
+      can also have a `description`, an `enum` of allowed values, or `items` for
+      an array. Whether extra properties are allowed is set by `mode`.
+    example:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The id of the customer to look up.
+        nameFormat:
+          type: string
+          enum:
+          - FULL
+          - FIRST
+          description: Whether to return the full name or only the first name.
+      required:
+      - customerId
+    references: []
 - name: CreateTraceRequest
   description: A trace to record, with the spans it contains. Send `metricCollection`
     to evaluate it online, `threadId` to group it into a conversation, and `testRunId`
@@ -34179,6 +35624,52 @@ types:
     example: null
     references:
     - TransformerCodeDefinition
+- name: CreateVoiceConnectionRequest
+  description: The voice connection to create.
+  example: null
+  python:
+    module: confident_ai.voice_connections
+    name: CreateVoiceConnectionRequest
+  typescript:
+    module: confident-ai/voice-connections
+    name: CreateVoiceConnectionRequest
+  references:
+  - VoiceTransportConfig
+  - VoiceCallSettingsPatch
+  kind: object
+  fields:
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: A name for the voice connection, unique within the project.
+    example: Support line
+    references: []
+  - wire: config
+    python: config
+    typescript: config
+    type:
+      python: VoiceTransportConfig
+      typescript: VoiceTransportConfig
+    required: true
+    description: null
+    example: null
+    references:
+    - VoiceTransportConfig
+  - wire: callSettings
+    python: call_settings
+    typescript: callSettings
+    type:
+      python: Optional[VoiceCallSettingsPatch]
+      typescript: VoiceCallSettingsPatch
+    required: false
+    description: null
+    example: null
+    references:
+    - VoiceCallSettingsPatch
 - name: CreateVulnerabilityRequest
   description: A vulnerability to add to this project. Its name cannot match one
     Confident AI ships — customise that one instead.
@@ -36331,6 +37822,247 @@ types:
     example: null
     references:
     - EvaluationRuleDataModel
+- name: ExpectationKind
+  kind: enum
+  description: '`MUST` for something the LLM system must do, `MUST_NOT` for something
+    it must not do.'
+  python:
+    module: confident_ai.test_runs
+    name: ExpectationKind
+  typescript:
+    module: confident-ai/test-runs
+    name: ExpectationKind
+  members:
+  - name: MUST
+    value: MUST
+  - name: MUST_NOT
+    value: MUST_NOT
+  references: []
+- name: ExpectationVerdict
+  description: The verdict on one of a golden's expectations.
+  example: null
+  python:
+    module: confident_ai.test_runs
+    name: ExpectationVerdict
+  typescript:
+    module: confident-ai/test-runs
+    name: ExpectationVerdict
+  references:
+  - ExpectationKind
+  - ExpectationVerdictStatus
+  kind: object
+  fields:
+  - wire: kind
+    python: kind
+    typescript: kind
+    type:
+      python: ExpectationKind
+      typescript: ExpectationKind
+    required: true
+    description: null
+    example: null
+    references:
+    - ExpectationKind
+  - wire: condition
+    python: condition
+    typescript: condition
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The condition as written on the golden.
+    example: Cite a source
+    references: []
+  - wire: status
+    python: status
+    typescript: status
+    type:
+      python: Optional[ExpectationVerdictStatus]
+      typescript: ExpectationVerdictStatus | null
+    required: true
+    description: The verdict, or `null` while the condition is being judged.
+    example: null
+    references:
+    - ExpectationVerdictStatus
+  - wire: reason
+    python: reason
+    typescript: reason
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: Why the condition held or not.
+    example: The answer links to the Nepal tourism board.
+    references: []
+  - wire: evidence
+    python: evidence
+    typescript: evidence
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The part of the test case the verdict is based on.
+    example: 'actual_output: "Source: nepal.gov.np"'
+    references: []
+- name: ExpectationVerdictStatus
+  kind: enum
+  description: '`pass` when the condition held, `fail` when it did not, and `unable_to_evaluate`
+    when the test case gave too little to judge it.'
+  python:
+    module: confident_ai.test_runs
+    name: ExpectationVerdictStatus
+  typescript:
+    module: confident-ai/test-runs
+    name: ExpectationVerdictStatus
+  members:
+  - name: PASS
+    value: pass
+  - name: FAIL
+    value: fail
+  - name: UNABLE_TO_EVALUATE
+    value: unable_to_evaluate
+  references: []
+- name: ExpectationsData
+  description: The result of judging a test case against its golden's expectations.
+  example: null
+  python:
+    module: confident_ai.test_runs
+    name: ExpectationsData
+  typescript:
+    module: confident-ai/test-runs
+    name: ExpectationsData
+  references:
+  - ExpectationVerdict
+  kind: object
+  fields:
+  - wire: success
+    python: success
+    typescript: success
+    type:
+      python: Optional[bool]
+      typescript: boolean | null
+    required: true
+    description: Whether every condition held.
+    example: true
+    references: []
+  - wire: score
+    python: score
+    typescript: score
+    type:
+      python: Optional[float]
+      typescript: number | null
+    required: true
+    description: 1 when every condition held, otherwise 0.
+    example: 1
+    references: []
+  - wire: reason
+    python: reason
+    typescript: reason
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: Why the test case met or missed its expectations.
+    example: The answer cited a source and named no competitors.
+    references: []
+  - wire: verdicts
+    python: verdicts
+    typescript: verdicts
+    type:
+      python: List[ExpectationVerdict]
+      typescript: ExpectationVerdict[]
+    required: true
+    description: One verdict per condition.
+    example: null
+    references:
+    - ExpectationVerdict
+  - wire: evaluationModel
+    python: evaluation_model
+    typescript: evaluationModel
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: The model that judged the expectations.
+    example: gpt-4.1
+    references: []
+  - wire: evaluationCost
+    python: evaluation_cost
+    typescript: evaluationCost
+    type:
+      python: Optional[float]
+      typescript: number | null
+    required: true
+    description: The cost of judging the expectations.
+    example: 0.0004
+    references: []
+  - wire: error
+    python: error
+    typescript: error
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: The error raised while judging the expectations, if any.
+    example: null
+    references: []
+- name: ExpectationsScores
+  description: The expectations results aggregated across the test cases in a test
+    run.
+  example: null
+  python:
+    module: confident_ai.test_runs
+    name: ExpectationsScores
+  typescript:
+    module: confident-ai/test-runs
+    name: ExpectationsScores
+  references: []
+  kind: object
+  fields:
+  - wire: scores
+    python: scores
+    typescript: scores
+    type:
+      python: List[float]
+      typescript: number[]
+    required: true
+    description: 'The expectations score of each test case judged against expectations:
+      1 when every condition held, otherwise 0.'
+    example:
+    - 1
+    - 1
+    - 0
+    references: []
+  - wire: passes
+    python: passes
+    typescript: passes
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of test cases that met every expectation.
+    example: 2
+    references: []
+  - wire: fails
+    python: fails
+    typescript: fails
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of test cases that missed at least one expectation.
+    example: 1
+    references: []
+  - wire: errors
+    python: errors
+    typescript: errors
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of test cases whose expectations errored during evaluation.
+    example: 0
+    references: []
 - name: ExportDestination
   description: A destination export schedules send exports to, with its credentials
     masked. Confident AI returns the last six characters of each credential so you
@@ -37115,14 +38847,15 @@ types:
         Rating", "Thumbs Rating", "Explanation", "Expected Output", "Expected Outcome",
         "Annotator", "End User", "Annotation Type", "Annotation Name", "Annotation
         Date", "Annotation Rating", "Annotation Thumbs", "Annotation Choice", "Annotation
-        Yes / No", "Annotation Text", "Metric Score", "Metric Status", "Metadata",
-        "Classifier", "Metric", "Metric Name", "Trace Count", "Test Case ID", "Requested
-        review from", "Assigned to", "Tags", "Labels", "Tools Called", "Finalized",
-        "Golden ID", "Ingestion Task", "Latency", "Environment", "Review flag", "Vulnerability",
-        "Vulnerability Type", "Attack Method", "Risk Category", "Framework", "Assessment
-        ID", "Prompt Alias", "Prompt Version", "Prompt Label", "Prompt Commit Hash",
-        "Prompt", "Annotations", "Failure Mode", "Recommended", "Sub-mode Name",
-        "Sub-mode Recommended", "Sub-mode Certainty", "Status Code", "Actor Type"]
+        Yes / No", "Annotation Text", "Metric Score", "Metric Status", "Metric Version",
+        "Metadata", "Classifier", "Classifier Version", "Metric", "Metric Name",
+        "Trace Count", "Test Case ID", "Requested review from", "Assigned to", "Tags",
+        "Labels", "Tools Called", "Finalized", "Golden ID", "Ingestion Task", "Latency",
+        "Environment", "Review flag", "Vulnerability", "Vulnerability Type", "Attack
+        Method", "Risk Category", "Framework", "Assessment ID", "Prompt Alias", "Prompt
+        Version", "Prompt Label", "Prompt Commit Hash", "Prompt", "Annotations",
+        "Failure Mode", "Recommended", "Sub-mode Name", "Sub-mode Recommended", "Sub-mode
+        Certainty", "Status Code", "Actor Type"]
       typescript: '"User Id" | "Customer Id" | "Customer Name" | "Thread Id" | "Trace
         UUID" | "Trace Name" | "Trace Version" | "Trace Status" | "Trace Tags" |
         "Trace" | "Span UUID" | "Name" | "Span Name" | "Span Type" | "Span Status"
@@ -37135,15 +38868,16 @@ types:
         Rating" | "Explanation" | "Expected Output" | "Expected Outcome" | "Annotator"
         | "End User" | "Annotation Type" | "Annotation Name" | "Annotation Date"
         | "Annotation Rating" | "Annotation Thumbs" | "Annotation Choice" | "Annotation
-        Yes / No" | "Annotation Text" | "Metric Score" | "Metric Status" | "Metadata"
-        | "Classifier" | "Metric" | "Metric Name" | "Trace Count" | "Test Case ID"
-        | "Requested review from" | "Assigned to" | "Tags" | "Labels" | "Tools Called"
-        | "Finalized" | "Golden ID" | "Ingestion Task" | "Latency" | "Environment"
-        | "Review flag" | "Vulnerability" | "Vulnerability Type" | "Attack Method"
-        | "Risk Category" | "Framework" | "Assessment ID" | "Prompt Alias" | "Prompt
-        Version" | "Prompt Label" | "Prompt Commit Hash" | "Prompt" | "Annotations"
-        | "Failure Mode" | "Recommended" | "Sub-mode Name" | "Sub-mode Recommended"
-        | "Sub-mode Certainty" | "Status Code" | "Actor Type"'
+        Yes / No" | "Annotation Text" | "Metric Score" | "Metric Status" | "Metric
+        Version" | "Metadata" | "Classifier" | "Classifier Version" | "Metric" |
+        "Metric Name" | "Trace Count" | "Test Case ID" | "Requested review from"
+        | "Assigned to" | "Tags" | "Labels" | "Tools Called" | "Finalized" | "Golden
+        ID" | "Ingestion Task" | "Latency" | "Environment" | "Review flag" | "Vulnerability"
+        | "Vulnerability Type" | "Attack Method" | "Risk Category" | "Framework"
+        | "Assessment ID" | "Prompt Alias" | "Prompt Version" | "Prompt Label" |
+        "Prompt Commit Hash" | "Prompt" | "Annotations" | "Failure Mode" | "Recommended"
+        | "Sub-mode Name" | "Sub-mode Recommended" | "Sub-mode Certainty" | "Status
+        Code" | "Actor Type"'
     required: true
     description: null
     example: null
@@ -37811,9 +39545,10 @@ types:
 - name: GenerationMode
   kind: enum
   description: 'Where the actual outputs come from when running a dataset: `AI_CONNECTION`
-    generates them with an AI connection, `PROMPT` with a prompt. Omit it when you
-    supply at most one of `aiConnectionId` or `promptAlias`, and Confident AI infers
-    the mode from whichever you sent.'
+    generates them with an AI connection, `PROMPT` with a prompt, and `VOICE_CONNECTION`
+    by calling a voice connection during simulation. Omit it when you supply at most
+    one of `aiConnectionId`, `promptAlias` or `voiceConnectionId`, and Confident
+    AI infers the mode from whichever you sent.'
   python:
     module: confident_ai.common
     name: GenerationMode
@@ -37825,6 +39560,8 @@ types:
     value: AI_CONNECTION
   - name: PROMPT
     value: PROMPT
+  - name: VOICE_CONNECTION
+    value: VOICE_CONNECTION
   references: []
 - name: Golden
   description: 'A golden in the dataset: single-turn when it carries `input`, multi-turn
@@ -42612,7 +44349,7 @@ types:
       python: Optional[List[Tool]]
       typescript: Tool[]
     required: false
-    description: This is the list of tools available to the prompt.
+    description: The tools available to the prompt, at the versions this commit pinned.
     example: null
     references:
     - Tool
@@ -42784,6 +44521,38 @@ types:
   - name: PROMPT
     value: PROMPT
   references: []
+- name: MetricCodeDefinition
+  description: The code a CODE metric runs to score a test case.
+  example: null
+  python:
+    module: confident_ai.metrics
+    name: MetricCodeDefinition
+  typescript:
+    module: confident-ai/metrics
+    name: MetricCodeDefinition
+  references: []
+  kind: object
+  fields:
+  - wire: language
+    python: language
+    typescript: language
+    type:
+      python: Literal["PYTHON"]
+      typescript: '"PYTHON"'
+    required: true
+    description: This is the language the code is written in.
+    example: PYTHON
+    references: []
+  - wire: code
+    python: code
+    typescript: code
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: This is the source code the metric runs.
+    example: 'def measure(test_case): return 1.0'
+    references: []
 - name: MetricCollection
   description: 'A metric collection: its name, sampling and transformer configuration,
     and the settings for every metric inside it.'
@@ -43888,6 +45657,346 @@ types:
     description: This is the name of the metric.
     example: Answer Relevancy
     references: []
+- name: MetricVersion
+  description: An immutable snapshot of a metric's definition. Saving a metric whose
+    definition changed appends a new version instead of editing this one, and saving
+    an unchanged definition appends nothing.
+  example: null
+  python:
+    module: confident_ai.metrics
+    name: MetricVersion
+  typescript:
+    module: confident-ai/metrics
+    name: MetricVersion
+  references:
+  - MetricAlgorithm
+  - Rubric
+  - MetricDag
+  - JevQuestion
+  - PromptMetricConfig
+  - MetricCodeDefinition
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: This is the unique id of the version.
+    example: <METRIC-VERSION-ID>
+    references: []
+  - wire: version
+    python: version
+    typescript: version
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: This is the human-readable label for `sequence`, written as three
+      two-digit groups that roll over at 100, so sequence 2 is `00.00.02` and sequence
+      100 is `00.01.00`.
+    example: 00.00.02
+    references: []
+  - wire: sequence
+    python: sequence
+    typescript: sequence
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: This is the position of the version in the metric's history, counting
+      from 1. The highest sequence is the definition new evaluations run.
+    example: 2
+    references: []
+  - wire: createdAt
+    python: created_at
+    typescript: createdAt
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: This is when the version was saved.
+    example: '2025-01-18T16:45:00+00:00'
+    references: []
+  - wire: algorithm
+    python: algorithm
+    typescript: algorithm
+    type:
+      python: Optional[MetricAlgorithm]
+      typescript: MetricAlgorithm | null
+    required: true
+    description: null
+    example: null
+    references:
+    - MetricAlgorithm
+  - wire: criteria
+    python: criteria
+    typescript: criteria
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: This is the criteria the version scores against, or null when it
+      uses evaluation steps.
+    example: Determine if the actual output is correct based on the expected output.
+    references: []
+  - wire: evaluationSteps
+    python: evaluation_steps
+    typescript: evaluationSteps
+    type:
+      python: Optional[List[str]]
+      typescript: string[] | null
+    required: true
+    description: These are the steps the version follows to score, or null when it
+      uses criteria.
+    example: null
+    references: []
+  - wire: rubric
+    python: rubric
+    typescript: rubric
+    type:
+      python: Optional[List[Rubric]]
+      typescript: Rubric[] | null
+    required: true
+    description: These are the score ranges that anchor how the version scores, or
+      null.
+    example: null
+    references:
+    - Rubric
+  - wire: dag
+    python: dag
+    typescript: dag
+    type:
+      python: Optional[MetricDag]
+      typescript: MetricDag | null
+    required: true
+    description: null
+    example: null
+    references:
+    - MetricDag
+  - wire: questions
+    python: questions
+    typescript: questions
+    type:
+      python: Optional[List[JevQuestion]]
+      typescript: JevQuestion[] | null
+    required: true
+    description: These are the questions a JEVAL version asks the decision model,
+      or null for other algorithms.
+    example: null
+    references:
+    - JevQuestion
+  - wire: promptConfig
+    python: prompt_config
+    typescript: promptConfig
+    type:
+      python: Optional[PromptMetricConfig]
+      typescript: PromptMetricConfig | null
+    required: true
+    description: This is the judge prompt of a PROMPT version, or null for other
+      algorithms.
+    example: null
+    references:
+    - PromptMetricConfig
+  - wire: requireInput
+    python: require_input
+    typescript: requireInput
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: This is true when the metric needs the test case's `input`.
+    example: false
+    references: []
+  - wire: requireActualOutput
+    python: require_actual_output
+    typescript: requireActualOutput
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: This is true when the metric needs the test case's `actualOutput`.
+    example: false
+    references: []
+  - wire: requireExpectedOutput
+    python: require_expected_output
+    typescript: requireExpectedOutput
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: This is true when the metric needs the test case's `expectedOutput`.
+    example: false
+    references: []
+  - wire: requireContext
+    python: require_context
+    typescript: requireContext
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: This is true when the metric needs the test case's `context`.
+    example: false
+    references: []
+  - wire: requireExpectedTools
+    python: require_expected_tools
+    typescript: requireExpectedTools
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: This is true when the metric needs the test case's `expectedTools`.
+    example: false
+    references: []
+  - wire: requireContent
+    python: require_content
+    typescript: requireContent
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: This is true when the metric needs the test case's `content`.
+    example: false
+    references: []
+  - wire: requireRole
+    python: require_role
+    typescript: requireRole
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: This is true when the metric needs the test case's `role`.
+    example: false
+    references: []
+  - wire: requireScenario
+    python: require_scenario
+    typescript: requireScenario
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: This is true when the metric needs the test case's `scenario`.
+    example: false
+    references: []
+  - wire: requireExpectedOutcome
+    python: require_expected_outcome
+    typescript: requireExpectedOutcome
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: This is true when the metric needs the test case's `expectedOutcome`.
+    example: false
+    references: []
+  - wire: requireRetrievalContext
+    python: require_retrieval_context
+    typescript: requireRetrievalContext
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: This is true when the metric needs the test case's `retrievalContext`.
+    example: false
+    references: []
+  - wire: requireToolsCalled
+    python: require_tools_called
+    typescript: requireToolsCalled
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: This is true when the metric needs the test case's `toolsCalled`.
+    example: false
+    references: []
+  - wire: requireMetadata
+    python: require_metadata
+    typescript: requireMetadata
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: This is true when the metric needs the test case's `metadata`.
+    example: false
+    references: []
+  - wire: requireTags
+    python: require_tags
+    typescript: requireTags
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: This is true when the metric needs the test case's `tags`.
+    example: false
+    references: []
+  - wire: codeDefinition
+    python: code_definition
+    typescript: codeDefinition
+    type:
+      python: Optional[MetricCodeDefinition]
+      typescript: MetricCodeDefinition | null
+    required: true
+    description: This is the code a CODE version runs, or null for other algorithms.
+    example: null
+    references:
+    - MetricCodeDefinition
+- name: MetricVersionList
+  description: One page of a metric's definition history, with the total across all
+    pages.
+  example: null
+  python:
+    module: confident_ai.metrics
+    name: MetricVersionList
+  typescript:
+    module: confident-ai/metrics
+    name: MetricVersionList
+  references:
+  - MetricVersion
+  kind: object
+  fields:
+  - wire: versions
+    python: versions
+    typescript: versions
+    type:
+      python: List[MetricVersion]
+      typescript: MetricVersion[]
+    required: true
+    description: The metric's definition history for the current page, newest version
+      first, so the first entry of the first page is the current definition.
+    example: null
+    references:
+    - MetricVersion
+  - wire: totalMetricVersions
+    python: total_metric_versions
+    typescript: totalMetricVersions
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of versions this metric has, across every page.
+    example: 2
+    references: []
+  - wire: page
+    python: page
+    typescript: page
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The page this response covers.
+    example: 1
+    references: []
+  - wire: pageSize
+    python: page_size
+    typescript: pageSize
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of versions per page.
+    example: 25
+    references: []
 - name: Model
   description: 'One model configuration: the provider and model Confident AI calls
     for a given purpose, with the limits it calls them under. A configuration belongs
@@ -44746,6 +46855,20 @@ types:
     example:
       source: faq
     references: []
+  - wire: expectations
+    python: expectations
+    typescript: expectations
+    type:
+      python: Optional[MultiTurnGoldenExpectations]
+      typescript: MultiTurnGoldenExpectations | null
+    required: false
+    description: These are what the LLM system must and must not do for this golden.
+    example:
+      must:
+      - Cite a source
+      mustNot:
+      - Mention competitors
+    references: []
   - wire: comments
     python: comments
     typescript: comments
@@ -44811,6 +46934,38 @@ types:
     description: These are the tags associated with the golden.
     example:
     - geography
+    references: []
+- name: MultiTurnGoldenExpectations
+  description: null
+  example: null
+  python:
+    module: confident_ai.datasets
+    name: MultiTurnGoldenExpectations
+  typescript:
+    module: confident-ai/datasets
+    name: MultiTurnGoldenExpectations
+  references: []
+  kind: object
+  fields:
+  - wire: must
+    python: must
+    typescript: must
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: null
+    example: null
+    references: []
+  - wire: mustNot
+    python: must_not
+    typescript: mustNot
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: null
+    example: null
     references: []
 - name: MultiTurnGoldenRequest
   description: 'A multi-turn golden to write: the scenario of a conversation with
@@ -44894,6 +47049,21 @@ types:
     description: Additional metadata to associate with the golden.
     example:
       source: faq
+    references: []
+  - wire: expectations
+    python: expectations
+    typescript: expectations
+    type:
+      python: Optional[MultiTurnGoldenRequestExpectations]
+      typescript: MultiTurnGoldenRequestExpectations | null
+    required: false
+    description: What the LLM system must and must not do for this golden. Omit it
+      to leave stored expectations unchanged, or send null to clear them.
+    example:
+      must:
+      - Cite a source
+      mustNot:
+      - Mention competitors
     references: []
   - wire: comments
     python: comments
@@ -44980,6 +47150,38 @@ types:
       and filtering goldens. A tag that does not exist in the dataset yet is created.
     example:
     - geography
+    references: []
+- name: MultiTurnGoldenRequestExpectations
+  description: null
+  example: null
+  python:
+    module: confident_ai.datasets
+    name: MultiTurnGoldenRequestExpectations
+  typescript:
+    module: confident-ai/datasets
+    name: MultiTurnGoldenRequestExpectations
+  references: []
+  kind: object
+  fields:
+  - wire: must
+    python: must
+    typescript: must
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: null
+    example: null
+    references: []
+  - wire: mustNot
+    python: must_not
+    typescript: mustNot
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: null
+    example: null
     references: []
 - name: MultiTurnTestCase
   description: A test case for a conversation with your LLM application.
@@ -46057,6 +48259,83 @@ types:
     required: true
     description: The name of the persona.
     example: Frustrated support caller
+    references: []
+- name: PhoneVoiceConfig
+  description: Dials your agent over the phone network.
+  example: null
+  python:
+    module: confident_ai.voice_connections
+    name: PhoneVoiceConfig
+  typescript:
+    module: confident-ai/voice-connections
+    name: PhoneVoiceConfig
+  references:
+  - SipCredentials
+  kind: object
+  fields:
+  - wire: transport
+    python: transport
+    typescript: transport
+    type:
+      python: Literal["PHONE"]
+      typescript: '"PHONE"'
+    required: true
+    description: null
+    example: null
+    references: []
+  - wire: phoneNumber
+    python: phone_number
+    typescript: phoneNumber
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The E.164 phone number to dial.
+    example: '+14155550100'
+    references: []
+  - wire: carrier
+    python: carrier
+    typescript: carrier
+    type:
+      python: Literal["CONFIDENT", "CUSTOM_TRUNK"]
+      typescript: '"CONFIDENT" | "CUSTOM_TRUNK"'
+    required: true
+    description: 'Who carries the call to the phone network: `CONFIDENT` uses Confident
+      AI''s own trunk, `CUSTOM_TRUNK` uses yours.'
+    example: null
+    references: []
+  - wire: trunkUri
+    python: trunk_uri
+    typescript: trunkUri
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: 'The sip: address of your outbound trunk. Required when `carrier`
+      is `CUSTOM_TRUNK`.'
+    example: sip:outbound@trunk.example.com
+    references: []
+  - wire: trunkCredentials
+    python: trunk_credentials
+    typescript: trunkCredentials
+    type:
+      python: Optional[SipCredentials]
+      typescript: SipCredentials | null
+    required: true
+    description: Credentials for your outbound trunk, or null when it needs none.
+    example: null
+    references:
+    - SipCredentials
+  - wire: callerId
+    python: caller_id
+    typescript: callerId
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: 'The number or sip: address presented to your agent as the caller.
+      Leave it empty to use the default.'
+    example: '+14155550199'
     references: []
 - name: PingAIConnectionRequest
   description: How to test the connection. Send `{}` to make a single call with a
@@ -47664,7 +49943,7 @@ types:
   - ModelSettings
   - PromptOutputType
   - OutputSchema
-  - Tool
+  - PushTool
   kind: object
   fields:
   - wire: messages
@@ -47741,13 +50020,16 @@ types:
     python: tools
     typescript: tools
     type:
-      python: Optional[List[Tool]]
-      typescript: Tool[]
+      python: Optional[List[PushTool]]
+      typescript: PushTool[]
     required: false
-    description: This is the list of tools to make available to the prompt.
-    example: null
+    description: The tools available to the prompt. The commit pins each one at a
+      version.
+    example:
+    - id: <TOOL-ID>
+      version: 00.00.01
     references:
-    - Tool
+    - PushTool
   - wire: branch
     python: branch
     typescript: branch
@@ -47842,6 +50124,21 @@ types:
     description: Additional metadata to associate with the golden.
     example:
       source: faq
+    references: []
+  - wire: expectations
+    python: expectations
+    typescript: expectations
+    type:
+      python: Optional[PushMultiTurnGoldenExpectations]
+      typescript: PushMultiTurnGoldenExpectations | null
+    required: false
+    description: What the LLM system must and must not do for this golden. Omit it
+      to leave stored expectations unchanged, or send null to clear them.
+    example:
+      must:
+      - Cite a source
+      mustNot:
+      - Mention competitors
     references: []
   - wire: comments
     python: comments
@@ -47940,6 +50237,38 @@ types:
       dataset is pulled. That golden is updated in place, staying in the version
       it is already in. Omit it to add a new golden.
     example: <GOLDEN-ID>
+    references: []
+- name: PushMultiTurnGoldenExpectations
+  description: null
+  example: null
+  python:
+    module: confident_ai.datasets
+    name: PushMultiTurnGoldenExpectations
+  typescript:
+    module: confident-ai/datasets
+    name: PushMultiTurnGoldenExpectations
+  references: []
+  kind: object
+  fields:
+  - wire: must
+    python: must
+    typescript: must
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: null
+    example: null
+    references: []
+  - wire: mustNot
+    python: must_not
+    typescript: mustNot
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: null
+    example: null
     references: []
 - name: PushPromptRequest
   description: The commit to push. Send `text` for a text prompt or `messages` for
@@ -48126,6 +50455,21 @@ types:
     example:
       source: faq
     references: []
+  - wire: expectations
+    python: expectations
+    typescript: expectations
+    type:
+      python: Optional[PushSingleTurnGoldenExpectations]
+      typescript: PushSingleTurnGoldenExpectations | null
+    required: false
+    description: What the LLM system must and must not do for this golden. Omit it
+      to leave stored expectations unchanged, or send null to clear them.
+    example:
+      must:
+      - Cite a source
+      mustNot:
+      - Mention competitors
+    references: []
   - wire: comments
     python: comments
     typescript: comments
@@ -48224,6 +50568,38 @@ types:
       it is already in. Omit it to add a new golden.
     example: <GOLDEN-ID>
     references: []
+- name: PushSingleTurnGoldenExpectations
+  description: null
+  example: null
+  python:
+    module: confident_ai.datasets
+    name: PushSingleTurnGoldenExpectations
+  typescript:
+    module: confident-ai/datasets
+    name: PushSingleTurnGoldenExpectations
+  references: []
+  kind: object
+  fields:
+  - wire: must
+    python: must
+    typescript: must
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: null
+    example: null
+    references: []
+  - wire: mustNot
+    python: must_not
+    typescript: mustNot
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: null
+    example: null
+    references: []
 - name: PushTextPrompt
   description: Pushes a commit to a text prompt. `interpolationType` defaults to
     `FSTRING` when omitted.
@@ -48239,7 +50615,7 @@ types:
   - ModelSettings
   - PromptOutputType
   - OutputSchema
-  - Tool
+  - PushTool
   kind: object
   fields:
   - wire: text
@@ -48311,13 +50687,16 @@ types:
     python: tools
     typescript: tools
     type:
-      python: Optional[List[Tool]]
-      typescript: Tool[]
+      python: Optional[List[PushTool]]
+      typescript: PushTool[]
     required: false
-    description: This is the list of tools to make available to the prompt.
-    example: null
+    description: The tools available to the prompt. The commit pins each one at a
+      version.
+    example:
+    - id: <TOOL-ID>
+      version: 00.00.01
     references:
-    - Tool
+    - PushTool
   - wire: branch
     python: branch
     typescript: branch
@@ -48328,6 +50707,98 @@ types:
     description: The name of the branch to push the new commit to. The branch is
       created from `main` when it does not exist yet.
     example: main
+    references: []
+- name: PushTool
+  description: A tool for the commit to pin. Omitted fields keep the values of the
+    version being pinned, and a changed `mode` or `schema` creates a new version.
+  example: null
+  python:
+    module: confident_ai.prompts
+    name: PushTool
+  typescript:
+    module: confident-ai/prompts
+    name: PushTool
+  references:
+  - ToolMode
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: The id of an existing tool. Omit it to use `name` instead.
+    example: <TOOL-ID>
+    references: []
+  - wire: version
+    python: version
+    typescript: version
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: The version to pin. Omit it to use the latest version.
+    example: 00.00.01
+    references: []
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: The name of the tool. Without `id`, the tool with this name is used
+      or created; with `id`, a new name renames it.
+    example: get_customer_name
+    references: []
+  - wire: description
+    python: description
+    typescript: description
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: What the tool does.
+    example: Looks up the customer's name by id.
+    references: []
+  - wire: mode
+    python: mode
+    typescript: mode
+    type:
+      python: Optional[ToolMode]
+      typescript: ToolMode
+    required: false
+    description: null
+    example: null
+    references:
+    - ToolMode
+  - wire: schema
+    python: schema
+    typescript: schema
+    type:
+      python: Optional[Dict[str, Any]]
+      typescript: Record<string, unknown>
+    required: false
+    description: The JSON Schema for the tool's input. List each parameter under
+      `properties` with a `type`, and name the mandatory ones in `required`. A parameter
+      can also have a `description`, an `enum` of allowed values, or `items` for
+      an array. Whether extra properties are allowed is set by `mode`.
+    example:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The id of the customer to look up.
+        nameFormat:
+          type: string
+          enum:
+          - FULL
+          - FIRST
+          description: Whether to return the full name or only the first name.
+      required:
+      - customerId
     references: []
 - name: QueueDatasetGoldensRequest
   description: null
@@ -51855,7 +54326,7 @@ types:
     references: []
 - name: RunDatasetEvaluationRequest
   description: How to evaluate the dataset. By default the goldens' stored actual
-    outputs are evaluated; supply `aiConnectionId` or `promptAlias`, never both,
+    outputs are evaluated; supply one of `aiConnectionId`, `promptAlias` or `voiceConnectionId`
     to generate them first.
   example: null
   python:
@@ -51912,6 +54383,19 @@ types:
       before evaluating them. Required when `generationMode` is `AI_CONNECTION`,
       and not allowed together with `promptAlias`.
     example: <AI-CONNECTION-ID>
+    references: []
+  - wire: voiceConnectionId
+    python: voice_connection_id
+    typescript: voiceConnectionId
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: The id of the voice connection to call while simulating each golden's
+      conversation. Required when `generationMode` is `VOICE_CONNECTION`, needs a
+      multi-turn dataset with `includeSimulation` enabled, and is not allowed together
+      with `aiConnectionId` or `promptAlias`.
+    example: <VOICE-CONNECTION-ID>
     references: []
   - wire: promptAlias
     python: prompt_alias
@@ -52929,6 +55413,20 @@ types:
     example:
       source: faq
     references: []
+  - wire: expectations
+    python: expectations
+    typescript: expectations
+    type:
+      python: Optional[SingleTurnGoldenExpectations]
+      typescript: SingleTurnGoldenExpectations | null
+    required: false
+    description: These are what the LLM system must and must not do for this golden.
+    example:
+      must:
+      - Cite a source
+      mustNot:
+      - Mention competitors
+    references: []
   - wire: comments
     python: comments
     typescript: comments
@@ -52994,6 +55492,38 @@ types:
     description: These are the tags associated with the golden.
     example:
     - geography
+    references: []
+- name: SingleTurnGoldenExpectations
+  description: null
+  example: null
+  python:
+    module: confident_ai.datasets
+    name: SingleTurnGoldenExpectations
+  typescript:
+    module: confident-ai/datasets
+    name: SingleTurnGoldenExpectations
+  references: []
+  kind: object
+  fields:
+  - wire: must
+    python: must
+    typescript: must
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: null
+    example: null
+    references: []
+  - wire: mustNot
+    python: must_not
+    typescript: mustNot
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: null
+    example: null
     references: []
 - name: SingleTurnGoldenRequest
   description: 'A single-turn golden to write: one input to your LLM application
@@ -53126,6 +55656,21 @@ types:
     example:
       source: faq
     references: []
+  - wire: expectations
+    python: expectations
+    typescript: expectations
+    type:
+      python: Optional[SingleTurnGoldenRequestExpectations]
+      typescript: SingleTurnGoldenRequestExpectations | null
+    required: false
+    description: What the LLM system must and must not do for this golden. Omit it
+      to leave stored expectations unchanged, or send null to clear them.
+    example:
+      must:
+      - Cite a source
+      mustNot:
+      - Mention competitors
+    references: []
   - wire: comments
     python: comments
     typescript: comments
@@ -53211,6 +55756,38 @@ types:
       and filtering goldens. A tag that does not exist in the dataset yet is created.
     example:
     - geography
+    references: []
+- name: SingleTurnGoldenRequestExpectations
+  description: null
+  example: null
+  python:
+    module: confident_ai.datasets
+    name: SingleTurnGoldenRequestExpectations
+  typescript:
+    module: confident-ai/datasets
+    name: SingleTurnGoldenRequestExpectations
+  references: []
+  kind: object
+  fields:
+  - wire: must
+    python: must
+    typescript: must
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: null
+    example: null
+    references: []
+  - wire: mustNot
+    python: must_not
+    typescript: mustNot
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: null
+    example: null
     references: []
 - name: SingleTurnTestCase
   description: A test case for a single exchange with your LLM application.
@@ -53402,6 +55979,116 @@ types:
     example:
     - geography
     references: []
+- name: SipCredentials
+  description: Digest credentials used to authenticate a SIP call.
+  example: null
+  python:
+    module: confident_ai.voice_connections
+    name: SipCredentials
+  typescript:
+    module: confident-ai/voice-connections
+    name: SipCredentials
+  references: []
+  kind: object
+  fields:
+  - wire: username
+    python: username
+    typescript: username
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The SIP digest username.
+    example: confident
+    references: []
+  - wire: password
+    python: password
+    typescript: password
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The SIP digest password.
+    example: YOUR-SIP-PASSWORD
+    references: []
+- name: SipVoiceConfig
+  description: Calls your agent's SIP address directly.
+  example: null
+  python:
+    module: confident_ai.voice_connections
+    name: SipVoiceConfig
+  typescript:
+    module: confident-ai/voice-connections
+    name: SipVoiceConfig
+  references:
+  - SipCredentials
+  - VoiceHeader
+  kind: object
+  fields:
+  - wire: transport
+    python: transport
+    typescript: transport
+    type:
+      python: Literal["SIP"]
+      typescript: '"SIP"'
+    required: true
+    description: null
+    example: null
+    references: []
+  - wire: sipUri
+    python: sip_uri
+    typescript: sipUri
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: 'The sip: address of your agent.'
+    example: sip:agent@sip.example.com
+    references: []
+  - wire: signalingTransport
+    python: signaling_transport
+    typescript: signalingTransport
+    type:
+      python: Literal["UDP", "TCP", "TLS"]
+      typescript: '"UDP" | "TCP" | "TLS"'
+    required: true
+    description: The transport used for SIP signaling. A `;transport=` parameter
+      on `sipUri` takes precedence.
+    example: null
+    references: []
+  - wire: credentials
+    python: credentials
+    typescript: credentials
+    type:
+      python: Optional[SipCredentials]
+      typescript: SipCredentials | null
+    required: true
+    description: Credentials for your SIP endpoint, or null when it needs none.
+    example: null
+    references:
+    - SipCredentials
+  - wire: callerId
+    python: caller_id
+    typescript: callerId
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: 'The number or sip: address presented to your agent as the caller.
+      Leave it empty to use the default.'
+    example: '+14155550199'
+    references: []
+  - wire: headers
+    python: headers
+    typescript: headers
+    type:
+      python: List[VoiceHeader]
+      typescript: VoiceHeader[]
+    required: true
+    description: Extra `X-` headers sent on the INVITE, for routing on your side.
+    example: null
+    references:
+    - VoiceHeader
 - name: SnowflakeExportDestinationConfig
   description: How Confident AI signs in to Snowflake with key-pair authentication,
     and where it creates the export tables.
@@ -54651,126 +57338,6 @@ types:
   - name: LLM
     value: LLM
   references: []
-- name: StructuredSchema
-  description: This is the schema for your tool's input.
-  example: null
-  python:
-    module: confident_ai.prompts
-    name: StructuredSchema
-  typescript:
-    module: confident-ai/prompts
-    name: StructuredSchema
-  references:
-  - StructuredSchemaField
-  kind: object
-  fields:
-  - wire: id
-    python: id
-    typescript: id
-    type:
-      python: Optional[str]
-      typescript: string
-    required: false
-    description: This is the id of the schema assigned by Confident AI.
-    example: <STRUCTURED-SCHEMA-ID>
-    references: []
-  - wire: name
-    python: name
-    typescript: name
-    type:
-      python: Optional[str]
-      typescript: string | null
-    required: false
-    description: This is the name of the schema.
-    example: GetCustomerNameInput
-    references: []
-  - wire: fields
-    python: fields
-    typescript: fields
-    type:
-      python: List[StructuredSchemaField]
-      typescript: StructuredSchemaField[]
-    required: true
-    description: This is the array of fields that define the tool's input structure.
-    example: null
-    references:
-    - StructuredSchemaField
-- name: StructuredSchemaField
-  description: null
-  example: null
-  python:
-    module: confident_ai.prompts
-    name: StructuredSchemaField
-  typescript:
-    module: confident-ai/prompts
-    name: StructuredSchemaField
-  references:
-  - SchemaDataType
-  kind: object
-  fields:
-  - wire: id
-    python: id
-    typescript: id
-    type:
-      python: str
-      typescript: string
-    required: true
-    description: This is the unique identifier for the schema field. Use it as the
-      `parentId` of nested fields.
-    example: <FIELD-ID>
-    references: []
-  - wire: name
-    python: name
-    typescript: name
-    type:
-      python: Optional[str]
-      typescript: string | null
-    required: false
-    description: This is the name of the schema field.
-    example: customerId
-    references: []
-  - wire: description
-    python: description
-    typescript: description
-    type:
-      python: Optional[str]
-      typescript: string | null
-    required: false
-    description: This is the description of the schema field.
-    example: The id of the customer to look up.
-    references: []
-  - wire: type
-    python: type
-    typescript: type
-    type:
-      python: SchemaDataType
-      typescript: SchemaDataType
-    required: true
-    description: null
-    example: null
-    references:
-    - SchemaDataType
-  - wire: required
-    python: required
-    typescript: required
-    type:
-      python: Optional[bool]
-      typescript: boolean
-    required: false
-    description: This indicates whether the field is required in the input.
-    example: true
-    references: []
-  - wire: parentId
-    python: parent_id
-    typescript: parentId
-    type:
-      python: Optional[str]
-      typescript: string | null
-    required: false
-    description: This is the id of the parent field for nested structures, or `null`
-      for a top-level field.
-    example: null
-    references: []
 - name: SubmitTestCaseResultRequest
   description: The result your agent produced for one dispatched test case. Every
     field is optional; a field you omit keeps the value Confident AI already holds
@@ -55426,6 +57993,7 @@ types:
   references:
   - TestRunStatus
   - MetricScores
+  - ExpectationsScores
   - AiInsightsSummary
   - TestRunTestCase
   kind: object
@@ -55523,6 +58091,19 @@ types:
     example: null
     references:
     - MetricScores
+  - wire: expectationsScores
+    python: expectations_scores
+    typescript: expectationsScores
+    type:
+      python: Optional[ExpectationsScores]
+      typescript: ExpectationsScores | null
+    required: true
+    description: The aggregated expectations results, or `null` when no test case
+      was judged against expectations. Always `null` for test runs with more than
+      one generation per golden.
+    example: null
+    references:
+    - ExpectationsScores
   - wire: runDuration
     python: run_duration
     typescript: runDuration
@@ -55652,6 +58233,7 @@ types:
   references:
   - Turn
   - TestCaseMetricData
+  - ExpectationsData
   kind: object
   fields:
   - wire: turns
@@ -55739,8 +58321,8 @@ types:
       python: Optional[bool]
       typescript: boolean | null
     required: true
-    description: Whether this test case passed all metric thresholds, or `null` while
-      it is still being evaluated.
+    description: Whether this test case passed all metric thresholds and met its
+      expectations, or `null` while it is still being evaluated.
     example: true
     references: []
   - wire: runDuration
@@ -55795,6 +58377,18 @@ types:
     example: null
     references:
     - TestCaseMetricData
+  - wire: expectationsData
+    python: expectations_data
+    typescript: expectationsData
+    type:
+      python: Optional[ExpectationsData]
+      typescript: ExpectationsData | null
+    required: true
+    description: The result of judging this test case against its golden's expectations,
+      or `null` when it had none.
+    example: null
+    references:
+    - ExpectationsData
 - name: TestRunRef
   description: null
   example: null
@@ -55830,6 +58424,7 @@ types:
   references:
   - ToolCall
   - TestCaseMetricData
+  - ExpectationsData
   kind: object
   fields:
   - wire: input
@@ -55933,8 +58528,8 @@ types:
       python: Optional[bool]
       typescript: boolean | null
     required: true
-    description: Whether this test case passed all metric thresholds, or `null` while
-      it is still being evaluated.
+    description: Whether this test case passed all metric thresholds and met its
+      expectations, or `null` while it is still being evaluated.
     example: true
     references: []
   - wire: runDuration
@@ -55989,6 +58584,18 @@ types:
     example: null
     references:
     - TestCaseMetricData
+  - wire: expectationsData
+    python: expectations_data
+    typescript: expectationsData
+    type:
+      python: Optional[ExpectationsData]
+      typescript: ExpectationsData | null
+    required: true
+    description: The result of judging this test case against its golden's expectations,
+      or `null` when it had none.
+    example: null
+    references:
+    - ExpectationsData
 - name: TestRunStatus
   kind: enum
   description: 'The status of the test run: `IN_PROGRESS` while test cases are still
@@ -56022,6 +58629,7 @@ types:
   references:
   - TestRunStatus
   - MetricScores
+  - ExpectationsScores
   - AiInsightsSummary
   kind: object
   fields:
@@ -56118,6 +58726,19 @@ types:
     example: null
     references:
     - MetricScores
+  - wire: expectationsScores
+    python: expectations_scores
+    typescript: expectationsScores
+    type:
+      python: Optional[ExpectationsScores]
+      typescript: ExpectationsScores | null
+    required: true
+    description: The aggregated expectations results, or `null` when no test case
+      was judged against expectations. Always `null` for test runs with more than
+      one generation per golden.
+    example: null
+    references:
+    - ExpectationsScores
   - wire: runDuration
     python: run_duration
     typescript: runDuration
@@ -56205,6 +58826,7 @@ types:
   references:
   - TestCaseTrace
   - TestCaseMetricData
+  - ExpectationsData
   kind: object
   fields:
   - wire: trace
@@ -56245,8 +58867,8 @@ types:
       python: Optional[bool]
       typescript: boolean | null
     required: true
-    description: Whether this test case passed all metric thresholds, or `null` while
-      it is still being evaluated.
+    description: Whether this test case passed all metric thresholds and met its
+      expectations, or `null` while it is still being evaluated.
     example: true
     references: []
   - wire: runDuration
@@ -56301,6 +58923,18 @@ types:
     example: null
     references:
     - TestCaseMetricData
+  - wire: expectationsData
+    python: expectations_data
+    typescript: expectationsData
+    type:
+      python: Optional[ExpectationsData]
+      typescript: ExpectationsData | null
+    required: true
+    description: The result of judging this test case against its golden's expectations,
+      or `null` when it had none.
+    example: null
+    references:
+    - ExpectationsData
 - name: TestTransformerCodeRequest
   description: A sample value to run the transformer's stored code against, so you
     can see what it returns before attaching it to anything.
@@ -56470,7 +59104,7 @@ types:
       python: Optional[List[Tool]]
       typescript: Tool[]
     required: false
-    description: This is the list of tools available to the prompt.
+    description: The tools available to the prompt, at the versions this commit pinned.
     example: null
     references:
     - Tool
@@ -56933,27 +59567,27 @@ types:
     example: 2
     references: []
 - name: Tool
-  description: null
+  description: A tool your prompts can call. Changing its `mode` or `schema` creates
+    a new version.
   example: null
   python:
-    module: confident_ai.prompts
+    module: confident_ai.common
     name: Tool
   typescript:
-    module: confident-ai/prompts
+    module: confident-ai/common
     name: Tool
   references:
   - ToolMode
-  - StructuredSchema
   kind: object
   fields:
   - wire: id
     python: id
     typescript: id
     type:
-      python: Optional[str]
+      python: str
       typescript: string
-    required: false
-    description: This is the id of the tool assigned by Confident AI.
+    required: true
+    description: The id of the tool, generated by Confident AI.
     example: <TOOL-ID>
     references: []
   - wire: name
@@ -56963,7 +59597,7 @@ types:
       python: str
       typescript: string
     required: true
-    description: This is the name of the tool.
+    description: The name of the tool, unique within the project.
     example: get_customer_name
     references: []
   - wire: description
@@ -56972,8 +59606,8 @@ types:
     type:
       python: Optional[str]
       typescript: string | null
-    required: false
-    description: This is the description of the tool.
+    required: true
+    description: What the tool does.
     example: Looks up the customer's name by id.
     references: []
   - wire: mode
@@ -56987,17 +59621,43 @@ types:
     example: null
     references:
     - ToolMode
-  - wire: structuredSchema
-    python: structured_schema
-    typescript: structuredSchema
+  - wire: version
+    python: version
+    typescript: version
     type:
-      python: StructuredSchema
-      typescript: StructuredSchema
+      python: str
+      typescript: string
     required: true
-    description: null
-    example: null
-    references:
-    - StructuredSchema
+    description: The version of the tool. A pulled prompt returns the version its
+      commit pinned.
+    example: 00.00.01
+    references: []
+  - wire: schema
+    python: schema
+    typescript: schema
+    type:
+      python: Dict[str, Any]
+      typescript: Record<string, unknown>
+    required: true
+    description: The JSON Schema for the tool's input. List each parameter under
+      `properties` with a `type`, and name the mandatory ones in `required`. A parameter
+      can also have a `description`, an `enum` of allowed values, or `items` for
+      an array. Whether extra properties are allowed is set by `mode`.
+    example:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The id of the customer to look up.
+        nameFormat:
+          type: string
+          enum:
+          - FULL
+          - FIRST
+          description: Whether to return the full name or only the first name.
+      required:
+      - customerId
+    references: []
 - name: ToolCall
   description: A tool your LLM application invoked, with what it passed in and what
     came back.
@@ -57089,15 +59749,69 @@ types:
   - name: MCP
     value: MCP
   references: []
+- name: ToolList
+  description: One page of tools, with the total across all pages.
+  example: null
+  python:
+    module: confident_ai.tools
+    name: ToolList
+  typescript:
+    module: confident-ai/tools
+    name: ToolList
+  references:
+  - ToolSummary
+  kind: object
+  fields:
+  - wire: tools
+    python: tools
+    typescript: tools
+    type:
+      python: List[ToolSummary]
+      typescript: ToolSummary[]
+    required: true
+    description: The tools for the current page, newest first.
+    example: null
+    references:
+    - ToolSummary
+  - wire: totalTools
+    python: total_tools
+    typescript: totalTools
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The total number of tools in this project.
+    example: 3
+    references: []
+  - wire: page
+    python: page
+    typescript: page
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The page this response covers.
+    example: 1
+    references: []
+  - wire: pageSize
+    python: page_size
+    typescript: pageSize
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of tools per page.
+    example: 25
+    references: []
 - name: ToolMode
   kind: enum
   description: This is the mode for your tool input fields, which controls whether
     fields outside the schema are allowed.
   python:
-    module: confident_ai.prompts
+    module: confident_ai.common
     name: ToolMode
   typescript:
-    module: confident-ai/prompts
+    module: confident-ai/common
     name: ToolMode
   members:
   - name: ALLOW_ADDITIONAL
@@ -57107,6 +59821,28 @@ types:
   - name: STRICT
     value: STRICT
   references: []
+- name: ToolRef
+  description: A reference to a tool by its id.
+  example: null
+  python:
+    module: confident_ai.tools
+    name: ToolRef
+  typescript:
+    module: confident-ai/tools
+    name: ToolRef
+  references: []
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the tool, generated by Confident AI.
+    example: <TOOL-ID>
+    references: []
 - name: ToolSpanRequest
   description: A span recording a tool call.
   example: null
@@ -57335,6 +60071,49 @@ types:
     required: false
     description: This is the description of the tool used in the span.
     example: Looks up the capital city of a country.
+    references: []
+- name: ToolSummary
+  description: 'A tool as it appears in a list: enough to recognise it and pick its
+    id. Retrieve one by id to read its input schema.'
+  example: null
+  python:
+    module: confident_ai.tools
+    name: ToolSummary
+  typescript:
+    module: confident-ai/tools
+    name: ToolSummary
+  references: []
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the tool, generated by Confident AI.
+    example: <TOOL-ID>
+    references: []
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The name of the tool.
+    example: get_customer_name
+    references: []
+  - wire: version
+    python: version
+    typescript: version
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The latest version of the tool.
+    example: 00.00.02
     references: []
 - name: TopicSummary
   description: The findings for one topic of test cases.
@@ -58779,10 +61558,10 @@ types:
       typescript: Record<string, unknown> | null
     required: false
     description: 'The authentication configuration Confident AI applies when calling
-      your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS`
-      or `LIVEKIT` and put that scheme''s settings in the matching object: `auth0Config`,
-      `hmacConfig`, `azureAdConfig`, `oauth2Config` or `livekitConfig`. A value that
-      does not match that shape is rejected. Send `null` to clear it.'
+      your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD` or `OAUTH2_CLIENT_CREDENTIALS`
+      and put that scheme''s settings in the matching object: `auth0Config`, `hmacConfig`,
+      `azureAdConfig` or `oauth2Config`. A value that does not match that shape is
+      rejected. Send `null` to clear it.'
     example:
       authType: HMAC
       hmacConfig:
@@ -58871,6 +61650,20 @@ types:
     example:
     - session
     - state
+    references: []
+  - wire: metadataKeyPath
+    python: metadata_key_path
+    typescript: metadataKeyPath
+    type:
+      python: Optional[List[Union[str, int]]]
+      typescript: (string | number)[] | null
+    required: false
+    description: Where an object of metadata sits in your application's response,
+      walked the same way as `actualOutputKeyPath`. Its keys are written onto the
+      generated test case's metadata, merged over the golden's own metadata unless
+      `mergeMetadata` is `false`. Send `null` or an empty list to clear it.
+    example:
+    - metadata
     references: []
   - wire: inputTokenCountKeyPath
     python: input_token_count_key_path
@@ -58963,6 +61756,17 @@ types:
       clear it.
     example: state
     references: []
+  - wire: metadataEvent
+    python: metadata_event
+    typescript: metadataEvent
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: For a streaming `responseMode`, the name of the event carrying the
+      metadata, read the same way as `actualOutputEvent`. Send `null` to clear it.
+    example: metadata
+    references: []
   - wire: actualOutputAccumulate
     python: actual_output_accumulate
     typescript: actualOutputAccumulate
@@ -58973,6 +61777,18 @@ types:
     description: For a streaming `responseMode`, whether the chunks arriving on `actualOutputEvent`
       are joined into one answer. Set it to `false` when each event already carries
       the whole answer and only the last one counts.
+    example: true
+    references: []
+  - wire: mergeMetadata
+    python: merge_metadata
+    typescript: mergeMetadata
+    type:
+      python: Optional[bool]
+      typescript: boolean
+    required: false
+    description: Whether the extracted metadata is merged over the golden's metadata,
+      with the response winning on shared keys (`true`, the default), or replaces
+      it outright (`false`).
     example: true
     references: []
   - wire: actualOutputTransformerId
@@ -59019,6 +61835,17 @@ types:
     required: false
     description: The id of a transformer that extracts the conversation state. Send
       this or `stateKeyPath`, never both. Send `null` to clear it.
+    example: <TRANSFORMER-ID>
+    references: []
+  - wire: metadataTransformerId
+    python: metadata_transformer_id
+    typescript: metadataTransformerId
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: The id of a transformer that extracts the metadata object. Send
+      this or `metadataKeyPath`, never both. Send `null` to clear it.
     example: <TRANSFORMER-ID>
     references: []
   - wire: inputTokenCountTransformerId
@@ -61936,6 +64763,80 @@ types:
       back the masked value, to keep the stored one; send `null` to clear it.
     example: correct-horse-battery-staple
     references: []
+- name: UpdateToolRequest
+  description: The fields of the tool to change. Send at least one; whatever you
+    omit is left as it was. A changed `mode` or `schema` creates a new version.
+  example: null
+  python:
+    module: confident_ai.tools
+    name: UpdateToolRequest
+  typescript:
+    module: confident-ai/tools
+    name: UpdateToolRequest
+  references:
+  - ToolMode
+  kind: object
+  fields:
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: The name of the tool, unique within the project. Omit it to keep
+      the current name.
+    example: get_customer_name
+    references: []
+  - wire: description
+    python: description
+    typescript: description
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: What the tool does. Send `null` to clear it, or omit it to keep
+      the current one.
+    example: Looks up the customer's name by id.
+    references: []
+  - wire: mode
+    python: mode
+    typescript: mode
+    type:
+      python: Optional[ToolMode]
+      typescript: ToolMode
+    required: false
+    description: null
+    example: null
+    references:
+    - ToolMode
+  - wire: schema
+    python: schema
+    typescript: schema
+    type:
+      python: Optional[Dict[str, Any]]
+      typescript: Record<string, unknown>
+    required: false
+    description: The JSON Schema for the tool's input. List each parameter under
+      `properties` with a `type`, and name the mandatory ones in `required`. A parameter
+      can also have a `description`, an `enum` of allowed values, or `items` for
+      an array. Whether extra properties are allowed is set by `mode`. Omit it to
+      keep the current one.
+    example:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The id of the customer to look up.
+        nameFormat:
+          type: string
+          enum:
+          - FULL
+          - FIRST
+          description: Whether to return the full name or only the first name.
+      required:
+      - customerId
+    references: []
 - name: UpdateTransformerRequest
   description: The fields of the transformer to change. Send at least one; `codeDefinition`
     replaces the stored code outright, so send both its fields together.
@@ -61981,6 +64882,52 @@ types:
     example: null
     references:
     - TransformerCodeDefinition
+- name: UpdateVoiceConnectionRequest
+  description: The parts of the voice connection to change.
+  example: null
+  python:
+    module: confident_ai.voice_connections
+    name: UpdateVoiceConnectionRequest
+  typescript:
+    module: confident-ai/voice-connections
+    name: UpdateVoiceConnectionRequest
+  references:
+  - VoiceTransportConfig
+  - VoiceCallSettingsPatch
+  kind: object
+  fields:
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: A new name, unique within the project.
+    example: Support line
+    references: []
+  - wire: config
+    python: config
+    typescript: config
+    type:
+      python: Optional[VoiceTransportConfig]
+      typescript: VoiceTransportConfig
+    required: false
+    description: null
+    example: null
+    references:
+    - VoiceTransportConfig
+  - wire: callSettings
+    python: call_settings
+    typescript: callSettings
+    type:
+      python: Optional[VoiceCallSettingsPatch]
+      typescript: VoiceCallSettingsPatch
+    required: false
+    description: null
+    example: null
+    references:
+    - VoiceCallSettingsPatch
 - name: UpdateVulnerabilityRequest
   description: The fields of the vulnerability to change. Send at least one; updating
     a vulnerability Confident AI ships makes this project its own copy, leaving other
@@ -62326,6 +65273,584 @@ types:
   - name: HIGH
     value: HIGH
   references: []
+- name: VoiceCallSettings
+  description: Limits applied to every call placed to your agent.
+  example: null
+  python:
+    module: confident_ai.voice_connections
+    name: VoiceCallSettings
+  typescript:
+    module: confident-ai/voice-connections
+    name: VoiceCallSettings
+  references: []
+  kind: object
+  fields:
+  - wire: maxConcurrentCalls
+    python: max_concurrent_calls
+    typescript: maxConcurrentCalls
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The most calls placed to your agent at once.
+    example: 1
+    references: []
+  - wire: ringTimeoutS
+    python: ring_timeout_s
+    typescript: ringTimeoutS
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: Seconds to wait for your agent to answer, for `PHONE` and `SIP`.
+    example: 45
+    references: []
+  - wire: maxCallDurationS
+    python: max_call_duration_s
+    typescript: maxCallDurationS
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: Seconds after which a call is hung up.
+    example: 1800
+    references: []
+  - wire: silenceTimeoutS
+    python: silence_timeout_s
+    typescript: silenceTimeoutS
+    type:
+      python: Optional[int]
+      typescript: number | null
+    required: true
+    description: Seconds of silence from both sides after which a call is hung up,
+      or null to never hang up for silence.
+    example: 30
+    references: []
+  - wire: recordCalls
+    python: record_calls
+    typescript: recordCalls
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: Whether simulated calls are recorded.
+    example: true
+    references: []
+- name: VoiceCallSettingsPatch
+  description: The call limits to set. Omitted settings keep their value.
+  example: null
+  python:
+    module: confident_ai.voice_connections
+    name: VoiceCallSettingsPatch
+  typescript:
+    module: confident-ai/voice-connections
+    name: VoiceCallSettingsPatch
+  references: []
+  kind: object
+  fields:
+  - wire: maxConcurrentCalls
+    python: max_concurrent_calls
+    typescript: maxConcurrentCalls
+    type:
+      python: Optional[int]
+      typescript: number
+    required: false
+    description: The most calls placed to your agent at once.
+    example: 1
+    references: []
+  - wire: ringTimeoutS
+    python: ring_timeout_s
+    typescript: ringTimeoutS
+    type:
+      python: Optional[int]
+      typescript: number
+    required: false
+    description: Seconds to wait for your agent to answer, for `PHONE` and `SIP`.
+    example: 45
+    references: []
+  - wire: maxCallDurationS
+    python: max_call_duration_s
+    typescript: maxCallDurationS
+    type:
+      python: Optional[int]
+      typescript: number
+    required: false
+    description: Seconds after which a call is hung up.
+    example: 1800
+    references: []
+  - wire: silenceTimeoutS
+    python: silence_timeout_s
+    typescript: silenceTimeoutS
+    type:
+      python: Optional[int]
+      typescript: number | null
+    required: false
+    description: Seconds of silence from both sides after which a call is hung up,
+      or null to never hang up for silence.
+    example: 30
+    references: []
+  - wire: recordCalls
+    python: record_calls
+    typescript: recordCalls
+    type:
+      python: Optional[bool]
+      typescript: boolean
+    required: false
+    description: Whether simulated calls are recorded.
+    example: true
+    references: []
+- name: VoiceConnection
+  description: A voice agent Confident AI calls during simulations. Stored credentials
+    are returned as saved, so treat the response as carrying secrets.
+  example: null
+  python:
+    module: confident_ai.voice_connections
+    name: VoiceConnection
+  typescript:
+    module: confident-ai/voice-connections
+    name: VoiceConnection
+  references:
+  - VoiceTransportConfig
+  - VoiceCallSettings
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the voice connection, generated by Confident AI.
+    example: <VOICE-CONNECTION-ID>
+    references: []
+  - wire: projectId
+    python: project_id
+    typescript: projectId
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the project the connection belongs to.
+    example: <PROJECT-ID>
+    references: []
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The name of the voice connection.
+    example: Support line
+    references: []
+  - wire: active
+    python: active
+    typescript: active
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: Whether the last test call reached your agent. Changing `config`
+      resets it to false.
+    example: true
+    references: []
+  - wire: config
+    python: config
+    typescript: config
+    type:
+      python: VoiceTransportConfig
+      typescript: VoiceTransportConfig
+    required: true
+    description: null
+    example: null
+    references:
+    - VoiceTransportConfig
+  - wire: callSettings
+    python: call_settings
+    typescript: callSettings
+    type:
+      python: VoiceCallSettings
+      typescript: VoiceCallSettings
+    required: true
+    description: null
+    example: null
+    references:
+    - VoiceCallSettings
+  - wire: createdAt
+    python: created_at
+    typescript: createdAt
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: When the connection was created, as an ISO 8601 timestamp.
+    example: '2026-10-01T09:12:00+00:00'
+    references: []
+  - wire: updatedAt
+    python: updated_at
+    typescript: updatedAt
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: When the connection last changed, as an ISO 8601 timestamp.
+    example: '2026-10-08T16:40:00+00:00'
+    references: []
+- name: VoiceConnectionList
+  description: One page of voice connections, with the total across all pages.
+  example: null
+  python:
+    module: confident_ai.voice_connections
+    name: VoiceConnectionList
+  typescript:
+    module: confident-ai/voice-connections
+    name: VoiceConnectionList
+  references:
+  - VoiceConnection
+  kind: object
+  fields:
+  - wire: voiceConnections
+    python: voice_connections
+    typescript: voiceConnections
+    type:
+      python: List[VoiceConnection]
+      typescript: VoiceConnection[]
+    required: true
+    description: The voice connections for the current page, ordered by name.
+    example: null
+    references:
+    - VoiceConnection
+  - wire: totalVoiceConnections
+    python: total_voice_connections
+    typescript: totalVoiceConnections
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The total number of voice connections in this project.
+    example: 2
+    references: []
+  - wire: page
+    python: page
+    typescript: page
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The page this response covers.
+    example: 1
+    references: []
+  - wire: pageSize
+    python: page_size
+    typescript: pageSize
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of voice connections per page.
+    example: 25
+    references: []
+- name: VoiceConnectionLog
+  description: A call placed to a voice connection.
+  example: null
+  python:
+    module: confident_ai.voice_connections
+    name: VoiceConnectionLog
+  typescript:
+    module: confident-ai/voice-connections
+    name: VoiceConnectionLog
+  references:
+  - VoiceTransport
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the log.
+    example: <VOICE-CONNECTION-LOG-ID>
+    references: []
+  - wire: createdAt
+    python: created_at
+    typescript: createdAt
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: When the call started, as an ISO 8601 timestamp.
+    example: '2026-10-08T16:40:00+00:00'
+    references: []
+  - wire: voiceConnectionId
+    python: voice_connection_id
+    typescript: voiceConnectionId
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the voice connection that was called.
+    example: <VOICE-CONNECTION-ID>
+    references: []
+  - wire: voiceConnectionName
+    python: voice_connection_name
+    typescript: voiceConnectionName
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The name of the voice connection when the call was placed.
+    example: Support line
+    references: []
+  - wire: source
+    python: source
+    typescript: source
+    type:
+      python: Literal["ping", "dataset_evaluation"]
+      typescript: '"ping" | "dataset_evaluation"'
+    required: true
+    description: 'What placed the call: `ping` for a test call, `dataset_evaluation`
+      for a call made while evaluating a dataset.'
+    example: null
+    references: []
+  - wire: sourceName
+    python: source_name
+    typescript: sourceName
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The alias of the dataset that was evaluated, or an empty string
+      for test calls.
+    example: support-goldens
+    references: []
+  - wire: testRunId
+    python: test_run_id
+    typescript: testRunId
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: The id of the test run the call belongs to, or null for test calls.
+    example: null
+    references: []
+  - wire: transport
+    python: transport
+    typescript: transport
+    type:
+      python: VoiceTransport
+      typescript: VoiceTransport
+    required: true
+    description: null
+    example: null
+    references:
+    - VoiceTransport
+  - wire: address
+    python: address
+    typescript: address
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: 'The number, sip: address or URL that was called.'
+    example: '+14155550100'
+    references: []
+  - wire: status
+    python: status
+    typescript: status
+    type:
+      python: Literal["ANSWERED", "NO_ANSWER", "FAILED"]
+      typescript: '"ANSWERED" | "NO_ANSWER" | "FAILED"'
+    required: true
+    description: 'How the call ended: `ANSWERED` when your agent picked up, `NO_ANSWER`
+      when nobody picked up in time, `FAILED` when the call could not be placed.'
+    example: null
+    references: []
+  - wire: connectMs
+    python: connect_ms
+    typescript: connectMs
+    type:
+      python: Optional[float]
+      typescript: number | null
+    required: true
+    description: Milliseconds until your agent answered or the stream opened, or
+      null when it never did.
+    example: 3200
+    references: []
+  - wire: durationMs
+    python: duration_ms
+    typescript: durationMs
+    type:
+      python: float
+      typescript: number
+    required: true
+    description: How long the call lasted, in milliseconds.
+    example: 9400
+    references: []
+  - wire: transcript
+    python: transcript
+    typescript: transcript
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: For test calls, what your agent said first. Null when nothing was
+      transcribed.
+    example: Hi, thanks for calling. How can I help?
+    references: []
+  - wire: error
+    python: error
+    typescript: error
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: Why the call did not connect, or null when it did.
+    example: null
+    references: []
+  - wire: audioUrl
+    python: audio_url
+    typescript: audioUrl
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: 'A signed URL to the call audio, valid for one hour: the greeting
+      for test calls and the full recording for evaluation calls. Null when no audio
+      was recorded.'
+    example: null
+    references: []
+- name: VoiceConnectionLogList
+  description: The calls placed to a voice connection, newest first.
+  example: null
+  python:
+    module: confident_ai.voice_connections
+    name: VoiceConnectionLogList
+  typescript:
+    module: confident-ai/voice-connections
+    name: VoiceConnectionLogList
+  references:
+  - VoiceConnectionLog
+  kind: object
+  fields:
+  - wire: voiceConnectionLogs
+    python: voice_connection_logs
+    typescript: voiceConnectionLogs
+    type:
+      python: List[VoiceConnectionLog]
+      typescript: VoiceConnectionLog[]
+    required: true
+    description: The calls on this page, newest first.
+    example: null
+    references:
+    - VoiceConnectionLog
+  - wire: nextCursor
+    python: next_cursor
+    typescript: nextCursor
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: The value to pass as `cursor` to get the next page, or `null` when
+      this is the last page.
+    example: null
+    references: []
+- name: VoiceConnectionRef
+  description: A reference to a voice connection by its id.
+  example: null
+  python:
+    module: confident_ai.voice_connections
+    name: VoiceConnectionRef
+  typescript:
+    module: confident-ai/voice-connections
+    name: VoiceConnectionRef
+  references: []
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the voice connection, generated by Confident AI.
+    example: <VOICE-CONNECTION-ID>
+    references: []
+- name: VoiceHeader
+  description: A header sent to your voice agent.
+  example: null
+  python:
+    module: confident_ai.voice_connections
+    name: VoiceHeader
+  typescript:
+    module: confident-ai/voice-connections
+    name: VoiceHeader
+  references: []
+  kind: object
+  fields:
+  - wire: key
+    python: key
+    typescript: key
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The header name.
+    example: X-Agent
+    references: []
+  - wire: value
+    python: value
+    typescript: value
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The header value.
+    example: support
+    references: []
+- name: VoiceTransport
+  kind: enum
+  description: 'How Confident AI reaches your voice agent: `PHONE` dials a phone
+    number, `SIP` calls a SIP address directly, and `WEBRTC` joins a WebRTC session.'
+  python:
+    module: confident_ai.voice_connections
+    name: VoiceTransport
+  typescript:
+    module: confident-ai/voice-connections
+    name: VoiceTransport
+  members:
+  - name: PHONE
+    value: PHONE
+  - name: SIP
+    value: SIP
+  - name: WEBRTC
+    value: WEBRTC
+  references: []
+- name: VoiceTransportConfig
+  description: How Confident AI reaches your voice agent. `transport` decides which
+    shape applies.
+  example: null
+  python:
+    module: confident_ai.voice_connections
+    name: VoiceTransportConfig
+  typescript:
+    module: confident-ai/voice-connections
+    name: VoiceTransportConfig
+  references:
+  - PhoneVoiceConfig
+  - SipVoiceConfig
+  - WebRTCVoiceConfig
+  kind: union
+  branches:
+  - PhoneVoiceConfig
+  - SipVoiceConfig
+  - WebRTCVoiceConfig
+  type:
+    python: Union[PhoneVoiceConfig, SipVoiceConfig, WebRTCVoiceConfig]
+    typescript: PhoneVoiceConfig | SipVoiceConfig | WebRTCVoiceConfig
 - name: Vulnerability
   description: A weakness a risk assessment probes for, either one Confident AI ships
     or one your project defined.
@@ -62677,6 +66202,158 @@ types:
     required: true
     description: The name of the vulnerability type.
     example: System prompt disclosure
+    references: []
+- name: WebRTCVoiceConfig
+  description: Joins a WebRTC session with your agent.
+  example: null
+  python:
+    module: confident_ai.voice_connections
+    name: WebRTCVoiceConfig
+  typescript:
+    module: confident-ai/voice-connections
+    name: WebRTCVoiceConfig
+  references:
+  - VoiceHeader
+  kind: object
+  fields:
+  - wire: transport
+    python: transport
+    typescript: transport
+    type:
+      python: Literal["WEBRTC"]
+      typescript: '"WEBRTC"'
+    required: true
+    description: null
+    example: null
+    references: []
+  - wire: provider
+    python: provider
+    typescript: provider
+    type:
+      python: Literal["LIVEKIT", "CUSTOM", "PIPECAT"]
+      typescript: '"LIVEKIT" | "CUSTOM" | "PIPECAT"'
+    required: true
+    description: 'Where your agent runs: `LIVEKIT` joins a LiveKit room, `PIPECAT`
+      starts a Pipecat session, and `CUSTOM` posts an SDP offer to your own signaling
+      URL.'
+    example: null
+    references: []
+  - wire: url
+    python: url
+    typescript: url
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The LiveKit server URL (wss://), the Pipecat start URL (https://),
+      or your signaling URL (wss:// or https://).
+    example: wss://your-project.livekit.cloud
+    references: []
+  - wire: livekit
+    python: livekit
+    typescript: livekit
+    type:
+      python: WebRTCVoiceConfigLivekit
+      typescript: WebRTCVoiceConfigLivekit
+    required: true
+    description: LiveKit settings, read when `provider` is `LIVEKIT`.
+    example: null
+    references: []
+  - wire: pipecat
+    python: pipecat
+    typescript: pipecat
+    type:
+      python: WebRTCVoiceConfigPipecat
+      typescript: WebRTCVoiceConfigPipecat
+    required: true
+    description: Pipecat settings, read when `provider` is `PIPECAT`.
+    example: null
+    references: []
+  - wire: headers
+    python: headers
+    typescript: headers
+    type:
+      python: List[VoiceHeader]
+      typescript: VoiceHeader[]
+    required: true
+    description: Headers sent to your signaling URL, read when `provider` is `CUSTOM`
+      or `PIPECAT`.
+    example: null
+    references:
+    - VoiceHeader
+- name: WebRTCVoiceConfigLivekit
+  description: null
+  example: null
+  python:
+    module: confident_ai.voice_connections
+    name: WebRTCVoiceConfigLivekit
+  typescript:
+    module: confident-ai/voice-connections
+    name: WebRTCVoiceConfigLivekit
+  references: []
+  kind: object
+  fields:
+  - wire: apiKey
+    python: api_key
+    typescript: apiKey
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: null
+    example: null
+    references: []
+  - wire: apiSecret
+    python: api_secret
+    typescript: apiSecret
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: null
+    example: null
+    references: []
+  - wire: agentName
+    python: agent_name
+    typescript: agentName
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: null
+    example: null
+    references: []
+- name: WebRTCVoiceConfigPipecat
+  description: null
+  example: null
+  python:
+    module: confident_ai.voice_connections
+    name: WebRTCVoiceConfigPipecat
+  typescript:
+    module: confident-ai/voice-connections
+    name: WebRTCVoiceConfigPipecat
+  references: []
+  kind: object
+  fields:
+  - wire: transport
+    python: transport
+    typescript: transport
+    type:
+      python: Literal["DAILY", "WEBRTC"]
+      typescript: '"DAILY" | "WEBRTC"'
+    required: true
+    description: null
+    example: null
+    references: []
+  - wire: apiKey
+    python: api_key
+    typescript: apiKey
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: null
+    example: null
     references: []
 - name: Widget
   description: One chart on a dashboard, with the configuration a query computes
@@ -63105,8 +66782,12 @@ types:
     value: polarity
   - name: CLASSIFIER_LABEL
     value: classifier_label
+  - name: CLASSIFIER_VERSION
+    value: classifier_version
   - name: VERSION
     value: version
+  - name: METRIC_VERSION
+    value: metric_version
   - name: VALUE
     value: value
   - name: FAILURE_SUB_MODE

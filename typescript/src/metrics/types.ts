@@ -5,10 +5,52 @@
 
 import {
   JevQuestion,
+  MetricAlgorithm,
+  MetricDag,
   MetricEvaluationParam,
   PromptMetricConfig,
   Rubric,
 } from "../common/types";
+
+export interface MetricCodeDefinition {
+  language: "PYTHON";
+  code: string;
+}
+
+export interface MetricVersion {
+  id: string;
+  version: string;
+  sequence: number;
+  createdAt: string;
+  algorithm: MetricAlgorithm | null;
+  criteria: string | null;
+  evaluationSteps: string[] | null;
+  rubric: Rubric[] | null;
+  dag: MetricDag | null;
+  questions: JevQuestion[] | null;
+  promptConfig: PromptMetricConfig | null;
+  requireInput: boolean;
+  requireActualOutput: boolean;
+  requireExpectedOutput: boolean;
+  requireContext: boolean;
+  requireExpectedTools: boolean;
+  requireContent: boolean;
+  requireRole: boolean;
+  requireScenario: boolean;
+  requireExpectedOutcome: boolean;
+  requireRetrievalContext: boolean;
+  requireToolsCalled: boolean;
+  requireMetadata: boolean;
+  requireTags: boolean;
+  codeDefinition: MetricCodeDefinition | null;
+}
+
+export interface MetricVersionList {
+  versions: MetricVersion[];
+  totalMetricVersions: number;
+  page: number;
+  pageSize: number;
+}
 
 export interface UpdateMetricRequest {
   criteria?: string | null;

@@ -66,6 +66,11 @@ class CreateDatasetVersionResult(ConfidentBaseModel):
     version: str
 
 
+class SingleTurnGoldenRequestExpectations(ConfidentBaseModel):
+    must: List[str]
+    must_not: List[str] = Field(alias="mustNot")
+
+
 class SingleTurnGoldenRequest(ConfidentBaseModel):
     input: str
     actual_output: Optional[str] = Field(default=None, alias="actualOutput")
@@ -96,6 +101,7 @@ class SingleTurnGoldenRequest(ConfidentBaseModel):
         default=None,
         alias="additionalMetadata",
     )
+    expectations: Optional[SingleTurnGoldenRequestExpectations] = None
     comments: Optional[str] = None
     source_file: Optional[str] = Field(default=None, alias="sourceFile")
     source_files: Optional[List[str]] = Field(default=None, alias="sourceFiles")
@@ -109,6 +115,11 @@ class SingleTurnGoldenRequest(ConfidentBaseModel):
         alias="imagesMapping",
     )
     tags: Optional[List[str]] = None
+
+
+class MultiTurnGoldenRequestExpectations(ConfidentBaseModel):
+    must: List[str]
+    must_not: List[str] = Field(alias="mustNot")
 
 
 class MultiTurnGoldenRequest(ConfidentBaseModel):
@@ -127,6 +138,7 @@ class MultiTurnGoldenRequest(ConfidentBaseModel):
         default=None,
         alias="additionalMetadata",
     )
+    expectations: Optional[MultiTurnGoldenRequestExpectations] = None
     comments: Optional[str] = None
     source_file: Optional[str] = Field(default=None, alias="sourceFile")
     source_files: Optional[List[str]] = Field(default=None, alias="sourceFiles")
@@ -148,6 +160,11 @@ GoldenRequest = Union[SingleTurnGoldenRequest, MultiTurnGoldenRequest]
 class CreateGoldenRequest(ConfidentBaseModel):
     golden: GoldenRequest
     version: Optional[str] = None
+
+
+class SingleTurnGoldenExpectations(ConfidentBaseModel):
+    must: List[str]
+    must_not: List[str] = Field(alias="mustNot")
 
 
 class SingleTurnGolden(ConfidentBaseModel):
@@ -181,6 +198,7 @@ class SingleTurnGolden(ConfidentBaseModel):
         default=None,
         alias="additionalMetadata",
     )
+    expectations: Optional[SingleTurnGoldenExpectations] = None
     comments: Optional[str] = None
     source_file: Optional[str] = Field(default=None, alias="sourceFile")
     source_files: Optional[List[str]] = Field(default=None, alias="sourceFiles")
@@ -190,6 +208,11 @@ class SingleTurnGolden(ConfidentBaseModel):
         alias="customColumnKeyValues",
     )
     tags: Optional[List[str]] = None
+
+
+class MultiTurnGoldenExpectations(ConfidentBaseModel):
+    must: List[str]
+    must_not: List[str] = Field(alias="mustNot")
 
 
 class MultiTurnGolden(ConfidentBaseModel):
@@ -209,6 +232,7 @@ class MultiTurnGolden(ConfidentBaseModel):
         default=None,
         alias="additionalMetadata",
     )
+    expectations: Optional[MultiTurnGoldenExpectations] = None
     comments: Optional[str] = None
     source_file: Optional[str] = Field(default=None, alias="sourceFile")
     source_files: Optional[List[str]] = Field(default=None, alias="sourceFiles")
@@ -298,6 +322,11 @@ class GoldenRef(ConfidentBaseModel):
     id: str
 
 
+class PushSingleTurnGoldenExpectations(ConfidentBaseModel):
+    must: List[str]
+    must_not: List[str] = Field(alias="mustNot")
+
+
 class PushSingleTurnGolden(ConfidentBaseModel):
     input: str
     actual_output: Optional[str] = Field(default=None, alias="actualOutput")
@@ -328,6 +357,7 @@ class PushSingleTurnGolden(ConfidentBaseModel):
         default=None,
         alias="additionalMetadata",
     )
+    expectations: Optional[PushSingleTurnGoldenExpectations] = None
     comments: Optional[str] = None
     source_file: Optional[str] = Field(default=None, alias="sourceFile")
     source_files: Optional[List[str]] = Field(default=None, alias="sourceFiles")
@@ -342,6 +372,11 @@ class PushSingleTurnGolden(ConfidentBaseModel):
     )
     tags: Optional[List[str]] = None
     id: Optional[str] = None
+
+
+class PushMultiTurnGoldenExpectations(ConfidentBaseModel):
+    must: List[str]
+    must_not: List[str] = Field(alias="mustNot")
 
 
 class PushMultiTurnGolden(ConfidentBaseModel):
@@ -360,6 +395,7 @@ class PushMultiTurnGolden(ConfidentBaseModel):
         default=None,
         alias="additionalMetadata",
     )
+    expectations: Optional[PushMultiTurnGoldenExpectations] = None
     comments: Optional[str] = None
     source_file: Optional[str] = Field(default=None, alias="sourceFile")
     source_files: Optional[List[str]] = Field(default=None, alias="sourceFiles")
@@ -397,6 +433,10 @@ class RunDatasetEvaluationRequest(ConfidentBaseModel):
     ai_connection_id: Optional[str] = Field(
         default=None,
         alias="aiConnectionId",
+    )
+    voice_connection_id: Optional[str] = Field(
+        default=None,
+        alias="voiceConnectionId",
     )
     prompt_alias: Optional[str] = Field(default=None, alias="promptAlias")
     prompt_commit: Optional[str] = Field(default=None, alias="promptCommit")

@@ -32,6 +32,7 @@ export enum Endpoints {
   CLASSIFIER_GENERATE_ENDPOINT = "/v2/classifiers/:classifierId/generate",
   CLASSIFIER_LABELS_ENDPOINT = "/v2/classifiers/:classifierId/labels",
   CLASSIFIER_LABEL_ENDPOINT = "/v2/classifiers/:classifierId/labels/:labelId",
+  CLASSIFIER_VERSIONS_ENDPOINT = "/v2/classifiers/:classifierId/versions",
 
   // dashboards
   DASHBOARDS_ENDPOINT = "/v2/dashboards",
@@ -89,6 +90,7 @@ export enum Endpoints {
   // metrics
   METRICS_ENDPOINT = "/v2/metrics",
   METRIC_ENDPOINT = "/v2/metrics/:metricId",
+  METRIC_VERSIONS_ENDPOINT = "/v2/metrics/:metricId/versions",
 
   // metrics-batch
   METRICS_BATCH_ENDPOINT = "/v2/metrics-batch",
@@ -202,6 +204,10 @@ export enum Endpoints {
   THREADS_ENDPOINT = "/v2/threads",
   THREAD_ENDPOINT = "/v2/threads/:threadId",
 
+  // tools
+  TOOLS_ENDPOINT = "/v2/tools",
+  TOOL_ENDPOINT = "/v2/tools/:toolId",
+
   // traces
   TRACES_ENDPOINT = "/v2/traces",
   TRACE_ENDPOINT = "/v2/traces/:traceUuid",
@@ -210,6 +216,12 @@ export enum Endpoints {
   TRANSFORMERS_ENDPOINT = "/v2/transformers",
   TRANSFORMER_ENDPOINT = "/v2/transformers/:transformerId",
   TRANSFORMER_TEST_CODE_ENDPOINT = "/v2/transformers/:transformerId/test-code",
+
+  // voice-connections
+  VOICE_CONNECTIONS_ENDPOINT = "/v2/voice-connections",
+  VOICE_CONNECTION_ENDPOINT = "/v2/voice-connections/:voiceConnectionId",
+  VOICE_CONNECTION_CALLS_ENDPOINT = "/v2/voice-connections/:voiceConnectionId/calls",
+  VOICE_CONNECTION_LOGS_ENDPOINT = "/v2/voice-connections/:voiceConnectionId/logs",
 
   // vulnerabilities
   VULNERABILITIES_ENDPOINT = "/v2/vulnerabilities",
