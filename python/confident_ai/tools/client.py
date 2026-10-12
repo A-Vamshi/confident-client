@@ -12,6 +12,7 @@ from confident_ai.tools.types import (
     CreateToolRequest,
     ToolList,
     ToolRef,
+    ToolVersionList,
     UpdateToolRequest,
 )
 
@@ -152,36 +153,42 @@ class ToolsClient:
             },
         )
 
-    def get(self, tool_id: str) -> Tool:
+    def get(self, tool_id: str, *, version: Optional[str] = None) -> Tool:
         """Get Tool
 
-        Retrieves a tool by id at its latest version, including its input
-        schema.
+        Retrieves a tool by id, including its input schema. Pass `version` to
+        retrieve that version instead of the latest.
 
         Args:
             tool_id: The id of the tool.
+            version: The version to retrieve. Omit it for the latest version.
         """
         return self._api.request(
             HttpMethods.GET,
             Endpoints.TOOL_ENDPOINT,
             response_schema=Tool,
             path={"toolId": tool_id},
+            query={"version": version},
         )
 
-    async def a_get(self, tool_id: str) -> Tool:
+    async def a_get(
+        self, tool_id: str, *, version: Optional[str] = None
+    ) -> Tool:
         """Get Tool
 
-        Retrieves a tool by id at its latest version, including its input
-        schema.
+        Retrieves a tool by id, including its input schema. Pass `version` to
+        retrieve that version instead of the latest.
 
         Args:
             tool_id: The id of the tool.
+            version: The version to retrieve. Omit it for the latest version.
         """
         return await self._api.a_request(
             HttpMethods.GET,
             Endpoints.TOOL_ENDPOINT,
             response_schema=Tool,
             path={"toolId": tool_id},
+            query={"version": version},
         )
 
     def update(
@@ -300,4 +307,56 @@ class ToolsClient:
             Endpoints.TOOL_ENDPOINT,
             response_schema=ToolRef,
             path={"toolId": tool_id},
+        )
+
+    def list_versions(
+        self,
+        tool_id: str,
+        *,
+        page: Optional[int] = None,
+        page_size: Optional[int] = None
+    ) -> ToolVersionList:
+        """List Tool Versions
+
+        Lists a tool's versions, newest first, so the first is its latest.
+        Changing a tool's `mode` or `schema` adds a version.
+
+        Args:
+            tool_id: The id of the tool.
+            page: The page to return. Defaults to 1.
+            page_size: The number of versions per page, at most 100. Defaults to
+                25.
+        """
+        return self._api.request(
+            HttpMethods.GET,
+            Endpoints.TOOL_VERSIONS_ENDPOINT,
+            response_schema=ToolVersionList,
+            path={"toolId": tool_id},
+            query={"page": page, "pageSize": page_size},
+        )
+
+    async def a_list_versions(
+        self,
+        tool_id: str,
+        *,
+        page: Optional[int] = None,
+        page_size: Optional[int] = None
+    ) -> ToolVersionList:
+        """List Tool Versions
+
+        Lists a tool's versions, newest first, so the first is its latest.
+        Changing a tool's `mode` or `schema` adds a version.
+
+        Args:
+            tool_id: The id of the tool.
+            page: The page to return. Defaults to 1.
+            page_size: The number of versions per page, at most 100. Defaults to
+                25.
+        """
+        return await self._api.a_request(
+            HttpMethods.GET,
+            Endpoints.TOOL_VERSIONS_ENDPOINT,
+            response_schema=ToolVersionList,
+            path={"toolId": tool_id},
+            query={"page": page, "pageSize": page_size},
         )

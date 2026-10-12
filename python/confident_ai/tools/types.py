@@ -35,6 +35,20 @@ class ToolRef(ConfidentBaseModel):
     id: str
 
 
+class ToolVersion(ConfidentBaseModel):
+    version: str
+    mode: ToolMode
+    schema: Dict[str, Any]
+    created_at: str = Field(alias="createdAt")
+
+
+class ToolVersionList(ConfidentBaseModel):
+    versions: List[ToolVersion]
+    total_tool_versions: int = Field(alias="totalToolVersions")
+    page: int
+    page_size: int = Field(alias="pageSize")
+
+
 class UpdateToolRequest(ConfidentBaseModel):
     name: Optional[str] = None
     description: Optional[str] = None

@@ -207,6 +207,7 @@ export enum Endpoints {
   // tools
   TOOLS_ENDPOINT = "/v2/tools",
   TOOL_ENDPOINT = "/v2/tools/:toolId",
+  TOOL_VERSIONS_ENDPOINT = "/v2/tools/:toolId/versions",
 
   // traces
   TRACES_ENDPOINT = "/v2/traces",

@@ -8,6 +8,8 @@ from confident_ai.tools.types import (
     ToolList,
     ToolRef,
     ToolSummary,
+    ToolVersion,
+    ToolVersionList,
     UpdateToolRequest,
 )
 
@@ -16,5 +18,7 @@ __all__ = [
     "ToolList",
     "ToolRef",
     "ToolSummary",
+    "ToolVersion",
+    "ToolVersionList",
     "UpdateToolRequest",
 ]

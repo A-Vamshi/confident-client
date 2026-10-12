@@ -6,7 +6,7 @@
 import { Api, HttpMethods } from "../api";
 import { Endpoints } from "../endpoints";
 import { Tool, ToolMode } from "../common/types";
-import { ToolList, ToolRef } from "./types";
+import { ToolList, ToolRef, ToolVersionList } from "./types";
 
 export class ToolsClient {
   constructor(protected readonly api: Api) {}
@@ -65,15 +65,17 @@ export class ToolsClient {
   /**
    * Get Tool
    *
-   * Retrieves a tool by id at its latest version, including its input schema.
+   * Retrieves a tool by id, including its input schema. Pass `version` to
+   * retrieve that version instead of the latest.
    *
    * @param toolId The id of the tool.
+   * @param version The version to retrieve. Omit it for the latest version.
    */
-  async get(toolId: string): Promise<Tool> {
+  async get(toolId: string, version?: string): Promise<Tool> {
     return this.api.sendRequest<Tool>(
       HttpMethods.GET,
       Endpoints.TOOL_ENDPOINT,
-      { urlParams: { toolId } },
+      { urlParams: { toolId }, params: { version } },
     );
   }
 
@@ -126,6 +128,29 @@ export class ToolsClient {
       HttpMethods.DELETE,
       Endpoints.TOOL_ENDPOINT,
       { urlParams: { toolId } },
+    );
+  }
+
+  /**
+   * List Tool Versions
+   *
+   * Lists a tool's versions, newest first, so the first is its latest. Changing
+   * a tool's `mode` or `schema` adds a version.
+   *
+   * @param toolId The id of the tool.
+   * @param page The page to return. Defaults to 1.
+   * @param pageSize The number of versions per page, at most 100. Defaults to
+   *   25.
+   */
+  async listVersions(
+    toolId: string,
+    page?: number,
+    pageSize?: number,
+  ): Promise<ToolVersionList> {
+    return this.api.sendRequest<ToolVersionList>(
+      HttpMethods.GET,
+      Endpoints.TOOL_VERSIONS_ENDPOINT,
+      { urlParams: { toolId }, params: { page, pageSize } },
     );
   }
 }

@@ -24539,8 +24539,8 @@ resources:
         pythonAsync: a_get
         typescript: get
       summary: Get Tool
-      description: Retrieves a tool by id at its latest version, including its input
-        schema.
+      description: Retrieves a tool by id, including its input schema. Pass `version`
+        to retrieve that version instead of the latest.
       operations:
       - id: getTool
         method: GET
@@ -24564,11 +24564,26 @@ resources:
         description: The id of the tool.
         example: <TOOL-ID>
         references: []
+      - python: version
+        typescript: version
+        wire: version
+        in: query
+        type:
+          python: Optional[str]
+          typescript: string
+        required: false
+        keyword: true
+        default: None
+        description: The version to retrieve. Omit it for the latest version.
+        example: 00.00.01
+        references: []
       order:
         python:
         - tool_id
+        - version
         typescript:
         - toolId
+        - version
     - name:
         python: update
         pythonAsync: a_update
@@ -24721,6 +24736,71 @@ resources:
         - tool_id
         typescript:
         - toolId
+    - name:
+        python: list_versions
+        pythonAsync: a_list_versions
+        typescript: listVersions
+      summary: List Tool Versions
+      description: Lists a tool's versions, newest first, so the first is its latest.
+        Changing a tool's `mode` or `schema` adds a version.
+      operations:
+      - id: listToolVersions
+        method: GET
+        path: /v2/tools/{toolId}/versions
+      returns:
+        python: ToolVersionList
+        typescript: Promise<ToolVersionList>
+        type: ToolVersionList
+      body: null
+      parameters:
+      - python: tool_id
+        typescript: toolId
+        wire: toolId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword: false
+        default: null
+        description: The id of the tool.
+        example: <TOOL-ID>
+        references: []
+      - python: page
+        typescript: page
+        wire: page
+        in: query
+        type:
+          python: Optional[int]
+          typescript: number
+        required: false
+        keyword: true
+        default: None
+        description: The page to return. Defaults to 1.
+        example: 1
+        references: []
+      - python: page_size
+        typescript: pageSize
+        wire: pageSize
+        in: query
+        type:
+          python: Optional[int]
+          typescript: number
+        required: false
+        keyword: true
+        default: None
+        description: The number of versions per page, at most 100. Defaults to 25.
+        example: 25
+        references: []
+      order:
+        python:
+        - tool_id
+        - page
+        - page_size
+        typescript:
+        - toolId
+        - page
+        - pageSize
   handle: null
 - name: traces
   keyKind: project
@@ -60114,6 +60194,130 @@ types:
     required: true
     description: The latest version of the tool.
     example: 00.00.02
+    references: []
+- name: ToolVersion
+  description: One saved definition of a tool.
+  example: null
+  python:
+    module: confident_ai.tools
+    name: ToolVersion
+  typescript:
+    module: confident-ai/tools
+    name: ToolVersion
+  references:
+  - ToolMode
+  kind: object
+  fields:
+  - wire: version
+    python: version
+    typescript: version
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The version of the tool.
+    example: 00.00.02
+    references: []
+  - wire: mode
+    python: mode
+    typescript: mode
+    type:
+      python: ToolMode
+      typescript: ToolMode
+    required: true
+    description: null
+    example: null
+    references:
+    - ToolMode
+  - wire: schema
+    python: schema
+    typescript: schema
+    type:
+      python: Dict[str, Any]
+      typescript: Record<string, unknown>
+    required: true
+    description: The JSON Schema for the tool's input. List each parameter under
+      `properties` with a `type`, and name the mandatory ones in `required`. A parameter
+      can also have a `description`, an `enum` of allowed values, or `items` for
+      an array. Whether extra properties are allowed is set by `mode`.
+    example:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The id of the customer to look up.
+        nameFormat:
+          type: string
+          enum:
+          - FULL
+          - FIRST
+          description: Whether to return the full name or only the first name.
+      required:
+      - customerId
+    references: []
+  - wire: createdAt
+    python: created_at
+    typescript: createdAt
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: When the version was saved.
+    example: '2025-01-18T16:45:00+00:00'
+    references: []
+- name: ToolVersionList
+  description: One page of a tool's versions, with the total across all pages.
+  example: null
+  python:
+    module: confident_ai.tools
+    name: ToolVersionList
+  typescript:
+    module: confident-ai/tools
+    name: ToolVersionList
+  references:
+  - ToolVersion
+  kind: object
+  fields:
+  - wire: versions
+    python: versions
+    typescript: versions
+    type:
+      python: List[ToolVersion]
+      typescript: ToolVersion[]
+    required: true
+    description: The tool's versions for the current page, newest first.
+    example: null
+    references:
+    - ToolVersion
+  - wire: totalToolVersions
+    python: total_tool_versions
+    typescript: totalToolVersions
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of versions this tool has.
+    example: 2
+    references: []
+  - wire: page
+    python: page
+    typescript: page
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The page this response covers.
+    example: 1
+    references: []
+  - wire: pageSize
+    python: page_size
+    typescript: pageSize
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of versions per page.
+    example: 25
     references: []
 - name: TopicSummary
   description: The findings for one topic of test cases.

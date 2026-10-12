@@ -29,6 +29,20 @@ export interface ToolRef {
   id: string;
 }
 
+export interface ToolVersion {
+  version: string;
+  mode: ToolMode;
+  schema: Record<string, unknown>;
+  createdAt: string;
+}
+
+export interface ToolVersionList {
+  versions: ToolVersion[];
+  totalToolVersions: number;
+  page: number;
+  pageSize: number;
+}
+
 export interface UpdateToolRequest {
   name?: string;
   description?: string | null;
