@@ -13,6 +13,7 @@ export enum AnnotationSelectionType {
   SPANS = "Spans",
   THREADS = "Threads",
   TRACES = "Traces",
+  TEST_CASES = "Test cases",
 }
 
 export enum SchedulableExportType {

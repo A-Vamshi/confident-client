@@ -98,6 +98,7 @@ export interface SubmitTestCaseResultRequest {
   inputTokenCount?: number;
   outputTokenCount?: number;
   metadata?: Record<string, unknown>;
+  error?: string;
 }
 
 export interface SubmittedTestCaseResult {

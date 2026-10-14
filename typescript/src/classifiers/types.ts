@@ -50,6 +50,7 @@ export interface Classifier {
   description: string | null;
   enabled: boolean;
   autoClassify: boolean;
+  includeAudio: boolean;
   dataModel: ClassifierDataModel;
   filters: FilterSet;
   autoGenerationConfig: ClassifierAutoGenerationConfig | null;
@@ -136,6 +137,7 @@ export interface CreateClassifierRequest {
   description?: string | null;
   enabled?: boolean;
   autoClassify?: boolean;
+  includeAudio?: boolean;
   filters?: FilterSet | null;
   autoGenerationConfig?: ClassifierAutoGenerationConfig | null;
 }
@@ -153,6 +155,7 @@ export interface UpdateClassifierRequest {
   description?: string | null;
   enabled?: boolean;
   autoClassify?: boolean;
+  includeAudio?: boolean;
   filters?: FilterSet | null;
   autoGenerationConfig?: ClassifierAutoGenerationConfig | null;
 }

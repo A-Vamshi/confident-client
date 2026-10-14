@@ -1015,6 +1015,7 @@ class Turn(ConfidentBaseModel):
         default=None,
         alias="toolsCalled",
     )
+    metadata: Optional[Dict[str, Any]] = None
 
 
 class UpdateApiKeyRequest(ConfidentBaseModel):

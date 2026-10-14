@@ -133,11 +133,11 @@ export class ProjectsOperations {
    * severs that inheritance — so the project then holds only the provider you
    * just sent, and any other provider it relied on has to be set again here.
    * This is a write-only surface: there is no read endpoint, and the response
-   * returns every credential masked. For `BEDROCK` and `AZURE` it writes the
-   * provider's default credential and leaves any other credentials stored on
-   * the Confident AI platform in place. A provider your organization's model
-   * provider policy does not allow cannot have a credential set (`403`), though
-   * clearing one is always permitted.
+   * returns every credential masked. It writes the provider's credential named
+   * "Default", creating it if missing, and leaves any other credentials stored
+   * for that provider on the Confident AI platform in place. A provider your
+   * organization's model provider policy does not allow cannot have a
+   * credential set (`403`), though clearing one is always permitted.
    *
    * @param projectId The id of the project, which must belong to the
    *   organization your API key is scoped to.

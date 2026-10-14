@@ -57,6 +57,7 @@ class Classifier(ConfidentBaseModel):
     description: Optional[str]
     enabled: bool
     auto_classify: bool = Field(alias="autoClassify")
+    include_audio: bool = Field(alias="includeAudio")
     data_model: ClassifierDataModel = Field(alias="dataModel")
     filters: FilterSet
     auto_generation_config: Optional[ClassifierAutoGenerationConfig] = Field(
@@ -145,6 +146,7 @@ class CreateClassifierRequest(ConfidentBaseModel):
     description: Optional[str] = None
     enabled: Optional[bool] = None
     auto_classify: Optional[bool] = Field(default=None, alias="autoClassify")
+    include_audio: Optional[bool] = Field(default=None, alias="includeAudio")
     filters: Optional[FilterSet] = None
     auto_generation_config: Optional[ClassifierAutoGenerationConfig] = Field(
         default=None,
@@ -165,6 +167,7 @@ class UpdateClassifierRequest(ConfidentBaseModel):
     description: Optional[str] = None
     enabled: Optional[bool] = None
     auto_classify: Optional[bool] = Field(default=None, alias="autoClassify")
+    include_audio: Optional[bool] = Field(default=None, alias="includeAudio")
     filters: Optional[FilterSet] = None
     auto_generation_config: Optional[ClassifierAutoGenerationConfig] = Field(
         default=None,

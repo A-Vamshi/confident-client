@@ -944,6 +944,7 @@ export interface Turn {
   userId?: string;
   retrievalContext?: string[] | null;
   toolsCalled?: ToolCall[] | null;
+  metadata?: Record<string, unknown> | null;
 }
 
 export interface UpdateApiKeyRequest {

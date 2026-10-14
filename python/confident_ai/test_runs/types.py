@@ -123,6 +123,7 @@ class SubmitTestCaseResultRequest(ConfidentBaseModel):
         alias="outputTokenCount",
     )
     metadata: Optional[Dict[str, Any]] = None
+    error: Optional[str] = None
 
 
 class SubmittedTestCaseResult(ConfidentBaseModel):

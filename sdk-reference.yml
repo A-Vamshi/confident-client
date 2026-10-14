@@ -3777,6 +3777,23 @@ resources:
           unchanged.
         example: true
         references: []
+      - python: include_audio
+        typescript: includeAudio
+        wire: includeAudio
+        in: body
+        type:
+          python: Optional[bool]
+          typescript: boolean
+        required: false
+        keyword: true
+        default: None
+        description: Whether the item's call recording and any audio in its inputs
+          and outputs are sent to the classifier alongside the text, so it can catch
+          issues that only show in the audio or in a mismatch between the audio and
+          its transcript. Needs an audio- capable platform model. Defaults to `false`
+          on create; omit it on an update to leave it unchanged.
+        example: false
+        references: []
       - python: filters
         typescript: filters
         wire: filters
@@ -3825,6 +3842,7 @@ resources:
         - description
         - enabled
         - auto_classify
+        - include_audio
         - filters
         - auto_generation_config
         typescript:
@@ -3834,6 +3852,7 @@ resources:
         - description
         - enabled
         - autoClassify
+        - includeAudio
         - filters
         - autoGenerationConfig
     - name:
@@ -3961,6 +3980,23 @@ resources:
           unchanged.
         example: true
         references: []
+      - python: include_audio
+        typescript: includeAudio
+        wire: includeAudio
+        in: body
+        type:
+          python: Optional[bool]
+          typescript: boolean
+        required: false
+        keyword: true
+        default: None
+        description: Whether the item's call recording and any audio in its inputs
+          and outputs are sent to the classifier alongside the text, so it can catch
+          issues that only show in the audio or in a mismatch between the audio and
+          its transcript. Needs an audio- capable platform model. Defaults to `false`
+          on create; omit it on an update to leave it unchanged.
+        example: false
+        references: []
       - python: filters
         typescript: filters
         wire: filters
@@ -4008,6 +4044,7 @@ resources:
         - description
         - enabled
         - auto_classify
+        - include_audio
         - filters
         - auto_generation_config
         typescript:
@@ -4016,6 +4053,7 @@ resources:
         - description
         - enabled
         - autoClassify
+        - includeAudio
         - filters
         - autoGenerationConfig
     - name:
@@ -12397,11 +12435,11 @@ resources:
         for a single model provider, which every project without credentials of its
         own then uses. TypeSafe credentials are project scoped and are rejected here.
         This is a write-only surface: there is no read endpoint, and the response
-        returns every credential masked. For `BEDROCK` and `AZURE` it writes the
-        provider''s default credential and leaves any other credentials stored on
-        the Confident AI platform in place. A provider your organization''s model
-        provider policy does not allow cannot have a credential set (`403`), though
-        clearing one is always permitted.'
+        returns every credential masked. It writes the provider''s credential named
+        "Default", creating it if missing, and leaves any other credentials stored
+        for that provider on the Confident AI platform in place. A provider your
+        organization''s model provider policy does not allow cannot have a credential
+        set (`403`), though clearing one is always permitted.'
       operations:
       - id: updateOrganizationModelCredentials
         method: PUT
@@ -16048,11 +16086,11 @@ resources:
         severs that inheritance — so the project then holds only the provider you
         just sent, and any other provider it relied on has to be set again here.
         This is a write-only surface: there is no read endpoint, and the response
-        returns every credential masked. For `BEDROCK` and `AZURE` it writes the
-        provider''s default credential and leaves any other credentials stored on
-        the Confident AI platform in place. A provider your organization''s model
-        provider policy does not allow cannot have a credential set (`403`), though
-        clearing one is always permitted.'
+        returns every credential masked. It writes the provider''s credential named
+        "Default", creating it if missing, and leaves any other credentials stored
+        for that provider on the Confident AI platform in place. A provider your
+        organization''s model provider policy does not allow cannot have a credential
+        set (`403`), though clearing one is always permitted.'
       operations:
       - id: updateProjectModelCredentials
         method: PUT
@@ -19297,11 +19335,11 @@ resources:
         severs that inheritance — so the project then holds only the provider you
         just sent, and any other provider it relied on has to be set again here.
         This is a write-only surface: there is no read endpoint, and the response
-        returns every credential masked. For `BEDROCK` and `AZURE` it writes the
-        provider''s default credential and leaves any other credentials stored on
-        the Confident AI platform in place. A provider your organization''s model
-        provider policy does not allow cannot have a credential set (`403`), though
-        clearing one is always permitted.'
+        returns every credential masked. It writes the provider''s credential named
+        "Default", creating it if missing, and leaves any other credentials stored
+        for that provider on the Confident AI platform in place. A provider your
+        organization''s model provider policy does not allow cannot have a credential
+        set (`403`), though clearing one is always permitted.'
       operations:
       - id: updateProjectModelCredentials
         method: PUT
@@ -24114,6 +24152,21 @@ resources:
         example:
           region: Nepal
         references: []
+      - python: error
+        typescript: error
+        wire: error
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string
+        required: false
+        keyword: true
+        default: None
+        description: Set this when your agent failed to produce an output. The test
+          case is marked errored with this message and is not evaluated, so the test
+          run can complete without waiting for it.
+        example: Upstream model provider timed out.
+        references: []
       order:
         python:
         - test_case_id
@@ -24125,6 +24178,7 @@ resources:
         - input_token_count
         - output_token_count
         - metadata
+        - error
         typescript:
         - testCaseId
         - actualOutput
@@ -24135,6 +24189,7 @@ resources:
         - inputTokenCount
         - outputTokenCount
         - metadata
+        - error
     - name:
         python: get
         pythonAsync: a_get
@@ -29471,6 +29526,8 @@ types:
     value: Threads
   - name: TRACES
     value: Traces
+  - name: TEST_CASES
+    value: Test cases
   references: []
 - name: AnnotationSortBy
   kind: enum
@@ -31036,6 +31093,17 @@ types:
     required: true
     description: Whether incoming items are classified automatically as they arrive.
     example: true
+    references: []
+  - wire: includeAudio
+    python: include_audio
+    typescript: includeAudio
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: Whether the item's call recording and any audio in its inputs and
+      outputs are sent to the classifier alongside the text.
+    example: false
     references: []
   - wire: dataModel
     python: data_model
@@ -32661,6 +32729,20 @@ types:
     description: Whether incoming items are classified automatically as they arrive.
       Defaults to `true` on create; omit it on an update to leave it unchanged.
     example: true
+    references: []
+  - wire: includeAudio
+    python: include_audio
+    typescript: includeAudio
+    type:
+      python: Optional[bool]
+      typescript: boolean
+    required: false
+    description: Whether the item's call recording and any audio in its inputs and
+      outputs are sent to the classifier alongside the text, so it can catch issues
+      that only show in the audio or in a mismatch between the audio and its transcript.
+      Needs an audio-capable platform model. Defaults to `false` on create; omit
+      it on an update to leave it unchanged.
+    example: false
     references: []
   - wire: filters
     python: filters
@@ -46394,8 +46476,7 @@ types:
       python: str
       typescript: string
     required: true
-    description: The id of the credentials record, generated by Confident AI. A project
-      that inherits the organization's credentials shares this id with it.
+    description: The id of the organization or project these credentials belong to.
     example: <MODEL-CREDENTIALS-ID>
     references: []
   - wire: openAiApiKey
@@ -57421,7 +57502,8 @@ types:
 - name: SubmitTestCaseResultRequest
   description: The result your agent produced for one dispatched test case. Every
     field is optional; a field you omit keeps the value Confident AI already holds
-    for the golden.
+    for the golden. Send `error` instead of an output when your agent could not produce
+    one.
   example: null
   python:
     module: confident_ai.test_runs
@@ -57516,6 +57598,18 @@ types:
     description: Optional additional metadata to attach to the test case.
     example:
       region: Nepal
+    references: []
+  - wire: error
+    python: error
+    typescript: error
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: Set this when your agent failed to produce an output. The test case
+      is marked errored with this message and is not evaluated, so the test run can
+      complete without waiting for it.
+    example: Upstream model provider timed out.
     references: []
 - name: SubmittedTestCaseResult
   description: The recorded test case id and whether its result was accepted.
@@ -61561,6 +61655,17 @@ types:
     example: null
     references:
     - ToolCall
+  - wire: metadata
+    python: metadata
+    typescript: metadata
+    type:
+      python: Optional[Dict[str, Any]]
+      typescript: Record<string, unknown> | null
+    required: false
+    description: Additional metadata to associate with this turn.
+    example:
+      channel: web
+    references: []
 - name: TurnRole
   kind: enum
   description: The role of the turn, either user or assistant.
@@ -62407,6 +62512,20 @@ types:
     description: Whether incoming items are classified automatically as they arrive.
       Defaults to `true` on create; omit it on an update to leave it unchanged.
     example: true
+    references: []
+  - wire: includeAudio
+    python: include_audio
+    typescript: includeAudio
+    type:
+      python: Optional[bool]
+      typescript: boolean
+    required: false
+    description: Whether the item's call recording and any audio in its inputs and
+      outputs are sent to the classifier alongside the text, so it can catch issues
+      that only show in the audio or in a mismatch between the audio and its transcript.
+      Needs an audio-capable platform model. Defaults to `false` on create; omit
+      it on an update to leave it unchanged.
+    example: false
     references: []
   - wire: filters
     python: filters

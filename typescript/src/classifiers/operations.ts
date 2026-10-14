@@ -64,6 +64,11 @@ export class ClassifiersOperations {
    * @param autoClassify Whether incoming items are classified automatically as
    *   they arrive. Defaults to `true` on create; omit it on an update to leave
    *   it unchanged.
+   * @param includeAudio Whether the item's call recording and any audio in its
+   *   inputs and outputs are sent to the classifier alongside the text, so it
+   *   can catch issues that only show in the audio or in a mismatch between the
+   *   audio and its transcript. Needs an audio-capable platform model. Defaults
+   *   to `false` on create; omit it on an update to leave it unchanged.
    * @param filters Narrows which traces or threads the classifier runs on, so
    *   it can watch one route rather than the whole project. Only the groups are
    *   stored, so the set's top-level operator is dropped and the groups are
@@ -80,6 +85,7 @@ export class ClassifiersOperations {
       description?: string | null;
       enabled?: boolean;
       autoClassify?: boolean;
+      includeAudio?: boolean;
       filters?: FilterSet | null;
       autoGenerationConfig?: ClassifierAutoGenerationConfig | null;
     } = {},
@@ -89,6 +95,7 @@ export class ClassifiersOperations {
       description,
       enabled,
       autoClassify,
+      includeAudio,
       filters,
       autoGenerationConfig,
     } = options;
@@ -103,6 +110,7 @@ export class ClassifiersOperations {
           description,
           enabled,
           autoClassify,
+          includeAudio,
           filters,
           autoGenerationConfig,
         },
@@ -145,6 +153,11 @@ export class ClassifiersOperations {
    * @param autoClassify Whether incoming items are classified automatically as
    *   they arrive. Defaults to `true` on create; omit it on an update to leave
    *   it unchanged.
+   * @param includeAudio Whether the item's call recording and any audio in its
+   *   inputs and outputs are sent to the classifier alongside the text, so it
+   *   can catch issues that only show in the audio or in a mismatch between the
+   *   audio and its transcript. Needs an audio-capable platform model. Defaults
+   *   to `false` on create; omit it on an update to leave it unchanged.
    * @param filters Narrows which traces or threads the classifier runs on, so
    *   it can watch one route rather than the whole project. Only the groups are
    *   stored, so the set's top-level operator is dropped and the groups are
@@ -160,6 +173,7 @@ export class ClassifiersOperations {
       description?: string | null;
       enabled?: boolean;
       autoClassify?: boolean;
+      includeAudio?: boolean;
       filters?: FilterSet | null;
       autoGenerationConfig?: ClassifierAutoGenerationConfig | null;
     } = {},
@@ -169,6 +183,7 @@ export class ClassifiersOperations {
       description,
       enabled,
       autoClassify,
+      includeAudio,
       filters,
       autoGenerationConfig,
     } = options;
@@ -181,6 +196,7 @@ export class ClassifiersOperations {
           description,
           enabled,
           autoClassify,
+          includeAudio,
           filters,
           autoGenerationConfig,
         },

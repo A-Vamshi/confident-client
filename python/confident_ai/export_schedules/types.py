@@ -20,6 +20,7 @@ class AnnotationSelectionType(Enum):
     SPANS = "Spans"
     THREADS = "Threads"
     TRACES = "Traces"
+    TEST_CASES = "Test cases"
 
 
 class SchedulableExportType(Enum):

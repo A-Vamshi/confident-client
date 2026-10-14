@@ -94,6 +94,7 @@ class ClassifiersOperations:
         description: Optional[str] = None,
         enabled: Optional[bool] = None,
         auto_classify: Optional[bool] = None,
+        include_audio: Optional[bool] = None,
         filters: Optional[FilterSet] = None,
         auto_generation_config: Optional[ClassifierAutoGenerationConfig] = None
     ) -> ClassifierRef:
@@ -114,6 +115,12 @@ class ClassifiersOperations:
             auto_classify: Whether incoming items are classified automatically
                 as they arrive. Defaults to `true` on create; omit it on an
                 update to leave it unchanged.
+            include_audio: Whether the item's call recording and any audio in
+                its inputs and outputs are sent to the classifier alongside the
+                text, so it can catch issues that only show in the audio or in a
+                mismatch between the audio and its transcript. Needs an audio-
+                capable platform model. Defaults to `false` on create; omit it
+                on an update to leave it unchanged.
             filters: Narrows which traces or threads the classifier runs on, so
                 it can watch one route rather than the whole project. Only the
                 groups are stored, so the set's top-level operator is dropped
@@ -134,6 +141,7 @@ class ClassifiersOperations:
                 "description": description,
                 "enabled": enabled,
                 "autoClassify": auto_classify,
+                "includeAudio": include_audio,
                 "filters": filters,
                 "autoGenerationConfig": auto_generation_config,
             },
@@ -148,6 +156,7 @@ class ClassifiersOperations:
         description: Optional[str] = None,
         enabled: Optional[bool] = None,
         auto_classify: Optional[bool] = None,
+        include_audio: Optional[bool] = None,
         filters: Optional[FilterSet] = None,
         auto_generation_config: Optional[ClassifierAutoGenerationConfig] = None
     ) -> ClassifierRef:
@@ -168,6 +177,12 @@ class ClassifiersOperations:
             auto_classify: Whether incoming items are classified automatically
                 as they arrive. Defaults to `true` on create; omit it on an
                 update to leave it unchanged.
+            include_audio: Whether the item's call recording and any audio in
+                its inputs and outputs are sent to the classifier alongside the
+                text, so it can catch issues that only show in the audio or in a
+                mismatch between the audio and its transcript. Needs an audio-
+                capable platform model. Defaults to `false` on create; omit it
+                on an update to leave it unchanged.
             filters: Narrows which traces or threads the classifier runs on, so
                 it can watch one route rather than the whole project. Only the
                 groups are stored, so the set's top-level operator is dropped
@@ -188,6 +203,7 @@ class ClassifiersOperations:
                 "description": description,
                 "enabled": enabled,
                 "autoClassify": auto_classify,
+                "includeAudio": include_audio,
                 "filters": filters,
                 "autoGenerationConfig": auto_generation_config,
             },
@@ -235,6 +251,7 @@ class ClassifiersOperations:
         description: Optional[str] = None,
         enabled: Optional[bool] = None,
         auto_classify: Optional[bool] = None,
+        include_audio: Optional[bool] = None,
         filters: Optional[FilterSet] = None,
         auto_generation_config: Optional[ClassifierAutoGenerationConfig] = None
     ) -> Classifier:
@@ -256,6 +273,12 @@ class ClassifiersOperations:
             auto_classify: Whether incoming items are classified automatically
                 as they arrive. Defaults to `true` on create; omit it on an
                 update to leave it unchanged.
+            include_audio: Whether the item's call recording and any audio in
+                its inputs and outputs are sent to the classifier alongside the
+                text, so it can catch issues that only show in the audio or in a
+                mismatch between the audio and its transcript. Needs an audio-
+                capable platform model. Defaults to `false` on create; omit it
+                on an update to leave it unchanged.
             filters: Narrows which traces or threads the classifier runs on, so
                 it can watch one route rather than the whole project. Only the
                 groups are stored, so the set's top-level operator is dropped
@@ -274,6 +297,7 @@ class ClassifiersOperations:
                 "description": description,
                 "enabled": enabled,
                 "autoClassify": auto_classify,
+                "includeAudio": include_audio,
                 "filters": filters,
                 "autoGenerationConfig": auto_generation_config,
             },
@@ -288,6 +312,7 @@ class ClassifiersOperations:
         description: Optional[str] = None,
         enabled: Optional[bool] = None,
         auto_classify: Optional[bool] = None,
+        include_audio: Optional[bool] = None,
         filters: Optional[FilterSet] = None,
         auto_generation_config: Optional[ClassifierAutoGenerationConfig] = None
     ) -> Classifier:
@@ -309,6 +334,12 @@ class ClassifiersOperations:
             auto_classify: Whether incoming items are classified automatically
                 as they arrive. Defaults to `true` on create; omit it on an
                 update to leave it unchanged.
+            include_audio: Whether the item's call recording and any audio in
+                its inputs and outputs are sent to the classifier alongside the
+                text, so it can catch issues that only show in the audio or in a
+                mismatch between the audio and its transcript. Needs an audio-
+                capable platform model. Defaults to `false` on create; omit it
+                on an update to leave it unchanged.
             filters: Narrows which traces or threads the classifier runs on, so
                 it can watch one route rather than the whole project. Only the
                 groups are stored, so the set's top-level operator is dropped
@@ -327,6 +358,7 @@ class ClassifiersOperations:
                 "description": description,
                 "enabled": enabled,
                 "autoClassify": auto_classify,
+                "includeAudio": include_audio,
                 "filters": filters,
                 "autoGenerationConfig": auto_generation_config,
             },
