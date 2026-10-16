@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { Endpoints } from "./endpoints";
+import { attachImagesMappings } from "./media";
 
 export const SDK_VERSION = "0.2.0";
 
@@ -74,6 +75,7 @@ export interface RequestOptions {
   body?: unknown;
   params?: Record<string, unknown>;
   urlParams?: Record<string, string | number>;
+  mediaHolders?: string[];
 }
 
 interface RetryOptions {
@@ -235,7 +237,7 @@ export class Api {
       const res = await this.httpRequest(
         method,
         url,
-        options.body,
+        attachImagesMappings(options.body, options.mediaHolders ?? []),
         dropUndefined(options.params),
       );
       return this.handleResponse<T>(res);

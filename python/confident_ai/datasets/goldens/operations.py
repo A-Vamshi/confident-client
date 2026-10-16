@@ -42,6 +42,7 @@ class GoldensOperations:
             response_schema=GoldenRef,
             request_schema=CreateGoldenRequest,
             body={"golden": golden, "version": version},
+            media_holders=["$.golden"],
             path={"datasetId": dataset_id},
         )
 
@@ -69,6 +70,7 @@ class GoldensOperations:
             response_schema=GoldenRef,
             request_schema=CreateGoldenRequest,
             body={"golden": golden, "version": version},
+            media_holders=["$.golden"],
             path={"datasetId": dataset_id},
         )
 
@@ -133,6 +135,7 @@ class GoldensOperations:
             response_schema=GoldenRef,
             request_schema=GoldenRequest,
             body=golden,
+            media_holders=["$"],
             path={"datasetId": dataset_id, "goldenId": golden_id},
         )
 
@@ -161,6 +164,7 @@ class GoldensOperations:
             response_schema=GoldenRef,
             request_schema=GoldenRequest,
             body=golden,
+            media_holders=["$"],
             path={"datasetId": dataset_id, "goldenId": golden_id},
         )
 

@@ -89,6 +89,7 @@ class DatasetsOperations:
                 "finalized": finalized,
                 "version": version,
             },
+            media_holders=["$.goldens.*"],
         )
 
     async def a_push(
@@ -132,6 +133,7 @@ class DatasetsOperations:
                 "finalized": finalized,
                 "version": version,
             },
+            media_holders=["$.goldens.*"],
         )
 
     def pull(
@@ -247,6 +249,7 @@ class DatasetsOperations:
             response_schema=DatasetRef,
             request_schema=QueueDatasetGoldensRequest,
             body={"goldens": goldens},
+            media_holders=["$.goldens.*"],
             path={"datasetId": dataset_id},
         )
 
@@ -271,6 +274,7 @@ class DatasetsOperations:
             response_schema=DatasetRef,
             request_schema=QueueDatasetGoldensRequest,
             body={"goldens": goldens},
+            media_holders=["$.goldens.*"],
             path={"datasetId": dataset_id},
         )
 

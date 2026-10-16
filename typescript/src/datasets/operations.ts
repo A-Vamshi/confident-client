@@ -62,7 +62,10 @@ export class DatasetsOperations {
     return this.api.sendRequest<DatasetRef>(
       HttpMethods.POST,
       Endpoints.DATASETS_ENDPOINT,
-      { body: { alias, goldens, finalized, version } },
+      {
+        body: { alias, goldens, finalized, version },
+        mediaHolders: ["$.goldens.*"],
+      },
     );
   }
 
@@ -127,7 +130,11 @@ export class DatasetsOperations {
     return this.api.sendRequest<DatasetRef>(
       HttpMethods.POST,
       Endpoints.DATASET_QUEUE_ENDPOINT,
-      { body: { goldens }, urlParams: { datasetId } },
+      {
+        body: { goldens },
+        mediaHolders: ["$.goldens.*"],
+        urlParams: { datasetId },
+      },
     );
   }
 

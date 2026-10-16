@@ -42,7 +42,10 @@ export class EvaluateClient {
     return this.api.sendRequest<EvaluateResult>(
       HttpMethods.POST,
       Endpoints.EVALUATE_ENDPOINT,
-      { body: { metricCollection, testCases, hyperparameters, identifier } },
+      {
+        body: { metricCollection, testCases, hyperparameters, identifier },
+        mediaHolders: ["$.testCases.*"],
+      },
     );
   }
 

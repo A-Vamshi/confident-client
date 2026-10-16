@@ -124,6 +124,7 @@ export class ItemsOperations extends AnnotationQueuesOperations {
           flagged,
           markAsCompleted,
         },
+        mediaHolders: ["$.annotations.*"],
         urlParams: { annotationQueueId, queueItemId },
       },
     );

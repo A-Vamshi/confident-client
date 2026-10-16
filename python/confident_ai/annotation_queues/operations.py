@@ -318,6 +318,7 @@ class AnnotationQueuesOperations:
                 "annotatorEmail": annotator_email,
                 "markAsCompleted": mark_as_completed,
             },
+            media_holders=["$.items.*.annotations.*"],
             path={"annotationQueueId": annotation_queue_id},
         )
 
@@ -356,5 +357,6 @@ class AnnotationQueuesOperations:
                 "annotatorEmail": annotator_email,
                 "markAsCompleted": mark_as_completed,
             },
+            media_holders=["$.items.*.annotations.*"],
             path={"annotationQueueId": annotation_queue_id},
         )

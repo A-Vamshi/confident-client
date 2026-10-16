@@ -183,6 +183,7 @@ class ItemsOperations:
                 "flagged": flagged,
                 "markAsCompleted": mark_as_completed,
             },
+            media_holders=["$.annotations.*"],
             path={
                 "annotationQueueId": annotation_queue_id,
                 "queueItemId": queue_item_id,
@@ -234,6 +235,7 @@ class ItemsOperations:
                 "flagged": flagged,
                 "markAsCompleted": mark_as_completed,
             },
+            media_holders=["$.annotations.*"],
             path={
                 "annotationQueueId": annotation_queue_id,
                 "queueItemId": queue_item_id,

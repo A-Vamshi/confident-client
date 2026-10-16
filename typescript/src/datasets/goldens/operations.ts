@@ -28,7 +28,11 @@ export class GoldensOperations extends DatasetIngestionTasksOperations {
     return this.api.sendRequest<GoldenRef>(
       HttpMethods.POST,
       Endpoints.DATASET_GOLDENS_ENDPOINT,
-      { body: { golden, version }, urlParams: { datasetId } },
+      {
+        body: { golden, version },
+        mediaHolders: ["$.golden"],
+        urlParams: { datasetId },
+      },
     );
   }
 
@@ -74,7 +78,7 @@ export class GoldensOperations extends DatasetIngestionTasksOperations {
     return this.api.sendRequest<GoldenRef>(
       HttpMethods.PUT,
       Endpoints.DATASET_GOLDEN_ENDPOINT,
-      { body: golden, urlParams: { datasetId, goldenId } },
+      { body: golden, mediaHolders: ["$"], urlParams: { datasetId, goldenId } },
     );
   }
 

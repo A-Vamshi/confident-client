@@ -2,6 +2,7 @@ from ._version import __version__
 from .api import Api, ApiKeyKind, HttpMethods
 from .endpoints import Endpoints
 from .client import ConfidentAI
+from .media import Media, parse_multimodal
 from .types import ApiResponse, ConfidentApiError
 
 __all__ = [
@@ -13,4 +14,6 @@ __all__ = [
     "ConfidentApiError",
     "Endpoints",
     "HttpMethods",
+    "Media",
+    "parse_multimodal",
 ]

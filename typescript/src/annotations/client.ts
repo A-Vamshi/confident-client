@@ -107,7 +107,7 @@ export class AnnotationsClient {
     return this.api.sendRequest<AnnotationRef>(
       HttpMethods.POST,
       Endpoints.ANNOTATIONS_ENDPOINT,
-      { body: annotation },
+      { body: annotation, mediaHolders: ["$"] },
     );
   }
 
@@ -175,6 +175,7 @@ export class AnnotationsClient {
           expectedOutcome,
           imagesMapping,
         },
+        mediaHolders: ["$"],
         urlParams: { annotationId },
       },
     );

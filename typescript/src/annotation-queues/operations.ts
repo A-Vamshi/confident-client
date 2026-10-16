@@ -159,6 +159,7 @@ export class AnnotationQueuesOperations {
       Endpoints.ANNOTATION_QUEUE_BATCH_ANNOTATE_ENDPOINT,
       {
         body: { items, annotatorEmail, markAsCompleted },
+        mediaHolders: ["$.items.*.annotations.*"],
         urlParams: { annotationQueueId },
       },
     );

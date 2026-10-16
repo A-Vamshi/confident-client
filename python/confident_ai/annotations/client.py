@@ -157,6 +157,7 @@ class AnnotationsClient:
             response_schema=AnnotationRef,
             request_schema=CreateAnnotationRequest,
             body=annotation,
+            media_holders=["$"],
         )
 
     async def a_create(
@@ -183,6 +184,7 @@ class AnnotationsClient:
             response_schema=AnnotationRef,
             request_schema=CreateAnnotationRequest,
             body=annotation,
+            media_holders=["$"],
         )
 
     def get(self, annotation_id: str) -> Annotation:
@@ -260,6 +262,7 @@ class AnnotationsClient:
                 "expectedOutcome": expected_outcome,
                 "imagesMapping": images_mapping,
             },
+            media_holders=["$"],
             path={"annotationId": annotation_id},
         )
 
@@ -304,5 +307,6 @@ class AnnotationsClient:
                 "expectedOutcome": expected_outcome,
                 "imagesMapping": images_mapping,
             },
+            media_holders=["$"],
             path={"annotationId": annotation_id},
         )

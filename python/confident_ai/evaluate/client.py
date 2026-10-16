@@ -60,6 +60,7 @@ class EvaluateClient:
                 "hyperparameters": hyperparameters,
                 "identifier": identifier,
             },
+            media_holders=["$.testCases.*"],
         )
 
     async def a_run_evals(
@@ -97,6 +98,7 @@ class EvaluateClient:
                 "hyperparameters": hyperparameters,
                 "identifier": identifier,
             },
+            media_holders=["$.testCases.*"],
         )
 
     def evaluate_span(
