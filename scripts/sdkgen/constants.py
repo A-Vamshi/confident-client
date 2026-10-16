@@ -155,6 +155,8 @@ TYPESCRIPT_HELPERS = REPO_ROOT / "typescript" / "src" / "utils" / "helpers.ts"
 SCHEMA_REF = "#/components/schemas/"
 COMPONENT_REF = "#/components/"
 
+MEDIA_MAPPING_FIELD = "imagesMapping"
+
 # Every verb a path item may carry, and the order routes are rendered in.
 METHODS = frozenset(
     {"get", "post", "put", "patch", "delete", "head", "options", "trace"}
