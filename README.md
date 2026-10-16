@@ -81,10 +81,10 @@ image belongs, and the request carries the image with it:
 
 ```python
 from confident_ai import Media
-from confident_ai.datasets import PushSingleTurnGolden
+from confident_ai.datasets import SingleTurnGolden
 
 photo = Media.from_file("cat.png")
-golden = PushSingleTurnGolden(input=f"What is in this photo? {photo}")
+golden = SingleTurnGolden(input=f"What is in this photo? {photo}")
 client.datasets.push(alias="photos", goldens=[golden])
 ```
 
