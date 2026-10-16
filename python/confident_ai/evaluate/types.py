@@ -13,7 +13,7 @@ from confident_ai.types import ConfidentBaseModel
 
 class SingleTurnTestCase(ConfidentBaseModel):
     input: str
-    actual_output: Optional[str] = Field(default=None, alias="actualOutput")
+    actual_output: str = Field(alias="actualOutput")
     expected_output: Optional[str] = Field(default=None, alias="expectedOutput")
     retrieval_context: Optional[List[str]] = Field(
         default=None,

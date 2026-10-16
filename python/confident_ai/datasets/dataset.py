@@ -14,12 +14,9 @@ from confident_ai.datasets.types import (
     DatasetRef,
     DatasetVersionList,
     Golden,
-    GoldenInput,
     GoldenRef,
-    MultiTurnGoldenInput,
     PushDatasetRequest,
     RunDatasetEvaluationResult,
-    SingleTurnGoldenInput,
 )
 
 
@@ -274,7 +271,7 @@ class Dataset:
             mcp_server_ids=mcp_server_ids,
         )
 
-    def queue_goldens(self, goldens: List[GoldenInput]) -> DatasetRef:
+    def queue_goldens(self, goldens: List[Golden]) -> DatasetRef:
         """Queue Dataset Goldens
 
         Adds goldens to the dataset as unfinalized goldens, for review on the
@@ -288,7 +285,7 @@ class Dataset:
         """
         return self._client.queue_goldens(self._dataset_id(), goldens)
 
-    async def a_queue_goldens(self, goldens: List[GoldenInput]) -> DatasetRef:
+    async def a_queue_goldens(self, goldens: List[Golden]) -> DatasetRef:
         """Queue Dataset Goldens
 
         Adds goldens to the dataset as unfinalized goldens, for review on the
@@ -303,7 +300,7 @@ class Dataset:
         return await self._client.a_queue_goldens(self._dataset_id(), goldens)
 
     def create_golden(
-        self, golden: GoldenInput, *, version: Optional[str] = None
+        self, golden: Golden, *, version: Optional[str] = None
     ) -> GoldenRef:
         """Create Golden
 
@@ -320,7 +317,7 @@ class Dataset:
         )
 
     async def a_create_golden(
-        self, golden: GoldenInput, *, version: Optional[str] = None
+        self, golden: Golden, *, version: Optional[str] = None
     ) -> GoldenRef:
         """Create Golden
 
@@ -398,9 +395,7 @@ class Dataset:
                 `multiTurn` decides which kind every golden in it is.
         """
         return self._client.update_golden(
-            self._dataset_id(),
-            self._golden_id(golden),
-            self._golden_input(golden),
+            self._dataset_id(), self._golden_id(golden), golden
         )
 
     async def a_update_golden(self, golden: Golden) -> GoldenRef:
@@ -417,9 +412,7 @@ class Dataset:
                 `multiTurn` decides which kind every golden in it is.
         """
         return await self._client.a_update_golden(
-            self._dataset_id(),
-            self._golden_id(golden),
-            self._golden_input(golden),
+            self._dataset_id(), self._golden_id(golden), golden
         )
 
     def pull(
@@ -526,7 +519,7 @@ class Dataset:
         fields = {
             "alias": self.alias,
             "version": self.version,
-            "goldens": [self._golden_input(golden) for golden in self.goldens],
+            "goldens": self.goldens,
             "finalized": finalized,
         }
         return PushDatasetRequest(**fields)
@@ -537,27 +530,6 @@ class Dataset:
                 "This golden has no id, so it is not in this dataset yet. Push it first."
             )
         return golden.id
-
-    def _golden_input(self, golden: Golden) -> GoldenInput:
-        fields = golden.model_dump(
-            mode="json", by_alias=True, exclude_none=True
-        )
-        chosen = [
-            name
-            for name, value in (
-                ("input", getattr(golden, "input", None)),
-                ("scenario", getattr(golden, "scenario", None)),
-            )
-            if value is not None
-        ]
-        if len(chosen) != 1:
-            raise ValueError(
-                "Set exactly one of input, scenario; "
-                + (", ".join(chosen) if chosen else "none is set")
-            )
-        if getattr(golden, "input", None) is not None:
-            return SingleTurnGoldenInput(**fields)
-        return MultiTurnGoldenInput(**fields)
 
     def _load(self, payload: DatasetPayload) -> None:
         self.id = payload.id

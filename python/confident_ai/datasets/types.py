@@ -71,94 +71,6 @@ class Expectations(ConfidentBaseModel):
     must_not: List[str] = Field(alias="mustNot")
 
 
-class SingleTurnGoldenInput(ConfidentBaseModel):
-    input: str
-    actual_output: Optional[str] = Field(default=None, alias="actualOutput")
-    expected_output: Optional[str] = Field(default=None, alias="expectedOutput")
-    context: Optional[List[str]] = None
-    retrieval_context: Optional[List[str]] = Field(
-        default=None,
-        alias="retrievalContext",
-    )
-    tools_called: Optional[List[ToolCall]] = Field(
-        default=None,
-        alias="toolsCalled",
-    )
-    expected_tools: Optional[List[ToolCall]] = Field(
-        default=None,
-        alias="expectedTools",
-    )
-    token_cost: Optional[float] = Field(default=None, alias="tokenCost")
-    input_token_count: Optional[int] = Field(
-        default=None,
-        alias="inputTokenCount",
-    )
-    output_token_count: Optional[int] = Field(
-        default=None,
-        alias="outputTokenCount",
-    )
-    additional_metadata: Optional[Dict[str, Any]] = Field(
-        default=None,
-        alias="additionalMetadata",
-    )
-    expectations: Optional[Expectations] = None
-    comments: Optional[str] = None
-    source_file: Optional[str] = Field(default=None, alias="sourceFile")
-    source_files: Optional[List[str]] = Field(default=None, alias="sourceFiles")
-    finalized: Optional[bool] = None
-    custom_column_key_values: Optional[Dict[str, str]] = Field(
-        default=None,
-        alias="customColumnKeyValues",
-    )
-    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
-        default=None,
-        alias="imagesMapping",
-    )
-    tags: Optional[List[str]] = None
-    id: Optional[str] = None
-
-
-class MultiTurnGoldenInput(ConfidentBaseModel):
-    scenario: str
-    expected_outcome: Optional[str] = Field(
-        default=None,
-        alias="expectedOutcome",
-    )
-    user_description: Optional[str] = Field(
-        default=None,
-        alias="userDescription",
-    )
-    turns: Optional[List[Turn]] = None
-    context: Optional[List[str]] = None
-    additional_metadata: Optional[Dict[str, Any]] = Field(
-        default=None,
-        alias="additionalMetadata",
-    )
-    expectations: Optional[Expectations] = None
-    comments: Optional[str] = None
-    source_file: Optional[str] = Field(default=None, alias="sourceFile")
-    source_files: Optional[List[str]] = Field(default=None, alias="sourceFiles")
-    finalized: Optional[bool] = None
-    custom_column_key_values: Optional[Dict[str, str]] = Field(
-        default=None,
-        alias="customColumnKeyValues",
-    )
-    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
-        default=None,
-        alias="imagesMapping",
-    )
-    tags: Optional[List[str]] = None
-    id: Optional[str] = None
-
-
-GoldenInput = Union[SingleTurnGoldenInput, MultiTurnGoldenInput]
-
-
-class CreateGoldenRequest(ConfidentBaseModel):
-    golden: GoldenInput
-    version: Optional[str] = None
-
-
 class SingleTurnGolden(ConfidentBaseModel):
     input: str
     actual_output: Optional[str] = Field(default=None, alias="actualOutput")
@@ -200,6 +112,10 @@ class SingleTurnGolden(ConfidentBaseModel):
         alias="customColumnKeyValues",
     )
     tags: Optional[List[str]] = None
+    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
+        default=None,
+        alias="imagesMapping",
+    )
 
 
 class MultiTurnGolden(ConfidentBaseModel):
@@ -229,9 +145,18 @@ class MultiTurnGolden(ConfidentBaseModel):
         alias="customColumnKeyValues",
     )
     tags: Optional[List[str]] = None
+    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
+        default=None,
+        alias="imagesMapping",
+    )
 
 
 Golden = Union[SingleTurnGolden, MultiTurnGolden]
+
+
+class CreateGoldenRequest(ConfidentBaseModel):
+    golden: Golden
+    version: Optional[str] = None
 
 
 class Dataset(ConfidentBaseModel):
@@ -313,11 +238,11 @@ class PushDatasetRequest(ConfidentBaseModel):
     alias: str
     finalized: Optional[bool] = None
     version: Optional[str] = None
-    goldens: List[GoldenInput]
+    goldens: List[Golden]
 
 
 class QueueDatasetGoldensRequest(ConfidentBaseModel):
-    goldens: List[GoldenInput]
+    goldens: List[Golden]
 
 
 class RunDatasetEvaluationRequest(ConfidentBaseModel):

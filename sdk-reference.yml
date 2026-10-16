@@ -6276,8 +6276,8 @@ resources:
         wire: goldens
         in: body
         type:
-          python: List[GoldenInput]
-          typescript: GoldenInput[]
+          python: List[Golden]
+          typescript: Golden[]
         required: true
         keyword:
           python: false
@@ -6289,7 +6289,7 @@ resources:
           the dataset's `multiTurn`. A new dataset takes its kind from them.
         example: null
         references:
-        - GoldenInput
+        - Golden
       - python: finalized
         typescript: finalized
         wire: finalized
@@ -6486,8 +6486,8 @@ resources:
         wire: goldens
         in: body
         type:
-          python: List[GoldenInput]
-          typescript: GoldenInput[]
+          python: List[Golden]
+          typescript: Golden[]
         required: true
         keyword:
           python: false
@@ -6498,7 +6498,7 @@ resources:
           stored unfinalized, whatever each golden's own `finalized` says.
         example: null
         references:
-        - GoldenInput
+        - Golden
       order:
         python:
         - dataset_id
@@ -7705,8 +7705,8 @@ resources:
         wire: golden
         in: body
         type:
-          python: GoldenInput
-          typescript: GoldenInput
+          python: Golden
+          typescript: Golden
         required: true
         keyword:
           python: false
@@ -7715,7 +7715,7 @@ resources:
         description: null
         example: null
         references:
-        - GoldenInput
+        - Golden
       - python: version
         typescript: version
         wire: version
@@ -7813,7 +7813,7 @@ resources:
         python: GoldenRef
         typescript: Promise<GoldenRef>
         type: GoldenRef
-      body: GoldenInput
+      body: Golden
       parameters:
       - python: dataset_id
         typescript: datasetId
@@ -7847,24 +7847,24 @@ resources:
         references: []
       - python: golden
         typescript: golden
-        wire: GoldenInput
+        wire: Golden
         in: union-body
         type:
-          python: GoldenInput
-          typescript: GoldenInput
+          python: Golden
+          typescript: Golden
         required: true
         keyword:
           python: false
           typescript: false
         default: null
-        description: 'One golden to write: single-turn when it carries `input`, multi-turn
-          when it carries `scenario`. A golden cannot be both, and its kind must
-          match the dataset''s `multiTurn`. Pass a SingleTurnGoldenInput or a MultiTurnGoldenInput.'
+        description: 'A golden in the dataset: single-turn when it carries `input`,
+          multi-turn when it carries `scenario`. The dataset''s `multiTurn` decides
+          which kind every golden in it is. Pass a SingleTurnGolden or a MultiTurnGolden.'
         example: null
         references:
-        - GoldenInput
-        - SingleTurnGoldenInput
-        - MultiTurnGoldenInput
+        - Golden
+        - SingleTurnGolden
+        - MultiTurnGolden
       order:
         python:
         - dataset_id
@@ -8512,8 +8512,8 @@ resources:
         wire: goldens
         in: body
         type:
-          python: List[GoldenInput]
-          typescript: GoldenInput[]
+          python: List[Golden]
+          typescript: Golden[]
         required: true
         keyword:
           python: false
@@ -8524,7 +8524,7 @@ resources:
           stored unfinalized, whatever each golden's own `finalized` says.
         example: null
         references:
-        - GoldenInput
+        - Golden
       order:
         python:
         - goldens
@@ -8552,8 +8552,8 @@ resources:
         wire: golden
         in: body
         type:
-          python: GoldenInput
-          typescript: GoldenInput
+          python: Golden
+          typescript: Golden
         required: true
         keyword:
           python: false
@@ -8562,7 +8562,7 @@ resources:
         description: null
         example: null
         references:
-        - GoldenInput
+        - Golden
       - python: version
         typescript: version
         wire: version
@@ -8678,11 +8678,11 @@ resources:
         python: GoldenRef
         typescript: Promise<GoldenRef>
         type: GoldenRef
-      body: GoldenInput
+      body: Golden
       parameters:
       - python: golden
         typescript: golden
-        wire: GoldenInput
+        wire: Golden
         in: union-body
         type:
           python: Golden
@@ -8697,9 +8697,9 @@ resources:
           which kind every golden in it is.'
         example: null
         references:
-        - GoldenInput
-        - SingleTurnGoldenInput
-        - MultiTurnGoldenInput
+        - Golden
+        - SingleTurnGolden
+        - MultiTurnGolden
       order:
         python:
         - golden
@@ -35733,20 +35733,20 @@ types:
     module: confident-ai/datasets
     name: CreateGoldenRequest
   references:
-  - GoldenInput
+  - Golden
   kind: object
   fields:
   - wire: golden
     python: golden
     typescript: golden
     type:
-      python: GoldenInput
-      typescript: GoldenInput
+      python: Golden
+      typescript: Golden
     required: true
     description: null
     example: null
     references:
-    - GoldenInput
+    - Golden
   - wire: version
     python: version
     typescript: version
@@ -41710,27 +41710,6 @@ types:
   type:
     python: Union[SingleTurnGolden, MultiTurnGolden]
     typescript: SingleTurnGolden | MultiTurnGolden
-- name: GoldenInput
-  description: 'One golden to write: single-turn when it carries `input`, multi-turn
-    when it carries `scenario`. A golden cannot be both, and its kind must match
-    the dataset''s `multiTurn`.'
-  example: null
-  python:
-    module: confident_ai.datasets
-    name: GoldenInput
-  typescript:
-    module: confident-ai/datasets
-    name: GoldenInput
-  references:
-  - SingleTurnGoldenInput
-  - MultiTurnGoldenInput
-  kind: union
-  branches:
-  - SingleTurnGoldenInput
-  - MultiTurnGoldenInput
-  type:
-    python: Union[SingleTurnGoldenInput, MultiTurnGoldenInput]
-    typescript: SingleTurnGoldenInput | MultiTurnGoldenInput
 - name: GoldenRef
   description: null
   example: null
@@ -49192,6 +49171,7 @@ types:
   references:
   - Turn
   - Expectations
+  - MLLMImage
   kind: object
   fields:
   - wire: scenario
@@ -49354,165 +49334,6 @@ types:
     example:
     - geography
     references: []
-- name: MultiTurnGoldenInput
-  description: 'A multi-turn golden to write: the scenario of a conversation with
-    your LLM application and, optionally, its turns. When pushing, an `id` updates
-    that golden instead of adding one.'
-  example: null
-  python:
-    module: confident_ai.datasets
-    name: MultiTurnGoldenInput
-  typescript:
-    module: confident-ai/datasets
-    name: MultiTurnGoldenInput
-  references:
-  - Turn
-  - Expectations
-  - MLLMImage
-  kind: object
-  fields:
-  - wire: scenario
-    python: scenario
-    typescript: scenario
-    type:
-      python: str
-      typescript: string
-    required: true
-    description: This is a description of the conversation context.
-    example: A traveller wants to book a hotel in Paris.
-    references: []
-  - wire: expectedOutcome
-    python: expected_outcome
-    typescript: expectedOutcome
-    type:
-      python: Optional[str]
-      typescript: string | null
-    required: false
-    description: This describes the expected outcome, or ideal conversation flow,
-      of the conversation.
-    example: The assistant confirms a reservation near the Louvre.
-    references: []
-  - wire: userDescription
-    python: user_description
-    typescript: userDescription
-    type:
-      python: Optional[str]
-      typescript: string | null
-    required: false
-    description: This is the description of the user in the conversation.
-    example: A traveller planning a weekend in Paris.
-    references: []
-  - wire: turns
-    python: turns
-    typescript: turns
-    type:
-      python: Optional[List[Turn]]
-      typescript: Turn[] | null
-    required: false
-    description: This is the list of turns in the conversation.
-    example:
-    - role: user
-      content: I need a hotel in Paris near the Louvre.
-    - role: assistant
-      content: Hôtel du Louvre has rooms available. Which dates?
-    references:
-    - Turn
-  - wire: context
-    python: context
-    typescript: context
-    type:
-      python: Optional[List[str]]
-      typescript: string[] | null
-    required: false
-    description: This is the context of the conversation.
-    example:
-    - Hôtel du Louvre is a five-minute walk from the museum.
-    references: []
-  - wire: additionalMetadata
-    python: additional_metadata
-    typescript: additionalMetadata
-    type:
-      python: Optional[Dict[str, Any]]
-      typescript: Record<string, unknown> | null
-    required: false
-    description: Additional metadata to associate with the golden.
-    example:
-      source: faq
-    references: []
-  - wire: expectations
-    python: expectations
-    typescript: expectations
-    type:
-      python: Optional[Expectations]
-      typescript: Expectations | null
-    required: false
-    description: What the LLM system must and must not do for this golden. Omit it
-      to leave stored expectations unchanged, or send null to clear them.
-    example:
-      must:
-      - Cite a source
-      mustNot:
-      - Mention competitors
-    references:
-    - Expectations
-  - wire: comments
-    python: comments
-    typescript: comments
-    type:
-      python: Optional[str]
-      typescript: string | null
-    required: false
-    description: Comments to associate with the golden.
-    example: Reviewed by the support team.
-    references: []
-  - wire: sourceFile
-    python: source_file
-    typescript: sourceFile
-    type:
-      python: Optional[str]
-      typescript: string | null
-    required: false
-    description: The source file the golden was retrieved from. Like `tags` and `customColumnKeyValues`,
-      this is left unchanged when the request omits it; send `null` to clear it.
-    example: capitals.csv
-    references: []
-  - wire: sourceFiles
-    python: source_files
-    typescript: sourceFiles
-    type:
-      python: Optional[List[str]]
-      typescript: string[]
-    required: false
-    description: The source files the golden was retrieved from. Like `tags` and
-      `customColumnKeyValues`, these are left unchanged when the request omits them;
-      send an empty array to clear them.
-    example:
-    - capitals.csv
-    references: []
-  - wire: finalized
-    python: finalized
-    typescript: finalized
-    type:
-      python: Optional[bool]
-      typescript: boolean
-    required: false
-    description: Whether the golden is ready to use in evaluations. When pushing
-      or queueing a list of goldens the request decides this for every golden and
-      this field is ignored.
-    example: true
-    references: []
-  - wire: customColumnKeyValues
-    python: custom_column_key_values
-    typescript: customColumnKeyValues
-    type:
-      python: Optional[Dict[str, str]]
-      typescript: Record<string, string>
-    required: false
-    description: Custom dataset column values keyed by column name. A column that
-      does not exist in the dataset yet is created.
-    example:
-      difficulty: easy
-    references: []
   - wire: imagesMapping
     python: images_mapping
     typescript: imagesMapping
@@ -49529,31 +49350,6 @@ types:
         local: false
     references:
     - MLLMImage
-  - wire: tags
-    python: tags
-    typescript: tags
-    type:
-      python: Optional[List[str]]
-      typescript: string[]
-    required: false
-    description: Tags to associate with the golden, which is useful for grouping
-      and filtering goldens. A tag that does not exist in the dataset yet is created.
-    example:
-    - geography
-    references: []
-  - wire: id
-    python: id
-    typescript: id
-    type:
-      python: Optional[str]
-      typescript: string
-    required: false
-    description: The id of a golden already in this dataset, as returned when the
-      dataset is pulled. When pushing, that golden is updated in place, staying in
-      the version it is already in; omit it to add a new golden. Creating, queueing
-      and updating a single golden ignore it.
-    example: <GOLDEN-ID>
-    references: []
 - name: MultiTurnTestCase
   description: A test case for a conversation with your LLM application.
   example: null
@@ -52340,7 +52136,7 @@ types:
     module: confident-ai/datasets
     name: PushDatasetRequest
   references:
-  - GoldenInput
+  - Golden
   kind: object
   fields:
   - wire: alias
@@ -52382,8 +52178,8 @@ types:
     python: goldens
     typescript: goldens
     type:
-      python: List[GoldenInput]
-      typescript: GoldenInput[]
+      python: List[Golden]
+      typescript: Golden[]
     required: true
     description: The goldens to push. A golden carrying an `id` updates the golden
       already in the dataset; one without is added. Every golden in one request must
@@ -52391,7 +52187,7 @@ types:
       `multiTurn`. A new dataset takes its kind from them.
     example: null
     references:
-    - GoldenInput
+    - Golden
 - name: PushPromptResult
   description: null
   example: null
@@ -52436,22 +52232,22 @@ types:
     module: confident-ai/datasets
     name: QueueDatasetGoldensRequest
   references:
-  - GoldenInput
+  - Golden
   kind: object
   fields:
   - wire: goldens
     python: goldens
     typescript: goldens
     type:
-      python: List[GoldenInput]
-      typescript: GoldenInput[]
+      python: List[Golden]
+      typescript: Golden[]
     required: true
     description: The goldens to queue for review. Every golden in one request must
       be of the same kind and match the dataset's `multiTurn`. They are stored unfinalized,
       whatever each golden's own `finalized` says.
     example: null
     references:
-    - GoldenInput
+    - Golden
 - name: QueueIngestionTask
   description: A rule that keeps an annotation queue filled from your production
     data.
@@ -56935,6 +56731,7 @@ types:
   references:
   - ToolCall
   - Expectations
+  - MLLMImage
   kind: object
   fields:
   - wire: input
@@ -57145,213 +56942,6 @@ types:
     example:
     - geography
     references: []
-- name: SingleTurnGoldenInput
-  description: 'A single-turn golden to write: one input to your LLM application
-    and the outputs expected of it. When pushing, an `id` updates that golden instead
-    of adding one.'
-  example: null
-  python:
-    module: confident_ai.datasets
-    name: SingleTurnGoldenInput
-  typescript:
-    module: confident-ai/datasets
-    name: SingleTurnGoldenInput
-  references:
-  - ToolCall
-  - Expectations
-  - MLLMImage
-  kind: object
-  fields:
-  - wire: input
-    python: input
-    typescript: input
-    type:
-      python: str
-      typescript: string
-    required: true
-    description: This is the input to your LLM application.
-    example: What is the capital of France?
-    references: []
-  - wire: actualOutput
-    python: actual_output
-    typescript: actualOutput
-    type:
-      python: Optional[str]
-      typescript: string | null
-    required: false
-    description: This is the actual output of your LLM application.
-    example: The capital of France is Paris.
-    references: []
-  - wire: expectedOutput
-    python: expected_output
-    typescript: expectedOutput
-    type:
-      python: Optional[str]
-      typescript: string | null
-    required: false
-    description: This is the expected output of your LLM application, which is the
-      ideal actual output.
-    example: Paris.
-    references: []
-  - wire: context
-    python: context
-    typescript: context
-    type:
-      python: Optional[List[str]]
-      typescript: string[] | null
-    required: false
-    description: This is the ideal retrieval context of your LLM application.
-    example:
-    - Paris is the capital of France.
-    references: []
-  - wire: retrievalContext
-    python: retrieval_context
-    typescript: retrievalContext
-    type:
-      python: Optional[List[str]]
-      typescript: string[] | null
-    required: false
-    description: This is the retrieval context of your LLM application.
-    example:
-    - Paris is the capital and largest city of France.
-    references: []
-  - wire: toolsCalled
-    python: tools_called
-    typescript: toolsCalled
-    type:
-      python: Optional[List[ToolCall]]
-      typescript: ToolCall[] | null
-    required: false
-    description: This is the tools called by your LLM application.
-    example: null
-    references:
-    - ToolCall
-  - wire: expectedTools
-    python: expected_tools
-    typescript: expectedTools
-    type:
-      python: Optional[List[ToolCall]]
-      typescript: ToolCall[] | null
-    required: false
-    description: This is the expected tools to be called by the LLM application.
-    example: null
-    references:
-    - ToolCall
-  - wire: tokenCost
-    python: token_cost
-    typescript: tokenCost
-    type:
-      python: Optional[float]
-      typescript: number | null
-    required: false
-    description: This is the cost of the tokens used to produce the actual output.
-    example: 0.002
-    references: []
-  - wire: inputTokenCount
-    python: input_token_count
-    typescript: inputTokenCount
-    type:
-      python: Optional[int]
-      typescript: number | null
-    required: false
-    description: This is the number of input tokens passed to the LLM model.
-    example: 12
-    references: []
-  - wire: outputTokenCount
-    python: output_token_count
-    typescript: outputTokenCount
-    type:
-      python: Optional[int]
-      typescript: number | null
-    required: false
-    description: This is the number of output tokens generated by the LLM model.
-    example: 3
-    references: []
-  - wire: additionalMetadata
-    python: additional_metadata
-    typescript: additionalMetadata
-    type:
-      python: Optional[Dict[str, Any]]
-      typescript: Record<string, unknown> | null
-    required: false
-    description: Additional metadata to associate with the golden.
-    example:
-      source: faq
-    references: []
-  - wire: expectations
-    python: expectations
-    typescript: expectations
-    type:
-      python: Optional[Expectations]
-      typescript: Expectations | null
-    required: false
-    description: What the LLM system must and must not do for this golden. Omit it
-      to leave stored expectations unchanged, or send null to clear them.
-    example:
-      must:
-      - Cite a source
-      mustNot:
-      - Mention competitors
-    references:
-    - Expectations
-  - wire: comments
-    python: comments
-    typescript: comments
-    type:
-      python: Optional[str]
-      typescript: string | null
-    required: false
-    description: Comments to associate with the golden.
-    example: Reviewed by the support team.
-    references: []
-  - wire: sourceFile
-    python: source_file
-    typescript: sourceFile
-    type:
-      python: Optional[str]
-      typescript: string | null
-    required: false
-    description: The source file the golden was retrieved from. Like `tags` and `customColumnKeyValues`,
-      this is left unchanged when the request omits it; send `null` to clear it.
-    example: capitals.csv
-    references: []
-  - wire: sourceFiles
-    python: source_files
-    typescript: sourceFiles
-    type:
-      python: Optional[List[str]]
-      typescript: string[]
-    required: false
-    description: The source files the golden was retrieved from. Like `tags` and
-      `customColumnKeyValues`, these are left unchanged when the request omits them;
-      send an empty array to clear them.
-    example:
-    - capitals.csv
-    references: []
-  - wire: finalized
-    python: finalized
-    typescript: finalized
-    type:
-      python: Optional[bool]
-      typescript: boolean
-    required: false
-    description: Whether the golden is ready to use in evaluations. When pushing
-      or queueing a list of goldens the request decides this for every golden and
-      this field is ignored.
-    example: true
-    references: []
-  - wire: customColumnKeyValues
-    python: custom_column_key_values
-    typescript: customColumnKeyValues
-    type:
-      python: Optional[Dict[str, str]]
-      typescript: Record<string, string>
-    required: false
-    description: Custom dataset column values keyed by column name. A column that
-      does not exist in the dataset yet is created.
-    example:
-      difficulty: easy
-    references: []
   - wire: imagesMapping
     python: images_mapping
     typescript: imagesMapping
@@ -57368,31 +56958,6 @@ types:
         local: false
     references:
     - MLLMImage
-  - wire: tags
-    python: tags
-    typescript: tags
-    type:
-      python: Optional[List[str]]
-      typescript: string[]
-    required: false
-    description: Tags to associate with the golden, which is useful for grouping
-      and filtering goldens. A tag that does not exist in the dataset yet is created.
-    example:
-    - geography
-    references: []
-  - wire: id
-    python: id
-    typescript: id
-    type:
-      python: Optional[str]
-      typescript: string
-    required: false
-    description: The id of a golden already in this dataset, as returned when the
-      dataset is pulled. When pushing, that golden is updated in place, staying in
-      the version it is already in; omit it to add a new golden. Creating, queueing
-      and updating a single golden ignore it.
-    example: <GOLDEN-ID>
-    references: []
 - name: SingleTurnTestCase
   description: A test case for a single exchange with your LLM application.
   example: null
@@ -57421,9 +56986,9 @@ types:
     python: actual_output
     typescript: actualOutput
     type:
-      python: Optional[str]
+      python: str
       typescript: string
-    required: false
+    required: true
     description: This is the actual output of your LLM application.
     example: No clue, pretty tall I guess?
     references: []

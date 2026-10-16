@@ -41,54 +41,6 @@ export interface Expectations {
   mustNot: string[];
 }
 
-export interface SingleTurnGoldenInput {
-  input: string;
-  actualOutput?: string | null;
-  expectedOutput?: string | null;
-  context?: string[] | null;
-  retrievalContext?: string[] | null;
-  toolsCalled?: ToolCall[] | null;
-  expectedTools?: ToolCall[] | null;
-  tokenCost?: number | null;
-  inputTokenCount?: number | null;
-  outputTokenCount?: number | null;
-  additionalMetadata?: Record<string, unknown> | null;
-  expectations?: Expectations | null;
-  comments?: string | null;
-  sourceFile?: string | null;
-  sourceFiles?: string[];
-  finalized?: boolean;
-  customColumnKeyValues?: Record<string, string>;
-  imagesMapping?: Record<string, MLLMImage>;
-  tags?: string[];
-  id?: string;
-}
-
-export interface MultiTurnGoldenInput {
-  scenario: string;
-  expectedOutcome?: string | null;
-  userDescription?: string | null;
-  turns?: Turn[] | null;
-  context?: string[] | null;
-  additionalMetadata?: Record<string, unknown> | null;
-  expectations?: Expectations | null;
-  comments?: string | null;
-  sourceFile?: string | null;
-  sourceFiles?: string[];
-  finalized?: boolean;
-  customColumnKeyValues?: Record<string, string>;
-  imagesMapping?: Record<string, MLLMImage>;
-  tags?: string[];
-  id?: string;
-}
-
-export type GoldenInput = SingleTurnGoldenInput | MultiTurnGoldenInput;
-
-export interface CreateGoldenRequest {
-  golden: GoldenInput;
-  version?: string;
-}
-
 export interface SingleTurnGolden {
   input: string;
   actualOutput?: string | null;
@@ -109,6 +61,7 @@ export interface SingleTurnGolden {
   finalized?: boolean;
   customColumnKeyValues?: Record<string, string>;
   tags?: string[];
+  imagesMapping?: Record<string, MLLMImage>;
 }
 
 export interface MultiTurnGolden {
@@ -126,9 +79,15 @@ export interface MultiTurnGolden {
   finalized?: boolean;
   customColumnKeyValues?: Record<string, string>;
   tags?: string[];
+  imagesMapping?: Record<string, MLLMImage>;
 }
 
 export type Golden = SingleTurnGolden | MultiTurnGolden;
+
+export interface CreateGoldenRequest {
+  golden: Golden;
+  version?: string;
+}
 
 export interface Dataset {
   id: string;
@@ -207,11 +166,11 @@ export interface PushDatasetRequest {
   alias: string;
   finalized?: boolean;
   version?: string;
-  goldens: GoldenInput[];
+  goldens: Golden[];
 }
 
 export interface QueueDatasetGoldensRequest {
-  goldens: GoldenInput[];
+  goldens: Golden[];
 }
 
 export interface RunDatasetEvaluationRequest {

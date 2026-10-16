@@ -12,12 +12,9 @@ import {
   DatasetRef,
   DatasetVersionList,
   Golden,
-  GoldenInput,
   GoldenRef,
-  MultiTurnGoldenInput,
   PushDatasetRequest,
   RunDatasetEvaluationResult,
-  SingleTurnGoldenInput,
 } from "./types";
 
 /**
@@ -158,7 +155,7 @@ export class Dataset {
    *   must be of the same kind and match the dataset's `multiTurn`. They are
    *   stored unfinalized, whatever each golden's own `finalized` says.
    */
-  async queueGoldens(goldens: GoldenInput[]): Promise<DatasetRef> {
+  async queueGoldens(goldens: Golden[]): Promise<DatasetRef> {
     return this.client.queueGoldens(this.datasetIdOrThrow(), goldens);
   }
 
@@ -172,10 +169,7 @@ export class Dataset {
    *   targets the latest version, or the unversioned goldens when the dataset
    *   has no versions.
    */
-  async createGolden(
-    golden: GoldenInput,
-    version?: string,
-  ): Promise<GoldenRef> {
+  async createGolden(golden: Golden, version?: string): Promise<GoldenRef> {
     return this.client.createGolden(this.datasetIdOrThrow(), golden, version);
   }
 
@@ -221,7 +215,7 @@ export class Dataset {
     return this.client.updateGolden(
       this.datasetIdOrThrow(),
       this.goldenIdOrThrow(golden),
-      this.goldenInput(golden),
+      golden,
     );
   }
 
@@ -283,7 +277,7 @@ export class Dataset {
     const fields = {
       alias: this.alias,
       version: this.version,
-      goldens: this.goldens.map((golden) => this.goldenInput(golden)),
+      goldens: this.goldens,
       finalized,
     };
     return fields as PushDatasetRequest;
@@ -296,23 +290,6 @@ export class Dataset {
       );
     }
     return golden.id;
-  }
-
-  private goldenInput(golden: Golden): GoldenInput {
-    const source = golden as unknown as Record<string, unknown>;
-    const fields = { ...source };
-    const chosen = (["input", "scenario"] as const).filter(
-      (name) => source[name] !== undefined,
-    );
-    if (chosen.length !== 1) {
-      throw new Error(
-        `Set exactly one of input, scenario; ${chosen.length ? chosen.join(", ") : "none is set"}.`,
-      );
-    }
-    if (source["input"] !== undefined) {
-      return fields as unknown as SingleTurnGoldenInput;
-    }
-    return fields as unknown as MultiTurnGoldenInput;
   }
 
   private load(payload: DatasetPayload): void {
