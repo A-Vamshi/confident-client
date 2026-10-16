@@ -71,6 +71,7 @@ export enum MetricEvaluationParam {
   ROLE = "role",
   SCENARIO = "scenario",
   EXPECTEDOUTCOME = "expectedOutcome",
+  AUDIO = "audio",
   TURNS = "turns",
   TOOLSCALLED = "toolsCalled",
   RETRIEVALCONTEXT = "retrievalContext",

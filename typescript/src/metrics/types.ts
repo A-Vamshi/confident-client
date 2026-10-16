@@ -38,6 +38,7 @@ export interface MetricVersion {
   requireRole: boolean;
   requireScenario: boolean;
   requireExpectedOutcome: boolean;
+  requireAudio: boolean;
   requireRetrievalContext: boolean;
   requireToolsCalled: boolean;
   requireMetadata: boolean;

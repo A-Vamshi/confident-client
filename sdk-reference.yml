@@ -45324,8 +45324,8 @@ types:
   kind: enum
   description: A test case field a metric evaluates. Single-turn metrics take input,
     `actualOutput`, `expectedOutput`, context and `expectedTools`; multi-turn metrics
-    take content, role, scenario, `expectedOutcome` and turns; `toolsCalled`, `retrievalContext`,
-    metadata and tags apply to both.
+    take content, role, scenario, `expectedOutcome`, audio (`GEVAL` only) and turns;
+    `toolsCalled`, `retrievalContext`, metadata and tags apply to both.
   python:
     module: confident_ai.common
     name: MetricEvaluationParam
@@ -45351,6 +45351,8 @@ types:
     value: scenario
   - name: EXPECTEDOUTCOME
     value: expectedOutcome
+  - name: AUDIO
+    value: audio
   - name: TURNS
     value: turns
   - name: TOOLSCALLED
@@ -46050,6 +46052,16 @@ types:
       typescript: boolean
     required: true
     description: This is true when the metric needs the test case's `expectedOutcome`.
+    example: false
+    references: []
+  - wire: requireAudio
+    python: require_audio
+    typescript: requireAudio
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: This is true when the metric needs the test case's `audio`.
     example: false
     references: []
   - wire: requireRetrievalContext

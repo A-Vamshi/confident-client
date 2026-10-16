@@ -44,6 +44,7 @@ class MetricVersion(ConfidentBaseModel):
     require_role: bool = Field(alias="requireRole")
     require_scenario: bool = Field(alias="requireScenario")
     require_expected_outcome: bool = Field(alias="requireExpectedOutcome")
+    require_audio: bool = Field(alias="requireAudio")
     require_retrieval_context: bool = Field(alias="requireRetrievalContext")
     require_tools_called: bool = Field(alias="requireToolsCalled")
     require_metadata: bool = Field(alias="requireMetadata")
