@@ -170,6 +170,9 @@ await dataset.push();
 `pull(version=...)` pulls a specific version, and `pull(finalized="false")`
 pulls the goldens still awaiting review instead of the finalized ones.
 
+Goldens can carry images: format a `Media` into their text. See
+`references/media.md`.
+
 ### One golden at a time
 
 ```python
