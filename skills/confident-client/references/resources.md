@@ -275,7 +275,7 @@ metrics with the settings an evaluation runs them under. Collections are what
 you name when running an evaluation.
 
 ```python
-from confident_ai.metric_collections import MetricSettingConfig
+from confident_ai.metric_collections import MetricRef, MetricSettingInput
 
 metrics = client.metrics.list()                    # rows on `.metrics`
 metric = client.metrics.create(
@@ -286,7 +286,7 @@ metric = client.metrics.create(
 collections = client.metric_collections.list()     # rows on `.metric_collections`
 collection = client.metric_collections.create(
     "Answer Quality",
-    metrics_settings=[MetricSettingConfig(metricId=metric.id)],
+    metrics_settings=[MetricSettingInput(metric=MetricRef(name=metric.name))],
 )
 ```
 

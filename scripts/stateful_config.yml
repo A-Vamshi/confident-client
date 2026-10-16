@@ -141,8 +141,6 @@ datasets:
     push:
       operation: pushDataset
       call_params: [finalized]
-      sent_as:
-        goldens: GoldenInput
       response_mapping:
         dataset_id: id
 

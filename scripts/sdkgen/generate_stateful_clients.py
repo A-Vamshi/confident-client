@@ -678,6 +678,8 @@ class Handle:
                     else f"self.{self.guard(argument, carried, key)}"
                     f"({argument})"
                 )
+            elif parameter.source == "union-body" and carried == sends:
+                call.append(argument)
             elif parameter.source == "union-body":
                 call.append(
                     f"self.{self.converter(carried, sends)}({argument})"
@@ -745,6 +747,8 @@ class Handle:
                     f"{camel_case(self.guard(argument, carried, key))}OrThrow"
                     f"({argument})"
                 )
+            elif parameter.source == "union-body" and carried == sends:
+                call.append(argument)
             elif parameter.source == "union-body":
                 call.append(
                     f"this.{camel_case(self.converter(carried, sends))}"

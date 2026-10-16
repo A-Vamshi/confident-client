@@ -32,20 +32,20 @@ Format the `Media` into the text, inline or from a variable:
 ```python
 from confident_ai import ConfidentAI, Media
 from confident_ai.common import Turn, TurnRole
-from confident_ai.datasets import PushMultiTurnGolden, PushSingleTurnGolden
+from confident_ai.datasets import MultiTurnGolden, SingleTurnGolden
 
 client = ConfidentAI()
 
 photo = Media.from_file("receipt.png")
 client.datasets.push(
     alias="receipts",
-    goldens=[PushSingleTurnGolden(input=f"What is the total? {photo}")],
+    goldens=[SingleTurnGolden(input=f"What is the total? {photo}")],
 )
 
 client.datasets.push(
     alias="support-chats",
     goldens=[
-        PushMultiTurnGolden(
+        MultiTurnGolden(
             scenario="A customer sends a photo of a damaged parcel",
             turns=[
                 Turn(

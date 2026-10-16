@@ -6,7 +6,7 @@ import pytest
 
 from confident_ai import ConfidentAI, Media, parse_multimodal
 from confident_ai.common import MLLMImage, Turn, TurnRole
-from confident_ai.datasets import MultiTurnGoldenInput, SingleTurnGoldenInput
+from confident_ai.datasets import MultiTurnGolden, SingleTurnGolden
 from confident_ai.evaluate import SingleTurnTestCase
 
 PNG = b"\x89PNG\r\n\x1a\n"
@@ -125,7 +125,7 @@ def sent_goldens(http):
 
 def test_push_maps_the_local_media_of_each_golden(http, project):
     goldens = [
-        SingleTurnGoldenInput(
+        SingleTurnGolden(
             input=f"Golden {i}: {Media.from_bytes(PNG, 'image/png')}"
         )
         for i in range(20)
@@ -149,7 +149,7 @@ def test_url_media_are_sent_by_reference(http, project):
 
     project.datasets.push(
         alias="screenshots",
-        goldens=[SingleTurnGoldenInput(input=f"{media} What is this?")],
+        goldens=[SingleTurnGolden(input=f"{media} What is this?")],
     )
 
     assert sent_goldens(http)[0]["imagesMapping"] == {
@@ -164,7 +164,7 @@ def test_media_in_turns_are_mapped_on_the_golden(http, project, tmp_path):
     path = tmp_path / "cat.png"
     path.write_bytes(PNG)
     content = f"What is in {Media.from_file(path)}?"
-    golden = MultiTurnGoldenInput(
+    golden = MultiTurnGolden(
         scenario="A user asks about a photo",
         turns=[Turn(role=TurnRole.USER, content=content)],
     )
@@ -178,7 +178,7 @@ def test_media_in_turns_are_mapped_on_the_golden(http, project, tmp_path):
 
 def test_goldens_without_media_are_sent_unchanged(http, project):
     project.datasets.push(
-        alias="plain", goldens=[SingleTurnGoldenInput(input="Hello")]
+        alias="plain", goldens=[SingleTurnGolden(input="Hello")]
     )
 
     assert "imagesMapping" not in sent_goldens(http)[0]
@@ -187,7 +187,7 @@ def test_goldens_without_media_are_sent_unchanged(http, project):
 def test_unknown_markers_are_left_to_the_server(http, project):
     project.datasets.push(
         alias="plain",
-        goldens=[SingleTurnGoldenInput(input="[CONFIDENT:IMAGE:0123abcd]")],
+        goldens=[SingleTurnGolden(input="[CONFIDENT:IMAGE:0123abcd]")],
     )
 
     assert "imagesMapping" not in sent_goldens(http)[0]
@@ -196,7 +196,7 @@ def test_unknown_markers_are_left_to_the_server(http, project):
 def test_a_supplied_images_mapping_wins(http, project):
     text = f"{Media.from_bytes(PNG, 'image/png')}"
     supplied = MLLMImage(url="https://cdn.example.com/cat.png", local=False)
-    golden = SingleTurnGoldenInput(
+    golden = SingleTurnGolden(
         input=text, images_mapping={key_of(text): supplied}
     )
 
@@ -208,9 +208,7 @@ def test_a_supplied_images_mapping_wins(http, project):
 
 
 def test_sending_leaves_the_goldens_untouched(http, project):
-    golden = SingleTurnGoldenInput(
-        input=f"{Media.from_bytes(PNG, 'image/png')}"
-    )
+    golden = SingleTurnGolden(input=f"{Media.from_bytes(PNG, 'image/png')}")
 
     project.datasets.push(alias="screenshots", goldens=[golden])
 
@@ -221,7 +219,7 @@ def test_update_golden_maps_media_on_the_body(http, project):
     text = f"{Media.from_bytes(PNG, 'image/png')}"
 
     project.datasets.update_golden(
-        "<DATASET-ID>", "<GOLDEN-ID>", SingleTurnGoldenInput(input=text)
+        "<DATASET-ID>", "<GOLDEN-ID>", SingleTurnGolden(input=text)
     )
 
     assert key_of(text) in http.last["json"]["imagesMapping"]
