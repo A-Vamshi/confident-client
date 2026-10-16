@@ -15,6 +15,7 @@ from confident_ai.utils.prompt_cache import (
 from confident_ai.common.types import PromptType, Tool
 from confident_ai.prompts.types import (
     CreatePromptVersionResult,
+    MessagesPromptInput,
     ModelSettings,
     OutputSchema,
     Prompt as PromptPayload,
@@ -22,15 +23,14 @@ from confident_ai.prompts.types import (
     PromptBranchList,
     PromptBranchRef,
     PromptCommitList,
+    PromptInput,
     PromptInterpolationType,
     PromptMessage,
     PromptOutputType,
     PromptVersionList,
-    PushMessagesPrompt,
-    PushPromptRequest,
     PushPromptResult,
-    PushTextPrompt,
-    PushTool,
+    TextPromptInput,
+    ToolInput,
 )
 
 
@@ -355,7 +355,7 @@ class Prompt:
         self.hash = result.hash
         return result
 
-    def _push_body(self, *, branch: Optional[str] = None) -> PushPromptRequest:
+    def _push_body(self, *, branch: Optional[str] = None) -> PromptInput:
         if self.alias is None:
             raise ValueError("Set alias before calling push.")
         fields = {
@@ -367,7 +367,7 @@ class Prompt:
             "tools": (
                 None
                 if self.tools is None
-                else [self._push_tool(tool) for tool in self.tools]
+                else [self._tool_input(tool) for tool in self.tools]
             ),
             "branch": branch,
         }
@@ -385,12 +385,12 @@ class Prompt:
                 + (", ".join(chosen) if chosen else "none is set")
             )
         if self.text is not None:
-            return PushTextPrompt(text=self.text, **fields)
-        return PushMessagesPrompt(messages=self.messages, **fields)
+            return TextPromptInput(text=self.text, **fields)
+        return MessagesPromptInput(messages=self.messages, **fields)
 
-    def _push_tool(self, tool: Tool) -> PushTool:
+    def _tool_input(self, tool: Tool) -> ToolInput:
         fields = tool.model_dump(mode="json", by_alias=True, exclude_none=True)
-        return PushTool(**fields)
+        return ToolInput(**fields)
 
     interpolate = interpolate_prompt
 

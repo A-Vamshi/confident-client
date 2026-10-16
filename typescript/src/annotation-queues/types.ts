@@ -31,18 +31,6 @@ export enum QueueItemStatus {
   COMPLETED = "COMPLETED",
 }
 
-export interface AddSpanQueueItemsRequest {
-  spanUuids: string[];
-}
-
-export interface AddThreadQueueItemsRequest {
-  threadIds: string[];
-}
-
-export interface AddTraceQueueItemsRequest {
-  traceUuids: string[];
-}
-
 export interface AddedQueueItems {
   ids: string[];
 }
@@ -222,6 +210,18 @@ export interface QueueIngestionTaskRef {
   id: string;
 }
 
+export interface SpanQueueItems {
+  spanUuids: string[];
+}
+
+export interface ThreadQueueItems {
+  threadIds: string[];
+}
+
+export interface TraceQueueItems {
+  traceUuids: string[];
+}
+
 export interface UpdateAnnotationQueueRequest {
   name?: string;
   formId?: string | null;
@@ -241,7 +241,4 @@ export interface UpdateQueueIngestionTaskRequest {
   reviewerEmails?: string[];
 }
 
-export type AddQueueItemsRequest =
-  | AddTraceQueueItemsRequest
-  | AddSpanQueueItemsRequest
-  | AddThreadQueueItemsRequest;
+export type QueueItems = TraceQueueItems | SpanQueueItems | ThreadQueueItems;

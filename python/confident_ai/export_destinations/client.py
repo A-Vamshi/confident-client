@@ -14,8 +14,8 @@ from confident_ai.export_destinations.types import (
     ExportDestinationRef,
     ExportDestinationType,
     SnowflakeExportDestinationConfig,
+    SnowflakeExportDestinationConfigUpdate,
     UpdateExportDestinationRequest,
-    UpdateSnowflakeExportDestinationConfig,
 )
 
 
@@ -229,7 +229,7 @@ class ExportDestinationsClient:
         secret_access_key: Optional[str] = None,
         path_prefix: Optional[str] = None,
         snowflake_config: Optional[
-            UpdateSnowflakeExportDestinationConfig
+            SnowflakeExportDestinationConfigUpdate
         ] = None,
         enabled: Optional[bool] = None
     ) -> ExportDestination:
@@ -293,7 +293,7 @@ class ExportDestinationsClient:
         secret_access_key: Optional[str] = None,
         path_prefix: Optional[str] = None,
         snowflake_config: Optional[
-            UpdateSnowflakeExportDestinationConfig
+            SnowflakeExportDestinationConfigUpdate
         ] = None,
         enabled: Optional[bool] = None
     ) -> ExportDestination:

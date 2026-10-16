@@ -39,7 +39,7 @@ export interface AnnotationRef {
 
 export type AnnotationValue = string | number | boolean | string[];
 
-export interface SpanAnnotationRequest {
+export interface SpanAnnotation {
   spanUuid: string;
   expectedOutput?: string;
   fieldType?: AnnotationFieldType;
@@ -50,7 +50,7 @@ export interface SpanAnnotationRequest {
   imagesMapping?: Record<string, MLLMImage>;
 }
 
-export interface ThreadAnnotationRequest {
+export interface ThreadAnnotation {
   threadId: string;
   expectedOutcome?: string;
   fieldType?: AnnotationFieldType;
@@ -61,7 +61,7 @@ export interface ThreadAnnotationRequest {
   imagesMapping?: Record<string, MLLMImage>;
 }
 
-export interface TraceAnnotationRequest {
+export interface TraceAnnotation {
   traceUuid: string;
   expectedOutput?: string;
   fieldType?: AnnotationFieldType;
@@ -81,5 +81,5 @@ export interface UpdateAnnotationRequest {
   imagesMapping?: Record<string, MLLMImage>;
 }
 
-export type CreateAnnotationRequest =
-  TraceAnnotationRequest | SpanAnnotationRequest | ThreadAnnotationRequest;
+export type AnnotationInput =
+  TraceAnnotation | SpanAnnotation | ThreadAnnotation;

@@ -38,18 +38,6 @@ class QueueItemStatus(Enum):
     COMPLETED = "COMPLETED"
 
 
-class AddSpanQueueItemsRequest(ConfidentBaseModel):
-    span_uuids: List[str] = Field(alias="spanUuids")
-
-
-class AddThreadQueueItemsRequest(ConfidentBaseModel):
-    thread_ids: List[str] = Field(alias="threadIds")
-
-
-class AddTraceQueueItemsRequest(ConfidentBaseModel):
-    trace_uuids: List[str] = Field(alias="traceUuids")
-
-
 class AddedQueueItems(ConfidentBaseModel):
     ids: List[str]
 
@@ -265,6 +253,18 @@ class QueueIngestionTaskRef(ConfidentBaseModel):
     id: str
 
 
+class SpanQueueItems(ConfidentBaseModel):
+    span_uuids: List[str] = Field(alias="spanUuids")
+
+
+class ThreadQueueItems(ConfidentBaseModel):
+    thread_ids: List[str] = Field(alias="threadIds")
+
+
+class TraceQueueItems(ConfidentBaseModel):
+    trace_uuids: List[str] = Field(alias="traceUuids")
+
+
 class UpdateAnnotationQueueRequest(ConfidentBaseModel):
     name: Optional[str] = None
     form_id: Optional[str] = Field(default=None, alias="formId")
@@ -296,8 +296,4 @@ class UpdateQueueIngestionTaskRequest(ConfidentBaseModel):
     )
 
 
-AddQueueItemsRequest = Union[
-    AddTraceQueueItemsRequest,
-    AddSpanQueueItemsRequest,
-    AddThreadQueueItemsRequest,
-]
+QueueItems = Union[TraceQueueItems, SpanQueueItems, ThreadQueueItems]

@@ -10,7 +10,7 @@ from confident_ai.endpoints import Endpoints
 from confident_ai.projects.types import (
     ClearProjectModelResult,
     ProjectModel,
-    UpdateProjectModelRequest,
+    ProjectModelInput,
     UpdateProjectModelResult,
 )
 
@@ -87,10 +87,7 @@ class ModelsOperations:
         )
 
     def update_model(
-        self,
-        project_id: str,
-        model_type: str,
-        model_config: UpdateProjectModelRequest,
+        self, project_id: str, model_type: str, model_config: ProjectModelInput
     ) -> UpdateProjectModelResult:
         """Set Project Model
 
@@ -111,24 +108,20 @@ class ModelsOperations:
                 concurrency, and platform, simulation, and speech models also
                 accept max input tokens. This replaces the whole configuration
                 rather than patching it. `CUSTOM` is rejected. Pass one of
-                UpdateEvaluationProjectModelRequest,
-                UpdateDecisionProjectModelRequest,
-                UpdatePlatformProjectModelRequest.
+                EvaluationProjectModel, DecisionProjectModel,
+                PlatformProjectModel.
         """
         return self._api.request(
             HttpMethods.PUT,
             Endpoints.PROJECT_MODEL_ENDPOINT,
             response_schema=UpdateProjectModelResult,
-            request_schema=UpdateProjectModelRequest,
+            request_schema=ProjectModelInput,
             body=model_config,
             path={"projectId": project_id, "modelType": model_type},
         )
 
     async def a_update_model(
-        self,
-        project_id: str,
-        model_type: str,
-        model_config: UpdateProjectModelRequest,
+        self, project_id: str, model_type: str, model_config: ProjectModelInput
     ) -> UpdateProjectModelResult:
         """Set Project Model
 
@@ -149,15 +142,14 @@ class ModelsOperations:
                 concurrency, and platform, simulation, and speech models also
                 accept max input tokens. This replaces the whole configuration
                 rather than patching it. `CUSTOM` is rejected. Pass one of
-                UpdateEvaluationProjectModelRequest,
-                UpdateDecisionProjectModelRequest,
-                UpdatePlatformProjectModelRequest.
+                EvaluationProjectModel, DecisionProjectModel,
+                PlatformProjectModel.
         """
         return await self._api.a_request(
             HttpMethods.PUT,
             Endpoints.PROJECT_MODEL_ENDPOINT,
             response_schema=UpdateProjectModelResult,
-            request_schema=UpdateProjectModelRequest,
+            request_schema=ProjectModelInput,
             body=model_config,
             path={"projectId": project_id, "modelType": model_type},
         )

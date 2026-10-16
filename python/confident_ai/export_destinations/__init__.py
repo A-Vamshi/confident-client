@@ -11,9 +11,9 @@ from confident_ai.export_destinations.types import (
     ExportDestinationSummary,
     ExportDestinationType,
     SnowflakeExportDestinationConfig,
+    SnowflakeExportDestinationConfigUpdate,
     SnowflakeExportDestinationMaskedConfig,
     UpdateExportDestinationRequest,
-    UpdateSnowflakeExportDestinationConfig,
 )
 
 __all__ = [
@@ -24,7 +24,7 @@ __all__ = [
     "ExportDestinationSummary",
     "ExportDestinationType",
     "SnowflakeExportDestinationConfig",
+    "SnowflakeExportDestinationConfigUpdate",
     "SnowflakeExportDestinationMaskedConfig",
     "UpdateExportDestinationRequest",
-    "UpdateSnowflakeExportDestinationConfig",
 ]

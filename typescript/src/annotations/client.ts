@@ -8,11 +8,11 @@ import { Endpoints } from "../endpoints";
 import { AnnotationFieldType, MLLMImage } from "../common/types";
 import {
   Annotation,
+  AnnotationInput,
   AnnotationList,
   AnnotationRef,
   AnnotationSortBy,
   AnnotationValue,
-  CreateAnnotationRequest,
 } from "./types";
 
 export class AnnotationsClient {
@@ -100,10 +100,9 @@ export class AnnotationsClient {
    *   `traceUuid`, `spanUuid` or `threadId` — never more than one — and the
    *   field that goes with it: `expectedOutput` for a trace or span,
    *   `expectedOutcome` for a thread. `fieldType` defaults to `THUMBS_RATING`.
-   *   Pass one of TraceAnnotationRequest, SpanAnnotationRequest,
-   *   ThreadAnnotationRequest.
+   *   Pass one of TraceAnnotation, SpanAnnotation, ThreadAnnotation.
    */
-  async create(annotation: CreateAnnotationRequest): Promise<AnnotationRef> {
+  async create(annotation: AnnotationInput): Promise<AnnotationRef> {
     return this.api.sendRequest<AnnotationRef>(
       HttpMethods.POST,
       Endpoints.ANNOTATIONS_ENDPOINT,

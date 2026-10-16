@@ -3,8 +3,8 @@
 // Do not edit by hand — change the route in confident-cloud
 // and regenerate.
 
-import { CreateMetricRequest } from "../common/types";
+import { MetricInput } from "../common/types";
 
 export interface CreateMetricsBatchRequest {
-  metrics: CreateMetricRequest[];
+  metrics: MetricInput[];
 }

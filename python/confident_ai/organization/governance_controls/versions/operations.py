@@ -8,8 +8,8 @@ from typing import Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.organization.types import (
-    CreateGovernanceControlVersionRequest,
     GovernanceControlVersion,
+    GovernanceControlVersionInput,
     GovernanceControlVersionList,
 )
 
@@ -76,9 +76,7 @@ class GovernanceControlsVersionsOperations:
         )
 
     def create_governance_control_version(
-        self,
-        control_id: str,
-        control_config: CreateGovernanceControlVersionRequest,
+        self, control_id: str, control_config: GovernanceControlVersionInput
     ) -> GovernanceControlVersion:
         """Create Governance Control Version
 
@@ -108,15 +106,13 @@ class GovernanceControlsVersionsOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_GOVERNANCE_CONTROL_VERSIONS_ENDPOINT,
             response_schema=GovernanceControlVersion,
-            request_schema=CreateGovernanceControlVersionRequest,
+            request_schema=GovernanceControlVersionInput,
             body=control_config,
             path={"controlId": control_id},
         )
 
     async def a_create_governance_control_version(
-        self,
-        control_id: str,
-        control_config: CreateGovernanceControlVersionRequest,
+        self, control_id: str, control_config: GovernanceControlVersionInput
     ) -> GovernanceControlVersion:
         """Create Governance Control Version
 
@@ -146,7 +142,7 @@ class GovernanceControlsVersionsOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_GOVERNANCE_CONTROL_VERSIONS_ENDPOINT,
             response_schema=GovernanceControlVersion,
-            request_schema=CreateGovernanceControlVersionRequest,
+            request_schema=GovernanceControlVersionInput,
             body=control_config,
             path={"controlId": control_id},
         )

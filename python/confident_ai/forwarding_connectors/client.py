@@ -10,7 +10,7 @@ from confident_ai.endpoints import Endpoints
 from confident_ai.forwarding_connectors.types import (
     CreateForwardingConnectorRequest,
     ForwardingConnector,
-    ForwardingConnectorHeaderConfig,
+    ForwardingConnectorHeaderInput,
     ForwardingConnectorList,
     ForwardingConnectorRef,
     UpdateForwardingConnectorRequest,
@@ -68,7 +68,7 @@ class ForwardingConnectorsClient:
         name: str,
         endpoint: str,
         *,
-        headers: Optional[List[ForwardingConnectorHeaderConfig]] = None,
+        headers: Optional[List[ForwardingConnectorHeaderInput]] = None,
         environments: Optional[List[str]] = None,
         enabled: Optional[bool] = None
     ) -> ForwardingConnectorRef:
@@ -118,7 +118,7 @@ class ForwardingConnectorsClient:
         name: str,
         endpoint: str,
         *,
-        headers: Optional[List[ForwardingConnectorHeaderConfig]] = None,
+        headers: Optional[List[ForwardingConnectorHeaderInput]] = None,
         environments: Optional[List[str]] = None,
         enabled: Optional[bool] = None
     ) -> ForwardingConnectorRef:
@@ -203,7 +203,7 @@ class ForwardingConnectorsClient:
         *,
         name: Optional[str] = None,
         endpoint: Optional[str] = None,
-        headers: Optional[List[ForwardingConnectorHeaderConfig]] = None,
+        headers: Optional[List[ForwardingConnectorHeaderInput]] = None,
         environments: Optional[List[str]] = None,
         enabled: Optional[bool] = None
     ) -> ForwardingConnector:
@@ -252,7 +252,7 @@ class ForwardingConnectorsClient:
         *,
         name: Optional[str] = None,
         endpoint: Optional[str] = None,
-        headers: Optional[List[ForwardingConnectorHeaderConfig]] = None,
+        headers: Optional[List[ForwardingConnectorHeaderInput]] = None,
         environments: Optional[List[str]] = None,
         enabled: Optional[bool] = None
     ) -> ForwardingConnector:

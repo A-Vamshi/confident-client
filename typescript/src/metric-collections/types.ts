@@ -15,7 +15,7 @@ export interface MetricRef {
   name: string;
 }
 
-export interface MetricSettingConfig {
+export interface MetricSettingInput {
   metric: MetricRef;
   activated?: boolean;
   threshold?: number;
@@ -33,7 +33,7 @@ export interface MetricSettingConfig {
 export interface CreateMetricCollectionRequest {
   name: string;
   multiTurn?: boolean;
-  metricsSettings?: MetricSettingConfig[];
+  metricsSettings?: MetricSettingInput[];
   sampleRate?: number;
   inputTransformerId?: string | null;
   outputTransformerId?: string | null;
@@ -79,7 +79,7 @@ export interface MetricCollectionRef {
 
 export interface UpdateMetricCollectionRequest {
   name?: string;
-  metricsSettings?: MetricSettingConfig[];
+  metricsSettings?: MetricSettingInput[];
   sampleRate?: number;
   inputTransformerId?: string | null;
   outputTransformerId?: string | null;

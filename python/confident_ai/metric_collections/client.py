@@ -12,7 +12,7 @@ from confident_ai.metric_collections.types import (
     MetricCollection,
     MetricCollectionList,
     MetricCollectionRef,
-    MetricSettingConfig,
+    MetricSettingInput,
     UpdateMetricCollectionRequest,
 )
 
@@ -50,7 +50,7 @@ class MetricCollectionsClient:
         name: str,
         *,
         multi_turn: Optional[bool] = None,
-        metrics_settings: Optional[List[MetricSettingConfig]] = None,
+        metrics_settings: Optional[List[MetricSettingInput]] = None,
         sample_rate: Optional[float] = None,
         input_transformer_id: Optional[str] = None,
         output_transformer_id: Optional[str] = None
@@ -98,7 +98,7 @@ class MetricCollectionsClient:
         name: str,
         *,
         multi_turn: Optional[bool] = None,
-        metrics_settings: Optional[List[MetricSettingConfig]] = None,
+        metrics_settings: Optional[List[MetricSettingInput]] = None,
         sample_rate: Optional[float] = None,
         input_transformer_id: Optional[str] = None,
         output_transformer_id: Optional[str] = None
@@ -178,7 +178,7 @@ class MetricCollectionsClient:
         metric_collection_id: str,
         *,
         name: Optional[str] = None,
-        metrics_settings: Optional[List[MetricSettingConfig]] = None,
+        metrics_settings: Optional[List[MetricSettingInput]] = None,
         sample_rate: Optional[float] = None,
         input_transformer_id: Optional[str] = None,
         output_transformer_id: Optional[str] = None
@@ -225,7 +225,7 @@ class MetricCollectionsClient:
         metric_collection_id: str,
         *,
         name: Optional[str] = None,
-        metrics_settings: Optional[List[MetricSettingConfig]] = None,
+        metrics_settings: Optional[List[MetricSettingInput]] = None,
         sample_rate: Optional[float] = None,
         input_transformer_id: Optional[str] = None,
         output_transformer_id: Optional[str] = None

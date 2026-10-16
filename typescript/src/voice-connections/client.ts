@@ -6,7 +6,7 @@
 import { Api, HttpMethods } from "../api";
 import { Endpoints } from "../endpoints";
 import {
-  VoiceCallSettingsPatch,
+  VoiceCallSettingsInput,
   VoiceConnection,
   VoiceConnectionList,
   VoiceConnectionLog,
@@ -48,7 +48,7 @@ export class VoiceConnectionsClient {
   async create(
     name: string,
     config: VoiceTransportConfig,
-    callSettings?: VoiceCallSettingsPatch,
+    callSettings?: VoiceCallSettingsInput,
   ): Promise<VoiceConnection> {
     return this.api.sendRequest<VoiceConnection>(
       HttpMethods.POST,
@@ -89,7 +89,7 @@ export class VoiceConnectionsClient {
     options: {
       name?: string;
       config?: VoiceTransportConfig;
-      callSettings?: VoiceCallSettingsPatch;
+      callSettings?: VoiceCallSettingsInput;
     } = {},
   ): Promise<VoiceConnection> {
     const { name, config, callSettings } = options;

@@ -7,12 +7,12 @@ from typing import List, Optional
 
 from confident_ai.api import Api, HttpMethods
 from confident_ai.common.types import (
-    CreateMetricRequest,
     JevQuestion,
     Metric,
     MetricAlgorithm,
     MetricDag,
     MetricEvaluationParam,
+    MetricInput,
     MetricList,
     PromptMetricConfig,
     Rubric,
@@ -87,7 +87,7 @@ class MetricsClient:
             HttpMethods.POST,
             Endpoints.METRICS_ENDPOINT,
             response_schema=Metric,
-            request_schema=CreateMetricRequest,
+            request_schema=MetricInput,
             body={
                 "name": name,
                 "multiTurn": multi_turn,
@@ -142,7 +142,7 @@ class MetricsClient:
             HttpMethods.POST,
             Endpoints.METRICS_ENDPOINT,
             response_schema=Metric,
-            request_schema=CreateMetricRequest,
+            request_schema=MetricInput,
             body={
                 "name": name,
                 "multiTurn": multi_turn,

@@ -638,6 +638,6 @@ class UpdateOrganizationRequest(ConfidentBaseModel):
     name: str
 
 
-CreateGovernanceControlVersionRequest = Union[
+GovernanceControlVersionInput = Union[
     GovernanceControlRuntimeConfig, GovernanceControlPreDeploymentConfig
 ]

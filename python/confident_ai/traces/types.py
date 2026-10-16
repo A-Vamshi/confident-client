@@ -21,7 +21,7 @@ class TraceSortBy(Enum):
     ENDEDAT = "endedAt"
 
 
-class MetricDataConfig(ConfidentBaseModel):
+class MetricDataInput(ConfidentBaseModel):
     name: str
     score: Optional[float] = None
     success: Optional[bool] = None
@@ -45,7 +45,7 @@ class MetricDataConfig(ConfidentBaseModel):
     verbose_logs: Optional[str] = Field(default=None, alias="verboseLogs")
 
 
-class AgentSpanRequest(ConfidentBaseModel):
+class AgentSpan(ConfidentBaseModel):
     type: Literal["AGENT"]
     uuid: str
     name: str
@@ -76,7 +76,7 @@ class AgentSpanRequest(ConfidentBaseModel):
         alias="expectedTools",
     )
     integration: Optional[str] = None
-    metrics_data: Optional[List[MetricDataConfig]] = Field(
+    metrics_data: Optional[List[MetricDataInput]] = Field(
         default=None,
         alias="metricsData",
     )
@@ -84,7 +84,7 @@ class AgentSpanRequest(ConfidentBaseModel):
     agent_handoffs: List[str] = Field(alias="agentHandoffs")
 
 
-class BaseSpanRequest(ConfidentBaseModel):
+class BaseSpan(ConfidentBaseModel):
     type: Optional[Literal["SPAN"]] = None
     uuid: str
     name: str
@@ -115,29 +115,29 @@ class BaseSpanRequest(ConfidentBaseModel):
         alias="expectedTools",
     )
     integration: Optional[str] = None
-    metrics_data: Optional[List[MetricDataConfig]] = Field(
+    metrics_data: Optional[List[MetricDataInput]] = Field(
         default=None,
         alias="metricsData",
     )
 
 
-class ThreadRequest(ConfidentBaseModel):
+class ThreadInput(ConfidentBaseModel):
     id: Optional[str] = None
     metadata: Optional[Dict[str, Any]] = None
     tags: Optional[List[str]] = None
 
 
-class UserRequest(ConfidentBaseModel):
+class User(ConfidentBaseModel):
     id: Optional[str] = None
     name: Optional[str] = None
 
 
-class CustomerRequest(ConfidentBaseModel):
+class Customer(ConfidentBaseModel):
     id: Optional[str] = None
     name: Optional[str] = None
 
 
-class LlmSpanRequest(ConfidentBaseModel):
+class LlmSpan(ConfidentBaseModel):
     type: Literal["LLM"]
     uuid: str
     name: str
@@ -168,7 +168,7 @@ class LlmSpanRequest(ConfidentBaseModel):
         alias="expectedTools",
     )
     integration: Optional[str] = None
-    metrics_data: Optional[List[MetricDataConfig]] = Field(
+    metrics_data: Optional[List[MetricDataInput]] = Field(
         default=None,
         alias="metricsData",
     )
@@ -200,7 +200,7 @@ class LlmSpanRequest(ConfidentBaseModel):
     )
 
 
-class RetrieverSpanRequest(ConfidentBaseModel):
+class RetrieverSpan(ConfidentBaseModel):
     type: Literal["RETRIEVER"]
     uuid: str
     name: str
@@ -231,7 +231,7 @@ class RetrieverSpanRequest(ConfidentBaseModel):
         alias="expectedTools",
     )
     integration: Optional[str] = None
-    metrics_data: Optional[List[MetricDataConfig]] = Field(
+    metrics_data: Optional[List[MetricDataInput]] = Field(
         default=None,
         alias="metricsData",
     )
@@ -240,7 +240,7 @@ class RetrieverSpanRequest(ConfidentBaseModel):
     chunk_size: Optional[int] = Field(default=None, alias="chunkSize")
 
 
-class ToolSpanRequest(ConfidentBaseModel):
+class ToolSpan(ConfidentBaseModel):
     type: Literal["TOOL"]
     uuid: str
     name: str
@@ -271,20 +271,14 @@ class ToolSpanRequest(ConfidentBaseModel):
         alias="expectedTools",
     )
     integration: Optional[str] = None
-    metrics_data: Optional[List[MetricDataConfig]] = Field(
+    metrics_data: Optional[List[MetricDataInput]] = Field(
         default=None,
         alias="metricsData",
     )
     description: Optional[str] = None
 
 
-SpanRequest = Union[
-    BaseSpanRequest,
-    LlmSpanRequest,
-    RetrieverSpanRequest,
-    ToolSpanRequest,
-    AgentSpanRequest,
-]
+SpanInput = Union[BaseSpan, LlmSpan, RetrieverSpan, ToolSpan, AgentSpan]
 
 
 class TraceAttachment(ConfidentBaseModel):
@@ -305,11 +299,11 @@ class CreateTraceRequest(ConfidentBaseModel):
     metadata: Optional[Dict[str, Any]] = None
     tags: Optional[List[str]] = None
     thread_id: Optional[str] = Field(default=None, alias="threadId")
-    thread: Optional[ThreadRequest] = None
+    thread: Optional[ThreadInput] = None
     user_id: Optional[str] = Field(default=None, alias="userId")
-    user: Optional[UserRequest] = None
+    user: Optional[User] = None
     customer_id: Optional[str] = Field(default=None, alias="customerId")
-    customer: Optional[CustomerRequest] = None
+    customer: Optional[Customer] = None
     metric_collection: Optional[str] = Field(
         default=None,
         alias="metricCollection",
@@ -331,8 +325,8 @@ class CreateTraceRequest(ConfidentBaseModel):
         default=None,
         alias="expectedTools",
     )
-    spans: Optional[List[SpanRequest]] = None
-    metrics_data: Optional[List[MetricDataConfig]] = Field(
+    spans: Optional[List[SpanInput]] = None
+    metrics_data: Optional[List[MetricDataInput]] = Field(
         default=None,
         alias="metricsData",
     )

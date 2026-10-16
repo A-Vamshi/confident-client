@@ -115,6 +115,26 @@ export interface MessagesPrompt {
   tools?: Tool[];
 }
 
+export interface ToolInput {
+  id?: string;
+  version?: string;
+  name?: string;
+  description?: string | null;
+  mode?: ToolMode;
+  schema?: Record<string, unknown>;
+}
+
+export interface MessagesPromptInput {
+  messages: PromptMessage[];
+  alias: string;
+  interpolationType?: PromptInterpolationType;
+  modelSettings?: ModelSettings;
+  outputType?: PromptOutputType;
+  outputSchema?: OutputSchema;
+  tools?: ToolInput[];
+  branch?: string;
+}
+
 export interface PromptBranch {
   id: string;
   name: string;
@@ -158,40 +178,9 @@ export interface PromptVersionList {
   type: PromptType;
 }
 
-export interface PushTool {
-  id?: string;
-  version?: string;
-  name?: string;
-  description?: string | null;
-  mode?: ToolMode;
-  schema?: Record<string, unknown>;
-}
-
-export interface PushMessagesPrompt {
-  messages: PromptMessage[];
-  alias: string;
-  interpolationType?: PromptInterpolationType;
-  modelSettings?: ModelSettings;
-  outputType?: PromptOutputType;
-  outputSchema?: OutputSchema;
-  tools?: PushTool[];
-  branch?: string;
-}
-
 export interface PushPromptResult {
   promptId: string;
   hash: string;
-}
-
-export interface PushTextPrompt {
-  text: string;
-  alias: string;
-  interpolationType?: PromptInterpolationType;
-  modelSettings?: ModelSettings;
-  outputType?: PromptOutputType;
-  outputSchema?: OutputSchema;
-  tools?: PushTool[];
-  branch?: string;
 }
 
 export interface TextPrompt {
@@ -209,10 +198,21 @@ export interface TextPrompt {
   tools?: Tool[];
 }
 
+export interface TextPromptInput {
+  text: string;
+  alias: string;
+  interpolationType?: PromptInterpolationType;
+  modelSettings?: ModelSettings;
+  outputType?: PromptOutputType;
+  outputSchema?: OutputSchema;
+  tools?: ToolInput[];
+  branch?: string;
+}
+
 export interface UpdatePromptBranchRequest {
   name: string;
 }
 
 export type Prompt = TextPrompt | MessagesPrompt;
 
-export type PushPromptRequest = PushTextPrompt | PushMessagesPrompt;
+export type PromptInput = TextPromptInput | MessagesPromptInput;

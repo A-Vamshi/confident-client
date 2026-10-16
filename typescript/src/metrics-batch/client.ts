@@ -5,7 +5,7 @@
 
 import { Api, HttpMethods } from "../api";
 import { Endpoints } from "../endpoints";
-import { CreateMetricRequest, MetricList } from "../common/types";
+import { MetricInput, MetricList } from "../common/types";
 
 export class MetricsBatchClient {
   constructor(protected readonly api: Api) {}
@@ -20,7 +20,7 @@ export class MetricsBatchClient {
    * @param metrics The metrics to create. Names must be unique within the batch
    *   for the same `multiTurn`, and `DAG` metrics are not accepted here.
    */
-  async create(metrics: CreateMetricRequest[]): Promise<MetricList> {
+  async create(metrics: MetricInput[]): Promise<MetricList> {
     return this.api.sendRequest<MetricList>(
       HttpMethods.POST,
       Endpoints.METRICS_BATCH_ENDPOINT,

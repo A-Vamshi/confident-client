@@ -7,8 +7,8 @@ from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.prompts.types import (
     Prompt,
+    PromptInput,
     PromptList,
-    PushPromptRequest,
     PushPromptResult,
 )
 
@@ -38,7 +38,7 @@ class PromptsOperations:
             response_schema=PromptList,
         )
 
-    def push(self, prompt: PushPromptRequest) -> PushPromptResult:
+    def push(self, prompt: PromptInput) -> PushPromptResult:
         """Push Prompt
 
         Creates a new commit for the prompt with the given `alias`, creating the
@@ -48,18 +48,18 @@ class PromptsOperations:
         Args:
             prompt: The commit to push. Send `text` for a text prompt or
                 `messages` for a messages prompt, never both. The kind must
-                match the existing prompt's type. Pass a PushTextPrompt or a
-                PushMessagesPrompt.
+                match the existing prompt's type. Pass a TextPromptInput or a
+                MessagesPromptInput.
         """
         return self._api.request(
             HttpMethods.POST,
             Endpoints.PROMPTS_ENDPOINT,
             response_schema=PushPromptResult,
-            request_schema=PushPromptRequest,
+            request_schema=PromptInput,
             body=prompt,
         )
 
-    async def a_push(self, prompt: PushPromptRequest) -> PushPromptResult:
+    async def a_push(self, prompt: PromptInput) -> PushPromptResult:
         """Push Prompt
 
         Creates a new commit for the prompt with the given `alias`, creating the
@@ -69,14 +69,14 @@ class PromptsOperations:
         Args:
             prompt: The commit to push. Send `text` for a text prompt or
                 `messages` for a messages prompt, never both. The kind must
-                match the existing prompt's type. Pass a PushTextPrompt or a
-                PushMessagesPrompt.
+                match the existing prompt's type. Pass a TextPromptInput or a
+                MessagesPromptInput.
         """
         return await self._api.a_request(
             HttpMethods.POST,
             Endpoints.PROMPTS_ENDPOINT,
             response_schema=PushPromptResult,
-            request_schema=PushPromptRequest,
+            request_schema=PromptInput,
             body=prompt,
         )
 

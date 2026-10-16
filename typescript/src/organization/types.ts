@@ -536,5 +536,5 @@ export interface UpdateOrganizationRequest {
   name: string;
 }
 
-export type CreateGovernanceControlVersionRequest =
+export type GovernanceControlVersionInput =
   GovernanceControlRuntimeConfig | GovernanceControlPreDeploymentConfig;

@@ -22,7 +22,7 @@ class MetricRef(ConfidentBaseModel):
     name: str
 
 
-class MetricSettingConfig(ConfidentBaseModel):
+class MetricSettingInput(ConfidentBaseModel):
     metric: MetricRef
     activated: Optional[bool] = None
     threshold: Optional[float] = None
@@ -55,7 +55,7 @@ class MetricSettingConfig(ConfidentBaseModel):
 class CreateMetricCollectionRequest(ConfidentBaseModel):
     name: str
     multi_turn: Optional[bool] = Field(default=None, alias="multiTurn")
-    metrics_settings: Optional[List[MetricSettingConfig]] = Field(
+    metrics_settings: Optional[List[MetricSettingInput]] = Field(
         default=None,
         alias="metricsSettings",
     )
@@ -118,7 +118,7 @@ class MetricCollectionRef(ConfidentBaseModel):
 
 class UpdateMetricCollectionRequest(ConfidentBaseModel):
     name: Optional[str] = None
-    metrics_settings: Optional[List[MetricSettingConfig]] = Field(
+    metrics_settings: Optional[List[MetricSettingInput]] = Field(
         default=None,
         alias="metricsSettings",
     )

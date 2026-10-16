@@ -51,7 +51,7 @@ class AnnotationRef(ConfidentBaseModel):
 AnnotationValue = Union[str, float, bool, List[str]]
 
 
-class SpanAnnotationRequest(ConfidentBaseModel):
+class SpanAnnotation(ConfidentBaseModel):
     span_uuid: str = Field(alias="spanUuid")
     expected_output: Optional[str] = Field(default=None, alias="expectedOutput")
     field_type: Optional[AnnotationFieldType] = Field(
@@ -68,7 +68,7 @@ class SpanAnnotationRequest(ConfidentBaseModel):
     )
 
 
-class ThreadAnnotationRequest(ConfidentBaseModel):
+class ThreadAnnotation(ConfidentBaseModel):
     thread_id: str = Field(alias="threadId")
     expected_outcome: Optional[str] = Field(
         default=None,
@@ -88,7 +88,7 @@ class ThreadAnnotationRequest(ConfidentBaseModel):
     )
 
 
-class TraceAnnotationRequest(ConfidentBaseModel):
+class TraceAnnotation(ConfidentBaseModel):
     trace_uuid: str = Field(alias="traceUuid")
     expected_output: Optional[str] = Field(default=None, alias="expectedOutput")
     field_type: Optional[AnnotationFieldType] = Field(
@@ -123,6 +123,4 @@ class UpdateAnnotationRequest(ConfidentBaseModel):
     )
 
 
-CreateAnnotationRequest = Union[
-    TraceAnnotationRequest, SpanAnnotationRequest, ThreadAnnotationRequest
-]
+AnnotationInput = Union[TraceAnnotation, SpanAnnotation, ThreadAnnotation]

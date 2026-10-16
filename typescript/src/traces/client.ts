@@ -7,15 +7,15 @@ import { Api, HttpMethods } from "../api";
 import { Endpoints } from "../endpoints";
 import { ToolCall, Trace, TraceSpanStatus } from "../common/types";
 import {
-  CustomerRequest,
-  MetricDataConfig,
-  SpanRequest,
-  ThreadRequest,
+  Customer,
+  MetricDataInput,
+  SpanInput,
+  ThreadInput,
   TraceAttachment,
   TraceList,
   TraceRef,
   TraceSortBy,
-  UserRequest,
+  User,
 } from "./types";
 
 export class TracesClient {
@@ -161,11 +161,11 @@ export class TracesClient {
       metadata?: Record<string, unknown>;
       tags?: string[];
       threadId?: string;
-      thread?: ThreadRequest;
+      thread?: ThreadInput;
       userId?: string;
-      user?: UserRequest;
+      user?: User;
       customerId?: string;
-      customer?: CustomerRequest;
+      customer?: Customer;
       metricCollection?: string;
       testRunId?: string;
       testCaseId?: string;
@@ -175,8 +175,8 @@ export class TracesClient {
       expectedOutput?: string;
       toolsCalled?: ToolCall[];
       expectedTools?: ToolCall[];
-      spans?: SpanRequest[];
-      metricsData?: MetricDataConfig[];
+      spans?: SpanInput[];
+      metricsData?: MetricDataInput[];
       attachments?: Record<string, TraceAttachment>;
     } = {},
   ): Promise<TraceRef> {

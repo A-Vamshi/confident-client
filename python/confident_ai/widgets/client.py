@@ -6,7 +6,7 @@
 from typing import Optional
 
 from confident_ai.api import Api, HttpMethods
-from confident_ai.common.types import CreateWidgetRequest, WidgetGranularity
+from confident_ai.common.types import WidgetGranularity, WidgetInput
 from confident_ai.endpoints import Endpoints
 from confident_ai.widgets.types import (
     AdHocWidgetQueryRequest,
@@ -20,7 +20,7 @@ class WidgetsClient:
 
     def query_ad_hoc(
         self,
-        widget: CreateWidgetRequest,
+        widget: WidgetInput,
         *,
         start_time: Optional[str] = None,
         end_time: Optional[str] = None,
@@ -57,7 +57,7 @@ class WidgetsClient:
 
     async def a_query_ad_hoc(
         self,
-        widget: CreateWidgetRequest,
+        widget: WidgetInput,
         *,
         start_time: Optional[str] = None,
         end_time: Optional[str] = None,

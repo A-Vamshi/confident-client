@@ -4,7 +4,6 @@
 // and regenerate.
 
 import {
-  CreateWidgetRequest,
   FilterSet,
   UserReference,
   WidgetAggregation,
@@ -13,10 +12,11 @@ import {
   WidgetDataModel,
   WidgetDimension,
   WidgetGranularity,
+  WidgetInput,
   WidgetLayout,
   WidgetLineColor,
-  WidgetLineConfig,
   WidgetLineExtraQueryParams,
+  WidgetLineInput,
   WidgetMode,
   WidgetTopK,
   WidgetType,
@@ -27,7 +27,7 @@ export interface CreateDashboardRequest {
   name: string;
   description?: string | null;
   private?: boolean;
-  widgets?: CreateWidgetRequest[];
+  widgets?: WidgetInput[];
 }
 
 export interface WidgetLine {
@@ -140,7 +140,7 @@ export interface UpdateWidgetRequest {
   startTime?: string | null;
   endTime?: string | null;
   layout?: WidgetLayout | null;
-  lines?: WidgetLineConfig[] | null;
+  lines?: WidgetLineInput[] | null;
 }
 
 export interface WidgetQueryRequest {

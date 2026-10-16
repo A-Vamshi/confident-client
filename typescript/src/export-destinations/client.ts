@@ -11,7 +11,7 @@ import {
   ExportDestinationRef,
   ExportDestinationType,
   SnowflakeExportDestinationConfig,
-  UpdateSnowflakeExportDestinationConfig,
+  SnowflakeExportDestinationConfigUpdate,
 } from "./types";
 
 export class ExportDestinationsClient {
@@ -158,7 +158,7 @@ export class ExportDestinationsClient {
       accessKeyId?: string;
       secretAccessKey?: string;
       pathPrefix?: string | null;
-      snowflakeConfig?: UpdateSnowflakeExportDestinationConfig;
+      snowflakeConfig?: SnowflakeExportDestinationConfigUpdate;
       enabled?: boolean;
     } = {},
   ): Promise<ExportDestination> {

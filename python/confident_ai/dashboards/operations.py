@@ -6,7 +6,7 @@
 from typing import List, Optional
 
 from confident_ai.api import Api, HttpMethods
-from confident_ai.common.types import CreateWidgetRequest, WidgetGranularity
+from confident_ai.common.types import WidgetGranularity, WidgetInput
 from confident_ai.dashboards.types import (
     CreateDashboardRequest,
     Dashboard,
@@ -70,7 +70,7 @@ class DashboardsOperations:
         *,
         description: Optional[str] = None,
         private: Optional[bool] = None,
-        widgets: Optional[List[CreateWidgetRequest]] = None
+        widgets: Optional[List[WidgetInput]] = None
     ) -> DashboardRef:
         """Create Dashboard
 
@@ -106,7 +106,7 @@ class DashboardsOperations:
         *,
         description: Optional[str] = None,
         private: Optional[bool] = None,
-        widgets: Optional[List[CreateWidgetRequest]] = None
+        widgets: Optional[List[WidgetInput]] = None
     ) -> DashboardRef:
         """Create Dashboard
 

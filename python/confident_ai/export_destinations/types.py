@@ -99,7 +99,7 @@ class ExportDestinationRef(ConfidentBaseModel):
     id: str
 
 
-class UpdateSnowflakeExportDestinationConfig(ConfidentBaseModel):
+class SnowflakeExportDestinationConfigUpdate(ConfidentBaseModel):
     account: Optional[str] = None
     username: Optional[str] = None
     role: Optional[str] = None
@@ -124,7 +124,7 @@ class UpdateExportDestinationRequest(ConfidentBaseModel):
         alias="secretAccessKey",
     )
     path_prefix: Optional[str] = Field(default=None, alias="pathPrefix")
-    snowflake_config: Optional[UpdateSnowflakeExportDestinationConfig] = Field(
+    snowflake_config: Optional[SnowflakeExportDestinationConfigUpdate] = Field(
         default=None,
         alias="snowflakeConfig",
     )

@@ -10,7 +10,7 @@ from confident_ai.endpoints import Endpoints
 from confident_ai.voice_connections.types import (
     CreateVoiceConnectionRequest,
     UpdateVoiceConnectionRequest,
-    VoiceCallSettingsPatch,
+    VoiceCallSettingsInput,
     VoiceConnection,
     VoiceConnectionList,
     VoiceConnectionLog,
@@ -69,7 +69,7 @@ class VoiceConnectionsClient:
         name: str,
         config: VoiceTransportConfig,
         *,
-        call_settings: Optional[VoiceCallSettingsPatch] = None
+        call_settings: Optional[VoiceCallSettingsInput] = None
     ) -> VoiceConnection:
         """Create Voice Connection
 
@@ -97,7 +97,7 @@ class VoiceConnectionsClient:
         name: str,
         config: VoiceTransportConfig,
         *,
-        call_settings: Optional[VoiceCallSettingsPatch] = None
+        call_settings: Optional[VoiceCallSettingsInput] = None
     ) -> VoiceConnection:
         """Create Voice Connection
 
@@ -160,7 +160,7 @@ class VoiceConnectionsClient:
         *,
         name: Optional[str] = None,
         config: Optional[VoiceTransportConfig] = None,
-        call_settings: Optional[VoiceCallSettingsPatch] = None
+        call_settings: Optional[VoiceCallSettingsInput] = None
     ) -> VoiceConnection:
         """Update Voice Connection
 
@@ -191,7 +191,7 @@ class VoiceConnectionsClient:
         *,
         name: Optional[str] = None,
         config: Optional[VoiceTransportConfig] = None,
-        call_settings: Optional[VoiceCallSettingsPatch] = None
+        call_settings: Optional[VoiceCallSettingsInput] = None
     ) -> VoiceConnection:
         """Update Voice Connection
 

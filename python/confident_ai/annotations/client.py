@@ -7,11 +7,11 @@ from typing import Dict, Literal, Optional
 
 from confident_ai.annotations.types import (
     Annotation,
+    AnnotationInput,
     AnnotationList,
     AnnotationRef,
     AnnotationSortBy,
     AnnotationValue,
-    CreateAnnotationRequest,
     UpdateAnnotationRequest,
 )
 from confident_ai.api import Api, HttpMethods
@@ -135,7 +135,7 @@ class AnnotationsClient:
             },
         )
 
-    def create(self, annotation: CreateAnnotationRequest) -> AnnotationRef:
+    def create(self, annotation: AnnotationInput) -> AnnotationRef:
         """Create Annotation
 
         Records a rating against exactly one trace, span or thread, and returns
@@ -148,21 +148,19 @@ class AnnotationsClient:
                 `traceUuid`, `spanUuid` or `threadId` — never more than one —
                 and the field that goes with it: `expectedOutput` for a trace or
                 span, `expectedOutcome` for a thread. `fieldType` defaults to
-                `THUMBS_RATING`. Pass one of TraceAnnotationRequest,
-                SpanAnnotationRequest, ThreadAnnotationRequest.
+                `THUMBS_RATING`. Pass one of TraceAnnotation, SpanAnnotation,
+                ThreadAnnotation.
         """
         return self._api.request(
             HttpMethods.POST,
             Endpoints.ANNOTATIONS_ENDPOINT,
             response_schema=AnnotationRef,
-            request_schema=CreateAnnotationRequest,
+            request_schema=AnnotationInput,
             body=annotation,
             media_holders=["$"],
         )
 
-    async def a_create(
-        self, annotation: CreateAnnotationRequest
-    ) -> AnnotationRef:
+    async def a_create(self, annotation: AnnotationInput) -> AnnotationRef:
         """Create Annotation
 
         Records a rating against exactly one trace, span or thread, and returns
@@ -175,14 +173,14 @@ class AnnotationsClient:
                 `traceUuid`, `spanUuid` or `threadId` — never more than one —
                 and the field that goes with it: `expectedOutput` for a trace or
                 span, `expectedOutcome` for a thread. `fieldType` defaults to
-                `THUMBS_RATING`. Pass one of TraceAnnotationRequest,
-                SpanAnnotationRequest, ThreadAnnotationRequest.
+                `THUMBS_RATING`. Pass one of TraceAnnotation, SpanAnnotation,
+                ThreadAnnotation.
         """
         return await self._api.a_request(
             HttpMethods.POST,
             Endpoints.ANNOTATIONS_ENDPOINT,
             response_schema=AnnotationRef,
-            request_schema=CreateAnnotationRequest,
+            request_schema=AnnotationInput,
             body=annotation,
             media_holders=["$"],
         )

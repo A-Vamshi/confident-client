@@ -78,7 +78,7 @@ export interface ExportDestinationRef {
   id: string;
 }
 
-export interface UpdateSnowflakeExportDestinationConfig {
+export interface SnowflakeExportDestinationConfigUpdate {
   account?: string;
   username?: string;
   role?: string;
@@ -97,6 +97,6 @@ export interface UpdateExportDestinationRequest {
   accessKeyId?: string;
   secretAccessKey?: string;
   pathPrefix?: string | null;
-  snowflakeConfig?: UpdateSnowflakeExportDestinationConfig;
+  snowflakeConfig?: SnowflakeExportDestinationConfigUpdate;
   enabled?: boolean;
 }

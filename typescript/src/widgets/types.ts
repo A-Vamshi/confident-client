@@ -4,15 +4,15 @@
 // and regenerate.
 
 import {
-  CreateWidgetRequest,
   WidgetData,
   WidgetGranularity,
+  WidgetInput,
   WidgetMode,
   WidgetType,
 } from "../common/types";
 
 export interface AdHocWidgetQueryRequest {
-  widget: CreateWidgetRequest;
+  widget: WidgetInput;
   startTime?: string;
   endTime?: string;
   granularity?: WidgetGranularity;

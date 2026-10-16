@@ -7,12 +7,12 @@ from typing import List, Optional
 
 from confident_ai.api import Api, HttpMethods
 from confident_ai.common.types import (
-    CreateWidgetRequest,
     WidgetBucketMode,
     WidgetDimension,
     WidgetGranularity,
+    WidgetInput,
     WidgetLayout,
-    WidgetLineConfig,
+    WidgetLineInput,
     WidgetMode,
     WidgetTopK,
     WidgetType,
@@ -46,7 +46,7 @@ class WidgetsOperations:
         start_time: Optional[str] = None,
         end_time: Optional[str] = None,
         layout: Optional[WidgetLayout] = None,
-        lines: Optional[List[WidgetLineConfig]] = None
+        lines: Optional[List[WidgetLineInput]] = None
     ) -> WidgetRef:
         """Create Widget
 
@@ -81,7 +81,7 @@ class WidgetsOperations:
             HttpMethods.POST,
             Endpoints.DASHBOARD_WIDGETS_ENDPOINT,
             response_schema=WidgetRef,
-            request_schema=CreateWidgetRequest,
+            request_schema=WidgetInput,
             body={
                 "name": name,
                 "description": description,
@@ -114,7 +114,7 @@ class WidgetsOperations:
         start_time: Optional[str] = None,
         end_time: Optional[str] = None,
         layout: Optional[WidgetLayout] = None,
-        lines: Optional[List[WidgetLineConfig]] = None
+        lines: Optional[List[WidgetLineInput]] = None
     ) -> WidgetRef:
         """Create Widget
 
@@ -149,7 +149,7 @@ class WidgetsOperations:
             HttpMethods.POST,
             Endpoints.DASHBOARD_WIDGETS_ENDPOINT,
             response_schema=WidgetRef,
-            request_schema=CreateWidgetRequest,
+            request_schema=WidgetInput,
             body={
                 "name": name,
                 "description": description,
@@ -183,7 +183,7 @@ class WidgetsOperations:
         start_time: Optional[str] = None,
         end_time: Optional[str] = None,
         layout: Optional[WidgetLayout] = None,
-        lines: Optional[List[WidgetLineConfig]] = None
+        lines: Optional[List[WidgetLineInput]] = None
     ) -> Widget:
         """Update Widget
 
@@ -255,7 +255,7 @@ class WidgetsOperations:
         start_time: Optional[str] = None,
         end_time: Optional[str] = None,
         layout: Optional[WidgetLayout] = None,
-        lines: Optional[List[WidgetLineConfig]] = None
+        lines: Optional[List[WidgetLineInput]] = None
     ) -> Widget:
         """Update Widget
 

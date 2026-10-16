@@ -7,8 +7,8 @@ import { HttpMethods } from "../../../api";
 import { Endpoints } from "../../../endpoints";
 import { GovernanceControlsOperations } from "../operations";
 import {
-  CreateGovernanceControlVersionRequest,
   GovernanceControlVersion,
+  GovernanceControlVersionInput,
   GovernanceControlVersionList,
 } from "../../types";
 
@@ -62,7 +62,7 @@ export class GovernanceControlsVersionsOperations extends GovernanceControlsOper
    */
   async createGovernanceControlVersion(
     controlId: string,
-    controlConfig: CreateGovernanceControlVersionRequest,
+    controlConfig: GovernanceControlVersionInput,
   ): Promise<GovernanceControlVersion> {
     return this.api.sendRequest<GovernanceControlVersion>(
       HttpMethods.POST,

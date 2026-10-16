@@ -261,7 +261,10 @@ def _describe_parameter(
             "typescript": typescript.annotation if typescript else None,
         },
         "required": parameter.required,
-        "keyword": parameter.keyword,
+        "keyword": {
+            "python": parameter.keyword,
+            "typescript": typescript.keyword if typescript else None,
+        },
         "default": parameter.default,
         # The docstring describes the argument as the method takes it; the
         # spec fills in what it omits.

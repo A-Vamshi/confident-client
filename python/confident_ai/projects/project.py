@@ -33,10 +33,10 @@ from confident_ai.projects.types import (
     ProjectMember,
     ProjectMemberList,
     ProjectModel,
+    ProjectModelInput,
     ProjectRef,
     ProjectRole,
     ProjectRoleList,
-    UpdateProjectModelRequest,
     UpdateProjectModelResult,
     UpdateProjectRequest,
 )
@@ -1038,7 +1038,7 @@ class Project:
         return await self._client.a_get_model(self._project_id(), type=type)
 
     def update_model(
-        self, model_type: str, model_config: UpdateProjectModelRequest
+        self, model_type: str, model_config: ProjectModelInput
     ) -> UpdateProjectModelResult:
         """Set Project Model
 
@@ -1057,16 +1057,15 @@ class Project:
                 concurrency, and platform, simulation, and speech models also
                 accept max input tokens. This replaces the whole configuration
                 rather than patching it. `CUSTOM` is rejected. Pass one of
-                UpdateEvaluationProjectModelRequest,
-                UpdateDecisionProjectModelRequest,
-                UpdatePlatformProjectModelRequest.
+                EvaluationProjectModel, DecisionProjectModel,
+                PlatformProjectModel.
         """
         return self._client.update_model(
             self._project_id(), model_type, model_config
         )
 
     async def a_update_model(
-        self, model_type: str, model_config: UpdateProjectModelRequest
+        self, model_type: str, model_config: ProjectModelInput
     ) -> UpdateProjectModelResult:
         """Set Project Model
 
@@ -1085,9 +1084,8 @@ class Project:
                 concurrency, and platform, simulation, and speech models also
                 accept max input tokens. This replaces the whole configuration
                 rather than patching it. `CUSTOM` is rejected. Pass one of
-                UpdateEvaluationProjectModelRequest,
-                UpdateDecisionProjectModelRequest,
-                UpdatePlatformProjectModelRequest.
+                EvaluationProjectModel, DecisionProjectModel,
+                PlatformProjectModel.
         """
         return await self._client.a_update_model(
             self._project_id(), model_type, model_config

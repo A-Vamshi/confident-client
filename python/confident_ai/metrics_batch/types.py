@@ -5,9 +5,9 @@
 
 from typing import List
 
-from confident_ai.common.types import CreateMetricRequest
+from confident_ai.common.types import MetricInput
 from confident_ai.types import ConfidentBaseModel
 
 
 class CreateMetricsBatchRequest(ConfidentBaseModel):
-    metrics: List[CreateMetricRequest]
+    metrics: List[MetricInput]

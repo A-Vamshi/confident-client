@@ -142,6 +142,38 @@ class MessagesPrompt(ConfidentBaseModel):
     tools: Optional[List[Tool]] = None
 
 
+class ToolInput(ConfidentBaseModel):
+    id: Optional[str] = None
+    version: Optional[str] = None
+    name: Optional[str] = None
+    description: Optional[str] = None
+    mode: Optional[ToolMode] = None
+    schema_: Optional[Dict[str, Any]] = Field(default=None, alias="schema")
+
+
+class MessagesPromptInput(ConfidentBaseModel):
+    messages: List[PromptMessage]
+    alias: str
+    interpolation_type: Optional[PromptInterpolationType] = Field(
+        default=None,
+        alias="interpolationType",
+    )
+    model_settings: Optional[ModelSettings] = Field(
+        default=None,
+        alias="modelSettings",
+    )
+    output_type: Optional[PromptOutputType] = Field(
+        default=None,
+        alias="outputType",
+    )
+    output_schema: Optional[OutputSchema] = Field(
+        default=None,
+        alias="outputSchema",
+    )
+    tools: Optional[List[ToolInput]] = None
+    branch: Optional[str] = None
+
+
 class PromptBranch(ConfidentBaseModel):
     id: str
     name: str
@@ -185,64 +217,9 @@ class PromptVersionList(ConfidentBaseModel):
     type: PromptType
 
 
-class PushTool(ConfidentBaseModel):
-    id: Optional[str] = None
-    version: Optional[str] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
-    mode: Optional[ToolMode] = None
-    schema_: Optional[Dict[str, Any]] = Field(default=None, alias="schema")
-
-
-class PushMessagesPrompt(ConfidentBaseModel):
-    messages: List[PromptMessage]
-    alias: str
-    interpolation_type: Optional[PromptInterpolationType] = Field(
-        default=None,
-        alias="interpolationType",
-    )
-    model_settings: Optional[ModelSettings] = Field(
-        default=None,
-        alias="modelSettings",
-    )
-    output_type: Optional[PromptOutputType] = Field(
-        default=None,
-        alias="outputType",
-    )
-    output_schema: Optional[OutputSchema] = Field(
-        default=None,
-        alias="outputSchema",
-    )
-    tools: Optional[List[PushTool]] = None
-    branch: Optional[str] = None
-
-
 class PushPromptResult(ConfidentBaseModel):
     prompt_id: str = Field(alias="promptId")
     hash: str
-
-
-class PushTextPrompt(ConfidentBaseModel):
-    text: str
-    alias: str
-    interpolation_type: Optional[PromptInterpolationType] = Field(
-        default=None,
-        alias="interpolationType",
-    )
-    model_settings: Optional[ModelSettings] = Field(
-        default=None,
-        alias="modelSettings",
-    )
-    output_type: Optional[PromptOutputType] = Field(
-        default=None,
-        alias="outputType",
-    )
-    output_schema: Optional[OutputSchema] = Field(
-        default=None,
-        alias="outputSchema",
-    )
-    tools: Optional[List[PushTool]] = None
-    branch: Optional[str] = None
 
 
 class TextPrompt(ConfidentBaseModel):
@@ -268,6 +245,29 @@ class TextPrompt(ConfidentBaseModel):
     tools: Optional[List[Tool]] = None
 
 
+class TextPromptInput(ConfidentBaseModel):
+    text: str
+    alias: str
+    interpolation_type: Optional[PromptInterpolationType] = Field(
+        default=None,
+        alias="interpolationType",
+    )
+    model_settings: Optional[ModelSettings] = Field(
+        default=None,
+        alias="modelSettings",
+    )
+    output_type: Optional[PromptOutputType] = Field(
+        default=None,
+        alias="outputType",
+    )
+    output_schema: Optional[OutputSchema] = Field(
+        default=None,
+        alias="outputSchema",
+    )
+    tools: Optional[List[ToolInput]] = None
+    branch: Optional[str] = None
+
+
 class UpdatePromptBranchRequest(ConfidentBaseModel):
     name: str
 
@@ -275,4 +275,4 @@ class UpdatePromptBranchRequest(ConfidentBaseModel):
 Prompt = Union[TextPrompt, MessagesPrompt]
 
 
-PushPromptRequest = Union[PushTextPrompt, PushMessagesPrompt]
+PromptInput = Union[TextPromptInput, MessagesPromptInput]

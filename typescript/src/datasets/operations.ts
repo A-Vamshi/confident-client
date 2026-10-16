@@ -10,8 +10,7 @@ import {
   Dataset,
   DatasetList,
   DatasetRef,
-  GoldenRequest,
-  PushGolden,
+  GoldenInput,
   RunDatasetEvaluationResult,
 } from "./types";
 
@@ -55,7 +54,7 @@ export class DatasetsOperations {
    */
   async push(
     alias: string,
-    goldens: PushGolden[],
+    goldens: GoldenInput[],
     finalized?: boolean,
     version?: string,
   ): Promise<DatasetRef> {
@@ -125,7 +124,7 @@ export class DatasetsOperations {
    */
   async queueGoldens(
     datasetId: string,
-    goldens: GoldenRequest[],
+    goldens: GoldenInput[],
   ): Promise<DatasetRef> {
     return this.api.sendRequest<DatasetRef>(
       HttpMethods.POST,

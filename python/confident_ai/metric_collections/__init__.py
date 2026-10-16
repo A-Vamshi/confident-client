@@ -11,7 +11,7 @@ from confident_ai.metric_collections.types import (
     MetricCollectionRef,
     MetricRef,
     MetricSetting,
-    MetricSettingConfig,
+    MetricSettingInput,
     MetricSummary,
     UpdateMetricCollectionRequest,
 )
@@ -24,7 +24,7 @@ __all__ = [
     "MetricCollectionRef",
     "MetricRef",
     "MetricSetting",
-    "MetricSettingConfig",
+    "MetricSettingInput",
     "MetricSummary",
     "UpdateMetricCollectionRequest",
 ]

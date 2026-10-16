@@ -7,13 +7,13 @@ import { HttpMethods } from "../../api";
 import { Endpoints } from "../../endpoints";
 import { AnnotationQueuesOperations } from "../operations";
 import {
-  AddQueueItemsRequest,
   AddedQueueItems,
   AnnotateQueueItemResult,
   AnnotationQueueItemList,
   QueueItemAnnotation,
   QueueItemFormResponse,
   QueueItemStatus,
+  QueueItems,
 } from "../types";
 
 export class ItemsOperations extends AnnotationQueuesOperations {
@@ -59,12 +59,12 @@ export class ItemsOperations extends AnnotationQueuesOperations {
    *   matches the queue's `type` — `traceUuids` for a `TRACE` queue,
    *   `spanUuids` for a `SPAN` queue, `threadIds` for a `THREAD` queue — and
    *   every id must already exist in your project. Items already in the queue
-   *   are skipped. Pass one of AddTraceQueueItemsRequest,
-   *   AddSpanQueueItemsRequest, AddThreadQueueItemsRequest.
+   *   are skipped. Pass one of TraceQueueItems, SpanQueueItems,
+   *   ThreadQueueItems.
    */
   async addItems(
     annotationQueueId: string,
-    items: AddQueueItemsRequest,
+    items: QueueItems,
   ): Promise<AddedQueueItems> {
     return this.api.sendRequest<AddedQueueItems>(
       HttpMethods.POST,

@@ -9,7 +9,7 @@ import { MembersOperations } from "../members/operations";
 import {
   ClearProjectModelResult,
   ProjectModel,
-  UpdateProjectModelRequest,
+  ProjectModelInput,
   UpdateProjectModelResult,
 } from "../types";
 
@@ -61,13 +61,13 @@ export class ModelsOperations extends MembersOperations {
    *   provider and name, `evaluation` also accepts max concurrency, and
    *   platform, simulation, and speech models also accept max input tokens.
    *   This replaces the whole configuration rather than patching it. `CUSTOM`
-   *   is rejected. Pass one of UpdateEvaluationProjectModelRequest,
-   *   UpdateDecisionProjectModelRequest, UpdatePlatformProjectModelRequest.
+   *   is rejected. Pass one of EvaluationProjectModel, DecisionProjectModel,
+   *   PlatformProjectModel.
    */
   async updateModel(
     projectId: string,
     modelType: string,
-    modelConfig: UpdateProjectModelRequest,
+    modelConfig: ProjectModelInput,
   ): Promise<UpdateProjectModelResult> {
     return this.api.sendRequest<UpdateProjectModelResult>(
       HttpMethods.PUT,

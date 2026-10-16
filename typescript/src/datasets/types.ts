@@ -36,12 +36,12 @@ export interface CreateDatasetVersionResult {
   version: string;
 }
 
-export interface SingleTurnGoldenRequestExpectations {
+export interface Expectations {
   must: string[];
   mustNot: string[];
 }
 
-export interface SingleTurnGoldenRequest {
+export interface SingleTurnGoldenInput {
   input: string;
   actualOutput?: string | null;
   expectedOutput?: string | null;
@@ -53,7 +53,7 @@ export interface SingleTurnGoldenRequest {
   inputTokenCount?: number | null;
   outputTokenCount?: number | null;
   additionalMetadata?: Record<string, unknown> | null;
-  expectations?: SingleTurnGoldenRequestExpectations | null;
+  expectations?: Expectations | null;
   comments?: string | null;
   sourceFile?: string | null;
   sourceFiles?: string[];
@@ -61,21 +61,17 @@ export interface SingleTurnGoldenRequest {
   customColumnKeyValues?: Record<string, string>;
   imagesMapping?: Record<string, MLLMImage>;
   tags?: string[];
+  id?: string;
 }
 
-export interface MultiTurnGoldenRequestExpectations {
-  must: string[];
-  mustNot: string[];
-}
-
-export interface MultiTurnGoldenRequest {
+export interface MultiTurnGoldenInput {
   scenario: string;
   expectedOutcome?: string | null;
   userDescription?: string | null;
   turns?: Turn[] | null;
   context?: string[] | null;
   additionalMetadata?: Record<string, unknown> | null;
-  expectations?: MultiTurnGoldenRequestExpectations | null;
+  expectations?: Expectations | null;
   comments?: string | null;
   sourceFile?: string | null;
   sourceFiles?: string[];
@@ -83,18 +79,14 @@ export interface MultiTurnGoldenRequest {
   customColumnKeyValues?: Record<string, string>;
   imagesMapping?: Record<string, MLLMImage>;
   tags?: string[];
+  id?: string;
 }
 
-export type GoldenRequest = SingleTurnGoldenRequest | MultiTurnGoldenRequest;
+export type GoldenInput = SingleTurnGoldenInput | MultiTurnGoldenInput;
 
 export interface CreateGoldenRequest {
-  golden: GoldenRequest;
+  golden: GoldenInput;
   version?: string;
-}
-
-export interface SingleTurnGoldenExpectations {
-  must: string[];
-  mustNot: string[];
 }
 
 export interface SingleTurnGolden {
@@ -110,18 +102,13 @@ export interface SingleTurnGolden {
   outputTokenCount?: number | null;
   id?: string;
   additionalMetadata?: Record<string, unknown> | null;
-  expectations?: SingleTurnGoldenExpectations | null;
+  expectations?: Expectations | null;
   comments?: string | null;
   sourceFile?: string | null;
   sourceFiles?: string[];
   finalized?: boolean;
   customColumnKeyValues?: Record<string, string>;
   tags?: string[];
-}
-
-export interface MultiTurnGoldenExpectations {
-  must: string[];
-  mustNot: string[];
 }
 
 export interface MultiTurnGolden {
@@ -132,7 +119,7 @@ export interface MultiTurnGolden {
   context?: string[] | null;
   id?: string;
   additionalMetadata?: Record<string, unknown> | null;
-  expectations?: MultiTurnGoldenExpectations | null;
+  expectations?: Expectations | null;
   comments?: string | null;
   sourceFile?: string | null;
   sourceFiles?: string[];
@@ -216,68 +203,15 @@ export interface GoldenRef {
   id: string;
 }
 
-export interface PushSingleTurnGoldenExpectations {
-  must: string[];
-  mustNot: string[];
-}
-
-export interface PushSingleTurnGolden {
-  input: string;
-  actualOutput?: string | null;
-  expectedOutput?: string | null;
-  context?: string[] | null;
-  retrievalContext?: string[] | null;
-  toolsCalled?: ToolCall[] | null;
-  expectedTools?: ToolCall[] | null;
-  tokenCost?: number | null;
-  inputTokenCount?: number | null;
-  outputTokenCount?: number | null;
-  additionalMetadata?: Record<string, unknown> | null;
-  expectations?: PushSingleTurnGoldenExpectations | null;
-  comments?: string | null;
-  sourceFile?: string | null;
-  sourceFiles?: string[];
-  finalized?: boolean;
-  customColumnKeyValues?: Record<string, string>;
-  imagesMapping?: Record<string, MLLMImage>;
-  tags?: string[];
-  id?: string;
-}
-
-export interface PushMultiTurnGoldenExpectations {
-  must: string[];
-  mustNot: string[];
-}
-
-export interface PushMultiTurnGolden {
-  scenario: string;
-  expectedOutcome?: string | null;
-  userDescription?: string | null;
-  turns?: Turn[] | null;
-  context?: string[] | null;
-  additionalMetadata?: Record<string, unknown> | null;
-  expectations?: PushMultiTurnGoldenExpectations | null;
-  comments?: string | null;
-  sourceFile?: string | null;
-  sourceFiles?: string[];
-  finalized?: boolean;
-  customColumnKeyValues?: Record<string, string>;
-  imagesMapping?: Record<string, MLLMImage>;
-  tags?: string[];
-  id?: string;
-}
-
-export type PushGolden = PushSingleTurnGolden | PushMultiTurnGolden;
-
 export interface PushDatasetRequest {
   alias: string;
   finalized?: boolean;
   version?: string;
-  goldens: PushGolden[];
+  goldens: GoldenInput[];
 }
 
 export interface QueueDatasetGoldensRequest {
-  goldens: GoldenRequest[];
+  goldens: GoldenInput[];
 }
 
 export interface RunDatasetEvaluationRequest {

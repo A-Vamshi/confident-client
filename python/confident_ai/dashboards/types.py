@@ -8,7 +8,6 @@ from typing import List, Literal, Optional, Union
 from pydantic import Field
 
 from confident_ai.common.types import (
-    CreateWidgetRequest,
     FilterSet,
     UserReference,
     WidgetAggregation,
@@ -17,10 +16,11 @@ from confident_ai.common.types import (
     WidgetDataModel,
     WidgetDimension,
     WidgetGranularity,
+    WidgetInput,
     WidgetLayout,
     WidgetLineColor,
-    WidgetLineConfig,
     WidgetLineExtraQueryParams,
+    WidgetLineInput,
     WidgetMode,
     WidgetTopK,
     WidgetType,
@@ -33,7 +33,7 @@ class CreateDashboardRequest(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     private: Optional[bool] = None
-    widgets: Optional[List[CreateWidgetRequest]] = None
+    widgets: Optional[List[WidgetInput]] = None
 
 
 class WidgetLine(ConfidentBaseModel):
@@ -153,7 +153,7 @@ class UpdateWidgetRequest(ConfidentBaseModel):
     start_time: Optional[str] = Field(default=None, alias="startTime")
     end_time: Optional[str] = Field(default=None, alias="endTime")
     layout: Optional[WidgetLayout] = None
-    lines: Optional[List[WidgetLineConfig]] = None
+    lines: Optional[List[WidgetLineInput]] = None
 
 
 class WidgetQueryRequest(ConfidentBaseModel):

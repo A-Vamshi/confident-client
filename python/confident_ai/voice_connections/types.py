@@ -74,7 +74,7 @@ VoiceTransportConfig = Union[
 ]
 
 
-class VoiceCallSettingsPatch(ConfidentBaseModel):
+class VoiceCallSettingsInput(ConfidentBaseModel):
     max_concurrent_calls: Optional[int] = Field(
         default=None,
         alias="maxConcurrentCalls",
@@ -94,7 +94,7 @@ class VoiceCallSettingsPatch(ConfidentBaseModel):
 class CreateVoiceConnectionRequest(ConfidentBaseModel):
     name: str
     config: VoiceTransportConfig
-    call_settings: Optional[VoiceCallSettingsPatch] = Field(
+    call_settings: Optional[VoiceCallSettingsInput] = Field(
         default=None,
         alias="callSettings",
     )
@@ -103,7 +103,7 @@ class CreateVoiceConnectionRequest(ConfidentBaseModel):
 class UpdateVoiceConnectionRequest(ConfidentBaseModel):
     name: Optional[str] = None
     config: Optional[VoiceTransportConfig] = None
-    call_settings: Optional[VoiceCallSettingsPatch] = Field(
+    call_settings: Optional[VoiceCallSettingsInput] = Field(
         default=None,
         alias="callSettings",
     )

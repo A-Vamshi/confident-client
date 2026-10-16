@@ -11,9 +11,8 @@ from confident_ai.datasets.types import (
     Dataset,
     DatasetList,
     DatasetRef,
-    GoldenRequest,
+    GoldenInput,
     PushDatasetRequest,
-    PushGolden,
     QueueDatasetGoldensRequest,
     RunDatasetEvaluationRequest,
     RunDatasetEvaluationResult,
@@ -51,7 +50,7 @@ class DatasetsOperations:
     def push(
         self,
         alias: str,
-        goldens: List[PushGolden],
+        goldens: List[GoldenInput],
         *,
         finalized: Optional[bool] = None,
         version: Optional[str] = None
@@ -95,7 +94,7 @@ class DatasetsOperations:
     async def a_push(
         self,
         alias: str,
-        goldens: List[PushGolden],
+        goldens: List[GoldenInput],
         *,
         finalized: Optional[bool] = None,
         version: Optional[str] = None
@@ -229,7 +228,7 @@ class DatasetsOperations:
         )
 
     def queue_goldens(
-        self, dataset_id: str, goldens: List[GoldenRequest]
+        self, dataset_id: str, goldens: List[GoldenInput]
     ) -> DatasetRef:
         """Queue Dataset Goldens
 
@@ -254,7 +253,7 @@ class DatasetsOperations:
         )
 
     async def a_queue_goldens(
-        self, dataset_id: str, goldens: List[GoldenRequest]
+        self, dataset_id: str, goldens: List[GoldenInput]
     ) -> DatasetRef:
         """Queue Dataset Goldens
 

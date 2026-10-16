@@ -4,10 +4,6 @@
 # and regenerate.
 
 from confident_ai.annotation_queues.types import (
-    AddQueueItemsRequest,
-    AddSpanQueueItemsRequest,
-    AddThreadQueueItemsRequest,
-    AddTraceQueueItemsRequest,
     AddedQueueItems,
     AnnotateQueueItemRequest,
     AnnotateQueueItemResult,
@@ -34,15 +30,15 @@ from confident_ai.annotation_queues.types import (
     QueueItemAnnotation,
     QueueItemFormResponse,
     QueueItemStatus,
+    QueueItems,
+    SpanQueueItems,
+    ThreadQueueItems,
+    TraceQueueItems,
     UpdateAnnotationQueueRequest,
     UpdateQueueIngestionTaskRequest,
 )
 
 __all__ = [
-    "AddQueueItemsRequest",
-    "AddSpanQueueItemsRequest",
-    "AddThreadQueueItemsRequest",
-    "AddTraceQueueItemsRequest",
     "AddedQueueItems",
     "AnnotateQueueItemRequest",
     "AnnotateQueueItemResult",
@@ -69,6 +65,10 @@ __all__ = [
     "QueueItemAnnotation",
     "QueueItemFormResponse",
     "QueueItemStatus",
+    "QueueItems",
+    "SpanQueueItems",
+    "ThreadQueueItems",
+    "TraceQueueItems",
     "UpdateAnnotationQueueRequest",
     "UpdateQueueIngestionTaskRequest",
 ]

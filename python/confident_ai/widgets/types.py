@@ -8,9 +8,9 @@ from typing import Optional
 from pydantic import Field
 
 from confident_ai.common.types import (
-    CreateWidgetRequest,
     WidgetData,
     WidgetGranularity,
+    WidgetInput,
     WidgetMode,
     WidgetType,
 )
@@ -18,7 +18,7 @@ from confident_ai.types import ConfidentBaseModel
 
 
 class AdHocWidgetQueryRequest(ConfidentBaseModel):
-    widget: CreateWidgetRequest
+    widget: WidgetInput
     start_time: Optional[str] = Field(default=None, alias="startTime")
     end_time: Optional[str] = Field(default=None, alias="endTime")
     granularity: Optional[WidgetGranularity] = None

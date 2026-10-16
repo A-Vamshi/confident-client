@@ -66,12 +66,12 @@ class CreateDatasetVersionResult(ConfidentBaseModel):
     version: str
 
 
-class SingleTurnGoldenRequestExpectations(ConfidentBaseModel):
+class Expectations(ConfidentBaseModel):
     must: List[str]
     must_not: List[str] = Field(alias="mustNot")
 
 
-class SingleTurnGoldenRequest(ConfidentBaseModel):
+class SingleTurnGoldenInput(ConfidentBaseModel):
     input: str
     actual_output: Optional[str] = Field(default=None, alias="actualOutput")
     expected_output: Optional[str] = Field(default=None, alias="expectedOutput")
@@ -101,7 +101,7 @@ class SingleTurnGoldenRequest(ConfidentBaseModel):
         default=None,
         alias="additionalMetadata",
     )
-    expectations: Optional[SingleTurnGoldenRequestExpectations] = None
+    expectations: Optional[Expectations] = None
     comments: Optional[str] = None
     source_file: Optional[str] = Field(default=None, alias="sourceFile")
     source_files: Optional[List[str]] = Field(default=None, alias="sourceFiles")
@@ -115,14 +115,10 @@ class SingleTurnGoldenRequest(ConfidentBaseModel):
         alias="imagesMapping",
     )
     tags: Optional[List[str]] = None
+    id: Optional[str] = None
 
 
-class MultiTurnGoldenRequestExpectations(ConfidentBaseModel):
-    must: List[str]
-    must_not: List[str] = Field(alias="mustNot")
-
-
-class MultiTurnGoldenRequest(ConfidentBaseModel):
+class MultiTurnGoldenInput(ConfidentBaseModel):
     scenario: str
     expected_outcome: Optional[str] = Field(
         default=None,
@@ -138,7 +134,7 @@ class MultiTurnGoldenRequest(ConfidentBaseModel):
         default=None,
         alias="additionalMetadata",
     )
-    expectations: Optional[MultiTurnGoldenRequestExpectations] = None
+    expectations: Optional[Expectations] = None
     comments: Optional[str] = None
     source_file: Optional[str] = Field(default=None, alias="sourceFile")
     source_files: Optional[List[str]] = Field(default=None, alias="sourceFiles")
@@ -152,19 +148,15 @@ class MultiTurnGoldenRequest(ConfidentBaseModel):
         alias="imagesMapping",
     )
     tags: Optional[List[str]] = None
+    id: Optional[str] = None
 
 
-GoldenRequest = Union[SingleTurnGoldenRequest, MultiTurnGoldenRequest]
+GoldenInput = Union[SingleTurnGoldenInput, MultiTurnGoldenInput]
 
 
 class CreateGoldenRequest(ConfidentBaseModel):
-    golden: GoldenRequest
+    golden: GoldenInput
     version: Optional[str] = None
-
-
-class SingleTurnGoldenExpectations(ConfidentBaseModel):
-    must: List[str]
-    must_not: List[str] = Field(alias="mustNot")
 
 
 class SingleTurnGolden(ConfidentBaseModel):
@@ -198,7 +190,7 @@ class SingleTurnGolden(ConfidentBaseModel):
         default=None,
         alias="additionalMetadata",
     )
-    expectations: Optional[SingleTurnGoldenExpectations] = None
+    expectations: Optional[Expectations] = None
     comments: Optional[str] = None
     source_file: Optional[str] = Field(default=None, alias="sourceFile")
     source_files: Optional[List[str]] = Field(default=None, alias="sourceFiles")
@@ -208,11 +200,6 @@ class SingleTurnGolden(ConfidentBaseModel):
         alias="customColumnKeyValues",
     )
     tags: Optional[List[str]] = None
-
-
-class MultiTurnGoldenExpectations(ConfidentBaseModel):
-    must: List[str]
-    must_not: List[str] = Field(alias="mustNot")
 
 
 class MultiTurnGolden(ConfidentBaseModel):
@@ -232,7 +219,7 @@ class MultiTurnGolden(ConfidentBaseModel):
         default=None,
         alias="additionalMetadata",
     )
-    expectations: Optional[MultiTurnGoldenExpectations] = None
+    expectations: Optional[Expectations] = None
     comments: Optional[str] = None
     source_file: Optional[str] = Field(default=None, alias="sourceFile")
     source_files: Optional[List[str]] = Field(default=None, alias="sourceFiles")
@@ -322,108 +309,15 @@ class GoldenRef(ConfidentBaseModel):
     id: str
 
 
-class PushSingleTurnGoldenExpectations(ConfidentBaseModel):
-    must: List[str]
-    must_not: List[str] = Field(alias="mustNot")
-
-
-class PushSingleTurnGolden(ConfidentBaseModel):
-    input: str
-    actual_output: Optional[str] = Field(default=None, alias="actualOutput")
-    expected_output: Optional[str] = Field(default=None, alias="expectedOutput")
-    context: Optional[List[str]] = None
-    retrieval_context: Optional[List[str]] = Field(
-        default=None,
-        alias="retrievalContext",
-    )
-    tools_called: Optional[List[ToolCall]] = Field(
-        default=None,
-        alias="toolsCalled",
-    )
-    expected_tools: Optional[List[ToolCall]] = Field(
-        default=None,
-        alias="expectedTools",
-    )
-    token_cost: Optional[float] = Field(default=None, alias="tokenCost")
-    input_token_count: Optional[int] = Field(
-        default=None,
-        alias="inputTokenCount",
-    )
-    output_token_count: Optional[int] = Field(
-        default=None,
-        alias="outputTokenCount",
-    )
-    additional_metadata: Optional[Dict[str, Any]] = Field(
-        default=None,
-        alias="additionalMetadata",
-    )
-    expectations: Optional[PushSingleTurnGoldenExpectations] = None
-    comments: Optional[str] = None
-    source_file: Optional[str] = Field(default=None, alias="sourceFile")
-    source_files: Optional[List[str]] = Field(default=None, alias="sourceFiles")
-    finalized: Optional[bool] = None
-    custom_column_key_values: Optional[Dict[str, str]] = Field(
-        default=None,
-        alias="customColumnKeyValues",
-    )
-    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
-        default=None,
-        alias="imagesMapping",
-    )
-    tags: Optional[List[str]] = None
-    id: Optional[str] = None
-
-
-class PushMultiTurnGoldenExpectations(ConfidentBaseModel):
-    must: List[str]
-    must_not: List[str] = Field(alias="mustNot")
-
-
-class PushMultiTurnGolden(ConfidentBaseModel):
-    scenario: str
-    expected_outcome: Optional[str] = Field(
-        default=None,
-        alias="expectedOutcome",
-    )
-    user_description: Optional[str] = Field(
-        default=None,
-        alias="userDescription",
-    )
-    turns: Optional[List[Turn]] = None
-    context: Optional[List[str]] = None
-    additional_metadata: Optional[Dict[str, Any]] = Field(
-        default=None,
-        alias="additionalMetadata",
-    )
-    expectations: Optional[PushMultiTurnGoldenExpectations] = None
-    comments: Optional[str] = None
-    source_file: Optional[str] = Field(default=None, alias="sourceFile")
-    source_files: Optional[List[str]] = Field(default=None, alias="sourceFiles")
-    finalized: Optional[bool] = None
-    custom_column_key_values: Optional[Dict[str, str]] = Field(
-        default=None,
-        alias="customColumnKeyValues",
-    )
-    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
-        default=None,
-        alias="imagesMapping",
-    )
-    tags: Optional[List[str]] = None
-    id: Optional[str] = None
-
-
-PushGolden = Union[PushSingleTurnGolden, PushMultiTurnGolden]
-
-
 class PushDatasetRequest(ConfidentBaseModel):
     alias: str
     finalized: Optional[bool] = None
     version: Optional[str] = None
-    goldens: List[PushGolden]
+    goldens: List[GoldenInput]
 
 
 class QueueDatasetGoldensRequest(ConfidentBaseModel):
-    goldens: List[GoldenRequest]
+    goldens: List[GoldenInput]
 
 
 class RunDatasetEvaluationRequest(ConfidentBaseModel):

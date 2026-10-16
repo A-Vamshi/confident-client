@@ -6,7 +6,7 @@
 import { HttpMethods } from "../../api";
 import { Endpoints } from "../../endpoints";
 import { DatasetIngestionTasksOperations } from "../dataset-ingestion-tasks/operations";
-import { Golden, GoldenRef, GoldenRequest } from "../types";
+import { Golden, GoldenInput, GoldenRef } from "../types";
 
 export class GoldensOperations extends DatasetIngestionTasksOperations {
   /**
@@ -22,7 +22,7 @@ export class GoldensOperations extends DatasetIngestionTasksOperations {
    */
   async createGolden(
     datasetId: string,
-    golden: GoldenRequest,
+    golden: GoldenInput,
     version?: string,
   ): Promise<GoldenRef> {
     return this.api.sendRequest<GoldenRef>(
@@ -67,13 +67,13 @@ export class GoldensOperations extends DatasetIngestionTasksOperations {
    *   pulled.
    * @param golden One golden to write: single-turn when it carries `input`,
    *   multi-turn when it carries `scenario`. A golden cannot be both, and its
-   *   kind must match the dataset's `multiTurn`. Pass a SingleTurnGoldenRequest
-   *   or a MultiTurnGoldenRequest.
+   *   kind must match the dataset's `multiTurn`. Pass a SingleTurnGoldenInput
+   *   or a MultiTurnGoldenInput.
    */
   async updateGolden(
     datasetId: string,
     goldenId: string,
-    golden: GoldenRequest,
+    golden: GoldenInput,
   ): Promise<GoldenRef> {
     return this.api.sendRequest<GoldenRef>(
       HttpMethods.PUT,

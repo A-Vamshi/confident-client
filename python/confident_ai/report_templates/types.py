@@ -40,7 +40,7 @@ class ReportTemplateSectionContent(ConfidentBaseModel):
     severity: Optional[ReportTemplateSectionSeverity] = None
 
 
-class ReportTemplateSectionConfig(ConfidentBaseModel):
+class ReportTemplateSectionInput(ConfidentBaseModel):
     id: Optional[str] = None
     type: ReportTemplateSectionType
     heading: Optional[str] = None
@@ -56,7 +56,7 @@ class ReportTemplateSectionConfig(ConfidentBaseModel):
 class CreateReportTemplateRequest(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
-    template_sections: Optional[List[ReportTemplateSectionConfig]] = Field(
+    template_sections: Optional[List[ReportTemplateSectionInput]] = Field(
         default=None,
         alias="templateSections",
     )
@@ -132,7 +132,7 @@ class ReportTemplateRef(ConfidentBaseModel):
 class UpdateReportTemplateRequest(ConfidentBaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
-    template_sections: Optional[List[ReportTemplateSectionConfig]] = Field(
+    template_sections: Optional[List[ReportTemplateSectionInput]] = Field(
         default=None,
         alias="templateSections",
     )

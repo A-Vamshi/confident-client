@@ -12,15 +12,12 @@ import {
   DatasetRef,
   DatasetVersionList,
   Golden,
+  GoldenInput,
   GoldenRef,
-  GoldenRequest,
-  MultiTurnGoldenRequest,
+  MultiTurnGoldenInput,
   PushDatasetRequest,
-  PushGolden,
-  PushMultiTurnGolden,
-  PushSingleTurnGolden,
   RunDatasetEvaluationResult,
-  SingleTurnGoldenRequest,
+  SingleTurnGoldenInput,
 } from "./types";
 
 /**
@@ -161,7 +158,7 @@ export class Dataset {
    *   must be of the same kind and match the dataset's `multiTurn`. They are
    *   stored unfinalized, whatever each golden's own `finalized` says.
    */
-  async queueGoldens(goldens: GoldenRequest[]): Promise<DatasetRef> {
+  async queueGoldens(goldens: GoldenInput[]): Promise<DatasetRef> {
     return this.client.queueGoldens(this.datasetIdOrThrow(), goldens);
   }
 
@@ -176,7 +173,7 @@ export class Dataset {
    *   has no versions.
    */
   async createGolden(
-    golden: GoldenRequest,
+    golden: GoldenInput,
     version?: string,
   ): Promise<GoldenRef> {
     return this.client.createGolden(this.datasetIdOrThrow(), golden, version);
@@ -224,7 +221,7 @@ export class Dataset {
     return this.client.updateGolden(
       this.datasetIdOrThrow(),
       this.goldenIdOrThrow(golden),
-      this.goldenRequest(golden),
+      this.goldenInput(golden),
     );
   }
 
@@ -286,7 +283,7 @@ export class Dataset {
     const fields = {
       alias: this.alias,
       version: this.version,
-      goldens: this.goldens.map((golden) => this.pushGolden(golden)),
+      goldens: this.goldens.map((golden) => this.goldenInput(golden)),
       finalized,
     };
     return fields as PushDatasetRequest;
@@ -301,26 +298,7 @@ export class Dataset {
     return golden.id;
   }
 
-  private goldenRequest(golden: Golden): GoldenRequest {
-    const source = golden as unknown as Record<string, unknown>;
-    const fields = { ...source };
-    // A Golden carries fields a GoldenRequest has no room for.
-    delete fields["id"];
-    const chosen = (["input", "scenario"] as const).filter(
-      (name) => source[name] !== undefined,
-    );
-    if (chosen.length !== 1) {
-      throw new Error(
-        `Set exactly one of input, scenario; ${chosen.length ? chosen.join(", ") : "none is set"}.`,
-      );
-    }
-    if (source["input"] !== undefined) {
-      return fields as unknown as SingleTurnGoldenRequest;
-    }
-    return fields as unknown as MultiTurnGoldenRequest;
-  }
-
-  private pushGolden(golden: Golden): PushGolden {
+  private goldenInput(golden: Golden): GoldenInput {
     const source = golden as unknown as Record<string, unknown>;
     const fields = { ...source };
     const chosen = (["input", "scenario"] as const).filter(
@@ -332,9 +310,9 @@ export class Dataset {
       );
     }
     if (source["input"] !== undefined) {
-      return fields as unknown as PushSingleTurnGolden;
+      return fields as unknown as SingleTurnGoldenInput;
     }
-    return fields as unknown as PushMultiTurnGolden;
+    return fields as unknown as MultiTurnGoldenInput;
   }
 
   private load(payload: DatasetPayload): void {

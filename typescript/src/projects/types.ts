@@ -56,6 +56,27 @@ export interface CreateProjectResult {
   apiKey: ProjectDefaultApiKey | null;
 }
 
+export interface DecisionProjectModel {
+  provider: ModelProvider;
+  name?: string;
+  modelCredentialId?: string | null;
+}
+
+export interface EvaluationProjectModel {
+  provider: ModelProvider;
+  name?: string;
+  maxConcurrency?: number | null;
+  modelCredentialId?: string | null;
+}
+
+export interface PlatformProjectModel {
+  provider: ModelProvider;
+  name?: string;
+  maxConcurrency?: number | null;
+  maxInputTokens?: number | null;
+  modelCredentialId?: string | null;
+}
+
 export interface ProjectGovernancePolicy {
   id: string;
   name: string;
@@ -123,27 +144,6 @@ export interface ProjectRoleList {
   roles: ProjectRole[];
 }
 
-export interface UpdateDecisionProjectModelRequest {
-  provider: ModelProvider;
-  name?: string;
-  modelCredentialId?: string | null;
-}
-
-export interface UpdateEvaluationProjectModelRequest {
-  provider: ModelProvider;
-  name?: string;
-  maxConcurrency?: number | null;
-  modelCredentialId?: string | null;
-}
-
-export interface UpdatePlatformProjectModelRequest {
-  provider: ModelProvider;
-  name?: string;
-  maxConcurrency?: number | null;
-  maxInputTokens?: number | null;
-  modelCredentialId?: string | null;
-}
-
 export interface UpdateProjectModelResult {
   model: Model;
   source?: ModelSource;
@@ -154,7 +154,5 @@ export interface UpdateProjectRequest {
   description?: string;
 }
 
-export type UpdateProjectModelRequest =
-  | UpdateEvaluationProjectModelRequest
-  | UpdateDecisionProjectModelRequest
-  | UpdatePlatformProjectModelRequest;
+export type ProjectModelInput =
+  EvaluationProjectModel | DecisionProjectModel | PlatformProjectModel;
