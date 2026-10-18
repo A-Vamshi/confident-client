@@ -75,7 +75,7 @@ a deploy. Pass `refresh=0` to turn both off while you are still editing it.
 
 ### Images
 
-`Media` puts an image into any text field of a golden, test case or annotation.
+`Media` puts an image into any text field of a golden, test case, annotation or prompt.
 Formatting it into a string leaves a `[CONFIDENT:IMAGE:…]` marker where the
 image belongs, and the request carries the image with it:
 

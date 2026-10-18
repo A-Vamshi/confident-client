@@ -162,7 +162,7 @@ language's examples.
     project should have an **owner** (`email`), and which **role** (`role_id`) to
     grant when inviting members or adding them to a project. Ask first, then act.
 14. **Images go into text as `Media`.** Format a `Media` into a golden's, test
-    case's or annotation's text and the SDK fills `imagesMapping`; never build
+    case's, annotation's or prompt's text and the SDK fills `imagesMapping`; never build
     it by hand. Read them back with `parse_multimodal`. See
     `references/media.md`.
 
@@ -181,7 +181,7 @@ examples; use the code block matching the target language.
 | RBAC: permissions, policies, and roles | `references/roles-policies-permissions.md` |
 | Provision, rotate, enable/disable, and delete API keys | `references/api-keys.md` |
 | Governance policies: CRUD, assign/unassign to projects, and the deployment gate | `references/governance.md` |
-| Images in goldens, test cases and annotations | `references/media.md` |
+| Images in goldens, test cases, annotations and prompts | `references/media.md` |
 | Prompts, datasets, traces, metrics, test runs and evaluations | `references/resources.md` |
 | Background: why observability matters for AI products | `references/ai-pm-observability.md` |
 

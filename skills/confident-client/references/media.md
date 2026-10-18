@@ -1,6 +1,6 @@
 # Images
 
-Goldens, test cases and annotations can carry images. Put a `Media` where the
+Goldens, test cases, annotations and prompts can carry images. Put a `Media` where the
 image belongs in any of their text fields: formatting it into a string leaves a
 `[CONFIDENT:IMAGE:…]` marker, and the SDK sends the image with the request.
 Only images are supported for now.
@@ -91,6 +91,7 @@ that delegate to them (`dataset.push()`, `dataset.create_golden()`, …):
 - datasets: push, queue goldens, create and update a golden
 - evaluations: `run_evals` / `runEvals`, per test case
 - annotations: create and update, and annotating annotation queue items
+- prompts: push, on a text prompt's `text` or a messages prompt's `content`
 
 ## Read Images Back
 
