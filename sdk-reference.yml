@@ -56920,9 +56920,9 @@ types:
     python: actual_output
     typescript: actualOutput
     type:
-      python: str
+      python: Optional[str]
       typescript: string
-    required: true
+    required: false
     description: This is the actual output of your LLM application.
     example: No clue, pretty tall I guess?
     references: []

@@ -7,7 +7,7 @@ import { MLLMImage, PromptType, ToolCall, Turn } from "../common/types";
 
 export interface SingleTurnTestCase {
   input: string;
-  actualOutput: string;
+  actualOutput?: string;
   expectedOutput?: string;
   retrievalContext?: string[];
   toolsCalled?: ToolCall[];
