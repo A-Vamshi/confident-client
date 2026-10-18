@@ -8,7 +8,13 @@ from typing import Any, Dict, List, Literal, Optional, Union
 
 from pydantic import Field
 
-from confident_ai.common.types import ModelProvider, PromptType, Tool, ToolMode
+from confident_ai.common.types import (
+    MLLMImage,
+    ModelProvider,
+    PromptType,
+    Tool,
+    ToolMode,
+)
 from confident_ai.types import ConfidentBaseModel
 
 
@@ -31,16 +37,6 @@ class ReasoningEffort(Enum):
     LOW = "LOW"
     MEDIUM = "MEDIUM"
     HIGH = "HIGH"
-
-
-class SchemaDataType(Enum):
-    OBJECT = "OBJECT"
-    ARRAY = "ARRAY"
-    STRING = "STRING"
-    FLOAT = "FLOAT"
-    INTEGER = "INTEGER"
-    BOOLEAN = "BOOLEAN"
-    NULL = "NULL"
 
 
 class Verbosity(Enum):
@@ -106,19 +102,6 @@ class ModelSettings(ConfidentBaseModel):
     verbosity: Optional[Verbosity] = None
 
 
-class OutputSchemaField(ConfidentBaseModel):
-    id: Optional[str] = None
-    name: str
-    type: SchemaDataType
-    required: Optional[bool] = None
-    parent_id: Optional[str] = Field(default=None, alias="parentId")
-
-
-class OutputSchema(ConfidentBaseModel):
-    name: str
-    fields: List[OutputSchemaField]
-
-
 class MessagesPrompt(ConfidentBaseModel):
     messages: List[PromptMessage]
     alias: str
@@ -135,7 +118,7 @@ class MessagesPrompt(ConfidentBaseModel):
         alias="modelSettings",
     )
     output_type: PromptOutputType = Field(alias="outputType")
-    output_schema: Optional[OutputSchema] = Field(
+    output_schema: Optional[Dict[str, Any]] = Field(
         default=None,
         alias="outputSchema",
     )
@@ -166,12 +149,16 @@ class MessagesPromptInput(ConfidentBaseModel):
         default=None,
         alias="outputType",
     )
-    output_schema: Optional[OutputSchema] = Field(
+    output_schema: Optional[Dict[str, Any]] = Field(
         default=None,
         alias="outputSchema",
     )
     tools: Optional[List[ToolInput]] = None
     branch: Optional[str] = None
+    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
+        default=None,
+        alias="imagesMapping",
+    )
 
 
 class PromptBranch(ConfidentBaseModel):
@@ -238,7 +225,7 @@ class TextPrompt(ConfidentBaseModel):
         alias="modelSettings",
     )
     output_type: PromptOutputType = Field(alias="outputType")
-    output_schema: Optional[OutputSchema] = Field(
+    output_schema: Optional[Dict[str, Any]] = Field(
         default=None,
         alias="outputSchema",
     )
@@ -260,12 +247,16 @@ class TextPromptInput(ConfidentBaseModel):
         default=None,
         alias="outputType",
     )
-    output_schema: Optional[OutputSchema] = Field(
+    output_schema: Optional[Dict[str, Any]] = Field(
         default=None,
         alias="outputSchema",
     )
     tools: Optional[List[ToolInput]] = None
     branch: Optional[str] = None
+    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
+        default=None,
+        alias="imagesMapping",
+    )
 
 
 class UpdatePromptBranchRequest(ConfidentBaseModel):

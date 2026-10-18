@@ -115,7 +115,8 @@ export class DatasetsOperations {
    * Queue Dataset Goldens
    *
    * Adds goldens to the dataset as unfinalized goldens, for review on the
-   * platform before they are used in evaluations.
+   * platform before they are used in evaluations. They go into the dataset's
+   * latest version, or among its unversioned goldens when it has no versions.
    *
    * @param datasetId The unique id of the dataset.
    * @param goldens The goldens to queue for review. Every golden in one request

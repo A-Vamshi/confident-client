@@ -3,7 +3,7 @@
 # Do not edit by hand — change the route in confident-cloud
 # and regenerate.
 
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 from confident_ai.api import Api
 from confident_ai.prompts.client import PromptsClient
@@ -12,12 +12,11 @@ from confident_ai.utils.prompt_cache import (
     a_pull_prompt,
     pull_prompt,
 )
-from confident_ai.common.types import PromptType, Tool
+from confident_ai.common.types import MLLMImage, PromptType, Tool
 from confident_ai.prompts.types import (
     CreatePromptVersionResult,
     MessagesPromptInput,
     ModelSettings,
-    OutputSchema,
     Prompt as PromptPayload,
     PromptBranch,
     PromptBranchList,
@@ -60,9 +59,10 @@ class Prompt:
         self.interpolation_type: Optional[PromptInterpolationType] = None
         self.model_settings: Optional[ModelSettings] = None
         self.output_type: Optional[PromptOutputType] = None
-        self.output_schema: Optional[OutputSchema] = None
+        self.output_schema: Optional[Dict[str, Any]] = None
         self.tools: Optional[List[Tool]] = None
         self.messages: Optional[List[PromptMessage]] = None
+        self.images_mapping: Optional[Dict[str, MLLMImage]] = None
 
     def __repr__(self) -> str:
         return f"Prompt(prompt_id={self.prompt_id!r}, alias={self.alias!r})"

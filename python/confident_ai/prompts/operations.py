@@ -57,6 +57,7 @@ class PromptsOperations:
             response_schema=PushPromptResult,
             request_schema=PromptInput,
             body=prompt,
+            media_holders=["$"],
         )
 
     async def a_push(self, prompt: PromptInput) -> PushPromptResult:
@@ -78,6 +79,7 @@ class PromptsOperations:
             response_schema=PushPromptResult,
             request_schema=PromptInput,
             body=prompt,
+            media_holders=["$"],
         )
 
     def get_by_label(self, prompt_id: str, label: str) -> Prompt:

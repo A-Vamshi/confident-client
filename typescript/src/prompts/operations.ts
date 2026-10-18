@@ -37,7 +37,7 @@ export class PromptsOperations {
     return this.api.sendRequest<PushPromptResult>(
       HttpMethods.POST,
       Endpoints.PROMPTS_ENDPOINT,
-      { body: prompt },
+      { body: prompt, mediaHolders: ["$"] },
     );
   }
 

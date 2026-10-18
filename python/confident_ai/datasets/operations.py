@@ -233,7 +233,9 @@ class DatasetsOperations:
         """Queue Dataset Goldens
 
         Adds goldens to the dataset as unfinalized goldens, for review on the
-        platform before they are used in evaluations.
+        platform before they are used in evaluations. They go into the dataset's
+        latest version, or among its unversioned goldens when it has no
+        versions.
 
         Args:
             dataset_id: The unique id of the dataset.
@@ -258,7 +260,9 @@ class DatasetsOperations:
         """Queue Dataset Goldens
 
         Adds goldens to the dataset as unfinalized goldens, for review on the
-        platform before they are used in evaluations.
+        platform before they are used in evaluations. They go into the dataset's
+        latest version, or among its unversioned goldens when it has no
+        versions.
 
         Args:
             dataset_id: The unique id of the dataset.

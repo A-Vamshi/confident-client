@@ -6455,7 +6455,8 @@ resources:
         typescript: queueGoldens
       summary: Queue Dataset Goldens
       description: Adds goldens to the dataset as unfinalized goldens, for review
-        on the platform before they are used in evaluations.
+        on the platform before they are used in evaluations. They go into the dataset's
+        latest version, or among its unversioned goldens when it has no versions.
       operations:
       - id: queueDatasetGoldens
         method: POST
@@ -8496,7 +8497,8 @@ resources:
         typescript: queueGoldens
       summary: Queue Dataset Goldens
       description: Adds goldens to the dataset as unfinalized goldens, for review
-        on the platform before they are used in evaluations.
+        on the platform before they are used in evaluations. They go into the dataset's
+        latest version, or among its unversioned goldens when it has no versions.
       operations:
       - id: queueDatasetGoldens
         method: POST
@@ -22006,12 +22008,23 @@ resources:
       typescript: outputSchema
       wire: outputSchema
       type:
-        python: Optional[OutputSchema]
-        typescript: OutputSchema
-      description: null
-      example: null
-      references:
-      - OutputSchema
+        python: Optional[Dict[str, Any]]
+        typescript: Record<string, unknown>
+      description: The JSON Schema the prompt's output must match, used when `outputType`
+        is `SCHEMA`. It can describe objects (`properties` and `required`), arrays
+        (`items`), and `string`, `integer`, `number`, `boolean` and `null` values.
+        `title` names it, `additionalProperties` can only be `false`, and any other
+        keyword is rejected.
+      example:
+        title: Greeting
+        type: object
+        properties:
+          greeting:
+            type: string
+        required:
+        - greeting
+        additionalProperties: false
+      references: []
     - python: tools
       typescript: tools
       wire: tools
@@ -22037,6 +22050,15 @@ resources:
         content: Hello, {{name}}! How can I help you today?
       references:
       - PromptMessage
+    - python: images_mapping
+      typescript: imagesMapping
+      wire: null
+      type:
+        python: Optional[Dict[str, MLLMImage]]
+        typescript: Record<string, MLLMImage>
+      description: null
+      example: null
+      references: []
     methods:
     - name:
         python: list_versions
@@ -26039,14 +26061,15 @@ resources:
         wire: actualOutput
         in: body
         type:
-          python: Optional[str]
+          python: str
           typescript: string
-        required: false
+        required: true
         keyword:
-          python: true
-          typescript: true
-        default: None
-        description: The actual output produced by your agent.
+          python: false
+          typescript: false
+        default: null
+        description: The actual output produced by your agent. When it failed, send
+          an empty string along with `error`.
         example: Mount Everest is 8,848 metres tall.
         references: []
       - python: retrieval_context
@@ -26170,9 +26193,10 @@ resources:
           python: true
           typescript: true
         default: None
-        description: Set this when your agent failed to produce an output. The test
-          case is marked errored with this message and is not evaluated, so the test
-          run can complete without waiting for it.
+        description: Set this when your agent failed to produce an output, with an
+          empty `actualOutput`. The test case is marked errored with this message
+          and is not evaluated, so the test run can complete without waiting for
+          it.
         example: Upstream model provider timed out.
         references: []
       order:
@@ -46344,7 +46368,6 @@ types:
   - PromptInterpolationType
   - ModelSettings
   - PromptOutputType
-  - OutputSchema
   - Tool
   kind: object
   fields:
@@ -46464,13 +46487,24 @@ types:
     python: output_schema
     typescript: outputSchema
     type:
-      python: Optional[OutputSchema]
-      typescript: OutputSchema
+      python: Optional[Dict[str, Any]]
+      typescript: Record<string, unknown>
     required: false
-    description: null
-    example: null
-    references:
-    - OutputSchema
+    description: The JSON Schema the prompt's output must match, used when `outputType`
+      is `SCHEMA`. It can describe objects (`properties` and `required`), arrays
+      (`items`), and `string`, `integer`, `number`, `boolean` and `null` values.
+      `title` names it, `additionalProperties` can only be `false`, and any other
+      keyword is rejected.
+    example:
+      title: Greeting
+      type: object
+      properties:
+        greeting:
+          type: string
+      required:
+      - greeting
+      additionalProperties: false
+    references: []
   - wire: tools
     python: tools
     typescript: tools
@@ -46497,8 +46531,8 @@ types:
   - PromptInterpolationType
   - ModelSettings
   - PromptOutputType
-  - OutputSchema
   - ToolInput
+  - MLLMImage
   kind: object
   fields:
   - wire: messages
@@ -46564,13 +46598,24 @@ types:
     python: output_schema
     typescript: outputSchema
     type:
-      python: Optional[OutputSchema]
-      typescript: OutputSchema
+      python: Optional[Dict[str, Any]]
+      typescript: Record<string, unknown>
     required: false
-    description: null
-    example: null
-    references:
-    - OutputSchema
+    description: The JSON Schema the prompt's output must match, used when `outputType`
+      is `SCHEMA`. It can describe objects (`properties` and `required`), arrays
+      (`items`), and `string`, `integer`, `number`, `boolean` and `null` values.
+      `title` names it, `additionalProperties` can only be `false`, and any other
+      keyword is rejected.
+    example:
+      title: Greeting
+      type: object
+      properties:
+        greeting:
+          type: string
+      required:
+      - greeting
+      additionalProperties: false
+    references: []
   - wire: tools
     python: tools
     typescript: tools
@@ -46596,6 +46641,20 @@ types:
       created from `main` when it does not exist yet.
     example: main
     references: []
+  - wire: imagesMapping
+    python: images_mapping
+    typescript: imagesMapping
+    type:
+      python: Optional[Dict[str, MLLMImage]]
+      typescript: Record<string, MLLMImage>
+    required: false
+    description: Images placed in the prompt's text or message contents with `[CONFIDENT:IMAGE:<key>]`
+      markers, keyed by each marker's `<key>`. When you send it, Confident AI stores
+      its own copy of every image the prompt contains; without it, the prompt is
+      stored as sent.
+    example: null
+    references:
+    - MLLMImage
 - name: Metric
   description: 'A custom metric: how it scores, and which test case fields it needs.'
   example: null
@@ -49944,106 +50003,6 @@ types:
     example: null
     references:
     - OrganizationRole
-- name: OutputSchema
-  description: This is the output schema definition, used when `outputType` is `SCHEMA`.
-  example: null
-  python:
-    module: confident_ai.prompts
-    name: OutputSchema
-  typescript:
-    module: confident-ai/prompts
-    name: OutputSchema
-  references:
-  - OutputSchemaField
-  kind: object
-  fields:
-  - wire: name
-    python: name
-    typescript: name
-    type:
-      python: str
-      typescript: string
-    required: true
-    description: This is the name of the output schema.
-    example: Greeting
-    references: []
-  - wire: fields
-    python: fields
-    typescript: fields
-    type:
-      python: List[OutputSchemaField]
-      typescript: OutputSchemaField[]
-    required: true
-    description: This is the array of fields that define the output schema structure.
-    example: null
-    references:
-    - OutputSchemaField
-- name: OutputSchemaField
-  description: null
-  example: null
-  python:
-    module: confident_ai.prompts
-    name: OutputSchemaField
-  typescript:
-    module: confident-ai/prompts
-    name: OutputSchemaField
-  references:
-  - SchemaDataType
-  kind: object
-  fields:
-  - wire: id
-    python: id
-    typescript: id
-    type:
-      python: Optional[str]
-      typescript: string
-    required: false
-    description: This is the unique identifier for the schema field. Use it as the
-      `parentId` of nested fields.
-    example: <FIELD-ID>
-    references: []
-  - wire: name
-    python: name
-    typescript: name
-    type:
-      python: str
-      typescript: string
-    required: true
-    description: This is the name of the schema field.
-    example: greeting
-    references: []
-  - wire: type
-    python: type
-    typescript: type
-    type:
-      python: SchemaDataType
-      typescript: SchemaDataType
-    required: true
-    description: null
-    example: null
-    references:
-    - SchemaDataType
-  - wire: required
-    python: required
-    typescript: required
-    type:
-      python: Optional[bool]
-      typescript: boolean
-    required: false
-    description: This indicates whether the field is required in the output.
-    example: true
-    references: []
-  - wire: parentId
-    python: parent_id
-    typescript: parentId
-    type:
-      python: Optional[str]
-      typescript: string | null
-    required: false
-    description: This is the id of the parent field for nested structures, or `null`
-      for a top-level field.
-    example: null
-    references: []
 - name: PendingRotationApiKey
   description: 'The result of rotating with a grace period: two values authenticate
     at once, the outgoing one until `rotatesAt` and the new one from now on.'
@@ -56602,31 +56561,6 @@ types:
   - name: SIGNAL_SPIKE
     value: SIGNAL_SPIKE
   references: []
-- name: SchemaDataType
-  kind: enum
-  description: This is the data type of a schema field.
-  python:
-    module: confident_ai.prompts
-    name: SchemaDataType
-  typescript:
-    module: confident-ai/prompts
-    name: SchemaDataType
-  members:
-  - name: OBJECT
-    value: OBJECT
-  - name: ARRAY
-    value: ARRAY
-  - name: STRING
-    value: STRING
-  - name: FLOAT
-    value: FLOAT
-  - name: INTEGER
-    value: INTEGER
-  - name: BOOLEAN
-    value: BOOLEAN
-  - name: 'NULL'
-    value: 'NULL'
-  references: []
 - name: SetGovernancePolicyControlsRequest
   description: The controls a governance policy should apply. This replaces the policy's
     own attachments outright rather than adding to them.
@@ -58633,10 +58567,10 @@ types:
     value: LLM
   references: []
 - name: SubmitTestCaseResultRequest
-  description: The result your agent produced for one dispatched test case. Every
-    field is optional; a field you omit keeps the value Confident AI already holds
-    for the golden. Send `error` instead of an output when your agent could not produce
-    one.
+  description: The result your agent produced for one dispatched test case. `actualOutput`
+    is required; any other field you omit keeps the value Confident AI already holds
+    for the golden. When your agent could not produce an output, send `error` with
+    an empty `actualOutput`.
   example: null
   python:
     module: confident_ai.test_runs
@@ -58652,10 +58586,11 @@ types:
     python: actual_output
     typescript: actualOutput
     type:
-      python: Optional[str]
+      python: str
       typescript: string
-    required: false
-    description: The actual output produced by your agent.
+    required: true
+    description: The actual output produced by your agent. When it failed, send an
+      empty string along with `error`.
     example: Mount Everest is 8,848 metres tall.
     references: []
   - wire: retrievalContext
@@ -58739,9 +58674,9 @@ types:
       python: Optional[str]
       typescript: string
     required: false
-    description: Set this when your agent failed to produce an output. The test case
-      is marked errored with this message and is not evaluated, so the test run can
-      complete without waiting for it.
+    description: Set this when your agent failed to produce an output, with an empty
+      `actualOutput`. The test case is marked errored with this message and is not
+      evaluated, so the test run can complete without waiting for it.
     example: Upstream model provider timed out.
     references: []
 - name: SubmittedTestCaseResult
@@ -60282,7 +60217,6 @@ types:
   - PromptInterpolationType
   - ModelSettings
   - PromptOutputType
-  - OutputSchema
   - Tool
   kind: object
   fields:
@@ -60397,13 +60331,24 @@ types:
     python: output_schema
     typescript: outputSchema
     type:
-      python: Optional[OutputSchema]
-      typescript: OutputSchema
+      python: Optional[Dict[str, Any]]
+      typescript: Record<string, unknown>
     required: false
-    description: null
-    example: null
-    references:
-    - OutputSchema
+    description: The JSON Schema the prompt's output must match, used when `outputType`
+      is `SCHEMA`. It can describe objects (`properties` and `required`), arrays
+      (`items`), and `string`, `integer`, `number`, `boolean` and `null` values.
+      `title` names it, `additionalProperties` can only be `false`, and any other
+      keyword is rejected.
+    example:
+      title: Greeting
+      type: object
+      properties:
+        greeting:
+          type: string
+      required:
+      - greeting
+      additionalProperties: false
+    references: []
   - wire: tools
     python: tools
     typescript: tools
@@ -60429,8 +60374,8 @@ types:
   - PromptInterpolationType
   - ModelSettings
   - PromptOutputType
-  - OutputSchema
   - ToolInput
+  - MLLMImage
   kind: object
   fields:
   - wire: text
@@ -60491,13 +60436,24 @@ types:
     python: output_schema
     typescript: outputSchema
     type:
-      python: Optional[OutputSchema]
-      typescript: OutputSchema
+      python: Optional[Dict[str, Any]]
+      typescript: Record<string, unknown>
     required: false
-    description: null
-    example: null
-    references:
-    - OutputSchema
+    description: The JSON Schema the prompt's output must match, used when `outputType`
+      is `SCHEMA`. It can describe objects (`properties` and `required`), arrays
+      (`items`), and `string`, `integer`, `number`, `boolean` and `null` values.
+      `title` names it, `additionalProperties` can only be `false`, and any other
+      keyword is rejected.
+    example:
+      title: Greeting
+      type: object
+      properties:
+        greeting:
+          type: string
+      required:
+      - greeting
+      additionalProperties: false
+    references: []
   - wire: tools
     python: tools
     typescript: tools
@@ -60523,6 +60479,20 @@ types:
       created from `main` when it does not exist yet.
     example: main
     references: []
+  - wire: imagesMapping
+    python: images_mapping
+    typescript: imagesMapping
+    type:
+      python: Optional[Dict[str, MLLMImage]]
+      typescript: Record<string, MLLMImage>
+    required: false
+    description: Images placed in the prompt's text or message contents with `[CONFIDENT:IMAGE:<key>]`
+      markers, keyed by each marker's `<key>`. When you send it, Confident AI stores
+      its own copy of every image the prompt contains; without it, the prompt is
+      stored as sent.
+    example: null
+    references:
+    - MLLMImage
 - name: Thread
   description: A thread with its evaluation results, annotations and the traces that
     make up the conversation.

@@ -3,7 +3,13 @@
 // Do not edit by hand — change the route in confident-cloud
 // and regenerate.
 
-import { ModelProvider, PromptType, Tool, ToolMode } from "../common/types";
+import {
+  MLLMImage,
+  ModelProvider,
+  PromptType,
+  Tool,
+  ToolMode,
+} from "../common/types";
 
 export enum PromptInterpolationType {
   MUSTACHE = "MUSTACHE",
@@ -24,16 +30,6 @@ export enum ReasoningEffort {
   LOW = "LOW",
   MEDIUM = "MEDIUM",
   HIGH = "HIGH",
-}
-
-export enum SchemaDataType {
-  OBJECT = "OBJECT",
-  ARRAY = "ARRAY",
-  STRING = "STRING",
-  FLOAT = "FLOAT",
-  INTEGER = "INTEGER",
-  BOOLEAN = "BOOLEAN",
-  NULL = "NULL",
 }
 
 export enum Verbosity {
@@ -87,19 +83,6 @@ export interface ModelSettings {
   verbosity?: Verbosity;
 }
 
-export interface OutputSchemaField {
-  id?: string;
-  name: string;
-  type: SchemaDataType;
-  required?: boolean;
-  parentId?: string | null;
-}
-
-export interface OutputSchema {
-  name: string;
-  fields: OutputSchemaField[];
-}
-
 export interface MessagesPrompt {
   messages: PromptMessage[];
   alias: string;
@@ -111,7 +94,7 @@ export interface MessagesPrompt {
   interpolationType: PromptInterpolationType;
   modelSettings?: ModelSettings;
   outputType: PromptOutputType;
-  outputSchema?: OutputSchema;
+  outputSchema?: Record<string, unknown>;
   tools?: Tool[];
 }
 
@@ -130,9 +113,10 @@ export interface MessagesPromptInput {
   interpolationType?: PromptInterpolationType;
   modelSettings?: ModelSettings;
   outputType?: PromptOutputType;
-  outputSchema?: OutputSchema;
+  outputSchema?: Record<string, unknown>;
   tools?: ToolInput[];
   branch?: string;
+  imagesMapping?: Record<string, MLLMImage>;
 }
 
 export interface PromptBranch {
@@ -194,7 +178,7 @@ export interface TextPrompt {
   interpolationType: PromptInterpolationType;
   modelSettings?: ModelSettings;
   outputType: PromptOutputType;
-  outputSchema?: OutputSchema;
+  outputSchema?: Record<string, unknown>;
   tools?: Tool[];
 }
 
@@ -204,9 +188,10 @@ export interface TextPromptInput {
   interpolationType?: PromptInterpolationType;
   modelSettings?: ModelSettings;
   outputType?: PromptOutputType;
-  outputSchema?: OutputSchema;
+  outputSchema?: Record<string, unknown>;
   tools?: ToolInput[];
   branch?: string;
+  imagesMapping?: Record<string, MLLMImage>;
 }
 
 export interface UpdatePromptBranchRequest {

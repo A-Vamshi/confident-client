@@ -22,6 +22,7 @@ import yaml
 from .constants import (
     PYTHON_PACKAGE,
     HELPERS_MODULE,
+    MEDIA_MAPPING_FIELD,
     METHOD_ORDER,
     ORGANIZATION_KEY_RESOURCES,
     PYTHON_HELPERS,
@@ -1294,6 +1295,7 @@ class Handle:
             field
             for field in properties_of(sends, self.schemas)
             if field not in arguments
+            and field != MEDIA_MAPPING_FIELD
             and all(
                 field in ((self.schemas.get(b) or {}).get("properties") or {})
                 for b in branches or [sends]
@@ -1386,6 +1388,7 @@ class Handle:
             field
             for field in properties_of(sends, self.schemas)
             if camel_case(field) not in arguments
+            and field != MEDIA_MAPPING_FIELD
             and all(
                 field in ((self.schemas.get(b) or {}).get("properties") or {})
                 for b in branches or [sends]
