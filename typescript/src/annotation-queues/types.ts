@@ -15,7 +15,7 @@ export enum AnnotationQueueType {
   SPAN = "SPAN",
   THREAD = "THREAD",
   GOLDEN = "GOLDEN",
-  TEST_RUN = "TEST_RUN",
+  TEST_CASE = "TEST_CASE",
 }
 
 export enum AssignmentStrategy {
@@ -86,7 +86,6 @@ export interface AnnotationQueue {
   type: AnnotationQueueType;
   createdAt: string;
   updatedAt: string;
-  testRunId: string | null;
   formId: string | null;
   tags: string[];
   totalItems: number;
@@ -103,6 +102,7 @@ export interface AnnotationQueueItem {
   spanUuid: string | null;
   threadId: string | null;
   testCaseId: string | null;
+  testRunId: string | null;
   addedAt: string;
   status: QueueItemStatus;
   assignedToEmail: string | null;
@@ -121,7 +121,6 @@ export interface AnnotationQueueSummary {
   type: AnnotationQueueType;
   createdAt: string;
   updatedAt: string;
-  testRunId: string | null;
   formId: string | null;
   tags: string[];
   totalItems: number;
@@ -194,6 +193,7 @@ export interface CreateQueueIngestionTaskRequest {
 
 export interface QueueIngestionTask {
   id: string;
+  annotationQueueId: string | null;
   name: string;
   description: string | null;
   enabled: boolean;
@@ -231,6 +231,7 @@ export interface UpdateAnnotationQueueRequest {
 export interface UpdateQueueIngestionTaskRequest {
   name?: string;
   dataModel?: IngestionDataModel;
+  newAnnotationQueueId?: string | null;
   description?: string | null;
   enabled?: boolean;
   sampleRate?: number;

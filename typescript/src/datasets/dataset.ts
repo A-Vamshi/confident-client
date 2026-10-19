@@ -95,6 +95,11 @@ export class Dataset {
    * @param aiConnectionId The id of the AI connection used to generate the
    *   actual outputs before evaluating them. Required when `generationMode` is
    *   `AI_CONNECTION`, and not allowed together with `promptAlias`.
+   * @param voiceConnectionId The id of the voice connection to call while
+   *   simulating each golden's conversation. Required when `generationMode` is
+   *   `VOICE_CONNECTION`, needs a multi-turn dataset with `includeSimulation`
+   *   enabled, and is not allowed together with `aiConnectionId` or
+   *   `promptAlias`.
    * @param promptAlias The alias of the prompt used to generate the actual
    *   outputs before evaluating them. Required when `generationMode` is
    *   `PROMPT`, and not allowed together with `aiConnectionId`.
@@ -127,6 +132,7 @@ export class Dataset {
       identifier?: string;
       version?: string;
       aiConnectionId?: string;
+      voiceConnectionId?: string;
       promptAlias?: string;
       promptCommit?: string;
       generationMode?: GenerationMode;

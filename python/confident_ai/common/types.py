@@ -28,13 +28,6 @@ class AuditLogExportStatus(Enum):
     ERRORED = "ERRORED"
 
 
-class Environment(Enum):
-    PRODUCTION = "production"
-    DEVELOPMENT = "development"
-    STAGING = "staging"
-    TESTING = "testing"
-
-
 class EvaluationErrorType(Enum):
     AI_CONNECTION_ERROR = "AI_CONNECTION_ERROR"
     TRANSFORMER_ERROR = "TRANSFORMER_ERROR"
@@ -46,6 +39,7 @@ class EvaluationErrorType(Enum):
 class GenerationMode(Enum):
     AI_CONNECTION = "AI_CONNECTION"
     PROMPT = "PROMPT"
+    VOICE_CONNECTION = "VOICE_CONNECTION"
 
 
 class IngestionDataModel(Enum):
@@ -72,6 +66,7 @@ class MetricAlgorithm(Enum):
     GEVAL = "GEVAL"
     JEVAL = "JEVAL"
     CODE = "CODE"
+    PROMPT = "PROMPT"
 
 
 class MetricEvaluationParam(Enum):
@@ -84,6 +79,7 @@ class MetricEvaluationParam(Enum):
     ROLE = "role"
     SCENARIO = "scenario"
     EXPECTEDOUTCOME = "expectedOutcome"
+    AUDIO = "audio"
     TURNS = "turns"
     TOOLSCALLED = "toolsCalled"
     RETRIEVALCONTEXT = "retrievalContext"
@@ -112,6 +108,7 @@ class ModelProvider(Enum):
     HUGGING_FACE = "HUGGING_FACE"
     TYPE_SAFE = "TYPE_SAFE"
     FAL = "FAL"
+    Z_AI = "Z_AI"
 
 
 class ModelType(Enum):
@@ -154,6 +151,12 @@ class SpanType(Enum):
 class ToolCallType(Enum):
     FUNCTION = "FUNCTION"
     MCP = "MCP"
+
+
+class ToolMode(Enum):
+    ALLOW_ADDITIONAL = "ALLOW_ADDITIONAL"
+    NO_ADDITIONAL = "NO_ADDITIONAL"
+    STRICT = "STRICT"
 
 
 class TraceSpanStatus(Enum):
@@ -243,7 +246,9 @@ class WidgetDimension(Enum):
     CLASSIFIER = "classifier"
     POLARITY = "polarity"
     CLASSIFIER_LABEL = "classifier_label"
+    CLASSIFIER_VERSION = "classifier_version"
     VERSION = "version"
+    METRIC_VERSION = "metric_version"
     VALUE = "value"
     FAILURE_SUB_MODE = "failure_sub_mode"
 
@@ -382,7 +387,7 @@ class MetricDag(ConfidentBaseModel):
     nodes: Dict[str, Any]
 
 
-class JevQuestionJevQuestion0(ConfidentBaseModel):
+class JevNoulQuestion(ConfidentBaseModel):
     type: Literal["noul"]
     question: str
     weight: Optional[float] = None
@@ -396,23 +401,36 @@ class JevQuestionJevQuestion0(ConfidentBaseModel):
     )
 
 
-class JevQuestionJevQuestion1(ConfidentBaseModel):
+class JevScoreQuestion(ConfidentBaseModel):
     type: Literal["score"]
     question: str
     weight: Optional[float] = None
     levels: List[str]
 
 
-class JevQuestionJevQuestion2(ConfidentBaseModel):
+class JevChoiceQuestion(ConfidentBaseModel):
     type: Literal["choice"]
     question: str
     weight: Optional[float] = None
     options: Dict[str, Optional[float]]
 
 
-JevQuestion = Union[
-    JevQuestionJevQuestion0, JevQuestionJevQuestion1, JevQuestionJevQuestion2
-]
+JevQuestion = Union[JevNoulQuestion, JevScoreQuestion, JevChoiceQuestion]
+
+
+class PromptMetricConfigMessage(ConfidentBaseModel):
+    role: Literal["system", "user", "assistant"]
+    content: str
+
+
+class PromptMetricConfigVariables(ConfidentBaseModel):
+    field: Literal["input", "output", "metadata", "tools_called"]
+    path: List[Union[str, int]]
+
+
+class PromptMetricConfig(ConfidentBaseModel):
+    messages: List[PromptMetricConfigMessage]
+    variables: Dict[str, PromptMetricConfigVariables]
 
 
 class CreateMetricRequest(ConfidentBaseModel):
@@ -431,6 +449,10 @@ class CreateMetricRequest(ConfidentBaseModel):
     algorithm: Optional[MetricAlgorithm] = None
     dag: Optional[MetricDag] = None
     questions: Optional[List[JevQuestion]] = None
+    prompt_config: Optional[PromptMetricConfig] = Field(
+        default=None,
+        alias="promptConfig",
+    )
 
 
 class CreateOrUpdatePolicyRequest(ConfidentBaseModel):
@@ -558,8 +580,10 @@ class FilterSetGroupFilter(ConfidentBaseModel):
         "Annotation Text",
         "Metric Score",
         "Metric Status",
+        "Metric Version",
         "Metadata",
         "Classifier",
+        "Classifier Version",
         "Metric",
         "Metric Name",
         "Trace Count",
@@ -744,6 +768,7 @@ class Metric(ConfidentBaseModel):
     rubric: Optional[List[Rubric]]
     dag: Optional[MetricDag]
     questions: Optional[List[JevQuestion]]
+    prompt_config: Optional[PromptMetricConfig] = Field(alias="promptConfig")
     multi_turn: bool = Field(alias="multiTurn")
     required_parameters: List[MetricEvaluationParam] = Field(
         alias="requiredParameters",
@@ -799,6 +824,7 @@ class ModelCredentials(ConfidentBaseModel):
     deep_seek_api_key: Optional[str] = Field(alias="deepSeekApiKey")
     mistral_api_key: Optional[str] = Field(alias="mistralApiKey")
     perplexity_api_key: Optional[str] = Field(alias="perplexityApiKey")
+    z_ai_api_key: Optional[str] = Field(alias="zAiApiKey")
     type_safe_api_key: Optional[str] = Field(alias="typeSafeApiKey")
     fal_api_key: Optional[str] = Field(alias="falApiKey")
     bedrock_model_config: Optional[Dict[str, Any]] = Field(
@@ -939,6 +965,15 @@ class Span(ConfidentBaseModel):
     annotations: List[AnnotationSummary]
 
 
+class Tool(ConfidentBaseModel):
+    id: str
+    name: str
+    description: Optional[str]
+    mode: ToolMode
+    version: str
+    schema_: Dict[str, Any] = Field(alias="schema")
+
+
 class Trace(ConfidentBaseModel):
     uuid: str
     name: Optional[str]
@@ -950,7 +985,7 @@ class Trace(ConfidentBaseModel):
     thread_id: Optional[str] = Field(alias="threadId")
     user_id: Optional[str] = Field(alias="userId")
     customer_id: Optional[str] = Field(alias="customerId")
-    environment: Environment
+    environment: str
     tags: Optional[List[str]]
     metadata: Optional[Dict[str, Any]]
     input: Optional[str]
@@ -981,6 +1016,7 @@ class Turn(ConfidentBaseModel):
         default=None,
         alias="toolsCalled",
     )
+    metadata: Optional[Dict[str, Any]] = None
 
 
 class UpdateApiKeyRequest(ConfidentBaseModel):

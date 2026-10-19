@@ -12,7 +12,7 @@ from confident_ai.utils.prompt_cache import (
     a_pull_prompt,
     pull_prompt,
 )
-from confident_ai.common.types import PromptType
+from confident_ai.common.types import PromptType, Tool
 from confident_ai.prompts.types import (
     CreatePromptVersionResult,
     ModelSettings,
@@ -30,7 +30,7 @@ from confident_ai.prompts.types import (
     PushPromptRequest,
     PushPromptResult,
     PushTextPrompt,
-    Tool,
+    PushTool,
 )
 
 
@@ -364,7 +364,11 @@ class Prompt:
             "model_settings": self.model_settings,
             "output_type": self.output_type,
             "output_schema": self.output_schema,
-            "tools": self.tools,
+            "tools": (
+                None
+                if self.tools is None
+                else [self._push_tool(tool) for tool in self.tools]
+            ),
             "branch": branch,
         }
         chosen = [
@@ -383,6 +387,10 @@ class Prompt:
         if self.text is not None:
             return PushTextPrompt(text=self.text, **fields)
         return PushMessagesPrompt(messages=self.messages, **fields)
+
+    def _push_tool(self, tool: Tool) -> PushTool:
+        fields = tool.model_dump(mode="json", by_alias=True, exclude_none=True)
+        return PushTool(**fields)
 
     interpolate = interpolate_prompt
 

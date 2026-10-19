@@ -3,7 +3,7 @@
 // Do not edit by hand — change the route in confident-cloud
 // and regenerate.
 
-import { FilterSet } from "../common/types";
+import { FilterSet, UserReference } from "../common/types";
 
 export enum ClassifierDataModel {
   TRACE = "TRACE",
@@ -30,8 +30,6 @@ export enum SignalPolarity {
 }
 
 export interface ClassifierAutoGenerationConfig {
-  summaryPrompt: string;
-  nClusters: number;
   sampleSize?: number;
 }
 
@@ -50,6 +48,7 @@ export interface Classifier {
   description: string | null;
   enabled: boolean;
   autoClassify: boolean;
+  includeAudio: boolean;
   dataModel: ClassifierDataModel;
   filters: FilterSet;
   autoGenerationConfig: ClassifierAutoGenerationConfig | null;
@@ -98,6 +97,29 @@ export interface ClassifierRef {
   id: string;
 }
 
+export interface ClassifierVersionLabel {
+  name: string;
+  description: string;
+}
+
+export interface ClassifierVersion {
+  id: string;
+  classifierId: string;
+  sequence: number;
+  version: string;
+  description: string | null;
+  labels: ClassifierVersionLabel[];
+  createdAt: string;
+  author: UserReference | null;
+}
+
+export interface ClassifierVersionList {
+  versions: ClassifierVersion[];
+  totalClassifierVersions: number;
+  page: number;
+  pageSize: number;
+}
+
 export interface CreateClassifierLabelRequest {
   name: string;
   description: string;
@@ -113,6 +135,7 @@ export interface CreateClassifierRequest {
   description?: string | null;
   enabled?: boolean;
   autoClassify?: boolean;
+  includeAudio?: boolean;
   filters?: FilterSet | null;
   autoGenerationConfig?: ClassifierAutoGenerationConfig | null;
 }
@@ -130,6 +153,7 @@ export interface UpdateClassifierRequest {
   description?: string | null;
   enabled?: boolean;
   autoClassify?: boolean;
+  includeAudio?: boolean;
   filters?: FilterSet | null;
   autoGenerationConfig?: ClassifierAutoGenerationConfig | null;
 }

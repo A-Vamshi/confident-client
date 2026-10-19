@@ -8,13 +8,19 @@ from typing import Any, Dict, List, Optional, Union
 
 from pydantic import Field
 
-from confident_ai.common.types import (
-    Environment,
-    EvaluationErrorType,
-    ToolCall,
-    Turn,
-)
+from confident_ai.common.types import EvaluationErrorType, ToolCall, Turn
 from confident_ai.types import ConfidentBaseModel
+
+
+class ExpectationKind(Enum):
+    MUST = "MUST"
+    MUST_NOT = "MUST_NOT"
+
+
+class ExpectationVerdictStatus(Enum):
+    PASS = "pass"
+    FAIL = "fail"
+    UNABLE_TO_EVALUATE = "unable_to_evaluate"
 
 
 class TestCaseResultStatus(Enum):
@@ -59,6 +65,31 @@ class CreateTestRunRequest(ConfidentBaseModel):
     identifier: Optional[str] = None
 
 
+class ExpectationVerdict(ConfidentBaseModel):
+    kind: ExpectationKind
+    condition: str
+    status: Optional[ExpectationVerdictStatus]
+    reason: str
+    evidence: str
+
+
+class ExpectationsData(ConfidentBaseModel):
+    success: Optional[bool]
+    score: Optional[float]
+    reason: Optional[str]
+    verdicts: List[ExpectationVerdict]
+    evaluation_model: Optional[str] = Field(alias="evaluationModel")
+    evaluation_cost: Optional[float] = Field(alias="evaluationCost")
+    error: Optional[str]
+
+
+class ExpectationsScores(ConfidentBaseModel):
+    scores: List[float]
+    passes: int
+    fails: int
+    errors: int
+
+
 class MetricScores(ConfidentBaseModel):
     metric: str
     scores: List[float]
@@ -92,6 +123,7 @@ class SubmitTestCaseResultRequest(ConfidentBaseModel):
         alias="outputTokenCount",
     )
     metadata: Optional[Dict[str, Any]] = None
+    error: Optional[str] = None
 
 
 class SubmittedTestCaseResult(ConfidentBaseModel):
@@ -126,7 +158,7 @@ class TestCaseTrace(ConfidentBaseModel):
     output: Optional[str]
     start_time: str = Field(alias="startTime")
     end_time: str = Field(alias="endTime")
-    environment: Environment
+    environment: str
     metadata: Optional[Dict[str, Any]]
     tags: Optional[List[str]]
     thread_id: Optional[str] = Field(alias="threadId")
@@ -157,6 +189,9 @@ class TestRunSingleTurnTestCase(ConfidentBaseModel):
         alias="additionalMetadata",
     )
     metrics_data: List[TestCaseMetricData] = Field(alias="metricsData")
+    expectations_data: Optional[ExpectationsData] = Field(
+        alias="expectationsData",
+    )
 
 
 class TestRunMultiTurnTestCase(ConfidentBaseModel):
@@ -175,6 +210,9 @@ class TestRunMultiTurnTestCase(ConfidentBaseModel):
         alias="additionalMetadata",
     )
     metrics_data: List[TestCaseMetricData] = Field(alias="metricsData")
+    expectations_data: Optional[ExpectationsData] = Field(
+        alias="expectationsData",
+    )
 
 
 class TestRunTraceTestCase(ConfidentBaseModel):
@@ -189,6 +227,9 @@ class TestRunTraceTestCase(ConfidentBaseModel):
         alias="additionalMetadata",
     )
     metrics_data: List[TestCaseMetricData] = Field(alias="metricsData")
+    expectations_data: Optional[ExpectationsData] = Field(
+        alias="expectationsData",
+    )
 
 
 TestRunTestCase = Union[
@@ -206,6 +247,9 @@ class TestRun(ConfidentBaseModel):
     tests_failed: int = Field(alias="testsFailed")
     total_tests: int = Field(alias="totalTests")
     metrics_scores: List[MetricScores] = Field(alias="metricsScores")
+    expectations_scores: Optional[ExpectationsScores] = Field(
+        alias="expectationsScores",
+    )
     run_duration: float = Field(alias="runDuration")
     evaluation_cost: Optional[float] = Field(alias="evaluationCost")
     dataset_alias: Optional[str] = Field(alias="datasetAlias")
@@ -224,6 +268,9 @@ class TestRunSummary(ConfidentBaseModel):
     tests_failed: int = Field(alias="testsFailed")
     total_tests: int = Field(alias="totalTests")
     metrics_scores: List[MetricScores] = Field(alias="metricsScores")
+    expectations_scores: Optional[ExpectationsScores] = Field(
+        alias="expectationsScores",
+    )
     run_duration: float = Field(alias="runDuration")
     evaluation_cost: Optional[float] = Field(alias="evaluationCost")
     dataset_alias: Optional[str] = Field(alias="datasetAlias")

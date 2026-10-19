@@ -94,6 +94,8 @@ prompts:
     push:
       operation: pushPrompt
       call_params: [branch]
+      sent_as:
+        tools: PushTool
       response_mapping:
         prompt_id: promptId
         hash: hash

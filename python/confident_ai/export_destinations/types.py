@@ -24,7 +24,7 @@ class SnowflakeExportDestinationConfig(ConfidentBaseModel):
     role: str
     warehouse: str
     database: str
-    schema: str
+    schema_: str = Field(alias="schema")
     private_key: str = Field(alias="privateKey")
     private_key_passphrase: Optional[str] = Field(
         default=None,
@@ -56,7 +56,7 @@ class SnowflakeExportDestinationMaskedConfig(ConfidentBaseModel):
     role: str
     warehouse: str
     database: str
-    schema: str
+    schema_: str = Field(alias="schema")
     private_key: str = Field(alias="privateKey")
     private_key_passphrase: Optional[str] = Field(alias="privateKeyPassphrase")
 
@@ -105,7 +105,7 @@ class UpdateSnowflakeExportDestinationConfig(ConfidentBaseModel):
     role: Optional[str] = None
     warehouse: Optional[str] = None
     database: Optional[str] = None
-    schema: Optional[str] = None
+    schema_: Optional[str] = Field(default=None, alias="schema")
     private_key: Optional[str] = Field(default=None, alias="privateKey")
     private_key_passphrase: Optional[str] = Field(
         default=None,

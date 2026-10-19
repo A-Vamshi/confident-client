@@ -92,6 +92,7 @@ class AIConnectionsClient:
         retrieval_context_key_path: Optional[List[Union[str, int]]] = None,
         tools_called_key_path: Optional[List[Union[str, int]]] = None,
         state_key_path: Optional[List[Union[str, int]]] = None,
+        metadata_key_path: Optional[List[Union[str, int]]] = None,
         input_token_count_key_path: Optional[List[Union[str, int]]] = None,
         output_token_count_key_path: Optional[List[Union[str, int]]] = None,
         token_cost_key_path: Optional[List[Union[str, int]]] = None,
@@ -99,11 +100,14 @@ class AIConnectionsClient:
         retrieval_context_event: Optional[str] = None,
         tools_called_event: Optional[str] = None,
         state_event: Optional[str] = None,
+        metadata_event: Optional[str] = None,
         actual_output_accumulate: Optional[bool] = None,
+        merge_metadata: Optional[bool] = None,
         actual_output_transformer_id: Optional[str] = None,
         retrieval_context_transformer_id: Optional[str] = None,
         tools_called_transformer_id: Optional[str] = None,
         state_transformer_id: Optional[str] = None,
+        metadata_transformer_id: Optional[str] = None,
         input_token_count_transformer_id: Optional[str] = None,
         output_token_count_transformer_id: Optional[str] = None,
         token_cost_transformer_id: Optional[str] = None,
@@ -153,14 +157,18 @@ class AIConnectionsClient:
                 configurations. They are not sent to your application. Send
                 `null` to clear them.
             authentication: The authentication configuration Confident AI
-                applies when calling your application, such as Auth0, HMAC or
-                Azure AD settings. Its shape follows the scheme you configure,
-                and it is stored as sent and read back as stored. Send `null` to
-                clear it.
+                applies when calling your application. Set `authType` to
+                `AUTH0`, `HMAC`, `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS` or
+                `CUSTOM_TOKEN_REQUEST` and put that scheme's settings in the
+                matching object: `auth0Config`, `hmacConfig`, `azureAdConfig`,
+                `oauth2Config` or `customTokenRequestConfig`. A value that does
+                not match that shape is rejected. Send `null` to clear it.
             cloud_provider: The cloud vault configuration Confident AI uses to
                 pull credentials at call time instead of holding them itself.
-                Its shape follows the provider you configure, and it is stored
-                as sent and read back as stored. Send `null` to clear it.
+                Set `enabled`, `provider` to `AZURE_KEY_VAULT`, `vaultUrl` to
+                your vault, and `azureCredentials` with the `tenantId`,
+                `clientId` and `clientSecret` used to read from it. A value that
+                does not match that shape is rejected. Send `null` to clear it.
             actual_output_key_path: Where your application's answer sits in its
                 response. Each element is an object key or an array index,
                 walked in order, so `["choices", 0, "message", "content"]` reads
@@ -182,6 +190,12 @@ class AIConnectionsClient:
                 `actualOutputKeyPath`. Confident AI reads it after each
                 simulated turn and sends it back on the next one. Send `null` or
                 an empty list to clear it.
+            metadata_key_path: Where an object of metadata sits in your
+                application's response, walked the same way as
+                `actualOutputKeyPath`. Its keys are written onto the generated
+                test case's metadata, merged over the golden's own metadata
+                unless `mergeMetadata` is `false`. Send `null` or an empty list
+                to clear it.
             input_token_count_key_path: Where the prompt token count sits in
                 your application's response, walked the same way as
                 `actualOutputKeyPath`. Send `null` or an empty list to clear it.
@@ -205,10 +219,16 @@ class AIConnectionsClient:
             state_event: For a streaming `responseMode`, the name of the event
                 carrying the conversation state, read the same way as
                 `actualOutputEvent`. Send `null` to clear it.
+            metadata_event: For a streaming `responseMode`, the name of the
+                event carrying the metadata, read the same way as
+                `actualOutputEvent`. Send `null` to clear it.
             actual_output_accumulate: For a streaming `responseMode`, whether
                 the chunks arriving on `actualOutputEvent` are joined into one
                 answer. Set it to `false` when each event already carries the
                 whole answer and only the last one counts.
+            merge_metadata: Whether the extracted metadata is merged over the
+                golden's metadata, with the response winning on shared keys
+                (`true`, the default), or replaces it outright (`false`).
             actual_output_transformer_id: The id of a transformer that extracts
                 the answer by running your code over the response, for shapes a
                 key path cannot reach. Send this or `actualOutputKeyPath`, never
@@ -222,6 +242,9 @@ class AIConnectionsClient:
                 Send `null` to clear it.
             state_transformer_id: The id of a transformer that extracts the
                 conversation state. Send this or `stateKeyPath`, never both.
+                Send `null` to clear it.
+            metadata_transformer_id: The id of a transformer that extracts the
+                metadata object. Send this or `metadataKeyPath`, never both.
                 Send `null` to clear it.
             input_token_count_transformer_id: The id of a transformer that
                 extracts the prompt token count. Send this or
@@ -261,6 +284,7 @@ class AIConnectionsClient:
                 "retrievalContextKeyPath": retrieval_context_key_path,
                 "toolsCalledKeyPath": tools_called_key_path,
                 "stateKeyPath": state_key_path,
+                "metadataKeyPath": metadata_key_path,
                 "inputTokenCountKeyPath": input_token_count_key_path,
                 "outputTokenCountKeyPath": output_token_count_key_path,
                 "tokenCostKeyPath": token_cost_key_path,
@@ -268,11 +292,14 @@ class AIConnectionsClient:
                 "retrievalContextEvent": retrieval_context_event,
                 "toolsCalledEvent": tools_called_event,
                 "stateEvent": state_event,
+                "metadataEvent": metadata_event,
                 "actualOutputAccumulate": actual_output_accumulate,
+                "mergeMetadata": merge_metadata,
                 "actualOutputTransformerId": actual_output_transformer_id,
                 "retrievalContextTransformerId": retrieval_context_transformer_id,
                 "toolsCalledTransformerId": tools_called_transformer_id,
                 "stateTransformerId": state_transformer_id,
+                "metadataTransformerId": metadata_transformer_id,
                 "inputTokenCountTransformerId": input_token_count_transformer_id,
                 "outputTokenCountTransformerId": output_token_count_transformer_id,
                 "tokenCostTransformerId": token_cost_transformer_id,
@@ -302,6 +329,7 @@ class AIConnectionsClient:
         retrieval_context_key_path: Optional[List[Union[str, int]]] = None,
         tools_called_key_path: Optional[List[Union[str, int]]] = None,
         state_key_path: Optional[List[Union[str, int]]] = None,
+        metadata_key_path: Optional[List[Union[str, int]]] = None,
         input_token_count_key_path: Optional[List[Union[str, int]]] = None,
         output_token_count_key_path: Optional[List[Union[str, int]]] = None,
         token_cost_key_path: Optional[List[Union[str, int]]] = None,
@@ -309,11 +337,14 @@ class AIConnectionsClient:
         retrieval_context_event: Optional[str] = None,
         tools_called_event: Optional[str] = None,
         state_event: Optional[str] = None,
+        metadata_event: Optional[str] = None,
         actual_output_accumulate: Optional[bool] = None,
+        merge_metadata: Optional[bool] = None,
         actual_output_transformer_id: Optional[str] = None,
         retrieval_context_transformer_id: Optional[str] = None,
         tools_called_transformer_id: Optional[str] = None,
         state_transformer_id: Optional[str] = None,
+        metadata_transformer_id: Optional[str] = None,
         input_token_count_transformer_id: Optional[str] = None,
         output_token_count_transformer_id: Optional[str] = None,
         token_cost_transformer_id: Optional[str] = None,
@@ -363,14 +394,18 @@ class AIConnectionsClient:
                 configurations. They are not sent to your application. Send
                 `null` to clear them.
             authentication: The authentication configuration Confident AI
-                applies when calling your application, such as Auth0, HMAC or
-                Azure AD settings. Its shape follows the scheme you configure,
-                and it is stored as sent and read back as stored. Send `null` to
-                clear it.
+                applies when calling your application. Set `authType` to
+                `AUTH0`, `HMAC`, `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS` or
+                `CUSTOM_TOKEN_REQUEST` and put that scheme's settings in the
+                matching object: `auth0Config`, `hmacConfig`, `azureAdConfig`,
+                `oauth2Config` or `customTokenRequestConfig`. A value that does
+                not match that shape is rejected. Send `null` to clear it.
             cloud_provider: The cloud vault configuration Confident AI uses to
                 pull credentials at call time instead of holding them itself.
-                Its shape follows the provider you configure, and it is stored
-                as sent and read back as stored. Send `null` to clear it.
+                Set `enabled`, `provider` to `AZURE_KEY_VAULT`, `vaultUrl` to
+                your vault, and `azureCredentials` with the `tenantId`,
+                `clientId` and `clientSecret` used to read from it. A value that
+                does not match that shape is rejected. Send `null` to clear it.
             actual_output_key_path: Where your application's answer sits in its
                 response. Each element is an object key or an array index,
                 walked in order, so `["choices", 0, "message", "content"]` reads
@@ -392,6 +427,12 @@ class AIConnectionsClient:
                 `actualOutputKeyPath`. Confident AI reads it after each
                 simulated turn and sends it back on the next one. Send `null` or
                 an empty list to clear it.
+            metadata_key_path: Where an object of metadata sits in your
+                application's response, walked the same way as
+                `actualOutputKeyPath`. Its keys are written onto the generated
+                test case's metadata, merged over the golden's own metadata
+                unless `mergeMetadata` is `false`. Send `null` or an empty list
+                to clear it.
             input_token_count_key_path: Where the prompt token count sits in
                 your application's response, walked the same way as
                 `actualOutputKeyPath`. Send `null` or an empty list to clear it.
@@ -415,10 +456,16 @@ class AIConnectionsClient:
             state_event: For a streaming `responseMode`, the name of the event
                 carrying the conversation state, read the same way as
                 `actualOutputEvent`. Send `null` to clear it.
+            metadata_event: For a streaming `responseMode`, the name of the
+                event carrying the metadata, read the same way as
+                `actualOutputEvent`. Send `null` to clear it.
             actual_output_accumulate: For a streaming `responseMode`, whether
                 the chunks arriving on `actualOutputEvent` are joined into one
                 answer. Set it to `false` when each event already carries the
                 whole answer and only the last one counts.
+            merge_metadata: Whether the extracted metadata is merged over the
+                golden's metadata, with the response winning on shared keys
+                (`true`, the default), or replaces it outright (`false`).
             actual_output_transformer_id: The id of a transformer that extracts
                 the answer by running your code over the response, for shapes a
                 key path cannot reach. Send this or `actualOutputKeyPath`, never
@@ -432,6 +479,9 @@ class AIConnectionsClient:
                 Send `null` to clear it.
             state_transformer_id: The id of a transformer that extracts the
                 conversation state. Send this or `stateKeyPath`, never both.
+                Send `null` to clear it.
+            metadata_transformer_id: The id of a transformer that extracts the
+                metadata object. Send this or `metadataKeyPath`, never both.
                 Send `null` to clear it.
             input_token_count_transformer_id: The id of a transformer that
                 extracts the prompt token count. Send this or
@@ -471,6 +521,7 @@ class AIConnectionsClient:
                 "retrievalContextKeyPath": retrieval_context_key_path,
                 "toolsCalledKeyPath": tools_called_key_path,
                 "stateKeyPath": state_key_path,
+                "metadataKeyPath": metadata_key_path,
                 "inputTokenCountKeyPath": input_token_count_key_path,
                 "outputTokenCountKeyPath": output_token_count_key_path,
                 "tokenCostKeyPath": token_cost_key_path,
@@ -478,11 +529,14 @@ class AIConnectionsClient:
                 "retrievalContextEvent": retrieval_context_event,
                 "toolsCalledEvent": tools_called_event,
                 "stateEvent": state_event,
+                "metadataEvent": metadata_event,
                 "actualOutputAccumulate": actual_output_accumulate,
+                "mergeMetadata": merge_metadata,
                 "actualOutputTransformerId": actual_output_transformer_id,
                 "retrievalContextTransformerId": retrieval_context_transformer_id,
                 "toolsCalledTransformerId": tools_called_transformer_id,
                 "stateTransformerId": state_transformer_id,
+                "metadataTransformerId": metadata_transformer_id,
                 "inputTokenCountTransformerId": input_token_count_transformer_id,
                 "outputTokenCountTransformerId": output_token_count_transformer_id,
                 "tokenCostTransformerId": token_cost_transformer_id,
@@ -549,6 +603,7 @@ class AIConnectionsClient:
         retrieval_context_key_path: Optional[List[Union[str, int]]] = None,
         tools_called_key_path: Optional[List[Union[str, int]]] = None,
         state_key_path: Optional[List[Union[str, int]]] = None,
+        metadata_key_path: Optional[List[Union[str, int]]] = None,
         input_token_count_key_path: Optional[List[Union[str, int]]] = None,
         output_token_count_key_path: Optional[List[Union[str, int]]] = None,
         token_cost_key_path: Optional[List[Union[str, int]]] = None,
@@ -556,11 +611,14 @@ class AIConnectionsClient:
         retrieval_context_event: Optional[str] = None,
         tools_called_event: Optional[str] = None,
         state_event: Optional[str] = None,
+        metadata_event: Optional[str] = None,
         actual_output_accumulate: Optional[bool] = None,
+        merge_metadata: Optional[bool] = None,
         actual_output_transformer_id: Optional[str] = None,
         retrieval_context_transformer_id: Optional[str] = None,
         tools_called_transformer_id: Optional[str] = None,
         state_transformer_id: Optional[str] = None,
+        metadata_transformer_id: Optional[str] = None,
         input_token_count_transformer_id: Optional[str] = None,
         output_token_count_transformer_id: Optional[str] = None,
         token_cost_transformer_id: Optional[str] = None,
@@ -612,14 +670,18 @@ class AIConnectionsClient:
                 configurations. They are not sent to your application. Send
                 `null` to clear them.
             authentication: The authentication configuration Confident AI
-                applies when calling your application, such as Auth0, HMAC or
-                Azure AD settings. Its shape follows the scheme you configure,
-                and it is stored as sent and read back as stored. Send `null` to
-                clear it.
+                applies when calling your application. Set `authType` to
+                `AUTH0`, `HMAC`, `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS` or
+                `CUSTOM_TOKEN_REQUEST` and put that scheme's settings in the
+                matching object: `auth0Config`, `hmacConfig`, `azureAdConfig`,
+                `oauth2Config` or `customTokenRequestConfig`. A value that does
+                not match that shape is rejected. Send `null` to clear it.
             cloud_provider: The cloud vault configuration Confident AI uses to
                 pull credentials at call time instead of holding them itself.
-                Its shape follows the provider you configure, and it is stored
-                as sent and read back as stored. Send `null` to clear it.
+                Set `enabled`, `provider` to `AZURE_KEY_VAULT`, `vaultUrl` to
+                your vault, and `azureCredentials` with the `tenantId`,
+                `clientId` and `clientSecret` used to read from it. A value that
+                does not match that shape is rejected. Send `null` to clear it.
             actual_output_key_path: Where your application's answer sits in its
                 response. Each element is an object key or an array index,
                 walked in order, so `["choices", 0, "message", "content"]` reads
@@ -641,6 +703,12 @@ class AIConnectionsClient:
                 `actualOutputKeyPath`. Confident AI reads it after each
                 simulated turn and sends it back on the next one. Send `null` or
                 an empty list to clear it.
+            metadata_key_path: Where an object of metadata sits in your
+                application's response, walked the same way as
+                `actualOutputKeyPath`. Its keys are written onto the generated
+                test case's metadata, merged over the golden's own metadata
+                unless `mergeMetadata` is `false`. Send `null` or an empty list
+                to clear it.
             input_token_count_key_path: Where the prompt token count sits in
                 your application's response, walked the same way as
                 `actualOutputKeyPath`. Send `null` or an empty list to clear it.
@@ -664,10 +732,16 @@ class AIConnectionsClient:
             state_event: For a streaming `responseMode`, the name of the event
                 carrying the conversation state, read the same way as
                 `actualOutputEvent`. Send `null` to clear it.
+            metadata_event: For a streaming `responseMode`, the name of the
+                event carrying the metadata, read the same way as
+                `actualOutputEvent`. Send `null` to clear it.
             actual_output_accumulate: For a streaming `responseMode`, whether
                 the chunks arriving on `actualOutputEvent` are joined into one
                 answer. Set it to `false` when each event already carries the
                 whole answer and only the last one counts.
+            merge_metadata: Whether the extracted metadata is merged over the
+                golden's metadata, with the response winning on shared keys
+                (`true`, the default), or replaces it outright (`false`).
             actual_output_transformer_id: The id of a transformer that extracts
                 the answer by running your code over the response, for shapes a
                 key path cannot reach. Send this or `actualOutputKeyPath`, never
@@ -681,6 +755,9 @@ class AIConnectionsClient:
                 Send `null` to clear it.
             state_transformer_id: The id of a transformer that extracts the
                 conversation state. Send this or `stateKeyPath`, never both.
+                Send `null` to clear it.
+            metadata_transformer_id: The id of a transformer that extracts the
+                metadata object. Send this or `metadataKeyPath`, never both.
                 Send `null` to clear it.
             input_token_count_transformer_id: The id of a transformer that
                 extracts the prompt token count. Send this or
@@ -720,6 +797,7 @@ class AIConnectionsClient:
                 "retrievalContextKeyPath": retrieval_context_key_path,
                 "toolsCalledKeyPath": tools_called_key_path,
                 "stateKeyPath": state_key_path,
+                "metadataKeyPath": metadata_key_path,
                 "inputTokenCountKeyPath": input_token_count_key_path,
                 "outputTokenCountKeyPath": output_token_count_key_path,
                 "tokenCostKeyPath": token_cost_key_path,
@@ -727,11 +805,14 @@ class AIConnectionsClient:
                 "retrievalContextEvent": retrieval_context_event,
                 "toolsCalledEvent": tools_called_event,
                 "stateEvent": state_event,
+                "metadataEvent": metadata_event,
                 "actualOutputAccumulate": actual_output_accumulate,
+                "mergeMetadata": merge_metadata,
                 "actualOutputTransformerId": actual_output_transformer_id,
                 "retrievalContextTransformerId": retrieval_context_transformer_id,
                 "toolsCalledTransformerId": tools_called_transformer_id,
                 "stateTransformerId": state_transformer_id,
+                "metadataTransformerId": metadata_transformer_id,
                 "inputTokenCountTransformerId": input_token_count_transformer_id,
                 "outputTokenCountTransformerId": output_token_count_transformer_id,
                 "tokenCostTransformerId": token_cost_transformer_id,
@@ -763,6 +844,7 @@ class AIConnectionsClient:
         retrieval_context_key_path: Optional[List[Union[str, int]]] = None,
         tools_called_key_path: Optional[List[Union[str, int]]] = None,
         state_key_path: Optional[List[Union[str, int]]] = None,
+        metadata_key_path: Optional[List[Union[str, int]]] = None,
         input_token_count_key_path: Optional[List[Union[str, int]]] = None,
         output_token_count_key_path: Optional[List[Union[str, int]]] = None,
         token_cost_key_path: Optional[List[Union[str, int]]] = None,
@@ -770,11 +852,14 @@ class AIConnectionsClient:
         retrieval_context_event: Optional[str] = None,
         tools_called_event: Optional[str] = None,
         state_event: Optional[str] = None,
+        metadata_event: Optional[str] = None,
         actual_output_accumulate: Optional[bool] = None,
+        merge_metadata: Optional[bool] = None,
         actual_output_transformer_id: Optional[str] = None,
         retrieval_context_transformer_id: Optional[str] = None,
         tools_called_transformer_id: Optional[str] = None,
         state_transformer_id: Optional[str] = None,
+        metadata_transformer_id: Optional[str] = None,
         input_token_count_transformer_id: Optional[str] = None,
         output_token_count_transformer_id: Optional[str] = None,
         token_cost_transformer_id: Optional[str] = None,
@@ -826,14 +911,18 @@ class AIConnectionsClient:
                 configurations. They are not sent to your application. Send
                 `null` to clear them.
             authentication: The authentication configuration Confident AI
-                applies when calling your application, such as Auth0, HMAC or
-                Azure AD settings. Its shape follows the scheme you configure,
-                and it is stored as sent and read back as stored. Send `null` to
-                clear it.
+                applies when calling your application. Set `authType` to
+                `AUTH0`, `HMAC`, `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS` or
+                `CUSTOM_TOKEN_REQUEST` and put that scheme's settings in the
+                matching object: `auth0Config`, `hmacConfig`, `azureAdConfig`,
+                `oauth2Config` or `customTokenRequestConfig`. A value that does
+                not match that shape is rejected. Send `null` to clear it.
             cloud_provider: The cloud vault configuration Confident AI uses to
                 pull credentials at call time instead of holding them itself.
-                Its shape follows the provider you configure, and it is stored
-                as sent and read back as stored. Send `null` to clear it.
+                Set `enabled`, `provider` to `AZURE_KEY_VAULT`, `vaultUrl` to
+                your vault, and `azureCredentials` with the `tenantId`,
+                `clientId` and `clientSecret` used to read from it. A value that
+                does not match that shape is rejected. Send `null` to clear it.
             actual_output_key_path: Where your application's answer sits in its
                 response. Each element is an object key or an array index,
                 walked in order, so `["choices", 0, "message", "content"]` reads
@@ -855,6 +944,12 @@ class AIConnectionsClient:
                 `actualOutputKeyPath`. Confident AI reads it after each
                 simulated turn and sends it back on the next one. Send `null` or
                 an empty list to clear it.
+            metadata_key_path: Where an object of metadata sits in your
+                application's response, walked the same way as
+                `actualOutputKeyPath`. Its keys are written onto the generated
+                test case's metadata, merged over the golden's own metadata
+                unless `mergeMetadata` is `false`. Send `null` or an empty list
+                to clear it.
             input_token_count_key_path: Where the prompt token count sits in
                 your application's response, walked the same way as
                 `actualOutputKeyPath`. Send `null` or an empty list to clear it.
@@ -878,10 +973,16 @@ class AIConnectionsClient:
             state_event: For a streaming `responseMode`, the name of the event
                 carrying the conversation state, read the same way as
                 `actualOutputEvent`. Send `null` to clear it.
+            metadata_event: For a streaming `responseMode`, the name of the
+                event carrying the metadata, read the same way as
+                `actualOutputEvent`. Send `null` to clear it.
             actual_output_accumulate: For a streaming `responseMode`, whether
                 the chunks arriving on `actualOutputEvent` are joined into one
                 answer. Set it to `false` when each event already carries the
                 whole answer and only the last one counts.
+            merge_metadata: Whether the extracted metadata is merged over the
+                golden's metadata, with the response winning on shared keys
+                (`true`, the default), or replaces it outright (`false`).
             actual_output_transformer_id: The id of a transformer that extracts
                 the answer by running your code over the response, for shapes a
                 key path cannot reach. Send this or `actualOutputKeyPath`, never
@@ -895,6 +996,9 @@ class AIConnectionsClient:
                 Send `null` to clear it.
             state_transformer_id: The id of a transformer that extracts the
                 conversation state. Send this or `stateKeyPath`, never both.
+                Send `null` to clear it.
+            metadata_transformer_id: The id of a transformer that extracts the
+                metadata object. Send this or `metadataKeyPath`, never both.
                 Send `null` to clear it.
             input_token_count_transformer_id: The id of a transformer that
                 extracts the prompt token count. Send this or
@@ -934,6 +1038,7 @@ class AIConnectionsClient:
                 "retrievalContextKeyPath": retrieval_context_key_path,
                 "toolsCalledKeyPath": tools_called_key_path,
                 "stateKeyPath": state_key_path,
+                "metadataKeyPath": metadata_key_path,
                 "inputTokenCountKeyPath": input_token_count_key_path,
                 "outputTokenCountKeyPath": output_token_count_key_path,
                 "tokenCostKeyPath": token_cost_key_path,
@@ -941,11 +1046,14 @@ class AIConnectionsClient:
                 "retrievalContextEvent": retrieval_context_event,
                 "toolsCalledEvent": tools_called_event,
                 "stateEvent": state_event,
+                "metadataEvent": metadata_event,
                 "actualOutputAccumulate": actual_output_accumulate,
+                "mergeMetadata": merge_metadata,
                 "actualOutputTransformerId": actual_output_transformer_id,
                 "retrievalContextTransformerId": retrieval_context_transformer_id,
                 "toolsCalledTransformerId": tools_called_transformer_id,
                 "stateTransformerId": state_transformer_id,
+                "metadataTransformerId": metadata_transformer_id,
                 "inputTokenCountTransformerId": input_token_count_transformer_id,
                 "outputTokenCountTransformerId": output_token_count_transformer_id,
                 "tokenCostTransformerId": token_cost_transformer_id,

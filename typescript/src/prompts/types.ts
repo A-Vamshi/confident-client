@@ -3,7 +3,7 @@
 // Do not edit by hand — change the route in confident-cloud
 // and regenerate.
 
-import { ModelProvider, PromptType } from "../common/types";
+import { ModelProvider, PromptType, Tool, ToolMode } from "../common/types";
 
 export enum PromptInterpolationType {
   MUSTACHE = "MUSTACHE",
@@ -36,12 +36,6 @@ export enum SchemaDataType {
   NULL = "NULL",
 }
 
-export enum ToolMode {
-  ALLOW_ADDITIONAL = "ALLOW_ADDITIONAL",
-  NO_ADDITIONAL = "NO_ADDITIONAL",
-  STRICT = "STRICT",
-}
-
 export enum Verbosity {
   LOW = "LOW",
   MEDIUM = "MEDIUM",
@@ -61,9 +55,22 @@ export interface CreatePromptVersionResult {
   hash: string;
 }
 
+export interface PromptMessageToolCallFunction {
+  name: string;
+  arguments: string;
+}
+
+export interface PromptMessageToolCall {
+  id: string;
+  type: "function";
+  function: PromptMessageToolCallFunction;
+}
+
 export interface PromptMessage {
   role: string;
   content: string;
+  tool_calls?: PromptMessageToolCall[];
+  tool_call_id?: string;
 }
 
 export interface ModelSettings {
@@ -91,29 +98,6 @@ export interface OutputSchemaField {
 export interface OutputSchema {
   name: string;
   fields: OutputSchemaField[];
-}
-
-export interface StructuredSchemaField {
-  id: string;
-  name?: string | null;
-  description?: string | null;
-  type: SchemaDataType;
-  required?: boolean;
-  parentId?: string | null;
-}
-
-export interface StructuredSchema {
-  id?: string;
-  name?: string | null;
-  fields: StructuredSchemaField[];
-}
-
-export interface Tool {
-  id?: string;
-  name: string;
-  description?: string | null;
-  mode: ToolMode;
-  structuredSchema: StructuredSchema;
 }
 
 export interface MessagesPrompt {
@@ -174,6 +158,15 @@ export interface PromptVersionList {
   type: PromptType;
 }
 
+export interface PushTool {
+  id?: string;
+  version?: string;
+  name?: string;
+  description?: string | null;
+  mode?: ToolMode;
+  schema?: Record<string, unknown>;
+}
+
 export interface PushMessagesPrompt {
   messages: PromptMessage[];
   alias: string;
@@ -181,7 +174,7 @@ export interface PushMessagesPrompt {
   modelSettings?: ModelSettings;
   outputType?: PromptOutputType;
   outputSchema?: OutputSchema;
-  tools?: Tool[];
+  tools?: PushTool[];
   branch?: string;
 }
 
@@ -197,7 +190,7 @@ export interface PushTextPrompt {
   modelSettings?: ModelSettings;
   outputType?: PromptOutputType;
   outputSchema?: OutputSchema;
-  tools?: Tool[];
+  tools?: PushTool[];
   branch?: string;
 }
 

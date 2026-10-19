@@ -33,7 +33,7 @@ export class AnnotationQueuesOperations {
     options: {
       page?: number;
       pageSize?: number;
-      type?: AnnotationQueueType;
+      type?: "TRACE" | "SPAN" | "THREAD" | "GOLDEN" | "TEST_CASE";
       searchTerm?: string;
     } = {},
   ): Promise<AnnotationQueueList> {

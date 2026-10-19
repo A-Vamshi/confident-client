@@ -3,7 +3,7 @@
 # Do not edit by hand — change the route in confident-cloud
 # and regenerate.
 
-from typing import List, Optional
+from typing import List, Literal, Optional
 
 from confident_ai.annotation_queues.types import (
     AnnotationQueue,
@@ -28,7 +28,9 @@ class AnnotationQueuesOperations:
         *,
         page: Optional[int] = None,
         page_size: Optional[int] = None,
-        type: Optional[AnnotationQueueType] = None,
+        type: Optional[
+            Literal["TRACE", "SPAN", "THREAD", "GOLDEN", "TEST_CASE"]
+        ] = None,
         search_term: Optional[str] = None
     ) -> AnnotationQueueList:
         """List Annotation Queues
@@ -61,7 +63,9 @@ class AnnotationQueuesOperations:
         *,
         page: Optional[int] = None,
         page_size: Optional[int] = None,
-        type: Optional[AnnotationQueueType] = None,
+        type: Optional[
+            Literal["TRACE", "SPAN", "THREAD", "GOLDEN", "TEST_CASE"]
+        ] = None,
         search_term: Optional[str] = None
     ) -> AnnotationQueueList:
         """List Annotation Queues

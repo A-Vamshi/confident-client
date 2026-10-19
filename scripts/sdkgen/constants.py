@@ -197,6 +197,7 @@ PYDANTIC_RESERVED = {
     "model_computed_fields",
     "model_extra",
     "model_fields_set",
+    "schema",
 }
 
 TS_IDENTIFIER = re.compile(r"^[A-Za-z_$][A-Za-z0-9_$]*$")

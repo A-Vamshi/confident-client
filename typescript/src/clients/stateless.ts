@@ -34,8 +34,10 @@ import { ScheduledAlertsClient } from "../scheduled-alerts/client";
 import { SpansClient } from "../spans/client";
 import { TestRunsClient } from "../test-runs/client";
 import { ThreadsClient } from "../threads/client";
+import { ToolsClient } from "../tools/client";
 import { TracesClient } from "../traces/client";
 import { TransformersClient } from "../transformers/client";
+import { VoiceConnectionsClient } from "../voice-connections/client";
 import { VulnerabilitiesClient } from "../vulnerabilities/client";
 import { WidgetsClient } from "../widgets/client";
 
@@ -162,12 +164,20 @@ export abstract class StatelessClients {
     return new ThreadsClient(this.api(ApiKeyKind.PROJECT));
   }
 
+  get tools(): ToolsClient {
+    return new ToolsClient(this.api(ApiKeyKind.PROJECT));
+  }
+
   get traces(): TracesClient {
     return new TracesClient(this.api(ApiKeyKind.PROJECT));
   }
 
   get transformers(): TransformersClient {
     return new TransformersClient(this.api(ApiKeyKind.PROJECT));
+  }
+
+  get voiceConnections(): VoiceConnectionsClient {
+    return new VoiceConnectionsClient(this.api(ApiKeyKind.PROJECT));
   }
 
   get vulnerabilities(): VulnerabilitiesClient {

@@ -14,10 +14,11 @@ from confident_ai.common.types import (
     MetricDag,
     MetricEvaluationParam,
     MetricList,
+    PromptMetricConfig,
     Rubric,
 )
 from confident_ai.endpoints import Endpoints
-from confident_ai.metrics.types import UpdateMetricRequest
+from confident_ai.metrics.types import MetricVersionList, UpdateMetricRequest
 
 
 class MetricsClient:
@@ -57,7 +58,8 @@ class MetricsClient:
         rubric: Optional[List[Rubric]] = None,
         algorithm: Optional[MetricAlgorithm] = None,
         dag: Optional[MetricDag] = None,
-        questions: Optional[List[JevQuestion]] = None
+        questions: Optional[List[JevQuestion]] = None,
+        prompt_config: Optional[PromptMetricConfig] = None
     ) -> Metric:
         """Create Metric
 
@@ -96,6 +98,7 @@ class MetricsClient:
                 "algorithm": algorithm,
                 "dag": dag,
                 "questions": questions,
+                "promptConfig": prompt_config,
             },
         )
 
@@ -110,7 +113,8 @@ class MetricsClient:
         rubric: Optional[List[Rubric]] = None,
         algorithm: Optional[MetricAlgorithm] = None,
         dag: Optional[MetricDag] = None,
-        questions: Optional[List[JevQuestion]] = None
+        questions: Optional[List[JevQuestion]] = None,
+        prompt_config: Optional[PromptMetricConfig] = None
     ) -> Metric:
         """Create Metric
 
@@ -149,6 +153,7 @@ class MetricsClient:
                 "algorithm": algorithm,
                 "dag": dag,
                 "questions": questions,
+                "promptConfig": prompt_config,
             },
         )
 
@@ -194,13 +199,15 @@ class MetricsClient:
         evaluation_steps: Optional[List[str]] = None,
         evaluation_params: Optional[List[MetricEvaluationParam]] = None,
         rubric: Optional[List[Rubric]] = None,
-        questions: Optional[List[JevQuestion]] = None
+        questions: Optional[List[JevQuestion]] = None,
+        prompt_config: Optional[PromptMetricConfig] = None
     ) -> Metric:
         """Update Metric
 
         Updates a custom metric and returns it. Only the fields you send are
         changed; send `null` to clear `criteria` or `evaluationSteps`, as long
-        as one of them remains. Every update creates a new metric version.
+        as one of them remains. An update that changes the definition creates a
+        new metric version; one that changes nothing creates none.
 
         Args:
             metric_id: The unique id of the metric.
@@ -225,6 +232,7 @@ class MetricsClient:
                 "evaluationParams": evaluation_params,
                 "rubric": rubric,
                 "questions": questions,
+                "promptConfig": prompt_config,
             },
             path={"metricId": metric_id},
         )
@@ -237,13 +245,15 @@ class MetricsClient:
         evaluation_steps: Optional[List[str]] = None,
         evaluation_params: Optional[List[MetricEvaluationParam]] = None,
         rubric: Optional[List[Rubric]] = None,
-        questions: Optional[List[JevQuestion]] = None
+        questions: Optional[List[JevQuestion]] = None,
+        prompt_config: Optional[PromptMetricConfig] = None
     ) -> Metric:
         """Update Metric
 
         Updates a custom metric and returns it. Only the fields you send are
         changed; send `null` to clear `criteria` or `evaluationSteps`, as long
-        as one of them remains. Every update creates a new metric version.
+        as one of them remains. An update that changes the definition creates a
+        new metric version; one that changes nothing creates none.
 
         Args:
             metric_id: The unique id of the metric.
@@ -268,6 +278,63 @@ class MetricsClient:
                 "evaluationParams": evaluation_params,
                 "rubric": rubric,
                 "questions": questions,
+                "promptConfig": prompt_config,
             },
             path={"metricId": metric_id},
+        )
+
+    def list_versions(
+        self,
+        metric_id: str,
+        *,
+        page: Optional[int] = None,
+        page_size: Optional[int] = None
+    ) -> MetricVersionList:
+        """List Metric Versions
+
+        Lists a custom metric's definition history, newest first, so the first
+        entry is the definition new evaluations run. Versions are append-only:
+        updating a metric with a changed definition adds one, and an update that
+        changes nothing adds none.
+
+        Args:
+            metric_id: The unique id of the metric.
+            page: The page to return. Defaults to 1.
+            page_size: The number of versions per page, at most 100. Defaults to
+                25.
+        """
+        return self._api.request(
+            HttpMethods.GET,
+            Endpoints.METRIC_VERSIONS_ENDPOINT,
+            response_schema=MetricVersionList,
+            path={"metricId": metric_id},
+            query={"page": page, "pageSize": page_size},
+        )
+
+    async def a_list_versions(
+        self,
+        metric_id: str,
+        *,
+        page: Optional[int] = None,
+        page_size: Optional[int] = None
+    ) -> MetricVersionList:
+        """List Metric Versions
+
+        Lists a custom metric's definition history, newest first, so the first
+        entry is the definition new evaluations run. Versions are append-only:
+        updating a metric with a changed definition adds one, and an update that
+        changes nothing adds none.
+
+        Args:
+            metric_id: The unique id of the metric.
+            page: The page to return. Defaults to 1.
+            page_size: The number of versions per page, at most 100. Defaults to
+                25.
+        """
+        return await self._api.a_request(
+            HttpMethods.GET,
+            Endpoints.METRIC_VERSIONS_ENDPOINT,
+            response_schema=MetricVersionList,
+            path={"metricId": metric_id},
+            query={"page": page, "pageSize": page_size},
         )

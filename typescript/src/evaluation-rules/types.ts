@@ -35,7 +35,7 @@ export interface EvaluationRule {
   filters: FilterSet | null;
   threadTimelimit: number | null;
   overwriteEvals: boolean;
-  metricCollectionId: string;
+  metricCollectionId: string | null;
   createdAt: string;
   updatedAt: string;
 }

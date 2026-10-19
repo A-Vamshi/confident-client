@@ -3,12 +3,18 @@
 // Do not edit by hand — change the route in confident-cloud
 // and regenerate.
 
-import {
-  Environment,
-  EvaluationErrorType,
-  ToolCall,
-  Turn,
-} from "../common/types";
+import { EvaluationErrorType, ToolCall, Turn } from "../common/types";
+
+export enum ExpectationKind {
+  MUST = "MUST",
+  MUST_NOT = "MUST_NOT",
+}
+
+export enum ExpectationVerdictStatus {
+  PASS = "pass",
+  FAIL = "fail",
+  UNABLE_TO_EVALUATE = "unable_to_evaluate",
+}
 
 export enum TestCaseResultStatus {
   ACCEPTED = "accepted",
@@ -49,6 +55,31 @@ export interface CreateTestRunRequest {
   identifier?: string;
 }
 
+export interface ExpectationVerdict {
+  kind: ExpectationKind;
+  condition: string;
+  status: ExpectationVerdictStatus | null;
+  reason: string;
+  evidence: string;
+}
+
+export interface ExpectationsData {
+  success: boolean | null;
+  score: number | null;
+  reason: string | null;
+  verdicts: ExpectationVerdict[];
+  evaluationModel: string | null;
+  evaluationCost: number | null;
+  error: string | null;
+}
+
+export interface ExpectationsScores {
+  scores: number[];
+  passes: number;
+  fails: number;
+  errors: number;
+}
+
 export interface MetricScores {
   metric: string;
   scores: number[];
@@ -67,6 +98,7 @@ export interface SubmitTestCaseResultRequest {
   inputTokenCount?: number;
   outputTokenCount?: number;
   metadata?: Record<string, unknown>;
+  error?: string;
 }
 
 export interface SubmittedTestCaseResult {
@@ -101,7 +133,7 @@ export interface TestCaseTrace {
   output: string | null;
   startTime: string;
   endTime: string;
-  environment: Environment;
+  environment: string;
   metadata: Record<string, unknown> | null;
   tags: string[] | null;
   threadId: string | null;
@@ -130,6 +162,7 @@ export interface TestRunSingleTurnTestCase {
   comments: string | null;
   additionalMetadata: Record<string, unknown> | null;
   metricsData: TestCaseMetricData[];
+  expectationsData: ExpectationsData | null;
 }
 
 export interface TestRunMultiTurnTestCase {
@@ -146,6 +179,7 @@ export interface TestRunMultiTurnTestCase {
   comments: string | null;
   additionalMetadata: Record<string, unknown> | null;
   metricsData: TestCaseMetricData[];
+  expectationsData: ExpectationsData | null;
 }
 
 export interface TestRunTraceTestCase {
@@ -158,6 +192,7 @@ export interface TestRunTraceTestCase {
   comments: string | null;
   additionalMetadata: Record<string, unknown> | null;
   metricsData: TestCaseMetricData[];
+  expectationsData: ExpectationsData | null;
 }
 
 export type TestRunTestCase =
@@ -173,6 +208,7 @@ export interface TestRun {
   testsFailed: number;
   totalTests: number;
   metricsScores: MetricScores[];
+  expectationsScores: ExpectationsScores | null;
   runDuration: number;
   evaluationCost: number | null;
   datasetAlias: string | null;
@@ -191,6 +227,7 @@ export interface TestRunSummary {
   testsFailed: number;
   totalTests: number;
   metricsScores: MetricScores[];
+  expectationsScores: ExpectationsScores | null;
   runDuration: number;
   evaluationCost: number | null;
   datasetAlias: string | null;

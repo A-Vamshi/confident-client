@@ -8,7 +8,7 @@ from typing import List, Optional
 
 from pydantic import Field
 
-from confident_ai.common.types import FilterSet
+from confident_ai.common.types import FilterSet, UserReference
 from confident_ai.types import ConfidentBaseModel
 
 
@@ -37,8 +37,6 @@ class SignalPolarity(Enum):
 
 
 class ClassifierAutoGenerationConfig(ConfidentBaseModel):
-    summary_prompt: str = Field(alias="summaryPrompt")
-    n_clusters: int = Field(alias="nClusters")
     sample_size: Optional[int] = Field(default=None, alias="sampleSize")
 
 
@@ -57,6 +55,7 @@ class Classifier(ConfidentBaseModel):
     description: Optional[str]
     enabled: bool
     auto_classify: bool = Field(alias="autoClassify")
+    include_audio: bool = Field(alias="includeAudio")
     data_model: ClassifierDataModel = Field(alias="dataModel")
     filters: FilterSet
     auto_generation_config: Optional[ClassifierAutoGenerationConfig] = Field(
@@ -107,6 +106,29 @@ class ClassifierRef(ConfidentBaseModel):
     id: str
 
 
+class ClassifierVersionLabel(ConfidentBaseModel):
+    name: str
+    description: str
+
+
+class ClassifierVersion(ConfidentBaseModel):
+    id: str
+    classifier_id: str = Field(alias="classifierId")
+    sequence: int
+    version: str
+    description: Optional[str]
+    labels: List[ClassifierVersionLabel]
+    created_at: str = Field(alias="createdAt")
+    author: Optional[UserReference]
+
+
+class ClassifierVersionList(ConfidentBaseModel):
+    versions: List[ClassifierVersion]
+    total_classifier_versions: int = Field(alias="totalClassifierVersions")
+    page: int
+    page_size: int = Field(alias="pageSize")
+
+
 class CreateClassifierLabelRequest(ConfidentBaseModel):
     name: str
     description: str
@@ -122,6 +144,7 @@ class CreateClassifierRequest(ConfidentBaseModel):
     description: Optional[str] = None
     enabled: Optional[bool] = None
     auto_classify: Optional[bool] = Field(default=None, alias="autoClassify")
+    include_audio: Optional[bool] = Field(default=None, alias="includeAudio")
     filters: Optional[FilterSet] = None
     auto_generation_config: Optional[ClassifierAutoGenerationConfig] = Field(
         default=None,
@@ -142,6 +165,7 @@ class UpdateClassifierRequest(ConfidentBaseModel):
     description: Optional[str] = None
     enabled: Optional[bool] = None
     auto_classify: Optional[bool] = Field(default=None, alias="autoClassify")
+    include_audio: Optional[bool] = Field(default=None, alias="includeAudio")
     filters: Optional[FilterSet] = None
     auto_generation_config: Optional[ClassifierAutoGenerationConfig] = Field(
         default=None,

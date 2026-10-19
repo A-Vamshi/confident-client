@@ -14,6 +14,7 @@ from confident_ai.classifiers.types import (
     ClassifierList,
     ClassifierPreset,
     ClassifierRef,
+    ClassifierVersionList,
     CreateClassifierRequest,
     UpdateClassifierRequest,
 )
@@ -93,6 +94,7 @@ class ClassifiersOperations:
         description: Optional[str] = None,
         enabled: Optional[bool] = None,
         auto_classify: Optional[bool] = None,
+        include_audio: Optional[bool] = None,
         filters: Optional[FilterSet] = None,
         auto_generation_config: Optional[ClassifierAutoGenerationConfig] = None
     ) -> ClassifierRef:
@@ -113,13 +115,19 @@ class ClassifiersOperations:
             auto_classify: Whether incoming items are classified automatically
                 as they arrive. Defaults to `true` on create; omit it on an
                 update to leave it unchanged.
+            include_audio: Whether the item's call recording and any audio in
+                its inputs and outputs are sent to the classifier alongside the
+                text, so it can catch issues that only show in the audio or in a
+                mismatch between the audio and its transcript. Needs an audio-
+                capable platform model. Defaults to `false` on create; omit it
+                on an update to leave it unchanged.
             filters: Narrows which traces or threads the classifier runs on, so
                 it can watch one route rather than the whole project. Only the
                 groups are stored, so the set's top-level operator is dropped
                 and the groups are combined by the platform. Send `null` to
                 clear the filters and classify everything of this data model.
-            auto_generation_config: How a generation run samples and clusters
-                your traffic to discover labels. Send `null` to clear it.
+            auto_generation_config: How a generation run samples your traffic to
+                generate labels. Send `null` to clear it.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -133,6 +141,7 @@ class ClassifiersOperations:
                 "description": description,
                 "enabled": enabled,
                 "autoClassify": auto_classify,
+                "includeAudio": include_audio,
                 "filters": filters,
                 "autoGenerationConfig": auto_generation_config,
             },
@@ -147,6 +156,7 @@ class ClassifiersOperations:
         description: Optional[str] = None,
         enabled: Optional[bool] = None,
         auto_classify: Optional[bool] = None,
+        include_audio: Optional[bool] = None,
         filters: Optional[FilterSet] = None,
         auto_generation_config: Optional[ClassifierAutoGenerationConfig] = None
     ) -> ClassifierRef:
@@ -167,13 +177,19 @@ class ClassifiersOperations:
             auto_classify: Whether incoming items are classified automatically
                 as they arrive. Defaults to `true` on create; omit it on an
                 update to leave it unchanged.
+            include_audio: Whether the item's call recording and any audio in
+                its inputs and outputs are sent to the classifier alongside the
+                text, so it can catch issues that only show in the audio or in a
+                mismatch between the audio and its transcript. Needs an audio-
+                capable platform model. Defaults to `false` on create; omit it
+                on an update to leave it unchanged.
             filters: Narrows which traces or threads the classifier runs on, so
                 it can watch one route rather than the whole project. Only the
                 groups are stored, so the set's top-level operator is dropped
                 and the groups are combined by the platform. Send `null` to
                 clear the filters and classify everything of this data model.
-            auto_generation_config: How a generation run samples and clusters
-                your traffic to discover labels. Send `null` to clear it.
+            auto_generation_config: How a generation run samples your traffic to
+                generate labels. Send `null` to clear it.
         """
         return await self._api.a_request(
             HttpMethods.POST,
@@ -187,6 +203,7 @@ class ClassifiersOperations:
                 "description": description,
                 "enabled": enabled,
                 "autoClassify": auto_classify,
+                "includeAudio": include_audio,
                 "filters": filters,
                 "autoGenerationConfig": auto_generation_config,
             },
@@ -234,6 +251,7 @@ class ClassifiersOperations:
         description: Optional[str] = None,
         enabled: Optional[bool] = None,
         auto_classify: Optional[bool] = None,
+        include_audio: Optional[bool] = None,
         filters: Optional[FilterSet] = None,
         auto_generation_config: Optional[ClassifierAutoGenerationConfig] = None
     ) -> Classifier:
@@ -255,13 +273,19 @@ class ClassifiersOperations:
             auto_classify: Whether incoming items are classified automatically
                 as they arrive. Defaults to `true` on create; omit it on an
                 update to leave it unchanged.
+            include_audio: Whether the item's call recording and any audio in
+                its inputs and outputs are sent to the classifier alongside the
+                text, so it can catch issues that only show in the audio or in a
+                mismatch between the audio and its transcript. Needs an audio-
+                capable platform model. Defaults to `false` on create; omit it
+                on an update to leave it unchanged.
             filters: Narrows which traces or threads the classifier runs on, so
                 it can watch one route rather than the whole project. Only the
                 groups are stored, so the set's top-level operator is dropped
                 and the groups are combined by the platform. Send `null` to
                 clear the filters and classify everything of this data model.
-            auto_generation_config: How a generation run samples and clusters
-                your traffic to discover labels. Send `null` to clear it.
+            auto_generation_config: How a generation run samples your traffic to
+                generate labels. Send `null` to clear it.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -273,6 +297,7 @@ class ClassifiersOperations:
                 "description": description,
                 "enabled": enabled,
                 "autoClassify": auto_classify,
+                "includeAudio": include_audio,
                 "filters": filters,
                 "autoGenerationConfig": auto_generation_config,
             },
@@ -287,6 +312,7 @@ class ClassifiersOperations:
         description: Optional[str] = None,
         enabled: Optional[bool] = None,
         auto_classify: Optional[bool] = None,
+        include_audio: Optional[bool] = None,
         filters: Optional[FilterSet] = None,
         auto_generation_config: Optional[ClassifierAutoGenerationConfig] = None
     ) -> Classifier:
@@ -308,13 +334,19 @@ class ClassifiersOperations:
             auto_classify: Whether incoming items are classified automatically
                 as they arrive. Defaults to `true` on create; omit it on an
                 update to leave it unchanged.
+            include_audio: Whether the item's call recording and any audio in
+                its inputs and outputs are sent to the classifier alongside the
+                text, so it can catch issues that only show in the audio or in a
+                mismatch between the audio and its transcript. Needs an audio-
+                capable platform model. Defaults to `false` on create; omit it
+                on an update to leave it unchanged.
             filters: Narrows which traces or threads the classifier runs on, so
                 it can watch one route rather than the whole project. Only the
                 groups are stored, so the set's top-level operator is dropped
                 and the groups are combined by the platform. Send `null` to
                 clear the filters and classify everything of this data model.
-            auto_generation_config: How a generation run samples and clusters
-                your traffic to discover labels. Send `null` to clear it.
+            auto_generation_config: How a generation run samples your traffic to
+                generate labels. Send `null` to clear it.
         """
         return await self._api.a_request(
             HttpMethods.PUT,
@@ -326,6 +358,7 @@ class ClassifiersOperations:
                 "description": description,
                 "enabled": enabled,
                 "autoClassify": auto_classify,
+                "includeAudio": include_audio,
                 "filters": filters,
                 "autoGenerationConfig": auto_generation_config,
             },
@@ -371,16 +404,14 @@ class ClassifiersOperations:
     def generate_labels(self, classifier_id: str) -> ClassifierLabelGeneration:
         """Generate Classifier Labels
 
-        Discovers labels for a classifier from your project's real traffic: it
-        samples recent traces or threads, clusters them with the classifier's
-        `autoGenerationConfig`, and writes the themes it finds back as
-        `RECOMMENDED` labels for a human to review. The run is asynchronous, so
-        poll the labels endpoint for results. Each run first deletes every
-        existing `RECOMMENDED` label, while labels already promoted to `ACTIVE`
-        are kept and passed to the generator so it does not propose them again.
-        `autoGenerationConfig` must already have `summaryPrompt` and `nClusters`
-        set. Reading traffic and running the model consumes usage. Requires the
-        Starter plan or above.
+        Generates labels for a classifier from your project's real traffic: it
+        samples recent traces or threads and runs them through the classifier's
+        normal auto-classification pipeline. Repeated proposals are merged and
+        written back as `RECOMMENDED` labels for a human to review. The run is
+        asynchronous, so poll the labels endpoint for results. Existing labels
+        are retained, and the sampled entities receive ordinary classification
+        results. Auto Classify must be enabled. Reading traffic and running the
+        model consumes usage. Requires the Starter plan or above.
 
         Args:
             classifier_id: The id of the classifier.
@@ -397,16 +428,14 @@ class ClassifiersOperations:
     ) -> ClassifierLabelGeneration:
         """Generate Classifier Labels
 
-        Discovers labels for a classifier from your project's real traffic: it
-        samples recent traces or threads, clusters them with the classifier's
-        `autoGenerationConfig`, and writes the themes it finds back as
-        `RECOMMENDED` labels for a human to review. The run is asynchronous, so
-        poll the labels endpoint for results. Each run first deletes every
-        existing `RECOMMENDED` label, while labels already promoted to `ACTIVE`
-        are kept and passed to the generator so it does not propose them again.
-        `autoGenerationConfig` must already have `summaryPrompt` and `nClusters`
-        set. Reading traffic and running the model consumes usage. Requires the
-        Starter plan or above.
+        Generates labels for a classifier from your project's real traffic: it
+        samples recent traces or threads and runs them through the classifier's
+        normal auto-classification pipeline. Repeated proposals are merged and
+        written back as `RECOMMENDED` labels for a human to review. The run is
+        asynchronous, so poll the labels endpoint for results. Existing labels
+        are retained, and the sampled entities receive ordinary classification
+        results. Auto Classify must be enabled. Reading traffic and running the
+        model consumes usage. Requires the Starter plan or above.
 
         Args:
             classifier_id: The id of the classifier.
@@ -416,4 +445,66 @@ class ClassifiersOperations:
             Endpoints.CLASSIFIER_GENERATE_ENDPOINT,
             response_schema=ClassifierLabelGeneration,
             path={"classifierId": classifier_id},
+        )
+
+    def list_versions(
+        self,
+        classifier_id: str,
+        *,
+        page: Optional[int] = None,
+        page_size: Optional[int] = None
+    ) -> ClassifierVersionList:
+        """List Classifier Versions
+
+        Lists a classifier's version history, newest first, so the first entry
+        is what the classifying model is shown today. A version is appended
+        whenever the description or the set of labels the model can apply
+        changes, which includes RECOMMENDED labels added by a generation run or
+        by the model itself while the classifier classifies automatically. A
+        version can be restored in the app, not through this API. Requires the
+        Starter plan or above.
+
+        Args:
+            classifier_id: The id of the classifier.
+            page: The page to return. Defaults to 1.
+            page_size: The number of versions per page, at most 100. Defaults to
+                25.
+        """
+        return self._api.request(
+            HttpMethods.GET,
+            Endpoints.CLASSIFIER_VERSIONS_ENDPOINT,
+            response_schema=ClassifierVersionList,
+            path={"classifierId": classifier_id},
+            query={"page": page, "pageSize": page_size},
+        )
+
+    async def a_list_versions(
+        self,
+        classifier_id: str,
+        *,
+        page: Optional[int] = None,
+        page_size: Optional[int] = None
+    ) -> ClassifierVersionList:
+        """List Classifier Versions
+
+        Lists a classifier's version history, newest first, so the first entry
+        is what the classifying model is shown today. A version is appended
+        whenever the description or the set of labels the model can apply
+        changes, which includes RECOMMENDED labels added by a generation run or
+        by the model itself while the classifier classifies automatically. A
+        version can be restored in the app, not through this API. Requires the
+        Starter plan or above.
+
+        Args:
+            classifier_id: The id of the classifier.
+            page: The page to return. Defaults to 1.
+            page_size: The number of versions per page, at most 100. Defaults to
+                25.
+        """
+        return await self._api.a_request(
+            HttpMethods.GET,
+            Endpoints.CLASSIFIER_VERSIONS_ENDPOINT,
+            response_schema=ClassifierVersionList,
+            path={"classifierId": classifier_id},
+            query={"page": page, "pageSize": page_size},
         )

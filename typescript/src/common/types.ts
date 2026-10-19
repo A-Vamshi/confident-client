@@ -20,13 +20,6 @@ export enum AuditLogExportStatus {
   ERRORED = "ERRORED",
 }
 
-export enum Environment {
-  PRODUCTION = "production",
-  DEVELOPMENT = "development",
-  STAGING = "staging",
-  TESTING = "testing",
-}
-
 export enum EvaluationErrorType {
   AI_CONNECTION_ERROR = "AI_CONNECTION_ERROR",
   TRANSFORMER_ERROR = "TRANSFORMER_ERROR",
@@ -38,6 +31,7 @@ export enum EvaluationErrorType {
 export enum GenerationMode {
   AI_CONNECTION = "AI_CONNECTION",
   PROMPT = "PROMPT",
+  VOICE_CONNECTION = "VOICE_CONNECTION",
 }
 
 export enum IngestionDataModel {
@@ -64,6 +58,7 @@ export enum MetricAlgorithm {
   GEVAL = "GEVAL",
   JEVAL = "JEVAL",
   CODE = "CODE",
+  PROMPT = "PROMPT",
 }
 
 export enum MetricEvaluationParam {
@@ -76,6 +71,7 @@ export enum MetricEvaluationParam {
   ROLE = "role",
   SCENARIO = "scenario",
   EXPECTEDOUTCOME = "expectedOutcome",
+  AUDIO = "audio",
   TURNS = "turns",
   TOOLSCALLED = "toolsCalled",
   RETRIEVALCONTEXT = "retrievalContext",
@@ -104,6 +100,7 @@ export enum ModelProvider {
   HUGGING_FACE = "HUGGING_FACE",
   TYPE_SAFE = "TYPE_SAFE",
   FAL = "FAL",
+  Z_AI = "Z_AI",
 }
 
 export enum ModelType {
@@ -146,6 +143,12 @@ export enum SpanType {
 export enum ToolCallType {
   FUNCTION = "FUNCTION",
   MCP = "MCP",
+}
+
+export enum ToolMode {
+  ALLOW_ADDITIONAL = "ALLOW_ADDITIONAL",
+  NO_ADDITIONAL = "NO_ADDITIONAL",
+  STRICT = "STRICT",
 }
 
 export enum TraceSpanStatus {
@@ -235,7 +238,9 @@ export enum WidgetDimension {
   CLASSIFIER = "classifier",
   POLARITY = "polarity",
   CLASSIFIER_LABEL = "classifier_label",
+  CLASSIFIER_VERSION = "classifier_version",
   VERSION = "version",
+  METRIC_VERSION = "metric_version",
   VALUE = "value",
   FAILURE_SUB_MODE = "failure_sub_mode",
 }
@@ -371,7 +376,7 @@ export interface MetricDag {
   nodes: Record<string, unknown>;
 }
 
-export interface JevQuestionJevQuestion0 {
+export interface JevNoulQuestion {
   type: "noul";
   question: string;
   weight?: number;
@@ -379,14 +384,14 @@ export interface JevQuestionJevQuestion0 {
   falseDescription?: string;
 }
 
-export interface JevQuestionJevQuestion1 {
+export interface JevScoreQuestion {
   type: "score";
   question: string;
   weight?: number;
   levels: string[];
 }
 
-export interface JevQuestionJevQuestion2 {
+export interface JevChoiceQuestion {
   type: "choice";
   question: string;
   weight?: number;
@@ -394,7 +399,22 @@ export interface JevQuestionJevQuestion2 {
 }
 
 export type JevQuestion =
-  JevQuestionJevQuestion0 | JevQuestionJevQuestion1 | JevQuestionJevQuestion2;
+  JevNoulQuestion | JevScoreQuestion | JevChoiceQuestion;
+
+export interface PromptMetricConfigMessage {
+  role: "system" | "user" | "assistant";
+  content: string;
+}
+
+export interface PromptMetricConfigVariables {
+  field: "input" | "output" | "metadata" | "tools_called";
+  path: (string | number)[];
+}
+
+export interface PromptMetricConfig {
+  messages: PromptMetricConfigMessage[];
+  variables: Record<string, PromptMetricConfigVariables>;
+}
 
 export interface CreateMetricRequest {
   name: string;
@@ -406,6 +426,7 @@ export interface CreateMetricRequest {
   algorithm?: MetricAlgorithm;
   dag?: MetricDag;
   questions?: JevQuestion[];
+  promptConfig?: PromptMetricConfig;
 }
 
 export interface CreateOrUpdatePolicyRequest {
@@ -527,8 +548,10 @@ export interface FilterSetGroupFilter {
     | "Annotation Text"
     | "Metric Score"
     | "Metric Status"
+    | "Metric Version"
     | "Metadata"
     | "Classifier"
+    | "Classifier Version"
     | "Metric"
     | "Metric Name"
     | "Trace Count"
@@ -700,6 +723,7 @@ export interface Metric {
   rubric: Rubric[] | null;
   dag: MetricDag | null;
   questions: JevQuestion[] | null;
+  promptConfig: PromptMetricConfig | null;
   multiTurn: boolean;
   requiredParameters: MetricEvaluationParam[];
 }
@@ -753,6 +777,7 @@ export interface ModelCredentials {
   deepSeekApiKey: string | null;
   mistralApiKey: string | null;
   perplexityApiKey: string | null;
+  zAiApiKey: string | null;
   typeSafeApiKey: string | null;
   falApiKey: string | null;
   bedrockModelConfig: Record<string, unknown> | null;
@@ -875,6 +900,15 @@ export interface Span {
   annotations: AnnotationSummary[];
 }
 
+export interface Tool {
+  id: string;
+  name: string;
+  description: string | null;
+  mode: ToolMode;
+  version: string;
+  schema: Record<string, unknown>;
+}
+
 export interface Trace {
   uuid: string;
   name: string | null;
@@ -886,7 +920,7 @@ export interface Trace {
   threadId: string | null;
   userId: string | null;
   customerId: string | null;
-  environment: Environment;
+  environment: string;
   tags: string[] | null;
   metadata: Record<string, unknown> | null;
   input: string | null;
@@ -911,6 +945,7 @@ export interface Turn {
   userId?: string;
   retrievalContext?: string[] | null;
   toolsCalled?: ToolCall[] | null;
+  metadata?: Record<string, unknown> | null;
 }
 
 export interface UpdateApiKeyRequest {

@@ -4,11 +4,11 @@
 # and regenerate.
 
 from enum import Enum
-from typing import List, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 
 from pydantic import Field
 
-from confident_ai.common.types import ModelProvider, PromptType
+from confident_ai.common.types import ModelProvider, PromptType, Tool, ToolMode
 from confident_ai.types import ConfidentBaseModel
 
 
@@ -43,12 +43,6 @@ class SchemaDataType(Enum):
     NULL = "NULL"
 
 
-class ToolMode(Enum):
-    ALLOW_ADDITIONAL = "ALLOW_ADDITIONAL"
-    NO_ADDITIONAL = "NO_ADDITIONAL"
-    STRICT = "STRICT"
-
-
 class Verbosity(Enum):
     LOW = "LOW"
     MEDIUM = "MEDIUM"
@@ -68,9 +62,22 @@ class CreatePromptVersionResult(ConfidentBaseModel):
     hash: str
 
 
+class PromptMessageToolCallFunction(ConfidentBaseModel):
+    name: str
+    arguments: str
+
+
+class PromptMessageToolCall(ConfidentBaseModel):
+    id: str
+    type: Literal["function"]
+    function: PromptMessageToolCallFunction
+
+
 class PromptMessage(ConfidentBaseModel):
     role: str
     content: str
+    tool_calls: Optional[List[PromptMessageToolCall]] = None
+    tool_call_id: Optional[str] = None
 
 
 class ModelSettings(ConfidentBaseModel):
@@ -110,29 +117,6 @@ class OutputSchemaField(ConfidentBaseModel):
 class OutputSchema(ConfidentBaseModel):
     name: str
     fields: List[OutputSchemaField]
-
-
-class StructuredSchemaField(ConfidentBaseModel):
-    id: str
-    name: Optional[str] = None
-    description: Optional[str] = None
-    type: SchemaDataType
-    required: Optional[bool] = None
-    parent_id: Optional[str] = Field(default=None, alias="parentId")
-
-
-class StructuredSchema(ConfidentBaseModel):
-    id: Optional[str] = None
-    name: Optional[str] = None
-    fields: List[StructuredSchemaField]
-
-
-class Tool(ConfidentBaseModel):
-    id: Optional[str] = None
-    name: str
-    description: Optional[str] = None
-    mode: ToolMode
-    structured_schema: StructuredSchema = Field(alias="structuredSchema")
 
 
 class MessagesPrompt(ConfidentBaseModel):
@@ -201,6 +185,15 @@ class PromptVersionList(ConfidentBaseModel):
     type: PromptType
 
 
+class PushTool(ConfidentBaseModel):
+    id: Optional[str] = None
+    version: Optional[str] = None
+    name: Optional[str] = None
+    description: Optional[str] = None
+    mode: Optional[ToolMode] = None
+    schema_: Optional[Dict[str, Any]] = Field(default=None, alias="schema")
+
+
 class PushMessagesPrompt(ConfidentBaseModel):
     messages: List[PromptMessage]
     alias: str
@@ -220,7 +213,7 @@ class PushMessagesPrompt(ConfidentBaseModel):
         default=None,
         alias="outputSchema",
     )
-    tools: Optional[List[Tool]] = None
+    tools: Optional[List[PushTool]] = None
     branch: Optional[str] = None
 
 
@@ -248,7 +241,7 @@ class PushTextPrompt(ConfidentBaseModel):
         default=None,
         alias="outputSchema",
     )
-    tools: Optional[List[Tool]] = None
+    tools: Optional[List[PushTool]] = None
     branch: Optional[str] = None
 
 
