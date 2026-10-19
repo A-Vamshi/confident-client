@@ -10,7 +10,7 @@ from confident_ai.attack_methods.types import (
     AttackMethod,
     AttackMethodList,
     AttackMethodRef,
-    UpdateAttackMethodRequest,
+    UpdateAttackMethodInput,
 )
 from confident_ai.endpoints import Endpoints
 
@@ -138,7 +138,7 @@ class AttackMethodsClient:
             HttpMethods.PUT,
             Endpoints.ATTACK_METHOD_ENDPOINT,
             response_schema=AttackMethod,
-            request_schema=UpdateAttackMethodRequest,
+            request_schema=UpdateAttackMethodInput,
             body={"parameters": parameters},
             path={"attackMethodId": attack_method_id},
         )
@@ -164,7 +164,7 @@ class AttackMethodsClient:
             HttpMethods.PUT,
             Endpoints.ATTACK_METHOD_ENDPOINT,
             response_schema=AttackMethod,
-            request_schema=UpdateAttackMethodRequest,
+            request_schema=UpdateAttackMethodInput,
             body={"parameters": parameters},
             path={"attackMethodId": attack_method_id},
         )

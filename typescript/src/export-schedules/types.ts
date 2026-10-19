@@ -4,7 +4,6 @@
 // and regenerate.
 
 import {
-  Environment,
   FilterSet,
   ScheduleIntervalUnit,
   ScheduleRecurrenceType,
@@ -14,6 +13,7 @@ export enum AnnotationSelectionType {
   SPANS = "Spans",
   THREADS = "Threads",
   TRACES = "Traces",
+  TEST_CASES = "Test cases",
 }
 
 export enum SchedulableExportType {
@@ -26,7 +26,7 @@ export enum SchedulableExportType {
   AUDIT_LOGS = "AUDIT_LOGS",
 }
 
-export interface CreateExportScheduleRequest {
+export interface CreateExportScheduleInput {
   recurrence?: ScheduleRecurrenceType;
   repeatEvery?: number | null;
   repeatUnit?: ScheduleIntervalUnit | null;
@@ -37,7 +37,7 @@ export interface CreateExportScheduleRequest {
   description?: string | null;
   exportType: SchedulableExportType;
   filters?: FilterSet;
-  environment?: Environment | null;
+  environment?: string | null;
   annotationSelectionType?: AnnotationSelectionType | null;
   destinationId?: string | null;
   enabled?: boolean;
@@ -61,7 +61,7 @@ export interface ExportSchedule {
   description: string | null;
   exportType: SchedulableExportType;
   filters: FilterSet;
-  environment: Environment | null;
+  environment: string | null;
   annotationSelectionType: AnnotationSelectionType | null;
   destinationId: string | null;
   scheduleSettings: ExportScheduleSettings | null;
@@ -87,7 +87,7 @@ export interface ExportScheduleRef {
   id: string;
 }
 
-export interface UpdateExportScheduleRequest {
+export interface UpdateExportScheduleInput {
   recurrence?: ScheduleRecurrenceType;
   repeatEvery?: number | null;
   repeatUnit?: ScheduleIntervalUnit | null;
@@ -97,7 +97,7 @@ export interface UpdateExportScheduleRequest {
   name?: string;
   description?: string | null;
   filters?: FilterSet;
-  environment?: Environment | null;
+  environment?: string | null;
   annotationSelectionType?: AnnotationSelectionType | null;
   destinationId?: string | null;
   enabled?: boolean;

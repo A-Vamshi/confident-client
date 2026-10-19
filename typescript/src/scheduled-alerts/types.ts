@@ -44,7 +44,20 @@ export interface AlertThresholdSettings {
   direction: AlertThresholdDirection;
 }
 
-export interface ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings0 {
+export interface AnomalyDetectionSettings {
+  traceName?: string;
+  metrics?: (
+    | "avg_score"
+    | "error_rate"
+    | "avg_latency"
+    | "avg_cost"
+    | "negative_label_rate"
+  )[];
+  direction: "WORSENED" | "ANY";
+  minAffectedCount: number;
+}
+
+export interface RegressionDetectionSettings {
   traceName?: string;
   metrics?: (
     | "avg_score"
@@ -58,31 +71,18 @@ export interface ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings0
   significantOnly: boolean;
 }
 
-export interface ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings1 {
-  traceName?: string;
-  metrics?: (
-    | "avg_score"
-    | "error_rate"
-    | "avg_latency"
-    | "avg_cost"
-    | "negative_label_rate"
-  )[];
-  direction: "WORSENED" | "ANY";
-  minAffectedCount: number;
-}
-
-export interface ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings2 {
+export interface SignalSpikeDetectionSettings {
   classifierIds: string[];
   direction: "WORSENED" | "ANY";
   minAffectedCount: number;
 }
 
-export type ScheduledAlertDetectionSettings =
-  | ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings0
-  | ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings1
-  | ScheduledAlertDetectionSettingsScheduledAlertDetectionSettings2;
+export type ScheduledAlertDetectionSettingsInput =
+  | RegressionDetectionSettings
+  | AnomalyDetectionSettings
+  | SignalSpikeDetectionSettings;
 
-export interface CreateScheduledAlertRequest {
+export interface CreateScheduledAlertInput {
   recurrence?: ScheduleRecurrenceType;
   repeatEvery?: number | null;
   repeatUnit?: ScheduleIntervalUnit | null;
@@ -97,41 +97,8 @@ export interface CreateScheduledAlertRequest {
   dataModel: AlertDataModel;
   aggregation?: string;
   thresholdSettings?: AlertThresholdSettings;
-  detectionSettings?: ScheduledAlertDetectionSettings;
+  detectionSettings?: ScheduledAlertDetectionSettingsInput;
   enabled?: boolean;
-}
-
-export interface ScheduledAlertDetectionSettings0 {
-  traceName?: string;
-  metrics?: (
-    | "avg_score"
-    | "error_rate"
-    | "avg_latency"
-    | "avg_cost"
-    | "negative_label_rate"
-  )[];
-  direction: "WORSENED" | "ANY";
-  minAffectedCount: number;
-  significantOnly: boolean;
-}
-
-export interface ScheduledAlertDetectionSettings1 {
-  traceName?: string;
-  metrics?: (
-    | "avg_score"
-    | "error_rate"
-    | "avg_latency"
-    | "avg_cost"
-    | "negative_label_rate"
-  )[];
-  direction: "WORSENED" | "ANY";
-  minAffectedCount: number;
-}
-
-export interface ScheduledAlertDetectionSettings2 {
-  classifierIds: string[];
-  direction: "WORSENED" | "ANY";
-  minAffectedCount: number;
 }
 
 export interface ScheduledAlertScheduleSettings {
@@ -156,9 +123,9 @@ export interface ScheduledAlert {
   filters: FilterSet;
   thresholdSettings: AlertThresholdSettings | null;
   detectionSettings:
-    | ScheduledAlertDetectionSettings0
-    | ScheduledAlertDetectionSettings1
-    | ScheduledAlertDetectionSettings2
+    | RegressionDetectionSettings
+    | AnomalyDetectionSettings
+    | SignalSpikeDetectionSettings
     | null;
   severity: AlertSeverity;
   scheduleSettings: ScheduledAlertScheduleSettings | null;
@@ -183,7 +150,7 @@ export interface ScheduledAlertRef {
   id: string;
 }
 
-export interface UpdateScheduledAlertRequest {
+export interface UpdateScheduledAlertInput {
   recurrence?: ScheduleRecurrenceType;
   repeatEvery?: number | null;
   repeatUnit?: ScheduleIntervalUnit | null;
@@ -198,6 +165,6 @@ export interface UpdateScheduledAlertRequest {
   dataModel?: AlertDataModel;
   aggregation?: string;
   thresholdSettings?: AlertThresholdSettings;
-  detectionSettings?: ScheduledAlertDetectionSettings;
+  detectionSettings?: ScheduledAlertDetectionSettingsInput;
   enabled?: boolean;
 }

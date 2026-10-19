@@ -28,13 +28,6 @@ class AuditLogExportStatus(Enum):
     ERRORED = "ERRORED"
 
 
-class Environment(Enum):
-    PRODUCTION = "production"
-    DEVELOPMENT = "development"
-    STAGING = "staging"
-    TESTING = "testing"
-
-
 class EvaluationErrorType(Enum):
     AI_CONNECTION_ERROR = "AI_CONNECTION_ERROR"
     TRANSFORMER_ERROR = "TRANSFORMER_ERROR"
@@ -46,6 +39,7 @@ class EvaluationErrorType(Enum):
 class GenerationMode(Enum):
     AI_CONNECTION = "AI_CONNECTION"
     PROMPT = "PROMPT"
+    VOICE_CONNECTION = "VOICE_CONNECTION"
 
 
 class IngestionDataModel(Enum):
@@ -72,6 +66,7 @@ class MetricAlgorithm(Enum):
     GEVAL = "GEVAL"
     JEVAL = "JEVAL"
     CODE = "CODE"
+    PROMPT = "PROMPT"
 
 
 class MetricEvaluationParam(Enum):
@@ -84,6 +79,7 @@ class MetricEvaluationParam(Enum):
     ROLE = "role"
     SCENARIO = "scenario"
     EXPECTEDOUTCOME = "expectedOutcome"
+    AUDIO = "audio"
     TURNS = "turns"
     TOOLSCALLED = "toolsCalled"
     RETRIEVALCONTEXT = "retrievalContext"
@@ -112,6 +108,7 @@ class ModelProvider(Enum):
     HUGGING_FACE = "HUGGING_FACE"
     TYPE_SAFE = "TYPE_SAFE"
     FAL = "FAL"
+    Z_AI = "Z_AI"
 
 
 class ModelType(Enum):
@@ -154,6 +151,12 @@ class SpanType(Enum):
 class ToolCallType(Enum):
     FUNCTION = "FUNCTION"
     MCP = "MCP"
+
+
+class ToolMode(Enum):
+    ALLOW_ADDITIONAL = "ALLOW_ADDITIONAL"
+    NO_ADDITIONAL = "NO_ADDITIONAL"
+    STRICT = "STRICT"
 
 
 class TraceSpanStatus(Enum):
@@ -243,7 +246,9 @@ class WidgetDimension(Enum):
     CLASSIFIER = "classifier"
     POLARITY = "polarity"
     CLASSIFIER_LABEL = "classifier_label"
+    CLASSIFIER_VERSION = "classifier_version"
     VERSION = "version"
+    METRIC_VERSION = "metric_version"
     VALUE = "value"
     FAILURE_SUB_MODE = "failure_sub_mode"
 
@@ -362,138 +367,52 @@ class Classification(ConfidentBaseModel):
     reason: str
 
 
-class CreateApiKeyRequest(ConfidentBaseModel):
+class CreateApiKeyInput(ConfidentBaseModel):
     name: str
     expires_in_days: Optional[int] = Field(default=None, alias="expiresInDays")
 
 
-class CreateAuditLogExportRequest(ConfidentBaseModel):
+class CreateAuditLogExportInput(ConfidentBaseModel):
     start_time: Optional[str] = Field(default=None, alias="startTime")
     end_time: Optional[str] = Field(default=None, alias="endTime")
     search_term: Optional[str] = Field(default=None, alias="searchTerm")
 
 
-class Rubric(ConfidentBaseModel):
-    score_range: Tuple[int, int] = Field(alias="scoreRange")
-    expected_outcome: str = Field(alias="expectedOutcome")
-
-
-class MetricDag(ConfidentBaseModel):
-    nodes: Dict[str, Any]
-
-
-class JevQuestionJevQuestion0(ConfidentBaseModel):
-    type: Literal["noul"]
-    question: str
-    weight: Optional[float] = None
-    true_description: Optional[str] = Field(
-        default=None,
-        alias="trueDescription",
-    )
-    false_description: Optional[str] = Field(
-        default=None,
-        alias="falseDescription",
-    )
-
-
-class JevQuestionJevQuestion1(ConfidentBaseModel):
-    type: Literal["score"]
-    question: str
-    weight: Optional[float] = None
-    levels: List[str]
-
-
-class JevQuestionJevQuestion2(ConfidentBaseModel):
-    type: Literal["choice"]
-    question: str
-    weight: Optional[float] = None
-    options: Dict[str, Optional[float]]
-
-
-JevQuestion = Union[
-    JevQuestionJevQuestion0, JevQuestionJevQuestion1, JevQuestionJevQuestion2
-]
-
-
-class CreateMetricRequest(ConfidentBaseModel):
-    name: str
-    multi_turn: Optional[bool] = Field(default=None, alias="multiTurn")
-    criteria: Optional[str] = None
-    evaluation_steps: Optional[List[str]] = Field(
-        default=None,
-        alias="evaluationSteps",
-    )
-    evaluation_params: Optional[List[MetricEvaluationParam]] = Field(
-        default=None,
-        alias="evaluationParams",
-    )
-    rubric: Optional[List[Rubric]] = None
-    algorithm: Optional[MetricAlgorithm] = None
-    dag: Optional[MetricDag] = None
-    questions: Optional[List[JevQuestion]] = None
-
-
-class CreateOrUpdatePolicyRequest(ConfidentBaseModel):
+class CreateOrUpdatePolicyInput(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     permission_ids: List[str] = Field(alias="permissionIds")
 
 
-class CreateOrUpdateRoleRequest(ConfidentBaseModel):
+class CreateOrUpdateRoleInput(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     policy_ids: List[str] = Field(alias="policyIds")
 
 
-class WidgetTopK(ConfidentBaseModel):
-    limit: Optional[int] = None
-    order_by: Optional[
-        Literal[
-            "count",
-            "avg_latency",
-            "p50_latency",
-            "p90_latency",
-            "p99_latency",
-            "error_rate",
-            "pass_rate",
-            "failure_rate",
-            "input_cost",
-            "output_cost",
-            "total_cost",
-            "avg_cost",
-            "input_tokens",
-            "output_tokens",
-            "total_tokens",
-            "count_distinct_endUserId",
-            "count_distinct_threadId",
-            "count_distinct_model",
-            "count_distinct_projectId",
-            "count_distinct_error",
-            "count_distinct_metadata",
-            "error_count",
-            "pass_count",
-            "avg_score",
-            "stddev_score",
-            "median_score",
-            "avg_rating",
-            "avg_value",
-            "score_histogram",
-            "created_at",
-            "start_time",
-            "dimension",
-        ]
-    ] = Field(
-        default=None,
-        alias="orderBy",
-    )
-    direction: Optional[Literal["asc", "desc"]] = None
+class CreatedApiKey(ConfidentBaseModel):
+    id: int
+    name: Optional[str]
+    valid: bool
+    created_at: str
+    expires_at: Optional[str] = Field(alias="expiresAt")
+    value: str
+    shadow_value: Optional[Any] = Field(alias="shadowValue")
+    rotates_at: Optional[Any] = Field(alias="rotatesAt")
+    last_used: Optional[Any] = Field(alias="lastUsed")
 
 
-class WidgetLayout(ConfidentBaseModel):
-    x: float
-    y: float
-    w: float
-    h: float
+class ErrorResponseDetails(ConfidentBaseModel):
+    usage: Optional[str] = None
+    limit: Optional[str] = None
+
+
+class ErrorResponse(ConfidentBaseModel):
+    success: Literal[False]
+    error: str
+    link: Optional[str] = None
+    deprecated: Optional[bool] = None
+    details: Optional[ErrorResponseDetails] = None
 
 
 class FilterSetGroupFilter(ConfidentBaseModel):
@@ -558,8 +477,10 @@ class FilterSetGroupFilter(ConfidentBaseModel):
         "Annotation Text",
         "Metric Score",
         "Metric Status",
+        "Metric Version",
         "Metadata",
         "Classifier",
+        "Classifier Version",
         "Metric",
         "Metric Name",
         "Trace Count",
@@ -634,68 +555,6 @@ class FilterSet(ConfidentBaseModel):
     groups: List[FilterSetGroup]
 
 
-class WidgetLineExtraQueryParams(ConfidentBaseModel):
-    pass
-
-
-class WidgetLineConfig(ConfidentBaseModel):
-    name: str
-    color: Optional[WidgetLineColor] = None
-    data_model: Optional[WidgetDataModel] = Field(
-        default=None,
-        alias="dataModel",
-    )
-    aggregation: Optional[WidgetAggregation] = None
-    filters: Optional[FilterSet] = None
-    extra_query_params: Optional[WidgetLineExtraQueryParams] = Field(
-        default=None,
-        alias="extraQueryParams",
-    )
-
-
-class CreateWidgetRequest(ConfidentBaseModel):
-    name: str
-    description: Optional[str] = None
-    type: Optional[WidgetType] = None
-    unit: Optional[WidgetUnit] = None
-    mode: Optional[WidgetMode] = None
-    bucket_mode: Optional[WidgetBucketMode] = Field(
-        default=None,
-        alias="bucketMode",
-    )
-    dimension: Optional[WidgetDimension] = None
-    top_k: Optional[WidgetTopK] = Field(default=None, alias="topK")
-    start_time: Optional[str] = Field(default=None, alias="startTime")
-    end_time: Optional[str] = Field(default=None, alias="endTime")
-    layout: Optional[WidgetLayout] = None
-    lines: Optional[List[WidgetLineConfig]] = None
-
-
-class CreatedApiKey(ConfidentBaseModel):
-    id: int
-    name: Optional[str]
-    valid: bool
-    created_at: str
-    expires_at: Optional[str] = Field(alias="expiresAt")
-    value: str
-    shadow_value: Optional[Any] = Field(alias="shadowValue")
-    rotates_at: Optional[Any] = Field(alias="rotatesAt")
-    last_used: Optional[Any] = Field(alias="lastUsed")
-
-
-class ErrorResponseDetails(ConfidentBaseModel):
-    usage: Optional[str] = None
-    limit: Optional[str] = None
-
-
-class ErrorResponse(ConfidentBaseModel):
-    success: Literal[False]
-    error: str
-    link: Optional[str] = None
-    deprecated: Optional[bool] = None
-    details: Optional[ErrorResponseDetails] = None
-
-
 class GovernancePolicyReference(ConfidentBaseModel):
     id: str
     name: str
@@ -717,7 +576,35 @@ class InvitationRef(ConfidentBaseModel):
     id: int
 
 
-class MLLMImage(ConfidentBaseModel):
+class JevChoiceQuestion(ConfidentBaseModel):
+    type: Literal["choice"]
+    question: str
+    weight: Optional[float] = None
+    options: Dict[str, Optional[float]]
+
+
+class JevNoulQuestion(ConfidentBaseModel):
+    type: Literal["noul"]
+    question: str
+    weight: Optional[float] = None
+    true_description: Optional[str] = Field(
+        default=None,
+        alias="trueDescription",
+    )
+    false_description: Optional[str] = Field(
+        default=None,
+        alias="falseDescription",
+    )
+
+
+class JevScoreQuestion(ConfidentBaseModel):
+    type: Literal["score"]
+    question: str
+    weight: Optional[float] = None
+    levels: List[str]
+
+
+class MLLMImageInput(ConfidentBaseModel):
     url: str
     local: bool
     base64: Optional[str] = None
@@ -735,6 +622,33 @@ class MemberRole(ConfidentBaseModel):
     name: str
 
 
+class Rubric(ConfidentBaseModel):
+    score_range: Tuple[int, int] = Field(alias="scoreRange")
+    expected_outcome: str = Field(alias="expectedOutcome")
+
+
+class MetricDag(ConfidentBaseModel):
+    nodes: Dict[str, Any]
+
+
+JevQuestion = Union[JevNoulQuestion, JevScoreQuestion, JevChoiceQuestion]
+
+
+class PromptMetricConfigMessage(ConfidentBaseModel):
+    role: Literal["system", "user", "assistant"]
+    content: str
+
+
+class PromptMetricConfigVariables(ConfidentBaseModel):
+    field: Literal["input", "output", "metadata", "tools_called"]
+    path: List[Union[str, int]]
+
+
+class PromptMetricConfig(ConfidentBaseModel):
+    messages: List[PromptMetricConfigMessage]
+    variables: Dict[str, PromptMetricConfigVariables]
+
+
 class Metric(ConfidentBaseModel):
     id: str
     name: str
@@ -744,6 +658,7 @@ class Metric(ConfidentBaseModel):
     rubric: Optional[List[Rubric]]
     dag: Optional[MetricDag]
     questions: Optional[List[JevQuestion]]
+    prompt_config: Optional[PromptMetricConfig] = Field(alias="promptConfig")
     multi_turn: bool = Field(alias="multiTurn")
     required_parameters: List[MetricEvaluationParam] = Field(
         alias="requiredParameters",
@@ -774,6 +689,28 @@ class MetricData(ConfidentBaseModel):
     test_run_id: Optional[str] = Field(alias="testRunId")
 
 
+class MetricInput(ConfidentBaseModel):
+    name: str
+    multi_turn: Optional[bool] = Field(default=None, alias="multiTurn")
+    criteria: Optional[str] = None
+    evaluation_steps: Optional[List[str]] = Field(
+        default=None,
+        alias="evaluationSteps",
+    )
+    evaluation_params: Optional[List[MetricEvaluationParam]] = Field(
+        default=None,
+        alias="evaluationParams",
+    )
+    rubric: Optional[List[Rubric]] = None
+    algorithm: Optional[MetricAlgorithm] = None
+    dag: Optional[MetricDag] = None
+    questions: Optional[List[JevQuestion]] = None
+    prompt_config: Optional[PromptMetricConfig] = Field(
+        default=None,
+        alias="promptConfig",
+    )
+
+
 class MetricList(ConfidentBaseModel):
     metrics: List[Metric]
 
@@ -799,6 +736,7 @@ class ModelCredentials(ConfidentBaseModel):
     deep_seek_api_key: Optional[str] = Field(alias="deepSeekApiKey")
     mistral_api_key: Optional[str] = Field(alias="mistralApiKey")
     perplexity_api_key: Optional[str] = Field(alias="perplexityApiKey")
+    z_ai_api_key: Optional[str] = Field(alias="zAiApiKey")
     type_safe_api_key: Optional[str] = Field(alias="typeSafeApiKey")
     fal_api_key: Optional[str] = Field(alias="falApiKey")
     bedrock_model_config: Optional[Dict[str, Any]] = Field(
@@ -875,7 +813,7 @@ class RoleRef(ConfidentBaseModel):
     id: str
 
 
-class RotateApiKeyRequest(ConfidentBaseModel):
+class RotateApiKeyInput(ConfidentBaseModel):
     grace_period_in_hours: Optional[int] = Field(
         default=None,
         alias="gracePeriodInHours",
@@ -939,6 +877,15 @@ class Span(ConfidentBaseModel):
     annotations: List[AnnotationSummary]
 
 
+class Tool(ConfidentBaseModel):
+    id: str
+    name: str
+    description: Optional[str]
+    mode: ToolMode
+    version: str
+    schema_: Dict[str, Any] = Field(alias="schema")
+
+
 class Trace(ConfidentBaseModel):
     uuid: str
     name: Optional[str]
@@ -950,7 +897,7 @@ class Trace(ConfidentBaseModel):
     thread_id: Optional[str] = Field(alias="threadId")
     user_id: Optional[str] = Field(alias="userId")
     customer_id: Optional[str] = Field(alias="customerId")
-    environment: Environment
+    environment: str
     tags: Optional[List[str]]
     metadata: Optional[Dict[str, Any]]
     input: Optional[str]
@@ -981,17 +928,18 @@ class Turn(ConfidentBaseModel):
         default=None,
         alias="toolsCalled",
     )
+    metadata: Optional[Dict[str, Any]] = None
 
 
-class UpdateApiKeyRequest(ConfidentBaseModel):
+class UpdateApiKeyInput(ConfidentBaseModel):
     valid: bool
 
 
-class UpdateMemberRoleRequest(ConfidentBaseModel):
+class UpdateMemberRoleInput(ConfidentBaseModel):
     role_id: str = Field(alias="roleId")
 
 
-class UpdateModelCredentialsRequest(ConfidentBaseModel):
+class UpdateModelCredentialsInput(ConfidentBaseModel):
     provider: ModelProvider
     api_key: Optional[str] = Field(default=None, alias="apiKey")
     model_config_: Optional[Dict[str, Any]] = Field(
@@ -1031,6 +979,94 @@ class WidgetDimensionData(ConfidentBaseModel):
     kind: Literal["DIMENSION"]
     unit: Optional[WidgetUnit]
     series: List[WidgetSeries]
+
+
+class WidgetTopK(ConfidentBaseModel):
+    limit: Optional[int] = None
+    order_by: Optional[
+        Literal[
+            "count",
+            "avg_latency",
+            "p50_latency",
+            "p90_latency",
+            "p99_latency",
+            "error_rate",
+            "pass_rate",
+            "failure_rate",
+            "input_cost",
+            "output_cost",
+            "total_cost",
+            "avg_cost",
+            "input_tokens",
+            "output_tokens",
+            "total_tokens",
+            "count_distinct_endUserId",
+            "count_distinct_threadId",
+            "count_distinct_model",
+            "count_distinct_projectId",
+            "count_distinct_error",
+            "count_distinct_metadata",
+            "error_count",
+            "pass_count",
+            "avg_score",
+            "stddev_score",
+            "median_score",
+            "avg_rating",
+            "avg_value",
+            "score_histogram",
+            "created_at",
+            "start_time",
+            "dimension",
+        ]
+    ] = Field(
+        default=None,
+        alias="orderBy",
+    )
+    direction: Optional[Literal["asc", "desc"]] = None
+
+
+class WidgetLayout(ConfidentBaseModel):
+    x: float
+    y: float
+    w: float
+    h: float
+
+
+class WidgetLineExtraQueryParams(ConfidentBaseModel):
+    pass
+
+
+class WidgetLineInput(ConfidentBaseModel):
+    name: str
+    color: Optional[WidgetLineColor] = None
+    data_model: Optional[WidgetDataModel] = Field(
+        default=None,
+        alias="dataModel",
+    )
+    aggregation: Optional[WidgetAggregation] = None
+    filters: Optional[FilterSet] = None
+    extra_query_params: Optional[WidgetLineExtraQueryParams] = Field(
+        default=None,
+        alias="extraQueryParams",
+    )
+
+
+class WidgetInput(ConfidentBaseModel):
+    name: str
+    description: Optional[str] = None
+    type: Optional[WidgetType] = None
+    unit: Optional[WidgetUnit] = None
+    mode: Optional[WidgetMode] = None
+    bucket_mode: Optional[WidgetBucketMode] = Field(
+        default=None,
+        alias="bucketMode",
+    )
+    dimension: Optional[WidgetDimension] = None
+    top_k: Optional[WidgetTopK] = Field(default=None, alias="topK")
+    start_time: Optional[str] = Field(default=None, alias="startTime")
+    end_time: Optional[str] = Field(default=None, alias="endTime")
+    layout: Optional[WidgetLayout] = None
+    lines: Optional[List[WidgetLineInput]] = None
 
 
 class WidgetTableColumn(ConfidentBaseModel):

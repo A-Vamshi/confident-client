@@ -9,14 +9,14 @@ from confident_ai.api import Api, HttpMethods
 from confident_ai.common.types import GenerationMode, Level
 from confident_ai.endpoints import Endpoints
 from confident_ai.rt_frameworks.types import (
-    AttackEngine,
-    CreateRTFrameworkRequest,
+    AttackEngineInput,
+    CreateRTFrameworkInput,
     RTFramework,
     RTFrameworkList,
     RTFrameworkRef,
     RiskAssessmentRef,
-    RunRTFrameworkRequest,
-    UpdateRTFrameworkRequest,
+    RunRTFrameworkInput,
+    UpdateRTFrameworkInput,
 )
 
 
@@ -92,7 +92,7 @@ class RTFrameworksOperations:
             HttpMethods.POST,
             Endpoints.RT_FRAMEWORKS_ENDPOINT,
             response_schema=RTFrameworkRef,
-            request_schema=CreateRTFrameworkRequest,
+            request_schema=CreateRTFrameworkInput,
             body={
                 "name": name,
                 "description": description,
@@ -125,7 +125,7 @@ class RTFrameworksOperations:
             HttpMethods.POST,
             Endpoints.RT_FRAMEWORKS_ENDPOINT,
             response_schema=RTFrameworkRef,
-            request_schema=CreateRTFrameworkRequest,
+            request_schema=CreateRTFrameworkInput,
             body={
                 "name": name,
                 "description": description,
@@ -188,7 +188,7 @@ class RTFrameworksOperations:
             HttpMethods.PUT,
             Endpoints.RT_FRAMEWORK_ENDPOINT,
             response_schema=RTFramework,
-            request_schema=UpdateRTFrameworkRequest,
+            request_schema=UpdateRTFrameworkInput,
             body={"name": name, "description": description},
             path={"rtFrameworkId": rt_framework_id},
         )
@@ -214,7 +214,7 @@ class RTFrameworksOperations:
             HttpMethods.PUT,
             Endpoints.RT_FRAMEWORK_ENDPOINT,
             response_schema=RTFramework,
-            request_schema=UpdateRTFrameworkRequest,
+            request_schema=UpdateRTFrameworkInput,
             body={"name": name, "description": description},
             path={"rtFrameworkId": rt_framework_id},
         )
@@ -262,7 +262,7 @@ class RTFrameworksOperations:
         prompt_alias: Optional[str] = None,
         prompt_commit: Optional[str] = None,
         generation_mode: Optional[GenerationMode] = None,
-        attack_engine: Optional[AttackEngine] = None
+        attack_engine: Optional[AttackEngineInput] = None
     ) -> RiskAssessmentRef:
         """Run RT Framework
 
@@ -289,7 +289,7 @@ class RTFrameworksOperations:
             HttpMethods.POST,
             Endpoints.RT_FRAMEWORK_RUN_ENDPOINT,
             response_schema=RiskAssessmentRef,
-            request_schema=RunRTFrameworkRequest,
+            request_schema=RunRTFrameworkInput,
             body={
                 "riskCategories": risk_categories,
                 "exposure": exposure,
@@ -314,7 +314,7 @@ class RTFrameworksOperations:
         prompt_alias: Optional[str] = None,
         prompt_commit: Optional[str] = None,
         generation_mode: Optional[GenerationMode] = None,
-        attack_engine: Optional[AttackEngine] = None
+        attack_engine: Optional[AttackEngineInput] = None
     ) -> RiskAssessmentRef:
         """Run RT Framework
 
@@ -341,7 +341,7 @@ class RTFrameworksOperations:
             HttpMethods.POST,
             Endpoints.RT_FRAMEWORK_RUN_ENDPOINT,
             response_schema=RiskAssessmentRef,
-            request_schema=RunRTFrameworkRequest,
+            request_schema=RunRTFrameworkInput,
             body={
                 "riskCategories": risk_categories,
                 "exposure": exposure,

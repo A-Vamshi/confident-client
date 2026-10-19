@@ -4,9 +4,9 @@
 # and regenerate.
 
 from confident_ai.mcp_servers.types import (
-    CreateMcpServerRequest,
+    CreateMcpServerInput,
     McpServer,
-    McpServerAuthConfig,
+    McpServerAuthConfigInput,
     McpServerAuthType,
     McpServerConnection,
     McpServerList,
@@ -15,13 +15,13 @@ from confident_ai.mcp_servers.types import (
     McpServerSummary,
     McpServerTool,
     McpServerTransport,
-    UpdateMcpServerRequest,
+    UpdateMcpServerInput,
 )
 
 __all__ = [
-    "CreateMcpServerRequest",
+    "CreateMcpServerInput",
     "McpServer",
-    "McpServerAuthConfig",
+    "McpServerAuthConfigInput",
     "McpServerAuthType",
     "McpServerConnection",
     "McpServerList",
@@ -30,5 +30,5 @@ __all__ = [
     "McpServerSummary",
     "McpServerTool",
     "McpServerTransport",
-    "UpdateMcpServerRequest",
+    "UpdateMcpServerInput",
 ]

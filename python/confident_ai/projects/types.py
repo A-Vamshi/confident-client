@@ -27,15 +27,15 @@ class ClearProjectModelResult(ConfidentBaseModel):
     source: ModelSource
 
 
-class CreateProjectInvitationsRequest(ConfidentBaseModel):
-    emails: List[str]
-    project_role_id: Optional[str] = Field(default=None, alias="projectRoleId")
-
-
-class CreateProjectRequest(ConfidentBaseModel):
+class CreateProjectInput(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     email: Optional[str] = None
+
+
+class CreateProjectInvitationsInput(ConfidentBaseModel):
+    emails: List[str]
+    project_role_id: Optional[str] = Field(default=None, alias="projectRoleId")
 
 
 class ProjectSummary(ConfidentBaseModel):
@@ -61,6 +61,39 @@ class ProjectDefaultApiKey(ConfidentBaseModel):
 class CreateProjectResult(ConfidentBaseModel):
     project: ProjectSummary
     api_key: Optional[ProjectDefaultApiKey] = Field(alias="apiKey")
+
+
+class DecisionProjectModelInput(ConfidentBaseModel):
+    provider: ModelProvider
+    name: Optional[str] = None
+    model_credential_id: Optional[str] = Field(
+        default=None,
+        alias="modelCredentialId",
+    )
+
+
+class EvaluationProjectModelInput(ConfidentBaseModel):
+    provider: ModelProvider
+    name: Optional[str] = None
+    max_concurrency: Optional[int] = Field(default=None, alias="maxConcurrency")
+    model_credential_id: Optional[str] = Field(
+        default=None,
+        alias="modelCredentialId",
+    )
+
+
+class PlatformProjectModelInput(ConfidentBaseModel):
+    provider: ModelProvider
+    name: Optional[str] = None
+    max_concurrency: Optional[int] = Field(default=None, alias="maxConcurrency")
+    max_input_tokens: Optional[int] = Field(
+        default=None,
+        alias="maxInputTokens",
+    )
+    model_credential_id: Optional[str] = Field(
+        default=None,
+        alias="modelCredentialId",
+    )
 
 
 class ProjectGovernancePolicy(ConfidentBaseModel):
@@ -132,37 +165,9 @@ class ProjectRoleList(ConfidentBaseModel):
     roles: List[ProjectRole]
 
 
-class UpdateDecisionProjectModelRequest(ConfidentBaseModel):
-    provider: ModelProvider
+class UpdateProjectInput(ConfidentBaseModel):
     name: Optional[str] = None
-    model_credential_id: Optional[str] = Field(
-        default=None,
-        alias="modelCredentialId",
-    )
-
-
-class UpdateEvaluationProjectModelRequest(ConfidentBaseModel):
-    provider: ModelProvider
-    name: Optional[str] = None
-    max_concurrency: Optional[int] = Field(default=None, alias="maxConcurrency")
-    model_credential_id: Optional[str] = Field(
-        default=None,
-        alias="modelCredentialId",
-    )
-
-
-class UpdatePlatformProjectModelRequest(ConfidentBaseModel):
-    provider: ModelProvider
-    name: Optional[str] = None
-    max_concurrency: Optional[int] = Field(default=None, alias="maxConcurrency")
-    max_input_tokens: Optional[int] = Field(
-        default=None,
-        alias="maxInputTokens",
-    )
-    model_credential_id: Optional[str] = Field(
-        default=None,
-        alias="modelCredentialId",
-    )
+    description: Optional[str] = None
 
 
 class UpdateProjectModelResult(ConfidentBaseModel):
@@ -170,13 +175,8 @@ class UpdateProjectModelResult(ConfidentBaseModel):
     source: Optional[ModelSource] = None
 
 
-class UpdateProjectRequest(ConfidentBaseModel):
-    name: Optional[str] = None
-    description: Optional[str] = None
-
-
-UpdateProjectModelRequest = Union[
-    UpdateEvaluationProjectModelRequest,
-    UpdateDecisionProjectModelRequest,
-    UpdatePlatformProjectModelRequest,
+ProjectModelInput = Union[
+    EvaluationProjectModelInput,
+    DecisionProjectModelInput,
+    PlatformProjectModelInput,
 ]

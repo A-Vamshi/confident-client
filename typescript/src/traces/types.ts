@@ -4,7 +4,6 @@
 // and regenerate.
 
 import {
-  Environment,
   EvaluationErrorType,
   ToolCall,
   TraceSpanStatus,
@@ -15,7 +14,7 @@ export enum TraceSortBy {
   ENDEDAT = "endedAt",
 }
 
-export interface MetricDataConfig {
+export interface MetricDataInput {
   name: string;
   score?: number | null;
   success?: boolean | null;
@@ -30,7 +29,7 @@ export interface MetricDataConfig {
   verboseLogs?: string | null;
 }
 
-export interface AgentSpanRequest {
+export interface AgentSpanInput {
   type: "AGENT";
   uuid: string;
   name: string;
@@ -49,12 +48,12 @@ export interface AgentSpanRequest {
   toolsCalled?: ToolCall[];
   expectedTools?: ToolCall[];
   integration?: string;
-  metricsData?: MetricDataConfig[];
+  metricsData?: MetricDataInput[];
   availableTools: string[];
   agentHandoffs: string[];
 }
 
-export interface BaseSpanRequest {
+export interface BaseSpanInput {
   type?: "SPAN";
   uuid: string;
   name: string;
@@ -73,26 +72,26 @@ export interface BaseSpanRequest {
   toolsCalled?: ToolCall[];
   expectedTools?: ToolCall[];
   integration?: string;
-  metricsData?: MetricDataConfig[];
+  metricsData?: MetricDataInput[];
 }
 
-export interface ThreadRequest {
+export interface ThreadInput {
   id?: string;
   metadata?: Record<string, unknown> | null;
   tags?: string[] | null;
 }
 
-export interface UserRequest {
+export interface UserInput {
   id?: string;
   name?: string | null;
 }
 
-export interface CustomerRequest {
+export interface CustomerInput {
   id?: string;
   name?: string | null;
 }
 
-export interface LlmSpanRequest {
+export interface LlmSpanInput {
   type: "LLM";
   uuid: string;
   name: string;
@@ -111,7 +110,7 @@ export interface LlmSpanRequest {
   toolsCalled?: ToolCall[];
   expectedTools?: ToolCall[];
   integration?: string;
-  metricsData?: MetricDataConfig[];
+  metricsData?: MetricDataInput[];
   model?: string;
   provider?: string;
   endpoint?: string;
@@ -125,7 +124,7 @@ export interface LlmSpanRequest {
   promptCommitHash?: string;
 }
 
-export interface RetrieverSpanRequest {
+export interface RetrieverSpanInput {
   type: "RETRIEVER";
   uuid: string;
   name: string;
@@ -144,13 +143,13 @@ export interface RetrieverSpanRequest {
   toolsCalled?: ToolCall[];
   expectedTools?: ToolCall[];
   integration?: string;
-  metricsData?: MetricDataConfig[];
+  metricsData?: MetricDataInput[];
   embedder: string;
   topK?: number;
   chunkSize?: number;
 }
 
-export interface ToolSpanRequest {
+export interface ToolSpanInput {
   type: "TOOL";
   uuid: string;
   name: string;
@@ -169,24 +168,24 @@ export interface ToolSpanRequest {
   toolsCalled?: ToolCall[];
   expectedTools?: ToolCall[];
   integration?: string;
-  metricsData?: MetricDataConfig[];
+  metricsData?: MetricDataInput[];
   description?: string;
 }
 
-export type SpanRequest =
-  | BaseSpanRequest
-  | LlmSpanRequest
-  | RetrieverSpanRequest
-  | ToolSpanRequest
-  | AgentSpanRequest;
+export type SpanInput =
+  | BaseSpanInput
+  | LlmSpanInput
+  | RetrieverSpanInput
+  | ToolSpanInput
+  | AgentSpanInput;
 
-export interface TraceAttachment {
+export interface TraceAttachmentInput {
   url?: string;
   dataBase64?: string;
   mimeType?: string;
 }
 
-export interface CreateTraceRequest {
+export interface CreateTraceInput {
   uuid: string;
   name?: string;
   input?: unknown;
@@ -194,15 +193,15 @@ export interface CreateTraceRequest {
   startTime: string;
   endTime: string;
   status?: TraceSpanStatus;
-  environment?: Environment;
+  environment?: string;
   metadata?: Record<string, unknown>;
   tags?: string[];
   threadId?: string;
-  thread?: ThreadRequest;
+  thread?: ThreadInput;
   userId?: string;
-  user?: UserRequest;
+  user?: UserInput;
   customerId?: string;
-  customer?: CustomerRequest;
+  customer?: CustomerInput;
   metricCollection?: string;
   testRunId?: string;
   testCaseId?: string;
@@ -212,9 +211,9 @@ export interface CreateTraceRequest {
   expectedOutput?: string;
   toolsCalled?: ToolCall[];
   expectedTools?: ToolCall[];
-  spans?: SpanRequest[];
-  metricsData?: MetricDataConfig[];
-  attachments?: Record<string, TraceAttachment>;
+  spans?: SpanInput[];
+  metricsData?: MetricDataInput[];
+  attachments?: Record<string, TraceAttachmentInput>;
 }
 
 export interface TraceSummary {
@@ -228,7 +227,7 @@ export interface TraceSummary {
   threadId: string | null;
   userId: string | null;
   customerId: string | null;
-  environment: Environment;
+  environment: string;
   tags: string[] | null;
   metadata: Record<string, unknown> | null;
   inputPreview: string | null;

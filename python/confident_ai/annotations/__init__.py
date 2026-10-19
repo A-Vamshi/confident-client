@@ -5,26 +5,26 @@
 
 from confident_ai.annotations.types import (
     Annotation,
+    AnnotationInput,
     AnnotationList,
     AnnotationRef,
     AnnotationSortBy,
-    AnnotationValue,
-    CreateAnnotationRequest,
-    SpanAnnotationRequest,
-    ThreadAnnotationRequest,
-    TraceAnnotationRequest,
-    UpdateAnnotationRequest,
+    AnnotationValueInput,
+    SpanAnnotationInput,
+    ThreadAnnotationInput,
+    TraceAnnotationInput,
+    UpdateAnnotationInput,
 )
 
 __all__ = [
     "Annotation",
+    "AnnotationInput",
     "AnnotationList",
     "AnnotationRef",
     "AnnotationSortBy",
-    "AnnotationValue",
-    "CreateAnnotationRequest",
-    "SpanAnnotationRequest",
-    "ThreadAnnotationRequest",
-    "TraceAnnotationRequest",
-    "UpdateAnnotationRequest",
+    "AnnotationValueInput",
+    "SpanAnnotationInput",
+    "ThreadAnnotationInput",
+    "TraceAnnotationInput",
+    "UpdateAnnotationInput",
 ]

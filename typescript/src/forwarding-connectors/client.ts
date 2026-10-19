@@ -5,10 +5,9 @@
 
 import { Api, HttpMethods } from "../api";
 import { Endpoints } from "../endpoints";
-import { Environment } from "../common/types";
 import {
   ForwardingConnector,
-  ForwardingConnectorHeaderConfig,
+  ForwardingConnectorHeaderInput,
   ForwardingConnectorList,
   ForwardingConnectorRef,
 } from "./types";
@@ -68,8 +67,8 @@ export class ForwardingConnectorsClient {
     name: string,
     endpoint: string,
     options: {
-      headers?: ForwardingConnectorHeaderConfig[];
-      environments?: Environment[];
+      headers?: ForwardingConnectorHeaderInput[];
+      environments?: string[];
       enabled?: boolean;
     } = {},
   ): Promise<ForwardingConnectorRef> {
@@ -126,8 +125,8 @@ export class ForwardingConnectorsClient {
     options: {
       name?: string;
       endpoint?: string;
-      headers?: ForwardingConnectorHeaderConfig[];
-      environments?: Environment[];
+      headers?: ForwardingConnectorHeaderInput[];
+      environments?: string[];
       enabled?: boolean;
     } = {},
   ): Promise<ForwardingConnector> {

@@ -20,13 +20,13 @@ class TransformerCodeDefinition(ConfidentBaseModel):
     language: TransformerLanguage
 
 
-class CreateTransformerRequest(ConfidentBaseModel):
+class CreateTransformerInput(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     code_definition: TransformerCodeDefinition = Field(alias="codeDefinition")
 
 
-class TestTransformerCodeRequest(ConfidentBaseModel):
+class TestTransformerCodeInput(ConfidentBaseModel):
     input_data: Optional[Any] = Field(default=None, alias="inputData")
 
 
@@ -73,7 +73,7 @@ class TransformerRef(ConfidentBaseModel):
     id: str
 
 
-class UpdateTransformerRequest(ConfidentBaseModel):
+class UpdateTransformerInput(ConfidentBaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     code_definition: Optional[TransformerCodeDefinition] = Field(

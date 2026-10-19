@@ -4,8 +4,8 @@
 # and regenerate.
 
 from confident_ai.vulnerabilities.types import (
-    CreateVulnerabilityRequest,
-    UpdateVulnerabilityRequest,
+    CreateVulnerabilityInput,
+    UpdateVulnerabilityInput,
     Vulnerability,
     VulnerabilityEvaluationExample,
     VulnerabilityList,
@@ -15,8 +15,8 @@ from confident_ai.vulnerabilities.types import (
 )
 
 __all__ = [
-    "CreateVulnerabilityRequest",
-    "UpdateVulnerabilityRequest",
+    "CreateVulnerabilityInput",
+    "UpdateVulnerabilityInput",
     "Vulnerability",
     "VulnerabilityEvaluationExample",
     "VulnerabilityList",

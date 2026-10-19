@@ -6,24 +6,19 @@
 from typing import Any, Dict, List, Literal, Optional
 
 from confident_ai.api import Api, HttpMethods
-from confident_ai.common.types import (
-    Environment,
-    ToolCall,
-    Trace,
-    TraceSpanStatus,
-)
+from confident_ai.common.types import ToolCall, Trace, TraceSpanStatus
 from confident_ai.endpoints import Endpoints
 from confident_ai.traces.types import (
-    CreateTraceRequest,
-    CustomerRequest,
-    MetricDataConfig,
-    SpanRequest,
-    ThreadRequest,
-    TraceAttachment,
+    CreateTraceInput,
+    CustomerInput,
+    MetricDataInput,
+    SpanInput,
+    ThreadInput,
+    TraceAttachmentInput,
     TraceList,
     TraceRef,
     TraceSortBy,
-    UserRequest,
+    UserInput,
 )
 
 
@@ -40,7 +35,7 @@ class TracesClient:
         end: Optional[str] = None,
         ascending: Optional[Literal["true", "false"]] = None,
         sort_by: Optional[TraceSortBy] = None,
-        environment: Optional[Environment] = None,
+        environment: Optional[str] = None,
         metadata: Optional[Dict[str, str]] = None
     ) -> TraceList:
         """List Traces
@@ -96,7 +91,7 @@ class TracesClient:
         end: Optional[str] = None,
         ascending: Optional[Literal["true", "false"]] = None,
         sort_by: Optional[TraceSortBy] = None,
-        environment: Optional[Environment] = None,
+        environment: Optional[str] = None,
         metadata: Optional[Dict[str, str]] = None
     ) -> TraceList:
         """List Traces
@@ -153,15 +148,15 @@ class TracesClient:
         input: Optional[Any] = None,
         output: Optional[Any] = None,
         status: Optional[TraceSpanStatus] = None,
-        environment: Optional[Environment] = None,
+        environment: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
         tags: Optional[List[str]] = None,
         thread_id: Optional[str] = None,
-        thread: Optional[ThreadRequest] = None,
+        thread: Optional[ThreadInput] = None,
         user_id: Optional[str] = None,
-        user: Optional[UserRequest] = None,
+        user: Optional[UserInput] = None,
         customer_id: Optional[str] = None,
-        customer: Optional[CustomerRequest] = None,
+        customer: Optional[CustomerInput] = None,
         metric_collection: Optional[str] = None,
         test_run_id: Optional[str] = None,
         test_case_id: Optional[str] = None,
@@ -171,9 +166,9 @@ class TracesClient:
         expected_output: Optional[str] = None,
         tools_called: Optional[List[ToolCall]] = None,
         expected_tools: Optional[List[ToolCall]] = None,
-        spans: Optional[List[SpanRequest]] = None,
-        metrics_data: Optional[List[MetricDataConfig]] = None,
-        attachments: Optional[Dict[str, TraceAttachment]] = None
+        spans: Optional[List[SpanInput]] = None,
+        metrics_data: Optional[List[MetricDataInput]] = None,
+        attachments: Optional[Dict[str, TraceAttachmentInput]] = None
     ) -> TraceRef:
         """Create Trace
 
@@ -193,6 +188,11 @@ class TracesClient:
                 value.
             output: This is the output of the trace, as a string or any JSON
                 value.
+            environment: This is the environment where your trace was posted,
+                which helps with separating and debugging traces from different
+                environments on the Confident AI platform. Any name up to 64
+                characters is accepted, for example production, staging or eu-
+                prod.
             metadata: This is any additional metadata associated with the trace.
             tags: This is any tags associated with the trace, which helps with
                 grouping traces and filtering them on the Confident AI platform.
@@ -238,7 +238,7 @@ class TracesClient:
             HttpMethods.POST,
             Endpoints.TRACES_ENDPOINT,
             response_schema=TraceRef,
-            request_schema=CreateTraceRequest,
+            request_schema=CreateTraceInput,
             body={
                 "uuid": uuid,
                 "startTime": start_time,
@@ -281,15 +281,15 @@ class TracesClient:
         input: Optional[Any] = None,
         output: Optional[Any] = None,
         status: Optional[TraceSpanStatus] = None,
-        environment: Optional[Environment] = None,
+        environment: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
         tags: Optional[List[str]] = None,
         thread_id: Optional[str] = None,
-        thread: Optional[ThreadRequest] = None,
+        thread: Optional[ThreadInput] = None,
         user_id: Optional[str] = None,
-        user: Optional[UserRequest] = None,
+        user: Optional[UserInput] = None,
         customer_id: Optional[str] = None,
-        customer: Optional[CustomerRequest] = None,
+        customer: Optional[CustomerInput] = None,
         metric_collection: Optional[str] = None,
         test_run_id: Optional[str] = None,
         test_case_id: Optional[str] = None,
@@ -299,9 +299,9 @@ class TracesClient:
         expected_output: Optional[str] = None,
         tools_called: Optional[List[ToolCall]] = None,
         expected_tools: Optional[List[ToolCall]] = None,
-        spans: Optional[List[SpanRequest]] = None,
-        metrics_data: Optional[List[MetricDataConfig]] = None,
-        attachments: Optional[Dict[str, TraceAttachment]] = None
+        spans: Optional[List[SpanInput]] = None,
+        metrics_data: Optional[List[MetricDataInput]] = None,
+        attachments: Optional[Dict[str, TraceAttachmentInput]] = None
     ) -> TraceRef:
         """Create Trace
 
@@ -321,6 +321,11 @@ class TracesClient:
                 value.
             output: This is the output of the trace, as a string or any JSON
                 value.
+            environment: This is the environment where your trace was posted,
+                which helps with separating and debugging traces from different
+                environments on the Confident AI platform. Any name up to 64
+                characters is accepted, for example production, staging or eu-
+                prod.
             metadata: This is any additional metadata associated with the trace.
             tags: This is any tags associated with the trace, which helps with
                 grouping traces and filtering them on the Confident AI platform.
@@ -366,7 +371,7 @@ class TracesClient:
             HttpMethods.POST,
             Endpoints.TRACES_ENDPOINT,
             response_schema=TraceRef,
-            request_schema=CreateTraceRequest,
+            request_schema=CreateTraceInput,
             body={
                 "uuid": uuid,
                 "startTime": start_time,

@@ -21,9 +21,6 @@ class AIConnectionResponseMode(Enum):
     SSE_STREAMING = "SSE_STREAMING"
     HTTP_STREAMING = "HTTP_STREAMING"
     WEBSOCKET = "WEBSOCKET"
-    PHONE = "PHONE"
-    SIP = "SIP"
-    WEBRTC = "WEBRTC"
 
 
 class AIConnectionType(Enum):
@@ -100,6 +97,7 @@ class AIConnection(ConfidentBaseModel):
         alias="toolsCalledKeyPath",
     )
     state_key_path: List[Union[str, int]] = Field(alias="stateKeyPath")
+    metadata_key_path: List[Union[str, int]] = Field(alias="metadataKeyPath")
     input_token_count_key_path: List[Union[str, int]] = Field(
         alias="inputTokenCountKeyPath",
     )
@@ -117,6 +115,9 @@ class AIConnection(ConfidentBaseModel):
         alias="toolsCalledTransformerId",
     )
     state_transformer_id: Optional[str] = Field(alias="stateTransformerId")
+    metadata_transformer_id: Optional[str] = Field(
+        alias="metadataTransformerId",
+    )
     input_token_count_transformer_id: Optional[str] = Field(
         alias="inputTokenCountTransformerId",
     )
@@ -132,7 +133,9 @@ class AIConnection(ConfidentBaseModel):
     )
     tools_called_event: Optional[str] = Field(alias="toolsCalledEvent")
     state_event: Optional[str] = Field(alias="stateEvent")
+    metadata_event: Optional[str] = Field(alias="metadataEvent")
     actual_output_accumulate: bool = Field(alias="actualOutputAccumulate")
+    merge_metadata: bool = Field(alias="mergeMetadata")
     prompts: Optional[Dict[str, AIConnectionPromptRef]]
 
 
@@ -162,6 +165,7 @@ class AIConnectionPingResult(ConfidentBaseModel):
     retrieval_context: Optional[List[str]] = Field(alias="retrievalContext")
     tools_called: Optional[List[Dict[str, Any]]] = Field(alias="toolsCalled")
     state: Optional[Dict[str, Any]]
+    metadata: Optional[Dict[str, Any]]
     input_token_count: Optional[float] = Field(alias="inputTokenCount")
     output_token_count: Optional[float] = Field(alias="outputTokenCount")
     token_cost: Optional[float] = Field(alias="tokenCost")
@@ -169,6 +173,7 @@ class AIConnectionPingResult(ConfidentBaseModel):
     invalid_retrieval_context: bool = Field(alias="invalidRetrievalContext")
     invalid_tools_called: bool = Field(alias="invalidToolsCalled")
     invalid_state: bool = Field(alias="invalidState")
+    invalid_metadata: bool = Field(alias="invalidMetadata")
     invalid_input_token_count: bool = Field(alias="invalidInputTokenCount")
     invalid_output_token_count: bool = Field(alias="invalidOutputTokenCount")
     invalid_token_cost: bool = Field(alias="invalidTokenCost")
@@ -178,7 +183,7 @@ class AIConnectionRef(ConfidentBaseModel):
     id: str
 
 
-class CreateAIConnectionRequest(ConfidentBaseModel):
+class CreateAIConnectionInput(ConfidentBaseModel):
     name: str
     type: Optional[AIConnectionType] = None
     endpoint: Optional[str] = None
@@ -222,6 +227,10 @@ class CreateAIConnectionRequest(ConfidentBaseModel):
         default=None,
         alias="stateKeyPath",
     )
+    metadata_key_path: Optional[List[Union[str, int]]] = Field(
+        default=None,
+        alias="metadataKeyPath",
+    )
     input_token_count_key_path: Optional[List[Union[str, int]]] = Field(
         default=None,
         alias="inputTokenCountKeyPath",
@@ -247,10 +256,12 @@ class CreateAIConnectionRequest(ConfidentBaseModel):
         alias="toolsCalledEvent",
     )
     state_event: Optional[str] = Field(default=None, alias="stateEvent")
+    metadata_event: Optional[str] = Field(default=None, alias="metadataEvent")
     actual_output_accumulate: Optional[bool] = Field(
         default=None,
         alias="actualOutputAccumulate",
     )
+    merge_metadata: Optional[bool] = Field(default=None, alias="mergeMetadata")
     actual_output_transformer_id: Optional[str] = Field(
         default=None,
         alias="actualOutputTransformerId",
@@ -267,6 +278,10 @@ class CreateAIConnectionRequest(ConfidentBaseModel):
         default=None,
         alias="stateTransformerId",
     )
+    metadata_transformer_id: Optional[str] = Field(
+        default=None,
+        alias="metadataTransformerId",
+    )
     input_token_count_transformer_id: Optional[str] = Field(
         default=None,
         alias="inputTokenCountTransformerId",
@@ -282,11 +297,11 @@ class CreateAIConnectionRequest(ConfidentBaseModel):
     prompts: Optional[Dict[str, AIConnectionPromptRef]] = None
 
 
-class PingAIConnectionRequest(ConfidentBaseModel):
+class PingAIConnectionInput(ConfidentBaseModel):
     multiturn: Optional[bool] = None
 
 
-class UpdateAIConnectionRequest(ConfidentBaseModel):
+class UpdateAIConnectionInput(ConfidentBaseModel):
     name: Optional[str] = None
     type: Optional[AIConnectionType] = None
     endpoint: Optional[str] = None
@@ -330,6 +345,10 @@ class UpdateAIConnectionRequest(ConfidentBaseModel):
         default=None,
         alias="stateKeyPath",
     )
+    metadata_key_path: Optional[List[Union[str, int]]] = Field(
+        default=None,
+        alias="metadataKeyPath",
+    )
     input_token_count_key_path: Optional[List[Union[str, int]]] = Field(
         default=None,
         alias="inputTokenCountKeyPath",
@@ -355,10 +374,12 @@ class UpdateAIConnectionRequest(ConfidentBaseModel):
         alias="toolsCalledEvent",
     )
     state_event: Optional[str] = Field(default=None, alias="stateEvent")
+    metadata_event: Optional[str] = Field(default=None, alias="metadataEvent")
     actual_output_accumulate: Optional[bool] = Field(
         default=None,
         alias="actualOutputAccumulate",
     )
+    merge_metadata: Optional[bool] = Field(default=None, alias="mergeMetadata")
     actual_output_transformer_id: Optional[str] = Field(
         default=None,
         alias="actualOutputTransformerId",
@@ -374,6 +395,10 @@ class UpdateAIConnectionRequest(ConfidentBaseModel):
     state_transformer_id: Optional[str] = Field(
         default=None,
         alias="stateTransformerId",
+    )
+    metadata_transformer_id: Optional[str] = Field(
+        default=None,
+        alias="metadataTransformerId",
     )
     input_token_count_transformer_id: Optional[str] = Field(
         default=None,

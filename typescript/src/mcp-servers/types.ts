@@ -14,21 +14,21 @@ export enum McpServerTransport {
   HTTP = "HTTP",
 }
 
-export interface McpServerAuthConfig {
+export interface McpServerAuthConfigInput {
   tenantId?: string;
   clientId?: string;
   clientSecret?: string;
   scope?: string;
 }
 
-export interface CreateMcpServerRequest {
+export interface CreateMcpServerInput {
   name: string;
   transport: McpServerTransport;
   description?: string | null;
   url?: string | null;
   headers?: Record<string, string> | null;
   authType?: McpServerAuthType;
-  authConfig?: McpServerAuthConfig | null;
+  authConfig?: McpServerAuthConfigInput | null;
   command?: string | null;
   args?: string[];
 }
@@ -88,14 +88,14 @@ export interface McpServerRef {
   id: string;
 }
 
-export interface UpdateMcpServerRequest {
+export interface UpdateMcpServerInput {
   name?: string;
   transport?: McpServerTransport;
   description?: string | null;
   url?: string | null;
   headers?: Record<string, string> | null;
   authType?: McpServerAuthType;
-  authConfig?: McpServerAuthConfig | null;
+  authConfig?: McpServerAuthConfigInput | null;
   command?: string | null;
   args?: string[];
 }

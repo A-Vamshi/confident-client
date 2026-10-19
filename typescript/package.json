@@ -1,6 +1,6 @@
 {
   "name": "confident-ai",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "The official TypeScript SDK for the Confident AI platform management API.",
   "license": "Apache-2.0",
   "author": "Jeffrey Ip <jeffreyip@confident-ai.com>",
@@ -21,6 +21,9 @@
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "confident-ai": "dist/cli.js"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

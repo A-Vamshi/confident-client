@@ -10,16 +10,16 @@ from confident_ai.endpoints import Endpoints
 from confident_ai.organization.types import (
     AssessGovernanceControlResult,
     CreatableGovernanceControlType,
-    CreateGovernanceControlRequest,
+    CreateGovernanceControlInput,
     GovernanceControl,
     GovernanceControlActivity,
     GovernanceControlAssessmentList,
     GovernanceControlList,
-    GovernanceControlPreDeploymentConfig,
+    GovernanceControlPreDeploymentConfigInput,
     GovernanceControlRef,
-    GovernanceControlRuntimeConfig,
+    GovernanceControlRuntimeConfigInput,
     GovernanceControlType,
-    UpdateGovernanceControlRequest,
+    UpdateGovernanceControlInput,
 )
 
 
@@ -98,9 +98,9 @@ class GovernanceControlsOperations:
         type: CreatableGovernanceControlType,
         *,
         description: Optional[str] = None,
-        runtime_config: Optional[GovernanceControlRuntimeConfig] = None,
+        runtime_config: Optional[GovernanceControlRuntimeConfigInput] = None,
         pre_deployment_config: Optional[
-            GovernanceControlPreDeploymentConfig
+            GovernanceControlPreDeploymentConfigInput
         ] = None,
         governance_policy_id: Optional[str] = None
     ) -> GovernanceControlRef:
@@ -125,7 +125,7 @@ class GovernanceControlsOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_GOVERNANCE_CONTROLS_ENDPOINT,
             response_schema=GovernanceControlRef,
-            request_schema=CreateGovernanceControlRequest,
+            request_schema=CreateGovernanceControlInput,
             body={
                 "name": name,
                 "type": type,
@@ -142,9 +142,9 @@ class GovernanceControlsOperations:
         type: CreatableGovernanceControlType,
         *,
         description: Optional[str] = None,
-        runtime_config: Optional[GovernanceControlRuntimeConfig] = None,
+        runtime_config: Optional[GovernanceControlRuntimeConfigInput] = None,
         pre_deployment_config: Optional[
-            GovernanceControlPreDeploymentConfig
+            GovernanceControlPreDeploymentConfigInput
         ] = None,
         governance_policy_id: Optional[str] = None
     ) -> GovernanceControlRef:
@@ -169,7 +169,7 @@ class GovernanceControlsOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_GOVERNANCE_CONTROLS_ENDPOINT,
             response_schema=GovernanceControlRef,
-            request_schema=CreateGovernanceControlRequest,
+            request_schema=CreateGovernanceControlInput,
             body={
                 "name": name,
                 "type": type,
@@ -243,7 +243,7 @@ class GovernanceControlsOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_GOVERNANCE_CONTROL_ENDPOINT,
             response_schema=GovernanceControl,
-            request_schema=UpdateGovernanceControlRequest,
+            request_schema=UpdateGovernanceControlInput,
             body={"name": name, "description": description},
             path={"controlId": control_id},
         )
@@ -273,7 +273,7 @@ class GovernanceControlsOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_GOVERNANCE_CONTROL_ENDPOINT,
             response_schema=GovernanceControl,
-            request_schema=UpdateGovernanceControlRequest,
+            request_schema=UpdateGovernanceControlInput,
             body={"name": name, "description": description},
             path={"controlId": control_id},
         )

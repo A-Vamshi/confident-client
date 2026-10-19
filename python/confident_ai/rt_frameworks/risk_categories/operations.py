@@ -8,11 +8,11 @@ from typing import Dict, List, Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.rt_frameworks.types import (
-    CreateRiskCategoryRequest,
+    CreateRiskCategoryInput,
     RiskCategory,
     RiskCategoryList,
     RiskCategoryRef,
-    UpdateRiskCategoryRequest,
+    UpdateRiskCategoryInput,
 )
 
 
@@ -107,7 +107,7 @@ class RiskCategoriesOperations:
             HttpMethods.POST,
             Endpoints.RT_FRAMEWORK_RISK_CATEGORIES_ENDPOINT,
             response_schema=RiskCategoryRef,
-            request_schema=CreateRiskCategoryRequest,
+            request_schema=CreateRiskCategoryInput,
             body={
                 "name": name,
                 "description": description,
@@ -152,7 +152,7 @@ class RiskCategoriesOperations:
             HttpMethods.POST,
             Endpoints.RT_FRAMEWORK_RISK_CATEGORIES_ENDPOINT,
             response_schema=RiskCategoryRef,
-            request_schema=CreateRiskCategoryRequest,
+            request_schema=CreateRiskCategoryInput,
             body={
                 "name": name,
                 "description": description,
@@ -248,7 +248,7 @@ class RiskCategoriesOperations:
             HttpMethods.PUT,
             Endpoints.RT_FRAMEWORK_RISK_CATEGORY_ENDPOINT,
             response_schema=RiskCategory,
-            request_schema=UpdateRiskCategoryRequest,
+            request_schema=UpdateRiskCategoryInput,
             body={
                 "name": name,
                 "description": description,
@@ -299,7 +299,7 @@ class RiskCategoriesOperations:
             HttpMethods.PUT,
             Endpoints.RT_FRAMEWORK_RISK_CATEGORY_ENDPOINT,
             response_schema=RiskCategory,
-            request_schema=UpdateRiskCategoryRequest,
+            request_schema=UpdateRiskCategoryInput,
             body={
                 "name": name,
                 "description": description,

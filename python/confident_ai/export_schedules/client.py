@@ -7,7 +7,6 @@ from typing import Literal, Optional
 
 from confident_ai.api import Api, HttpMethods
 from confident_ai.common.types import (
-    Environment,
     FilterSet,
     ScheduleIntervalUnit,
     ScheduleRecurrenceType,
@@ -15,12 +14,12 @@ from confident_ai.common.types import (
 from confident_ai.endpoints import Endpoints
 from confident_ai.export_schedules.types import (
     AnnotationSelectionType,
-    CreateExportScheduleRequest,
+    CreateExportScheduleInput,
     ExportSchedule,
     ExportScheduleList,
     ExportScheduleRef,
     SchedulableExportType,
-    UpdateExportScheduleRequest,
+    UpdateExportScheduleInput,
 )
 
 
@@ -107,7 +106,7 @@ class ExportSchedulesClient:
         end_at: Optional[str] = None,
         description: Optional[str] = None,
         filters: Optional[FilterSet] = None,
-        environment: Optional[Environment] = None,
+        environment: Optional[str] = None,
         annotation_selection_type: Optional[AnnotationSelectionType] = None,
         destination_id: Optional[str] = None,
         enabled: Optional[bool] = None
@@ -150,7 +149,7 @@ class ExportSchedulesClient:
             HttpMethods.POST,
             Endpoints.EXPORT_SCHEDULES_ENDPOINT,
             response_schema=ExportScheduleRef,
-            request_schema=CreateExportScheduleRequest,
+            request_schema=CreateExportScheduleInput,
             body={
                 "name": name,
                 "exportType": export_type,
@@ -182,7 +181,7 @@ class ExportSchedulesClient:
         end_at: Optional[str] = None,
         description: Optional[str] = None,
         filters: Optional[FilterSet] = None,
-        environment: Optional[Environment] = None,
+        environment: Optional[str] = None,
         annotation_selection_type: Optional[AnnotationSelectionType] = None,
         destination_id: Optional[str] = None,
         enabled: Optional[bool] = None
@@ -225,7 +224,7 @@ class ExportSchedulesClient:
             HttpMethods.POST,
             Endpoints.EXPORT_SCHEDULES_ENDPOINT,
             response_schema=ExportScheduleRef,
-            request_schema=CreateExportScheduleRequest,
+            request_schema=CreateExportScheduleInput,
             body={
                 "name": name,
                 "exportType": export_type,
@@ -289,7 +288,7 @@ class ExportSchedulesClient:
         name: Optional[str] = None,
         description: Optional[str] = None,
         filters: Optional[FilterSet] = None,
-        environment: Optional[Environment] = None,
+        environment: Optional[str] = None,
         annotation_selection_type: Optional[AnnotationSelectionType] = None,
         destination_id: Optional[str] = None,
         enabled: Optional[bool] = None
@@ -329,7 +328,7 @@ class ExportSchedulesClient:
             HttpMethods.PUT,
             Endpoints.EXPORT_SCHEDULE_ENDPOINT,
             response_schema=ExportSchedule,
-            request_schema=UpdateExportScheduleRequest,
+            request_schema=UpdateExportScheduleInput,
             body={
                 "recurrence": recurrence,
                 "repeatEvery": repeat_every,
@@ -361,7 +360,7 @@ class ExportSchedulesClient:
         name: Optional[str] = None,
         description: Optional[str] = None,
         filters: Optional[FilterSet] = None,
-        environment: Optional[Environment] = None,
+        environment: Optional[str] = None,
         annotation_selection_type: Optional[AnnotationSelectionType] = None,
         destination_id: Optional[str] = None,
         enabled: Optional[bool] = None
@@ -401,7 +400,7 @@ class ExportSchedulesClient:
             HttpMethods.PUT,
             Endpoints.EXPORT_SCHEDULE_ENDPOINT,
             response_schema=ExportSchedule,
-            request_schema=UpdateExportScheduleRequest,
+            request_schema=UpdateExportScheduleInput,
             body={
                 "recurrence": recurrence,
                 "repeatEvery": repeat_every,

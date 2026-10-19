@@ -13,7 +13,7 @@ import pytest
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.transformers.types import (
-    CreateTransformerRequest,
+    CreateTransformerInput,
     TransformerCodeRunFailure,
     TransformerCodeRunResult,
     TransformerCodeRunSuccess,
@@ -99,8 +99,8 @@ def test_body_is_dumped_by_alias_without_unset_fields(api, http):
         HttpMethods.POST,
         Endpoints.PROJECTS_ENDPOINT,
         response_schema=TransformerRef,
-        request_schema=CreateTransformerRequest,
-        body=CreateTransformerRequest(
+        request_schema=CreateTransformerInput,
+        body=CreateTransformerInput(
             name="strip",
             code_definition={
                 "code": "x",
@@ -122,7 +122,7 @@ def test_a_plain_dict_body_is_coerced_through_the_request_schema(api, http):
         HttpMethods.POST,
         Endpoints.PROJECTS_ENDPOINT,
         response_schema=TransformerRef,
-        request_schema=CreateTransformerRequest,
+        request_schema=CreateTransformerInput,
         body={
             "name": "strip",
             "codeDefinition": {"code": "x", "language": "PYTHON"},
@@ -141,7 +141,7 @@ def test_an_invalid_body_is_refused_before_any_request(api, http):
             HttpMethods.POST,
             Endpoints.PROJECTS_ENDPOINT,
             response_schema=TransformerRef,
-            request_schema=CreateTransformerRequest,
+            request_schema=CreateTransformerInput,
             body={"name": "strip"},
         )
 
@@ -221,8 +221,8 @@ def test_a_request_sends_the_same_body(api, http):
             HttpMethods.POST,
             Endpoints.PROJECTS_ENDPOINT,
             response_schema=TransformerRef,
-            request_schema=CreateTransformerRequest,
-            body=CreateTransformerRequest(
+            request_schema=CreateTransformerInput,
+            body=CreateTransformerInput(
                 name="strip",
                 code_definition={
                     "code": "x",

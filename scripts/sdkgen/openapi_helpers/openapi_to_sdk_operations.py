@@ -5,13 +5,26 @@ argument in Python and TypeScript form. Every renderer reads that same
 object, which is what stops the two SDKs drifting apart.
 """
 
+import json
+
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Sequence, Set, Tuple
+from typing import (
+    Any,
+    Dict,
+    FrozenSet,
+    List,
+    Optional,
+    Sequence,
+    Set,
+    Tuple,
+)
 
 from ..constants import (
     TS_OPTIONS_THRESHOLD,
     ENDPOINTS_CLASS,
+    MEDIA_MAPPING_FIELD,
     PATH_PARAMETER,
+    SCHEMA_REF,
     TS_RESERVED,
     UNION_BODY_PARAMETERS,
 )
@@ -107,6 +120,32 @@ def body_fields(
     ]
 
 
+def media_holders(name: str, schemas: Dict[str, Any]) -> Tuple[str, ...]:
+    found: List[str] = []
+
+    def walk(schema: Dict[str, Any], path: str, seen: FrozenSet[str]) -> None:
+        if "$ref" in schema:
+            ref = ref_name(schema["$ref"])
+            if ref not in seen:
+                walk(schemas.get(ref) or {}, path, seen | {ref})
+            return
+        properties = schema.get("properties") or {}
+        if MEDIA_MAPPING_FIELD in properties:
+            if path not in found:
+                found.append(path)
+            return
+        for union in ("anyOf", "oneOf", "allOf"):
+            for branch in schema.get(union) or []:
+                walk(branch, path, seen)
+        if "items" in schema:
+            walk(schema["items"], f"{path}.*", seen)
+        for key, value in properties.items():
+            walk(value, f"{path}.{key}", seen)
+
+    walk({"$ref": f"{SCHEMA_REF}{name}"}, "$", frozenset())
+    return tuple(found)
+
+
 def union_body_help(
     name: str, schemas: Dict[str, Any], home: Dict[str, str]
 ) -> str:
@@ -175,6 +214,7 @@ class Method:
     parameters: List[Parameter]
     documented: List[Tuple[str, Optional[str]]]
     call: List[str]
+    media_holders: Tuple[str, ...]
     annotations: List[str]
     referenced: Set[str]
 
@@ -263,6 +303,7 @@ def resolve_method(
     annotations: List[str] = [returns_annotation]
     referenced: Set[str] = {returns} | ({sends} if sends else set())
     fields = body_fields(sends, schemas) if sends else None
+    holders = media_holders(sends, schemas) if sends else ()
 
     body_parameter = None
     if sends and fields is None:
@@ -389,6 +430,8 @@ def resolve_method(
                 for field, _, _, _ in resolved_body
             )
             call.append(f"body={{{entries}}},")
+        if holders:
+            call.append(f"media_holders={json.dumps(list(holders))},")
     if paths:
         entries = ", ".join(
             f'"{p["name"]}": {snake_case(p["name"])}' for p in paths
@@ -411,6 +454,7 @@ def resolve_method(
         parameters=parameters,
         documented=documented,
         call=call,
+        media_holders=holders,
         annotations=annotations,
         referenced=referenced,
     )

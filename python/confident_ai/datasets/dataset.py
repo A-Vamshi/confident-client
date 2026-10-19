@@ -15,14 +15,8 @@ from confident_ai.datasets.types import (
     DatasetVersionList,
     Golden,
     GoldenRef,
-    GoldenRequest,
-    MultiTurnGoldenRequest,
-    PushDatasetRequest,
-    PushGolden,
-    PushMultiTurnGolden,
-    PushSingleTurnGolden,
+    PushDatasetInput,
     RunDatasetEvaluationResult,
-    SingleTurnGoldenRequest,
 )
 
 
@@ -110,6 +104,7 @@ class Dataset:
         identifier: Optional[str] = None,
         version: Optional[str] = None,
         ai_connection_id: Optional[str] = None,
+        voice_connection_id: Optional[str] = None,
         prompt_alias: Optional[str] = None,
         prompt_commit: Optional[str] = None,
         generation_mode: Optional[GenerationMode] = None,
@@ -139,6 +134,11 @@ class Dataset:
                 actual outputs before evaluating them. Required when
                 `generationMode` is `AI_CONNECTION`, and not allowed together
                 with `promptAlias`.
+            voice_connection_id: The id of the voice connection to call while
+                simulating each golden's conversation. Required when
+                `generationMode` is `VOICE_CONNECTION`, needs a multi-turn
+                dataset with `includeSimulation` enabled, and is not allowed
+                together with `aiConnectionId` or `promptAlias`.
             prompt_alias: The alias of the prompt used to generate the actual
                 outputs before evaluating them. Required when `generationMode`
                 is `PROMPT`, and not allowed together with `aiConnectionId`.
@@ -172,6 +172,7 @@ class Dataset:
             identifier=identifier,
             version=version,
             ai_connection_id=ai_connection_id,
+            voice_connection_id=voice_connection_id,
             prompt_alias=prompt_alias,
             prompt_commit=prompt_commit,
             generation_mode=generation_mode,
@@ -190,6 +191,7 @@ class Dataset:
         identifier: Optional[str] = None,
         version: Optional[str] = None,
         ai_connection_id: Optional[str] = None,
+        voice_connection_id: Optional[str] = None,
         prompt_alias: Optional[str] = None,
         prompt_commit: Optional[str] = None,
         generation_mode: Optional[GenerationMode] = None,
@@ -219,6 +221,11 @@ class Dataset:
                 actual outputs before evaluating them. Required when
                 `generationMode` is `AI_CONNECTION`, and not allowed together
                 with `promptAlias`.
+            voice_connection_id: The id of the voice connection to call while
+                simulating each golden's conversation. Required when
+                `generationMode` is `VOICE_CONNECTION`, needs a multi-turn
+                dataset with `includeSimulation` enabled, and is not allowed
+                together with `aiConnectionId` or `promptAlias`.
             prompt_alias: The alias of the prompt used to generate the actual
                 outputs before evaluating them. Required when `generationMode`
                 is `PROMPT`, and not allowed together with `aiConnectionId`.
@@ -252,6 +259,7 @@ class Dataset:
             identifier=identifier,
             version=version,
             ai_connection_id=ai_connection_id,
+            voice_connection_id=voice_connection_id,
             prompt_alias=prompt_alias,
             prompt_commit=prompt_commit,
             generation_mode=generation_mode,
@@ -263,11 +271,13 @@ class Dataset:
             mcp_server_ids=mcp_server_ids,
         )
 
-    def queue_goldens(self, goldens: List[GoldenRequest]) -> DatasetRef:
+    def queue_goldens(self, goldens: List[Golden]) -> DatasetRef:
         """Queue Dataset Goldens
 
         Adds goldens to the dataset as unfinalized goldens, for review on the
-        platform before they are used in evaluations.
+        platform before they are used in evaluations. They go into the dataset's
+        latest version, or among its unversioned goldens when it has no
+        versions.
 
         Args:
             goldens: The goldens to queue for review. Every golden in one
@@ -277,11 +287,13 @@ class Dataset:
         """
         return self._client.queue_goldens(self._dataset_id(), goldens)
 
-    async def a_queue_goldens(self, goldens: List[GoldenRequest]) -> DatasetRef:
+    async def a_queue_goldens(self, goldens: List[Golden]) -> DatasetRef:
         """Queue Dataset Goldens
 
         Adds goldens to the dataset as unfinalized goldens, for review on the
-        platform before they are used in evaluations.
+        platform before they are used in evaluations. They go into the dataset's
+        latest version, or among its unversioned goldens when it has no
+        versions.
 
         Args:
             goldens: The goldens to queue for review. Every golden in one
@@ -292,7 +304,7 @@ class Dataset:
         return await self._client.a_queue_goldens(self._dataset_id(), goldens)
 
     def create_golden(
-        self, golden: GoldenRequest, *, version: Optional[str] = None
+        self, golden: Golden, *, version: Optional[str] = None
     ) -> GoldenRef:
         """Create Golden
 
@@ -309,7 +321,7 @@ class Dataset:
         )
 
     async def a_create_golden(
-        self, golden: GoldenRequest, *, version: Optional[str] = None
+        self, golden: Golden, *, version: Optional[str] = None
     ) -> GoldenRef:
         """Create Golden
 
@@ -387,9 +399,7 @@ class Dataset:
                 `multiTurn` decides which kind every golden in it is.
         """
         return self._client.update_golden(
-            self._dataset_id(),
-            self._golden_id(golden),
-            self._golden_request(golden),
+            self._dataset_id(), self._golden_id(golden), golden
         )
 
     async def a_update_golden(self, golden: Golden) -> GoldenRef:
@@ -406,9 +416,7 @@ class Dataset:
                 `multiTurn` decides which kind every golden in it is.
         """
         return await self._client.a_update_golden(
-            self._dataset_id(),
-            self._golden_id(golden),
-            self._golden_request(golden),
+            self._dataset_id(), self._golden_id(golden), golden
         )
 
     def pull(
@@ -507,7 +515,7 @@ class Dataset:
 
     def _push_body(
         self, *, finalized: Optional[bool] = None
-    ) -> PushDatasetRequest:
+    ) -> PushDatasetInput:
         if self.alias is None:
             raise ValueError("Set alias before calling push.")
         if self.goldens is None:
@@ -515,10 +523,10 @@ class Dataset:
         fields = {
             "alias": self.alias,
             "version": self.version,
-            "goldens": [self._push_golden(golden) for golden in self.goldens],
+            "goldens": self.goldens,
             "finalized": finalized,
         }
-        return PushDatasetRequest(**fields)
+        return PushDatasetInput(**fields)
 
     def _golden_id(self, golden: Golden) -> str:
         if golden.id is None:
@@ -526,50 +534,6 @@ class Dataset:
                 "This golden has no id, so it is not in this dataset yet. Push it first."
             )
         return golden.id
-
-    def _golden_request(self, golden: Golden) -> GoldenRequest:
-        fields = golden.model_dump(
-            mode="json", by_alias=True, exclude_none=True
-        )
-        # A Golden carries fields a GoldenRequest has no room for.
-        fields.pop("id", None)
-        chosen = [
-            name
-            for name, value in (
-                ("input", getattr(golden, "input", None)),
-                ("scenario", getattr(golden, "scenario", None)),
-            )
-            if value is not None
-        ]
-        if len(chosen) != 1:
-            raise ValueError(
-                "Set exactly one of input, scenario; "
-                + (", ".join(chosen) if chosen else "none is set")
-            )
-        if getattr(golden, "input", None) is not None:
-            return SingleTurnGoldenRequest(**fields)
-        return MultiTurnGoldenRequest(**fields)
-
-    def _push_golden(self, golden: Golden) -> PushGolden:
-        fields = golden.model_dump(
-            mode="json", by_alias=True, exclude_none=True
-        )
-        chosen = [
-            name
-            for name, value in (
-                ("input", getattr(golden, "input", None)),
-                ("scenario", getattr(golden, "scenario", None)),
-            )
-            if value is not None
-        ]
-        if len(chosen) != 1:
-            raise ValueError(
-                "Set exactly one of input, scenario; "
-                + (", ".join(chosen) if chosen else "none is set")
-            )
-        if getattr(golden, "input", None) is not None:
-            return PushSingleTurnGolden(**fields)
-        return PushMultiTurnGolden(**fields)
 
     def _load(self, payload: DatasetPayload) -> None:
         self.id = payload.id

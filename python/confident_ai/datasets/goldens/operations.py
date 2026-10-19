@@ -6,12 +6,7 @@
 from typing import Optional
 
 from confident_ai.api import Api, HttpMethods
-from confident_ai.datasets.types import (
-    CreateGoldenRequest,
-    Golden,
-    GoldenRef,
-    GoldenRequest,
-)
+from confident_ai.datasets.types import CreateGoldenInput, Golden, GoldenRef
 from confident_ai.endpoints import Endpoints
 
 
@@ -19,11 +14,7 @@ class GoldensOperations:
     _api: Api
 
     def create_golden(
-        self,
-        dataset_id: str,
-        golden: GoldenRequest,
-        *,
-        version: Optional[str] = None
+        self, dataset_id: str, golden: Golden, *, version: Optional[str] = None
     ) -> GoldenRef:
         """Create Golden
 
@@ -40,17 +31,14 @@ class GoldensOperations:
             HttpMethods.POST,
             Endpoints.DATASET_GOLDENS_ENDPOINT,
             response_schema=GoldenRef,
-            request_schema=CreateGoldenRequest,
+            request_schema=CreateGoldenInput,
             body={"golden": golden, "version": version},
+            media_holders=["$.golden"],
             path={"datasetId": dataset_id},
         )
 
     async def a_create_golden(
-        self,
-        dataset_id: str,
-        golden: GoldenRequest,
-        *,
-        version: Optional[str] = None
+        self, dataset_id: str, golden: Golden, *, version: Optional[str] = None
     ) -> GoldenRef:
         """Create Golden
 
@@ -67,8 +55,9 @@ class GoldensOperations:
             HttpMethods.POST,
             Endpoints.DATASET_GOLDENS_ENDPOINT,
             response_schema=GoldenRef,
-            request_schema=CreateGoldenRequest,
+            request_schema=CreateGoldenInput,
             body={"golden": golden, "version": version},
+            media_holders=["$.golden"],
             path={"datasetId": dataset_id},
         )
 
@@ -109,7 +98,7 @@ class GoldensOperations:
         )
 
     def update_golden(
-        self, dataset_id: str, golden_id: str, golden: GoldenRequest
+        self, dataset_id: str, golden_id: str, golden: Golden
     ) -> GoldenRef:
         """Update Golden
 
@@ -122,22 +111,23 @@ class GoldensOperations:
             dataset_id: The unique id of the dataset.
             golden_id: The unique id of the golden, returned when the dataset is
                 pulled.
-            golden: One golden to write: single-turn when it carries `input`,
-                multi-turn when it carries `scenario`. A golden cannot be both,
-                and its kind must match the dataset's `multiTurn`. Pass a
-                SingleTurnGoldenRequest or a MultiTurnGoldenRequest.
+            golden: A golden in the dataset: single-turn when it carries
+                `input`, multi-turn when it carries `scenario`. The dataset's
+                `multiTurn` decides which kind every golden in it is. Pass a
+                SingleTurnGolden or a MultiTurnGolden.
         """
         return self._api.request(
             HttpMethods.PUT,
             Endpoints.DATASET_GOLDEN_ENDPOINT,
             response_schema=GoldenRef,
-            request_schema=GoldenRequest,
+            request_schema=Golden,
             body=golden,
+            media_holders=["$"],
             path={"datasetId": dataset_id, "goldenId": golden_id},
         )
 
     async def a_update_golden(
-        self, dataset_id: str, golden_id: str, golden: GoldenRequest
+        self, dataset_id: str, golden_id: str, golden: Golden
     ) -> GoldenRef:
         """Update Golden
 
@@ -150,17 +140,18 @@ class GoldensOperations:
             dataset_id: The unique id of the dataset.
             golden_id: The unique id of the golden, returned when the dataset is
                 pulled.
-            golden: One golden to write: single-turn when it carries `input`,
-                multi-turn when it carries `scenario`. A golden cannot be both,
-                and its kind must match the dataset's `multiTurn`. Pass a
-                SingleTurnGoldenRequest or a MultiTurnGoldenRequest.
+            golden: A golden in the dataset: single-turn when it carries
+                `input`, multi-turn when it carries `scenario`. The dataset's
+                `multiTurn` decides which kind every golden in it is. Pass a
+                SingleTurnGolden or a MultiTurnGolden.
         """
         return await self._api.a_request(
             HttpMethods.PUT,
             Endpoints.DATASET_GOLDEN_ENDPOINT,
             response_schema=GoldenRef,
-            request_schema=GoldenRequest,
+            request_schema=Golden,
             body=golden,
+            media_holders=["$"],
             path={"datasetId": dataset_id, "goldenId": golden_id},
         )
 

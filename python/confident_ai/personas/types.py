@@ -10,7 +10,7 @@ from pydantic import Field
 from confident_ai.types import ConfidentBaseModel
 
 
-class CreatePersonaRequest(ConfidentBaseModel):
+class CreatePersonaInput(ConfidentBaseModel):
     name: str
     characteristics: str
     metadata: Optional[Dict[str, Any]] = None
@@ -41,7 +41,7 @@ class PersonaRef(ConfidentBaseModel):
     id: str
 
 
-class UpdatePersonaRequest(ConfidentBaseModel):
+class UpdatePersonaInput(ConfidentBaseModel):
     name: Optional[str] = None
     characteristics: Optional[str] = None
     metadata: Optional[Dict[str, Any]] = None

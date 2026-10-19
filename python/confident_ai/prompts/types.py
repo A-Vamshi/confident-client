@@ -4,11 +4,17 @@
 # and regenerate.
 
 from enum import Enum
-from typing import List, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 
 from pydantic import Field
 
-from confident_ai.common.types import ModelProvider, PromptType
+from confident_ai.common.types import (
+    MLLMImageInput,
+    ModelProvider,
+    PromptType,
+    Tool,
+    ToolMode,
+)
 from confident_ai.types import ConfidentBaseModel
 
 
@@ -33,33 +39,17 @@ class ReasoningEffort(Enum):
     HIGH = "HIGH"
 
 
-class SchemaDataType(Enum):
-    OBJECT = "OBJECT"
-    ARRAY = "ARRAY"
-    STRING = "STRING"
-    FLOAT = "FLOAT"
-    INTEGER = "INTEGER"
-    BOOLEAN = "BOOLEAN"
-    NULL = "NULL"
-
-
-class ToolMode(Enum):
-    ALLOW_ADDITIONAL = "ALLOW_ADDITIONAL"
-    NO_ADDITIONAL = "NO_ADDITIONAL"
-    STRICT = "STRICT"
-
-
 class Verbosity(Enum):
     LOW = "LOW"
     MEDIUM = "MEDIUM"
     HIGH = "HIGH"
 
 
-class CreatePromptBranchRequest(ConfidentBaseModel):
+class CreatePromptBranchInput(ConfidentBaseModel):
     name: str
 
 
-class CreatePromptVersionRequest(ConfidentBaseModel):
+class CreatePromptVersionInput(ConfidentBaseModel):
     hash: Optional[str] = None
 
 
@@ -68,9 +58,22 @@ class CreatePromptVersionResult(ConfidentBaseModel):
     hash: str
 
 
+class PromptMessageToolCallFunction(ConfidentBaseModel):
+    name: str
+    arguments: str
+
+
+class PromptMessageToolCall(ConfidentBaseModel):
+    id: str
+    type: Literal["function"]
+    function: PromptMessageToolCallFunction
+
+
 class PromptMessage(ConfidentBaseModel):
     role: str
     content: str
+    tool_calls: Optional[List[PromptMessageToolCall]] = None
+    tool_call_id: Optional[str] = None
 
 
 class ModelSettings(ConfidentBaseModel):
@@ -99,42 +102,6 @@ class ModelSettings(ConfidentBaseModel):
     verbosity: Optional[Verbosity] = None
 
 
-class OutputSchemaField(ConfidentBaseModel):
-    id: Optional[str] = None
-    name: str
-    type: SchemaDataType
-    required: Optional[bool] = None
-    parent_id: Optional[str] = Field(default=None, alias="parentId")
-
-
-class OutputSchema(ConfidentBaseModel):
-    name: str
-    fields: List[OutputSchemaField]
-
-
-class StructuredSchemaField(ConfidentBaseModel):
-    id: str
-    name: Optional[str] = None
-    description: Optional[str] = None
-    type: SchemaDataType
-    required: Optional[bool] = None
-    parent_id: Optional[str] = Field(default=None, alias="parentId")
-
-
-class StructuredSchema(ConfidentBaseModel):
-    id: Optional[str] = None
-    name: Optional[str] = None
-    fields: List[StructuredSchemaField]
-
-
-class Tool(ConfidentBaseModel):
-    id: Optional[str] = None
-    name: str
-    description: Optional[str] = None
-    mode: ToolMode
-    structured_schema: StructuredSchema = Field(alias="structuredSchema")
-
-
 class MessagesPrompt(ConfidentBaseModel):
     messages: List[PromptMessage]
     alias: str
@@ -151,11 +118,47 @@ class MessagesPrompt(ConfidentBaseModel):
         alias="modelSettings",
     )
     output_type: PromptOutputType = Field(alias="outputType")
-    output_schema: Optional[OutputSchema] = Field(
+    output_schema: Optional[Dict[str, Any]] = Field(
         default=None,
         alias="outputSchema",
     )
     tools: Optional[List[Tool]] = None
+
+
+class ToolInput(ConfidentBaseModel):
+    id: Optional[str] = None
+    version: Optional[str] = None
+    name: Optional[str] = None
+    description: Optional[str] = None
+    mode: Optional[ToolMode] = None
+    schema_: Optional[Dict[str, Any]] = Field(default=None, alias="schema")
+
+
+class MessagesPromptInput(ConfidentBaseModel):
+    messages: List[PromptMessage]
+    alias: str
+    interpolation_type: Optional[PromptInterpolationType] = Field(
+        default=None,
+        alias="interpolationType",
+    )
+    model_settings: Optional[ModelSettings] = Field(
+        default=None,
+        alias="modelSettings",
+    )
+    output_type: Optional[PromptOutputType] = Field(
+        default=None,
+        alias="outputType",
+    )
+    output_schema: Optional[Dict[str, Any]] = Field(
+        default=None,
+        alias="outputSchema",
+    )
+    tools: Optional[List[ToolInput]] = None
+    branch: Optional[str] = None
+    images_mapping: Optional[Dict[str, MLLMImageInput]] = Field(
+        default=None,
+        alias="imagesMapping",
+    )
 
 
 class PromptBranch(ConfidentBaseModel):
@@ -201,55 +204,9 @@ class PromptVersionList(ConfidentBaseModel):
     type: PromptType
 
 
-class PushMessagesPrompt(ConfidentBaseModel):
-    messages: List[PromptMessage]
-    alias: str
-    interpolation_type: Optional[PromptInterpolationType] = Field(
-        default=None,
-        alias="interpolationType",
-    )
-    model_settings: Optional[ModelSettings] = Field(
-        default=None,
-        alias="modelSettings",
-    )
-    output_type: Optional[PromptOutputType] = Field(
-        default=None,
-        alias="outputType",
-    )
-    output_schema: Optional[OutputSchema] = Field(
-        default=None,
-        alias="outputSchema",
-    )
-    tools: Optional[List[Tool]] = None
-    branch: Optional[str] = None
-
-
 class PushPromptResult(ConfidentBaseModel):
     prompt_id: str = Field(alias="promptId")
     hash: str
-
-
-class PushTextPrompt(ConfidentBaseModel):
-    text: str
-    alias: str
-    interpolation_type: Optional[PromptInterpolationType] = Field(
-        default=None,
-        alias="interpolationType",
-    )
-    model_settings: Optional[ModelSettings] = Field(
-        default=None,
-        alias="modelSettings",
-    )
-    output_type: Optional[PromptOutputType] = Field(
-        default=None,
-        alias="outputType",
-    )
-    output_schema: Optional[OutputSchema] = Field(
-        default=None,
-        alias="outputSchema",
-    )
-    tools: Optional[List[Tool]] = None
-    branch: Optional[str] = None
 
 
 class TextPrompt(ConfidentBaseModel):
@@ -268,18 +225,45 @@ class TextPrompt(ConfidentBaseModel):
         alias="modelSettings",
     )
     output_type: PromptOutputType = Field(alias="outputType")
-    output_schema: Optional[OutputSchema] = Field(
+    output_schema: Optional[Dict[str, Any]] = Field(
         default=None,
         alias="outputSchema",
     )
     tools: Optional[List[Tool]] = None
 
 
-class UpdatePromptBranchRequest(ConfidentBaseModel):
+class TextPromptInput(ConfidentBaseModel):
+    text: str
+    alias: str
+    interpolation_type: Optional[PromptInterpolationType] = Field(
+        default=None,
+        alias="interpolationType",
+    )
+    model_settings: Optional[ModelSettings] = Field(
+        default=None,
+        alias="modelSettings",
+    )
+    output_type: Optional[PromptOutputType] = Field(
+        default=None,
+        alias="outputType",
+    )
+    output_schema: Optional[Dict[str, Any]] = Field(
+        default=None,
+        alias="outputSchema",
+    )
+    tools: Optional[List[ToolInput]] = None
+    branch: Optional[str] = None
+    images_mapping: Optional[Dict[str, MLLMImageInput]] = Field(
+        default=None,
+        alias="imagesMapping",
+    )
+
+
+class UpdatePromptBranchInput(ConfidentBaseModel):
     name: str
 
 
 Prompt = Union[TextPrompt, MessagesPrompt]
 
 
-PushPromptRequest = Union[PushTextPrompt, PushMessagesPrompt]
+PromptInput = Union[TextPromptInput, MessagesPromptInput]

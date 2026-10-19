@@ -8,7 +8,7 @@ from typing import Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.prompts.types import (
-    CreatePromptVersionRequest,
+    CreatePromptVersionInput,
     CreatePromptVersionResult,
     Prompt,
     PromptVersionList,
@@ -67,7 +67,7 @@ class VersionsOperations:
             HttpMethods.POST,
             Endpoints.PROMPT_VERSIONS_ENDPOINT,
             response_schema=CreatePromptVersionResult,
-            request_schema=CreatePromptVersionRequest,
+            request_schema=CreatePromptVersionInput,
             body={"hash": hash},
             path={"promptId": prompt_id},
         )
@@ -91,7 +91,7 @@ class VersionsOperations:
             HttpMethods.POST,
             Endpoints.PROMPT_VERSIONS_ENDPOINT,
             response_schema=CreatePromptVersionResult,
-            request_schema=CreatePromptVersionRequest,
+            request_schema=CreatePromptVersionInput,
             body={"hash": hash},
             path={"promptId": prompt_id},
         )

@@ -10,8 +10,7 @@ import {
   Dataset,
   DatasetList,
   DatasetRef,
-  GoldenRequest,
-  PushGolden,
+  Golden,
   RunDatasetEvaluationResult,
 } from "./types";
 
@@ -55,14 +54,17 @@ export class DatasetsOperations {
    */
   async push(
     alias: string,
-    goldens: PushGolden[],
+    goldens: Golden[],
     finalized?: boolean,
     version?: string,
   ): Promise<DatasetRef> {
     return this.api.sendRequest<DatasetRef>(
       HttpMethods.POST,
       Endpoints.DATASETS_ENDPOINT,
-      { body: { alias, goldens, finalized, version } },
+      {
+        body: { alias, goldens, finalized, version },
+        mediaHolders: ["$.goldens.*"],
+      },
     );
   }
 
@@ -113,7 +115,8 @@ export class DatasetsOperations {
    * Queue Dataset Goldens
    *
    * Adds goldens to the dataset as unfinalized goldens, for review on the
-   * platform before they are used in evaluations.
+   * platform before they are used in evaluations. They go into the dataset's
+   * latest version, or among its unversioned goldens when it has no versions.
    *
    * @param datasetId The unique id of the dataset.
    * @param goldens The goldens to queue for review. Every golden in one request
@@ -122,12 +125,16 @@ export class DatasetsOperations {
    */
   async queueGoldens(
     datasetId: string,
-    goldens: GoldenRequest[],
+    goldens: Golden[],
   ): Promise<DatasetRef> {
     return this.api.sendRequest<DatasetRef>(
       HttpMethods.POST,
       Endpoints.DATASET_QUEUE_ENDPOINT,
-      { body: { goldens }, urlParams: { datasetId } },
+      {
+        body: { goldens },
+        mediaHolders: ["$.goldens.*"],
+        urlParams: { datasetId },
+      },
     );
   }
 
@@ -150,6 +157,11 @@ export class DatasetsOperations {
    * @param aiConnectionId The id of the AI connection used to generate the
    *   actual outputs before evaluating them. Required when `generationMode` is
    *   `AI_CONNECTION`, and not allowed together with `promptAlias`.
+   * @param voiceConnectionId The id of the voice connection to call while
+   *   simulating each golden's conversation. Required when `generationMode` is
+   *   `VOICE_CONNECTION`, needs a multi-turn dataset with `includeSimulation`
+   *   enabled, and is not allowed together with `aiConnectionId` or
+   *   `promptAlias`.
    * @param promptAlias The alias of the prompt used to generate the actual
    *   outputs before evaluating them. Required when `generationMode` is
    *   `PROMPT`, and not allowed together with `aiConnectionId`.
@@ -183,6 +195,7 @@ export class DatasetsOperations {
       identifier?: string;
       version?: string;
       aiConnectionId?: string;
+      voiceConnectionId?: string;
       promptAlias?: string;
       promptCommit?: string;
       generationMode?: GenerationMode;
@@ -198,6 +211,7 @@ export class DatasetsOperations {
       identifier,
       version,
       aiConnectionId,
+      voiceConnectionId,
       promptAlias,
       promptCommit,
       generationMode,
@@ -217,6 +231,7 @@ export class DatasetsOperations {
           identifier,
           version,
           aiConnectionId,
+          voiceConnectionId,
           promptAlias,
           promptCommit,
           generationMode,

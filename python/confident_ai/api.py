@@ -4,7 +4,7 @@ import math
 import os
 from enum import Enum
 from functools import lru_cache
-from typing import Any, Mapping, Optional, Tuple, Union
+from typing import Any, Mapping, Optional, Sequence, Tuple, Union
 
 import aiohttp
 import requests
@@ -18,6 +18,7 @@ from tenacity import (
 
 from ._version import __version__
 from .endpoints import Endpoints
+from .media import attach_images_mappings
 from .types import ApiResponse, ConfidentApiError
 from .utils.request import join_url, serialize_params
 
@@ -284,6 +285,7 @@ class Api:
         body: Optional[Any] = None,
         path: Optional[Mapping[str, Any]] = None,
         query: Optional[Mapping[str, Any]] = None,
+        media_holders: Sequence[str] = (),
     ) -> Any:
         """Call one endpoint and return its payload as ``response_schema``.
 
@@ -293,7 +295,9 @@ class Api:
         data, _ = self.send_request(
             method,
             endpoint,
-            body=_parse_body(request_schema, body),
+            body=attach_images_mappings(
+                _parse_body(request_schema, body), media_holders
+            ),
             params=query,
             url_params=path,
         )
@@ -353,6 +357,7 @@ class Api:
         body: Optional[Any] = None,
         path: Optional[Mapping[str, Any]] = None,
         query: Optional[Mapping[str, Any]] = None,
+        media_holders: Sequence[str] = (),
     ) -> Any:
         """Call one endpoint and return its payload as ``response_schema``.
 
@@ -362,7 +367,9 @@ class Api:
         data, _ = await self.a_send_request(
             method,
             endpoint,
-            body=_parse_body(request_schema, body),
+            body=attach_images_mappings(
+                _parse_body(request_schema, body), media_holders
+            ),
             params=query,
             url_params=path,
         )

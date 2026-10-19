@@ -5,14 +5,14 @@
 
 import { Api, HttpMethods } from "../api";
 import { Endpoints } from "../endpoints";
-import { AnnotationFieldType, MLLMImage } from "../common/types";
+import { AnnotationFieldType, MLLMImageInput } from "../common/types";
 import {
   Annotation,
+  AnnotationInput,
   AnnotationList,
   AnnotationRef,
   AnnotationSortBy,
-  AnnotationValue,
-  CreateAnnotationRequest,
+  AnnotationValueInput,
 } from "./types";
 
 export class AnnotationsClient {
@@ -100,14 +100,14 @@ export class AnnotationsClient {
    *   `traceUuid`, `spanUuid` or `threadId` — never more than one — and the
    *   field that goes with it: `expectedOutput` for a trace or span,
    *   `expectedOutcome` for a thread. `fieldType` defaults to `THUMBS_RATING`.
-   *   Pass one of TraceAnnotationRequest, SpanAnnotationRequest,
-   *   ThreadAnnotationRequest.
+   *   Pass one of TraceAnnotationInput, SpanAnnotationInput,
+   *   ThreadAnnotationInput.
    */
-  async create(annotation: CreateAnnotationRequest): Promise<AnnotationRef> {
+  async create(annotation: AnnotationInput): Promise<AnnotationRef> {
     return this.api.sendRequest<AnnotationRef>(
       HttpMethods.POST,
       Endpoints.ANNOTATIONS_ENDPOINT,
-      { body: annotation },
+      { body: annotation, mediaHolders: ["$"] },
     );
   }
 
@@ -148,11 +148,11 @@ export class AnnotationsClient {
     annotationId: string,
     options: {
       fieldType?: AnnotationFieldType;
-      value?: AnnotationValue;
+      value?: AnnotationValueInput;
       explanation?: string;
       expectedOutput?: string;
       expectedOutcome?: string;
-      imagesMapping?: Record<string, MLLMImage>;
+      imagesMapping?: Record<string, MLLMImageInput>;
     } = {},
   ): Promise<AnnotationRef> {
     const {
@@ -175,6 +175,7 @@ export class AnnotationsClient {
           expectedOutcome,
           imagesMapping,
         },
+        mediaHolders: ["$"],
         urlParams: { annotationId },
       },
     );

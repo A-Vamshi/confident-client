@@ -261,7 +261,10 @@ def _describe_parameter(
             "typescript": typescript.annotation if typescript else None,
         },
         "required": parameter.required,
-        "keyword": parameter.keyword,
+        "keyword": {
+            "python": parameter.keyword,
+            "typescript": typescript.keyword if typescript else None,
+        },
         "default": parameter.default,
         # The docstring describes the argument as the method takes it; the
         # spec fills in what it omits.
@@ -345,6 +348,7 @@ def _describe_method(
             "typescript": typescript.returns if typescript else None,
             "type": returns,
         },
+        "body": method.sends if method else None,
         "parameters": parameters,
         "order": order,
     }
@@ -722,6 +726,7 @@ def _describe_module_types(
         entry: Dict[str, Any] = {
             "name": declaration.name,
             "description": schema.get("description"),
+            "example": _example_of(schema),
             **import_location(declaration.name),
             "references": _schemas_referenced(schema),
         }

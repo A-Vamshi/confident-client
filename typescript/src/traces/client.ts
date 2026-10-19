@@ -5,17 +5,17 @@
 
 import { Api, HttpMethods } from "../api";
 import { Endpoints } from "../endpoints";
-import { Environment, ToolCall, Trace, TraceSpanStatus } from "../common/types";
+import { ToolCall, Trace, TraceSpanStatus } from "../common/types";
 import {
-  CustomerRequest,
-  MetricDataConfig,
-  SpanRequest,
-  ThreadRequest,
-  TraceAttachment,
+  CustomerInput,
+  MetricDataInput,
+  SpanInput,
+  ThreadInput,
+  TraceAttachmentInput,
   TraceList,
   TraceRef,
   TraceSortBy,
-  UserRequest,
+  UserInput,
 } from "./types";
 
 export class TracesClient {
@@ -57,7 +57,7 @@ export class TracesClient {
       end?: string;
       ascending?: "true" | "false";
       sortBy?: TraceSortBy;
-      environment?: Environment;
+      environment?: string;
       metadata?: Record<string, string>;
     } = {},
   ): Promise<TraceList> {
@@ -106,6 +106,10 @@ export class TracesClient {
    * @param input This is the input to the trace, as a string or any JSON value.
    * @param output This is the output of the trace, as a string or any JSON
    *   value.
+   * @param environment This is the environment where your trace was posted,
+   *   which helps with separating and debugging traces from different
+   *   environments on the Confident AI platform. Any name up to 64 characters
+   *   is accepted, for example production, staging or eu-prod.
    * @param metadata This is any additional metadata associated with the trace.
    * @param tags This is any tags associated with the trace, which helps with
    *   grouping traces and filtering them on the Confident AI platform.
@@ -153,15 +157,15 @@ export class TracesClient {
       input?: unknown;
       output?: unknown;
       status?: TraceSpanStatus;
-      environment?: Environment;
+      environment?: string;
       metadata?: Record<string, unknown>;
       tags?: string[];
       threadId?: string;
-      thread?: ThreadRequest;
+      thread?: ThreadInput;
       userId?: string;
-      user?: UserRequest;
+      user?: UserInput;
       customerId?: string;
-      customer?: CustomerRequest;
+      customer?: CustomerInput;
       metricCollection?: string;
       testRunId?: string;
       testCaseId?: string;
@@ -171,9 +175,9 @@ export class TracesClient {
       expectedOutput?: string;
       toolsCalled?: ToolCall[];
       expectedTools?: ToolCall[];
-      spans?: SpanRequest[];
-      metricsData?: MetricDataConfig[];
-      attachments?: Record<string, TraceAttachment>;
+      spans?: SpanInput[];
+      metricsData?: MetricDataInput[];
+      attachments?: Record<string, TraceAttachmentInput>;
     } = {},
   ): Promise<TraceRef> {
     const {

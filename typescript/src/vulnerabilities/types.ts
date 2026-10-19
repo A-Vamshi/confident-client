@@ -10,7 +10,7 @@ export interface VulnerabilityEvaluationExample {
   reason: string;
 }
 
-export interface CreateVulnerabilityRequest {
+export interface CreateVulnerabilityInput {
   name: string;
   description?: string | null;
   criteria: string;
@@ -19,7 +19,7 @@ export interface CreateVulnerabilityRequest {
   evaluationExamples?: VulnerabilityEvaluationExample[];
 }
 
-export interface UpdateVulnerabilityRequest {
+export interface UpdateVulnerabilityInput {
   name?: string;
   description?: string | null;
   criteria?: string;

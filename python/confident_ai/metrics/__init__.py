@@ -3,8 +3,16 @@
 # Do not edit by hand — change the route in confident-cloud
 # and regenerate.
 
-from confident_ai.metrics.types import UpdateMetricRequest
+from confident_ai.metrics.types import (
+    MetricCodeDefinition,
+    MetricVersion,
+    MetricVersionList,
+    UpdateMetricInput,
+)
 
 __all__ = [
-    "UpdateMetricRequest",
+    "MetricCodeDefinition",
+    "MetricVersion",
+    "MetricVersionList",
+    "UpdateMetricInput",
 ]

@@ -6,7 +6,7 @@
 import {
   FilterSet,
   IngestionDataModel,
-  MLLMImage,
+  MLLMImageInput,
   UserReference,
 } from "../common/types";
 
@@ -15,7 +15,7 @@ export enum AnnotationQueueType {
   SPAN = "SPAN",
   THREAD = "THREAD",
   GOLDEN = "GOLDEN",
-  TEST_RUN = "TEST_RUN",
+  TEST_CASE = "TEST_CASE",
 }
 
 export enum AssignmentStrategy {
@@ -31,40 +31,28 @@ export enum QueueItemStatus {
   COMPLETED = "COMPLETED",
 }
 
-export interface AddSpanQueueItemsRequest {
-  spanUuids: string[];
-}
-
-export interface AddThreadQueueItemsRequest {
-  threadIds: string[];
-}
-
-export interface AddTraceQueueItemsRequest {
-  traceUuids: string[];
-}
-
 export interface AddedQueueItems {
   ids: string[];
 }
 
-export interface QueueItemAnnotation {
+export interface QueueItemAnnotationInput {
   fieldType?: "THUMBS_RATING" | "FIVE_STAR_RATING";
   value: boolean | number;
   name?: string;
   explanation?: string;
   expectedOutput?: string;
   expectedOutcome?: string;
-  imagesMapping?: Record<string, MLLMImage>;
+  imagesMapping?: Record<string, MLLMImageInput>;
 }
 
-export interface QueueItemFormResponse {
+export interface QueueItemFormResponseInput {
   label: string;
   value?: unknown;
 }
 
-export interface AnnotateQueueItemRequest {
-  annotations?: QueueItemAnnotation[];
-  formResponses?: QueueItemFormResponse[];
+export interface AnnotateQueueItemInput {
+  annotations?: QueueItemAnnotationInput[];
+  formResponses?: QueueItemFormResponseInput[];
   annotatorEmail?: string;
   flagged?: boolean;
   markAsCompleted?: boolean;
@@ -86,7 +74,6 @@ export interface AnnotationQueue {
   type: AnnotationQueueType;
   createdAt: string;
   updatedAt: string;
-  testRunId: string | null;
   formId: string | null;
   tags: string[];
   totalItems: number;
@@ -103,6 +90,7 @@ export interface AnnotationQueueItem {
   spanUuid: string | null;
   threadId: string | null;
   testCaseId: string | null;
+  testRunId: string | null;
   addedAt: string;
   status: QueueItemStatus;
   assignedToEmail: string | null;
@@ -121,7 +109,6 @@ export interface AnnotationQueueSummary {
   type: AnnotationQueueType;
   createdAt: string;
   updatedAt: string;
-  testRunId: string | null;
   formId: string | null;
   tags: string[];
   totalItems: number;
@@ -147,19 +134,19 @@ export interface BatchAnnotateFailure {
   error: string;
 }
 
-export interface BatchAnnotateItem {
+export interface BatchAnnotateItemInput {
   queueItemId: string;
-  annotations?: QueueItemAnnotation[];
-  formResponses?: QueueItemFormResponse[];
+  annotations?: QueueItemAnnotationInput[];
+  formResponses?: QueueItemFormResponseInput[];
   annotatorEmail?: string;
   flagged?: boolean;
   markAsCompleted?: boolean;
 }
 
-export interface BatchAnnotateRequest {
+export interface BatchAnnotateInput {
   annotatorEmail?: string;
   markAsCompleted?: boolean;
-  items: BatchAnnotateItem[];
+  items: BatchAnnotateItemInput[];
 }
 
 export interface BatchAnnotateSuccess {
@@ -173,14 +160,14 @@ export interface BatchAnnotateResult {
   results: (BatchAnnotateSuccess | BatchAnnotateFailure)[];
 }
 
-export interface CreateAnnotationQueueRequest {
+export interface CreateAnnotationQueueInput {
   name: string;
   type: AnnotationQueueType;
   formId?: string;
   tags?: string[];
 }
 
-export interface CreateQueueIngestionTaskRequest {
+export interface CreateQueueIngestionTaskInput {
   name: string;
   dataModel: IngestionDataModel;
   description?: string | null;
@@ -194,6 +181,7 @@ export interface CreateQueueIngestionTaskRequest {
 
 export interface QueueIngestionTask {
   id: string;
+  annotationQueueId: string | null;
   name: string;
   description: string | null;
   enabled: boolean;
@@ -222,15 +210,28 @@ export interface QueueIngestionTaskRef {
   id: string;
 }
 
-export interface UpdateAnnotationQueueRequest {
+export interface SpanQueueItemsInput {
+  spanUuids: string[];
+}
+
+export interface ThreadQueueItemsInput {
+  threadIds: string[];
+}
+
+export interface TraceQueueItemsInput {
+  traceUuids: string[];
+}
+
+export interface UpdateAnnotationQueueInput {
   name?: string;
   formId?: string | null;
   tags?: string[];
 }
 
-export interface UpdateQueueIngestionTaskRequest {
+export interface UpdateQueueIngestionTaskInput {
   name?: string;
   dataModel?: IngestionDataModel;
+  newAnnotationQueueId?: string | null;
   description?: string | null;
   enabled?: boolean;
   sampleRate?: number;
@@ -240,7 +241,5 @@ export interface UpdateQueueIngestionTaskRequest {
   reviewerEmails?: string[];
 }
 
-export type AddQueueItemsRequest =
-  | AddTraceQueueItemsRequest
-  | AddSpanQueueItemsRequest
-  | AddThreadQueueItemsRequest;
+export type QueueItemsInput =
+  TraceQueueItemsInput | SpanQueueItemsInput | ThreadQueueItemsInput;

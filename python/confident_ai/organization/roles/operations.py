@@ -6,7 +6,7 @@
 from typing import List, Optional
 
 from confident_ai.api import Api, HttpMethods
-from confident_ai.common.types import CreateOrUpdateRoleRequest, RoleRef
+from confident_ai.common.types import CreateOrUpdateRoleInput, RoleRef
 from confident_ai.endpoints import Endpoints
 from confident_ai.organization.types import (
     OrganizationRole,
@@ -77,7 +77,7 @@ class RolesOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_ROLES_ENDPOINT,
             response_schema=OrganizationRole,
-            request_schema=CreateOrUpdateRoleRequest,
+            request_schema=CreateOrUpdateRoleInput,
             body={
                 "name": name,
                 "policyIds": policy_ids,
@@ -117,7 +117,7 @@ class RolesOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_ROLES_ENDPOINT,
             response_schema=OrganizationRole,
-            request_schema=CreateOrUpdateRoleRequest,
+            request_schema=CreateOrUpdateRoleInput,
             body={
                 "name": name,
                 "policyIds": policy_ids,
@@ -160,7 +160,7 @@ class RolesOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_ROLE_ENDPOINT,
             response_schema=OrganizationRole,
-            request_schema=CreateOrUpdateRoleRequest,
+            request_schema=CreateOrUpdateRoleInput,
             body={
                 "name": name,
                 "policyIds": policy_ids,
@@ -204,7 +204,7 @@ class RolesOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_ROLE_ENDPOINT,
             response_schema=OrganizationRole,
-            request_schema=CreateOrUpdateRoleRequest,
+            request_schema=CreateOrUpdateRoleInput,
             body={
                 "name": name,
                 "policyIds": policy_ids,

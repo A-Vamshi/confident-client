@@ -7,6 +7,8 @@ keeps `signature` beside `ts_signature`. Keep them adjacent: it is the only
 thing that makes a difference between the two SDKs visible in review.
 """
 
+import json
+
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Set, Tuple
 
@@ -326,6 +328,10 @@ def render_typescript_client(
                     if p.source == "body"
                 )
                 options.append(f"body: {{ {entries} }}")
+            if method.media_holders:
+                options.append(
+                    f"mediaHolders: {json.dumps(list(method.media_holders))}"
+                )
         for source, key in (("path", "urlParams"), ("query", "params")):
             entries = ", ".join(
                 ts_key(p.wire, p.ts_name)

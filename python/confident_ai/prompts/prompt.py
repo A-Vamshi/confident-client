@@ -3,7 +3,7 @@
 # Do not edit by hand — change the route in confident-cloud
 # and regenerate.
 
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 from confident_ai.api import Api
 from confident_ai.prompts.client import PromptsClient
@@ -12,25 +12,24 @@ from confident_ai.utils.prompt_cache import (
     a_pull_prompt,
     pull_prompt,
 )
-from confident_ai.common.types import PromptType
+from confident_ai.common.types import MLLMImageInput, PromptType, Tool
 from confident_ai.prompts.types import (
     CreatePromptVersionResult,
+    MessagesPromptInput,
     ModelSettings,
-    OutputSchema,
     Prompt as PromptPayload,
     PromptBranch,
     PromptBranchList,
     PromptBranchRef,
     PromptCommitList,
+    PromptInput,
     PromptInterpolationType,
     PromptMessage,
     PromptOutputType,
     PromptVersionList,
-    PushMessagesPrompt,
-    PushPromptRequest,
     PushPromptResult,
-    PushTextPrompt,
-    Tool,
+    TextPromptInput,
+    ToolInput,
 )
 
 
@@ -60,9 +59,10 @@ class Prompt:
         self.interpolation_type: Optional[PromptInterpolationType] = None
         self.model_settings: Optional[ModelSettings] = None
         self.output_type: Optional[PromptOutputType] = None
-        self.output_schema: Optional[OutputSchema] = None
+        self.output_schema: Optional[Dict[str, Any]] = None
         self.tools: Optional[List[Tool]] = None
         self.messages: Optional[List[PromptMessage]] = None
+        self.images_mapping: Optional[Dict[str, MLLMImageInput]] = None
 
     def __repr__(self) -> str:
         return f"Prompt(prompt_id={self.prompt_id!r}, alias={self.alias!r})"
@@ -355,7 +355,7 @@ class Prompt:
         self.hash = result.hash
         return result
 
-    def _push_body(self, *, branch: Optional[str] = None) -> PushPromptRequest:
+    def _push_body(self, *, branch: Optional[str] = None) -> PromptInput:
         if self.alias is None:
             raise ValueError("Set alias before calling push.")
         fields = {
@@ -364,7 +364,11 @@ class Prompt:
             "model_settings": self.model_settings,
             "output_type": self.output_type,
             "output_schema": self.output_schema,
-            "tools": self.tools,
+            "tools": (
+                None
+                if self.tools is None
+                else [self._tool_input(tool) for tool in self.tools]
+            ),
             "branch": branch,
         }
         chosen = [
@@ -381,8 +385,12 @@ class Prompt:
                 + (", ".join(chosen) if chosen else "none is set")
             )
         if self.text is not None:
-            return PushTextPrompt(text=self.text, **fields)
-        return PushMessagesPrompt(messages=self.messages, **fields)
+            return TextPromptInput(text=self.text, **fields)
+        return MessagesPromptInput(messages=self.messages, **fields)
+
+    def _tool_input(self, tool: Tool) -> ToolInput:
+        fields = tool.model_dump(mode="json", by_alias=True, exclude_none=True)
+        return ToolInput(**fields)
 
     interpolate = interpolate_prompt
 

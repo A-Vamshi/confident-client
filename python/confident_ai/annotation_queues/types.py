@@ -11,7 +11,7 @@ from pydantic import Field
 from confident_ai.common.types import (
     FilterSet,
     IngestionDataModel,
-    MLLMImage,
+    MLLMImageInput,
     UserReference,
 )
 from confident_ai.types import ConfidentBaseModel
@@ -22,7 +22,7 @@ class AnnotationQueueType(Enum):
     SPAN = "SPAN"
     THREAD = "THREAD"
     GOLDEN = "GOLDEN"
-    TEST_RUN = "TEST_RUN"
+    TEST_CASE = "TEST_CASE"
 
 
 class AssignmentStrategy(Enum):
@@ -38,23 +38,11 @@ class QueueItemStatus(Enum):
     COMPLETED = "COMPLETED"
 
 
-class AddSpanQueueItemsRequest(ConfidentBaseModel):
-    span_uuids: List[str] = Field(alias="spanUuids")
-
-
-class AddThreadQueueItemsRequest(ConfidentBaseModel):
-    thread_ids: List[str] = Field(alias="threadIds")
-
-
-class AddTraceQueueItemsRequest(ConfidentBaseModel):
-    trace_uuids: List[str] = Field(alias="traceUuids")
-
-
 class AddedQueueItems(ConfidentBaseModel):
     ids: List[str]
 
 
-class QueueItemAnnotation(ConfidentBaseModel):
+class QueueItemAnnotationInput(ConfidentBaseModel):
     field_type: Optional[Literal["THUMBS_RATING", "FIVE_STAR_RATING"]] = Field(
         default=None,
         alias="fieldType",
@@ -67,20 +55,20 @@ class QueueItemAnnotation(ConfidentBaseModel):
         default=None,
         alias="expectedOutcome",
     )
-    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
+    images_mapping: Optional[Dict[str, MLLMImageInput]] = Field(
         default=None,
         alias="imagesMapping",
     )
 
 
-class QueueItemFormResponse(ConfidentBaseModel):
+class QueueItemFormResponseInput(ConfidentBaseModel):
     label: str
     value: Optional[Any] = None
 
 
-class AnnotateQueueItemRequest(ConfidentBaseModel):
-    annotations: Optional[List[QueueItemAnnotation]] = None
-    form_responses: Optional[List[QueueItemFormResponse]] = Field(
+class AnnotateQueueItemInput(ConfidentBaseModel):
+    annotations: Optional[List[QueueItemAnnotationInput]] = None
+    form_responses: Optional[List[QueueItemFormResponseInput]] = Field(
         default=None,
         alias="formResponses",
     )
@@ -108,7 +96,6 @@ class AnnotationQueue(ConfidentBaseModel):
     type: AnnotationQueueType
     created_at: str = Field(alias="createdAt")
     updated_at: str = Field(alias="updatedAt")
-    test_run_id: Optional[str] = Field(alias="testRunId")
     form_id: Optional[str] = Field(alias="formId")
     tags: List[str]
     total_items: int = Field(alias="totalItems")
@@ -127,6 +114,7 @@ class AnnotationQueueItem(ConfidentBaseModel):
     span_uuid: Optional[str] = Field(alias="spanUuid")
     thread_id: Optional[str] = Field(alias="threadId")
     test_case_id: Optional[str] = Field(alias="testCaseId")
+    test_run_id: Optional[str] = Field(alias="testRunId")
     added_at: str = Field(alias="addedAt")
     status: QueueItemStatus
     assigned_to_email: Optional[str] = Field(alias="assignedToEmail")
@@ -145,7 +133,6 @@ class AnnotationQueueSummary(ConfidentBaseModel):
     type: AnnotationQueueType
     created_at: str = Field(alias="createdAt")
     updated_at: str = Field(alias="updatedAt")
-    test_run_id: Optional[str] = Field(alias="testRunId")
     form_id: Optional[str] = Field(alias="formId")
     tags: List[str]
     total_items: int = Field(alias="totalItems")
@@ -173,10 +160,10 @@ class BatchAnnotateFailure(ConfidentBaseModel):
     error: str
 
 
-class BatchAnnotateItem(ConfidentBaseModel):
+class BatchAnnotateItemInput(ConfidentBaseModel):
     queue_item_id: str = Field(alias="queueItemId")
-    annotations: Optional[List[QueueItemAnnotation]] = None
-    form_responses: Optional[List[QueueItemFormResponse]] = Field(
+    annotations: Optional[List[QueueItemAnnotationInput]] = None
+    form_responses: Optional[List[QueueItemFormResponseInput]] = Field(
         default=None,
         alias="formResponses",
     )
@@ -188,13 +175,13 @@ class BatchAnnotateItem(ConfidentBaseModel):
     )
 
 
-class BatchAnnotateRequest(ConfidentBaseModel):
+class BatchAnnotateInput(ConfidentBaseModel):
     annotator_email: Optional[str] = Field(default=None, alias="annotatorEmail")
     mark_as_completed: Optional[bool] = Field(
         default=None,
         alias="markAsCompleted",
     )
-    items: List[BatchAnnotateItem]
+    items: List[BatchAnnotateItemInput]
 
 
 class BatchAnnotateSuccess(ConfidentBaseModel):
@@ -208,14 +195,14 @@ class BatchAnnotateResult(ConfidentBaseModel):
     results: List[Union[BatchAnnotateSuccess, BatchAnnotateFailure]]
 
 
-class CreateAnnotationQueueRequest(ConfidentBaseModel):
+class CreateAnnotationQueueInput(ConfidentBaseModel):
     name: str
     type: AnnotationQueueType
     form_id: Optional[str] = Field(default=None, alias="formId")
     tags: Optional[List[str]] = None
 
 
-class CreateQueueIngestionTaskRequest(ConfidentBaseModel):
+class CreateQueueIngestionTaskInput(ConfidentBaseModel):
     name: str
     data_model: IngestionDataModel = Field(alias="dataModel")
     description: Optional[str] = None
@@ -235,6 +222,7 @@ class CreateQueueIngestionTaskRequest(ConfidentBaseModel):
 
 class QueueIngestionTask(ConfidentBaseModel):
     id: str
+    annotation_queue_id: Optional[str] = Field(alias="annotationQueueId")
     name: str
     description: Optional[str]
     enabled: bool
@@ -265,17 +253,33 @@ class QueueIngestionTaskRef(ConfidentBaseModel):
     id: str
 
 
-class UpdateAnnotationQueueRequest(ConfidentBaseModel):
+class SpanQueueItemsInput(ConfidentBaseModel):
+    span_uuids: List[str] = Field(alias="spanUuids")
+
+
+class ThreadQueueItemsInput(ConfidentBaseModel):
+    thread_ids: List[str] = Field(alias="threadIds")
+
+
+class TraceQueueItemsInput(ConfidentBaseModel):
+    trace_uuids: List[str] = Field(alias="traceUuids")
+
+
+class UpdateAnnotationQueueInput(ConfidentBaseModel):
     name: Optional[str] = None
     form_id: Optional[str] = Field(default=None, alias="formId")
     tags: Optional[List[str]] = None
 
 
-class UpdateQueueIngestionTaskRequest(ConfidentBaseModel):
+class UpdateQueueIngestionTaskInput(ConfidentBaseModel):
     name: Optional[str] = None
     data_model: Optional[IngestionDataModel] = Field(
         default=None,
         alias="dataModel",
+    )
+    new_annotation_queue_id: Optional[str] = Field(
+        default=None,
+        alias="newAnnotationQueueId",
     )
     description: Optional[str] = None
     enabled: Optional[bool] = None
@@ -292,8 +296,6 @@ class UpdateQueueIngestionTaskRequest(ConfidentBaseModel):
     )
 
 
-AddQueueItemsRequest = Union[
-    AddTraceQueueItemsRequest,
-    AddSpanQueueItemsRequest,
-    AddThreadQueueItemsRequest,
+QueueItemsInput = Union[
+    TraceQueueItemsInput, SpanQueueItemsInput, ThreadQueueItemsInput
 ]

@@ -12,12 +12,12 @@ from confident_ai.common.types import (
 )
 from confident_ai.endpoints import Endpoints
 from confident_ai.report_templates.types import (
-    CreateReportTemplateRequest,
+    CreateReportTemplateInput,
     ReportTemplate,
     ReportTemplateList,
     ReportTemplateRef,
-    ReportTemplateSectionConfig,
-    UpdateReportTemplateRequest,
+    ReportTemplateSectionInput,
+    UpdateReportTemplateInput,
 )
 
 
@@ -72,7 +72,7 @@ class ReportTemplatesClient:
         name: str,
         *,
         description: Optional[str] = None,
-        template_sections: Optional[List[ReportTemplateSectionConfig]] = None,
+        template_sections: Optional[List[ReportTemplateSectionInput]] = None,
         enabled: Optional[bool] = None,
         recurrence: Optional[ScheduleRecurrenceType] = None,
         repeat_every: Optional[int] = None,
@@ -114,7 +114,7 @@ class ReportTemplatesClient:
             HttpMethods.POST,
             Endpoints.REPORT_TEMPLATES_ENDPOINT,
             response_schema=ReportTemplateRef,
-            request_schema=CreateReportTemplateRequest,
+            request_schema=CreateReportTemplateInput,
             body={
                 "name": name,
                 "description": description,
@@ -134,7 +134,7 @@ class ReportTemplatesClient:
         name: str,
         *,
         description: Optional[str] = None,
-        template_sections: Optional[List[ReportTemplateSectionConfig]] = None,
+        template_sections: Optional[List[ReportTemplateSectionInput]] = None,
         enabled: Optional[bool] = None,
         recurrence: Optional[ScheduleRecurrenceType] = None,
         repeat_every: Optional[int] = None,
@@ -176,7 +176,7 @@ class ReportTemplatesClient:
             HttpMethods.POST,
             Endpoints.REPORT_TEMPLATES_ENDPOINT,
             response_schema=ReportTemplateRef,
-            request_schema=CreateReportTemplateRequest,
+            request_schema=CreateReportTemplateInput,
             body={
                 "name": name,
                 "description": description,
@@ -229,7 +229,7 @@ class ReportTemplatesClient:
         *,
         name: Optional[str] = None,
         description: Optional[str] = None,
-        template_sections: Optional[List[ReportTemplateSectionConfig]] = None,
+        template_sections: Optional[List[ReportTemplateSectionInput]] = None,
         enabled: Optional[bool] = None,
         recurrence: Optional[ScheduleRecurrenceType] = None,
         repeat_every: Optional[int] = None,
@@ -271,7 +271,7 @@ class ReportTemplatesClient:
             HttpMethods.PUT,
             Endpoints.REPORT_TEMPLATE_ENDPOINT,
             response_schema=ReportTemplate,
-            request_schema=UpdateReportTemplateRequest,
+            request_schema=UpdateReportTemplateInput,
             body={
                 "name": name,
                 "description": description,
@@ -293,7 +293,7 @@ class ReportTemplatesClient:
         *,
         name: Optional[str] = None,
         description: Optional[str] = None,
-        template_sections: Optional[List[ReportTemplateSectionConfig]] = None,
+        template_sections: Optional[List[ReportTemplateSectionInput]] = None,
         enabled: Optional[bool] = None,
         recurrence: Optional[ScheduleRecurrenceType] = None,
         repeat_every: Optional[int] = None,
@@ -335,7 +335,7 @@ class ReportTemplatesClient:
             HttpMethods.PUT,
             Endpoints.REPORT_TEMPLATE_ENDPOINT,
             response_schema=ReportTemplate,
-            request_schema=UpdateReportTemplateRequest,
+            request_schema=UpdateReportTemplateInput,
             body={
                 "name": name,
                 "description": description,

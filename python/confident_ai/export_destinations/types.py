@@ -18,13 +18,13 @@ class ExportDestinationType(Enum):
     SNOWFLAKE = "SNOWFLAKE"
 
 
-class SnowflakeExportDestinationConfig(ConfidentBaseModel):
+class SnowflakeExportDestinationConfigInput(ConfidentBaseModel):
     account: str
     username: str
     role: str
     warehouse: str
     database: str
-    schema: str
+    schema_: str = Field(alias="schema")
     private_key: str = Field(alias="privateKey")
     private_key_passphrase: Optional[str] = Field(
         default=None,
@@ -32,7 +32,7 @@ class SnowflakeExportDestinationConfig(ConfidentBaseModel):
     )
 
 
-class CreateExportDestinationRequest(ConfidentBaseModel):
+class CreateExportDestinationInput(ConfidentBaseModel):
     name: str
     type: Optional[ExportDestinationType] = None
     bucket: Optional[str] = None
@@ -43,7 +43,7 @@ class CreateExportDestinationRequest(ConfidentBaseModel):
         alias="secretAccessKey",
     )
     path_prefix: Optional[str] = Field(default=None, alias="pathPrefix")
-    snowflake_config: Optional[SnowflakeExportDestinationConfig] = Field(
+    snowflake_config: Optional[SnowflakeExportDestinationConfigInput] = Field(
         default=None,
         alias="snowflakeConfig",
     )
@@ -56,7 +56,7 @@ class SnowflakeExportDestinationMaskedConfig(ConfidentBaseModel):
     role: str
     warehouse: str
     database: str
-    schema: str
+    schema_: str = Field(alias="schema")
     private_key: str = Field(alias="privateKey")
     private_key_passphrase: Optional[str] = Field(alias="privateKeyPassphrase")
 
@@ -99,13 +99,13 @@ class ExportDestinationRef(ConfidentBaseModel):
     id: str
 
 
-class UpdateSnowflakeExportDestinationConfig(ConfidentBaseModel):
+class SnowflakeExportDestinationConfigUpdateInput(ConfidentBaseModel):
     account: Optional[str] = None
     username: Optional[str] = None
     role: Optional[str] = None
     warehouse: Optional[str] = None
     database: Optional[str] = None
-    schema: Optional[str] = None
+    schema_: Optional[str] = Field(default=None, alias="schema")
     private_key: Optional[str] = Field(default=None, alias="privateKey")
     private_key_passphrase: Optional[str] = Field(
         default=None,
@@ -113,7 +113,7 @@ class UpdateSnowflakeExportDestinationConfig(ConfidentBaseModel):
     )
 
 
-class UpdateExportDestinationRequest(ConfidentBaseModel):
+class UpdateExportDestinationInput(ConfidentBaseModel):
     name: Optional[str] = None
     type: Optional[ExportDestinationType] = None
     bucket: Optional[str] = None
@@ -124,8 +124,10 @@ class UpdateExportDestinationRequest(ConfidentBaseModel):
         alias="secretAccessKey",
     )
     path_prefix: Optional[str] = Field(default=None, alias="pathPrefix")
-    snowflake_config: Optional[UpdateSnowflakeExportDestinationConfig] = Field(
-        default=None,
-        alias="snowflakeConfig",
+    snowflake_config: Optional[SnowflakeExportDestinationConfigUpdateInput] = (
+        Field(
+            default=None,
+            alias="snowflakeConfig",
+        )
     )
     enabled: Optional[bool] = None

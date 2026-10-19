@@ -6,7 +6,7 @@
 import { HttpMethods } from "../../api";
 import { Endpoints } from "../../endpoints";
 import { DatasetIngestionTasksOperations } from "../dataset-ingestion-tasks/operations";
-import { Golden, GoldenRef, GoldenRequest } from "../types";
+import { Golden, GoldenRef } from "../types";
 
 export class GoldensOperations extends DatasetIngestionTasksOperations {
   /**
@@ -22,13 +22,17 @@ export class GoldensOperations extends DatasetIngestionTasksOperations {
    */
   async createGolden(
     datasetId: string,
-    golden: GoldenRequest,
+    golden: Golden,
     version?: string,
   ): Promise<GoldenRef> {
     return this.api.sendRequest<GoldenRef>(
       HttpMethods.POST,
       Endpoints.DATASET_GOLDENS_ENDPOINT,
-      { body: { golden, version }, urlParams: { datasetId } },
+      {
+        body: { golden, version },
+        mediaHolders: ["$.golden"],
+        urlParams: { datasetId },
+      },
     );
   }
 
@@ -61,20 +65,20 @@ export class GoldensOperations extends DatasetIngestionTasksOperations {
    * @param datasetId The unique id of the dataset.
    * @param goldenId The unique id of the golden, returned when the dataset is
    *   pulled.
-   * @param golden One golden to write: single-turn when it carries `input`,
-   *   multi-turn when it carries `scenario`. A golden cannot be both, and its
-   *   kind must match the dataset's `multiTurn`. Pass a SingleTurnGoldenRequest
-   *   or a MultiTurnGoldenRequest.
+   * @param golden A golden in the dataset: single-turn when it carries `input`,
+   *   multi-turn when it carries `scenario`. The dataset's `multiTurn` decides
+   *   which kind every golden in it is. Pass a SingleTurnGolden or a
+   *   MultiTurnGolden.
    */
   async updateGolden(
     datasetId: string,
     goldenId: string,
-    golden: GoldenRequest,
+    golden: Golden,
   ): Promise<GoldenRef> {
     return this.api.sendRequest<GoldenRef>(
       HttpMethods.PUT,
       Endpoints.DATASET_GOLDEN_ENDPOINT,
-      { body: golden, urlParams: { datasetId, goldenId } },
+      { body: golden, mediaHolders: ["$"], urlParams: { datasetId, goldenId } },
     );
   }
 

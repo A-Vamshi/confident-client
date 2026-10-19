@@ -3,15 +3,65 @@
 # Do not edit by hand — change the route in confident-cloud
 # and regenerate.
 
-from typing import List, Optional
+from typing import List, Literal, Optional
 
 from pydantic import Field
 
-from confident_ai.common.types import JevQuestion, MetricEvaluationParam, Rubric
+from confident_ai.common.types import (
+    JevQuestion,
+    MetricAlgorithm,
+    MetricDag,
+    MetricEvaluationParam,
+    PromptMetricConfig,
+    Rubric,
+)
 from confident_ai.types import ConfidentBaseModel
 
 
-class UpdateMetricRequest(ConfidentBaseModel):
+class MetricCodeDefinition(ConfidentBaseModel):
+    language: Literal["PYTHON"]
+    code: str
+
+
+class MetricVersion(ConfidentBaseModel):
+    id: str
+    version: str
+    sequence: int
+    created_at: str = Field(alias="createdAt")
+    algorithm: Optional[MetricAlgorithm]
+    criteria: Optional[str]
+    evaluation_steps: Optional[List[str]] = Field(alias="evaluationSteps")
+    rubric: Optional[List[Rubric]]
+    dag: Optional[MetricDag]
+    questions: Optional[List[JevQuestion]]
+    prompt_config: Optional[PromptMetricConfig] = Field(alias="promptConfig")
+    require_input: bool = Field(alias="requireInput")
+    require_actual_output: bool = Field(alias="requireActualOutput")
+    require_expected_output: bool = Field(alias="requireExpectedOutput")
+    require_context: bool = Field(alias="requireContext")
+    require_expected_tools: bool = Field(alias="requireExpectedTools")
+    require_content: bool = Field(alias="requireContent")
+    require_role: bool = Field(alias="requireRole")
+    require_scenario: bool = Field(alias="requireScenario")
+    require_expected_outcome: bool = Field(alias="requireExpectedOutcome")
+    require_audio: bool = Field(alias="requireAudio")
+    require_retrieval_context: bool = Field(alias="requireRetrievalContext")
+    require_tools_called: bool = Field(alias="requireToolsCalled")
+    require_metadata: bool = Field(alias="requireMetadata")
+    require_tags: bool = Field(alias="requireTags")
+    code_definition: Optional[MetricCodeDefinition] = Field(
+        alias="codeDefinition",
+    )
+
+
+class MetricVersionList(ConfidentBaseModel):
+    versions: List[MetricVersion]
+    total_metric_versions: int = Field(alias="totalMetricVersions")
+    page: int
+    page_size: int = Field(alias="pageSize")
+
+
+class UpdateMetricInput(ConfidentBaseModel):
     criteria: Optional[str] = None
     evaluation_steps: Optional[List[str]] = Field(
         default=None,
@@ -23,3 +73,7 @@ class UpdateMetricRequest(ConfidentBaseModel):
     )
     rubric: Optional[List[Rubric]] = None
     questions: Optional[List[JevQuestion]] = None
+    prompt_config: Optional[PromptMetricConfig] = Field(
+        default=None,
+        alias="promptConfig",
+    )

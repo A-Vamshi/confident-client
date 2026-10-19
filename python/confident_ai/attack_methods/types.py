@@ -59,5 +59,5 @@ class AttackMethodRef(ConfidentBaseModel):
     id: str
 
 
-class UpdateAttackMethodRequest(ConfidentBaseModel):
+class UpdateAttackMethodInput(ConfidentBaseModel):
     parameters: Dict[str, Any]

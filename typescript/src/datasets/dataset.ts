@@ -13,14 +13,8 @@ import {
   DatasetVersionList,
   Golden,
   GoldenRef,
-  GoldenRequest,
-  MultiTurnGoldenRequest,
-  PushDatasetRequest,
-  PushGolden,
-  PushMultiTurnGolden,
-  PushSingleTurnGolden,
+  PushDatasetInput,
   RunDatasetEvaluationResult,
-  SingleTurnGoldenRequest,
 } from "./types";
 
 /**
@@ -95,6 +89,11 @@ export class Dataset {
    * @param aiConnectionId The id of the AI connection used to generate the
    *   actual outputs before evaluating them. Required when `generationMode` is
    *   `AI_CONNECTION`, and not allowed together with `promptAlias`.
+   * @param voiceConnectionId The id of the voice connection to call while
+   *   simulating each golden's conversation. Required when `generationMode` is
+   *   `VOICE_CONNECTION`, needs a multi-turn dataset with `includeSimulation`
+   *   enabled, and is not allowed together with `aiConnectionId` or
+   *   `promptAlias`.
    * @param promptAlias The alias of the prompt used to generate the actual
    *   outputs before evaluating them. Required when `generationMode` is
    *   `PROMPT`, and not allowed together with `aiConnectionId`.
@@ -127,6 +126,7 @@ export class Dataset {
       identifier?: string;
       version?: string;
       aiConnectionId?: string;
+      voiceConnectionId?: string;
       promptAlias?: string;
       promptCommit?: string;
       generationMode?: GenerationMode;
@@ -149,13 +149,14 @@ export class Dataset {
    * Queue Dataset Goldens
    *
    * Adds goldens to the dataset as unfinalized goldens, for review on the
-   * platform before they are used in evaluations.
+   * platform before they are used in evaluations. They go into the dataset's
+   * latest version, or among its unversioned goldens when it has no versions.
    *
    * @param goldens The goldens to queue for review. Every golden in one request
    *   must be of the same kind and match the dataset's `multiTurn`. They are
    *   stored unfinalized, whatever each golden's own `finalized` says.
    */
-  async queueGoldens(goldens: GoldenRequest[]): Promise<DatasetRef> {
+  async queueGoldens(goldens: Golden[]): Promise<DatasetRef> {
     return this.client.queueGoldens(this.datasetIdOrThrow(), goldens);
   }
 
@@ -169,10 +170,7 @@ export class Dataset {
    *   targets the latest version, or the unversioned goldens when the dataset
    *   has no versions.
    */
-  async createGolden(
-    golden: GoldenRequest,
-    version?: string,
-  ): Promise<GoldenRef> {
+  async createGolden(golden: Golden, version?: string): Promise<GoldenRef> {
     return this.client.createGolden(this.datasetIdOrThrow(), golden, version);
   }
 
@@ -218,7 +216,7 @@ export class Dataset {
     return this.client.updateGolden(
       this.datasetIdOrThrow(),
       this.goldenIdOrThrow(golden),
-      this.goldenRequest(golden),
+      golden,
     );
   }
 
@@ -270,7 +268,7 @@ export class Dataset {
     return result;
   }
 
-  private pushBody(finalized?: boolean): PushDatasetRequest {
+  private pushBody(finalized?: boolean): PushDatasetInput {
     if (this.alias === undefined) {
       throw new Error("Set alias before calling push.");
     }
@@ -280,10 +278,10 @@ export class Dataset {
     const fields = {
       alias: this.alias,
       version: this.version,
-      goldens: this.goldens.map((golden) => this.pushGolden(golden)),
+      goldens: this.goldens,
       finalized,
     };
-    return fields as PushDatasetRequest;
+    return fields as PushDatasetInput;
   }
 
   private goldenIdOrThrow(golden: Golden): string {
@@ -293,42 +291,6 @@ export class Dataset {
       );
     }
     return golden.id;
-  }
-
-  private goldenRequest(golden: Golden): GoldenRequest {
-    const source = golden as unknown as Record<string, unknown>;
-    const fields = { ...source };
-    // A Golden carries fields a GoldenRequest has no room for.
-    delete fields["id"];
-    const chosen = (["input", "scenario"] as const).filter(
-      (name) => source[name] !== undefined,
-    );
-    if (chosen.length !== 1) {
-      throw new Error(
-        `Set exactly one of input, scenario; ${chosen.length ? chosen.join(", ") : "none is set"}.`,
-      );
-    }
-    if (source["input"] !== undefined) {
-      return fields as unknown as SingleTurnGoldenRequest;
-    }
-    return fields as unknown as MultiTurnGoldenRequest;
-  }
-
-  private pushGolden(golden: Golden): PushGolden {
-    const source = golden as unknown as Record<string, unknown>;
-    const fields = { ...source };
-    const chosen = (["input", "scenario"] as const).filter(
-      (name) => source[name] !== undefined,
-    );
-    if (chosen.length !== 1) {
-      throw new Error(
-        `Set exactly one of input, scenario; ${chosen.length ? chosen.join(", ") : "none is set"}.`,
-      );
-    }
-    if (source["input"] !== undefined) {
-      return fields as unknown as PushSingleTurnGolden;
-    }
-    return fields as unknown as PushMultiTurnGolden;
   }
 
   private load(payload: DatasetPayload): void {

@@ -33,12 +33,12 @@ from confident_ai.projects.types import (
     ProjectMember,
     ProjectMemberList,
     ProjectModel,
+    ProjectModelInput,
     ProjectRef,
     ProjectRole,
     ProjectRoleList,
-    UpdateProjectModelRequest,
+    UpdateProjectInput,
     UpdateProjectModelResult,
-    UpdateProjectRequest,
 )
 
 
@@ -1038,7 +1038,7 @@ class Project:
         return await self._client.a_get_model(self._project_id(), type=type)
 
     def update_model(
-        self, model_type: str, model_config: UpdateProjectModelRequest
+        self, model_type: str, model_config: ProjectModelInput
     ) -> UpdateProjectModelResult:
         """Set Project Model
 
@@ -1057,16 +1057,15 @@ class Project:
                 concurrency, and platform, simulation, and speech models also
                 accept max input tokens. This replaces the whole configuration
                 rather than patching it. `CUSTOM` is rejected. Pass one of
-                UpdateEvaluationProjectModelRequest,
-                UpdateDecisionProjectModelRequest,
-                UpdatePlatformProjectModelRequest.
+                EvaluationProjectModelInput, DecisionProjectModelInput,
+                PlatformProjectModelInput.
         """
         return self._client.update_model(
             self._project_id(), model_type, model_config
         )
 
     async def a_update_model(
-        self, model_type: str, model_config: UpdateProjectModelRequest
+        self, model_type: str, model_config: ProjectModelInput
     ) -> UpdateProjectModelResult:
         """Set Project Model
 
@@ -1085,9 +1084,8 @@ class Project:
                 concurrency, and platform, simulation, and speech models also
                 accept max input tokens. This replaces the whole configuration
                 rather than patching it. `CUSTOM` is rejected. Pass one of
-                UpdateEvaluationProjectModelRequest,
-                UpdateDecisionProjectModelRequest,
-                UpdatePlatformProjectModelRequest.
+                EvaluationProjectModelInput, DecisionProjectModelInput,
+                PlatformProjectModelInput.
         """
         return await self._client.a_update_model(
             self._project_id(), model_type, model_config
@@ -1132,12 +1130,12 @@ class Project:
         the project and severs that inheritance — so the project then holds only
         the provider you just sent, and any other provider it relied on has to
         be set again here. This is a write-only surface: there is no read
-        endpoint, and the response returns every credential masked. For
-        `BEDROCK` and `AZURE` it writes the provider's default credential and
-        leaves any other credentials stored on the Confident AI platform in
-        place. A provider your organization's model provider policy does not
-        allow cannot have a credential set (`403`), though clearing one is
-        always permitted.
+        endpoint, and the response returns every credential masked. It writes
+        the provider's credential named "Default", creating it if missing, and
+        leaves any other credentials stored for that provider on the Confident
+        AI platform in place. A provider your organization's model provider
+        policy does not allow cannot have a credential set (`403`), though
+        clearing one is always permitted.
 
         Args:
             api_key: The provider's API key, for the API-key providers only.
@@ -1185,12 +1183,12 @@ class Project:
         the project and severs that inheritance — so the project then holds only
         the provider you just sent, and any other provider it relied on has to
         be set again here. This is a write-only surface: there is no read
-        endpoint, and the response returns every credential masked. For
-        `BEDROCK` and `AZURE` it writes the provider's default credential and
-        leaves any other credentials stored on the Confident AI platform in
-        place. A provider your organization's model provider policy does not
-        allow cannot have a credential set (`403`), though clearing one is
-        always permitted.
+        endpoint, and the response returns every credential masked. It writes
+        the provider's credential named "Default", creating it if missing, and
+        leaves any other credentials stored for that provider on the Confident
+        AI platform in place. A provider your organization's model provider
+        policy does not allow cannot have a credential set (`403`), though
+        clearing one is always permitted.
 
         Args:
             api_key: The provider's API key, for the API-key providers only.
@@ -1379,9 +1377,9 @@ class Project:
         self.project_id = result.id
         return result
 
-    def _update_body(self) -> UpdateProjectRequest:
+    def _update_body(self) -> UpdateProjectInput:
         fields = {"name": self.name, "description": self.description}
-        return UpdateProjectRequest(**fields)
+        return UpdateProjectInput(**fields)
 
     def _load(self, payload: ProjectPayload) -> None:
         self.id = payload.id

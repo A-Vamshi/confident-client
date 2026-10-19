@@ -20,13 +20,6 @@ export enum AuditLogExportStatus {
   ERRORED = "ERRORED",
 }
 
-export enum Environment {
-  PRODUCTION = "production",
-  DEVELOPMENT = "development",
-  STAGING = "staging",
-  TESTING = "testing",
-}
-
 export enum EvaluationErrorType {
   AI_CONNECTION_ERROR = "AI_CONNECTION_ERROR",
   TRANSFORMER_ERROR = "TRANSFORMER_ERROR",
@@ -38,6 +31,7 @@ export enum EvaluationErrorType {
 export enum GenerationMode {
   AI_CONNECTION = "AI_CONNECTION",
   PROMPT = "PROMPT",
+  VOICE_CONNECTION = "VOICE_CONNECTION",
 }
 
 export enum IngestionDataModel {
@@ -64,6 +58,7 @@ export enum MetricAlgorithm {
   GEVAL = "GEVAL",
   JEVAL = "JEVAL",
   CODE = "CODE",
+  PROMPT = "PROMPT",
 }
 
 export enum MetricEvaluationParam {
@@ -76,6 +71,7 @@ export enum MetricEvaluationParam {
   ROLE = "role",
   SCENARIO = "scenario",
   EXPECTEDOUTCOME = "expectedOutcome",
+  AUDIO = "audio",
   TURNS = "turns",
   TOOLSCALLED = "toolsCalled",
   RETRIEVALCONTEXT = "retrievalContext",
@@ -104,6 +100,7 @@ export enum ModelProvider {
   HUGGING_FACE = "HUGGING_FACE",
   TYPE_SAFE = "TYPE_SAFE",
   FAL = "FAL",
+  Z_AI = "Z_AI",
 }
 
 export enum ModelType {
@@ -146,6 +143,12 @@ export enum SpanType {
 export enum ToolCallType {
   FUNCTION = "FUNCTION",
   MCP = "MCP",
+}
+
+export enum ToolMode {
+  ALLOW_ADDITIONAL = "ALLOW_ADDITIONAL",
+  NO_ADDITIONAL = "NO_ADDITIONAL",
+  STRICT = "STRICT",
 }
 
 export enum TraceSpanStatus {
@@ -235,7 +238,9 @@ export enum WidgetDimension {
   CLASSIFIER = "classifier",
   POLARITY = "polarity",
   CLASSIFIER_LABEL = "classifier_label",
+  CLASSIFIER_VERSION = "classifier_version",
   VERSION = "version",
+  METRIC_VERSION = "metric_version",
   VALUE = "value",
   FAILURE_SUB_MODE = "failure_sub_mode",
 }
@@ -351,118 +356,52 @@ export interface Classification {
   reason: string;
 }
 
-export interface CreateApiKeyRequest {
+export interface CreateApiKeyInput {
   name: string;
   expiresInDays?: number;
 }
 
-export interface CreateAuditLogExportRequest {
+export interface CreateAuditLogExportInput {
   startTime?: string;
   endTime?: string;
   searchTerm?: string;
 }
 
-export interface Rubric {
-  scoreRange: [number, number];
-  expectedOutcome: string;
-}
-
-export interface MetricDag {
-  nodes: Record<string, unknown>;
-}
-
-export interface JevQuestionJevQuestion0 {
-  type: "noul";
-  question: string;
-  weight?: number;
-  trueDescription?: string;
-  falseDescription?: string;
-}
-
-export interface JevQuestionJevQuestion1 {
-  type: "score";
-  question: string;
-  weight?: number;
-  levels: string[];
-}
-
-export interface JevQuestionJevQuestion2 {
-  type: "choice";
-  question: string;
-  weight?: number;
-  options: Record<string, number | null>;
-}
-
-export type JevQuestion =
-  JevQuestionJevQuestion0 | JevQuestionJevQuestion1 | JevQuestionJevQuestion2;
-
-export interface CreateMetricRequest {
-  name: string;
-  multiTurn?: boolean;
-  criteria?: string;
-  evaluationSteps?: string[];
-  evaluationParams?: MetricEvaluationParam[];
-  rubric?: Rubric[];
-  algorithm?: MetricAlgorithm;
-  dag?: MetricDag;
-  questions?: JevQuestion[];
-}
-
-export interface CreateOrUpdatePolicyRequest {
+export interface CreateOrUpdatePolicyInput {
   name: string;
   description?: string | null;
   permissionIds: string[];
 }
 
-export interface CreateOrUpdateRoleRequest {
+export interface CreateOrUpdateRoleInput {
   name: string;
   description?: string | null;
   policyIds: string[];
 }
 
-export interface WidgetTopK {
-  limit?: number;
-  orderBy?:
-    | "count"
-    | "avg_latency"
-    | "p50_latency"
-    | "p90_latency"
-    | "p99_latency"
-    | "error_rate"
-    | "pass_rate"
-    | "failure_rate"
-    | "input_cost"
-    | "output_cost"
-    | "total_cost"
-    | "avg_cost"
-    | "input_tokens"
-    | "output_tokens"
-    | "total_tokens"
-    | "count_distinct_endUserId"
-    | "count_distinct_threadId"
-    | "count_distinct_model"
-    | "count_distinct_projectId"
-    | "count_distinct_error"
-    | "count_distinct_metadata"
-    | "error_count"
-    | "pass_count"
-    | "avg_score"
-    | "stddev_score"
-    | "median_score"
-    | "avg_rating"
-    | "avg_value"
-    | "score_histogram"
-    | "created_at"
-    | "start_time"
-    | "dimension";
-  direction?: "asc" | "desc";
+export interface CreatedApiKey {
+  id: number;
+  name: string | null;
+  valid: boolean;
+  created_at: string;
+  expiresAt: string | null;
+  value: string;
+  shadowValue: null | null;
+  rotatesAt: null | null;
+  lastUsed: null | null;
 }
 
-export interface WidgetLayout {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
+export interface ErrorResponseDetails {
+  usage?: string;
+  limit?: string;
+}
+
+export interface ErrorResponse {
+  success: false;
+  error: string;
+  link?: string;
+  deprecated?: boolean;
+  details?: ErrorResponseDetails;
 }
 
 export interface FilterSetGroupFilter {
@@ -527,8 +466,10 @@ export interface FilterSetGroupFilter {
     | "Annotation Text"
     | "Metric Score"
     | "Metric Status"
+    | "Metric Version"
     | "Metadata"
     | "Classifier"
+    | "Classifier Version"
     | "Metric"
     | "Metric Name"
     | "Trace Count"
@@ -601,57 +542,6 @@ export interface FilterSet {
   groups: FilterSetGroup[];
 }
 
-export interface WidgetLineExtraQueryParams {}
-
-export interface WidgetLineConfig {
-  name: string;
-  color?: WidgetLineColor | null;
-  dataModel?: WidgetDataModel | null;
-  aggregation?: WidgetAggregation | null;
-  filters?: FilterSet | null;
-  extraQueryParams?: WidgetLineExtraQueryParams | null;
-}
-
-export interface CreateWidgetRequest {
-  name: string;
-  description?: string | null;
-  type?: WidgetType | null;
-  unit?: WidgetUnit | null;
-  mode?: WidgetMode | null;
-  bucketMode?: WidgetBucketMode | null;
-  dimension?: WidgetDimension | null;
-  topK?: WidgetTopK | null;
-  startTime?: string | null;
-  endTime?: string | null;
-  layout?: WidgetLayout | null;
-  lines?: WidgetLineConfig[] | null;
-}
-
-export interface CreatedApiKey {
-  id: number;
-  name: string | null;
-  valid: boolean;
-  created_at: string;
-  expiresAt: string | null;
-  value: string;
-  shadowValue: null | null;
-  rotatesAt: null | null;
-  lastUsed: null | null;
-}
-
-export interface ErrorResponseDetails {
-  usage?: string;
-  limit?: string;
-}
-
-export interface ErrorResponse {
-  success: false;
-  error: string;
-  link?: string;
-  deprecated?: boolean;
-  details?: ErrorResponseDetails;
-}
-
 export interface GovernancePolicyReference {
   id: string;
   name: string;
@@ -673,7 +563,29 @@ export interface InvitationRef {
   id: number;
 }
 
-export interface MLLMImage {
+export interface JevChoiceQuestion {
+  type: "choice";
+  question: string;
+  weight?: number;
+  options: Record<string, number | null>;
+}
+
+export interface JevNoulQuestion {
+  type: "noul";
+  question: string;
+  weight?: number;
+  trueDescription?: string;
+  falseDescription?: string;
+}
+
+export interface JevScoreQuestion {
+  type: "score";
+  question: string;
+  weight?: number;
+  levels: string[];
+}
+
+export interface MLLMImageInput {
   url: string;
   local: boolean;
   base64?: string;
@@ -691,6 +603,33 @@ export interface MemberRole {
   name: string;
 }
 
+export interface Rubric {
+  scoreRange: [number, number];
+  expectedOutcome: string;
+}
+
+export interface MetricDag {
+  nodes: Record<string, unknown>;
+}
+
+export type JevQuestion =
+  JevNoulQuestion | JevScoreQuestion | JevChoiceQuestion;
+
+export interface PromptMetricConfigMessage {
+  role: "system" | "user" | "assistant";
+  content: string;
+}
+
+export interface PromptMetricConfigVariables {
+  field: "input" | "output" | "metadata" | "tools_called";
+  path: (string | number)[];
+}
+
+export interface PromptMetricConfig {
+  messages: PromptMetricConfigMessage[];
+  variables: Record<string, PromptMetricConfigVariables>;
+}
+
 export interface Metric {
   id: string;
   name: string;
@@ -700,6 +639,7 @@ export interface Metric {
   rubric: Rubric[] | null;
   dag: MetricDag | null;
   questions: JevQuestion[] | null;
+  promptConfig: PromptMetricConfig | null;
   multiTurn: boolean;
   requiredParameters: MetricEvaluationParam[];
 }
@@ -728,6 +668,19 @@ export interface MetricData {
   testRunId: string | null;
 }
 
+export interface MetricInput {
+  name: string;
+  multiTurn?: boolean;
+  criteria?: string;
+  evaluationSteps?: string[];
+  evaluationParams?: MetricEvaluationParam[];
+  rubric?: Rubric[];
+  algorithm?: MetricAlgorithm;
+  dag?: MetricDag;
+  questions?: JevQuestion[];
+  promptConfig?: PromptMetricConfig;
+}
+
 export interface MetricList {
   metrics: Metric[];
 }
@@ -753,6 +706,7 @@ export interface ModelCredentials {
   deepSeekApiKey: string | null;
   mistralApiKey: string | null;
   perplexityApiKey: string | null;
+  zAiApiKey: string | null;
   typeSafeApiKey: string | null;
   falApiKey: string | null;
   bedrockModelConfig: Record<string, unknown> | null;
@@ -817,7 +771,7 @@ export interface RoleRef {
   id: string;
 }
 
-export interface RotateApiKeyRequest {
+export interface RotateApiKeyInput {
   gracePeriodInHours?: number;
   expiresInDays?: number | null;
 }
@@ -875,6 +829,15 @@ export interface Span {
   annotations: AnnotationSummary[];
 }
 
+export interface Tool {
+  id: string;
+  name: string;
+  description: string | null;
+  mode: ToolMode;
+  version: string;
+  schema: Record<string, unknown>;
+}
+
 export interface Trace {
   uuid: string;
   name: string | null;
@@ -886,7 +849,7 @@ export interface Trace {
   threadId: string | null;
   userId: string | null;
   customerId: string | null;
-  environment: Environment;
+  environment: string;
   tags: string[] | null;
   metadata: Record<string, unknown> | null;
   input: string | null;
@@ -911,17 +874,18 @@ export interface Turn {
   userId?: string;
   retrievalContext?: string[] | null;
   toolsCalled?: ToolCall[] | null;
+  metadata?: Record<string, unknown> | null;
 }
 
-export interface UpdateApiKeyRequest {
+export interface UpdateApiKeyInput {
   valid: boolean;
 }
 
-export interface UpdateMemberRoleRequest {
+export interface UpdateMemberRoleInput {
   roleId: string;
 }
 
-export interface UpdateModelCredentialsRequest {
+export interface UpdateModelCredentialsInput {
   provider: ModelProvider;
   apiKey?: string | null;
   modelConfig?: Record<string, unknown> | null;
@@ -958,6 +922,77 @@ export interface WidgetDimensionData {
   kind: "DIMENSION";
   unit: WidgetUnit | null;
   series: WidgetSeries[];
+}
+
+export interface WidgetTopK {
+  limit?: number;
+  orderBy?:
+    | "count"
+    | "avg_latency"
+    | "p50_latency"
+    | "p90_latency"
+    | "p99_latency"
+    | "error_rate"
+    | "pass_rate"
+    | "failure_rate"
+    | "input_cost"
+    | "output_cost"
+    | "total_cost"
+    | "avg_cost"
+    | "input_tokens"
+    | "output_tokens"
+    | "total_tokens"
+    | "count_distinct_endUserId"
+    | "count_distinct_threadId"
+    | "count_distinct_model"
+    | "count_distinct_projectId"
+    | "count_distinct_error"
+    | "count_distinct_metadata"
+    | "error_count"
+    | "pass_count"
+    | "avg_score"
+    | "stddev_score"
+    | "median_score"
+    | "avg_rating"
+    | "avg_value"
+    | "score_histogram"
+    | "created_at"
+    | "start_time"
+    | "dimension";
+  direction?: "asc" | "desc";
+}
+
+export interface WidgetLayout {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+export interface WidgetLineExtraQueryParams {}
+
+export interface WidgetLineInput {
+  name: string;
+  color?: WidgetLineColor | null;
+  dataModel?: WidgetDataModel | null;
+  aggregation?: WidgetAggregation | null;
+  filters?: FilterSet | null;
+  extraQueryParams?: WidgetLineExtraQueryParams | null;
+}
+
+export interface WidgetInput {
+  name: string;
+  description?: string | null;
+  type?: WidgetType | null;
+  unit?: WidgetUnit | null;
+  mode?: WidgetMode | null;
+  bucketMode?: WidgetBucketMode | null;
+  dimension?: WidgetDimension | null;
+  topK?: WidgetTopK | null;
+  startTime?: string | null;
+  endTime?: string | null;
+  layout?: WidgetLayout | null;
+  lines?: WidgetLineInput[] | null;
 }
 
 export interface WidgetTableColumn {

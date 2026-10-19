@@ -3,7 +3,11 @@
 // Do not edit by hand — change the route in confident-cloud
 // and regenerate.
 
-import { AnnotationFieldType, MLLMImage, UserReference } from "../common/types";
+import {
+  AnnotationFieldType,
+  MLLMImageInput,
+  UserReference,
+} from "../common/types";
 
 export enum AnnotationSortBy {
   CREATEDAT = "createdAt",
@@ -37,49 +41,49 @@ export interface AnnotationRef {
   id: string;
 }
 
-export type AnnotationValue = string | number | boolean | string[];
+export type AnnotationValueInput = string | number | boolean | string[];
 
-export interface SpanAnnotationRequest {
+export interface SpanAnnotationInput {
   spanUuid: string;
   expectedOutput?: string;
   fieldType?: AnnotationFieldType;
-  value: AnnotationValue;
+  value: AnnotationValueInput;
   name?: string;
   explanation?: string;
   userId?: string;
-  imagesMapping?: Record<string, MLLMImage>;
+  imagesMapping?: Record<string, MLLMImageInput>;
 }
 
-export interface ThreadAnnotationRequest {
+export interface ThreadAnnotationInput {
   threadId: string;
   expectedOutcome?: string;
   fieldType?: AnnotationFieldType;
-  value: AnnotationValue;
+  value: AnnotationValueInput;
   name?: string;
   explanation?: string;
   userId?: string;
-  imagesMapping?: Record<string, MLLMImage>;
+  imagesMapping?: Record<string, MLLMImageInput>;
 }
 
-export interface TraceAnnotationRequest {
+export interface TraceAnnotationInput {
   traceUuid: string;
   expectedOutput?: string;
   fieldType?: AnnotationFieldType;
-  value: AnnotationValue;
+  value: AnnotationValueInput;
   name?: string;
   explanation?: string;
   userId?: string;
-  imagesMapping?: Record<string, MLLMImage>;
+  imagesMapping?: Record<string, MLLMImageInput>;
 }
 
-export interface UpdateAnnotationRequest {
+export interface UpdateAnnotationInput {
   fieldType?: AnnotationFieldType;
-  value?: AnnotationValue;
+  value?: AnnotationValueInput;
   explanation?: string;
   expectedOutput?: string;
   expectedOutcome?: string;
-  imagesMapping?: Record<string, MLLMImage>;
+  imagesMapping?: Record<string, MLLMImageInput>;
 }
 
-export type CreateAnnotationRequest =
-  TraceAnnotationRequest | SpanAnnotationRequest | ThreadAnnotationRequest;
+export type AnnotationInput =
+  TraceAnnotationInput | SpanAnnotationInput | ThreadAnnotationInput;

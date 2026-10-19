@@ -7,11 +7,11 @@ from typing import List, Optional
 
 from confident_ai.annotation_queues.types import (
     AssignmentStrategy,
-    CreateQueueIngestionTaskRequest,
+    CreateQueueIngestionTaskInput,
     QueueIngestionTask,
     QueueIngestionTaskList,
     QueueIngestionTaskRef,
-    UpdateQueueIngestionTaskRequest,
+    UpdateQueueIngestionTaskInput,
 )
 from confident_ai.api import Api, HttpMethods
 from confident_ai.common.types import FilterSet, IngestionDataModel
@@ -111,7 +111,7 @@ class QueueIngestionTasksOperations:
             HttpMethods.POST,
             Endpoints.ANNOTATION_QUEUE_QUEUE_INGESTION_TASKS_ENDPOINT,
             response_schema=QueueIngestionTaskRef,
-            request_schema=CreateQueueIngestionTaskRequest,
+            request_schema=CreateQueueIngestionTaskInput,
             body={
                 "name": name,
                 "dataModel": data_model,
@@ -166,7 +166,7 @@ class QueueIngestionTasksOperations:
             HttpMethods.POST,
             Endpoints.ANNOTATION_QUEUE_QUEUE_INGESTION_TASKS_ENDPOINT,
             response_schema=QueueIngestionTaskRef,
-            request_schema=CreateQueueIngestionTaskRequest,
+            request_schema=CreateQueueIngestionTaskInput,
             body={
                 "name": name,
                 "dataModel": data_model,
@@ -232,6 +232,7 @@ class QueueIngestionTasksOperations:
         *,
         name: Optional[str] = None,
         data_model: Optional[IngestionDataModel] = None,
+        new_annotation_queue_id: Optional[str] = None,
         description: Optional[str] = None,
         enabled: Optional[bool] = None,
         sample_rate: Optional[float] = None,
@@ -250,6 +251,11 @@ class QueueIngestionTasksOperations:
             annotation_queue_id: The id of the annotation queue the task fills.
             queue_ingestion_task_id: The id of the queue ingestion task.
             name: The name of the task.
+            new_annotation_queue_id: Moves the task to another queue, which must
+                hold the same data model. Later items are queued there; items
+                already queued stay where they are. Send `null` to detach the
+                task, which only a recurring task may do — it then creates a
+                queue of its own each period.
             description: A note about what the task harvests. Send `null` to
                 clear it.
             enabled: Whether the task runs. Disabling it stops new items
@@ -267,10 +273,11 @@ class QueueIngestionTasksOperations:
             HttpMethods.PUT,
             Endpoints.ANNOTATION_QUEUE_QUEUE_INGESTION_TASK_ENDPOINT,
             response_schema=QueueIngestionTask,
-            request_schema=UpdateQueueIngestionTaskRequest,
+            request_schema=UpdateQueueIngestionTaskInput,
             body={
                 "name": name,
                 "dataModel": data_model,
+                "newAnnotationQueueId": new_annotation_queue_id,
                 "description": description,
                 "enabled": enabled,
                 "sampleRate": sample_rate,
@@ -292,6 +299,7 @@ class QueueIngestionTasksOperations:
         *,
         name: Optional[str] = None,
         data_model: Optional[IngestionDataModel] = None,
+        new_annotation_queue_id: Optional[str] = None,
         description: Optional[str] = None,
         enabled: Optional[bool] = None,
         sample_rate: Optional[float] = None,
@@ -310,6 +318,11 @@ class QueueIngestionTasksOperations:
             annotation_queue_id: The id of the annotation queue the task fills.
             queue_ingestion_task_id: The id of the queue ingestion task.
             name: The name of the task.
+            new_annotation_queue_id: Moves the task to another queue, which must
+                hold the same data model. Later items are queued there; items
+                already queued stay where they are. Send `null` to detach the
+                task, which only a recurring task may do — it then creates a
+                queue of its own each period.
             description: A note about what the task harvests. Send `null` to
                 clear it.
             enabled: Whether the task runs. Disabling it stops new items
@@ -327,10 +340,11 @@ class QueueIngestionTasksOperations:
             HttpMethods.PUT,
             Endpoints.ANNOTATION_QUEUE_QUEUE_INGESTION_TASK_ENDPOINT,
             response_schema=QueueIngestionTask,
-            request_schema=UpdateQueueIngestionTaskRequest,
+            request_schema=UpdateQueueIngestionTaskInput,
             body={
                 "name": name,
                 "dataModel": data_model,
+                "newAnnotationQueueId": new_annotation_queue_id,
                 "description": description,
                 "enabled": enabled,
                 "sampleRate": sample_rate,

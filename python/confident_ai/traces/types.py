@@ -9,7 +9,6 @@ from typing import Any, Dict, List, Literal, Optional, Union
 from pydantic import Field
 
 from confident_ai.common.types import (
-    Environment,
     EvaluationErrorType,
     ToolCall,
     TraceSpanStatus,
@@ -22,7 +21,7 @@ class TraceSortBy(Enum):
     ENDEDAT = "endedAt"
 
 
-class MetricDataConfig(ConfidentBaseModel):
+class MetricDataInput(ConfidentBaseModel):
     name: str
     score: Optional[float] = None
     success: Optional[bool] = None
@@ -46,7 +45,7 @@ class MetricDataConfig(ConfidentBaseModel):
     verbose_logs: Optional[str] = Field(default=None, alias="verboseLogs")
 
 
-class AgentSpanRequest(ConfidentBaseModel):
+class AgentSpanInput(ConfidentBaseModel):
     type: Literal["AGENT"]
     uuid: str
     name: str
@@ -77,7 +76,7 @@ class AgentSpanRequest(ConfidentBaseModel):
         alias="expectedTools",
     )
     integration: Optional[str] = None
-    metrics_data: Optional[List[MetricDataConfig]] = Field(
+    metrics_data: Optional[List[MetricDataInput]] = Field(
         default=None,
         alias="metricsData",
     )
@@ -85,7 +84,7 @@ class AgentSpanRequest(ConfidentBaseModel):
     agent_handoffs: List[str] = Field(alias="agentHandoffs")
 
 
-class BaseSpanRequest(ConfidentBaseModel):
+class BaseSpanInput(ConfidentBaseModel):
     type: Optional[Literal["SPAN"]] = None
     uuid: str
     name: str
@@ -116,29 +115,29 @@ class BaseSpanRequest(ConfidentBaseModel):
         alias="expectedTools",
     )
     integration: Optional[str] = None
-    metrics_data: Optional[List[MetricDataConfig]] = Field(
+    metrics_data: Optional[List[MetricDataInput]] = Field(
         default=None,
         alias="metricsData",
     )
 
 
-class ThreadRequest(ConfidentBaseModel):
+class ThreadInput(ConfidentBaseModel):
     id: Optional[str] = None
     metadata: Optional[Dict[str, Any]] = None
     tags: Optional[List[str]] = None
 
 
-class UserRequest(ConfidentBaseModel):
+class UserInput(ConfidentBaseModel):
     id: Optional[str] = None
     name: Optional[str] = None
 
 
-class CustomerRequest(ConfidentBaseModel):
+class CustomerInput(ConfidentBaseModel):
     id: Optional[str] = None
     name: Optional[str] = None
 
 
-class LlmSpanRequest(ConfidentBaseModel):
+class LlmSpanInput(ConfidentBaseModel):
     type: Literal["LLM"]
     uuid: str
     name: str
@@ -169,7 +168,7 @@ class LlmSpanRequest(ConfidentBaseModel):
         alias="expectedTools",
     )
     integration: Optional[str] = None
-    metrics_data: Optional[List[MetricDataConfig]] = Field(
+    metrics_data: Optional[List[MetricDataInput]] = Field(
         default=None,
         alias="metricsData",
     )
@@ -201,7 +200,7 @@ class LlmSpanRequest(ConfidentBaseModel):
     )
 
 
-class RetrieverSpanRequest(ConfidentBaseModel):
+class RetrieverSpanInput(ConfidentBaseModel):
     type: Literal["RETRIEVER"]
     uuid: str
     name: str
@@ -232,7 +231,7 @@ class RetrieverSpanRequest(ConfidentBaseModel):
         alias="expectedTools",
     )
     integration: Optional[str] = None
-    metrics_data: Optional[List[MetricDataConfig]] = Field(
+    metrics_data: Optional[List[MetricDataInput]] = Field(
         default=None,
         alias="metricsData",
     )
@@ -241,7 +240,7 @@ class RetrieverSpanRequest(ConfidentBaseModel):
     chunk_size: Optional[int] = Field(default=None, alias="chunkSize")
 
 
-class ToolSpanRequest(ConfidentBaseModel):
+class ToolSpanInput(ConfidentBaseModel):
     type: Literal["TOOL"]
     uuid: str
     name: str
@@ -272,29 +271,29 @@ class ToolSpanRequest(ConfidentBaseModel):
         alias="expectedTools",
     )
     integration: Optional[str] = None
-    metrics_data: Optional[List[MetricDataConfig]] = Field(
+    metrics_data: Optional[List[MetricDataInput]] = Field(
         default=None,
         alias="metricsData",
     )
     description: Optional[str] = None
 
 
-SpanRequest = Union[
-    BaseSpanRequest,
-    LlmSpanRequest,
-    RetrieverSpanRequest,
-    ToolSpanRequest,
-    AgentSpanRequest,
+SpanInput = Union[
+    BaseSpanInput,
+    LlmSpanInput,
+    RetrieverSpanInput,
+    ToolSpanInput,
+    AgentSpanInput,
 ]
 
 
-class TraceAttachment(ConfidentBaseModel):
+class TraceAttachmentInput(ConfidentBaseModel):
     url: Optional[str] = None
     data_base64: Optional[str] = Field(default=None, alias="dataBase64")
     mime_type: Optional[str] = Field(default=None, alias="mimeType")
 
 
-class CreateTraceRequest(ConfidentBaseModel):
+class CreateTraceInput(ConfidentBaseModel):
     uuid: str
     name: Optional[str] = None
     input: Optional[Any] = None
@@ -302,15 +301,15 @@ class CreateTraceRequest(ConfidentBaseModel):
     start_time: str = Field(alias="startTime")
     end_time: str = Field(alias="endTime")
     status: Optional[TraceSpanStatus] = None
-    environment: Optional[Environment] = None
+    environment: Optional[str] = None
     metadata: Optional[Dict[str, Any]] = None
     tags: Optional[List[str]] = None
     thread_id: Optional[str] = Field(default=None, alias="threadId")
-    thread: Optional[ThreadRequest] = None
+    thread: Optional[ThreadInput] = None
     user_id: Optional[str] = Field(default=None, alias="userId")
-    user: Optional[UserRequest] = None
+    user: Optional[UserInput] = None
     customer_id: Optional[str] = Field(default=None, alias="customerId")
-    customer: Optional[CustomerRequest] = None
+    customer: Optional[CustomerInput] = None
     metric_collection: Optional[str] = Field(
         default=None,
         alias="metricCollection",
@@ -332,12 +331,12 @@ class CreateTraceRequest(ConfidentBaseModel):
         default=None,
         alias="expectedTools",
     )
-    spans: Optional[List[SpanRequest]] = None
-    metrics_data: Optional[List[MetricDataConfig]] = Field(
+    spans: Optional[List[SpanInput]] = None
+    metrics_data: Optional[List[MetricDataInput]] = Field(
         default=None,
         alias="metricsData",
     )
-    attachments: Optional[Dict[str, TraceAttachment]] = None
+    attachments: Optional[Dict[str, TraceAttachmentInput]] = None
 
 
 class TraceSummary(ConfidentBaseModel):
@@ -351,7 +350,7 @@ class TraceSummary(ConfidentBaseModel):
     thread_id: Optional[str] = Field(alias="threadId")
     user_id: Optional[str] = Field(alias="userId")
     customer_id: Optional[str] = Field(alias="customerId")
-    environment: Environment
+    environment: str
     tags: Optional[List[str]]
     metadata: Optional[Dict[str, Any]]
     input_preview: Optional[str] = Field(alias="inputPreview")

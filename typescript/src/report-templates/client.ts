@@ -10,7 +10,7 @@ import {
   ReportTemplate,
   ReportTemplateList,
   ReportTemplateRef,
-  ReportTemplateSectionConfig,
+  ReportTemplateSectionInput,
 } from "./types";
 
 export class ReportTemplatesClient {
@@ -65,7 +65,7 @@ export class ReportTemplatesClient {
     name: string,
     options: {
       description?: string | null;
-      templateSections?: ReportTemplateSectionConfig[];
+      templateSections?: ReportTemplateSectionInput[];
       enabled?: boolean;
       recurrence?: ScheduleRecurrenceType;
       repeatEvery?: number | null;
@@ -156,7 +156,7 @@ export class ReportTemplatesClient {
     options: {
       name?: string;
       description?: string | null;
-      templateSections?: ReportTemplateSectionConfig[];
+      templateSections?: ReportTemplateSectionInput[];
       enabled?: boolean;
       recurrence?: ScheduleRecurrenceType;
       repeatEvery?: number | null;

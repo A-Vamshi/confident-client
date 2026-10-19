@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "confident-ai"
-version = "0.2.1"
+version = "0.3.0"
 description = "The official Python SDK for the Confident AI platform management API."
 authors = ["Jeffrey Ip <jeffreyip@confident-ai.com>"]
 license = "Apache-2.0"
@@ -29,6 +29,9 @@ exclude = ["tests/*"]
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/confident-ai/confident-client/issues"
+
+[tool.poetry.scripts]
+confident-ai = "confident_ai.cli:main"
 
 [tool.poetry.dependencies]
 python = ">=3.9, <4.0"

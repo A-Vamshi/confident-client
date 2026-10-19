@@ -3,18 +3,18 @@
 # Do not edit by hand — change the route in confident-cloud
 # and regenerate.
 
-from typing import List, Optional
+from typing import List, Literal, Optional
 
 from confident_ai.annotation_queues.types import (
     AnnotationQueue,
     AnnotationQueueList,
     AnnotationQueueRef,
     AnnotationQueueType,
-    BatchAnnotateItem,
-    BatchAnnotateRequest,
+    BatchAnnotateInput,
+    BatchAnnotateItemInput,
     BatchAnnotateResult,
-    CreateAnnotationQueueRequest,
-    UpdateAnnotationQueueRequest,
+    CreateAnnotationQueueInput,
+    UpdateAnnotationQueueInput,
 )
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
@@ -28,7 +28,9 @@ class AnnotationQueuesOperations:
         *,
         page: Optional[int] = None,
         page_size: Optional[int] = None,
-        type: Optional[AnnotationQueueType] = None,
+        type: Optional[
+            Literal["TRACE", "SPAN", "THREAD", "GOLDEN", "TEST_CASE"]
+        ] = None,
         search_term: Optional[str] = None
     ) -> AnnotationQueueList:
         """List Annotation Queues
@@ -61,7 +63,9 @@ class AnnotationQueuesOperations:
         *,
         page: Optional[int] = None,
         page_size: Optional[int] = None,
-        type: Optional[AnnotationQueueType] = None,
+        type: Optional[
+            Literal["TRACE", "SPAN", "THREAD", "GOLDEN", "TEST_CASE"]
+        ] = None,
         search_term: Optional[str] = None
     ) -> AnnotationQueueList:
         """List Annotation Queues
@@ -115,7 +119,7 @@ class AnnotationQueuesOperations:
             HttpMethods.POST,
             Endpoints.ANNOTATION_QUEUES_ENDPOINT,
             response_schema=AnnotationQueueRef,
-            request_schema=CreateAnnotationQueueRequest,
+            request_schema=CreateAnnotationQueueInput,
             body={"name": name, "type": type, "formId": form_id, "tags": tags},
         )
 
@@ -145,7 +149,7 @@ class AnnotationQueuesOperations:
             HttpMethods.POST,
             Endpoints.ANNOTATION_QUEUES_ENDPOINT,
             response_schema=AnnotationQueueRef,
-            request_schema=CreateAnnotationQueueRequest,
+            request_schema=CreateAnnotationQueueInput,
             body={"name": name, "type": type, "formId": form_id, "tags": tags},
         )
 
@@ -209,7 +213,7 @@ class AnnotationQueuesOperations:
             HttpMethods.PUT,
             Endpoints.ANNOTATION_QUEUE_ENDPOINT,
             response_schema=AnnotationQueue,
-            request_schema=UpdateAnnotationQueueRequest,
+            request_schema=UpdateAnnotationQueueInput,
             body={"name": name, "formId": form_id, "tags": tags},
             path={"annotationQueueId": annotation_queue_id},
         )
@@ -242,7 +246,7 @@ class AnnotationQueuesOperations:
             HttpMethods.PUT,
             Endpoints.ANNOTATION_QUEUE_ENDPOINT,
             response_schema=AnnotationQueue,
-            request_schema=UpdateAnnotationQueueRequest,
+            request_schema=UpdateAnnotationQueueInput,
             body={"name": name, "formId": form_id, "tags": tags},
             path={"annotationQueueId": annotation_queue_id},
         )
@@ -282,7 +286,7 @@ class AnnotationQueuesOperations:
     def batch_annotate_items(
         self,
         annotation_queue_id: str,
-        items: List[BatchAnnotateItem],
+        items: List[BatchAnnotateItemInput],
         *,
         annotator_email: Optional[str] = None,
         mark_as_completed: Optional[bool] = None
@@ -308,19 +312,20 @@ class AnnotationQueuesOperations:
             HttpMethods.POST,
             Endpoints.ANNOTATION_QUEUE_BATCH_ANNOTATE_ENDPOINT,
             response_schema=BatchAnnotateResult,
-            request_schema=BatchAnnotateRequest,
+            request_schema=BatchAnnotateInput,
             body={
                 "items": items,
                 "annotatorEmail": annotator_email,
                 "markAsCompleted": mark_as_completed,
             },
+            media_holders=["$.items.*.annotations.*"],
             path={"annotationQueueId": annotation_queue_id},
         )
 
     async def a_batch_annotate_items(
         self,
         annotation_queue_id: str,
-        items: List[BatchAnnotateItem],
+        items: List[BatchAnnotateItemInput],
         *,
         annotator_email: Optional[str] = None,
         mark_as_completed: Optional[bool] = None
@@ -346,11 +351,12 @@ class AnnotationQueuesOperations:
             HttpMethods.POST,
             Endpoints.ANNOTATION_QUEUE_BATCH_ANNOTATE_ENDPOINT,
             response_schema=BatchAnnotateResult,
-            request_schema=BatchAnnotateRequest,
+            request_schema=BatchAnnotateInput,
             body={
                 "items": items,
                 "annotatorEmail": annotator_email,
                 "markAsCompleted": mark_as_completed,
             },
+            media_holders=["$.items.*.annotations.*"],
             path={"annotationQueueId": annotation_queue_id},
         )

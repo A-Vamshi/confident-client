@@ -7,7 +7,7 @@ import { Api, HttpMethods } from "../api";
 import { Endpoints } from "../endpoints";
 import { GenerationMode, Level } from "../common/types";
 import {
-  AttackEngine,
+  AttackEngineInput,
   RTFramework,
   RTFrameworkList,
   RTFrameworkRef,
@@ -147,7 +147,7 @@ export class RTFrameworksOperations {
       promptAlias?: string;
       promptCommit?: string;
       generationMode?: GenerationMode;
-      attackEngine?: AttackEngine;
+      attackEngine?: AttackEngineInput;
     } = {},
   ): Promise<RiskAssessmentRef> {
     const {

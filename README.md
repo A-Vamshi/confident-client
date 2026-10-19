@@ -73,6 +73,44 @@ dataset.push()                                    # upserts: ids update, new one
 seconds, so editing a prompt on Confident AI reaches a running process without
 a deploy. Pass `refresh=0` to turn both off while you are still editing it.
 
+### Images
+
+`Media` puts an image into any text field of a golden, test case, annotation or prompt.
+Formatting it into a string leaves a `[CONFIDENT:IMAGE:…]` marker where the
+image belongs, and the request carries the image with it:
+
+```python
+from confident_ai import Media
+from confident_ai.datasets import SingleTurnGolden
+
+photo = Media.from_file("cat.png")
+golden = SingleTurnGolden(input=f"What is in this photo? {photo}")
+client.datasets.push(alias="photos", goldens=[golden])
+```
+
+```ts
+import { Media } from "confident-ai";
+
+const photo = Media.fromFile("cat.png");
+await client.datasets.push("photos", [
+  { input: `What is in this photo? ${photo}` },
+]);
+```
+
+`from_url` sends the link. `from_file`, `from_bytes` and `from_base64` send the
+image itself, which stays in memory until the process exits. Only images are
+supported for now.
+
+Text you pull back carries its images as markers too. `parse_multimodal`
+(`parseMultimodal`) turns it into text and `Media` in order, ready to hand to a
+model:
+
+```python
+from confident_ai import parse_multimodal
+
+parse_multimodal(golden.input)   # ["What is in this photo? ", Media(...)]
+```
+
 ### Async
 
 Every method has an `a_`-prefixed twin in Python; in TypeScript everything is
@@ -97,6 +135,22 @@ which `deepeval` already uses.
 
 The base URL resolves from `CONFIDENT_BASE_URL`, else `CONFIDENT_REGION`
 (`US` / `EU`), defaulting to `https://api.confident-ai.com`.
+
+## Command line
+
+Both packages install a `confident-ai` command. `confident-ai gate` checks the
+project against its governance policy and exits non-zero when it doesn't pass,
+so a CI step can stop a deployment:
+
+```bash
+confident-ai gate        # pip install confident-ai
+npx confident-ai gate    # npm install confident-ai
+```
+
+It reads `CONFIDENT_PROJ_API_KEY`, and the project must belong to a governance
+policy. It exits `0` when the policy passes, `1` when it fails or can't be
+assessed, and `2` on bad usage. `-q` / `--quiet` prints nothing and leaves the
+verdict to the exit code.
 
 ## Conventions
 

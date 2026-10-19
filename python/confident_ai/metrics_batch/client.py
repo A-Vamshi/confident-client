@@ -6,16 +6,16 @@
 from typing import List
 
 from confident_ai.api import Api, HttpMethods
-from confident_ai.common.types import CreateMetricRequest, MetricList
+from confident_ai.common.types import MetricInput, MetricList
 from confident_ai.endpoints import Endpoints
-from confident_ai.metrics_batch.types import CreateMetricsBatchRequest
+from confident_ai.metrics_batch.types import CreateMetricsBatchInput
 
 
 class MetricsBatchClient:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def create(self, metrics: List[CreateMetricRequest]) -> MetricList:
+    def create(self, metrics: List[MetricInput]) -> MetricList:
         """Batch Create Metrics
 
         Creates several `GEVAL` metrics at once and returns the ones created.
@@ -31,11 +31,11 @@ class MetricsBatchClient:
             HttpMethods.POST,
             Endpoints.METRICS_BATCH_ENDPOINT,
             response_schema=MetricList,
-            request_schema=CreateMetricsBatchRequest,
+            request_schema=CreateMetricsBatchInput,
             body={"metrics": metrics},
         )
 
-    async def a_create(self, metrics: List[CreateMetricRequest]) -> MetricList:
+    async def a_create(self, metrics: List[MetricInput]) -> MetricList:
         """Batch Create Metrics
 
         Creates several `GEVAL` metrics at once and returns the ones created.
@@ -51,6 +51,6 @@ class MetricsBatchClient:
             HttpMethods.POST,
             Endpoints.METRICS_BATCH_ENDPOINT,
             response_schema=MetricList,
-            request_schema=CreateMetricsBatchRequest,
+            request_schema=CreateMetricsBatchInput,
             body={"metrics": metrics},
         )

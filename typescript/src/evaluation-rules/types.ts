@@ -11,7 +11,7 @@ export enum EvaluationRuleDataModel {
   THREAD = "THREAD",
 }
 
-export interface CreateEvaluationRuleRequest {
+export interface CreateEvaluationRuleInput {
   name: string;
   enabled?: boolean;
   dataModel: EvaluationRuleDataModel;
@@ -35,7 +35,7 @@ export interface EvaluationRule {
   filters: FilterSet | null;
   threadTimelimit: number | null;
   overwriteEvals: boolean;
-  metricCollectionId: string;
+  metricCollectionId: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -58,7 +58,7 @@ export interface EvaluationRuleRef {
   id: string;
 }
 
-export interface UpdateEvaluationRuleRequest {
+export interface UpdateEvaluationRuleInput {
   name?: string;
   enabled?: boolean;
   dataModel?: EvaluationRuleDataModel;

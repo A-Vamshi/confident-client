@@ -13,9 +13,9 @@ import {
   GovernanceControlActivity,
   GovernanceControlAssessmentList,
   GovernanceControlList,
-  GovernanceControlPreDeploymentConfig,
+  GovernanceControlPreDeploymentConfigInput,
   GovernanceControlRef,
-  GovernanceControlRuntimeConfig,
+  GovernanceControlRuntimeConfigInput,
   GovernanceControlType,
 } from "../types";
 
@@ -71,8 +71,8 @@ export class GovernanceControlsOperations extends AuditLogsExportsOperations {
     type: CreatableGovernanceControlType,
     options: {
       description?: string | null;
-      runtimeConfig?: GovernanceControlRuntimeConfig;
-      preDeploymentConfig?: GovernanceControlPreDeploymentConfig;
+      runtimeConfig?: GovernanceControlRuntimeConfigInput;
+      preDeploymentConfig?: GovernanceControlPreDeploymentConfigInput;
       governancePolicyId?: string;
     } = {},
   ): Promise<GovernanceControlRef> {

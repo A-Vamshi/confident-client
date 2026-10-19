@@ -8,14 +8,14 @@ from typing import List, Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.reports.types import (
-    CreateReportRequest,
+    CreateReportInput,
     Report,
     ReportList,
     ReportMetadataInput,
     ReportRef,
     ReportSectionInput,
     ReportStatus,
-    UpdateReportRequest,
+    UpdateReportInput,
 )
 
 
@@ -133,7 +133,7 @@ class ReportsClient:
             HttpMethods.POST,
             Endpoints.REPORTS_ENDPOINT,
             response_schema=ReportRef,
-            request_schema=CreateReportRequest,
+            request_schema=CreateReportInput,
             body={
                 "reportTemplateId": report_template_id,
                 "sections": sections,
@@ -169,7 +169,7 @@ class ReportsClient:
             HttpMethods.POST,
             Endpoints.REPORTS_ENDPOINT,
             response_schema=ReportRef,
-            request_schema=CreateReportRequest,
+            request_schema=CreateReportInput,
             body={
                 "reportTemplateId": report_template_id,
                 "sections": sections,
@@ -237,7 +237,7 @@ class ReportsClient:
             HttpMethods.PUT,
             Endpoints.REPORT_ENDPOINT,
             response_schema=Report,
-            request_schema=UpdateReportRequest,
+            request_schema=UpdateReportInput,
             body={
                 "status": status,
                 "error": error,
@@ -273,7 +273,7 @@ class ReportsClient:
             HttpMethods.PUT,
             Endpoints.REPORT_ENDPOINT,
             response_schema=Report,
-            request_schema=UpdateReportRequest,
+            request_schema=UpdateReportInput,
             body={
                 "status": status,
                 "error": error,

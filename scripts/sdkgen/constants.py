@@ -90,26 +90,25 @@ ORGANIZATION_KEY_RESOURCES = frozenset({"organization", "projects"})
 # body becomes a single parameter. This names that parameter, per schema. A
 # union body with no entry here stops the generator.
 UNION_BODY_PARAMETERS = {
-    "AddQueueItemsRequest": "items",
-    "CreateAnnotationRequest": "annotation",
-    "CreateGovernanceControlVersionRequest": "control_config",
-    "GoldenRequest": "golden",
-    "PushPromptRequest": "prompt",
-    "UpdateProjectModelRequest": "model_config",
+    "QueueItemsInput": "items",
+    "AnnotationInput": "annotation",
+    "GovernanceControlVersionInput": "control_config",
+    "Golden": "golden",
+    "PromptInput": "prompt",
+    "ProjectModelInput": "model_config",
 }
 
-# Response shapes a caller must also be able to write down, and the only fields
-# that stay required when they do. A stateful handle holds these before the API
-# has seen them — a golden just added to a pulled dataset has no id and none of
-# the fields the server fills in — so requiring what a response always carries
-# would make the value impossible to construct. Naming what stays rather than
-# what goes means a field added upstream is relaxed with the rest.
+# Write schemas sent as the read schema of the same thing, so a caller builds
+# the class it pulls rather than a near-twin of it. The read schema takes the
+# write schema's required fields, and any field only the write schema has.
 #
-# Every name here must be a field the spec requires, or the generator stops, so
-# a stale entry cannot sit unnoticed.
-WRITABLE_SCHEMAS: Dict[str, FrozenSet[str]] = {
-    "SingleTurnGolden": frozenset({"input"}),
-    "MultiTurnGolden": frozenset({"scenario"}),
+# The generator stops when the read schema has a field the write schema lacks,
+# or a shared field is typed differently: a pulled value sent back would then
+# be a payload the API rejects.
+MERGED_WRITE_SCHEMAS: Dict[str, str] = {
+    "GoldenInput": "Golden",
+    "SingleTurnGoldenInput": "SingleTurnGolden",
+    "MultiTurnGoldenInput": "MultiTurnGolden",
 }
 
 
@@ -155,6 +154,29 @@ TYPESCRIPT_HELPERS = REPO_ROOT / "typescript" / "src" / "utils" / "helpers.ts"
 SCHEMA_REF = "#/components/schemas/"
 COMPONENT_REF = "#/components/"
 
+# Keywords the generated types never express: prose, and the bounds and
+# defaults the API applies itself.
+UNTYPED_KEYWORDS = frozenset(
+    {
+        "description",
+        "title",
+        "example",
+        "examples",
+        "default",
+        "minimum",
+        "maximum",
+        "exclusiveMinimum",
+        "exclusiveMaximum",
+        "minLength",
+        "maxLength",
+        "minItems",
+        "maxItems",
+        "pattern",
+    }
+)
+
+MEDIA_MAPPING_FIELD = "imagesMapping"
+
 # Every verb a path item may carry, and the order routes are rendered in.
 METHODS = frozenset(
     {"get", "post", "put", "patch", "delete", "head", "options", "trace"}
@@ -197,6 +219,7 @@ PYDANTIC_RESERVED = {
     "model_computed_fields",
     "model_extra",
     "model_fields_set",
+    "schema",
 }
 
 TS_IDENTIFIER = re.compile(r"^[A-Za-z_$][A-Za-z0-9_$]*$")

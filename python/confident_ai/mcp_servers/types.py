@@ -22,14 +22,14 @@ class McpServerTransport(Enum):
     HTTP = "HTTP"
 
 
-class McpServerAuthConfig(ConfidentBaseModel):
+class McpServerAuthConfigInput(ConfidentBaseModel):
     tenant_id: Optional[str] = Field(default=None, alias="tenantId")
     client_id: Optional[str] = Field(default=None, alias="clientId")
     client_secret: Optional[str] = Field(default=None, alias="clientSecret")
     scope: Optional[str] = None
 
 
-class CreateMcpServerRequest(ConfidentBaseModel):
+class CreateMcpServerInput(ConfidentBaseModel):
     name: str
     transport: McpServerTransport
     description: Optional[str] = None
@@ -39,7 +39,7 @@ class CreateMcpServerRequest(ConfidentBaseModel):
         default=None,
         alias="authType",
     )
-    auth_config: Optional[McpServerAuthConfig] = Field(
+    auth_config: Optional[McpServerAuthConfigInput] = Field(
         default=None,
         alias="authConfig",
     )
@@ -107,7 +107,7 @@ class McpServerRef(ConfidentBaseModel):
     id: str
 
 
-class UpdateMcpServerRequest(ConfidentBaseModel):
+class UpdateMcpServerInput(ConfidentBaseModel):
     name: Optional[str] = None
     transport: Optional[McpServerTransport] = None
     description: Optional[str] = None
@@ -117,7 +117,7 @@ class UpdateMcpServerRequest(ConfidentBaseModel):
         default=None,
         alias="authType",
     )
-    auth_config: Optional[McpServerAuthConfig] = Field(
+    auth_config: Optional[McpServerAuthConfigInput] = Field(
         default=None,
         alias="authConfig",
     )

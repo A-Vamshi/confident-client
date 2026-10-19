@@ -10,16 +10,16 @@ from confident_ai.common.types import (
     ModelCredentials,
     ModelProvider,
     PermissionList,
-    UpdateModelCredentialsRequest,
+    UpdateModelCredentialsInput,
 )
 from confident_ai.endpoints import Endpoints
 from confident_ai.projects.types import (
-    CreateProjectRequest,
+    CreateProjectInput,
     CreateProjectResult,
     Project,
     ProjectList,
     ProjectRef,
-    UpdateProjectRequest,
+    UpdateProjectInput,
 )
 
 
@@ -84,7 +84,7 @@ class ProjectsOperations:
             HttpMethods.POST,
             Endpoints.PROJECTS_ENDPOINT,
             response_schema=CreateProjectResult,
-            request_schema=CreateProjectRequest,
+            request_schema=CreateProjectInput,
             body={"name": name, "description": description, "email": email},
         )
 
@@ -118,7 +118,7 @@ class ProjectsOperations:
             HttpMethods.POST,
             Endpoints.PROJECTS_ENDPOINT,
             response_schema=CreateProjectResult,
-            request_schema=CreateProjectRequest,
+            request_schema=CreateProjectInput,
             body={"name": name, "description": description, "email": email},
         )
 
@@ -181,7 +181,7 @@ class ProjectsOperations:
             HttpMethods.PUT,
             Endpoints.PROJECT_ENDPOINT,
             response_schema=Project,
-            request_schema=UpdateProjectRequest,
+            request_schema=UpdateProjectInput,
             body={"name": name, "description": description},
             path={"projectId": project_id},
         )
@@ -209,7 +209,7 @@ class ProjectsOperations:
             HttpMethods.PUT,
             Endpoints.PROJECT_ENDPOINT,
             response_schema=Project,
-            request_schema=UpdateProjectRequest,
+            request_schema=UpdateProjectInput,
             body={"name": name, "description": description},
             path={"projectId": project_id},
         )
@@ -276,12 +276,12 @@ class ProjectsOperations:
         the project and severs that inheritance — so the project then holds only
         the provider you just sent, and any other provider it relied on has to
         be set again here. This is a write-only surface: there is no read
-        endpoint, and the response returns every credential masked. For
-        `BEDROCK` and `AZURE` it writes the provider's default credential and
-        leaves any other credentials stored on the Confident AI platform in
-        place. A provider your organization's model provider policy does not
-        allow cannot have a credential set (`403`), though clearing one is
-        always permitted.
+        endpoint, and the response returns every credential masked. It writes
+        the provider's credential named "Default", creating it if missing, and
+        leaves any other credentials stored for that provider on the Confident
+        AI platform in place. A provider your organization's model provider
+        policy does not allow cannot have a credential set (`403`), though
+        clearing one is always permitted.
 
         Args:
             project_id: The id of the project, which must belong to the
@@ -313,7 +313,7 @@ class ProjectsOperations:
             HttpMethods.PUT,
             Endpoints.PROJECT_MODEL_CREDENTIALS_ENDPOINT,
             response_schema=ModelCredentials,
-            request_schema=UpdateModelCredentialsRequest,
+            request_schema=UpdateModelCredentialsInput,
             body={
                 "provider": provider,
                 "apiKey": api_key,
@@ -338,12 +338,12 @@ class ProjectsOperations:
         the project and severs that inheritance — so the project then holds only
         the provider you just sent, and any other provider it relied on has to
         be set again here. This is a write-only surface: there is no read
-        endpoint, and the response returns every credential masked. For
-        `BEDROCK` and `AZURE` it writes the provider's default credential and
-        leaves any other credentials stored on the Confident AI platform in
-        place. A provider your organization's model provider policy does not
-        allow cannot have a credential set (`403`), though clearing one is
-        always permitted.
+        endpoint, and the response returns every credential masked. It writes
+        the provider's credential named "Default", creating it if missing, and
+        leaves any other credentials stored for that provider on the Confident
+        AI platform in place. A provider your organization's model provider
+        policy does not allow cannot have a credential set (`403`), though
+        clearing one is always permitted.
 
         Args:
             project_id: The id of the project, which must belong to the
@@ -375,7 +375,7 @@ class ProjectsOperations:
             HttpMethods.PUT,
             Endpoints.PROJECT_MODEL_CREDENTIALS_ENDPOINT,
             response_schema=ModelCredentials,
-            request_schema=UpdateModelCredentialsRequest,
+            request_schema=UpdateModelCredentialsInput,
             body={
                 "provider": provider,
                 "apiKey": api_key,
