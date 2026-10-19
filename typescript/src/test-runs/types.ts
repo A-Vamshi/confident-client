@@ -90,7 +90,7 @@ export interface MetricScores {
 }
 
 export interface SubmitTestCaseResultInput {
-  actualOutput: string;
+  actualOutput?: string;
   retrievalContext?: string[];
   toolsCalled?: ToolCall[];
   expectedTools?: ToolCall[];

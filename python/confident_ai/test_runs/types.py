@@ -100,7 +100,7 @@ class MetricScores(ConfidentBaseModel):
 
 
 class SubmitTestCaseResultInput(ConfidentBaseModel):
-    actual_output: str = Field(alias="actualOutput")
+    actual_output: Optional[str] = Field(default=None, alias="actualOutput")
     retrieval_context: Optional[List[str]] = Field(
         default=None,
         alias="retrievalContext",

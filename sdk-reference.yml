@@ -26060,15 +26060,14 @@ resources:
         wire: actualOutput
         in: body
         type:
-          python: str
+          python: Optional[str]
           typescript: string
-        required: true
+        required: false
         keyword:
-          python: false
-          typescript: false
-        default: null
-        description: The actual output produced by your agent. When it failed, send
-          an empty string along with `error`.
+          python: true
+          typescript: true
+        default: None
+        description: The actual output produced by your agent.
         example: Mount Everest is 8,848 metres tall.
         references: []
       - python: retrieval_context
@@ -26192,10 +26191,9 @@ resources:
           python: true
           typescript: true
         default: None
-        description: Set this when your agent failed to produce an output, with an
-          empty `actualOutput`. The test case is marked errored with this message
-          and is not evaluated, so the test run can complete without waiting for
-          it.
+        description: Set this when your agent failed to produce an output. The test
+          case is marked errored with this message and is not evaluated, so the test
+          run can complete without waiting for it.
         example: Upstream model provider timed out.
         references: []
       order:
@@ -58546,10 +58544,10 @@ types:
     value: LLM
   references: []
 - name: SubmitTestCaseResultInput
-  description: The result your agent produced for one dispatched test case. `actualOutput`
-    is required; any other field you omit keeps the value Confident AI already holds
-    for the golden. When your agent could not produce an output, send `error` with
-    an empty `actualOutput`.
+  description: The result your agent produced for one dispatched test case. Every
+    field is optional; a field you omit keeps the value Confident AI already holds
+    for the golden. Send `error` instead of an output when your agent could not produce
+    one.
   example: null
   python:
     module: confident_ai.test_runs
@@ -58565,11 +58563,10 @@ types:
     python: actual_output
     typescript: actualOutput
     type:
-      python: str
+      python: Optional[str]
       typescript: string
-    required: true
-    description: The actual output produced by your agent. When it failed, send an
-      empty string along with `error`.
+    required: false
+    description: The actual output produced by your agent.
     example: Mount Everest is 8,848 metres tall.
     references: []
   - wire: retrievalContext
@@ -58653,9 +58650,9 @@ types:
       python: Optional[str]
       typescript: string
     required: false
-    description: Set this when your agent failed to produce an output, with an empty
-      `actualOutput`. The test case is marked errored with this message and is not
-      evaluated, so the test run can complete without waiting for it.
+    description: Set this when your agent failed to produce an output. The test case
+      is marked errored with this message and is not evaluated, so the test run can
+      complete without waiting for it.
     example: Upstream model provider timed out.
     references: []
 - name: SubmittedTestCaseResult
