@@ -10,8 +10,7 @@ import {
   Dataset,
   DatasetList,
   DatasetRef,
-  GoldenRequest,
-  PushGolden,
+  Golden,
   RunDatasetEvaluationResult,
 } from "./types";
 
@@ -55,14 +54,17 @@ export class DatasetsOperations {
    */
   async push(
     alias: string,
-    goldens: PushGolden[],
+    goldens: Golden[],
     finalized?: boolean,
     version?: string,
   ): Promise<DatasetRef> {
     return this.api.sendRequest<DatasetRef>(
       HttpMethods.POST,
       Endpoints.DATASETS_ENDPOINT,
-      { body: { alias, goldens, finalized, version } },
+      {
+        body: { alias, goldens, finalized, version },
+        mediaHolders: ["$.goldens.*"],
+      },
     );
   }
 
@@ -113,7 +115,8 @@ export class DatasetsOperations {
    * Queue Dataset Goldens
    *
    * Adds goldens to the dataset as unfinalized goldens, for review on the
-   * platform before they are used in evaluations.
+   * platform before they are used in evaluations. They go into the dataset's
+   * latest version, or among its unversioned goldens when it has no versions.
    *
    * @param datasetId The unique id of the dataset.
    * @param goldens The goldens to queue for review. Every golden in one request
@@ -122,12 +125,16 @@ export class DatasetsOperations {
    */
   async queueGoldens(
     datasetId: string,
-    goldens: GoldenRequest[],
+    goldens: Golden[],
   ): Promise<DatasetRef> {
     return this.api.sendRequest<DatasetRef>(
       HttpMethods.POST,
       Endpoints.DATASET_QUEUE_ENDPOINT,
-      { body: { goldens }, urlParams: { datasetId } },
+      {
+        body: { goldens },
+        mediaHolders: ["$.goldens.*"],
+        urlParams: { datasetId },
+      },
     );
   }
 

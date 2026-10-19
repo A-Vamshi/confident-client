@@ -11,20 +11,20 @@ from confident_ai.common.types import GenerationMode, Level
 from confident_ai.types import ConfidentBaseModel
 
 
-class AttackEngine(ConfidentBaseModel):
+class AttackEngineInput(ConfidentBaseModel):
     generation_guidelines: Optional[List[str]] = Field(
         default=None,
         alias="generationGuidelines",
     )
 
 
-class CreateRTFrameworkRequest(ConfidentBaseModel):
+class CreateRTFrameworkInput(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     template: Optional[str] = None
 
 
-class CreateRiskCategoryRequest(ConfidentBaseModel):
+class CreateRiskCategoryInput(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     vulnerability_type_ids: Optional[List[str]] = Field(
@@ -158,7 +158,7 @@ class RiskCategoryRef(ConfidentBaseModel):
     id: str
 
 
-class RunRTFrameworkRequest(ConfidentBaseModel):
+class RunRTFrameworkInput(ConfidentBaseModel):
     identifier: Optional[str] = None
     risk_categories: List[str] = Field(alias="riskCategories")
     exposure: Level
@@ -172,18 +172,18 @@ class RunRTFrameworkRequest(ConfidentBaseModel):
         default=None,
         alias="generationMode",
     )
-    attack_engine: Optional[AttackEngine] = Field(
+    attack_engine: Optional[AttackEngineInput] = Field(
         default=None,
         alias="attackEngine",
     )
 
 
-class UpdateRTFrameworkRequest(ConfidentBaseModel):
+class UpdateRTFrameworkInput(ConfidentBaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
 
 
-class UpdateRiskCategoryRequest(ConfidentBaseModel):
+class UpdateRiskCategoryInput(ConfidentBaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     vulnerability_type_ids: Optional[List[str]] = Field(

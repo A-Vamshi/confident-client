@@ -15,8 +15,8 @@ from confident_ai.classifiers.types import (
     ClassifierPreset,
     ClassifierRef,
     ClassifierVersionList,
-    CreateClassifierRequest,
-    UpdateClassifierRequest,
+    CreateClassifierInput,
+    UpdateClassifierInput,
 )
 from confident_ai.common.types import FilterSet
 from confident_ai.endpoints import Endpoints
@@ -133,7 +133,7 @@ class ClassifiersOperations:
             HttpMethods.POST,
             Endpoints.CLASSIFIERS_ENDPOINT,
             response_schema=ClassifierRef,
-            request_schema=CreateClassifierRequest,
+            request_schema=CreateClassifierInput,
             body={
                 "name": name,
                 "dataModel": data_model,
@@ -195,7 +195,7 @@ class ClassifiersOperations:
             HttpMethods.POST,
             Endpoints.CLASSIFIERS_ENDPOINT,
             response_schema=ClassifierRef,
-            request_schema=CreateClassifierRequest,
+            request_schema=CreateClassifierInput,
             body={
                 "name": name,
                 "dataModel": data_model,
@@ -291,7 +291,7 @@ class ClassifiersOperations:
             HttpMethods.PUT,
             Endpoints.CLASSIFIER_ENDPOINT,
             response_schema=Classifier,
-            request_schema=UpdateClassifierRequest,
+            request_schema=UpdateClassifierInput,
             body={
                 "name": name,
                 "description": description,
@@ -352,7 +352,7 @@ class ClassifiersOperations:
             HttpMethods.PUT,
             Endpoints.CLASSIFIER_ENDPOINT,
             response_schema=Classifier,
-            request_schema=UpdateClassifierRequest,
+            request_schema=UpdateClassifierInput,
             body={
                 "name": name,
                 "description": description,

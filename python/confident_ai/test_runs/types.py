@@ -57,7 +57,7 @@ class AiInsightsSummary(ConfidentBaseModel):
     topic_summaries: List[TopicSummary] = Field(alias="topicSummaries")
 
 
-class CreateTestRunRequest(ConfidentBaseModel):
+class CreateTestRunInput(ConfidentBaseModel):
     metric_collection: Optional[str] = Field(
         default=None,
         alias="metricCollection",
@@ -99,7 +99,7 @@ class MetricScores(ConfidentBaseModel):
     error_type: Optional[EvaluationErrorType] = Field(alias="errorType")
 
 
-class SubmitTestCaseResultRequest(ConfidentBaseModel):
+class SubmitTestCaseResultInput(ConfidentBaseModel):
     actual_output: Optional[str] = Field(default=None, alias="actualOutput")
     retrieval_context: Optional[List[str]] = Field(
         default=None,

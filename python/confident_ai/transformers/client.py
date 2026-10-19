@@ -8,14 +8,14 @@ from typing import Any, Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.transformers.types import (
-    CreateTransformerRequest,
-    TestTransformerCodeRequest,
+    CreateTransformerInput,
+    TestTransformerCodeInput,
     Transformer,
     TransformerCodeDefinition,
     TransformerCodeRunResult,
     TransformerList,
     TransformerRef,
-    UpdateTransformerRequest,
+    UpdateTransformerInput,
 )
 
 
@@ -87,7 +87,7 @@ class TransformersClient:
             HttpMethods.POST,
             Endpoints.TRANSFORMERS_ENDPOINT,
             response_schema=TransformerRef,
-            request_schema=CreateTransformerRequest,
+            request_schema=CreateTransformerInput,
             body={
                 "name": name,
                 "codeDefinition": code_definition,
@@ -117,7 +117,7 @@ class TransformersClient:
             HttpMethods.POST,
             Endpoints.TRANSFORMERS_ENDPOINT,
             response_schema=TransformerRef,
-            request_schema=CreateTransformerRequest,
+            request_schema=CreateTransformerInput,
             body={
                 "name": name,
                 "codeDefinition": code_definition,
@@ -181,7 +181,7 @@ class TransformersClient:
             HttpMethods.PUT,
             Endpoints.TRANSFORMER_ENDPOINT,
             response_schema=Transformer,
-            request_schema=UpdateTransformerRequest,
+            request_schema=UpdateTransformerInput,
             body={
                 "name": name,
                 "description": description,
@@ -214,7 +214,7 @@ class TransformersClient:
             HttpMethods.PUT,
             Endpoints.TRANSFORMER_ENDPOINT,
             response_schema=Transformer,
-            request_schema=UpdateTransformerRequest,
+            request_schema=UpdateTransformerInput,
             body={
                 "name": name,
                 "description": description,
@@ -276,7 +276,7 @@ class TransformersClient:
             HttpMethods.POST,
             Endpoints.TRANSFORMER_TEST_CODE_ENDPOINT,
             response_schema=TransformerCodeRunResult,
-            request_schema=TestTransformerCodeRequest,
+            request_schema=TestTransformerCodeInput,
             body={"inputData": input_data},
             path={"transformerId": transformer_id},
         )
@@ -302,7 +302,7 @@ class TransformersClient:
             HttpMethods.POST,
             Endpoints.TRANSFORMER_TEST_CODE_ENDPOINT,
             response_schema=TransformerCodeRunResult,
-            request_schema=TestTransformerCodeRequest,
+            request_schema=TestTransformerCodeInput,
             body={"inputData": input_data},
             path={"transformerId": transformer_id},
         )

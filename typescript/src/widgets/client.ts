@@ -5,7 +5,7 @@
 
 import { Api, HttpMethods } from "../api";
 import { Endpoints } from "../endpoints";
-import { CreateWidgetRequest, WidgetGranularity } from "../common/types";
+import { WidgetGranularity, WidgetInput } from "../common/types";
 import { AdHocWidgetQueryResult } from "./types";
 
 export class WidgetsClient {
@@ -28,7 +28,7 @@ export class WidgetsClient {
    *   it.
    */
   async queryAdHoc(
-    widget: CreateWidgetRequest,
+    widget: WidgetInput,
     options: {
       startTime?: string;
       endTime?: string;

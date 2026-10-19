@@ -12,13 +12,13 @@ export interface TransformerCodeDefinition {
   language: TransformerLanguage;
 }
 
-export interface CreateTransformerRequest {
+export interface CreateTransformerInput {
   name: string;
   description?: string | null;
   codeDefinition: TransformerCodeDefinition;
 }
 
-export interface TestTransformerCodeRequest {
+export interface TestTransformerCodeInput {
   inputData?: unknown;
 }
 
@@ -63,7 +63,7 @@ export interface TransformerRef {
   id: string;
 }
 
-export interface UpdateTransformerRequest {
+export interface UpdateTransformerInput {
   name?: string;
   description?: string | null;
   codeDefinition?: TransformerCodeDefinition;

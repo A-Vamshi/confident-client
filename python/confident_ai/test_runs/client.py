@@ -9,8 +9,8 @@ from confident_ai.api import Api, HttpMethods
 from confident_ai.common.types import ToolCall
 from confident_ai.endpoints import Endpoints
 from confident_ai.test_runs.types import (
-    CreateTestRunRequest,
-    SubmitTestCaseResultRequest,
+    CreateTestRunInput,
+    SubmitTestCaseResultInput,
     SubmittedTestCaseResult,
     TestRun,
     TestRunList,
@@ -150,7 +150,7 @@ class TestRunsClient:
             HttpMethods.POST,
             Endpoints.TEST_RUNS_ENDPOINT,
             response_schema=TestRunRef,
-            request_schema=CreateTestRunRequest,
+            request_schema=CreateTestRunInput,
             body={
                 "metricCollection": metric_collection,
                 "identifier": identifier,
@@ -181,7 +181,7 @@ class TestRunsClient:
             HttpMethods.POST,
             Endpoints.TEST_RUNS_ENDPOINT,
             response_schema=TestRunRef,
-            request_schema=CreateTestRunRequest,
+            request_schema=CreateTestRunInput,
             body={
                 "metricCollection": metric_collection,
                 "identifier": identifier,
@@ -238,7 +238,7 @@ class TestRunsClient:
             HttpMethods.POST,
             Endpoints.TEST_RUNS_EVALUATE_ENDPOINT,
             response_schema=SubmittedTestCaseResult,
-            request_schema=SubmitTestCaseResultRequest,
+            request_schema=SubmitTestCaseResultInput,
             body={
                 "actualOutput": actual_output,
                 "retrievalContext": retrieval_context,
@@ -303,7 +303,7 @@ class TestRunsClient:
             HttpMethods.POST,
             Endpoints.TEST_RUNS_EVALUATE_ENDPOINT,
             response_schema=SubmittedTestCaseResult,
-            request_schema=SubmitTestCaseResultRequest,
+            request_schema=SubmitTestCaseResultInput,
             body={
                 "actualOutput": actual_output,
                 "retrievalContext": retrieval_context,

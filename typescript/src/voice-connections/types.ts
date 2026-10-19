@@ -60,7 +60,7 @@ export interface WebRTCVoiceConfig {
 export type VoiceTransportConfig =
   PhoneVoiceConfig | SipVoiceConfig | WebRTCVoiceConfig;
 
-export interface VoiceCallSettingsPatch {
+export interface VoiceCallSettingsInput {
   maxConcurrentCalls?: number;
   ringTimeoutS?: number;
   maxCallDurationS?: number;
@@ -68,16 +68,16 @@ export interface VoiceCallSettingsPatch {
   recordCalls?: boolean;
 }
 
-export interface CreateVoiceConnectionRequest {
+export interface CreateVoiceConnectionInput {
   name: string;
   config: VoiceTransportConfig;
-  callSettings?: VoiceCallSettingsPatch;
+  callSettings?: VoiceCallSettingsInput;
 }
 
-export interface UpdateVoiceConnectionRequest {
+export interface UpdateVoiceConnectionInput {
   name?: string;
   config?: VoiceTransportConfig;
-  callSettings?: VoiceCallSettingsPatch;
+  callSettings?: VoiceCallSettingsInput;
 }
 
 export interface VoiceCallSettings {

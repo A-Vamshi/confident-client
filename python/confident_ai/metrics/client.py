@@ -7,18 +7,18 @@ from typing import List, Optional
 
 from confident_ai.api import Api, HttpMethods
 from confident_ai.common.types import (
-    CreateMetricRequest,
     JevQuestion,
     Metric,
     MetricAlgorithm,
     MetricDag,
     MetricEvaluationParam,
+    MetricInput,
     MetricList,
     PromptMetricConfig,
     Rubric,
 )
 from confident_ai.endpoints import Endpoints
-from confident_ai.metrics.types import MetricVersionList, UpdateMetricRequest
+from confident_ai.metrics.types import MetricVersionList, UpdateMetricInput
 
 
 class MetricsClient:
@@ -87,7 +87,7 @@ class MetricsClient:
             HttpMethods.POST,
             Endpoints.METRICS_ENDPOINT,
             response_schema=Metric,
-            request_schema=CreateMetricRequest,
+            request_schema=MetricInput,
             body={
                 "name": name,
                 "multiTurn": multi_turn,
@@ -142,7 +142,7 @@ class MetricsClient:
             HttpMethods.POST,
             Endpoints.METRICS_ENDPOINT,
             response_schema=Metric,
-            request_schema=CreateMetricRequest,
+            request_schema=MetricInput,
             body={
                 "name": name,
                 "multiTurn": multi_turn,
@@ -225,7 +225,7 @@ class MetricsClient:
             HttpMethods.PUT,
             Endpoints.METRIC_ENDPOINT,
             response_schema=Metric,
-            request_schema=UpdateMetricRequest,
+            request_schema=UpdateMetricInput,
             body={
                 "criteria": criteria,
                 "evaluationSteps": evaluation_steps,
@@ -271,7 +271,7 @@ class MetricsClient:
             HttpMethods.PUT,
             Endpoints.METRIC_ENDPOINT,
             response_schema=Metric,
-            request_schema=UpdateMetricRequest,
+            request_schema=UpdateMetricInput,
             body={
                 "criteria": criteria,
                 "evaluationSteps": evaluation_steps,

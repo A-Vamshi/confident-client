@@ -3,7 +3,13 @@
 // Do not edit by hand — change the route in confident-cloud
 // and regenerate.
 
-import { ModelProvider, PromptType, Tool, ToolMode } from "../common/types";
+import {
+  MLLMImageInput,
+  ModelProvider,
+  PromptType,
+  Tool,
+  ToolMode,
+} from "../common/types";
 
 export enum PromptInterpolationType {
   MUSTACHE = "MUSTACHE",
@@ -26,27 +32,17 @@ export enum ReasoningEffort {
   HIGH = "HIGH",
 }
 
-export enum SchemaDataType {
-  OBJECT = "OBJECT",
-  ARRAY = "ARRAY",
-  STRING = "STRING",
-  FLOAT = "FLOAT",
-  INTEGER = "INTEGER",
-  BOOLEAN = "BOOLEAN",
-  NULL = "NULL",
-}
-
 export enum Verbosity {
   LOW = "LOW",
   MEDIUM = "MEDIUM",
   HIGH = "HIGH",
 }
 
-export interface CreatePromptBranchRequest {
+export interface CreatePromptBranchInput {
   name: string;
 }
 
-export interface CreatePromptVersionRequest {
+export interface CreatePromptVersionInput {
   hash?: string;
 }
 
@@ -87,19 +83,6 @@ export interface ModelSettings {
   verbosity?: Verbosity;
 }
 
-export interface OutputSchemaField {
-  id?: string;
-  name: string;
-  type: SchemaDataType;
-  required?: boolean;
-  parentId?: string | null;
-}
-
-export interface OutputSchema {
-  name: string;
-  fields: OutputSchemaField[];
-}
-
 export interface MessagesPrompt {
   messages: PromptMessage[];
   alias: string;
@@ -111,8 +94,29 @@ export interface MessagesPrompt {
   interpolationType: PromptInterpolationType;
   modelSettings?: ModelSettings;
   outputType: PromptOutputType;
-  outputSchema?: OutputSchema;
+  outputSchema?: Record<string, unknown>;
   tools?: Tool[];
+}
+
+export interface ToolInput {
+  id?: string;
+  version?: string;
+  name?: string;
+  description?: string | null;
+  mode?: ToolMode;
+  schema?: Record<string, unknown>;
+}
+
+export interface MessagesPromptInput {
+  messages: PromptMessage[];
+  alias: string;
+  interpolationType?: PromptInterpolationType;
+  modelSettings?: ModelSettings;
+  outputType?: PromptOutputType;
+  outputSchema?: Record<string, unknown>;
+  tools?: ToolInput[];
+  branch?: string;
+  imagesMapping?: Record<string, MLLMImageInput>;
 }
 
 export interface PromptBranch {
@@ -158,40 +162,9 @@ export interface PromptVersionList {
   type: PromptType;
 }
 
-export interface PushTool {
-  id?: string;
-  version?: string;
-  name?: string;
-  description?: string | null;
-  mode?: ToolMode;
-  schema?: Record<string, unknown>;
-}
-
-export interface PushMessagesPrompt {
-  messages: PromptMessage[];
-  alias: string;
-  interpolationType?: PromptInterpolationType;
-  modelSettings?: ModelSettings;
-  outputType?: PromptOutputType;
-  outputSchema?: OutputSchema;
-  tools?: PushTool[];
-  branch?: string;
-}
-
 export interface PushPromptResult {
   promptId: string;
   hash: string;
-}
-
-export interface PushTextPrompt {
-  text: string;
-  alias: string;
-  interpolationType?: PromptInterpolationType;
-  modelSettings?: ModelSettings;
-  outputType?: PromptOutputType;
-  outputSchema?: OutputSchema;
-  tools?: PushTool[];
-  branch?: string;
 }
 
 export interface TextPrompt {
@@ -205,14 +178,26 @@ export interface TextPrompt {
   interpolationType: PromptInterpolationType;
   modelSettings?: ModelSettings;
   outputType: PromptOutputType;
-  outputSchema?: OutputSchema;
+  outputSchema?: Record<string, unknown>;
   tools?: Tool[];
 }
 
-export interface UpdatePromptBranchRequest {
+export interface TextPromptInput {
+  text: string;
+  alias: string;
+  interpolationType?: PromptInterpolationType;
+  modelSettings?: ModelSettings;
+  outputType?: PromptOutputType;
+  outputSchema?: Record<string, unknown>;
+  tools?: ToolInput[];
+  branch?: string;
+  imagesMapping?: Record<string, MLLMImageInput>;
+}
+
+export interface UpdatePromptBranchInput {
   name: string;
 }
 
 export type Prompt = TextPrompt | MessagesPrompt;
 
-export type PushPromptRequest = PushTextPrompt | PushMessagesPrompt;
+export type PromptInput = TextPromptInput | MessagesPromptInput;

@@ -5,24 +5,24 @@
 
 from confident_ai.export_schedules.types import (
     AnnotationSelectionType,
-    CreateExportScheduleRequest,
+    CreateExportScheduleInput,
     ExportSchedule,
     ExportScheduleList,
     ExportScheduleRef,
     ExportScheduleSettings,
     ExportScheduleSummary,
     SchedulableExportType,
-    UpdateExportScheduleRequest,
+    UpdateExportScheduleInput,
 )
 
 __all__ = [
     "AnnotationSelectionType",
-    "CreateExportScheduleRequest",
+    "CreateExportScheduleInput",
     "ExportSchedule",
     "ExportScheduleList",
     "ExportScheduleRef",
     "ExportScheduleSettings",
     "ExportScheduleSummary",
     "SchedulableExportType",
-    "UpdateExportScheduleRequest",
+    "UpdateExportScheduleInput",
 ]

@@ -10,7 +10,7 @@ import {
   AnnotationQueueList,
   AnnotationQueueRef,
   AnnotationQueueType,
-  BatchAnnotateItem,
+  BatchAnnotateItemInput,
   BatchAnnotateResult,
 } from "./types";
 
@@ -150,7 +150,7 @@ export class AnnotationQueuesOperations {
    */
   async batchAnnotateItems(
     annotationQueueId: string,
-    items: BatchAnnotateItem[],
+    items: BatchAnnotateItemInput[],
     annotatorEmail?: string,
     markAsCompleted?: boolean,
   ): Promise<BatchAnnotateResult> {
@@ -159,6 +159,7 @@ export class AnnotationQueuesOperations {
       Endpoints.ANNOTATION_QUEUE_BATCH_ANNOTATE_ENDPOINT,
       {
         body: { items, annotatorEmail, markAsCompleted },
+        mediaHolders: ["$.items.*.annotations.*"],
         urlParams: { annotationQueueId },
       },
     );

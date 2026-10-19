@@ -61,7 +61,7 @@ class MetricVersionList(ConfidentBaseModel):
     page_size: int = Field(alias="pageSize")
 
 
-class UpdateMetricRequest(ConfidentBaseModel):
+class UpdateMetricInput(ConfidentBaseModel):
     criteria: Optional[str] = None
     evaluation_steps: Optional[List[str]] = Field(
         default=None,

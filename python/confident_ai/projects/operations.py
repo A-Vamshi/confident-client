@@ -10,16 +10,16 @@ from confident_ai.common.types import (
     ModelCredentials,
     ModelProvider,
     PermissionList,
-    UpdateModelCredentialsRequest,
+    UpdateModelCredentialsInput,
 )
 from confident_ai.endpoints import Endpoints
 from confident_ai.projects.types import (
-    CreateProjectRequest,
+    CreateProjectInput,
     CreateProjectResult,
     Project,
     ProjectList,
     ProjectRef,
-    UpdateProjectRequest,
+    UpdateProjectInput,
 )
 
 
@@ -84,7 +84,7 @@ class ProjectsOperations:
             HttpMethods.POST,
             Endpoints.PROJECTS_ENDPOINT,
             response_schema=CreateProjectResult,
-            request_schema=CreateProjectRequest,
+            request_schema=CreateProjectInput,
             body={"name": name, "description": description, "email": email},
         )
 
@@ -118,7 +118,7 @@ class ProjectsOperations:
             HttpMethods.POST,
             Endpoints.PROJECTS_ENDPOINT,
             response_schema=CreateProjectResult,
-            request_schema=CreateProjectRequest,
+            request_schema=CreateProjectInput,
             body={"name": name, "description": description, "email": email},
         )
 
@@ -181,7 +181,7 @@ class ProjectsOperations:
             HttpMethods.PUT,
             Endpoints.PROJECT_ENDPOINT,
             response_schema=Project,
-            request_schema=UpdateProjectRequest,
+            request_schema=UpdateProjectInput,
             body={"name": name, "description": description},
             path={"projectId": project_id},
         )
@@ -209,7 +209,7 @@ class ProjectsOperations:
             HttpMethods.PUT,
             Endpoints.PROJECT_ENDPOINT,
             response_schema=Project,
-            request_schema=UpdateProjectRequest,
+            request_schema=UpdateProjectInput,
             body={"name": name, "description": description},
             path={"projectId": project_id},
         )
@@ -313,7 +313,7 @@ class ProjectsOperations:
             HttpMethods.PUT,
             Endpoints.PROJECT_MODEL_CREDENTIALS_ENDPOINT,
             response_schema=ModelCredentials,
-            request_schema=UpdateModelCredentialsRequest,
+            request_schema=UpdateModelCredentialsInput,
             body={
                 "provider": provider,
                 "apiKey": api_key,
@@ -375,7 +375,7 @@ class ProjectsOperations:
             HttpMethods.PUT,
             Endpoints.PROJECT_MODEL_CREDENTIALS_ENDPOINT,
             response_schema=ModelCredentials,
-            request_schema=UpdateModelCredentialsRequest,
+            request_schema=UpdateModelCredentialsInput,
             body={
                 "provider": provider,
                 "apiKey": api_key,

@@ -7,7 +7,7 @@ from typing import List, Optional
 
 from confident_ai.api import Api, HttpMethods
 from confident_ai.common.types import (
-    CreateOrUpdatePolicyRequest,
+    CreateOrUpdatePolicyInput,
     Policy,
     PolicyList,
     PolicyRef,
@@ -78,7 +78,7 @@ class PoliciesOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_POLICIES_ENDPOINT,
             response_schema=Policy,
-            request_schema=CreateOrUpdatePolicyRequest,
+            request_schema=CreateOrUpdatePolicyInput,
             body={
                 "name": name,
                 "permissionIds": permission_ids,
@@ -118,7 +118,7 @@ class PoliciesOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_POLICIES_ENDPOINT,
             response_schema=Policy,
-            request_schema=CreateOrUpdatePolicyRequest,
+            request_schema=CreateOrUpdatePolicyInput,
             body={
                 "name": name,
                 "permissionIds": permission_ids,
@@ -161,7 +161,7 @@ class PoliciesOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_POLICY_ENDPOINT,
             response_schema=Policy,
-            request_schema=CreateOrUpdatePolicyRequest,
+            request_schema=CreateOrUpdatePolicyInput,
             body={
                 "name": name,
                 "permissionIds": permission_ids,
@@ -205,7 +205,7 @@ class PoliciesOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_POLICY_ENDPOINT,
             response_schema=Policy,
-            request_schema=CreateOrUpdatePolicyRequest,
+            request_schema=CreateOrUpdatePolicyInput,
             body={
                 "name": name,
                 "permissionIds": permission_ids,

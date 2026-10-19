@@ -7,25 +7,24 @@ import { Api } from "../api";
 import { PromptsClient } from "./client";
 import { interpolatePrompt } from "../utils/helpers";
 import { pullPrompt } from "../utils/promptCache";
-import { PromptType, Tool } from "../common/types";
+import { MLLMImageInput, PromptType, Tool } from "../common/types";
 import {
   CreatePromptVersionResult,
+  MessagesPromptInput,
   ModelSettings,
-  OutputSchema,
   Prompt as PromptPayload,
   PromptBranch,
   PromptBranchList,
   PromptBranchRef,
   PromptCommitList,
+  PromptInput,
   PromptInterpolationType,
   PromptMessage,
   PromptOutputType,
   PromptVersionList,
-  PushMessagesPrompt,
-  PushPromptRequest,
   PushPromptResult,
-  PushTextPrompt,
-  PushTool,
+  TextPromptInput,
+  ToolInput,
 } from "./types";
 
 /**
@@ -48,9 +47,10 @@ export class Prompt {
   interpolationType?: PromptInterpolationType;
   modelSettings?: ModelSettings;
   outputType?: PromptOutputType;
-  outputSchema?: OutputSchema;
+  outputSchema?: Record<string, unknown>;
   tools?: Tool[];
   messages?: PromptMessage[];
+  imagesMapping?: Record<string, MLLMImageInput>;
 
   constructor(api: Api, options: { promptId?: string; alias?: string } = {}) {
     this.client = new PromptsClient(api);
@@ -207,7 +207,7 @@ export class Prompt {
     return result;
   }
 
-  private pushBody(branch?: string): PushPromptRequest {
+  private pushBody(branch?: string): PromptInput {
     if (this.alias === undefined) {
       throw new Error("Set alias before calling push.");
     }
@@ -217,7 +217,7 @@ export class Prompt {
       modelSettings: this.modelSettings,
       outputType: this.outputType,
       outputSchema: this.outputSchema,
-      tools: this.tools?.map((tool) => this.pushTool(tool)),
+      tools: this.tools?.map((tool) => this.toolInput(tool)),
       branch,
     };
     const chosen = (["text", "messages"] as const).filter(
@@ -229,18 +229,18 @@ export class Prompt {
       );
     }
     if (this.text !== undefined) {
-      return { ...fields, text: this.text } as unknown as PushTextPrompt;
+      return { ...fields, text: this.text } as unknown as TextPromptInput;
     }
     return {
       ...fields,
       messages: this.messages,
-    } as unknown as PushMessagesPrompt;
+    } as unknown as MessagesPromptInput;
   }
 
-  private pushTool(tool: Tool): PushTool {
+  private toolInput(tool: Tool): ToolInput {
     const source = tool as unknown as Record<string, unknown>;
     const fields = { ...source };
-    return fields as unknown as PushTool;
+    return fields as unknown as ToolInput;
   }
 
   interpolate(values: Record<string, unknown>) {

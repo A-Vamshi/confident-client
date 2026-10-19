@@ -11,7 +11,7 @@ import {
   WidgetDimension,
   WidgetGranularity,
   WidgetLayout,
-  WidgetLineConfig,
+  WidgetLineInput,
   WidgetMode,
   WidgetTopK,
   WidgetType,
@@ -62,7 +62,7 @@ export class WidgetsOperations extends DashboardsOperations {
       startTime?: string | null;
       endTime?: string | null;
       layout?: WidgetLayout | null;
-      lines?: WidgetLineConfig[] | null;
+      lines?: WidgetLineInput[] | null;
     } = {},
   ): Promise<WidgetRef> {
     const {
@@ -146,7 +146,7 @@ export class WidgetsOperations extends DashboardsOperations {
       startTime?: string | null;
       endTime?: string | null;
       layout?: WidgetLayout | null;
-      lines?: WidgetLineConfig[] | null;
+      lines?: WidgetLineInput[] | null;
     } = {},
   ): Promise<Widget> {
     const {

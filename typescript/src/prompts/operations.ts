@@ -5,12 +5,7 @@
 
 import { Api, HttpMethods } from "../api";
 import { Endpoints } from "../endpoints";
-import {
-  Prompt,
-  PromptList,
-  PushPromptRequest,
-  PushPromptResult,
-} from "./types";
+import { Prompt, PromptInput, PromptList, PushPromptResult } from "./types";
 
 export class PromptsOperations {
   constructor(protected readonly api: Api) {}
@@ -36,13 +31,13 @@ export class PromptsOperations {
    *
    * @param prompt The commit to push. Send `text` for a text prompt or
    *   `messages` for a messages prompt, never both. The kind must match the
-   *   existing prompt's type. Pass a PushTextPrompt or a PushMessagesPrompt.
+   *   existing prompt's type. Pass a TextPromptInput or a MessagesPromptInput.
    */
-  async push(prompt: PushPromptRequest): Promise<PushPromptResult> {
+  async push(prompt: PromptInput): Promise<PushPromptResult> {
     return this.api.sendRequest<PushPromptResult>(
       HttpMethods.POST,
       Endpoints.PROMPTS_ENDPOINT,
-      { body: prompt },
+      { body: prompt, mediaHolders: ["$"] },
     );
   }
 

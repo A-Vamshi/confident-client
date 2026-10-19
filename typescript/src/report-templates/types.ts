@@ -30,7 +30,7 @@ export interface ReportTemplateSectionContent {
   severity?: ReportTemplateSectionSeverity | null;
 }
 
-export interface ReportTemplateSectionConfig {
+export interface ReportTemplateSectionInput {
   id?: string;
   type: ReportTemplateSectionType;
   heading?: string | null;
@@ -40,10 +40,10 @@ export interface ReportTemplateSectionConfig {
   startOnNewPage?: boolean;
 }
 
-export interface CreateReportTemplateRequest {
+export interface CreateReportTemplateInput {
   name: string;
   description?: string | null;
-  templateSections?: ReportTemplateSectionConfig[];
+  templateSections?: ReportTemplateSectionInput[];
   enabled?: boolean;
   recurrence?: ScheduleRecurrenceType;
   repeatEvery?: number | null;
@@ -106,10 +106,10 @@ export interface ReportTemplateRef {
   id: string;
 }
 
-export interface UpdateReportTemplateRequest {
+export interface UpdateReportTemplateInput {
   name?: string;
   description?: string | null;
-  templateSections?: ReportTemplateSectionConfig[];
+  templateSections?: ReportTemplateSectionInput[];
   enabled?: boolean;
   recurrence?: ScheduleRecurrenceType;
   repeatEvery?: number | null;

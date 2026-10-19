@@ -6,14 +6,14 @@
 from typing import List, Optional
 
 from confident_ai.annotation_queues.types import (
-    AddQueueItemsRequest,
     AddedQueueItems,
-    AnnotateQueueItemRequest,
+    AnnotateQueueItemInput,
     AnnotateQueueItemResult,
     AnnotationQueueItemList,
-    QueueItemAnnotation,
-    QueueItemFormResponse,
+    QueueItemAnnotationInput,
+    QueueItemFormResponseInput,
     QueueItemStatus,
+    QueueItemsInput,
 )
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
@@ -83,7 +83,7 @@ class ItemsOperations:
         )
 
     def add_items(
-        self, annotation_queue_id: str, items: AddQueueItemsRequest
+        self, annotation_queue_id: str, items: QueueItemsInput
     ) -> AddedQueueItems:
         """Add Annotation Queue Items
 
@@ -98,20 +98,20 @@ class ItemsOperations:
                 matches the queue's `type` — `traceUuids` for a `TRACE` queue,
                 `spanUuids` for a `SPAN` queue, `threadIds` for a `THREAD` queue
                 — and every id must already exist in your project. Items already
-                in the queue are skipped. Pass one of AddTraceQueueItemsRequest,
-                AddSpanQueueItemsRequest, AddThreadQueueItemsRequest.
+                in the queue are skipped. Pass one of TraceQueueItemsInput,
+                SpanQueueItemsInput, ThreadQueueItemsInput.
         """
         return self._api.request(
             HttpMethods.POST,
             Endpoints.ANNOTATION_QUEUE_ITEMS_ENDPOINT,
             response_schema=AddedQueueItems,
-            request_schema=AddQueueItemsRequest,
+            request_schema=QueueItemsInput,
             body=items,
             path={"annotationQueueId": annotation_queue_id},
         )
 
     async def a_add_items(
-        self, annotation_queue_id: str, items: AddQueueItemsRequest
+        self, annotation_queue_id: str, items: QueueItemsInput
     ) -> AddedQueueItems:
         """Add Annotation Queue Items
 
@@ -126,14 +126,14 @@ class ItemsOperations:
                 matches the queue's `type` — `traceUuids` for a `TRACE` queue,
                 `spanUuids` for a `SPAN` queue, `threadIds` for a `THREAD` queue
                 — and every id must already exist in your project. Items already
-                in the queue are skipped. Pass one of AddTraceQueueItemsRequest,
-                AddSpanQueueItemsRequest, AddThreadQueueItemsRequest.
+                in the queue are skipped. Pass one of TraceQueueItemsInput,
+                SpanQueueItemsInput, ThreadQueueItemsInput.
         """
         return await self._api.a_request(
             HttpMethods.POST,
             Endpoints.ANNOTATION_QUEUE_ITEMS_ENDPOINT,
             response_schema=AddedQueueItems,
-            request_schema=AddQueueItemsRequest,
+            request_schema=QueueItemsInput,
             body=items,
             path={"annotationQueueId": annotation_queue_id},
         )
@@ -143,8 +143,8 @@ class ItemsOperations:
         annotation_queue_id: str,
         queue_item_id: str,
         *,
-        annotations: Optional[List[QueueItemAnnotation]] = None,
-        form_responses: Optional[List[QueueItemFormResponse]] = None,
+        annotations: Optional[List[QueueItemAnnotationInput]] = None,
+        form_responses: Optional[List[QueueItemFormResponseInput]] = None,
         annotator_email: Optional[str] = None,
         flagged: Optional[bool] = None,
         mark_as_completed: Optional[bool] = None
@@ -175,7 +175,7 @@ class ItemsOperations:
             HttpMethods.POST,
             Endpoints.ANNOTATION_QUEUE_ITEM_ANNOTATE_ENDPOINT,
             response_schema=AnnotateQueueItemResult,
-            request_schema=AnnotateQueueItemRequest,
+            request_schema=AnnotateQueueItemInput,
             body={
                 "annotations": annotations,
                 "formResponses": form_responses,
@@ -183,6 +183,7 @@ class ItemsOperations:
                 "flagged": flagged,
                 "markAsCompleted": mark_as_completed,
             },
+            media_holders=["$.annotations.*"],
             path={
                 "annotationQueueId": annotation_queue_id,
                 "queueItemId": queue_item_id,
@@ -194,8 +195,8 @@ class ItemsOperations:
         annotation_queue_id: str,
         queue_item_id: str,
         *,
-        annotations: Optional[List[QueueItemAnnotation]] = None,
-        form_responses: Optional[List[QueueItemFormResponse]] = None,
+        annotations: Optional[List[QueueItemAnnotationInput]] = None,
+        form_responses: Optional[List[QueueItemFormResponseInput]] = None,
         annotator_email: Optional[str] = None,
         flagged: Optional[bool] = None,
         mark_as_completed: Optional[bool] = None
@@ -226,7 +227,7 @@ class ItemsOperations:
             HttpMethods.POST,
             Endpoints.ANNOTATION_QUEUE_ITEM_ANNOTATE_ENDPOINT,
             response_schema=AnnotateQueueItemResult,
-            request_schema=AnnotateQueueItemRequest,
+            request_schema=AnnotateQueueItemInput,
             body={
                 "annotations": annotations,
                 "formResponses": form_responses,
@@ -234,6 +235,7 @@ class ItemsOperations:
                 "flagged": flagged,
                 "markAsCompleted": mark_as_completed,
             },
+            media_holders=["$.annotations.*"],
             path={
                 "annotationQueueId": annotation_queue_id,
                 "queueItemId": queue_item_id,

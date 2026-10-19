@@ -22,6 +22,7 @@ import yaml
 from .constants import (
     PYTHON_PACKAGE,
     HELPERS_MODULE,
+    MEDIA_MAPPING_FIELD,
     METHOD_ORDER,
     ORGANIZATION_KEY_RESOURCES,
     PYTHON_HELPERS,
@@ -678,6 +679,8 @@ class Handle:
                     else f"self.{self.guard(argument, carried, key)}"
                     f"({argument})"
                 )
+            elif parameter.source == "union-body" and carried == sends:
+                call.append(argument)
             elif parameter.source == "union-body":
                 call.append(
                     f"self.{self.converter(carried, sends)}({argument})"
@@ -745,6 +748,8 @@ class Handle:
                     f"{camel_case(self.guard(argument, carried, key))}OrThrow"
                     f"({argument})"
                 )
+            elif parameter.source == "union-body" and carried == sends:
+                call.append(argument)
             elif parameter.source == "union-body":
                 call.append(
                     f"this.{camel_case(self.converter(carried, sends))}"
@@ -1290,6 +1295,7 @@ class Handle:
             field
             for field in properties_of(sends, self.schemas)
             if field not in arguments
+            and field != MEDIA_MAPPING_FIELD
             and all(
                 field in ((self.schemas.get(b) or {}).get("properties") or {})
                 for b in branches or [sends]
@@ -1382,6 +1388,7 @@ class Handle:
             field
             for field in properties_of(sends, self.schemas)
             if camel_case(field) not in arguments
+            and field != MEDIA_MAPPING_FIELD
             and all(
                 field in ((self.schemas.get(b) or {}).get("properties") or {})
                 for b in branches or [sends]

@@ -8,8 +8,8 @@ from typing import List, Literal, Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.vulnerabilities.types import (
-    CreateVulnerabilityRequest,
-    UpdateVulnerabilityRequest,
+    CreateVulnerabilityInput,
+    UpdateVulnerabilityInput,
     Vulnerability,
     VulnerabilityEvaluationExample,
     VulnerabilityList,
@@ -128,7 +128,7 @@ class VulnerabilitiesClient:
             HttpMethods.POST,
             Endpoints.VULNERABILITIES_ENDPOINT,
             response_schema=VulnerabilityRef,
-            request_schema=CreateVulnerabilityRequest,
+            request_schema=CreateVulnerabilityInput,
             body={
                 "name": name,
                 "criteria": criteria,
@@ -174,7 +174,7 @@ class VulnerabilitiesClient:
             HttpMethods.POST,
             Endpoints.VULNERABILITIES_ENDPOINT,
             response_schema=VulnerabilityRef,
-            request_schema=CreateVulnerabilityRequest,
+            request_schema=CreateVulnerabilityInput,
             body={
                 "name": name,
                 "criteria": criteria,
@@ -258,7 +258,7 @@ class VulnerabilitiesClient:
             HttpMethods.PUT,
             Endpoints.VULNERABILITY_ENDPOINT,
             response_schema=Vulnerability,
-            request_schema=UpdateVulnerabilityRequest,
+            request_schema=UpdateVulnerabilityInput,
             body={
                 "name": name,
                 "description": description,
@@ -307,7 +307,7 @@ class VulnerabilitiesClient:
             HttpMethods.PUT,
             Endpoints.VULNERABILITY_ENDPOINT,
             response_schema=Vulnerability,
-            request_schema=UpdateVulnerabilityRequest,
+            request_schema=UpdateVulnerabilityInput,
             body={
                 "name": name,
                 "description": description,

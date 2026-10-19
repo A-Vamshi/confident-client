@@ -18,7 +18,7 @@ class EvaluationRuleDataModel(Enum):
     THREAD = "THREAD"
 
 
-class CreateEvaluationRuleRequest(ConfidentBaseModel):
+class CreateEvaluationRuleInput(ConfidentBaseModel):
     name: str
     enabled: Optional[bool] = None
     data_model: EvaluationRuleDataModel = Field(alias="dataModel")
@@ -73,7 +73,7 @@ class EvaluationRuleRef(ConfidentBaseModel):
     id: str
 
 
-class UpdateEvaluationRuleRequest(ConfidentBaseModel):
+class UpdateEvaluationRuleInput(ConfidentBaseModel):
     name: Optional[str] = None
     enabled: Optional[bool] = None
     data_model: Optional[EvaluationRuleDataModel] = Field(

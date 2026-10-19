@@ -33,7 +33,7 @@ class SchedulableExportType(Enum):
     AUDIT_LOGS = "AUDIT_LOGS"
 
 
-class CreateExportScheduleRequest(ConfidentBaseModel):
+class CreateExportScheduleInput(ConfidentBaseModel):
     recurrence: Optional[ScheduleRecurrenceType] = None
     repeat_every: Optional[int] = Field(default=None, alias="repeatEvery")
     repeat_unit: Optional[ScheduleIntervalUnit] = Field(
@@ -106,7 +106,7 @@ class ExportScheduleRef(ConfidentBaseModel):
     id: str
 
 
-class UpdateExportScheduleRequest(ConfidentBaseModel):
+class UpdateExportScheduleInput(ConfidentBaseModel):
     recurrence: Optional[ScheduleRecurrenceType] = None
     repeat_every: Optional[int] = Field(default=None, alias="repeatEvery")
     repeat_unit: Optional[ScheduleIntervalUnit] = Field(

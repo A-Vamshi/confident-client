@@ -183,7 +183,7 @@ class AIConnectionRef(ConfidentBaseModel):
     id: str
 
 
-class CreateAIConnectionRequest(ConfidentBaseModel):
+class CreateAIConnectionInput(ConfidentBaseModel):
     name: str
     type: Optional[AIConnectionType] = None
     endpoint: Optional[str] = None
@@ -297,11 +297,11 @@ class CreateAIConnectionRequest(ConfidentBaseModel):
     prompts: Optional[Dict[str, AIConnectionPromptRef]] = None
 
 
-class PingAIConnectionRequest(ConfidentBaseModel):
+class PingAIConnectionInput(ConfidentBaseModel):
     multiturn: Optional[bool] = None
 
 
-class UpdateAIConnectionRequest(ConfidentBaseModel):
+class UpdateAIConnectionInput(ConfidentBaseModel):
     name: Optional[str] = None
     type: Optional[AIConnectionType] = None
     endpoint: Optional[str] = None

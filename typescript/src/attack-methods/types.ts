@@ -52,6 +52,6 @@ export interface AttackMethodRef {
   id: string;
 }
 
-export interface UpdateAttackMethodRequest {
+export interface UpdateAttackMethodInput {
   parameters: Record<string, unknown>;
 }

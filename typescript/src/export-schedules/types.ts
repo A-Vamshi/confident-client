@@ -26,7 +26,7 @@ export enum SchedulableExportType {
   AUDIT_LOGS = "AUDIT_LOGS",
 }
 
-export interface CreateExportScheduleRequest {
+export interface CreateExportScheduleInput {
   recurrence?: ScheduleRecurrenceType;
   repeatEvery?: number | null;
   repeatUnit?: ScheduleIntervalUnit | null;
@@ -87,7 +87,7 @@ export interface ExportScheduleRef {
   id: string;
 }
 
-export interface UpdateExportScheduleRequest {
+export interface UpdateExportScheduleInput {
   recurrence?: ScheduleRecurrenceType;
   repeatEvery?: number | null;
   repeatUnit?: ScheduleIntervalUnit | null;

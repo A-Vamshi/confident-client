@@ -9,7 +9,7 @@ import {
   MetricCollection,
   MetricCollectionList,
   MetricCollectionRef,
-  MetricSettingConfig,
+  MetricSettingInput,
 } from "./types";
 
 export class MetricCollectionsClient {
@@ -55,7 +55,7 @@ export class MetricCollectionsClient {
     name: string,
     options: {
       multiTurn?: boolean;
-      metricsSettings?: MetricSettingConfig[];
+      metricsSettings?: MetricSettingInput[];
       sampleRate?: number;
       inputTransformerId?: string | null;
       outputTransformerId?: string | null;
@@ -126,7 +126,7 @@ export class MetricCollectionsClient {
     metricCollectionId: string,
     options: {
       name?: string;
-      metricsSettings?: MetricSettingConfig[];
+      metricsSettings?: MetricSettingInput[];
       sampleRate?: number;
       inputTransformerId?: string | null;
       outputTransformerId?: string | null;

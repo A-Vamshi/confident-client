@@ -17,7 +17,7 @@ class VulnerabilityEvaluationExample(ConfidentBaseModel):
     reason: str
 
 
-class CreateVulnerabilityRequest(ConfidentBaseModel):
+class CreateVulnerabilityInput(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     criteria: str
@@ -32,7 +32,7 @@ class CreateVulnerabilityRequest(ConfidentBaseModel):
     )
 
 
-class UpdateVulnerabilityRequest(ConfidentBaseModel):
+class UpdateVulnerabilityInput(ConfidentBaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     criteria: Optional[str] = None

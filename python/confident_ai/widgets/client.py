@@ -6,10 +6,10 @@
 from typing import Optional
 
 from confident_ai.api import Api, HttpMethods
-from confident_ai.common.types import CreateWidgetRequest, WidgetGranularity
+from confident_ai.common.types import WidgetGranularity, WidgetInput
 from confident_ai.endpoints import Endpoints
 from confident_ai.widgets.types import (
-    AdHocWidgetQueryRequest,
+    AdHocWidgetQueryInput,
     AdHocWidgetQueryResult,
 )
 
@@ -20,7 +20,7 @@ class WidgetsClient:
 
     def query_ad_hoc(
         self,
-        widget: CreateWidgetRequest,
+        widget: WidgetInput,
         *,
         start_time: Optional[str] = None,
         end_time: Optional[str] = None,
@@ -46,7 +46,7 @@ class WidgetsClient:
             HttpMethods.POST,
             Endpoints.WIDGETS_QUERY_ENDPOINT,
             response_schema=AdHocWidgetQueryResult,
-            request_schema=AdHocWidgetQueryRequest,
+            request_schema=AdHocWidgetQueryInput,
             body={
                 "widget": widget,
                 "startTime": start_time,
@@ -57,7 +57,7 @@ class WidgetsClient:
 
     async def a_query_ad_hoc(
         self,
-        widget: CreateWidgetRequest,
+        widget: WidgetInput,
         *,
         start_time: Optional[str] = None,
         end_time: Optional[str] = None,
@@ -83,7 +83,7 @@ class WidgetsClient:
             HttpMethods.POST,
             Endpoints.WIDGETS_QUERY_ENDPOINT,
             response_schema=AdHocWidgetQueryResult,
-            request_schema=AdHocWidgetQueryRequest,
+            request_schema=AdHocWidgetQueryInput,
             body={
                 "widget": widget,
                 "startTime": start_time,

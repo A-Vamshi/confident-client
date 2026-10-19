@@ -8,9 +8,9 @@ from typing import Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.voice_connections.types import (
-    CreateVoiceConnectionRequest,
-    UpdateVoiceConnectionRequest,
-    VoiceCallSettingsPatch,
+    CreateVoiceConnectionInput,
+    UpdateVoiceConnectionInput,
+    VoiceCallSettingsInput,
     VoiceConnection,
     VoiceConnectionList,
     VoiceConnectionLog,
@@ -69,7 +69,7 @@ class VoiceConnectionsClient:
         name: str,
         config: VoiceTransportConfig,
         *,
-        call_settings: Optional[VoiceCallSettingsPatch] = None
+        call_settings: Optional[VoiceCallSettingsInput] = None
     ) -> VoiceConnection:
         """Create Voice Connection
 
@@ -84,7 +84,7 @@ class VoiceConnectionsClient:
             HttpMethods.POST,
             Endpoints.VOICE_CONNECTIONS_ENDPOINT,
             response_schema=VoiceConnection,
-            request_schema=CreateVoiceConnectionRequest,
+            request_schema=CreateVoiceConnectionInput,
             body={
                 "name": name,
                 "config": config,
@@ -97,7 +97,7 @@ class VoiceConnectionsClient:
         name: str,
         config: VoiceTransportConfig,
         *,
-        call_settings: Optional[VoiceCallSettingsPatch] = None
+        call_settings: Optional[VoiceCallSettingsInput] = None
     ) -> VoiceConnection:
         """Create Voice Connection
 
@@ -112,7 +112,7 @@ class VoiceConnectionsClient:
             HttpMethods.POST,
             Endpoints.VOICE_CONNECTIONS_ENDPOINT,
             response_schema=VoiceConnection,
-            request_schema=CreateVoiceConnectionRequest,
+            request_schema=CreateVoiceConnectionInput,
             body={
                 "name": name,
                 "config": config,
@@ -160,7 +160,7 @@ class VoiceConnectionsClient:
         *,
         name: Optional[str] = None,
         config: Optional[VoiceTransportConfig] = None,
-        call_settings: Optional[VoiceCallSettingsPatch] = None
+        call_settings: Optional[VoiceCallSettingsInput] = None
     ) -> VoiceConnection:
         """Update Voice Connection
 
@@ -176,7 +176,7 @@ class VoiceConnectionsClient:
             HttpMethods.PUT,
             Endpoints.VOICE_CONNECTION_ENDPOINT,
             response_schema=VoiceConnection,
-            request_schema=UpdateVoiceConnectionRequest,
+            request_schema=UpdateVoiceConnectionInput,
             body={
                 "name": name,
                 "config": config,
@@ -191,7 +191,7 @@ class VoiceConnectionsClient:
         *,
         name: Optional[str] = None,
         config: Optional[VoiceTransportConfig] = None,
-        call_settings: Optional[VoiceCallSettingsPatch] = None
+        call_settings: Optional[VoiceCallSettingsInput] = None
     ) -> VoiceConnection:
         """Update Voice Connection
 
@@ -207,7 +207,7 @@ class VoiceConnectionsClient:
             HttpMethods.PUT,
             Endpoints.VOICE_CONNECTION_ENDPOINT,
             response_schema=VoiceConnection,
-            request_schema=UpdateVoiceConnectionRequest,
+            request_schema=UpdateVoiceConnectionInput,
             body={
                 "name": name,
                 "config": config,

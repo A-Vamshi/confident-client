@@ -50,7 +50,7 @@ export interface AiInsightsSummary {
   topicSummaries: TopicSummary[];
 }
 
-export interface CreateTestRunRequest {
+export interface CreateTestRunInput {
   metricCollection?: string;
   identifier?: string;
 }
@@ -89,7 +89,7 @@ export interface MetricScores {
   errorType: EvaluationErrorType | null;
 }
 
-export interface SubmitTestCaseResultRequest {
+export interface SubmitTestCaseResultInput {
   actualOutput?: string;
   retrievalContext?: string[];
   toolsCalled?: ToolCall[];

@@ -8,7 +8,7 @@ from typing import Literal, Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.common.types import Model, ModelProvider
 from confident_ai.endpoints import Endpoints
-from confident_ai.organization.types import UpdateOrganizationModelRequest
+from confident_ai.organization.types import UpdateOrganizationModelInput
 
 
 class ModelsOperations:
@@ -100,7 +100,7 @@ class ModelsOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_MODEL_ENDPOINT,
             response_schema=Model,
-            request_schema=UpdateOrganizationModelRequest,
+            request_schema=UpdateOrganizationModelInput,
             body={
                 "provider": provider,
                 "name": name,
@@ -151,7 +151,7 @@ class ModelsOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_MODEL_ENDPOINT,
             response_schema=Model,
-            request_schema=UpdateOrganizationModelRequest,
+            request_schema=UpdateOrganizationModelInput,
             body={
                 "provider": provider,
                 "name": name,

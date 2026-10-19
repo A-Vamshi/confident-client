@@ -14,9 +14,9 @@ from confident_ai.ai_connections.types import (
     AIConnectionRef,
     AIConnectionResponseMode,
     AIConnectionType,
-    CreateAIConnectionRequest,
-    PingAIConnectionRequest,
-    UpdateAIConnectionRequest,
+    CreateAIConnectionInput,
+    PingAIConnectionInput,
+    UpdateAIConnectionInput,
 )
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
@@ -263,7 +263,7 @@ class AIConnectionsClient:
             HttpMethods.POST,
             Endpoints.AI_CONNECTIONS_ENDPOINT,
             response_schema=AIConnectionRef,
-            request_schema=CreateAIConnectionRequest,
+            request_schema=CreateAIConnectionInput,
             body={
                 "name": name,
                 "type": type,
@@ -500,7 +500,7 @@ class AIConnectionsClient:
             HttpMethods.POST,
             Endpoints.AI_CONNECTIONS_ENDPOINT,
             response_schema=AIConnectionRef,
-            request_schema=CreateAIConnectionRequest,
+            request_schema=CreateAIConnectionInput,
             body={
                 "name": name,
                 "type": type,
@@ -776,7 +776,7 @@ class AIConnectionsClient:
             HttpMethods.PUT,
             Endpoints.AI_CONNECTION_ENDPOINT,
             response_schema=AIConnection,
-            request_schema=UpdateAIConnectionRequest,
+            request_schema=UpdateAIConnectionInput,
             body={
                 "name": name,
                 "type": type,
@@ -1017,7 +1017,7 @@ class AIConnectionsClient:
             HttpMethods.PUT,
             Endpoints.AI_CONNECTION_ENDPOINT,
             response_schema=AIConnection,
-            request_schema=UpdateAIConnectionRequest,
+            request_schema=UpdateAIConnectionInput,
             body={
                 "name": name,
                 "type": type,
@@ -1113,7 +1113,7 @@ class AIConnectionsClient:
             HttpMethods.POST,
             Endpoints.AI_CONNECTION_PING_ENDPOINT,
             response_schema=AIConnectionPingResult,
-            request_schema=PingAIConnectionRequest,
+            request_schema=PingAIConnectionInput,
             body={"multiturn": multiturn},
             path={"aiConnectionId": ai_connection_id},
         )
@@ -1137,7 +1137,7 @@ class AIConnectionsClient:
             HttpMethods.POST,
             Endpoints.AI_CONNECTION_PING_ENDPOINT,
             response_schema=AIConnectionPingResult,
-            request_schema=PingAIConnectionRequest,
+            request_schema=PingAIConnectionInput,
             body={"multiturn": multiturn},
             path={"aiConnectionId": ai_connection_id},
         )

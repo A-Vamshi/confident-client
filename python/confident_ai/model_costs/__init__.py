@@ -4,17 +4,17 @@
 # and regenerate.
 
 from confident_ai.model_costs.types import (
-    CreateModelCostRequest,
+    CreateModelCostInput,
     ModelCost,
     ModelCostList,
     ModelCostRef,
-    UpdateModelCostRequest,
+    UpdateModelCostInput,
 )
 
 __all__ = [
-    "CreateModelCostRequest",
+    "CreateModelCostInput",
     "ModelCost",
     "ModelCostList",
     "ModelCostRef",
-    "UpdateModelCostRequest",
+    "UpdateModelCostInput",
 ]

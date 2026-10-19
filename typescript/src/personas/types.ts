@@ -3,7 +3,7 @@
 // Do not edit by hand — change the route in confident-cloud
 // and regenerate.
 
-export interface CreatePersonaRequest {
+export interface CreatePersonaInput {
   name: string;
   characteristics: string;
   metadata?: Record<string, unknown> | null;
@@ -34,7 +34,7 @@ export interface PersonaRef {
   id: string;
 }
 
-export interface UpdatePersonaRequest {
+export interface UpdatePersonaInput {
   name?: string;
   characteristics?: string;
   metadata?: Record<string, unknown> | null;

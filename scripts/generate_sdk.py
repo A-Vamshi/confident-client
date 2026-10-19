@@ -50,8 +50,8 @@ from sdkgen.generate_files import (
 )
 from sdkgen.openapi_helpers.openapi_parser import (
     generated_routes,
+    merge_write_schemas,
     operations_by_resource,
-    relax_required,
     schema_homes,
     schema_nodes,
     schemas_reached,
@@ -91,9 +91,8 @@ def load_schemas(spec_dir: Path) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         )
 
     spec = yaml.safe_load(spec_path.read_text())
-    components = spec.get("components") or {}
-    relax_required(components.get("schemas") or {})
-    return spec, components
+    merge_write_schemas(spec)
+    return spec, spec.get("components") or {}
 
 
 def resource_source(resource: str) -> str:

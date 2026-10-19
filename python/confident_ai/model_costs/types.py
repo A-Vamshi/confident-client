@@ -10,7 +10,7 @@ from pydantic import Field
 from confident_ai.types import ConfidentBaseModel
 
 
-class CreateModelCostRequest(ConfidentBaseModel):
+class CreateModelCostInput(ConfidentBaseModel):
     match_pattern: str = Field(alias="matchPattern")
     provider: Optional[str] = None
     input_cost_per_million_tokens: Optional[float] = Field(
@@ -49,7 +49,7 @@ class ModelCostRef(ConfidentBaseModel):
     id: str
 
 
-class UpdateModelCostRequest(ConfidentBaseModel):
+class UpdateModelCostInput(ConfidentBaseModel):
     match_pattern: str = Field(alias="matchPattern")
     provider: Optional[str] = None
     input_cost_per_million_tokens: Optional[float] = Field(

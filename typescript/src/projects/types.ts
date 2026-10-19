@@ -20,15 +20,15 @@ export interface ClearProjectModelResult {
   source: ModelSource;
 }
 
-export interface CreateProjectInvitationsRequest {
-  emails: string[];
-  projectRoleId?: string;
-}
-
-export interface CreateProjectRequest {
+export interface CreateProjectInput {
   name: string;
   description?: string;
   email?: string;
+}
+
+export interface CreateProjectInvitationsInput {
+  emails: string[];
+  projectRoleId?: string;
 }
 
 export interface ProjectSummary {
@@ -54,6 +54,27 @@ export interface ProjectDefaultApiKey {
 export interface CreateProjectResult {
   project: ProjectSummary;
   apiKey: ProjectDefaultApiKey | null;
+}
+
+export interface DecisionProjectModelInput {
+  provider: ModelProvider;
+  name?: string;
+  modelCredentialId?: string | null;
+}
+
+export interface EvaluationProjectModelInput {
+  provider: ModelProvider;
+  name?: string;
+  maxConcurrency?: number | null;
+  modelCredentialId?: string | null;
+}
+
+export interface PlatformProjectModelInput {
+  provider: ModelProvider;
+  name?: string;
+  maxConcurrency?: number | null;
+  maxInputTokens?: number | null;
+  modelCredentialId?: string | null;
 }
 
 export interface ProjectGovernancePolicy {
@@ -123,25 +144,9 @@ export interface ProjectRoleList {
   roles: ProjectRole[];
 }
 
-export interface UpdateDecisionProjectModelRequest {
-  provider: ModelProvider;
+export interface UpdateProjectInput {
   name?: string;
-  modelCredentialId?: string | null;
-}
-
-export interface UpdateEvaluationProjectModelRequest {
-  provider: ModelProvider;
-  name?: string;
-  maxConcurrency?: number | null;
-  modelCredentialId?: string | null;
-}
-
-export interface UpdatePlatformProjectModelRequest {
-  provider: ModelProvider;
-  name?: string;
-  maxConcurrency?: number | null;
-  maxInputTokens?: number | null;
-  modelCredentialId?: string | null;
+  description?: string;
 }
 
 export interface UpdateProjectModelResult {
@@ -149,12 +154,7 @@ export interface UpdateProjectModelResult {
   source?: ModelSource;
 }
 
-export interface UpdateProjectRequest {
-  name?: string;
-  description?: string;
-}
-
-export type UpdateProjectModelRequest =
-  | UpdateEvaluationProjectModelRequest
-  | UpdateDecisionProjectModelRequest
-  | UpdatePlatformProjectModelRequest;
+export type ProjectModelInput =
+  | EvaluationProjectModelInput
+  | DecisionProjectModelInput
+  | PlatformProjectModelInput;

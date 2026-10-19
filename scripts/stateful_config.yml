@@ -95,7 +95,7 @@ prompts:
       operation: pushPrompt
       call_params: [branch]
       sent_as:
-        tools: PushTool
+        tools: ToolInput
       response_mapping:
         prompt_id: promptId
         hash: hash
@@ -141,8 +141,6 @@ datasets:
     push:
       operation: pushDataset
       call_params: [finalized]
-      sent_as:
-        goldens: PushGolden
       response_mapping:
         dataset_id: id
 

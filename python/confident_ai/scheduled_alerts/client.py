@@ -16,13 +16,13 @@ from confident_ai.scheduled_alerts.types import (
     AlertDataModel,
     AlertSeverity,
     AlertThresholdSettings,
-    CreateScheduledAlertRequest,
+    CreateScheduledAlertInput,
     ScheduledAlert,
-    ScheduledAlertDetectionSettings,
+    ScheduledAlertDetectionSettingsInput,
     ScheduledAlertList,
     ScheduledAlertRef,
     ScheduledAlertType,
-    UpdateScheduledAlertRequest,
+    UpdateScheduledAlertInput,
 )
 
 
@@ -115,7 +115,9 @@ class ScheduledAlertsClient:
         type: Optional[ScheduledAlertType] = None,
         aggregation: Optional[str] = None,
         threshold_settings: Optional[AlertThresholdSettings] = None,
-        detection_settings: Optional[ScheduledAlertDetectionSettings] = None,
+        detection_settings: Optional[
+            ScheduledAlertDetectionSettingsInput
+        ] = None,
         enabled: Optional[bool] = None
     ) -> ScheduledAlertRef:
         """Create Scheduled Alert
@@ -179,7 +181,7 @@ class ScheduledAlertsClient:
             HttpMethods.POST,
             Endpoints.SCHEDULED_ALERTS_ENDPOINT,
             response_schema=ScheduledAlertRef,
-            request_schema=CreateScheduledAlertRequest,
+            request_schema=CreateScheduledAlertInput,
             body={
                 "name": name,
                 "dataModel": data_model,
@@ -217,7 +219,9 @@ class ScheduledAlertsClient:
         type: Optional[ScheduledAlertType] = None,
         aggregation: Optional[str] = None,
         threshold_settings: Optional[AlertThresholdSettings] = None,
-        detection_settings: Optional[ScheduledAlertDetectionSettings] = None,
+        detection_settings: Optional[
+            ScheduledAlertDetectionSettingsInput
+        ] = None,
         enabled: Optional[bool] = None
     ) -> ScheduledAlertRef:
         """Create Scheduled Alert
@@ -281,7 +285,7 @@ class ScheduledAlertsClient:
             HttpMethods.POST,
             Endpoints.SCHEDULED_ALERTS_ENDPOINT,
             response_schema=ScheduledAlertRef,
-            request_schema=CreateScheduledAlertRequest,
+            request_schema=CreateScheduledAlertInput,
             body={
                 "name": name,
                 "dataModel": data_model,
@@ -354,7 +358,9 @@ class ScheduledAlertsClient:
         data_model: Optional[AlertDataModel] = None,
         aggregation: Optional[str] = None,
         threshold_settings: Optional[AlertThresholdSettings] = None,
-        detection_settings: Optional[ScheduledAlertDetectionSettings] = None,
+        detection_settings: Optional[
+            ScheduledAlertDetectionSettingsInput
+        ] = None,
         enabled: Optional[bool] = None
     ) -> ScheduledAlert:
         """Update Scheduled Alert
@@ -420,7 +426,7 @@ class ScheduledAlertsClient:
             HttpMethods.PUT,
             Endpoints.SCHEDULED_ALERT_ENDPOINT,
             response_schema=ScheduledAlert,
-            request_schema=UpdateScheduledAlertRequest,
+            request_schema=UpdateScheduledAlertInput,
             body={
                 "recurrence": recurrence,
                 "repeatEvery": repeat_every,
@@ -460,7 +466,9 @@ class ScheduledAlertsClient:
         data_model: Optional[AlertDataModel] = None,
         aggregation: Optional[str] = None,
         threshold_settings: Optional[AlertThresholdSettings] = None,
-        detection_settings: Optional[ScheduledAlertDetectionSettings] = None,
+        detection_settings: Optional[
+            ScheduledAlertDetectionSettingsInput
+        ] = None,
         enabled: Optional[bool] = None
     ) -> ScheduledAlert:
         """Update Scheduled Alert
@@ -526,7 +534,7 @@ class ScheduledAlertsClient:
             HttpMethods.PUT,
             Endpoints.SCHEDULED_ALERT_ENDPOINT,
             response_schema=ScheduledAlert,
-            request_schema=UpdateScheduledAlertRequest,
+            request_schema=UpdateScheduledAlertInput,
             body={
                 "recurrence": recurrence,
                 "repeatEvery": repeat_every,

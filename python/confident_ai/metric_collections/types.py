@@ -18,12 +18,12 @@ class EvalMode(Enum):
     DECISION = "DECISION"
 
 
-class MetricRef(ConfidentBaseModel):
+class MetricRefInput(ConfidentBaseModel):
     name: str
 
 
-class MetricSettingConfig(ConfidentBaseModel):
-    metric: MetricRef
+class MetricSettingInput(ConfidentBaseModel):
+    metric: MetricRefInput
     activated: Optional[bool] = None
     threshold: Optional[float] = None
     include_reason: Optional[bool] = Field(default=None, alias="includeReason")
@@ -52,10 +52,10 @@ class MetricSettingConfig(ConfidentBaseModel):
     eval_mode: Optional[EvalMode] = Field(default=None, alias="evalMode")
 
 
-class CreateMetricCollectionRequest(ConfidentBaseModel):
+class CreateMetricCollectionInput(ConfidentBaseModel):
     name: str
     multi_turn: Optional[bool] = Field(default=None, alias="multiTurn")
-    metrics_settings: Optional[List[MetricSettingConfig]] = Field(
+    metrics_settings: Optional[List[MetricSettingInput]] = Field(
         default=None,
         alias="metricsSettings",
     )
@@ -116,9 +116,9 @@ class MetricCollectionRef(ConfidentBaseModel):
     id: str
 
 
-class UpdateMetricCollectionRequest(ConfidentBaseModel):
+class UpdateMetricCollectionInput(ConfidentBaseModel):
     name: Optional[str] = None
-    metrics_settings: Optional[List[MetricSettingConfig]] = Field(
+    metrics_settings: Optional[List[MetricSettingInput]] = Field(
         default=None,
         alias="metricsSettings",
     )

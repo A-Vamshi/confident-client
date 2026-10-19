@@ -3,15 +3,15 @@
 // Do not edit by hand — change the route in confident-cloud
 // and regenerate.
 
-export interface ForwardingConnectorHeaderConfig {
+export interface ForwardingConnectorHeaderInput {
   key: string;
   value: string;
 }
 
-export interface CreateForwardingConnectorRequest {
+export interface CreateForwardingConnectorInput {
   name: string;
   endpoint: string;
-  headers?: ForwardingConnectorHeaderConfig[];
+  headers?: ForwardingConnectorHeaderInput[];
   environments?: string[];
   enabled?: boolean;
 }
@@ -54,10 +54,10 @@ export interface ForwardingConnectorRef {
   id: string;
 }
 
-export interface UpdateForwardingConnectorRequest {
+export interface UpdateForwardingConnectorInput {
   name?: string;
   endpoint?: string;
-  headers?: ForwardingConnectorHeaderConfig[];
+  headers?: ForwardingConnectorHeaderInput[];
   environments?: string[];
   enabled?: boolean;
 }

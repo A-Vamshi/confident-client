@@ -113,7 +113,7 @@ export interface AssessGovernanceControlResult {
   statusCounts: Record<string, number>;
 }
 
-export interface GovernanceControlThresholdSettings {
+export interface GovernanceControlThresholdSettingsInput {
   value: number;
   direction: GovernanceControlThresholdDirection;
 }
@@ -122,10 +122,10 @@ export interface GovernanceControlExtraQueryParams {
   category?: GovernanceControlMetricDataCategory;
 }
 
-export interface GovernanceControlRuntimeConfig {
+export interface GovernanceControlRuntimeConfigInput {
   dataModel: GovernanceControlDataModel | null;
   aggregation: GovernanceControlAggregation | null;
-  thresholdSettings: GovernanceControlThresholdSettings | null;
+  thresholdSettings: GovernanceControlThresholdSettingsInput | null;
   extraQueryParams?: GovernanceControlExtraQueryParams | null;
   filters: FilterSet | null;
   severity: GovernanceControlSeverity | null;
@@ -135,7 +135,7 @@ export interface GovernanceControlPreDeploymentWindow {
   days: number;
 }
 
-export interface GovernanceControlPreDeploymentConfig {
+export interface GovernanceControlPreDeploymentConfigInput {
   identifier: string;
   window: GovernanceControlPreDeploymentWindow;
   officialOnly?: boolean;
@@ -143,27 +143,27 @@ export interface GovernanceControlPreDeploymentConfig {
   severity: GovernanceControlSeverity | null;
 }
 
-export interface CreateGovernanceControlRequest {
+export interface CreateGovernanceControlInput {
   name: string;
   description?: string | null;
   type: CreatableGovernanceControlType;
-  runtimeConfig?: GovernanceControlRuntimeConfig;
-  preDeploymentConfig?: GovernanceControlPreDeploymentConfig;
+  runtimeConfig?: GovernanceControlRuntimeConfigInput;
+  preDeploymentConfig?: GovernanceControlPreDeploymentConfigInput;
   governancePolicyId?: string;
 }
 
-export interface CreateGovernancePolicyRequest {
+export interface CreateGovernancePolicyInput {
   name: string;
   description?: string | null;
   basePolicyIds?: string[];
 }
 
-export interface CreateOrganizationInvitationsRequest {
+export interface CreateOrganizationInvitationsInput {
   emails: string[];
   organizationRoleId?: string;
 }
 
-export interface DeleteGovernancePolicyControlsRequest {
+export interface DeleteGovernancePolicyControlsInput {
   controlIds: string[];
 }
 
@@ -388,7 +388,7 @@ export interface GovernancePolicyProjectList {
   pageSize: number;
 }
 
-export interface GovernancePolicyProjectsRequest {
+export interface GovernancePolicyProjectsInput {
   projectIds: string[];
 }
 
@@ -503,28 +503,32 @@ export interface OrganizationRoleList {
   roles: OrganizationRole[];
 }
 
-export interface SetGovernancePolicyControlsRequest {
+export interface SetGovernancePolicyControlsInput {
   controlIds: string[];
 }
 
-export interface UpdateGovernanceControlRequest {
+export interface UpdateGovernanceControlInput {
   name?: string;
   description?: string | null;
 }
 
-export interface UpdateGovernancePolicyRequest {
+export interface UpdateGovernancePolicyInput {
   name?: string;
   description?: string | null;
   ownerEmail?: string | null;
   basePolicyIds?: string[];
 }
 
-export interface UpdateGovernancePolicySkillRequest {
+export interface UpdateGovernancePolicySkillInput {
   description: string;
   body: string;
 }
 
-export interface UpdateOrganizationModelRequest {
+export interface UpdateOrganizationInput {
+  name: string;
+}
+
+export interface UpdateOrganizationModelInput {
   provider: ModelProvider;
   name?: string;
   maxConcurrency?: number | null;
@@ -532,9 +536,6 @@ export interface UpdateOrganizationModelRequest {
   modelCredentialId?: string | null;
 }
 
-export interface UpdateOrganizationRequest {
-  name: string;
-}
-
-export type CreateGovernanceControlVersionRequest =
-  GovernanceControlRuntimeConfig | GovernanceControlPreDeploymentConfig;
+export type GovernanceControlVersionInput =
+  | GovernanceControlRuntimeConfigInput
+  | GovernanceControlPreDeploymentConfigInput;

@@ -163,7 +163,7 @@ ReportSectionInput = Union[
 ]
 
 
-class CreateReportRequest(ConfidentBaseModel):
+class CreateReportInput(ConfidentBaseModel):
     report_template_id: str = Field(alias="reportTemplateId")
     status: Optional[ReportStatus] = None
     error: Optional[str] = None
@@ -243,7 +243,7 @@ class ReportRef(ConfidentBaseModel):
     id: str
 
 
-class UpdateReportRequest(ConfidentBaseModel):
+class UpdateReportInput(ConfidentBaseModel):
     status: Optional[ReportStatus] = None
     error: Optional[str] = None
     metadata: Optional[ReportMetadataInput] = None

@@ -6,15 +6,15 @@
 from typing import List, Optional
 
 from confident_ai.api import Api, HttpMethods
-from confident_ai.common.types import CreateWidgetRequest, WidgetGranularity
+from confident_ai.common.types import WidgetGranularity, WidgetInput
 from confident_ai.dashboards.types import (
-    CreateDashboardRequest,
+    CreateDashboardInput,
     Dashboard,
     DashboardList,
-    DashboardQueryRequest,
+    DashboardQueryInput,
     DashboardQueryResult,
     DashboardRef,
-    UpdateDashboardRequest,
+    UpdateDashboardInput,
 )
 from confident_ai.endpoints import Endpoints
 
@@ -70,7 +70,7 @@ class DashboardsOperations:
         *,
         description: Optional[str] = None,
         private: Optional[bool] = None,
-        widgets: Optional[List[CreateWidgetRequest]] = None
+        widgets: Optional[List[WidgetInput]] = None
     ) -> DashboardRef:
         """Create Dashboard
 
@@ -91,7 +91,7 @@ class DashboardsOperations:
             HttpMethods.POST,
             Endpoints.DASHBOARDS_ENDPOINT,
             response_schema=DashboardRef,
-            request_schema=CreateDashboardRequest,
+            request_schema=CreateDashboardInput,
             body={
                 "name": name,
                 "description": description,
@@ -106,7 +106,7 @@ class DashboardsOperations:
         *,
         description: Optional[str] = None,
         private: Optional[bool] = None,
-        widgets: Optional[List[CreateWidgetRequest]] = None
+        widgets: Optional[List[WidgetInput]] = None
     ) -> DashboardRef:
         """Create Dashboard
 
@@ -127,7 +127,7 @@ class DashboardsOperations:
             HttpMethods.POST,
             Endpoints.DASHBOARDS_ENDPOINT,
             response_schema=DashboardRef,
-            request_schema=CreateDashboardRequest,
+            request_schema=CreateDashboardInput,
             body={
                 "name": name,
                 "description": description,
@@ -193,7 +193,7 @@ class DashboardsOperations:
             HttpMethods.PUT,
             Endpoints.DASHBOARD_ENDPOINT,
             response_schema=Dashboard,
-            request_schema=UpdateDashboardRequest,
+            request_schema=UpdateDashboardInput,
             body={"name": name, "description": description, "private": private},
             path={"dashboardId": dashboard_id},
         )
@@ -221,7 +221,7 @@ class DashboardsOperations:
             HttpMethods.PUT,
             Endpoints.DASHBOARD_ENDPOINT,
             response_schema=Dashboard,
-            request_schema=UpdateDashboardRequest,
+            request_schema=UpdateDashboardInput,
             body={"name": name, "description": description, "private": private},
             path={"dashboardId": dashboard_id},
         )
@@ -290,7 +290,7 @@ class DashboardsOperations:
             HttpMethods.POST,
             Endpoints.DASHBOARD_QUERY_ENDPOINT,
             response_schema=DashboardQueryResult,
-            request_schema=DashboardQueryRequest,
+            request_schema=DashboardQueryInput,
             body={
                 "startTime": start_time,
                 "endTime": end_time,
@@ -332,7 +332,7 @@ class DashboardsOperations:
             HttpMethods.POST,
             Endpoints.DASHBOARD_QUERY_ENDPOINT,
             response_schema=DashboardQueryResult,
-            request_schema=DashboardQueryRequest,
+            request_schema=DashboardQueryInput,
             body={
                 "startTime": start_time,
                 "endTime": end_time,

@@ -10,15 +10,15 @@ from pydantic import Field
 from confident_ai.types import ConfidentBaseModel
 
 
-class ForwardingConnectorHeaderConfig(ConfidentBaseModel):
+class ForwardingConnectorHeaderInput(ConfidentBaseModel):
     key: str
     value: str
 
 
-class CreateForwardingConnectorRequest(ConfidentBaseModel):
+class CreateForwardingConnectorInput(ConfidentBaseModel):
     name: str
     endpoint: str
-    headers: Optional[List[ForwardingConnectorHeaderConfig]] = None
+    headers: Optional[List[ForwardingConnectorHeaderInput]] = None
     environments: Optional[List[str]] = None
     enabled: Optional[bool] = None
 
@@ -63,9 +63,9 @@ class ForwardingConnectorRef(ConfidentBaseModel):
     id: str
 
 
-class UpdateForwardingConnectorRequest(ConfidentBaseModel):
+class UpdateForwardingConnectorInput(ConfidentBaseModel):
     name: Optional[str] = None
     endpoint: Optional[str] = None
-    headers: Optional[List[ForwardingConnectorHeaderConfig]] = None
+    headers: Optional[List[ForwardingConnectorHeaderInput]] = None
     environments: Optional[List[str]] = None
     enabled: Optional[bool] = None

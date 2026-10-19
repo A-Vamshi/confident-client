@@ -8,7 +8,6 @@ from typing import List, Literal, Optional, Union
 from pydantic import Field
 
 from confident_ai.common.types import (
-    CreateWidgetRequest,
     FilterSet,
     UserReference,
     WidgetAggregation,
@@ -17,10 +16,11 @@ from confident_ai.common.types import (
     WidgetDataModel,
     WidgetDimension,
     WidgetGranularity,
+    WidgetInput,
     WidgetLayout,
     WidgetLineColor,
-    WidgetLineConfig,
     WidgetLineExtraQueryParams,
+    WidgetLineInput,
     WidgetMode,
     WidgetTopK,
     WidgetType,
@@ -29,11 +29,11 @@ from confident_ai.common.types import (
 from confident_ai.types import ConfidentBaseModel
 
 
-class CreateDashboardRequest(ConfidentBaseModel):
+class CreateDashboardInput(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     private: Optional[bool] = None
-    widgets: Optional[List[CreateWidgetRequest]] = None
+    widgets: Optional[List[WidgetInput]] = None
 
 
 class WidgetLine(ConfidentBaseModel):
@@ -93,7 +93,7 @@ class DashboardList(ConfidentBaseModel):
     page_size: int = Field(alias="pageSize")
 
 
-class DashboardQueryRequest(ConfidentBaseModel):
+class DashboardQueryInput(ConfidentBaseModel):
     start_time: Optional[str] = Field(default=None, alias="startTime")
     end_time: Optional[str] = Field(default=None, alias="endTime")
     granularity: Optional[WidgetGranularity] = None
@@ -132,13 +132,13 @@ class DashboardRef(ConfidentBaseModel):
     id: str
 
 
-class UpdateDashboardRequest(ConfidentBaseModel):
+class UpdateDashboardInput(ConfidentBaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     private: Optional[bool] = None
 
 
-class UpdateWidgetRequest(ConfidentBaseModel):
+class UpdateWidgetInput(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     type: Optional[WidgetType] = None
@@ -153,10 +153,10 @@ class UpdateWidgetRequest(ConfidentBaseModel):
     start_time: Optional[str] = Field(default=None, alias="startTime")
     end_time: Optional[str] = Field(default=None, alias="endTime")
     layout: Optional[WidgetLayout] = None
-    lines: Optional[List[WidgetLineConfig]] = None
+    lines: Optional[List[WidgetLineInput]] = None
 
 
-class WidgetQueryRequest(ConfidentBaseModel):
+class WidgetQueryInput(ConfidentBaseModel):
     start_time: Optional[str] = Field(default=None, alias="startTime")
     end_time: Optional[str] = Field(default=None, alias="endTime")
     granularity: Optional[WidgetGranularity] = None

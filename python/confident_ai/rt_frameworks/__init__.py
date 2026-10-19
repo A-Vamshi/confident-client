@@ -4,9 +4,9 @@
 # and regenerate.
 
 from confident_ai.rt_frameworks.types import (
-    AttackEngine,
-    CreateRTFrameworkRequest,
-    CreateRiskCategoryRequest,
+    AttackEngineInput,
+    CreateRTFrameworkInput,
+    CreateRiskCategoryInput,
     FrameworkAttackMethod,
     FrameworkRiskCategory,
     FrameworkRiskCategorySummary,
@@ -23,15 +23,15 @@ from confident_ai.rt_frameworks.types import (
     RiskCategoryRef,
     RiskCategorySummary,
     RiskCategoryVulnerabilityType,
-    RunRTFrameworkRequest,
-    UpdateRTFrameworkRequest,
-    UpdateRiskCategoryRequest,
+    RunRTFrameworkInput,
+    UpdateRTFrameworkInput,
+    UpdateRiskCategoryInput,
 )
 
 __all__ = [
-    "AttackEngine",
-    "CreateRTFrameworkRequest",
-    "CreateRiskCategoryRequest",
+    "AttackEngineInput",
+    "CreateRTFrameworkInput",
+    "CreateRiskCategoryInput",
     "FrameworkAttackMethod",
     "FrameworkRiskCategory",
     "FrameworkRiskCategorySummary",
@@ -48,7 +48,7 @@ __all__ = [
     "RiskCategoryRef",
     "RiskCategorySummary",
     "RiskCategoryVulnerabilityType",
-    "RunRTFrameworkRequest",
-    "UpdateRTFrameworkRequest",
-    "UpdateRiskCategoryRequest",
+    "RunRTFrameworkInput",
+    "UpdateRTFrameworkInput",
+    "UpdateRiskCategoryInput",
 ]

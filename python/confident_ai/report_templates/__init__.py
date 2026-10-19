@@ -4,33 +4,33 @@
 # and regenerate.
 
 from confident_ai.report_templates.types import (
-    CreateReportTemplateRequest,
+    CreateReportTemplateInput,
     ReportTemplate,
     ReportTemplateList,
     ReportTemplateRef,
     ReportTemplateSchedule,
     ReportTemplateSection,
-    ReportTemplateSectionConfig,
     ReportTemplateSectionContent,
+    ReportTemplateSectionInput,
     ReportTemplateSectionSeverity,
     ReportTemplateSectionType,
     ReportTemplateSummary,
     ReportTemplateType,
-    UpdateReportTemplateRequest,
+    UpdateReportTemplateInput,
 )
 
 __all__ = [
-    "CreateReportTemplateRequest",
+    "CreateReportTemplateInput",
     "ReportTemplate",
     "ReportTemplateList",
     "ReportTemplateRef",
     "ReportTemplateSchedule",
     "ReportTemplateSection",
-    "ReportTemplateSectionConfig",
     "ReportTemplateSectionContent",
+    "ReportTemplateSectionInput",
     "ReportTemplateSectionSeverity",
     "ReportTemplateSectionType",
     "ReportTemplateSummary",
     "ReportTemplateType",
-    "UpdateReportTemplateRequest",
+    "UpdateReportTemplateInput",
 ]

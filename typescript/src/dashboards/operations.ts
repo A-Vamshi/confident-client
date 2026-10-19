@@ -5,7 +5,7 @@
 
 import { Api, HttpMethods } from "../api";
 import { Endpoints } from "../endpoints";
-import { CreateWidgetRequest, WidgetGranularity } from "../common/types";
+import { WidgetGranularity, WidgetInput } from "../common/types";
 import {
   Dashboard,
   DashboardList,
@@ -55,7 +55,7 @@ export class DashboardsOperations {
     options: {
       description?: string | null;
       private_?: boolean;
-      widgets?: CreateWidgetRequest[];
+      widgets?: WidgetInput[];
     } = {},
   ): Promise<DashboardRef> {
     const { description, private_, widgets } = options;

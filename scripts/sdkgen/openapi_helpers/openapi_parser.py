@@ -14,9 +14,10 @@ from ..constants import (
     EXCLUDED_OPERATIONS,
     GENERATED_OPERATIONS,
     GENERATED_RESOURCES,
+    MERGED_WRITE_SCHEMAS,
     METHODS,
     SCHEMA_REF,
-    WRITABLE_SCHEMAS,
+    UNTYPED_KEYWORDS,
 )
 from ..errors import SpecError
 
@@ -47,28 +48,96 @@ def component_at(ref: str, components: Dict[str, Any]) -> Any:
     return held
 
 
-def relax_required(schemas: Dict[str, Any]) -> None:
-    """Narrow a writable schema's required fields, in place.
+def merge_write_schemas(spec: Dict[str, Any]) -> None:
+    """Send each merged write schema as its read schema, in place.
 
     Applied to the loaded spec rather than to one renderer, so the types, the
-    method signatures and the stateful handles cannot disagree about whether a
-    field has to be there.
+    method signatures and the stateful handles all name the same class.
     """
-    for name, kept in WRITABLE_SCHEMAS.items():
-        schema = schemas.get(name)
-        if schema is None:
+    schemas = (spec.get("components") or {}).get("schemas") or {}
+    for write, read in MERGED_WRITE_SCHEMAS.items():
+        for name in (write, read):
+            if name not in schemas:
+                raise SpecError(
+                    f"MERGED_WRITE_SCHEMAS names `{name}`, which the spec "
+                    "does not declare."
+                )
+    for write, read in MERGED_WRITE_SCHEMAS.items():
+        merge_into_read(write, read, schemas)
+    redirect_refs(spec)
+    for write in MERGED_WRITE_SCHEMAS:
+        del schemas[write]
+
+
+def merge_into_read(write: str, read: str, schemas: Dict[str, Any]) -> None:
+    sent, pulled = schemas[write], schemas[read]
+    branches = sent.get("anyOf") or sent.get("oneOf")
+    if branches:
+        pulled_branches = pulled.get("anyOf") or pulled.get("oneOf") or []
+        if wire_shape(branches) != wire_shape(pulled_branches):
             raise SpecError(
-                f"WRITABLE_SCHEMAS names `{name}`, which the spec does not "
-                "declare."
+                f"`{write}` and `{read}` are unions of different branches, so "
+                "one class cannot both send and receive them. Drop the pair "
+                "from MERGED_WRITE_SCHEMAS."
             )
-        required = set(schema.get("required") or [])
-        absent = sorted(kept - required)
-        if absent:
+        return
+
+    sent_fields = sent.get("properties") or {}
+    pulled_fields = pulled.setdefault("properties", {})
+    unsent = sorted(set(pulled_fields) - set(sent_fields))
+    if unsent:
+        raise SpecError(
+            f"`{read}.{unsent[0]}` has no counterpart in `{write}`, which "
+            "rejects unknown fields, so a pulled value could not be sent back. "
+            "Drop the pair from MERGED_WRITE_SCHEMAS."
+        )
+    for name, schema in sent_fields.items():
+        if name not in pulled_fields:
+            pulled_fields[name] = schema
+        elif wire_shape(schema) != wire_shape(pulled_fields[name]):
             raise SpecError(
-                f"WRITABLE_SCHEMAS keeps `{name}.{absent[0]}` required, which "
-                "the spec no longer requires. Drop it from the entry."
+                f"`{write}.{name}` and `{read}.{name}` are typed differently, "
+                "so one class cannot both send and receive it. Drop the pair "
+                "from MERGED_WRITE_SCHEMAS."
             )
-        schema["required"] = [f for f in schema["required"] if f in kept]
+    pulled["required"] = list(sent.get("required") or [])
+
+
+def wire_shape(node: Any) -> Any:
+    """A schema as the generated types see it, with merged names resolved."""
+    if isinstance(node, list):
+        return [wire_shape(value) for value in node]
+    if not isinstance(node, dict):
+        return node
+    kept: Dict[str, Any] = {}
+    for key, value in node.items():
+        if key in UNTYPED_KEYWORDS:
+            continue
+        if key == "$ref":
+            kept[key] = merged_ref(value)
+        elif key == "properties":
+            kept[key] = {name: wire_shape(item) for name, item in value.items()}
+        else:
+            kept[key] = wire_shape(value)
+    return kept
+
+
+def merged_ref(ref: str) -> str:
+    if not ref.startswith(SCHEMA_REF):
+        return ref
+    name = ref[len(SCHEMA_REF) :]
+    return f"{SCHEMA_REF}{MERGED_WRITE_SCHEMAS.get(name, name)}"
+
+
+def redirect_refs(node: Any) -> None:
+    if isinstance(node, list):
+        for value in node:
+            redirect_refs(value)
+    elif isinstance(node, dict):
+        if isinstance(node.get("$ref"), str):
+            node["$ref"] = merged_ref(node["$ref"])
+        for value in node.values():
+            redirect_refs(value)
 
 
 def split_union(schema: Dict[str, Any]) -> Tuple[List[Dict[str, Any]], bool]:

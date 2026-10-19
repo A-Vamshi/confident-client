@@ -5,14 +5,14 @@
 
 from confident_ai.test_runs.types import (
     AiInsightsSummary,
-    CreateTestRunRequest,
+    CreateTestRunInput,
     ExpectationKind,
     ExpectationVerdict,
     ExpectationVerdictStatus,
     ExpectationsData,
     ExpectationsScores,
     MetricScores,
-    SubmitTestCaseResultRequest,
+    SubmitTestCaseResultInput,
     SubmittedTestCaseResult,
     SummaryOverview,
     SummaryPoint,
@@ -33,14 +33,14 @@ from confident_ai.test_runs.types import (
 
 __all__ = [
     "AiInsightsSummary",
-    "CreateTestRunRequest",
+    "CreateTestRunInput",
     "ExpectationKind",
     "ExpectationVerdict",
     "ExpectationVerdictStatus",
     "ExpectationsData",
     "ExpectationsScores",
     "MetricScores",
-    "SubmitTestCaseResultRequest",
+    "SubmitTestCaseResultInput",
     "SubmittedTestCaseResult",
     "SummaryOverview",
     "SummaryPoint",

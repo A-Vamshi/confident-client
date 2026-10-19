@@ -11,7 +11,7 @@ export enum EvaluationRuleDataModel {
   THREAD = "THREAD",
 }
 
-export interface CreateEvaluationRuleRequest {
+export interface CreateEvaluationRuleInput {
   name: string;
   enabled?: boolean;
   dataModel: EvaluationRuleDataModel;
@@ -58,7 +58,7 @@ export interface EvaluationRuleRef {
   id: string;
 }
 
-export interface UpdateEvaluationRuleRequest {
+export interface UpdateEvaluationRuleInput {
   name?: string;
   enabled?: boolean;
   dataModel?: EvaluationRuleDataModel;

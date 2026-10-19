@@ -9,7 +9,7 @@ from confident_ai.api import Api, HttpMethods
 from confident_ai.common.types import InvitationRef
 from confident_ai.endpoints import Endpoints
 from confident_ai.projects.types import (
-    CreateProjectInvitationsRequest,
+    CreateProjectInvitationsInput,
     ProjectInvitation,
     ProjectInvitationList,
 )
@@ -92,7 +92,7 @@ class InvitationsOperations:
             HttpMethods.POST,
             Endpoints.PROJECT_INVITATIONS_ENDPOINT,
             response_schema=ProjectInvitationList,
-            request_schema=CreateProjectInvitationsRequest,
+            request_schema=CreateProjectInvitationsInput,
             body={"emails": emails, "projectRoleId": project_role_id},
             path={"projectId": project_id},
         )
@@ -127,7 +127,7 @@ class InvitationsOperations:
             HttpMethods.POST,
             Endpoints.PROJECT_INVITATIONS_ENDPOINT,
             response_schema=ProjectInvitationList,
-            request_schema=CreateProjectInvitationsRequest,
+            request_schema=CreateProjectInvitationsInput,
             body={"emails": emails, "projectRoleId": project_role_id},
             path={"projectId": project_id},
         )

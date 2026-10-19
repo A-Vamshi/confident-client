@@ -3,9 +3,9 @@
 // Do not edit by hand — change the route in confident-cloud
 // and regenerate.
 
-import { MLLMImage, PromptType, ToolCall, Turn } from "../common/types";
+import { MLLMImageInput, PromptType, ToolCall, Turn } from "../common/types";
 
-export interface SingleTurnTestCase {
+export interface SingleTurnTestCaseInput {
   input: string;
   actualOutput?: string;
   expectedOutput?: string;
@@ -18,13 +18,13 @@ export interface SingleTurnTestCase {
   outputTokenCount?: number;
   name?: string;
   flaky?: boolean;
-  imagesMapping?: Record<string, MLLMImage>;
+  imagesMapping?: Record<string, MLLMImageInput>;
   additionalMetadata?: Record<string, unknown>;
   customColumnKeyValues?: Record<string, string>;
   tags?: string[];
 }
 
-export interface MultiTurnTestCase {
+export interface MultiTurnTestCaseInput {
   turns: Turn[];
   scenario?: string;
   expectedOutcome?: string;
@@ -36,25 +36,25 @@ export interface MultiTurnTestCase {
   outputTokenCount?: number;
   name?: string;
   flaky?: boolean;
-  imagesMapping?: Record<string, MLLMImage>;
+  imagesMapping?: Record<string, MLLMImageInput>;
   additionalMetadata?: Record<string, unknown>;
   customColumnKeyValues?: Record<string, string>;
   tags?: string[];
 }
 
-export type TestCase = SingleTurnTestCase | MultiTurnTestCase;
+export type TestCaseInput = SingleTurnTestCaseInput | MultiTurnTestCaseInput;
 
-export interface PromptHyperparameter {
+export interface PromptHyperparameterInput {
   id: string;
   type: PromptType;
 }
 
-export type HyperparameterValue = string | PromptHyperparameter;
+export type HyperparameterValueInput = string | PromptHyperparameterInput;
 
-export interface EvaluateRequest {
+export interface EvaluateInput {
   metricCollection: string;
-  testCases: TestCase[];
-  hyperparameters?: Record<string, HyperparameterValue>;
+  testCases: TestCaseInput[];
+  hyperparameters?: Record<string, HyperparameterValueInput>;
   identifier?: string;
 }
 
@@ -62,7 +62,7 @@ export interface EvaluateResult {
   id: string;
 }
 
-export interface EvaluateSpanRequest {
+export interface EvaluateSpanInput {
   metricCollection: string;
   overwriteMetrics?: boolean;
 }
@@ -71,7 +71,7 @@ export interface EvaluateSpanResult {
   id: string;
 }
 
-export interface EvaluateThreadRequest {
+export interface EvaluateThreadInput {
   metricCollection: string;
   chatbotRole?: string;
   overwriteMetrics?: boolean;
@@ -81,7 +81,7 @@ export interface EvaluateThreadResult {
   id: string;
 }
 
-export interface EvaluateTraceRequest {
+export interface EvaluateTraceInput {
   metricCollection: string;
   overwriteMetrics?: boolean;
 }

@@ -31,12 +31,12 @@ import {
   ProjectMember,
   ProjectMemberList,
   ProjectModel,
+  ProjectModelInput,
   ProjectRef,
   ProjectRole,
   ProjectRoleList,
-  UpdateProjectModelRequest,
+  UpdateProjectInput,
   UpdateProjectModelResult,
-  UpdateProjectRequest,
 } from "./types";
 
 /**
@@ -579,12 +579,12 @@ export class Project {
    *   provider and name, `evaluation` also accepts max concurrency, and
    *   platform, simulation, and speech models also accept max input tokens.
    *   This replaces the whole configuration rather than patching it. `CUSTOM`
-   *   is rejected. Pass one of UpdateEvaluationProjectModelRequest,
-   *   UpdateDecisionProjectModelRequest, UpdatePlatformProjectModelRequest.
+   *   is rejected. Pass one of EvaluationProjectModelInput,
+   *   DecisionProjectModelInput, PlatformProjectModelInput.
    */
   async updateModel(
     modelType: string,
-    modelConfig: UpdateProjectModelRequest,
+    modelConfig: ProjectModelInput,
   ): Promise<UpdateProjectModelResult> {
     return this.client.updateModel(
       this.projectIdOrThrow(),
@@ -730,9 +730,9 @@ export class Project {
     return result;
   }
 
-  private updateBody(): UpdateProjectRequest {
+  private updateBody(): UpdateProjectInput {
     const fields = { name: this.name, description: this.description };
-    return fields as UpdateProjectRequest;
+    return fields as UpdateProjectInput;
   }
 
   private load(payload: ProjectPayload): void {

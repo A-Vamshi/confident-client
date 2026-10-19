@@ -30,6 +30,9 @@ exclude = ["tests/*"]
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/confident-ai/confident-client/issues"
 
+[tool.poetry.scripts]
+confident-ai = "confident_ai.cli:main"
+
 [tool.poetry.dependencies]
 python = ">=3.9, <4.0"
 requests = "^2.31.0"

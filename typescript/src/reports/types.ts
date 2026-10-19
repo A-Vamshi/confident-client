@@ -135,7 +135,7 @@ export type ReportSectionInput =
   | ReportTableSectionInput
   | ReportGraphSectionInput;
 
-export interface CreateReportRequest {
+export interface CreateReportInput {
   reportTemplateId: string;
   status?: ReportStatus;
   error?: string | null;
@@ -213,7 +213,7 @@ export interface ReportRef {
   id: string;
 }
 
-export interface UpdateReportRequest {
+export interface UpdateReportInput {
   status?: ReportStatus;
   error?: string | null;
   metadata?: ReportMetadataInput;

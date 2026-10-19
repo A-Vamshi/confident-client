@@ -3,8 +3,8 @@
 # Do not edit by hand — change the route in confident-cloud
 # and regenerate.
 
-from confident_ai.metrics_batch.types import CreateMetricsBatchRequest
+from confident_ai.metrics_batch.types import CreateMetricsBatchInput
 
 __all__ = [
-    "CreateMetricsBatchRequest",
+    "CreateMetricsBatchInput",
 ]

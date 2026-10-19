@@ -10,7 +10,7 @@ export enum ExportDestinationType {
   SNOWFLAKE = "SNOWFLAKE",
 }
 
-export interface SnowflakeExportDestinationConfig {
+export interface SnowflakeExportDestinationConfigInput {
   account: string;
   username: string;
   role: string;
@@ -21,7 +21,7 @@ export interface SnowflakeExportDestinationConfig {
   privateKeyPassphrase?: string | null;
 }
 
-export interface CreateExportDestinationRequest {
+export interface CreateExportDestinationInput {
   name: string;
   type?: ExportDestinationType;
   bucket?: string;
@@ -29,7 +29,7 @@ export interface CreateExportDestinationRequest {
   accessKeyId?: string;
   secretAccessKey?: string;
   pathPrefix?: string | null;
-  snowflakeConfig?: SnowflakeExportDestinationConfig;
+  snowflakeConfig?: SnowflakeExportDestinationConfigInput;
   enabled?: boolean;
 }
 
@@ -78,7 +78,7 @@ export interface ExportDestinationRef {
   id: string;
 }
 
-export interface UpdateSnowflakeExportDestinationConfig {
+export interface SnowflakeExportDestinationConfigUpdateInput {
   account?: string;
   username?: string;
   role?: string;
@@ -89,7 +89,7 @@ export interface UpdateSnowflakeExportDestinationConfig {
   privateKeyPassphrase?: string | null;
 }
 
-export interface UpdateExportDestinationRequest {
+export interface UpdateExportDestinationInput {
   name?: string;
   type?: ExportDestinationType;
   bucket?: string;
@@ -97,6 +97,6 @@ export interface UpdateExportDestinationRequest {
   accessKeyId?: string;
   secretAccessKey?: string;
   pathPrefix?: string | null;
-  snowflakeConfig?: UpdateSnowflakeExportDestinationConfig;
+  snowflakeConfig?: SnowflakeExportDestinationConfigUpdateInput;
   enabled?: boolean;
 }

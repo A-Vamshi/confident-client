@@ -8,8 +8,8 @@ from typing import Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.organization.types import (
-    CreateGovernanceControlVersionRequest,
     GovernanceControlVersion,
+    GovernanceControlVersionInput,
     GovernanceControlVersionList,
 )
 
@@ -76,9 +76,7 @@ class GovernanceControlsVersionsOperations:
         )
 
     def create_governance_control_version(
-        self,
-        control_id: str,
-        control_config: CreateGovernanceControlVersionRequest,
+        self, control_id: str, control_config: GovernanceControlVersionInput
     ) -> GovernanceControlVersion:
         """Create Governance Control Version
 
@@ -101,22 +99,20 @@ class GovernanceControlsVersionsOperations:
                 Except for `extraQueryParams`, every field is required even when
                 `null`, so a version is a complete definition rather than a
                 patch of the one before it. Pass a
-                GovernanceControlRuntimeConfig or a
-                GovernanceControlPreDeploymentConfig.
+                GovernanceControlRuntimeConfigInput or a
+                GovernanceControlPreDeploymentConfigInput.
         """
         return self._api.request(
             HttpMethods.POST,
             Endpoints.ORGANIZATION_GOVERNANCE_CONTROL_VERSIONS_ENDPOINT,
             response_schema=GovernanceControlVersion,
-            request_schema=CreateGovernanceControlVersionRequest,
+            request_schema=GovernanceControlVersionInput,
             body=control_config,
             path={"controlId": control_id},
         )
 
     async def a_create_governance_control_version(
-        self,
-        control_id: str,
-        control_config: CreateGovernanceControlVersionRequest,
+        self, control_id: str, control_config: GovernanceControlVersionInput
     ) -> GovernanceControlVersion:
         """Create Governance Control Version
 
@@ -139,14 +135,14 @@ class GovernanceControlsVersionsOperations:
                 Except for `extraQueryParams`, every field is required even when
                 `null`, so a version is a complete definition rather than a
                 patch of the one before it. Pass a
-                GovernanceControlRuntimeConfig or a
-                GovernanceControlPreDeploymentConfig.
+                GovernanceControlRuntimeConfigInput or a
+                GovernanceControlPreDeploymentConfigInput.
         """
         return await self._api.a_request(
             HttpMethods.POST,
             Endpoints.ORGANIZATION_GOVERNANCE_CONTROL_VERSIONS_ENDPOINT,
             response_schema=GovernanceControlVersion,
-            request_schema=CreateGovernanceControlVersionRequest,
+            request_schema=GovernanceControlVersionInput,
             body=control_config,
             path={"controlId": control_id},
         )

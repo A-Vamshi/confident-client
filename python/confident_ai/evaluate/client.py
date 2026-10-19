@@ -8,16 +8,16 @@ from typing import Dict, List, Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.evaluate.types import (
-    EvaluateRequest,
+    EvaluateInput,
     EvaluateResult,
-    EvaluateSpanRequest,
+    EvaluateSpanInput,
     EvaluateSpanResult,
-    EvaluateThreadRequest,
+    EvaluateThreadInput,
     EvaluateThreadResult,
-    EvaluateTraceRequest,
+    EvaluateTraceInput,
     EvaluateTraceResult,
-    HyperparameterValue,
-    TestCase,
+    HyperparameterValueInput,
+    TestCaseInput,
 )
 
 
@@ -28,9 +28,9 @@ class EvaluateClient:
     def run_evals(
         self,
         metric_collection: str,
-        test_cases: List[TestCase],
+        test_cases: List[TestCaseInput],
         *,
-        hyperparameters: Optional[Dict[str, HyperparameterValue]] = None,
+        hyperparameters: Optional[Dict[str, HyperparameterValueInput]] = None,
         identifier: Optional[str] = None
     ) -> EvaluateResult:
         """Run Evals
@@ -53,21 +53,22 @@ class EvaluateClient:
             HttpMethods.POST,
             Endpoints.EVALUATE_ENDPOINT,
             response_schema=EvaluateResult,
-            request_schema=EvaluateRequest,
+            request_schema=EvaluateInput,
             body={
                 "metricCollection": metric_collection,
                 "testCases": test_cases,
                 "hyperparameters": hyperparameters,
                 "identifier": identifier,
             },
+            media_holders=["$.testCases.*"],
         )
 
     async def a_run_evals(
         self,
         metric_collection: str,
-        test_cases: List[TestCase],
+        test_cases: List[TestCaseInput],
         *,
-        hyperparameters: Optional[Dict[str, HyperparameterValue]] = None,
+        hyperparameters: Optional[Dict[str, HyperparameterValueInput]] = None,
         identifier: Optional[str] = None
     ) -> EvaluateResult:
         """Run Evals
@@ -90,13 +91,14 @@ class EvaluateClient:
             HttpMethods.POST,
             Endpoints.EVALUATE_ENDPOINT,
             response_schema=EvaluateResult,
-            request_schema=EvaluateRequest,
+            request_schema=EvaluateInput,
             body={
                 "metricCollection": metric_collection,
                 "testCases": test_cases,
                 "hyperparameters": hyperparameters,
                 "identifier": identifier,
             },
+            media_holders=["$.testCases.*"],
         )
 
     def evaluate_span(
@@ -126,7 +128,7 @@ class EvaluateClient:
             HttpMethods.POST,
             Endpoints.EVALUATE_SPAN_ENDPOINT,
             response_schema=EvaluateSpanResult,
-            request_schema=EvaluateSpanRequest,
+            request_schema=EvaluateSpanInput,
             body={
                 "metricCollection": metric_collection,
                 "overwriteMetrics": overwrite_metrics,
@@ -161,7 +163,7 @@ class EvaluateClient:
             HttpMethods.POST,
             Endpoints.EVALUATE_SPAN_ENDPOINT,
             response_schema=EvaluateSpanResult,
-            request_schema=EvaluateSpanRequest,
+            request_schema=EvaluateSpanInput,
             body={
                 "metricCollection": metric_collection,
                 "overwriteMetrics": overwrite_metrics,
@@ -201,7 +203,7 @@ class EvaluateClient:
             HttpMethods.POST,
             Endpoints.EVALUATE_THREAD_ENDPOINT,
             response_schema=EvaluateThreadResult,
-            request_schema=EvaluateThreadRequest,
+            request_schema=EvaluateThreadInput,
             body={
                 "metricCollection": metric_collection,
                 "chatbotRole": chatbot_role,
@@ -242,7 +244,7 @@ class EvaluateClient:
             HttpMethods.POST,
             Endpoints.EVALUATE_THREAD_ENDPOINT,
             response_schema=EvaluateThreadResult,
-            request_schema=EvaluateThreadRequest,
+            request_schema=EvaluateThreadInput,
             body={
                 "metricCollection": metric_collection,
                 "chatbotRole": chatbot_role,
@@ -278,7 +280,7 @@ class EvaluateClient:
             HttpMethods.POST,
             Endpoints.EVALUATE_TRACE_ENDPOINT,
             response_schema=EvaluateTraceResult,
-            request_schema=EvaluateTraceRequest,
+            request_schema=EvaluateTraceInput,
             body={
                 "metricCollection": metric_collection,
                 "overwriteMetrics": overwrite_metrics,
@@ -313,7 +315,7 @@ class EvaluateClient:
             HttpMethods.POST,
             Endpoints.EVALUATE_TRACE_ENDPOINT,
             response_schema=EvaluateTraceResult,
-            request_schema=EvaluateTraceRequest,
+            request_schema=EvaluateTraceInput,
             body={
                 "metricCollection": metric_collection,
                 "overwriteMetrics": overwrite_metrics,

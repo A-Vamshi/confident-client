@@ -8,12 +8,12 @@ from typing import List, Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.metric_collections.types import (
-    CreateMetricCollectionRequest,
+    CreateMetricCollectionInput,
     MetricCollection,
     MetricCollectionList,
     MetricCollectionRef,
-    MetricSettingConfig,
-    UpdateMetricCollectionRequest,
+    MetricSettingInput,
+    UpdateMetricCollectionInput,
 )
 
 
@@ -50,7 +50,7 @@ class MetricCollectionsClient:
         name: str,
         *,
         multi_turn: Optional[bool] = None,
-        metrics_settings: Optional[List[MetricSettingConfig]] = None,
+        metrics_settings: Optional[List[MetricSettingInput]] = None,
         sample_rate: Optional[float] = None,
         input_transformer_id: Optional[str] = None,
         output_transformer_id: Optional[str] = None
@@ -82,7 +82,7 @@ class MetricCollectionsClient:
             HttpMethods.POST,
             Endpoints.METRIC_COLLECTIONS_ENDPOINT,
             response_schema=MetricCollection,
-            request_schema=CreateMetricCollectionRequest,
+            request_schema=CreateMetricCollectionInput,
             body={
                 "name": name,
                 "multiTurn": multi_turn,
@@ -98,7 +98,7 @@ class MetricCollectionsClient:
         name: str,
         *,
         multi_turn: Optional[bool] = None,
-        metrics_settings: Optional[List[MetricSettingConfig]] = None,
+        metrics_settings: Optional[List[MetricSettingInput]] = None,
         sample_rate: Optional[float] = None,
         input_transformer_id: Optional[str] = None,
         output_transformer_id: Optional[str] = None
@@ -130,7 +130,7 @@ class MetricCollectionsClient:
             HttpMethods.POST,
             Endpoints.METRIC_COLLECTIONS_ENDPOINT,
             response_schema=MetricCollection,
-            request_schema=CreateMetricCollectionRequest,
+            request_schema=CreateMetricCollectionInput,
             body={
                 "name": name,
                 "multiTurn": multi_turn,
@@ -178,7 +178,7 @@ class MetricCollectionsClient:
         metric_collection_id: str,
         *,
         name: Optional[str] = None,
-        metrics_settings: Optional[List[MetricSettingConfig]] = None,
+        metrics_settings: Optional[List[MetricSettingInput]] = None,
         sample_rate: Optional[float] = None,
         input_transformer_id: Optional[str] = None,
         output_transformer_id: Optional[str] = None
@@ -209,7 +209,7 @@ class MetricCollectionsClient:
             HttpMethods.PUT,
             Endpoints.METRIC_COLLECTION_ENDPOINT,
             response_schema=MetricCollection,
-            request_schema=UpdateMetricCollectionRequest,
+            request_schema=UpdateMetricCollectionInput,
             body={
                 "name": name,
                 "metricsSettings": metrics_settings,
@@ -225,7 +225,7 @@ class MetricCollectionsClient:
         metric_collection_id: str,
         *,
         name: Optional[str] = None,
-        metrics_settings: Optional[List[MetricSettingConfig]] = None,
+        metrics_settings: Optional[List[MetricSettingInput]] = None,
         sample_rate: Optional[float] = None,
         input_transformer_id: Optional[str] = None,
         output_transformer_id: Optional[str] = None
@@ -256,7 +256,7 @@ class MetricCollectionsClient:
             HttpMethods.PUT,
             Endpoints.METRIC_COLLECTION_ENDPOINT,
             response_schema=MetricCollection,
-            request_schema=UpdateMetricCollectionRequest,
+            request_schema=UpdateMetricCollectionInput,
             body={
                 "name": name,
                 "metricsSettings": metrics_settings,

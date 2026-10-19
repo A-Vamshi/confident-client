@@ -8,11 +8,11 @@ from typing import Any, Dict, Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.personas.types import (
-    CreatePersonaRequest,
+    CreatePersonaInput,
     Persona,
     PersonaList,
     PersonaRef,
-    UpdatePersonaRequest,
+    UpdatePersonaInput,
 )
 
 
@@ -100,7 +100,7 @@ class PersonasClient:
             HttpMethods.POST,
             Endpoints.PERSONAS_ENDPOINT,
             response_schema=PersonaRef,
-            request_schema=CreatePersonaRequest,
+            request_schema=CreatePersonaInput,
             body={
                 "name": name,
                 "characteristics": characteristics,
@@ -144,7 +144,7 @@ class PersonasClient:
             HttpMethods.POST,
             Endpoints.PERSONAS_ENDPOINT,
             response_schema=PersonaRef,
-            request_schema=CreatePersonaRequest,
+            request_schema=CreatePersonaInput,
             body={
                 "name": name,
                 "characteristics": characteristics,
@@ -220,7 +220,7 @@ class PersonasClient:
             HttpMethods.PUT,
             Endpoints.PERSONA_ENDPOINT,
             response_schema=Persona,
-            request_schema=UpdatePersonaRequest,
+            request_schema=UpdatePersonaInput,
             body={
                 "name": name,
                 "characteristics": characteristics,
@@ -261,7 +261,7 @@ class PersonasClient:
             HttpMethods.PUT,
             Endpoints.PERSONA_ENDPOINT,
             response_schema=Persona,
-            request_schema=UpdatePersonaRequest,
+            request_schema=UpdatePersonaInput,
             body={
                 "name": name,
                 "characteristics": characteristics,

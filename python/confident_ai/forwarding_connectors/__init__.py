@@ -4,23 +4,23 @@
 # and regenerate.
 
 from confident_ai.forwarding_connectors.types import (
-    CreateForwardingConnectorRequest,
+    CreateForwardingConnectorInput,
     ForwardingConnector,
     ForwardingConnectorHeader,
-    ForwardingConnectorHeaderConfig,
+    ForwardingConnectorHeaderInput,
     ForwardingConnectorList,
     ForwardingConnectorRef,
     ForwardingConnectorSummary,
-    UpdateForwardingConnectorRequest,
+    UpdateForwardingConnectorInput,
 )
 
 __all__ = [
-    "CreateForwardingConnectorRequest",
+    "CreateForwardingConnectorInput",
     "ForwardingConnector",
     "ForwardingConnectorHeader",
-    "ForwardingConnectorHeaderConfig",
+    "ForwardingConnectorHeaderInput",
     "ForwardingConnectorList",
     "ForwardingConnectorRef",
     "ForwardingConnectorSummary",
-    "UpdateForwardingConnectorRequest",
+    "UpdateForwardingConnectorInput",
 ]

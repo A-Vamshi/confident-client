@@ -4,13 +4,13 @@
 # and regenerate.
 
 from confident_ai.voice_connections.types import (
-    CreateVoiceConnectionRequest,
+    CreateVoiceConnectionInput,
     PhoneVoiceConfig,
     SipCredentials,
     SipVoiceConfig,
-    UpdateVoiceConnectionRequest,
+    UpdateVoiceConnectionInput,
     VoiceCallSettings,
-    VoiceCallSettingsPatch,
+    VoiceCallSettingsInput,
     VoiceConnection,
     VoiceConnectionList,
     VoiceConnectionLog,
@@ -25,13 +25,13 @@ from confident_ai.voice_connections.types import (
 )
 
 __all__ = [
-    "CreateVoiceConnectionRequest",
+    "CreateVoiceConnectionInput",
     "PhoneVoiceConfig",
     "SipCredentials",
     "SipVoiceConfig",
-    "UpdateVoiceConnectionRequest",
+    "UpdateVoiceConnectionInput",
     "VoiceCallSettings",
-    "VoiceCallSettingsPatch",
+    "VoiceCallSettingsInput",
     "VoiceConnection",
     "VoiceConnectionList",
     "VoiceConnectionLog",

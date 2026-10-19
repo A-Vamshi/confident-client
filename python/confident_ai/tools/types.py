@@ -11,7 +11,7 @@ from confident_ai.common.types import ToolMode
 from confident_ai.types import ConfidentBaseModel
 
 
-class CreateToolRequest(ConfidentBaseModel):
+class CreateToolInput(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     mode: ToolMode
@@ -49,7 +49,7 @@ class ToolVersionList(ConfidentBaseModel):
     page_size: int = Field(alias="pageSize")
 
 
-class UpdateToolRequest(ConfidentBaseModel):
+class UpdateToolInput(ConfidentBaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     mode: Optional[ToolMode] = None

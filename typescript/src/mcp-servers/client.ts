@@ -7,7 +7,7 @@ import { Api, HttpMethods } from "../api";
 import { Endpoints } from "../endpoints";
 import {
   McpServer,
-  McpServerAuthConfig,
+  McpServerAuthConfigInput,
   McpServerAuthType,
   McpServerConnection,
   McpServerList,
@@ -68,7 +68,7 @@ export class McpServersClient {
       url?: string | null;
       headers?: Record<string, string> | null;
       authType?: McpServerAuthType;
-      authConfig?: McpServerAuthConfig | null;
+      authConfig?: McpServerAuthConfigInput | null;
       command?: string | null;
       args?: string[];
     } = {},
@@ -144,7 +144,7 @@ export class McpServersClient {
       url?: string | null;
       headers?: Record<string, string> | null;
       authType?: McpServerAuthType;
-      authConfig?: McpServerAuthConfig | null;
+      authConfig?: McpServerAuthConfigInput | null;
       command?: string | null;
       args?: string[];
     } = {},
