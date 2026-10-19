@@ -11,9 +11,9 @@ from confident_ai.classifiers.types import (
     ClassifierLabelList,
     ClassifierLabelRef,
     ClassifierLabelStatus,
-    CreateClassifierLabelRequest,
+    CreateClassifierLabelInput,
     SignalPolarity,
-    UpdateClassifierLabelRequest,
+    UpdateClassifierLabelInput,
 )
 from confident_ai.endpoints import Endpoints
 
@@ -110,7 +110,7 @@ class LabelsOperations:
             HttpMethods.POST,
             Endpoints.CLASSIFIER_LABELS_ENDPOINT,
             response_schema=ClassifierLabelRef,
-            request_schema=CreateClassifierLabelRequest,
+            request_schema=CreateClassifierLabelInput,
             body={
                 "name": name,
                 "description": description,
@@ -152,7 +152,7 @@ class LabelsOperations:
             HttpMethods.POST,
             Endpoints.CLASSIFIER_LABELS_ENDPOINT,
             response_schema=ClassifierLabelRef,
-            request_schema=CreateClassifierLabelRequest,
+            request_schema=CreateClassifierLabelInput,
             body={
                 "name": name,
                 "description": description,
@@ -231,7 +231,7 @@ class LabelsOperations:
             HttpMethods.PUT,
             Endpoints.CLASSIFIER_LABEL_ENDPOINT,
             response_schema=ClassifierLabel,
-            request_schema=UpdateClassifierLabelRequest,
+            request_schema=UpdateClassifierLabelInput,
             body={
                 "name": name,
                 "description": description,
@@ -272,7 +272,7 @@ class LabelsOperations:
             HttpMethods.PUT,
             Endpoints.CLASSIFIER_LABEL_ENDPOINT,
             response_schema=ClassifierLabel,
-            request_schema=UpdateClassifierLabelRequest,
+            request_schema=UpdateClassifierLabelInput,
             body={
                 "name": name,
                 "description": description,

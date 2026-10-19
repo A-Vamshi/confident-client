@@ -15,7 +15,7 @@ import {
   AlertSeverity,
   AlertThresholdSettings,
   ScheduledAlert,
-  ScheduledAlertDetectionSettings,
+  ScheduledAlertDetectionSettingsInput,
   ScheduledAlertList,
   ScheduledAlertRef,
   ScheduledAlertType,
@@ -122,7 +122,7 @@ export class ScheduledAlertsClient {
       type?: ScheduledAlertType;
       aggregation?: string;
       thresholdSettings?: AlertThresholdSettings;
-      detectionSettings?: ScheduledAlertDetectionSettings;
+      detectionSettings?: ScheduledAlertDetectionSettingsInput;
       enabled?: boolean;
     } = {},
   ): Promise<ScheduledAlertRef> {
@@ -256,7 +256,7 @@ export class ScheduledAlertsClient {
       dataModel?: AlertDataModel;
       aggregation?: string;
       thresholdSettings?: AlertThresholdSettings;
-      detectionSettings?: ScheduledAlertDetectionSettings;
+      detectionSettings?: ScheduledAlertDetectionSettingsInput;
       enabled?: boolean;
     } = {},
   ): Promise<ScheduledAlert> {

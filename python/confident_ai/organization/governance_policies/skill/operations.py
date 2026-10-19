@@ -10,7 +10,7 @@ from confident_ai.endpoints import Endpoints
 from confident_ai.organization.types import (
     GovernancePolicyIdentifier,
     GovernancePolicySkill,
-    UpdateGovernancePolicySkillRequest,
+    UpdateGovernancePolicySkillInput,
 )
 
 
@@ -86,7 +86,7 @@ class GovernancePoliciesSkillOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_GOVERNANCE_POLICY_SKILL_ENDPOINT,
             response_schema=GovernancePolicySkill,
-            request_schema=UpdateGovernancePolicySkillRequest,
+            request_schema=UpdateGovernancePolicySkillInput,
             body={"description": description, "body": body},
             path={"policyId": policy_id},
         )
@@ -116,7 +116,7 @@ class GovernancePoliciesSkillOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_GOVERNANCE_POLICY_SKILL_ENDPOINT,
             response_schema=GovernancePolicySkill,
-            request_schema=UpdateGovernancePolicySkillRequest,
+            request_schema=UpdateGovernancePolicySkillInput,
             body={"description": description, "body": body},
             path={"policyId": policy_id},
         )

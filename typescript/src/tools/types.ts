@@ -5,7 +5,7 @@
 
 import { ToolMode } from "../common/types";
 
-export interface CreateToolRequest {
+export interface CreateToolInput {
   name: string;
   description?: string | null;
   mode: ToolMode;
@@ -43,7 +43,7 @@ export interface ToolVersionList {
   pageSize: number;
 }
 
-export interface UpdateToolRequest {
+export interface UpdateToolInput {
   name?: string;
   description?: string | null;
   mode?: ToolMode;

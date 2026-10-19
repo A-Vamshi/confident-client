@@ -7,7 +7,7 @@ import { Api } from "../api";
 import { PromptsClient } from "./client";
 import { interpolatePrompt } from "../utils/helpers";
 import { pullPrompt } from "../utils/promptCache";
-import { MLLMImage, PromptType, Tool } from "../common/types";
+import { MLLMImageInput, PromptType, Tool } from "../common/types";
 import {
   CreatePromptVersionResult,
   MessagesPromptInput,
@@ -50,7 +50,7 @@ export class Prompt {
   outputSchema?: Record<string, unknown>;
   tools?: Tool[];
   messages?: PromptMessage[];
-  imagesMapping?: Record<string, MLLMImage>;
+  imagesMapping?: Record<string, MLLMImageInput>;
 
   constructor(api: Api, options: { promptId?: string; alias?: string } = {}) {
     this.client = new PromptsClient(api);

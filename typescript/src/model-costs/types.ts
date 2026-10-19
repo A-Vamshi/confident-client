@@ -3,7 +3,7 @@
 // Do not edit by hand — change the route in confident-cloud
 // and regenerate.
 
-export interface CreateModelCostRequest {
+export interface CreateModelCostInput {
   matchPattern: string;
   provider?: string | null;
   inputCostPerMillionTokens?: number | null;
@@ -32,7 +32,7 @@ export interface ModelCostRef {
   id: string;
 }
 
-export interface UpdateModelCostRequest {
+export interface UpdateModelCostInput {
   matchPattern: string;
   provider?: string | null;
   inputCostPerMillionTokens?: number | null;

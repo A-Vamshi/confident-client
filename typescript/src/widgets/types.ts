@@ -11,7 +11,7 @@ import {
   WidgetType,
 } from "../common/types";
 
-export interface AdHocWidgetQueryRequest {
+export interface AdHocWidgetQueryInput {
   widget: WidgetInput;
   startTime?: string;
   endTime?: string;

@@ -367,24 +367,24 @@ class Classification(ConfidentBaseModel):
     reason: str
 
 
-class CreateApiKeyRequest(ConfidentBaseModel):
+class CreateApiKeyInput(ConfidentBaseModel):
     name: str
     expires_in_days: Optional[int] = Field(default=None, alias="expiresInDays")
 
 
-class CreateAuditLogExportRequest(ConfidentBaseModel):
+class CreateAuditLogExportInput(ConfidentBaseModel):
     start_time: Optional[str] = Field(default=None, alias="startTime")
     end_time: Optional[str] = Field(default=None, alias="endTime")
     search_term: Optional[str] = Field(default=None, alias="searchTerm")
 
 
-class CreateOrUpdatePolicyRequest(ConfidentBaseModel):
+class CreateOrUpdatePolicyInput(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     permission_ids: List[str] = Field(alias="permissionIds")
 
 
-class CreateOrUpdateRoleRequest(ConfidentBaseModel):
+class CreateOrUpdateRoleInput(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     policy_ids: List[str] = Field(alias="policyIds")
@@ -604,7 +604,7 @@ class JevScoreQuestion(ConfidentBaseModel):
     levels: List[str]
 
 
-class MLLMImage(ConfidentBaseModel):
+class MLLMImageInput(ConfidentBaseModel):
     url: str
     local: bool
     base64: Optional[str] = None
@@ -813,7 +813,7 @@ class RoleRef(ConfidentBaseModel):
     id: str
 
 
-class RotateApiKeyRequest(ConfidentBaseModel):
+class RotateApiKeyInput(ConfidentBaseModel):
     grace_period_in_hours: Optional[int] = Field(
         default=None,
         alias="gracePeriodInHours",
@@ -931,15 +931,15 @@ class Turn(ConfidentBaseModel):
     metadata: Optional[Dict[str, Any]] = None
 
 
-class UpdateApiKeyRequest(ConfidentBaseModel):
+class UpdateApiKeyInput(ConfidentBaseModel):
     valid: bool
 
 
-class UpdateMemberRoleRequest(ConfidentBaseModel):
+class UpdateMemberRoleInput(ConfidentBaseModel):
     role_id: str = Field(alias="roleId")
 
 
-class UpdateModelCredentialsRequest(ConfidentBaseModel):
+class UpdateModelCredentialsInput(ConfidentBaseModel):
     provider: ModelProvider
     api_key: Optional[str] = Field(default=None, alias="apiKey")
     model_config_: Optional[Dict[str, Any]] = Field(

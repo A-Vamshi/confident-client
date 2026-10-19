@@ -10,7 +10,7 @@ from pydantic import Field
 
 from confident_ai.common.types import (
     AnnotationFieldType,
-    MLLMImage,
+    MLLMImageInput,
     UserReference,
 )
 from confident_ai.types import ConfidentBaseModel
@@ -48,27 +48,27 @@ class AnnotationRef(ConfidentBaseModel):
     id: str
 
 
-AnnotationValue = Union[str, float, bool, List[str]]
+AnnotationValueInput = Union[str, float, bool, List[str]]
 
 
-class SpanAnnotation(ConfidentBaseModel):
+class SpanAnnotationInput(ConfidentBaseModel):
     span_uuid: str = Field(alias="spanUuid")
     expected_output: Optional[str] = Field(default=None, alias="expectedOutput")
     field_type: Optional[AnnotationFieldType] = Field(
         default=None,
         alias="fieldType",
     )
-    value: AnnotationValue
+    value: AnnotationValueInput
     name: Optional[str] = None
     explanation: Optional[str] = None
     user_id: Optional[str] = Field(default=None, alias="userId")
-    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
+    images_mapping: Optional[Dict[str, MLLMImageInput]] = Field(
         default=None,
         alias="imagesMapping",
     )
 
 
-class ThreadAnnotation(ConfidentBaseModel):
+class ThreadAnnotationInput(ConfidentBaseModel):
     thread_id: str = Field(alias="threadId")
     expected_outcome: Optional[str] = Field(
         default=None,
@@ -78,49 +78,51 @@ class ThreadAnnotation(ConfidentBaseModel):
         default=None,
         alias="fieldType",
     )
-    value: AnnotationValue
+    value: AnnotationValueInput
     name: Optional[str] = None
     explanation: Optional[str] = None
     user_id: Optional[str] = Field(default=None, alias="userId")
-    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
+    images_mapping: Optional[Dict[str, MLLMImageInput]] = Field(
         default=None,
         alias="imagesMapping",
     )
 
 
-class TraceAnnotation(ConfidentBaseModel):
+class TraceAnnotationInput(ConfidentBaseModel):
     trace_uuid: str = Field(alias="traceUuid")
     expected_output: Optional[str] = Field(default=None, alias="expectedOutput")
     field_type: Optional[AnnotationFieldType] = Field(
         default=None,
         alias="fieldType",
     )
-    value: AnnotationValue
+    value: AnnotationValueInput
     name: Optional[str] = None
     explanation: Optional[str] = None
     user_id: Optional[str] = Field(default=None, alias="userId")
-    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
+    images_mapping: Optional[Dict[str, MLLMImageInput]] = Field(
         default=None,
         alias="imagesMapping",
     )
 
 
-class UpdateAnnotationRequest(ConfidentBaseModel):
+class UpdateAnnotationInput(ConfidentBaseModel):
     field_type: Optional[AnnotationFieldType] = Field(
         default=None,
         alias="fieldType",
     )
-    value: Optional[AnnotationValue] = None
+    value: Optional[AnnotationValueInput] = None
     explanation: Optional[str] = None
     expected_output: Optional[str] = Field(default=None, alias="expectedOutput")
     expected_outcome: Optional[str] = Field(
         default=None,
         alias="expectedOutcome",
     )
-    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
+    images_mapping: Optional[Dict[str, MLLMImageInput]] = Field(
         default=None,
         alias="imagesMapping",
     )
 
 
-AnnotationInput = Union[TraceAnnotation, SpanAnnotation, ThreadAnnotation]
+AnnotationInput = Union[
+    TraceAnnotationInput, SpanAnnotationInput, ThreadAnnotationInput
+]

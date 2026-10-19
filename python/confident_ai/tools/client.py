@@ -9,11 +9,11 @@ from confident_ai.api import Api, HttpMethods
 from confident_ai.common.types import Tool, ToolMode
 from confident_ai.endpoints import Endpoints
 from confident_ai.tools.types import (
-    CreateToolRequest,
+    CreateToolInput,
     ToolList,
     ToolRef,
     ToolVersionList,
-    UpdateToolRequest,
+    UpdateToolInput,
 )
 
 
@@ -107,7 +107,7 @@ class ToolsClient:
             HttpMethods.POST,
             Endpoints.TOOLS_ENDPOINT,
             response_schema=ToolRef,
-            request_schema=CreateToolRequest,
+            request_schema=CreateToolInput,
             body={
                 "name": name,
                 "mode": mode,
@@ -144,7 +144,7 @@ class ToolsClient:
             HttpMethods.POST,
             Endpoints.TOOLS_ENDPOINT,
             response_schema=ToolRef,
-            request_schema=CreateToolRequest,
+            request_schema=CreateToolInput,
             body={
                 "name": name,
                 "mode": mode,
@@ -224,7 +224,7 @@ class ToolsClient:
             HttpMethods.PUT,
             Endpoints.TOOL_ENDPOINT,
             response_schema=Tool,
-            request_schema=UpdateToolRequest,
+            request_schema=UpdateToolInput,
             body={
                 "name": name,
                 "description": description,
@@ -267,7 +267,7 @@ class ToolsClient:
             HttpMethods.PUT,
             Endpoints.TOOL_ENDPOINT,
             response_schema=Tool,
-            request_schema=UpdateToolRequest,
+            request_schema=UpdateToolInput,
             body={
                 "name": name,
                 "description": description,

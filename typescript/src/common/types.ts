@@ -356,24 +356,24 @@ export interface Classification {
   reason: string;
 }
 
-export interface CreateApiKeyRequest {
+export interface CreateApiKeyInput {
   name: string;
   expiresInDays?: number;
 }
 
-export interface CreateAuditLogExportRequest {
+export interface CreateAuditLogExportInput {
   startTime?: string;
   endTime?: string;
   searchTerm?: string;
 }
 
-export interface CreateOrUpdatePolicyRequest {
+export interface CreateOrUpdatePolicyInput {
   name: string;
   description?: string | null;
   permissionIds: string[];
 }
 
-export interface CreateOrUpdateRoleRequest {
+export interface CreateOrUpdateRoleInput {
   name: string;
   description?: string | null;
   policyIds: string[];
@@ -585,7 +585,7 @@ export interface JevScoreQuestion {
   levels: string[];
 }
 
-export interface MLLMImage {
+export interface MLLMImageInput {
   url: string;
   local: boolean;
   base64?: string;
@@ -771,7 +771,7 @@ export interface RoleRef {
   id: string;
 }
 
-export interface RotateApiKeyRequest {
+export interface RotateApiKeyInput {
   gracePeriodInHours?: number;
   expiresInDays?: number | null;
 }
@@ -877,15 +877,15 @@ export interface Turn {
   metadata?: Record<string, unknown> | null;
 }
 
-export interface UpdateApiKeyRequest {
+export interface UpdateApiKeyInput {
   valid: boolean;
 }
 
-export interface UpdateMemberRoleRequest {
+export interface UpdateMemberRoleInput {
   roleId: string;
 }
 
-export interface UpdateModelCredentialsRequest {
+export interface UpdateModelCredentialsInput {
   provider: ModelProvider;
   apiKey?: string | null;
   modelConfig?: Record<string, unknown> | null;

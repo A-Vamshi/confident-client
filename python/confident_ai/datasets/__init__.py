@@ -4,9 +4,9 @@
 # and regenerate.
 
 from confident_ai.datasets.types import (
-    CreateDatasetIngestionTaskRequest,
+    CreateDatasetIngestionTaskInput,
     CreateDatasetVersionResult,
-    CreateGoldenRequest,
+    CreateGoldenInput,
     Dataset,
     DatasetIngestionTask,
     DatasetIngestionTaskList,
@@ -21,18 +21,18 @@ from confident_ai.datasets.types import (
     Golden,
     GoldenRef,
     MultiTurnGolden,
-    PushDatasetRequest,
-    QueueDatasetGoldensRequest,
-    RunDatasetEvaluationRequest,
+    PushDatasetInput,
+    QueueDatasetGoldensInput,
+    RunDatasetEvaluationInput,
     RunDatasetEvaluationResult,
     SingleTurnGolden,
-    UpdateDatasetIngestionTaskRequest,
+    UpdateDatasetIngestionTaskInput,
 )
 
 __all__ = [
-    "CreateDatasetIngestionTaskRequest",
+    "CreateDatasetIngestionTaskInput",
     "CreateDatasetVersionResult",
-    "CreateGoldenRequest",
+    "CreateGoldenInput",
     "Dataset",
     "DatasetIngestionTask",
     "DatasetIngestionTaskList",
@@ -47,10 +47,10 @@ __all__ = [
     "Golden",
     "GoldenRef",
     "MultiTurnGolden",
-    "PushDatasetRequest",
-    "QueueDatasetGoldensRequest",
-    "RunDatasetEvaluationRequest",
+    "PushDatasetInput",
+    "QueueDatasetGoldensInput",
+    "RunDatasetEvaluationInput",
     "RunDatasetEvaluationResult",
     "SingleTurnGolden",
-    "UpdateDatasetIngestionTaskRequest",
+    "UpdateDatasetIngestionTaskInput",
 ]

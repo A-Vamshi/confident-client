@@ -15,7 +15,7 @@ from confident_ai.datasets.types import (
     DatasetVersionList,
     Golden,
     GoldenRef,
-    PushDatasetRequest,
+    PushDatasetInput,
     RunDatasetEvaluationResult,
 )
 
@@ -515,7 +515,7 @@ class Dataset:
 
     def _push_body(
         self, *, finalized: Optional[bool] = None
-    ) -> PushDatasetRequest:
+    ) -> PushDatasetInput:
         if self.alias is None:
             raise ValueError("Set alias before calling push.")
         if self.goldens is None:
@@ -526,7 +526,7 @@ class Dataset:
             "goldens": self.goldens,
             "finalized": finalized,
         }
-        return PushDatasetRequest(**fields)
+        return PushDatasetInput(**fields)
 
     def _golden_id(self, golden: Golden) -> str:
         if golden.id is None:

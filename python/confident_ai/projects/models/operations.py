@@ -108,8 +108,8 @@ class ModelsOperations:
                 concurrency, and platform, simulation, and speech models also
                 accept max input tokens. This replaces the whole configuration
                 rather than patching it. `CUSTOM` is rejected. Pass one of
-                EvaluationProjectModel, DecisionProjectModel,
-                PlatformProjectModel.
+                EvaluationProjectModelInput, DecisionProjectModelInput,
+                PlatformProjectModelInput.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -142,8 +142,8 @@ class ModelsOperations:
                 concurrency, and platform, simulation, and speech models also
                 accept max input tokens. This replaces the whole configuration
                 rather than patching it. `CUSTOM` is rejected. Pass one of
-                EvaluationProjectModel, DecisionProjectModel,
-                PlatformProjectModel.
+                EvaluationProjectModelInput, DecisionProjectModelInput,
+                PlatformProjectModelInput.
         """
         return await self._api.a_request(
             HttpMethods.PUT,

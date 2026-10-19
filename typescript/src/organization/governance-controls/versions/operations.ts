@@ -58,7 +58,8 @@ export class GovernanceControlsVersionsOperations extends GovernanceControlsOper
    *   alike — takes the runtime config. Except for `extraQueryParams`, every
    *   field is required even when `null`, so a version is a complete definition
    *   rather than a patch of the one before it. Pass a
-   *   GovernanceControlRuntimeConfig or a GovernanceControlPreDeploymentConfig.
+   *   GovernanceControlRuntimeConfigInput or a
+   *   GovernanceControlPreDeploymentConfigInput.
    */
   async createGovernanceControlVersion(
     controlId: string,

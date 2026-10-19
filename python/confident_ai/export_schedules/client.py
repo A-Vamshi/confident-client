@@ -14,12 +14,12 @@ from confident_ai.common.types import (
 from confident_ai.endpoints import Endpoints
 from confident_ai.export_schedules.types import (
     AnnotationSelectionType,
-    CreateExportScheduleRequest,
+    CreateExportScheduleInput,
     ExportSchedule,
     ExportScheduleList,
     ExportScheduleRef,
     SchedulableExportType,
-    UpdateExportScheduleRequest,
+    UpdateExportScheduleInput,
 )
 
 
@@ -149,7 +149,7 @@ class ExportSchedulesClient:
             HttpMethods.POST,
             Endpoints.EXPORT_SCHEDULES_ENDPOINT,
             response_schema=ExportScheduleRef,
-            request_schema=CreateExportScheduleRequest,
+            request_schema=CreateExportScheduleInput,
             body={
                 "name": name,
                 "exportType": export_type,
@@ -224,7 +224,7 @@ class ExportSchedulesClient:
             HttpMethods.POST,
             Endpoints.EXPORT_SCHEDULES_ENDPOINT,
             response_schema=ExportScheduleRef,
-            request_schema=CreateExportScheduleRequest,
+            request_schema=CreateExportScheduleInput,
             body={
                 "name": name,
                 "exportType": export_type,
@@ -328,7 +328,7 @@ class ExportSchedulesClient:
             HttpMethods.PUT,
             Endpoints.EXPORT_SCHEDULE_ENDPOINT,
             response_schema=ExportSchedule,
-            request_schema=UpdateExportScheduleRequest,
+            request_schema=UpdateExportScheduleInput,
             body={
                 "recurrence": recurrence,
                 "repeatEvery": repeat_every,
@@ -400,7 +400,7 @@ class ExportSchedulesClient:
             HttpMethods.PUT,
             Endpoints.EXPORT_SCHEDULE_ENDPOINT,
             response_schema=ExportSchedule,
-            request_schema=UpdateExportScheduleRequest,
+            request_schema=UpdateExportScheduleInput,
             body={
                 "recurrence": recurrence,
                 "repeatEvery": repeat_every,

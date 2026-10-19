@@ -10,8 +10,8 @@ import {
   EvaluateSpanResult,
   EvaluateThreadResult,
   EvaluateTraceResult,
-  HyperparameterValue,
-  TestCase,
+  HyperparameterValueInput,
+  TestCaseInput,
 } from "./types";
 
 export class EvaluateClient {
@@ -35,8 +35,8 @@ export class EvaluateClient {
    */
   async runEvals(
     metricCollection: string,
-    testCases: TestCase[],
-    hyperparameters?: Record<string, HyperparameterValue>,
+    testCases: TestCaseInput[],
+    hyperparameters?: Record<string, HyperparameterValueInput>,
     identifier?: string,
   ): Promise<EvaluateResult> {
     return this.api.sendRequest<EvaluateResult>(

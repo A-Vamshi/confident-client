@@ -6,10 +6,7 @@
 from typing import Optional
 
 from confident_ai.api import Api, HttpMethods
-from confident_ai.common.types import (
-    AuditLogExport,
-    CreateAuditLogExportRequest,
-)
+from confident_ai.common.types import AuditLogExport, CreateAuditLogExportInput
 from confident_ai.endpoints import Endpoints
 
 
@@ -53,7 +50,7 @@ class AuditLogsExportsOperations:
             HttpMethods.POST,
             Endpoints.PROJECT_AUDIT_LOGS_EXPORTS_ENDPOINT,
             response_schema=AuditLogExport,
-            request_schema=CreateAuditLogExportRequest,
+            request_schema=CreateAuditLogExportInput,
             body={
                 "startTime": start_time,
                 "endTime": end_time,
@@ -99,7 +96,7 @@ class AuditLogsExportsOperations:
             HttpMethods.POST,
             Endpoints.PROJECT_AUDIT_LOGS_EXPORTS_ENDPOINT,
             response_schema=AuditLogExport,
-            request_schema=CreateAuditLogExportRequest,
+            request_schema=CreateAuditLogExportInput,
             body={
                 "startTime": start_time,
                 "endTime": end_time,

@@ -8,11 +8,11 @@ from typing import Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.model_costs.types import (
-    CreateModelCostRequest,
+    CreateModelCostInput,
     ModelCost,
     ModelCostList,
     ModelCostRef,
-    UpdateModelCostRequest,
+    UpdateModelCostInput,
 )
 
 
@@ -120,7 +120,7 @@ class ModelCostsClient:
             HttpMethods.POST,
             Endpoints.MODEL_COSTS_ENDPOINT,
             response_schema=ModelCostRef,
-            request_schema=CreateModelCostRequest,
+            request_schema=CreateModelCostInput,
             body={
                 "matchPattern": match_pattern,
                 "provider": provider,
@@ -163,7 +163,7 @@ class ModelCostsClient:
             HttpMethods.POST,
             Endpoints.MODEL_COSTS_ENDPOINT,
             response_schema=ModelCostRef,
-            request_schema=CreateModelCostRequest,
+            request_schema=CreateModelCostInput,
             body={
                 "matchPattern": match_pattern,
                 "provider": provider,
@@ -208,7 +208,7 @@ class ModelCostsClient:
             HttpMethods.PUT,
             Endpoints.MODEL_COST_ENDPOINT,
             response_schema=ModelCost,
-            request_schema=UpdateModelCostRequest,
+            request_schema=UpdateModelCostInput,
             body={
                 "matchPattern": match_pattern,
                 "provider": provider,
@@ -254,7 +254,7 @@ class ModelCostsClient:
             HttpMethods.PUT,
             Endpoints.MODEL_COST_ENDPOINT,
             response_schema=ModelCost,
-            request_schema=UpdateModelCostRequest,
+            request_schema=UpdateModelCostInput,
             body={
                 "matchPattern": match_pattern,
                 "provider": provider,

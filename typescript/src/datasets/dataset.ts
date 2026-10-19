@@ -13,7 +13,7 @@ import {
   DatasetVersionList,
   Golden,
   GoldenRef,
-  PushDatasetRequest,
+  PushDatasetInput,
   RunDatasetEvaluationResult,
 } from "./types";
 
@@ -268,7 +268,7 @@ export class Dataset {
     return result;
   }
 
-  private pushBody(finalized?: boolean): PushDatasetRequest {
+  private pushBody(finalized?: boolean): PushDatasetInput {
     if (this.alias === undefined) {
       throw new Error("Set alias before calling push.");
     }
@@ -281,7 +281,7 @@ export class Dataset {
       goldens: this.goldens,
       finalized,
     };
-    return fields as PushDatasetRequest;
+    return fields as PushDatasetInput;
   }
 
   private goldenIdOrThrow(golden: Golden): string {

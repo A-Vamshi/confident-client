@@ -12,9 +12,9 @@ from confident_ai.datasets.types import (
     DatasetList,
     DatasetRef,
     Golden,
-    PushDatasetRequest,
-    QueueDatasetGoldensRequest,
-    RunDatasetEvaluationRequest,
+    PushDatasetInput,
+    QueueDatasetGoldensInput,
+    RunDatasetEvaluationInput,
     RunDatasetEvaluationResult,
 )
 from confident_ai.endpoints import Endpoints
@@ -81,7 +81,7 @@ class DatasetsOperations:
             HttpMethods.POST,
             Endpoints.DATASETS_ENDPOINT,
             response_schema=DatasetRef,
-            request_schema=PushDatasetRequest,
+            request_schema=PushDatasetInput,
             body={
                 "alias": alias,
                 "goldens": goldens,
@@ -125,7 +125,7 @@ class DatasetsOperations:
             HttpMethods.POST,
             Endpoints.DATASETS_ENDPOINT,
             response_schema=DatasetRef,
-            request_schema=PushDatasetRequest,
+            request_schema=PushDatasetInput,
             body={
                 "alias": alias,
                 "goldens": goldens,
@@ -248,7 +248,7 @@ class DatasetsOperations:
             HttpMethods.POST,
             Endpoints.DATASET_QUEUE_ENDPOINT,
             response_schema=DatasetRef,
-            request_schema=QueueDatasetGoldensRequest,
+            request_schema=QueueDatasetGoldensInput,
             body={"goldens": goldens},
             media_holders=["$.goldens.*"],
             path={"datasetId": dataset_id},
@@ -275,7 +275,7 @@ class DatasetsOperations:
             HttpMethods.POST,
             Endpoints.DATASET_QUEUE_ENDPOINT,
             response_schema=DatasetRef,
-            request_schema=QueueDatasetGoldensRequest,
+            request_schema=QueueDatasetGoldensInput,
             body={"goldens": goldens},
             media_holders=["$.goldens.*"],
             path={"datasetId": dataset_id},
@@ -356,7 +356,7 @@ class DatasetsOperations:
             HttpMethods.POST,
             Endpoints.DATASET_RUN_ENDPOINT,
             response_schema=RunDatasetEvaluationResult,
-            request_schema=RunDatasetEvaluationRequest,
+            request_schema=RunDatasetEvaluationInput,
             body={
                 "metricCollection": metric_collection,
                 "identifier": identifier,
@@ -451,7 +451,7 @@ class DatasetsOperations:
             HttpMethods.POST,
             Endpoints.DATASET_RUN_ENDPOINT,
             response_schema=RunDatasetEvaluationResult,
-            request_schema=RunDatasetEvaluationRequest,
+            request_schema=RunDatasetEvaluationInput,
             body={
                 "metricCollection": metric_collection,
                 "identifier": identifier,

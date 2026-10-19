@@ -40,7 +40,7 @@ export interface ReportTemplateSectionInput {
   startOnNewPage?: boolean;
 }
 
-export interface CreateReportTemplateRequest {
+export interface CreateReportTemplateInput {
   name: string;
   description?: string | null;
   templateSections?: ReportTemplateSectionInput[];
@@ -106,7 +106,7 @@ export interface ReportTemplateRef {
   id: string;
 }
 
-export interface UpdateReportTemplateRequest {
+export interface UpdateReportTemplateInput {
   name?: string;
   description?: string | null;
   templateSections?: ReportTemplateSectionInput[];

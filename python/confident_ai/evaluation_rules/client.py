@@ -9,12 +9,12 @@ from confident_ai.api import Api, HttpMethods
 from confident_ai.common.types import FilterSet, SpanType
 from confident_ai.endpoints import Endpoints
 from confident_ai.evaluation_rules.types import (
-    CreateEvaluationRuleRequest,
+    CreateEvaluationRuleInput,
     EvaluationRule,
     EvaluationRuleDataModel,
     EvaluationRuleList,
     EvaluationRuleRef,
-    UpdateEvaluationRuleRequest,
+    UpdateEvaluationRuleInput,
 )
 
 
@@ -131,7 +131,7 @@ class EvaluationRulesClient:
             HttpMethods.POST,
             Endpoints.EVALUATION_RULES_ENDPOINT,
             response_schema=EvaluationRuleRef,
-            request_schema=CreateEvaluationRuleRequest,
+            request_schema=CreateEvaluationRuleInput,
             body={
                 "name": name,
                 "dataModel": data_model,
@@ -199,7 +199,7 @@ class EvaluationRulesClient:
             HttpMethods.POST,
             Endpoints.EVALUATION_RULES_ENDPOINT,
             response_schema=EvaluationRuleRef,
-            request_schema=CreateEvaluationRuleRequest,
+            request_schema=CreateEvaluationRuleInput,
             body={
                 "name": name,
                 "dataModel": data_model,
@@ -300,7 +300,7 @@ class EvaluationRulesClient:
             HttpMethods.PUT,
             Endpoints.EVALUATION_RULE_ENDPOINT,
             response_schema=EvaluationRule,
-            request_schema=UpdateEvaluationRuleRequest,
+            request_schema=UpdateEvaluationRuleInput,
             body={
                 "name": name,
                 "enabled": enabled,
@@ -368,7 +368,7 @@ class EvaluationRulesClient:
             HttpMethods.PUT,
             Endpoints.EVALUATION_RULE_ENDPOINT,
             response_schema=EvaluationRule,
-            request_schema=UpdateEvaluationRuleRequest,
+            request_schema=UpdateEvaluationRuleInput,
             body={
                 "name": name,
                 "enabled": enabled,

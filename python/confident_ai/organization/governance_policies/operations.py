@@ -8,16 +8,16 @@ from typing import List, Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.organization.types import (
-    CreateGovernancePolicyRequest,
+    CreateGovernancePolicyInput,
     GovernancePolicy,
     GovernancePolicyAssessmentRun,
     GovernancePolicyAssignment,
     GovernancePolicyIdentifier,
     GovernancePolicyList,
     GovernancePolicyProjectList,
-    GovernancePolicyProjectsRequest,
+    GovernancePolicyProjectsInput,
     GovernancePolicyUnassignment,
-    UpdateGovernancePolicyRequest,
+    UpdateGovernancePolicyInput,
 )
 
 
@@ -85,7 +85,7 @@ class GovernancePoliciesOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_GOVERNANCE_POLICIES_ENDPOINT,
             response_schema=GovernancePolicyIdentifier,
-            request_schema=CreateGovernancePolicyRequest,
+            request_schema=CreateGovernancePolicyInput,
             body={
                 "name": name,
                 "description": description,
@@ -122,7 +122,7 @@ class GovernancePoliciesOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_GOVERNANCE_POLICIES_ENDPOINT,
             response_schema=GovernancePolicyIdentifier,
-            request_schema=CreateGovernancePolicyRequest,
+            request_schema=CreateGovernancePolicyInput,
             body={
                 "name": name,
                 "description": description,
@@ -208,7 +208,7 @@ class GovernancePoliciesOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_GOVERNANCE_POLICY_ENDPOINT,
             response_schema=GovernancePolicy,
-            request_schema=UpdateGovernancePolicyRequest,
+            request_schema=UpdateGovernancePolicyInput,
             body={
                 "name": name,
                 "description": description,
@@ -256,7 +256,7 @@ class GovernancePoliciesOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_GOVERNANCE_POLICY_ENDPOINT,
             response_schema=GovernancePolicy,
-            request_schema=UpdateGovernancePolicyRequest,
+            request_schema=UpdateGovernancePolicyInput,
             body={
                 "name": name,
                 "description": description,
@@ -381,7 +381,7 @@ class GovernancePoliciesOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_GOVERNANCE_POLICY_ASSIGN_ENDPOINT,
             response_schema=GovernancePolicyAssignment,
-            request_schema=GovernancePolicyProjectsRequest,
+            request_schema=GovernancePolicyProjectsInput,
             body={"projectIds": project_ids},
             path={"policyId": policy_id},
         )
@@ -409,7 +409,7 @@ class GovernancePoliciesOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_GOVERNANCE_POLICY_ASSIGN_ENDPOINT,
             response_schema=GovernancePolicyAssignment,
-            request_schema=GovernancePolicyProjectsRequest,
+            request_schema=GovernancePolicyProjectsInput,
             body={"projectIds": project_ids},
             path={"policyId": policy_id},
         )
@@ -494,7 +494,7 @@ class GovernancePoliciesOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_GOVERNANCE_POLICY_UNASSIGN_ENDPOINT,
             response_schema=GovernancePolicyUnassignment,
-            request_schema=GovernancePolicyProjectsRequest,
+            request_schema=GovernancePolicyProjectsInput,
             body={"projectIds": project_ids},
             path={"policyId": policy_id},
         )
@@ -523,7 +523,7 @@ class GovernancePoliciesOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_GOVERNANCE_POLICY_UNASSIGN_ENDPOINT,
             response_schema=GovernancePolicyUnassignment,
-            request_schema=GovernancePolicyProjectsRequest,
+            request_schema=GovernancePolicyProjectsInput,
             body={"projectIds": project_ids},
             path={"policyId": policy_id},
         )

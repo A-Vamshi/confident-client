@@ -8,11 +8,11 @@ from typing import Literal, Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.common.types import FilterSet, IngestionDataModel
 from confident_ai.datasets.types import (
-    CreateDatasetIngestionTaskRequest,
+    CreateDatasetIngestionTaskInput,
     DatasetIngestionTask,
     DatasetIngestionTaskList,
     DatasetIngestionTaskRef,
-    UpdateDatasetIngestionTaskRequest,
+    UpdateDatasetIngestionTaskInput,
 )
 from confident_ai.endpoints import Endpoints
 
@@ -136,7 +136,7 @@ class DatasetIngestionTasksOperations:
             HttpMethods.POST,
             Endpoints.DATASET_DATASET_INGESTION_TASKS_ENDPOINT,
             response_schema=DatasetIngestionTaskRef,
-            request_schema=CreateDatasetIngestionTaskRequest,
+            request_schema=CreateDatasetIngestionTaskInput,
             body={
                 "name": name,
                 "dataModel": data_model,
@@ -226,7 +226,7 @@ class DatasetIngestionTasksOperations:
             HttpMethods.POST,
             Endpoints.DATASET_DATASET_INGESTION_TASKS_ENDPOINT,
             response_schema=DatasetIngestionTaskRef,
-            request_schema=CreateDatasetIngestionTaskRequest,
+            request_schema=CreateDatasetIngestionTaskInput,
             body={
                 "name": name,
                 "dataModel": data_model,
@@ -360,7 +360,7 @@ class DatasetIngestionTasksOperations:
             HttpMethods.PUT,
             Endpoints.DATASET_DATASET_INGESTION_TASK_ENDPOINT,
             response_schema=DatasetIngestionTask,
-            request_schema=UpdateDatasetIngestionTaskRequest,
+            request_schema=UpdateDatasetIngestionTaskInput,
             body={
                 "name": name,
                 "dataModel": data_model,
@@ -453,7 +453,7 @@ class DatasetIngestionTasksOperations:
             HttpMethods.PUT,
             Endpoints.DATASET_DATASET_INGESTION_TASK_ENDPOINT,
             response_schema=DatasetIngestionTask,
-            request_schema=UpdateDatasetIngestionTaskRequest,
+            request_schema=UpdateDatasetIngestionTaskInput,
             body={
                 "name": name,
                 "dataModel": data_model,

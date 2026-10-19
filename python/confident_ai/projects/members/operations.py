@@ -6,7 +6,7 @@
 from typing import Optional
 
 from confident_ai.api import Api, HttpMethods
-from confident_ai.common.types import MemberRef, UpdateMemberRoleRequest
+from confident_ai.common.types import MemberRef, UpdateMemberRoleInput
 from confident_ai.endpoints import Endpoints
 from confident_ai.projects.types import ProjectMember, ProjectMemberList
 
@@ -97,7 +97,7 @@ class MembersOperations:
             HttpMethods.PUT,
             Endpoints.PROJECT_MEMBER_ENDPOINT,
             response_schema=ProjectMember,
-            request_schema=UpdateMemberRoleRequest,
+            request_schema=UpdateMemberRoleInput,
             body={"roleId": role_id},
             path={"projectId": project_id, "userId": user_id},
         )
@@ -127,7 +127,7 @@ class MembersOperations:
             HttpMethods.PUT,
             Endpoints.PROJECT_MEMBER_ENDPOINT,
             response_schema=ProjectMember,
-            request_schema=UpdateMemberRoleRequest,
+            request_schema=UpdateMemberRoleInput,
             body={"roleId": role_id},
             path={"projectId": project_id, "userId": user_id},
         )

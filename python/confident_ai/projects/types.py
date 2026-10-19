@@ -27,15 +27,15 @@ class ClearProjectModelResult(ConfidentBaseModel):
     source: ModelSource
 
 
-class CreateProjectInvitationsRequest(ConfidentBaseModel):
-    emails: List[str]
-    project_role_id: Optional[str] = Field(default=None, alias="projectRoleId")
-
-
-class CreateProjectRequest(ConfidentBaseModel):
+class CreateProjectInput(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     email: Optional[str] = None
+
+
+class CreateProjectInvitationsInput(ConfidentBaseModel):
+    emails: List[str]
+    project_role_id: Optional[str] = Field(default=None, alias="projectRoleId")
 
 
 class ProjectSummary(ConfidentBaseModel):
@@ -63,7 +63,7 @@ class CreateProjectResult(ConfidentBaseModel):
     api_key: Optional[ProjectDefaultApiKey] = Field(alias="apiKey")
 
 
-class DecisionProjectModel(ConfidentBaseModel):
+class DecisionProjectModelInput(ConfidentBaseModel):
     provider: ModelProvider
     name: Optional[str] = None
     model_credential_id: Optional[str] = Field(
@@ -72,7 +72,7 @@ class DecisionProjectModel(ConfidentBaseModel):
     )
 
 
-class EvaluationProjectModel(ConfidentBaseModel):
+class EvaluationProjectModelInput(ConfidentBaseModel):
     provider: ModelProvider
     name: Optional[str] = None
     max_concurrency: Optional[int] = Field(default=None, alias="maxConcurrency")
@@ -82,7 +82,7 @@ class EvaluationProjectModel(ConfidentBaseModel):
     )
 
 
-class PlatformProjectModel(ConfidentBaseModel):
+class PlatformProjectModelInput(ConfidentBaseModel):
     provider: ModelProvider
     name: Optional[str] = None
     max_concurrency: Optional[int] = Field(default=None, alias="maxConcurrency")
@@ -165,16 +165,18 @@ class ProjectRoleList(ConfidentBaseModel):
     roles: List[ProjectRole]
 
 
+class UpdateProjectInput(ConfidentBaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+
+
 class UpdateProjectModelResult(ConfidentBaseModel):
     model: Model
     source: Optional[ModelSource] = None
 
 
-class UpdateProjectRequest(ConfidentBaseModel):
-    name: Optional[str] = None
-    description: Optional[str] = None
-
-
 ProjectModelInput = Union[
-    EvaluationProjectModel, DecisionProjectModel, PlatformProjectModel
+    EvaluationProjectModelInput,
+    DecisionProjectModelInput,
+    PlatformProjectModelInput,
 ]

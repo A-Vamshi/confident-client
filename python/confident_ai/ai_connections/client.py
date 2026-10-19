@@ -14,9 +14,9 @@ from confident_ai.ai_connections.types import (
     AIConnectionRef,
     AIConnectionResponseMode,
     AIConnectionType,
-    CreateAIConnectionRequest,
-    PingAIConnectionRequest,
-    UpdateAIConnectionRequest,
+    CreateAIConnectionInput,
+    PingAIConnectionInput,
+    UpdateAIConnectionInput,
 )
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
@@ -158,11 +158,11 @@ class AIConnectionsClient:
                 `null` to clear them.
             authentication: The authentication configuration Confident AI
                 applies when calling your application. Set `authType` to
-                `AUTH0`, `HMAC`, `AZURE_AD` or `OAUTH2_CLIENT_CREDENTIALS` and
-                put that scheme's settings in the matching object:
-                `auth0Config`, `hmacConfig`, `azureAdConfig` or `oauth2Config`.
-                A value that does not match that shape is rejected. Send `null`
-                to clear it.
+                `AUTH0`, `HMAC`, `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS` or
+                `CUSTOM_TOKEN_REQUEST` and put that scheme's settings in the
+                matching object: `auth0Config`, `hmacConfig`, `azureAdConfig`,
+                `oauth2Config` or `customTokenRequestConfig`. A value that does
+                not match that shape is rejected. Send `null` to clear it.
             cloud_provider: The cloud vault configuration Confident AI uses to
                 pull credentials at call time instead of holding them itself.
                 Set `enabled`, `provider` to `AZURE_KEY_VAULT`, `vaultUrl` to
@@ -263,7 +263,7 @@ class AIConnectionsClient:
             HttpMethods.POST,
             Endpoints.AI_CONNECTIONS_ENDPOINT,
             response_schema=AIConnectionRef,
-            request_schema=CreateAIConnectionRequest,
+            request_schema=CreateAIConnectionInput,
             body={
                 "name": name,
                 "type": type,
@@ -395,11 +395,11 @@ class AIConnectionsClient:
                 `null` to clear them.
             authentication: The authentication configuration Confident AI
                 applies when calling your application. Set `authType` to
-                `AUTH0`, `HMAC`, `AZURE_AD` or `OAUTH2_CLIENT_CREDENTIALS` and
-                put that scheme's settings in the matching object:
-                `auth0Config`, `hmacConfig`, `azureAdConfig` or `oauth2Config`.
-                A value that does not match that shape is rejected. Send `null`
-                to clear it.
+                `AUTH0`, `HMAC`, `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS` or
+                `CUSTOM_TOKEN_REQUEST` and put that scheme's settings in the
+                matching object: `auth0Config`, `hmacConfig`, `azureAdConfig`,
+                `oauth2Config` or `customTokenRequestConfig`. A value that does
+                not match that shape is rejected. Send `null` to clear it.
             cloud_provider: The cloud vault configuration Confident AI uses to
                 pull credentials at call time instead of holding them itself.
                 Set `enabled`, `provider` to `AZURE_KEY_VAULT`, `vaultUrl` to
@@ -500,7 +500,7 @@ class AIConnectionsClient:
             HttpMethods.POST,
             Endpoints.AI_CONNECTIONS_ENDPOINT,
             response_schema=AIConnectionRef,
-            request_schema=CreateAIConnectionRequest,
+            request_schema=CreateAIConnectionInput,
             body={
                 "name": name,
                 "type": type,
@@ -671,11 +671,11 @@ class AIConnectionsClient:
                 `null` to clear them.
             authentication: The authentication configuration Confident AI
                 applies when calling your application. Set `authType` to
-                `AUTH0`, `HMAC`, `AZURE_AD` or `OAUTH2_CLIENT_CREDENTIALS` and
-                put that scheme's settings in the matching object:
-                `auth0Config`, `hmacConfig`, `azureAdConfig` or `oauth2Config`.
-                A value that does not match that shape is rejected. Send `null`
-                to clear it.
+                `AUTH0`, `HMAC`, `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS` or
+                `CUSTOM_TOKEN_REQUEST` and put that scheme's settings in the
+                matching object: `auth0Config`, `hmacConfig`, `azureAdConfig`,
+                `oauth2Config` or `customTokenRequestConfig`. A value that does
+                not match that shape is rejected. Send `null` to clear it.
             cloud_provider: The cloud vault configuration Confident AI uses to
                 pull credentials at call time instead of holding them itself.
                 Set `enabled`, `provider` to `AZURE_KEY_VAULT`, `vaultUrl` to
@@ -776,7 +776,7 @@ class AIConnectionsClient:
             HttpMethods.PUT,
             Endpoints.AI_CONNECTION_ENDPOINT,
             response_schema=AIConnection,
-            request_schema=UpdateAIConnectionRequest,
+            request_schema=UpdateAIConnectionInput,
             body={
                 "name": name,
                 "type": type,
@@ -912,11 +912,11 @@ class AIConnectionsClient:
                 `null` to clear them.
             authentication: The authentication configuration Confident AI
                 applies when calling your application. Set `authType` to
-                `AUTH0`, `HMAC`, `AZURE_AD` or `OAUTH2_CLIENT_CREDENTIALS` and
-                put that scheme's settings in the matching object:
-                `auth0Config`, `hmacConfig`, `azureAdConfig` or `oauth2Config`.
-                A value that does not match that shape is rejected. Send `null`
-                to clear it.
+                `AUTH0`, `HMAC`, `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS` or
+                `CUSTOM_TOKEN_REQUEST` and put that scheme's settings in the
+                matching object: `auth0Config`, `hmacConfig`, `azureAdConfig`,
+                `oauth2Config` or `customTokenRequestConfig`. A value that does
+                not match that shape is rejected. Send `null` to clear it.
             cloud_provider: The cloud vault configuration Confident AI uses to
                 pull credentials at call time instead of holding them itself.
                 Set `enabled`, `provider` to `AZURE_KEY_VAULT`, `vaultUrl` to
@@ -1017,7 +1017,7 @@ class AIConnectionsClient:
             HttpMethods.PUT,
             Endpoints.AI_CONNECTION_ENDPOINT,
             response_schema=AIConnection,
-            request_schema=UpdateAIConnectionRequest,
+            request_schema=UpdateAIConnectionInput,
             body={
                 "name": name,
                 "type": type,
@@ -1113,7 +1113,7 @@ class AIConnectionsClient:
             HttpMethods.POST,
             Endpoints.AI_CONNECTION_PING_ENDPOINT,
             response_schema=AIConnectionPingResult,
-            request_schema=PingAIConnectionRequest,
+            request_schema=PingAIConnectionInput,
             body={"multiturn": multiturn},
             path={"aiConnectionId": ai_connection_id},
         )
@@ -1137,7 +1137,7 @@ class AIConnectionsClient:
             HttpMethods.POST,
             Endpoints.AI_CONNECTION_PING_ENDPOINT,
             response_schema=AIConnectionPingResult,
-            request_schema=PingAIConnectionRequest,
+            request_schema=PingAIConnectionInput,
             body={"multiturn": multiturn},
             path={"aiConnectionId": ai_connection_id},
         )

@@ -20,11 +20,11 @@ from confident_ai.classifiers.types import (
     ClassifierVersion,
     ClassifierVersionLabel,
     ClassifierVersionList,
-    CreateClassifierLabelRequest,
-    CreateClassifierRequest,
+    CreateClassifierInput,
+    CreateClassifierLabelInput,
     SignalPolarity,
-    UpdateClassifierLabelRequest,
-    UpdateClassifierRequest,
+    UpdateClassifierInput,
+    UpdateClassifierLabelInput,
 )
 
 __all__ = [
@@ -44,9 +44,9 @@ __all__ = [
     "ClassifierVersion",
     "ClassifierVersionLabel",
     "ClassifierVersionList",
-    "CreateClassifierLabelRequest",
-    "CreateClassifierRequest",
+    "CreateClassifierInput",
+    "CreateClassifierLabelInput",
     "SignalPolarity",
-    "UpdateClassifierLabelRequest",
-    "UpdateClassifierRequest",
+    "UpdateClassifierInput",
+    "UpdateClassifierLabelInput",
 ]

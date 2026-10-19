@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import * as fs from "node:fs";
 import * as path from "node:path";
 
-import { MLLMImage } from "./common/types";
+import { MLLMImageInput } from "./common/types";
 
 const IMAGE_MIME_TYPES: Record<string, string> = {
   ".avif": "image/avif",
@@ -146,7 +146,7 @@ export function parseMultimodal(text: string): Array<string | Media> {
   return parts;
 }
 
-function imageFor(key: string, media: Media): MLLMImage {
+function imageFor(key: string, media: Media): MLLMImageInput {
   if (!media.isLocal) return { url: key, local: false };
   return {
     url: "",
@@ -178,14 +178,14 @@ function withImagesMapping(
 ): Record<string, unknown> {
   const keys = new Set<string>();
   markerKeys(holder, keys);
-  const mapping: Record<string, MLLMImage> = {};
+  const mapping: Record<string, MLLMImageInput> = {};
   for (const key of keys) {
     const media = mediaFor(key);
     if (media) mapping[key] = imageFor(key, media);
   }
   if (Object.keys(mapping).length === 0) return holder;
   const supplied = holder[MAPPING_FIELD] as
-    Record<string, MLLMImage> | undefined;
+    Record<string, MLLMImageInput> | undefined;
   return { ...holder, [MAPPING_FIELD]: { ...mapping, ...supplied } };
 }
 

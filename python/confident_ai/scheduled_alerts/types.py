@@ -92,14 +92,14 @@ class SignalSpikeDetectionSettings(ConfidentBaseModel):
     min_affected_count: int = Field(alias="minAffectedCount")
 
 
-ScheduledAlertDetectionSettings = Union[
+ScheduledAlertDetectionSettingsInput = Union[
     RegressionDetectionSettings,
     AnomalyDetectionSettings,
     SignalSpikeDetectionSettings,
 ]
 
 
-class CreateScheduledAlertRequest(ConfidentBaseModel):
+class CreateScheduledAlertInput(ConfidentBaseModel):
     recurrence: Optional[ScheduleRecurrenceType] = None
     repeat_every: Optional[int] = Field(default=None, alias="repeatEvery")
     repeat_unit: Optional[ScheduleIntervalUnit] = Field(
@@ -120,7 +120,7 @@ class CreateScheduledAlertRequest(ConfidentBaseModel):
         default=None,
         alias="thresholdSettings",
     )
-    detection_settings: Optional[ScheduledAlertDetectionSettings] = Field(
+    detection_settings: Optional[ScheduledAlertDetectionSettingsInput] = Field(
         default=None,
         alias="detectionSettings",
     )
@@ -186,7 +186,7 @@ class ScheduledAlertRef(ConfidentBaseModel):
     id: str
 
 
-class UpdateScheduledAlertRequest(ConfidentBaseModel):
+class UpdateScheduledAlertInput(ConfidentBaseModel):
     recurrence: Optional[ScheduleRecurrenceType] = None
     repeat_every: Optional[int] = Field(default=None, alias="repeatEvery")
     repeat_unit: Optional[ScheduleIntervalUnit] = Field(
@@ -210,7 +210,7 @@ class UpdateScheduledAlertRequest(ConfidentBaseModel):
         default=None,
         alias="thresholdSettings",
     )
-    detection_settings: Optional[ScheduledAlertDetectionSettings] = Field(
+    detection_settings: Optional[ScheduledAlertDetectionSettingsInput] = Field(
         default=None,
         alias="detectionSettings",
     )

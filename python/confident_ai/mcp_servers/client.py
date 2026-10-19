@@ -8,15 +8,15 @@ from typing import Dict, List, Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.mcp_servers.types import (
-    CreateMcpServerRequest,
+    CreateMcpServerInput,
     McpServer,
-    McpServerAuthConfig,
+    McpServerAuthConfigInput,
     McpServerAuthType,
     McpServerConnection,
     McpServerList,
     McpServerRef,
     McpServerTransport,
-    UpdateMcpServerRequest,
+    UpdateMcpServerInput,
 )
 
 
@@ -77,7 +77,7 @@ class McpServersClient:
         url: Optional[str] = None,
         headers: Optional[Dict[str, str]] = None,
         auth_type: Optional[McpServerAuthType] = None,
-        auth_config: Optional[McpServerAuthConfig] = None,
+        auth_config: Optional[McpServerAuthConfigInput] = None,
         command: Optional[str] = None,
         args: Optional[List[str]] = None
     ) -> McpServerRef:
@@ -108,7 +108,7 @@ class McpServersClient:
             HttpMethods.POST,
             Endpoints.MCP_SERVERS_ENDPOINT,
             response_schema=McpServerRef,
-            request_schema=CreateMcpServerRequest,
+            request_schema=CreateMcpServerInput,
             body={
                 "name": name,
                 "transport": transport,
@@ -131,7 +131,7 @@ class McpServersClient:
         url: Optional[str] = None,
         headers: Optional[Dict[str, str]] = None,
         auth_type: Optional[McpServerAuthType] = None,
-        auth_config: Optional[McpServerAuthConfig] = None,
+        auth_config: Optional[McpServerAuthConfigInput] = None,
         command: Optional[str] = None,
         args: Optional[List[str]] = None
     ) -> McpServerRef:
@@ -162,7 +162,7 @@ class McpServersClient:
             HttpMethods.POST,
             Endpoints.MCP_SERVERS_ENDPOINT,
             response_schema=McpServerRef,
-            request_schema=CreateMcpServerRequest,
+            request_schema=CreateMcpServerInput,
             body={
                 "name": name,
                 "transport": transport,
@@ -222,7 +222,7 @@ class McpServersClient:
         url: Optional[str] = None,
         headers: Optional[Dict[str, str]] = None,
         auth_type: Optional[McpServerAuthType] = None,
-        auth_config: Optional[McpServerAuthConfig] = None,
+        auth_config: Optional[McpServerAuthConfigInput] = None,
         command: Optional[str] = None,
         args: Optional[List[str]] = None
     ) -> McpServer:
@@ -255,7 +255,7 @@ class McpServersClient:
             HttpMethods.PUT,
             Endpoints.MCP_SERVER_ENDPOINT,
             response_schema=McpServer,
-            request_schema=UpdateMcpServerRequest,
+            request_schema=UpdateMcpServerInput,
             body={
                 "name": name,
                 "transport": transport,
@@ -280,7 +280,7 @@ class McpServersClient:
         url: Optional[str] = None,
         headers: Optional[Dict[str, str]] = None,
         auth_type: Optional[McpServerAuthType] = None,
-        auth_config: Optional[McpServerAuthConfig] = None,
+        auth_config: Optional[McpServerAuthConfigInput] = None,
         command: Optional[str] = None,
         args: Optional[List[str]] = None
     ) -> McpServer:
@@ -313,7 +313,7 @@ class McpServersClient:
             HttpMethods.PUT,
             Endpoints.MCP_SERVER_ENDPOINT,
             response_schema=McpServer,
-            request_schema=UpdateMcpServerRequest,
+            request_schema=UpdateMcpServerInput,
             body={
                 "name": name,
                 "transport": transport,

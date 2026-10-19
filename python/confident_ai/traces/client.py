@@ -9,16 +9,16 @@ from confident_ai.api import Api, HttpMethods
 from confident_ai.common.types import ToolCall, Trace, TraceSpanStatus
 from confident_ai.endpoints import Endpoints
 from confident_ai.traces.types import (
-    CreateTraceRequest,
-    Customer,
+    CreateTraceInput,
+    CustomerInput,
     MetricDataInput,
     SpanInput,
     ThreadInput,
-    TraceAttachment,
+    TraceAttachmentInput,
     TraceList,
     TraceRef,
     TraceSortBy,
-    User,
+    UserInput,
 )
 
 
@@ -154,9 +154,9 @@ class TracesClient:
         thread_id: Optional[str] = None,
         thread: Optional[ThreadInput] = None,
         user_id: Optional[str] = None,
-        user: Optional[User] = None,
+        user: Optional[UserInput] = None,
         customer_id: Optional[str] = None,
-        customer: Optional[Customer] = None,
+        customer: Optional[CustomerInput] = None,
         metric_collection: Optional[str] = None,
         test_run_id: Optional[str] = None,
         test_case_id: Optional[str] = None,
@@ -168,7 +168,7 @@ class TracesClient:
         expected_tools: Optional[List[ToolCall]] = None,
         spans: Optional[List[SpanInput]] = None,
         metrics_data: Optional[List[MetricDataInput]] = None,
-        attachments: Optional[Dict[str, TraceAttachment]] = None
+        attachments: Optional[Dict[str, TraceAttachmentInput]] = None
     ) -> TraceRef:
         """Create Trace
 
@@ -238,7 +238,7 @@ class TracesClient:
             HttpMethods.POST,
             Endpoints.TRACES_ENDPOINT,
             response_schema=TraceRef,
-            request_schema=CreateTraceRequest,
+            request_schema=CreateTraceInput,
             body={
                 "uuid": uuid,
                 "startTime": start_time,
@@ -287,9 +287,9 @@ class TracesClient:
         thread_id: Optional[str] = None,
         thread: Optional[ThreadInput] = None,
         user_id: Optional[str] = None,
-        user: Optional[User] = None,
+        user: Optional[UserInput] = None,
         customer_id: Optional[str] = None,
-        customer: Optional[Customer] = None,
+        customer: Optional[CustomerInput] = None,
         metric_collection: Optional[str] = None,
         test_run_id: Optional[str] = None,
         test_case_id: Optional[str] = None,
@@ -301,7 +301,7 @@ class TracesClient:
         expected_tools: Optional[List[ToolCall]] = None,
         spans: Optional[List[SpanInput]] = None,
         metrics_data: Optional[List[MetricDataInput]] = None,
-        attachments: Optional[Dict[str, TraceAttachment]] = None
+        attachments: Optional[Dict[str, TraceAttachmentInput]] = None
     ) -> TraceRef:
         """Create Trace
 
@@ -371,7 +371,7 @@ class TracesClient:
             HttpMethods.POST,
             Endpoints.TRACES_ENDPOINT,
             response_schema=TraceRef,
-            request_schema=CreateTraceRequest,
+            request_schema=CreateTraceInput,
             body={
                 "uuid": uuid,
                 "startTime": start_time,

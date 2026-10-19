@@ -106,7 +106,7 @@ resources:
         python: AIConnectionRef
         typescript: Promise<AIConnectionRef>
         type: AIConnectionRef
-      body: CreateAIConnectionRequest
+      body: CreateAIConnectionInput
       parameters:
       - python: name
         typescript: name
@@ -347,11 +347,11 @@ resources:
           typescript: true
         default: None
         description: 'The authentication configuration Confident AI applies when
-          calling your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`
-          or `OAUTH2_CLIENT_CREDENTIALS` and put that scheme''s settings in the matching
-          object: `auth0Config`, `hmacConfig`, `azureAdConfig` or `oauth2Config`.
-          A value that does not match that shape is rejected. Send `null` to clear
-          it.'
+          calling your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`,
+          `OAUTH2_CLIENT_CREDENTIALS` or `CUSTOM_TOKEN_REQUEST` and put that scheme''s
+          settings in the matching object: `auth0Config`, `hmacConfig`, `azureAdConfig`,
+          `oauth2Config` or `customTokenRequestConfig`. A value that does not match
+          that shape is rejected. Send `null` to clear it.'
         example:
           authType: HMAC
           hmacConfig:
@@ -957,7 +957,7 @@ resources:
         python: AIConnection
         typescript: Promise<AIConnection>
         type: AIConnection
-      body: UpdateAIConnectionRequest
+      body: UpdateAIConnectionInput
       parameters:
       - python: ai_connection_id
         typescript: aiConnectionId
@@ -1213,11 +1213,11 @@ resources:
           typescript: true
         default: None
         description: 'The authentication configuration Confident AI applies when
-          calling your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`
-          or `OAUTH2_CLIENT_CREDENTIALS` and put that scheme''s settings in the matching
-          object: `auth0Config`, `hmacConfig`, `azureAdConfig` or `oauth2Config`.
-          A value that does not match that shape is rejected. Send `null` to clear
-          it.'
+          calling your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`,
+          `OAUTH2_CLIENT_CREDENTIALS` or `CUSTOM_TOKEN_REQUEST` and put that scheme''s
+          settings in the matching object: `auth0Config`, `hmacConfig`, `azureAdConfig`,
+          `oauth2Config` or `customTokenRequestConfig`. A value that does not match
+          that shape is rejected. Send `null` to clear it.'
         example:
           authType: HMAC
           hmacConfig:
@@ -1822,7 +1822,7 @@ resources:
         python: AIConnectionPingResult
         typescript: Promise<AIConnectionPingResult>
         type: AIConnectionPingResult
-      body: PingAIConnectionRequest
+      body: PingAIConnectionInput
       parameters:
       - python: ai_connection_id
         typescript: aiConnectionId
@@ -1982,7 +1982,7 @@ resources:
         python: AnnotationQueueRef
         typescript: Promise<AnnotationQueueRef>
         type: AnnotationQueueRef
-      body: CreateAnnotationQueueRequest
+      body: CreateAnnotationQueueInput
       parameters:
       - python: name
         typescript: name
@@ -2113,7 +2113,7 @@ resources:
         python: AnnotationQueue
         typescript: Promise<AnnotationQueue>
         type: AnnotationQueue
-      body: UpdateAnnotationQueueRequest
+      body: UpdateAnnotationQueueInput
       parameters:
       - python: annotation_queue_id
         typescript: annotationQueueId
@@ -2246,7 +2246,7 @@ resources:
         python: BatchAnnotateResult
         typescript: Promise<BatchAnnotateResult>
         type: BatchAnnotateResult
-      body: BatchAnnotateRequest
+      body: BatchAnnotateInput
       parameters:
       - python: annotation_queue_id
         typescript: annotationQueueId
@@ -2268,8 +2268,8 @@ resources:
         wire: items
         in: body
         type:
-          python: List[BatchAnnotateItem]
-          typescript: BatchAnnotateItem[]
+          python: List[BatchAnnotateItemInput]
+          typescript: BatchAnnotateItemInput[]
         required: true
         keyword:
           python: false
@@ -2279,7 +2279,7 @@ resources:
           failure does not stop the rest.
         example: null
         references:
-        - BatchAnnotateItem
+        - BatchAnnotateItemInput
       - python: annotator_email
         typescript: annotatorEmail
         wire: annotatorEmail
@@ -2440,7 +2440,7 @@ resources:
         python: AddedQueueItems
         typescript: Promise<AddedQueueItems>
         type: AddedQueueItems
-      body: QueueItems
+      body: QueueItemsInput
       parameters:
       - python: annotation_queue_id
         typescript: annotationQueueId
@@ -2459,11 +2459,11 @@ resources:
         references: []
       - python: items
         typescript: items
-        wire: QueueItems
+        wire: QueueItemsInput
         in: union-body
         type:
-          python: QueueItems
-          typescript: QueueItems
+          python: QueueItemsInput
+          typescript: QueueItemsInput
         required: true
         keyword:
           python: false
@@ -2473,13 +2473,13 @@ resources:
           matches the queue's `type` — `traceUuids` for a `TRACE` queue, `spanUuids`
           for a `SPAN` queue, `threadIds` for a `THREAD` queue — and every id must
           already exist in your project. Items already in the queue are skipped.
-          Pass one of TraceQueueItems, SpanQueueItems, ThreadQueueItems.
+          Pass one of TraceQueueItemsInput, SpanQueueItemsInput, ThreadQueueItemsInput.
         example: null
         references:
-        - QueueItems
-        - TraceQueueItems
-        - SpanQueueItems
-        - ThreadQueueItems
+        - QueueItemsInput
+        - TraceQueueItemsInput
+        - SpanQueueItemsInput
+        - ThreadQueueItemsInput
       order:
         python:
         - annotation_queue_id
@@ -2504,7 +2504,7 @@ resources:
         python: AnnotateQueueItemResult
         typescript: Promise<AnnotateQueueItemResult>
         type: AnnotateQueueItemResult
-      body: AnnotateQueueItemRequest
+      body: AnnotateQueueItemInput
       parameters:
       - python: annotation_queue_id
         typescript: annotationQueueId
@@ -2541,8 +2541,8 @@ resources:
         wire: annotations
         in: body
         type:
-          python: Optional[List[QueueItemAnnotation]]
-          typescript: QueueItemAnnotation[]
+          python: Optional[List[QueueItemAnnotationInput]]
+          typescript: QueueItemAnnotationInput[]
         required: false
         keyword:
           python: true
@@ -2551,14 +2551,14 @@ resources:
         description: The criteria ratings to record on the item, one entry per criterion.
         example: null
         references:
-        - QueueItemAnnotation
+        - QueueItemAnnotationInput
       - python: form_responses
         typescript: formResponses
         wire: formResponses
         in: body
         type:
-          python: Optional[List[QueueItemFormResponse]]
-          typescript: QueueItemFormResponse[]
+          python: Optional[List[QueueItemFormResponseInput]]
+          typescript: QueueItemFormResponseInput[]
         required: false
         keyword:
           python: true
@@ -2568,7 +2568,7 @@ resources:
           Sending them requires `annotatorEmail`.
         example: null
         references:
-        - QueueItemFormResponse
+        - QueueItemFormResponseInput
       - python: annotator_email
         typescript: annotatorEmail
         wire: annotatorEmail
@@ -2715,7 +2715,7 @@ resources:
         python: QueueIngestionTaskRef
         typescript: Promise<QueueIngestionTaskRef>
         type: QueueIngestionTaskRef
-      body: CreateQueueIngestionTaskRequest
+      body: CreateQueueIngestionTaskInput
       parameters:
       - python: annotation_queue_id
         typescript: annotationQueueId
@@ -2977,7 +2977,7 @@ resources:
         python: QueueIngestionTask
         typescript: Promise<QueueIngestionTask>
         type: QueueIngestionTask
-      body: UpdateQueueIngestionTaskRequest
+      body: UpdateQueueIngestionTaskInput
       parameters:
       - python: annotation_queue_id
         typescript: annotationQueueId
@@ -3507,14 +3507,14 @@ resources:
         description: 'An annotation to record against exactly one target. Send `traceUuid`,
           `spanUuid` or `threadId` — never more than one — and the field that goes
           with it: `expectedOutput` for a trace or span, `expectedOutcome` for a
-          thread. `fieldType` defaults to `THUMBS_RATING`. Pass one of TraceAnnotation,
-          SpanAnnotation, ThreadAnnotation.'
+          thread. `fieldType` defaults to `THUMBS_RATING`. Pass one of TraceAnnotationInput,
+          SpanAnnotationInput, ThreadAnnotationInput.'
         example: null
         references:
         - AnnotationInput
-        - TraceAnnotation
-        - SpanAnnotation
-        - ThreadAnnotation
+        - TraceAnnotationInput
+        - SpanAnnotationInput
+        - ThreadAnnotationInput
       order:
         python:
         - annotation
@@ -3575,7 +3575,7 @@ resources:
         python: AnnotationRef
         typescript: Promise<AnnotationRef>
         type: AnnotationRef
-      body: UpdateAnnotationRequest
+      body: UpdateAnnotationInput
       parameters:
       - python: annotation_id
         typescript: annotationId
@@ -3613,8 +3613,8 @@ resources:
         wire: value
         in: body
         type:
-          python: Optional[AnnotationValue]
-          typescript: AnnotationValue
+          python: Optional[AnnotationValueInput]
+          typescript: AnnotationValueInput
         required: false
         keyword:
           python: true
@@ -3623,7 +3623,7 @@ resources:
         description: null
         example: null
         references:
-        - AnnotationValue
+        - AnnotationValueInput
       - python: explanation
         typescript: explanation
         wire: explanation
@@ -3676,8 +3676,8 @@ resources:
         wire: imagesMapping
         in: body
         type:
-          python: Optional[Dict[str, MLLMImage]]
-          typescript: Record<string, MLLMImage>
+          python: Optional[Dict[str, MLLMImageInput]]
+          typescript: Record<string, MLLMImageInput>
         required: false
         keyword:
           python: true
@@ -3687,7 +3687,7 @@ resources:
           text fields, keyed by that marker's key.
         example: null
         references:
-        - MLLMImage
+        - MLLMImageInput
       order:
         python:
         - annotation_id
@@ -3849,7 +3849,7 @@ resources:
         python: AttackMethod
         typescript: Promise<AttackMethod>
         type: AttackMethod
-      body: UpdateAttackMethodRequest
+      body: UpdateAttackMethodInput
       parameters:
       - python: attack_method_id
         typescript: attackMethodId
@@ -4037,7 +4037,7 @@ resources:
         python: ClassifierRef
         typescript: Promise<ClassifierRef>
         type: ClassifierRef
-      body: CreateClassifierRequest
+      body: CreateClassifierInput
       parameters:
       - python: name
         typescript: name
@@ -4193,8 +4193,8 @@ resources:
           python: true
           typescript: true
         default: None
-        description: How a generation run samples and clusters your traffic to discover
-          labels. Send `null` to clear it.
+        description: How a generation run samples your traffic to generate labels.
+          Send `null` to clear it.
         example: null
         references:
         - ClassifierAutoGenerationConfig
@@ -4275,7 +4275,7 @@ resources:
         python: Classifier
         typescript: Promise<Classifier>
         type: Classifier
-      body: UpdateClassifierRequest
+      body: UpdateClassifierInput
       parameters:
       - python: classifier_id
         typescript: classifierId
@@ -4414,8 +4414,8 @@ resources:
           python: true
           typescript: true
         default: None
-        description: How a generation run samples and clusters your traffic to discover
-          labels. Send `null` to clear it.
+        description: How a generation run samples your traffic to generate labels.
+          Send `null` to clear it.
         example: null
         references:
         - ClassifierAutoGenerationConfig
@@ -4481,15 +4481,14 @@ resources:
         pythonAsync: a_generate_labels
         typescript: generateLabels
       summary: Generate Classifier Labels
-      description: 'Discovers labels for a classifier from your project''s real traffic:
-        it samples recent traces or threads, clusters them with the classifier''s
-        `autoGenerationConfig`, and writes the themes it finds back as `RECOMMENDED`
-        labels for a human to review. The run is asynchronous, so poll the labels
-        endpoint for results. Each run first deletes every existing `RECOMMENDED`
-        label, while labels already promoted to `ACTIVE` are kept and passed to the
-        generator so it does not propose them again. `autoGenerationConfig` must
-        already have `summaryPrompt` and `nClusters` set. Reading traffic and running
-        the model consumes usage. Requires the Starter plan or above.'
+      description: 'Generates labels for a classifier from your project''s real traffic:
+        it samples recent traces or threads and runs them through the classifier''s
+        normal auto-classification pipeline. Repeated proposals are merged and written
+        back as `RECOMMENDED` labels for a human to review. The run is asynchronous,
+        so poll the labels endpoint for results. Existing labels are retained, and
+        the sampled entities receive ordinary classification results. Auto Classify
+        must be enabled. Reading traffic and running the model consumes usage. Requires
+        the Starter plan or above.'
       operations:
       - id: generateClassifierLabels
         method: POST
@@ -4695,7 +4694,7 @@ resources:
         python: ClassifierLabelRef
         typescript: Promise<ClassifierLabelRef>
         type: ClassifierLabelRef
-      body: CreateClassifierLabelRequest
+      body: CreateClassifierLabelInput
       parameters:
       - python: classifier_id
         typescript: classifierId
@@ -4877,7 +4876,7 @@ resources:
         python: ClassifierLabel
         typescript: Promise<ClassifierLabel>
         type: ClassifierLabel
-      body: UpdateClassifierLabelRequest
+      body: UpdateClassifierLabelInput
       parameters:
       - python: classifier_id
         typescript: classifierId
@@ -5145,7 +5144,7 @@ resources:
         python: DashboardRef
         typescript: Promise<DashboardRef>
         type: DashboardRef
-      body: CreateDashboardRequest
+      body: CreateDashboardInput
       parameters:
       - python: name
         typescript: name
@@ -5274,7 +5273,7 @@ resources:
         python: Dashboard
         typescript: Promise<Dashboard>
         type: Dashboard
-      body: UpdateDashboardRequest
+      body: UpdateDashboardInput
       parameters:
       - python: dashboard_id
         typescript: dashboardId
@@ -5401,7 +5400,7 @@ resources:
         python: DashboardQueryResult
         typescript: Promise<DashboardQueryResult>
         type: DashboardQueryResult
-      body: DashboardQueryRequest
+      body: DashboardQueryInput
       parameters:
       - python: dashboard_id
         typescript: dashboardId
@@ -5779,7 +5778,7 @@ resources:
         python: Widget
         typescript: Promise<Widget>
         type: Widget
-      body: UpdateWidgetRequest
+      body: UpdateWidgetInput
       parameters:
       - python: dashboard_id
         typescript: dashboardId
@@ -6108,7 +6107,7 @@ resources:
         python: WidgetQueryResult
         typescript: Promise<WidgetQueryResult>
         type: WidgetQueryResult
-      body: WidgetQueryRequest
+      body: WidgetQueryInput
       parameters:
       - python: dashboard_id
         typescript: dashboardId
@@ -6253,7 +6252,7 @@ resources:
         python: DatasetRef
         typescript: Promise<DatasetRef>
         type: DatasetRef
-      body: PushDatasetRequest
+      body: PushDatasetInput
       parameters:
       - python: alias
         typescript: alias
@@ -6465,7 +6464,7 @@ resources:
         python: DatasetRef
         typescript: Promise<DatasetRef>
         type: DatasetRef
-      body: QueueDatasetGoldensRequest
+      body: QueueDatasetGoldensInput
       parameters:
       - python: dataset_id
         typescript: datasetId
@@ -6525,7 +6524,7 @@ resources:
         python: RunDatasetEvaluationResult
         typescript: Promise<RunDatasetEvaluationResult>
         type: RunDatasetEvaluationResult
-      body: RunDatasetEvaluationRequest
+      body: RunDatasetEvaluationInput
       parameters:
       - python: dataset_id
         typescript: datasetId
@@ -6892,7 +6891,7 @@ resources:
         python: DatasetIngestionTaskRef
         typescript: Promise<DatasetIngestionTaskRef>
         type: DatasetIngestionTaskRef
-      body: CreateDatasetIngestionTaskRequest
+      body: CreateDatasetIngestionTaskInput
       parameters:
       - python: dataset_id
         typescript: datasetId
@@ -7275,7 +7274,7 @@ resources:
         python: DatasetIngestionTask
         typescript: Promise<DatasetIngestionTask>
         type: DatasetIngestionTask
-      body: UpdateDatasetIngestionTaskRequest
+      body: UpdateDatasetIngestionTaskInput
       parameters:
       - python: dataset_id
         typescript: datasetId
@@ -7684,7 +7683,7 @@ resources:
         python: GoldenRef
         typescript: Promise<GoldenRef>
         type: GoldenRef
-      body: CreateGoldenRequest
+      body: CreateGoldenInput
       parameters:
       - python: dataset_id
         typescript: datasetId
@@ -8223,7 +8222,7 @@ resources:
         python: RunDatasetEvaluationResult
         typescript: Promise<RunDatasetEvaluationResult>
         type: RunDatasetEvaluationResult
-      body: RunDatasetEvaluationRequest
+      body: RunDatasetEvaluationInput
       parameters:
       - python: metric_collection
         typescript: metricCollection
@@ -8507,7 +8506,7 @@ resources:
         python: DatasetRef
         typescript: Promise<DatasetRef>
         type: DatasetRef
-      body: QueueDatasetGoldensRequest
+      body: QueueDatasetGoldensInput
       parameters:
       - python: goldens
         typescript: goldens
@@ -8547,7 +8546,7 @@ resources:
         python: GoldenRef
         typescript: Promise<GoldenRef>
         type: GoldenRef
-      body: CreateGoldenRequest
+      body: CreateGoldenInput
       parameters:
       - python: golden
         typescript: golden
@@ -8782,7 +8781,7 @@ resources:
         python: DatasetRef
         typescript: Promise<DatasetRef>
         type: DatasetRef
-      body: PushDatasetRequest
+      body: PushDatasetInput
       parameters:
       - python: finalized
         typescript: finalized
@@ -8835,7 +8834,7 @@ resources:
         python: EvaluateResult
         typescript: Promise<EvaluateResult>
         type: EvaluateResult
-      body: EvaluateRequest
+      body: EvaluateInput
       parameters:
       - python: metric_collection
         typescript: metricCollection
@@ -8857,8 +8856,8 @@ resources:
         wire: testCases
         in: body
         type:
-          python: List[TestCase]
-          typescript: TestCase[]
+          python: List[TestCaseInput]
+          typescript: TestCaseInput[]
         required: true
         keyword:
           python: false
@@ -8868,14 +8867,14 @@ resources:
           in one request must be of the same kind — all single-turn, or all multi-turn.
         example: null
         references:
-        - TestCase
+        - TestCaseInput
       - python: hyperparameters
         typescript: hyperparameters
         wire: hyperparameters
         in: body
         type:
-          python: Optional[Dict[str, HyperparameterValue]]
-          typescript: Record<string, HyperparameterValue>
+          python: Optional[Dict[str, HyperparameterValueInput]]
+          typescript: Record<string, HyperparameterValueInput>
         required: false
         keyword:
           python: true
@@ -8886,7 +8885,7 @@ resources:
         example:
           model: gpt-4o-mini
         references:
-        - HyperparameterValue
+        - HyperparameterValueInput
       - python: identifier
         typescript: identifier
         wire: identifier
@@ -8929,7 +8928,7 @@ resources:
         python: EvaluateSpanResult
         typescript: Promise<EvaluateSpanResult>
         type: EvaluateSpanResult
-      body: EvaluateSpanRequest
+      body: EvaluateSpanInput
       parameters:
       - python: span_uuid
         typescript: spanUuid
@@ -9004,7 +9003,7 @@ resources:
         python: EvaluateThreadResult
         typescript: Promise<EvaluateThreadResult>
         type: EvaluateThreadResult
-      body: EvaluateThreadRequest
+      body: EvaluateThreadInput
       parameters:
       - python: thread_id
         typescript: threadId
@@ -9097,7 +9096,7 @@ resources:
         python: EvaluateTraceResult
         typescript: Promise<EvaluateTraceResult>
         type: EvaluateTraceResult
-      body: EvaluateTraceRequest
+      body: EvaluateTraceInput
       parameters:
       - python: trace_uuid
         typescript: traceUuid
@@ -9262,7 +9261,7 @@ resources:
         python: EvaluationRuleRef
         typescript: Promise<EvaluationRuleRef>
         type: EvaluationRuleRef
-      body: CreateEvaluationRuleRequest
+      body: CreateEvaluationRuleInput
       parameters:
       - python: name
         typescript: name
@@ -9515,7 +9514,7 @@ resources:
         python: EvaluationRule
         typescript: Promise<EvaluationRule>
         type: EvaluationRule
-      body: UpdateEvaluationRuleRequest
+      body: UpdateEvaluationRuleInput
       parameters:
       - python: evaluation_rule_id
         typescript: evaluationRuleId
@@ -9851,7 +9850,7 @@ resources:
         python: ExportDestinationRef
         typescript: Promise<ExportDestinationRef>
         type: ExportDestinationRef
-      body: CreateExportDestinationRequest
+      body: CreateExportDestinationInput
       parameters:
       - python: name
         typescript: name
@@ -9974,8 +9973,8 @@ resources:
         wire: snowflakeConfig
         in: body
         type:
-          python: Optional[SnowflakeExportDestinationConfig]
-          typescript: SnowflakeExportDestinationConfig
+          python: Optional[SnowflakeExportDestinationConfigInput]
+          typescript: SnowflakeExportDestinationConfigInput
         required: false
         keyword:
           python: true
@@ -9984,7 +9983,7 @@ resources:
         description: null
         example: null
         references:
-        - SnowflakeExportDestinationConfig
+        - SnowflakeExportDestinationConfigInput
       - python: enabled
         typescript: enabled
         wire: enabled
@@ -10078,7 +10077,7 @@ resources:
         python: ExportDestination
         typescript: Promise<ExportDestination>
         type: ExportDestination
-      body: UpdateExportDestinationRequest
+      body: UpdateExportDestinationInput
       parameters:
       - python: export_destination_id
         typescript: exportDestinationId
@@ -10214,8 +10213,8 @@ resources:
         wire: snowflakeConfig
         in: body
         type:
-          python: Optional[SnowflakeExportDestinationConfigUpdate]
-          typescript: SnowflakeExportDestinationConfigUpdate
+          python: Optional[SnowflakeExportDestinationConfigUpdateInput]
+          typescript: SnowflakeExportDestinationConfigUpdateInput
         required: false
         keyword:
           python: true
@@ -10224,7 +10223,7 @@ resources:
         description: null
         example: null
         references:
-        - SnowflakeExportDestinationConfigUpdate
+        - SnowflakeExportDestinationConfigUpdateInput
       - python: enabled
         typescript: enabled
         wire: enabled
@@ -10425,7 +10424,7 @@ resources:
         python: ExportScheduleRef
         typescript: Promise<ExportScheduleRef>
         type: ExportScheduleRef
-      body: CreateExportScheduleRequest
+      body: CreateExportScheduleInput
       parameters:
       - python: name
         typescript: name
@@ -10745,7 +10744,7 @@ resources:
         python: ExportSchedule
         typescript: Promise<ExportSchedule>
         type: ExportSchedule
-      body: UpdateExportScheduleRequest
+      body: UpdateExportScheduleInput
       parameters:
       - python: export_schedule_id
         typescript: exportScheduleId
@@ -11135,7 +11134,7 @@ resources:
         python: ForwardingConnectorRef
         typescript: Promise<ForwardingConnectorRef>
         type: ForwardingConnectorRef
-      body: CreateForwardingConnectorRequest
+      body: CreateForwardingConnectorInput
       parameters:
       - python: name
         typescript: name
@@ -11293,7 +11292,7 @@ resources:
         python: ForwardingConnector
         typescript: Promise<ForwardingConnector>
         type: ForwardingConnector
-      body: UpdateForwardingConnectorRequest
+      body: UpdateForwardingConnectorInput
       parameters:
       - python: forwarding_connector_id
         typescript: forwardingConnectorId
@@ -11574,7 +11573,7 @@ resources:
         python: McpServerRef
         typescript: Promise<McpServerRef>
         type: McpServerRef
-      body: CreateMcpServerRequest
+      body: CreateMcpServerInput
       parameters:
       - python: name
         typescript: name
@@ -11677,8 +11676,8 @@ resources:
         wire: authConfig
         in: body
         type:
-          python: Optional[McpServerAuthConfig]
-          typescript: McpServerAuthConfig | null
+          python: Optional[McpServerAuthConfigInput]
+          typescript: McpServerAuthConfigInput | null
         required: false
         keyword:
           python: true
@@ -11688,7 +11687,7 @@ resources:
           clear them.
         example: null
         references:
-        - McpServerAuthConfig
+        - McpServerAuthConfigInput
       - python: command
         typescript: command
         wire: command
@@ -11799,7 +11798,7 @@ resources:
         python: McpServer
         typescript: Promise<McpServer>
         type: McpServer
-      body: UpdateMcpServerRequest
+      body: UpdateMcpServerInput
       parameters:
       - python: mcp_server_id
         typescript: mcpServerId
@@ -11917,8 +11916,8 @@ resources:
         wire: authConfig
         in: body
         type:
-          python: Optional[McpServerAuthConfig]
-          typescript: McpServerAuthConfig | null
+          python: Optional[McpServerAuthConfigInput]
+          typescript: McpServerAuthConfigInput | null
         required: false
         keyword:
           python: true
@@ -11928,7 +11927,7 @@ resources:
           clear them.
         example: null
         references:
-        - McpServerAuthConfig
+        - McpServerAuthConfigInput
       - python: command
         typescript: command
         wire: command
@@ -12115,7 +12114,7 @@ resources:
         python: MetricCollection
         typescript: Promise<MetricCollection>
         type: MetricCollection
-      body: CreateMetricCollectionRequest
+      body: CreateMetricCollectionInput
       parameters:
       - python: name
         typescript: name
@@ -12283,7 +12282,7 @@ resources:
         python: MetricCollection
         typescript: Promise<MetricCollection>
         type: MetricCollection
-      body: UpdateMetricCollectionRequest
+      body: UpdateMetricCollectionInput
       parameters:
       - python: metric_collection_id
         typescript: metricCollectionId
@@ -12733,7 +12732,7 @@ resources:
         python: Metric
         typescript: Promise<Metric>
         type: Metric
-      body: UpdateMetricRequest
+      body: UpdateMetricInput
       parameters:
       - python: metric_id
         typescript: metricId
@@ -12974,7 +12973,7 @@ resources:
         python: MetricList
         typescript: Promise<MetricList>
         type: MetricList
-      body: CreateMetricsBatchRequest
+      body: CreateMetricsBatchInput
       parameters:
       - python: metrics
         typescript: metrics
@@ -13245,7 +13244,7 @@ resources:
         python: ModelCostRef
         typescript: Promise<ModelCostRef>
         type: ModelCostRef
-      body: CreateModelCostRequest
+      body: CreateModelCostInput
       parameters:
       - python: match_pattern
         typescript: matchPattern
@@ -13341,7 +13340,7 @@ resources:
         python: ModelCost
         typescript: Promise<ModelCost>
         type: ModelCost
-      body: UpdateModelCostRequest
+      body: UpdateModelCostInput
       parameters:
       - python: model_cost_id
         typescript: modelCostId
@@ -13529,7 +13528,7 @@ resources:
         python: Organization
         typescript: Promise<Organization>
         type: Organization
-      body: UpdateOrganizationRequest
+      body: UpdateOrganizationInput
       parameters:
       - python: name
         typescript: name
@@ -13574,7 +13573,7 @@ resources:
         python: ModelCredentials
         typescript: Promise<ModelCredentials>
         type: ModelCredentials
-      body: UpdateModelCredentialsRequest
+      body: UpdateModelCredentialsInput
       parameters:
       - python: provider
         typescript: provider
@@ -13724,7 +13723,7 @@ resources:
         python: CreatedApiKey
         typescript: Promise<CreatedApiKey>
         type: CreatedApiKey
-      body: CreateApiKeyRequest
+      body: CreateApiKeyInput
       parameters:
       - python: name
         typescript: name
@@ -13821,7 +13820,7 @@ resources:
         python: ApiKey
         typescript: Promise<ApiKey>
         type: ApiKey
-      body: UpdateApiKeyRequest
+      body: UpdateApiKeyInput
       parameters:
       - python: api_key_id
         typescript: apiKeyId
@@ -13918,7 +13917,7 @@ resources:
         python: RotatedApiKey
         typescript: Promise<RotatedApiKey>
         type: RotatedApiKey
-      body: RotateApiKeyRequest
+      body: RotateApiKeyInput
       parameters:
       - python: api_key_id
         typescript: apiKeyId
@@ -14009,7 +14008,7 @@ resources:
         python: AuditLogExport
         typescript: Promise<AuditLogExport>
         type: AuditLogExport
-      body: CreateAuditLogExportRequest
+      body: CreateAuditLogExportInput
       parameters:
       - python: start_time
         typescript: startTime
@@ -14231,7 +14230,7 @@ resources:
         python: GovernanceControlRef
         typescript: Promise<GovernanceControlRef>
         type: GovernanceControlRef
-      body: CreateGovernanceControlRequest
+      body: CreateGovernanceControlInput
       parameters:
       - python: name
         typescript: name
@@ -14285,8 +14284,8 @@ resources:
         wire: runtimeConfig
         in: body
         type:
-          python: Optional[GovernanceControlRuntimeConfig]
-          typescript: GovernanceControlRuntimeConfig
+          python: Optional[GovernanceControlRuntimeConfigInput]
+          typescript: GovernanceControlRuntimeConfigInput
         required: false
         keyword:
           python: true
@@ -14295,14 +14294,14 @@ resources:
         description: null
         example: null
         references:
-        - GovernanceControlRuntimeConfig
+        - GovernanceControlRuntimeConfigInput
       - python: pre_deployment_config
         typescript: preDeploymentConfig
         wire: preDeploymentConfig
         in: body
         type:
-          python: Optional[GovernanceControlPreDeploymentConfig]
-          typescript: GovernanceControlPreDeploymentConfig
+          python: Optional[GovernanceControlPreDeploymentConfigInput]
+          typescript: GovernanceControlPreDeploymentConfigInput
         required: false
         keyword:
           python: true
@@ -14311,7 +14310,7 @@ resources:
         description: null
         example: null
         references:
-        - GovernanceControlPreDeploymentConfig
+        - GovernanceControlPreDeploymentConfigInput
       - python: governance_policy_id
         typescript: governancePolicyId
         wire: governancePolicyId
@@ -14400,7 +14399,7 @@ resources:
         python: GovernanceControl
         typescript: Promise<GovernanceControl>
         type: GovernanceControl
-      body: UpdateGovernanceControlRequest
+      body: UpdateGovernanceControlInput
       parameters:
       - python: control_id
         typescript: controlId
@@ -14778,12 +14777,12 @@ resources:
           config, and every other type — `RUNTIME` and `OPERATIONAL` alike — takes
           the runtime config. Except for `extraQueryParams`, every field is required
           even when `null`, so a version is a complete definition rather than a patch
-          of the one before it. Pass a GovernanceControlRuntimeConfig or a GovernanceControlPreDeploymentConfig.'
+          of the one before it. Pass a GovernanceControlRuntimeConfigInput or a GovernanceControlPreDeploymentConfigInput.'
         example: null
         references:
         - GovernanceControlVersionInput
-        - GovernanceControlRuntimeConfig
-        - GovernanceControlPreDeploymentConfig
+        - GovernanceControlRuntimeConfigInput
+        - GovernanceControlPreDeploymentConfigInput
       order:
         python:
         - control_id
@@ -14842,7 +14841,7 @@ resources:
         python: GovernancePolicyIdentifier
         typescript: Promise<GovernancePolicyIdentifier>
         type: GovernancePolicyIdentifier
-      body: CreateGovernancePolicyRequest
+      body: CreateGovernancePolicyInput
       parameters:
       - python: name
         typescript: name
@@ -14964,7 +14963,7 @@ resources:
         python: GovernancePolicy
         typescript: Promise<GovernancePolicy>
         type: GovernancePolicy
-      body: UpdateGovernancePolicyRequest
+      body: UpdateGovernancePolicyInput
       parameters:
       - python: policy_id
         typescript: policyId
@@ -15162,7 +15161,7 @@ resources:
         python: GovernancePolicyAssignment
         typescript: Promise<GovernancePolicyAssignment>
         type: GovernancePolicyAssignment
-      body: GovernancePolicyProjectsRequest
+      body: GovernancePolicyProjectsInput
       parameters:
       - python: policy_id
         typescript: policyId
@@ -15297,7 +15296,7 @@ resources:
         python: GovernancePolicyUnassignment
         typescript: Promise<GovernancePolicyUnassignment>
         type: GovernancePolicyUnassignment
-      body: GovernancePolicyProjectsRequest
+      body: GovernancePolicyProjectsInput
       parameters:
       - python: policy_id
         typescript: policyId
@@ -15409,7 +15408,7 @@ resources:
         python: GovernancePolicyControlList
         typescript: Promise<GovernancePolicyControlList>
         type: GovernancePolicyControlList
-      body: SetGovernancePolicyControlsRequest
+      body: SetGovernancePolicyControlsInput
       parameters:
       - python: policy_id
         typescript: policyId
@@ -15470,7 +15469,7 @@ resources:
         python: GovernancePolicyControlList
         typescript: Promise<GovernancePolicyControlList>
         type: GovernancePolicyControlList
-      body: DeleteGovernancePolicyControlsRequest
+      body: DeleteGovernancePolicyControlsInput
       parameters:
       - python: policy_id
         typescript: policyId
@@ -15581,7 +15580,7 @@ resources:
         python: GovernancePolicySkill
         typescript: Promise<GovernancePolicySkill>
         type: GovernancePolicySkill
-      body: UpdateGovernancePolicySkillRequest
+      body: UpdateGovernancePolicySkillInput
       parameters:
       - python: policy_id
         typescript: policyId
@@ -15865,7 +15864,7 @@ resources:
         python: OrganizationInvitationList
         typescript: Promise<OrganizationInvitationList>
         type: OrganizationInvitationList
-      body: CreateOrganizationInvitationsRequest
+      body: CreateOrganizationInvitationsInput
       parameters:
       - python: emails
         typescript: emails
@@ -16074,7 +16073,7 @@ resources:
         python: OrganizationMember
         typescript: Promise<OrganizationMember>
         type: OrganizationMember
-      body: UpdateMemberRoleRequest
+      body: UpdateMemberRoleInput
       parameters:
       - python: user_id
         typescript: userId
@@ -16224,7 +16223,7 @@ resources:
         python: Model
         typescript: Promise<Model>
         type: Model
-      body: UpdateOrganizationModelRequest
+      body: UpdateOrganizationModelInput
       parameters:
       - python: model_type
         typescript: modelType
@@ -16387,7 +16386,7 @@ resources:
         python: Policy
         typescript: Promise<Policy>
         type: Policy
-      body: CreateOrUpdatePolicyRequest
+      body: CreateOrUpdatePolicyInput
       parameters:
       - python: name
         typescript: name
@@ -16468,7 +16467,7 @@ resources:
         python: Policy
         typescript: Promise<Policy>
         type: Policy
-      body: CreateOrUpdatePolicyRequest
+      body: CreateOrUpdatePolicyInput
       parameters:
       - python: policy_id
         typescript: policyId
@@ -16638,7 +16637,7 @@ resources:
         python: OrganizationRole
         typescript: Promise<OrganizationRole>
         type: OrganizationRole
-      body: CreateOrUpdateRoleRequest
+      body: CreateOrUpdateRoleInput
       parameters:
       - python: name
         typescript: name
@@ -16718,7 +16717,7 @@ resources:
         python: OrganizationRole
         typescript: Promise<OrganizationRole>
         type: OrganizationRole
-      body: CreateOrUpdateRoleRequest
+      body: CreateOrUpdateRoleInput
       parameters:
       - python: role_id
         typescript: roleId
@@ -16930,7 +16929,7 @@ resources:
         python: PersonaRef
         typescript: Promise<PersonaRef>
         type: PersonaRef
-      body: CreatePersonaRequest
+      body: CreatePersonaInput
       parameters:
       - python: name
         typescript: name
@@ -17057,7 +17056,7 @@ resources:
         python: Persona
         typescript: Promise<Persona>
         type: Persona
-      body: UpdatePersonaRequest
+      body: UpdatePersonaInput
       parameters:
       - python: persona_id
         typescript: personaId
@@ -17234,7 +17233,7 @@ resources:
         python: CreateProjectResult
         typescript: Promise<CreateProjectResult>
         type: CreateProjectResult
-      body: CreateProjectRequest
+      body: CreateProjectInput
       parameters:
       - python: name
         typescript: name
@@ -17348,7 +17347,7 @@ resources:
         python: Project
         typescript: Promise<Project>
         type: Project
-      body: UpdateProjectRequest
+      body: UpdateProjectInput
       parameters:
       - python: project_id
         typescript: projectId
@@ -17473,7 +17472,7 @@ resources:
         python: ModelCredentials
         typescript: Promise<ModelCredentials>
         type: ModelCredentials
-      body: UpdateModelCredentialsRequest
+      body: UpdateModelCredentialsInput
       parameters:
       - python: project_id
         typescript: projectId
@@ -17676,7 +17675,7 @@ resources:
         python: CreatedApiKey
         typescript: Promise<CreatedApiKey>
         type: CreatedApiKey
-      body: CreateApiKeyRequest
+      body: CreateApiKeyInput
       parameters:
       - python: project_id
         typescript: projectId
@@ -17807,7 +17806,7 @@ resources:
         python: ApiKey
         typescript: Promise<ApiKey>
         type: ApiKey
-      body: UpdateApiKeyRequest
+      body: UpdateApiKeyInput
       parameters:
       - python: project_id
         typescript: projectId
@@ -17939,7 +17938,7 @@ resources:
         python: RotatedApiKey
         typescript: Promise<RotatedApiKey>
         type: RotatedApiKey
-      body: RotateApiKeyRequest
+      body: RotateApiKeyInput
       parameters:
       - python: project_id
         typescript: projectId
@@ -18048,7 +18047,7 @@ resources:
         python: AuditLogExport
         typescript: Promise<AuditLogExport>
         type: AuditLogExport
-      body: CreateAuditLogExportRequest
+      body: CreateAuditLogExportInput
       parameters:
       - python: project_id
         typescript: projectId
@@ -18254,7 +18253,7 @@ resources:
         python: ProjectInvitationList
         typescript: Promise<ProjectInvitationList>
         type: ProjectInvitationList
-      body: CreateProjectInvitationsRequest
+      body: CreateProjectInvitationsInput
       parameters:
       - python: project_id
         typescript: projectId
@@ -18533,7 +18532,7 @@ resources:
         python: ProjectMember
         typescript: Promise<ProjectMember>
         type: ProjectMember
-      body: UpdateMemberRoleRequest
+      body: UpdateMemberRoleInput
       parameters:
       - python: project_id
         typescript: projectId
@@ -18784,13 +18783,13 @@ resources:
           name, `evaluation` also accepts max concurrency, and platform, simulation,
           and speech models also accept max input tokens. This replaces the whole
           configuration rather than patching it. `CUSTOM` is rejected. Pass one of
-          EvaluationProjectModel, DecisionProjectModel, PlatformProjectModel.'
+          EvaluationProjectModelInput, DecisionProjectModelInput, PlatformProjectModelInput.'
         example: null
         references:
         - ProjectModelInput
-        - EvaluationProjectModel
-        - DecisionProjectModel
-        - PlatformProjectModel
+        - EvaluationProjectModelInput
+        - DecisionProjectModelInput
+        - PlatformProjectModelInput
       order:
         python:
         - project_id
@@ -18923,7 +18922,7 @@ resources:
         python: Policy
         typescript: Promise<Policy>
         type: Policy
-      body: CreateOrUpdatePolicyRequest
+      body: CreateOrUpdatePolicyInput
       parameters:
       - python: project_id
         typescript: projectId
@@ -19021,7 +19020,7 @@ resources:
         python: Policy
         typescript: Promise<Policy>
         type: Policy
-      body: CreateOrUpdatePolicyRequest
+      body: CreateOrUpdatePolicyInput
       parameters:
       - python: project_id
         typescript: projectId
@@ -19243,7 +19242,7 @@ resources:
         python: ProjectRole
         typescript: Promise<ProjectRole>
         type: ProjectRole
-      body: CreateOrUpdateRoleRequest
+      body: CreateOrUpdateRoleInput
       parameters:
       - python: project_id
         typescript: projectId
@@ -19340,7 +19339,7 @@ resources:
         python: ProjectRole
         typescript: Promise<ProjectRole>
         type: ProjectRole
-      body: CreateOrUpdateRoleRequest
+      body: CreateOrUpdateRoleInput
       parameters:
       - python: project_id
         typescript: projectId
@@ -19680,7 +19679,7 @@ resources:
         python: CreatedApiKey
         typescript: Promise<CreatedApiKey>
         type: CreatedApiKey
-      body: CreateApiKeyRequest
+      body: CreateApiKeyInput
       parameters:
       - python: name
         typescript: name
@@ -19777,7 +19776,7 @@ resources:
         python: ApiKey
         typescript: Promise<ApiKey>
         type: ApiKey
-      body: UpdateApiKeyRequest
+      body: UpdateApiKeyInput
       parameters:
       - python: api_key_id
         typescript: apiKeyId
@@ -19875,7 +19874,7 @@ resources:
         python: RotatedApiKey
         typescript: Promise<RotatedApiKey>
         type: RotatedApiKey
-      body: RotateApiKeyRequest
+      body: RotateApiKeyInput
       parameters:
       - python: api_key_id
         typescript: apiKeyId
@@ -20012,7 +20011,7 @@ resources:
         python: ProjectMember
         typescript: Promise<ProjectMember>
         type: ProjectMember
-      body: UpdateMemberRoleRequest
+      body: UpdateMemberRoleInput
       parameters:
       - python: user_id
         typescript: userId
@@ -20136,7 +20135,7 @@ resources:
         python: ProjectInvitationList
         typescript: Promise<ProjectInvitationList>
         type: ProjectInvitationList
-      body: CreateProjectInvitationsRequest
+      body: CreateProjectInvitationsInput
       parameters:
       - python: emails
         typescript: emails
@@ -20328,7 +20327,7 @@ resources:
         python: Policy
         typescript: Promise<Policy>
         type: Policy
-      body: CreateOrUpdatePolicyRequest
+      body: CreateOrUpdatePolicyInput
       parameters:
       - python: name
         typescript: name
@@ -20409,7 +20408,7 @@ resources:
         python: Policy
         typescript: Promise<Policy>
         type: Policy
-      body: CreateOrUpdatePolicyRequest
+      body: CreateOrUpdatePolicyInput
       parameters:
       - python: policy_id
         typescript: policyId
@@ -20571,7 +20570,7 @@ resources:
         python: ProjectRole
         typescript: Promise<ProjectRole>
         type: ProjectRole
-      body: CreateOrUpdateRoleRequest
+      body: CreateOrUpdateRoleInput
       parameters:
       - python: name
         typescript: name
@@ -20651,7 +20650,7 @@ resources:
         python: ProjectRole
         typescript: Promise<ProjectRole>
         type: ProjectRole
-      body: CreateOrUpdateRoleRequest
+      body: CreateOrUpdateRoleInput
       parameters:
       - python: role_id
         typescript: roleId
@@ -20868,13 +20867,13 @@ resources:
           name, `evaluation` also accepts max concurrency, and platform, simulation,
           and speech models also accept max input tokens. This replaces the whole
           configuration rather than patching it. `CUSTOM` is rejected. Pass one of
-          EvaluationProjectModel, DecisionProjectModel, PlatformProjectModel.'
+          EvaluationProjectModelInput, DecisionProjectModelInput, PlatformProjectModelInput.'
         example: null
         references:
         - ProjectModelInput
-        - EvaluationProjectModel
-        - DecisionProjectModel
-        - PlatformProjectModel
+        - EvaluationProjectModelInput
+        - DecisionProjectModelInput
+        - PlatformProjectModelInput
       order:
         python:
         - model_type
@@ -20944,7 +20943,7 @@ resources:
         python: ModelCredentials
         typescript: Promise<ModelCredentials>
         type: ModelCredentials
-      body: UpdateModelCredentialsRequest
+      body: UpdateModelCredentialsInput
       parameters:
       - python: provider
         typescript: provider
@@ -21042,7 +21041,7 @@ resources:
         python: AuditLogExport
         typescript: Promise<AuditLogExport>
         type: AuditLogExport
-      body: CreateAuditLogExportRequest
+      body: CreateAuditLogExportInput
       parameters:
       - python: start_time
         typescript: startTime
@@ -21180,7 +21179,7 @@ resources:
         python: ProjectPayload
         typescript: Promise<ProjectPayload>
         type: Project
-      body: UpdateProjectRequest
+      body: UpdateProjectInput
       parameters: []
       order:
         python: []
@@ -21374,7 +21373,7 @@ resources:
         python: PromptBranch
         typescript: Promise<PromptBranch>
         type: PromptBranch
-      body: CreatePromptBranchRequest
+      body: CreatePromptBranchInput
       parameters:
       - python: prompt_id
         typescript: promptId
@@ -21428,7 +21427,7 @@ resources:
         python: PromptBranchRef
         typescript: Promise<PromptBranchRef>
         type: PromptBranchRef
-      body: UpdatePromptBranchRequest
+      body: UpdatePromptBranchInput
       parameters:
       - python: prompt_id
         typescript: promptId
@@ -21735,7 +21734,7 @@ resources:
         python: CreatePromptVersionResult
         typescript: Promise<CreatePromptVersionResult>
         type: CreatePromptVersionResult
-      body: CreatePromptVersionRequest
+      body: CreatePromptVersionInput
       parameters:
       - python: prompt_id
         typescript: promptId
@@ -22054,8 +22053,8 @@ resources:
       typescript: imagesMapping
       wire: null
       type:
-        python: Optional[Dict[str, MLLMImage]]
-        typescript: Record<string, MLLMImage>
+        python: Optional[Dict[str, MLLMImageInput]]
+        typescript: Record<string, MLLMImageInput>
       description: null
       example: null
       references: []
@@ -22095,7 +22094,7 @@ resources:
         python: CreatePromptVersionResult
         typescript: Promise<CreatePromptVersionResult>
         type: CreatePromptVersionResult
-      body: CreatePromptVersionRequest
+      body: CreatePromptVersionInput
       parameters:
       - python: hash
         typescript: hash
@@ -22191,7 +22190,7 @@ resources:
         python: PromptBranch
         typescript: Promise<PromptBranch>
         type: PromptBranch
-      body: CreatePromptBranchRequest
+      body: CreatePromptBranchInput
       parameters:
       - python: name
         typescript: name
@@ -22228,7 +22227,7 @@ resources:
         python: PromptBranchRef
         typescript: Promise<PromptBranchRef>
         type: PromptBranchRef
-      body: UpdatePromptBranchRequest
+      body: UpdatePromptBranchInput
       parameters:
       - python: branch_id
         typescript: branchId
@@ -22637,7 +22636,7 @@ resources:
         python: ReportTemplateRef
         typescript: Promise<ReportTemplateRef>
         type: ReportTemplateRef
-      body: CreateReportTemplateRequest
+      body: CreateReportTemplateInput
       parameters:
       - python: name
         typescript: name
@@ -22878,7 +22877,7 @@ resources:
         python: ReportTemplate
         typescript: Promise<ReportTemplate>
         type: ReportTemplate
-      body: UpdateReportTemplateRequest
+      body: UpdateReportTemplateInput
       parameters:
       - python: report_template_id
         typescript: reportTemplateId
@@ -23278,7 +23277,7 @@ resources:
         python: ReportRef
         typescript: Promise<ReportRef>
         type: ReportRef
-      body: CreateReportRequest
+      body: CreateReportInput
       parameters:
       - python: report_template_id
         typescript: reportTemplateId
@@ -23425,7 +23424,7 @@ resources:
         python: Report
         typescript: Promise<Report>
         type: Report
-      body: UpdateReportRequest
+      body: UpdateReportInput
       parameters:
       - python: report_id
         typescript: reportId
@@ -23644,7 +23643,7 @@ resources:
         python: RTFrameworkRef
         typescript: Promise<RTFrameworkRef>
         type: RTFrameworkRef
-      body: CreateRTFrameworkRequest
+      body: CreateRTFrameworkInput
       parameters:
       - python: name
         typescript: name
@@ -23755,7 +23754,7 @@ resources:
         python: RTFramework
         typescript: Promise<RTFramework>
         type: RTFramework
-      body: UpdateRTFrameworkRequest
+      body: UpdateRTFrameworkInput
       parameters:
       - python: rt_framework_id
         typescript: rtFrameworkId
@@ -23865,7 +23864,7 @@ resources:
         python: RiskAssessmentRef
         typescript: Promise<RiskAssessmentRef>
         type: RiskAssessmentRef
-      body: RunRTFrameworkRequest
+      body: RunRTFrameworkInput
       parameters:
       - python: rt_framework_id
         typescript: rtFrameworkId
@@ -24000,8 +23999,8 @@ resources:
         wire: attackEngine
         in: body
         type:
-          python: Optional[AttackEngine]
-          typescript: AttackEngine
+          python: Optional[AttackEngineInput]
+          typescript: AttackEngineInput
         required: false
         keyword:
           python: true
@@ -24010,7 +24009,7 @@ resources:
         description: null
         example: null
         references:
-        - AttackEngine
+        - AttackEngineInput
       order:
         python:
         - rt_framework_id
@@ -24130,7 +24129,7 @@ resources:
         python: RiskCategoryRef
         typescript: Promise<RiskCategoryRef>
         type: RiskCategoryRef
-      body: CreateRiskCategoryRequest
+      body: CreateRiskCategoryInput
       parameters:
       - python: rt_framework_id
         typescript: rtFrameworkId
@@ -24314,7 +24313,7 @@ resources:
         python: RiskCategory
         typescript: Promise<RiskCategory>
         type: RiskCategory
-      body: UpdateRiskCategoryRequest
+      body: UpdateRiskCategoryInput
       parameters:
       - python: rt_framework_id
         typescript: rtFrameworkId
@@ -24624,7 +24623,7 @@ resources:
         python: ScheduledAlertRef
         typescript: Promise<ScheduledAlertRef>
         type: ScheduledAlertRef
-      body: CreateScheduledAlertRequest
+      body: CreateScheduledAlertInput
       parameters:
       - python: name
         typescript: name
@@ -24885,8 +24884,8 @@ resources:
         wire: detectionSettings
         in: body
         type:
-          python: Optional[ScheduledAlertDetectionSettings]
-          typescript: ScheduledAlertDetectionSettings
+          python: Optional[ScheduledAlertDetectionSettingsInput]
+          typescript: ScheduledAlertDetectionSettingsInput
         required: false
         keyword:
           python: true
@@ -24895,7 +24894,7 @@ resources:
         description: null
         example: null
         references:
-        - ScheduledAlertDetectionSettings
+        - ScheduledAlertDetectionSettingsInput
       - python: enabled
         typescript: enabled
         wire: enabled
@@ -25001,7 +25000,7 @@ resources:
         python: ScheduledAlert
         typescript: Promise<ScheduledAlert>
         type: ScheduledAlert
-      body: UpdateScheduledAlertRequest
+      body: UpdateScheduledAlertInput
       parameters:
       - python: scheduled_alert_id
         typescript: scheduledAlertId
@@ -25276,8 +25275,8 @@ resources:
         wire: detectionSettings
         in: body
         type:
-          python: Optional[ScheduledAlertDetectionSettings]
-          typescript: ScheduledAlertDetectionSettings
+          python: Optional[ScheduledAlertDetectionSettingsInput]
+          typescript: ScheduledAlertDetectionSettingsInput
         required: false
         keyword:
           python: true
@@ -25286,7 +25285,7 @@ resources:
         description: null
         example: null
         references:
-        - ScheduledAlertDetectionSettings
+        - ScheduledAlertDetectionSettingsInput
       - python: enabled
         typescript: enabled
         wire: enabled
@@ -25975,7 +25974,7 @@ resources:
         python: TestRunRef
         typescript: Promise<TestRunRef>
         type: TestRunRef
-      body: CreateTestRunRequest
+      body: CreateTestRunInput
       parameters:
       - python: metric_collection
         typescript: metricCollection
@@ -26038,7 +26037,7 @@ resources:
         python: SubmittedTestCaseResult
         typescript: Promise<SubmittedTestCaseResult>
         type: SubmittedTestCaseResult
-      body: SubmitTestCaseResultRequest
+      body: SubmitTestCaseResultInput
       parameters:
       - python: test_case_id
         typescript: testCaseId
@@ -26560,7 +26559,7 @@ resources:
         python: ToolRef
         typescript: Promise<ToolRef>
         type: ToolRef
-      body: CreateToolRequest
+      body: CreateToolInput
       parameters:
       - python: name
         typescript: name
@@ -26724,7 +26723,7 @@ resources:
         python: Tool
         typescript: Promise<Tool>
         type: Tool
-      body: UpdateToolRequest
+      body: UpdateToolInput
       parameters:
       - python: tool_id
         typescript: toolId
@@ -27139,7 +27138,7 @@ resources:
         python: TraceRef
         typescript: Promise<TraceRef>
         type: TraceRef
-      body: CreateTraceRequest
+      body: CreateTraceInput
       parameters:
       - python: uuid
         typescript: uuid
@@ -27352,8 +27351,8 @@ resources:
         wire: user
         in: body
         type:
-          python: Optional[User]
-          typescript: User
+          python: Optional[UserInput]
+          typescript: UserInput
         required: false
         keyword:
           python: true
@@ -27362,7 +27361,7 @@ resources:
         description: null
         example: null
         references:
-        - User
+        - UserInput
       - python: customer_id
         typescript: customerId
         wire: customerId
@@ -27384,8 +27383,8 @@ resources:
         wire: customer
         in: body
         type:
-          python: Optional[Customer]
-          typescript: Customer
+          python: Optional[CustomerInput]
+          typescript: CustomerInput
         required: false
         keyword:
           python: true
@@ -27394,7 +27393,7 @@ resources:
         description: null
         example: null
         references:
-        - Customer
+        - CustomerInput
       - python: metric_collection
         typescript: metricCollection
         wire: metricCollection
@@ -27593,8 +27592,8 @@ resources:
         wire: attachments
         in: body
         type:
-          python: Optional[Dict[str, TraceAttachment]]
-          typescript: Record<string, TraceAttachment>
+          python: Optional[Dict[str, TraceAttachmentInput]]
+          typescript: Record<string, TraceAttachmentInput>
         required: false
         keyword:
           python: true
@@ -27608,7 +27607,7 @@ resources:
             mimeType: application/pdf
             dataBase64: JVBERi0xLjQK
         references:
-        - TraceAttachment
+        - TraceAttachmentInput
       order:
         python:
         - uuid
@@ -27792,7 +27791,7 @@ resources:
         python: TransformerRef
         typescript: Promise<TransformerRef>
         type: TransformerRef
-      body: CreateTransformerRequest
+      body: CreateTransformerInput
       parameters:
       - python: name
         typescript: name
@@ -27903,7 +27902,7 @@ resources:
         python: Transformer
         typescript: Promise<Transformer>
         type: Transformer
-      body: UpdateTransformerRequest
+      body: UpdateTransformerInput
       parameters:
       - python: transformer_id
         typescript: transformerId
@@ -28032,7 +28031,7 @@ resources:
         python: TransformerCodeRunResult
         typescript: Promise<TransformerCodeRunResult>
         type: TransformerCodeRunResult
-      body: TestTransformerCodeRequest
+      body: TestTransformerCodeInput
       parameters:
       - python: transformer_id
         typescript: transformerId
@@ -28160,7 +28159,7 @@ resources:
         python: VoiceConnection
         typescript: Promise<VoiceConnection>
         type: VoiceConnection
-      body: CreateVoiceConnectionRequest
+      body: CreateVoiceConnectionInput
       parameters:
       - python: name
         typescript: name
@@ -28272,7 +28271,7 @@ resources:
         python: VoiceConnection
         typescript: Promise<VoiceConnection>
         type: VoiceConnection
-      body: UpdateVoiceConnectionRequest
+      body: UpdateVoiceConnectionInput
       parameters:
       - python: voice_connection_id
         typescript: voiceConnectionId
@@ -28619,7 +28618,7 @@ resources:
         python: VulnerabilityRef
         typescript: Promise<VulnerabilityRef>
         type: VulnerabilityRef
-      body: CreateVulnerabilityRequest
+      body: CreateVulnerabilityInput
       parameters:
       - python: name
         typescript: name
@@ -28787,7 +28786,7 @@ resources:
         python: Vulnerability
         typescript: Promise<Vulnerability>
         type: Vulnerability
-      body: UpdateVulnerabilityRequest
+      body: UpdateVulnerabilityInput
       parameters:
       - python: vulnerability_id
         typescript: vulnerabilityId
@@ -28990,7 +28989,7 @@ resources:
         python: AdHocWidgetQueryResult
         typescript: Promise<AdHocWidgetQueryResult>
         type: AdHocWidgetQueryResult
-      body: AdHocWidgetQueryRequest
+      body: AdHocWidgetQueryInput
       parameters:
       - python: widget
         typescript: widget
@@ -30247,17 +30246,17 @@ types:
   - name: AGENT_HANDLER
     value: AGENT_HANDLER
   references: []
-- name: AdHocWidgetQueryRequest
+- name: AdHocWidgetQueryInput
   description: 'A widget definition to compute once without saving it. The same limits
     apply as to any query: at most 20 lines, a `topK.limit` of at most 100, and a
     range no longer than 366 days.'
   example: null
   python:
     module: confident_ai.widgets
-    name: AdHocWidgetQueryRequest
+    name: AdHocWidgetQueryInput
   typescript:
     module: confident-ai/widgets
-    name: AdHocWidgetQueryRequest
+    name: AdHocWidgetQueryInput
   references:
   - WidgetInput
   - WidgetGranularity
@@ -30383,16 +30382,16 @@ types:
     example:
     - <QUEUE-ITEM-ID>
     references: []
-- name: AgentSpan
+- name: AgentSpanInput
   description: A span recording an agent step, with the tools and handoffs available
     to it.
   example: null
   python:
     module: confident_ai.traces
-    name: AgentSpan
+    name: AgentSpanInput
   typescript:
     module: confident-ai/traces
-    name: AgentSpan
+    name: AgentSpanInput
   references:
   - TraceSpanStatus
   - ToolCall
@@ -30761,44 +30760,44 @@ types:
     example: null
     references:
     - AlertThresholdDirection
-- name: AnnotateQueueItemRequest
+- name: AnnotateQueueItemInput
   description: The annotation to record on one queue item. Send at least one of `annotations`
     or `formResponses`.
   example: null
   python:
     module: confident_ai.annotation_queues
-    name: AnnotateQueueItemRequest
+    name: AnnotateQueueItemInput
   typescript:
     module: confident-ai/annotation-queues
-    name: AnnotateQueueItemRequest
+    name: AnnotateQueueItemInput
   references:
-  - QueueItemAnnotation
-  - QueueItemFormResponse
+  - QueueItemAnnotationInput
+  - QueueItemFormResponseInput
   kind: object
   fields:
   - wire: annotations
     python: annotations
     typescript: annotations
     type:
-      python: Optional[List[QueueItemAnnotation]]
-      typescript: QueueItemAnnotation[]
+      python: Optional[List[QueueItemAnnotationInput]]
+      typescript: QueueItemAnnotationInput[]
     required: false
     description: The criteria ratings to record on the item, one entry per criterion.
     example: null
     references:
-    - QueueItemAnnotation
+    - QueueItemAnnotationInput
   - wire: formResponses
     python: form_responses
     typescript: formResponses
     type:
-      python: Optional[List[QueueItemFormResponse]]
-      typescript: QueueItemFormResponse[]
+      python: Optional[List[QueueItemFormResponseInput]]
+      typescript: QueueItemFormResponseInput[]
     required: false
     description: The annotations for the fields of the queue's annotation form. Sending
       them requires `annotatorEmail`.
     example: null
     references:
-    - QueueItemFormResponse
+    - QueueItemFormResponseInput
   - wire: annotatorEmail
     python: annotator_email
     typescript: annotatorEmail
@@ -31064,17 +31063,17 @@ types:
     module: confident-ai/annotations
     name: AnnotationInput
   references:
-  - TraceAnnotation
-  - SpanAnnotation
-  - ThreadAnnotation
+  - TraceAnnotationInput
+  - SpanAnnotationInput
+  - ThreadAnnotationInput
   kind: union
   branches:
-  - TraceAnnotation
-  - SpanAnnotation
-  - ThreadAnnotation
+  - TraceAnnotationInput
+  - SpanAnnotationInput
+  - ThreadAnnotationInput
   type:
-    python: Union[TraceAnnotation, SpanAnnotation, ThreadAnnotation]
-    typescript: TraceAnnotation | SpanAnnotation | ThreadAnnotation
+    python: Union[TraceAnnotationInput, SpanAnnotationInput, ThreadAnnotationInput]
+    typescript: TraceAnnotationInput | SpanAnnotationInput | ThreadAnnotationInput
 - name: AnnotationList
   description: One page of annotations, with the total across all pages.
   example: null
@@ -31849,7 +31848,7 @@ types:
     example: null
     references:
     - UserReference
-- name: AnnotationValue
+- name: AnnotationValueInput
   description: 'The annotated value, in the shape its `fieldType` expects: a boolean
     for `THUMBS_RATING` (`true` is thumbs up) and `BOOLEAN`, a whole number from
     1 to 5 for `FIVE_STAR_RATING`, a number for `NUMBER` or `FLOAT`, a string for
@@ -31857,10 +31856,10 @@ types:
   example: true
   python:
     module: confident_ai.annotations
-    name: AnnotationValue
+    name: AnnotationValueInput
   typescript:
     module: confident-ai/annotations
-    name: AnnotationValue
+    name: AnnotationValueInput
   references: []
   kind: union
   branches: []
@@ -32189,15 +32188,15 @@ types:
   - name: RANDOM
     value: RANDOM
   references: []
-- name: AttackEngine
+- name: AttackEngineInput
   description: How attacks are generated for this run.
   example: null
   python:
     module: confident_ai.rt_frameworks
-    name: AttackEngine
+    name: AttackEngineInput
   typescript:
     module: confident-ai/rt-frameworks
-    name: AttackEngine
+    name: AttackEngineInput
   references: []
   kind: object
   fields:
@@ -32716,15 +32715,15 @@ types:
   - name: ERRORED
     value: ERRORED
   references: []
-- name: BaseSpan
+- name: BaseSpanInput
   description: A plain span with no model, retriever, tool or agent detail.
   example: null
   python:
     module: confident_ai.traces
-    name: BaseSpan
+    name: BaseSpanInput
   typescript:
     module: confident-ai/traces
-    name: BaseSpan
+    name: BaseSpanInput
   references:
   - TraceSpanStatus
   - ToolCall
@@ -32977,19 +32976,67 @@ types:
     description: Why this entry failed. The rest of the batch still applied.
     example: Queue item not found in this queue.
     references: []
-- name: BatchAnnotateItem
+- name: BatchAnnotateInput
+  description: Annotations for several items of one queue, applied in a single call.
+    Every item must belong to the queue in the path.
+  example: null
+  python:
+    module: confident_ai.annotation_queues
+    name: BatchAnnotateInput
+  typescript:
+    module: confident-ai/annotation-queues
+    name: BatchAnnotateInput
+  references:
+  - BatchAnnotateItemInput
+  kind: object
+  fields:
+  - wire: annotatorEmail
+    python: annotator_email
+    typescript: annotatorEmail
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: The email address credited for every entry that does not name its
+      own annotator.
+    example: jane@acme.com
+    references: []
+  - wire: markAsCompleted
+    python: mark_as_completed
+    typescript: markAsCompleted
+    type:
+      python: Optional[bool]
+      typescript: boolean
+    required: false
+    description: Whether to mark the items annotated, for every entry that does not
+      say otherwise. Defaults to `true`.
+    example: true
+    references: []
+  - wire: items
+    python: items
+    typescript: items
+    type:
+      python: List[BatchAnnotateItemInput]
+      typescript: BatchAnnotateItemInput[]
+    required: true
+    description: The items to annotate. Each is processed on its own, so one failure
+      does not stop the rest.
+    example: null
+    references:
+    - BatchAnnotateItemInput
+- name: BatchAnnotateItemInput
   description: One item's annotation within a batch. Anything it omits falls back
     to the batch-level value.
   example: null
   python:
     module: confident_ai.annotation_queues
-    name: BatchAnnotateItem
+    name: BatchAnnotateItemInput
   typescript:
     module: confident-ai/annotation-queues
-    name: BatchAnnotateItem
+    name: BatchAnnotateItemInput
   references:
-  - QueueItemAnnotation
-  - QueueItemFormResponse
+  - QueueItemAnnotationInput
+  - QueueItemFormResponseInput
   kind: object
   fields:
   - wire: queueItemId
@@ -33006,25 +33053,25 @@ types:
     python: annotations
     typescript: annotations
     type:
-      python: Optional[List[QueueItemAnnotation]]
-      typescript: QueueItemAnnotation[]
+      python: Optional[List[QueueItemAnnotationInput]]
+      typescript: QueueItemAnnotationInput[]
     required: false
     description: The criteria ratings to record on the item, one entry per criterion.
     example: null
     references:
-    - QueueItemAnnotation
+    - QueueItemAnnotationInput
   - wire: formResponses
     python: form_responses
     typescript: formResponses
     type:
-      python: Optional[List[QueueItemFormResponse]]
-      typescript: QueueItemFormResponse[]
+      python: Optional[List[QueueItemFormResponseInput]]
+      typescript: QueueItemFormResponseInput[]
     required: false
     description: The annotations for the fields of the queue's annotation form. Sending
       them requires `annotatorEmail`.
     example: null
     references:
-    - QueueItemFormResponse
+    - QueueItemFormResponseInput
   - wire: annotatorEmail
     python: annotator_email
     typescript: annotatorEmail
@@ -33058,54 +33105,6 @@ types:
       list. Defaults to `true`.
     example: true
     references: []
-- name: BatchAnnotateRequest
-  description: Annotations for several items of one queue, applied in a single call.
-    Every item must belong to the queue in the path.
-  example: null
-  python:
-    module: confident_ai.annotation_queues
-    name: BatchAnnotateRequest
-  typescript:
-    module: confident-ai/annotation-queues
-    name: BatchAnnotateRequest
-  references:
-  - BatchAnnotateItem
-  kind: object
-  fields:
-  - wire: annotatorEmail
-    python: annotator_email
-    typescript: annotatorEmail
-    type:
-      python: Optional[str]
-      typescript: string
-    required: false
-    description: The email address credited for every entry that does not name its
-      own annotator.
-    example: jane@acme.com
-    references: []
-  - wire: markAsCompleted
-    python: mark_as_completed
-    typescript: markAsCompleted
-    type:
-      python: Optional[bool]
-      typescript: boolean
-    required: false
-    description: Whether to mark the items annotated, for every entry that does not
-      say otherwise. Defaults to `true`.
-    example: true
-    references: []
-  - wire: items
-    python: items
-    typescript: items
-    type:
-      python: List[BatchAnnotateItem]
-      typescript: BatchAnnotateItem[]
-    required: true
-    description: The items to annotate. Each is processed on its own, so one failure
-      does not stop the rest.
-    example: null
-    references:
-    - BatchAnnotateItem
 - name: BatchAnnotateResult
   description: One result per entry sent to a batch annotation.
   example: null
@@ -33221,7 +33220,7 @@ types:
     example: The user asks for the capital city of a country.
     references: []
 - name: Classifier
-  description: 'A classifier: what it runs on, how it discovers labels, and the labels
+  description: 'A classifier: what it runs on, how it generates labels, and the labels
     it can apply.'
   example: null
   python:
@@ -33327,8 +33326,8 @@ types:
       python: Optional[ClassifierAutoGenerationConfig]
       typescript: ClassifierAutoGenerationConfig | null
     required: true
-    description: How a generation run samples and clusters your traffic, or `null`
-      when the classifier has no generation config.
+    description: How a generation run samples your traffic, or `null` when the classifier
+      has no generation config.
     example: null
     references:
     - ClassifierAutoGenerationConfig
@@ -33344,8 +33343,7 @@ types:
     references:
     - ClassifierLabel
 - name: ClassifierAutoGenerationConfig
-  description: How a generation run samples and clusters your traffic. Both `summaryPrompt`
-    and `nClusters` must be set before the generate endpoint will run.
+  description: How many recent traces or threads a generation run samples and classifies.
   example: null
   python:
     module: confident_ai.classifiers
@@ -33356,27 +33354,6 @@ types:
   references: []
   kind: object
   fields:
-  - wire: summaryPrompt
-    python: summary_prompt
-    typescript: summaryPrompt
-    type:
-      python: str
-      typescript: string
-    required: true
-    description: What the model should look for when clustering sampled traffic into
-      themes.
-    example: Analyze the user's input to determine the emotional tone they express.
-    references: []
-  - wire: nClusters
-    python: n_clusters
-    typescript: nClusters
-    type:
-      python: int
-      typescript: number
-    required: true
-    description: Roughly how many themes to cluster the sample into.
-    example: 3
-    references: []
   - wire: sampleSize
     python: sample_size
     typescript: sampleSize
@@ -33525,7 +33502,7 @@ types:
     required: true
     description: A human-readable explanation of the outcome.
     example: Label generation started. Generated labels appear with status RECOMMENDED
-      when the run completes.
+      as the sampled data is classified.
     references: []
 - name: ClassifierLabelList
   description: One page of labels, with the total across all pages.
@@ -34065,7 +34042,7 @@ types:
   - name: PRE_DEPLOYMENT_RED_TEAMING
     value: PRE_DEPLOYMENT_RED_TEAMING
   references: []
-- name: CreateAIConnectionRequest
+- name: CreateAIConnectionInput
   description: The LLM application to register. Confident AI calls the endpoint once
     as the connection is created to work out whether it is `active`. For each of
     the seven values Confident AI extracts from a response, send either its key path
@@ -34087,10 +34064,10 @@ types:
     timeout: 60
   python:
     module: confident_ai.ai_connections
-    name: CreateAIConnectionRequest
+    name: CreateAIConnectionInput
   typescript:
     module: confident-ai/ai-connections
-    name: CreateAIConnectionRequest
+    name: CreateAIConnectionInput
   references:
   - AIConnectionType
   - AIConnectionResponseMode
@@ -34266,10 +34243,10 @@ types:
       typescript: Record<string, unknown> | null
     required: false
     description: 'The authentication configuration Confident AI applies when calling
-      your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD` or `OAUTH2_CLIENT_CREDENTIALS`
-      and put that scheme''s settings in the matching object: `auth0Config`, `hmacConfig`,
-      `azureAdConfig` or `oauth2Config`. A value that does not match that shape is
-      rejected. Send `null` to clear it.'
+      your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS`
+      or `CUSTOM_TOKEN_REQUEST` and put that scheme''s settings in the matching object:
+      `auth0Config`, `hmacConfig`, `azureAdConfig`, `oauth2Config` or `customTokenRequestConfig`.
+      A value that does not match that shape is rejected. Send `null` to clear it.'
     example:
       authType: HMAC
       hmacConfig:
@@ -34605,16 +34582,16 @@ types:
         label: production
     references:
     - AIConnectionPromptRef
-- name: CreateAnnotationQueueRequest
+- name: CreateAnnotationQueueInput
   description: A queue to open for your team to annotate. Its `type` is fixed at
     creation and decides what can be added to it.
   example: null
   python:
     module: confident_ai.annotation_queues
-    name: CreateAnnotationQueueRequest
+    name: CreateAnnotationQueueInput
   typescript:
     module: confident-ai/annotation-queues
-    name: CreateAnnotationQueueRequest
+    name: CreateAnnotationQueueInput
   references:
   - AnnotationQueueType
   kind: object
@@ -34664,16 +34641,16 @@ types:
     - geography
     - week-12
     references: []
-- name: CreateApiKeyRequest
+- name: CreateApiKeyInput
   description: The key to mint. Its value is generated by Confident AI and returned
     once, in the response.
   example: null
   python:
     module: confident_ai.common
-    name: CreateApiKeyRequest
+    name: CreateApiKeyInput
   typescript:
     module: confident-ai/common
-    name: CreateApiKeyRequest
+    name: CreateApiKeyInput
   references: []
   kind: object
   fields:
@@ -34699,17 +34676,17 @@ types:
       a key that never expires.
     example: 90
     references: []
-- name: CreateAuditLogExportRequest
+- name: CreateAuditLogExportInput
   description: Which audit logs to export. Send an empty object to export every audit
     log ever recorded; `startTime` and `endTime` must be sent together to export
     one period instead.
   example: null
   python:
     module: confident_ai.common
-    name: CreateAuditLogExportRequest
+    name: CreateAuditLogExportInput
   typescript:
     module: confident-ai/common
-    name: CreateAuditLogExportRequest
+    name: CreateAuditLogExportInput
   references: []
   kind: object
   fields:
@@ -34747,76 +34724,7 @@ types:
       method, IP address, resource id, user agent, and status code.
     example: jane@acme.com
     references: []
-- name: CreateClassifierLabelRequest
-  description: A label to add to the classifier. Setting `status` to `ACTIVE` also
-    enables the label, so sending `enabled` `false` alongside it is rejected.
-  example: null
-  python:
-    module: confident_ai.classifiers
-    name: CreateClassifierLabelRequest
-  typescript:
-    module: confident-ai/classifiers
-    name: CreateClassifierLabelRequest
-  references:
-  - ClassifierLabelStatus
-  - SignalPolarity
-  kind: object
-  fields:
-  - wire: name
-    python: name
-    typescript: name
-    type:
-      python: str
-      typescript: string
-    required: true
-    description: The name of the label, unique within the classifier.
-    example: Positive
-    references: []
-  - wire: description
-    python: description
-    typescript: description
-    type:
-      python: str
-      typescript: string
-    required: true
-    description: When this label applies. It is the instruction the classifying model
-      reads, so state the condition rather than restating the name.
-    example: User expresses satisfaction, gratitude, or positive sentiment.
-    references: []
-  - wire: enabled
-    python: enabled
-    typescript: enabled
-    type:
-      python: Optional[bool]
-      typescript: boolean
-    required: false
-    description: Whether the label can be applied. Defaults to `true` on create;
-      omit it on an update to leave it unchanged.
-    example: true
-    references: []
-  - wire: status
-    python: status
-    typescript: status
-    type:
-      python: Optional[ClassifierLabelStatus]
-      typescript: ClassifierLabelStatus
-    required: false
-    description: null
-    example: null
-    references:
-    - ClassifierLabelStatus
-  - wire: polarity
-    python: polarity
-    typescript: polarity
-    type:
-      python: Optional[SignalPolarity]
-      typescript: SignalPolarity
-    required: false
-    description: null
-    example: null
-    references:
-    - SignalPolarity
-- name: CreateClassifierRequest
+- name: CreateClassifierInput
   description: A classifier to add to this project, which tags incoming traces or
     threads with labels. Sending a `preset` seeds the description, the generation
     config, and a starting set of labels; any field you send explicitly overrides
@@ -34824,10 +34732,10 @@ types:
   example: null
   python:
     module: confident_ai.classifiers
-    name: CreateClassifierRequest
+    name: CreateClassifierInput
   typescript:
     module: confident-ai/classifiers
-    name: CreateClassifierRequest
+    name: CreateClassifierInput
   references:
   - ClassifierDataModel
   - ClassifierPreset
@@ -34942,21 +34850,90 @@ types:
       python: Optional[ClassifierAutoGenerationConfig]
       typescript: ClassifierAutoGenerationConfig | null
     required: false
-    description: How a generation run samples and clusters your traffic to discover
-      labels. Send `null` to clear it.
+    description: How a generation run samples your traffic to generate labels. Send
+      `null` to clear it.
     example: null
     references:
     - ClassifierAutoGenerationConfig
-- name: CreateDashboardRequest
+- name: CreateClassifierLabelInput
+  description: A label to add to the classifier. Setting `status` to `ACTIVE` also
+    enables the label, so sending `enabled` `false` alongside it is rejected.
+  example: null
+  python:
+    module: confident_ai.classifiers
+    name: CreateClassifierLabelInput
+  typescript:
+    module: confident-ai/classifiers
+    name: CreateClassifierLabelInput
+  references:
+  - ClassifierLabelStatus
+  - SignalPolarity
+  kind: object
+  fields:
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The name of the label, unique within the classifier.
+    example: Positive
+    references: []
+  - wire: description
+    python: description
+    typescript: description
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: When this label applies. It is the instruction the classifying model
+      reads, so state the condition rather than restating the name.
+    example: User expresses satisfaction, gratitude, or positive sentiment.
+    references: []
+  - wire: enabled
+    python: enabled
+    typescript: enabled
+    type:
+      python: Optional[bool]
+      typescript: boolean
+    required: false
+    description: Whether the label can be applied. Defaults to `true` on create;
+      omit it on an update to leave it unchanged.
+    example: true
+    references: []
+  - wire: status
+    python: status
+    typescript: status
+    type:
+      python: Optional[ClassifierLabelStatus]
+      typescript: ClassifierLabelStatus
+    required: false
+    description: null
+    example: null
+    references:
+    - ClassifierLabelStatus
+  - wire: polarity
+    python: polarity
+    typescript: polarity
+    type:
+      python: Optional[SignalPolarity]
+      typescript: SignalPolarity
+    required: false
+    description: null
+    example: null
+    references:
+    - SignalPolarity
+- name: CreateDashboardInput
   description: A dashboard to add to this project, optionally with the widgets it
     starts out with.
   example: null
   python:
     module: confident_ai.dashboards
-    name: CreateDashboardRequest
+    name: CreateDashboardInput
   typescript:
     module: confident-ai/dashboards
-    name: CreateDashboardRequest
+    name: CreateDashboardInput
   references:
   - WidgetInput
   kind: object
@@ -35004,17 +34981,17 @@ types:
     example: null
     references:
     - WidgetInput
-- name: CreateDatasetIngestionTaskRequest
+- name: CreateDatasetIngestionTaskInput
   description: 'A standing rule that harvests matching production items into the
     dataset as goldens. `dataModel` must match the dataset: `THREAD` for a multi-turn
     dataset, `TRACE` or `SPAN` for a single-turn one.'
   example: null
   python:
     module: confident_ai.datasets
-    name: CreateDatasetIngestionTaskRequest
+    name: CreateDatasetIngestionTaskInput
   typescript:
     module: confident-ai/datasets
-    name: CreateDatasetIngestionTaskRequest
+    name: CreateDatasetIngestionTaskInput
   references:
   - IngestionDataModel
   - FilterSet
@@ -35231,16 +35208,16 @@ types:
       It is always incremental.
     example: 00.00.02
     references: []
-- name: CreateEvaluationRuleRequest
+- name: CreateEvaluationRuleInput
   description: 'The standing rule to create: what to evaluate, which metric collection
     to run, and how much of the matching traffic to score.'
   example: null
   python:
     module: confident_ai.evaluation_rules
-    name: CreateEvaluationRuleRequest
+    name: CreateEvaluationRuleInput
   typescript:
     module: confident-ai/evaluation-rules
-    name: CreateEvaluationRuleRequest
+    name: CreateEvaluationRuleInput
   references:
   - EvaluationRuleDataModel
   - SpanType
@@ -35368,7 +35345,7 @@ types:
       to leave it unchanged.
     example: false
     references: []
-- name: CreateExportDestinationRequest
+- name: CreateExportDestinationInput
   description: 'A destination to add to this project, which export schedules send
     exports to. Send the bucket fields for `S3` or `snowflakeConfig` for `SNOWFLAKE`.
     Credentials must be sent in full: a value copied from a read is masked, and storing
@@ -35376,13 +35353,13 @@ types:
   example: null
   python:
     module: confident_ai.export_destinations
-    name: CreateExportDestinationRequest
+    name: CreateExportDestinationInput
   typescript:
     module: confident-ai/export-destinations
-    name: CreateExportDestinationRequest
+    name: CreateExportDestinationInput
   references:
   - ExportDestinationType
-  - SnowflakeExportDestinationConfig
+  - SnowflakeExportDestinationConfigInput
   kind: object
   fields:
   - wire: name
@@ -35468,13 +35445,13 @@ types:
     python: snowflake_config
     typescript: snowflakeConfig
     type:
-      python: Optional[SnowflakeExportDestinationConfig]
-      typescript: SnowflakeExportDestinationConfig
+      python: Optional[SnowflakeExportDestinationConfigInput]
+      typescript: SnowflakeExportDestinationConfigInput
     required: false
     description: null
     example: null
     references:
-    - SnowflakeExportDestinationConfig
+    - SnowflakeExportDestinationConfigInput
   - wire: enabled
     python: enabled
     typescript: enabled
@@ -35486,17 +35463,17 @@ types:
       to `true`.
     example: true
     references: []
-- name: CreateExportScheduleRequest
+- name: CreateExportScheduleInput
   description: An export schedule to add to this project. Each run exports the `exportType`
     data from the window since the previous run, scoped by `filters`, `environment`
     and, for annotations, `annotationSelectionType`, and delivers it to `destinationId`.
   example: null
   python:
     module: confident_ai.export_schedules
-    name: CreateExportScheduleRequest
+    name: CreateExportScheduleInput
   typescript:
     module: confident-ai/export-schedules
-    name: CreateExportScheduleRequest
+    name: CreateExportScheduleInput
   references:
   - ScheduleRecurrenceType
   - ScheduleIntervalUnit
@@ -35669,16 +35646,16 @@ types:
       to `true`.
     example: true
     references: []
-- name: CreateForwardingConnectorRequest
+- name: CreateForwardingConnectorInput
   description: The forwarding connector to create. A project can hold at most 3 connectors,
     so creating one past that limit is rejected.
   example: null
   python:
     module: confident_ai.forwarding_connectors
-    name: CreateForwardingConnectorRequest
+    name: CreateForwardingConnectorInput
   typescript:
     module: confident-ai/forwarding-connectors
-    name: CreateForwardingConnectorRequest
+    name: CreateForwardingConnectorInput
   references:
   - ForwardingConnectorHeaderInput
   kind: object
@@ -35747,15 +35724,15 @@ types:
       omit it on an update to leave it unchanged.
     example: true
     references: []
-- name: CreateGoldenRequest
+- name: CreateGoldenInput
   description: null
   example: null
   python:
     module: confident_ai.datasets
-    name: CreateGoldenRequest
+    name: CreateGoldenInput
   typescript:
     module: confident-ai/datasets
-    name: CreateGoldenRequest
+    name: CreateGoldenInput
   references:
   - Golden
   kind: object
@@ -35782,7 +35759,7 @@ types:
       latest version, or the unversioned goldens when the dataset has no versions.
     example: 00.00.01
     references: []
-- name: CreateGovernanceControlRequest
+- name: CreateGovernanceControlInput
   description: A governance control to add to your organization. Send the config
     that matches `type` — `runtimeConfig` for `RUNTIME`, `preDeploymentConfig` for
     either pre-deployment type — to snapshot the control's first version in the same
@@ -35792,14 +35769,14 @@ types:
   example: null
   python:
     module: confident_ai.organization
-    name: CreateGovernanceControlRequest
+    name: CreateGovernanceControlInput
   typescript:
     module: confident-ai/organization
-    name: CreateGovernanceControlRequest
+    name: CreateGovernanceControlInput
   references:
   - CreatableGovernanceControlType
-  - GovernanceControlRuntimeConfig
-  - GovernanceControlPreDeploymentConfig
+  - GovernanceControlRuntimeConfigInput
+  - GovernanceControlPreDeploymentConfigInput
   kind: object
   fields:
   - wire: name
@@ -35838,24 +35815,24 @@ types:
     python: runtime_config
     typescript: runtimeConfig
     type:
-      python: Optional[GovernanceControlRuntimeConfig]
-      typescript: GovernanceControlRuntimeConfig
+      python: Optional[GovernanceControlRuntimeConfigInput]
+      typescript: GovernanceControlRuntimeConfigInput
     required: false
     description: null
     example: null
     references:
-    - GovernanceControlRuntimeConfig
+    - GovernanceControlRuntimeConfigInput
   - wire: preDeploymentConfig
     python: pre_deployment_config
     typescript: preDeploymentConfig
     type:
-      python: Optional[GovernanceControlPreDeploymentConfig]
-      typescript: GovernanceControlPreDeploymentConfig
+      python: Optional[GovernanceControlPreDeploymentConfigInput]
+      typescript: GovernanceControlPreDeploymentConfigInput
     required: false
     description: null
     example: null
     references:
-    - GovernanceControlPreDeploymentConfig
+    - GovernanceControlPreDeploymentConfigInput
   - wire: governancePolicyId
     python: governance_policy_id
     typescript: governancePolicyId
@@ -35868,17 +35845,17 @@ types:
       endpoint.'
     example: <GOVERNANCE-POLICY-ID>
     references: []
-- name: CreateGovernancePolicyRequest
+- name: CreateGovernancePolicyInput
   description: A governance policy to add to your organization. It starts with no
     controls attached and no projects enrolled, so both are done afterwards through
     their own endpoints.
   example: null
   python:
     module: confident_ai.organization
-    name: CreateGovernancePolicyRequest
+    name: CreateGovernancePolicyInput
   typescript:
     module: confident-ai/organization
-    name: CreateGovernancePolicyRequest
+    name: CreateGovernancePolicyInput
   references: []
   kind: object
   fields:
@@ -35915,7 +35892,7 @@ types:
     example:
     - <GOVERNANCE-POLICY-ID>
     references: []
-- name: CreateMcpServerRequest
+- name: CreateMcpServerInput
   description: One of your MCP servers to register with the project. An `HTTP` server
     needs `url`, a `STDIO` server needs `command`, and an `AZURE_AD` or `OAUTH_CLIENT_CREDENTIALS`
     server needs its `authConfig` credentials including `clientSecret`, since there
@@ -35930,14 +35907,14 @@ types:
       Authorization: Bearer YOUR-TOKEN
   python:
     module: confident_ai.mcp_servers
-    name: CreateMcpServerRequest
+    name: CreateMcpServerInput
   typescript:
     module: confident-ai/mcp-servers
-    name: CreateMcpServerRequest
+    name: CreateMcpServerInput
   references:
   - McpServerTransport
   - McpServerAuthType
-  - McpServerAuthConfig
+  - McpServerAuthConfigInput
   kind: object
   fields:
   - wire: name
@@ -36010,14 +35987,14 @@ types:
     python: auth_config
     typescript: authConfig
     type:
-      python: Optional[McpServerAuthConfig]
-      typescript: McpServerAuthConfig | null
+      python: Optional[McpServerAuthConfigInput]
+      typescript: McpServerAuthConfigInput | null
     required: false
     description: The credentials for a non-`HEADERS` auth type. Send `null` to clear
       them.
     example: null
     references:
-    - McpServerAuthConfig
+    - McpServerAuthConfigInput
   - wire: command
     python: command
     typescript: command
@@ -36042,15 +36019,15 @@ types:
     - -y
     - '@modelcontextprotocol/server-filesystem'
     references: []
-- name: CreateMetricCollectionRequest
+- name: CreateMetricCollectionInput
   description: null
   example: null
   python:
     module: confident_ai.metric_collections
-    name: CreateMetricCollectionRequest
+    name: CreateMetricCollectionInput
   typescript:
     module: confident-ai/metric-collections
-    name: CreateMetricCollectionRequest
+    name: CreateMetricCollectionInput
   references:
   - MetricSettingInput
   kind: object
@@ -36123,15 +36100,15 @@ types:
       Send `null` to unset it.
     example: null
     references: []
-- name: CreateMetricsBatchRequest
+- name: CreateMetricsBatchInput
   description: null
   example: null
   python:
     module: confident_ai.metrics_batch
-    name: CreateMetricsBatchRequest
+    name: CreateMetricsBatchInput
   typescript:
     module: confident-ai/metrics-batch
-    name: CreateMetricsBatchRequest
+    name: CreateMetricsBatchInput
   references:
   - MetricInput
   kind: object
@@ -36148,17 +36125,17 @@ types:
     example: null
     references:
     - MetricInput
-- name: CreateModelCostRequest
+- name: CreateModelCostInput
   description: A custom model price to add to this project. Send at least one of
     `inputCostPerMillionTokens` and `outputCostPerMillionTokens`; the pair of `matchPattern`
     and `provider` must not already be priced in this project.
   example: null
   python:
     module: confident_ai.model_costs
-    name: CreateModelCostRequest
+    name: CreateModelCostInput
   typescript:
     module: confident-ai/model-costs
-    name: CreateModelCostRequest
+    name: CreateModelCostInput
   references: []
   kind: object
   fields:
@@ -36208,17 +36185,17 @@ types:
       only the input rate is priced; output tokens are then costed at zero.
     example: 10
     references: []
-- name: CreateOrUpdatePolicyRequest
+- name: CreateOrUpdatePolicyInput
   description: A policy to create, or the complete state to give an existing one.
     Every field is applied, so an update must resend `name` and `permissionIds` even
     when they are unchanged.
   example: null
   python:
     module: confident_ai.common
-    name: CreateOrUpdatePolicyRequest
+    name: CreateOrUpdatePolicyInput
   typescript:
     module: confident-ai/common
-    name: CreateOrUpdatePolicyRequest
+    name: CreateOrUpdatePolicyInput
   references: []
   kind: object
   fields:
@@ -36259,17 +36236,17 @@ types:
     example:
     - <PERMISSION-ID>
     references: []
-- name: CreateOrUpdateRoleRequest
+- name: CreateOrUpdateRoleInput
   description: A role to create, or the complete state to give an existing one. Every
     field is applied, so an update must resend `name` and `policyIds` even when they
     are unchanged.
   example: null
   python:
     module: confident_ai.common
-    name: CreateOrUpdateRoleRequest
+    name: CreateOrUpdateRoleInput
   typescript:
     module: confident-ai/common
-    name: CreateOrUpdateRoleRequest
+    name: CreateOrUpdateRoleInput
   references: []
   kind: object
   fields:
@@ -36311,16 +36288,16 @@ types:
     example:
     - <POLICY-ID>
     references: []
-- name: CreateOrganizationInvitationsRequest
+- name: CreateOrganizationInvitationsInput
   description: Who to invite into the organization, and the role they should hold
     once they accept.
   example: null
   python:
     module: confident_ai.organization
-    name: CreateOrganizationInvitationsRequest
+    name: CreateOrganizationInvitationsInput
   typescript:
     module: confident-ai/organization
-    name: CreateOrganizationInvitationsRequest
+    name: CreateOrganizationInvitationsInput
   references: []
   kind: object
   fields:
@@ -36349,17 +36326,17 @@ types:
       be handed out this way.
     example: <ORGANIZATION-ROLE-ID>
     references: []
-- name: CreatePersonaRequest
+- name: CreatePersonaInput
   description: A persona to add to this project. Creating one only defines the character
     — attach it to a multi-turn golden for a simulated conversation to be played
     in its voice.
   example: null
   python:
     module: confident_ai.personas
-    name: CreatePersonaRequest
+    name: CreatePersonaInput
   typescript:
     module: confident-ai/personas
-    name: CreatePersonaRequest
+    name: CreatePersonaInput
   references: []
   kind: object
   fields:
@@ -36405,55 +36382,17 @@ types:
       accountId: acc_123
       plan: pro
     references: []
-- name: CreateProjectInvitationsRequest
-  description: Who to invite into the project, and the role they should hold in it
-    once they accept.
-  example: null
-  python:
-    module: confident_ai.projects
-    name: CreateProjectInvitationsRequest
-  typescript:
-    module: confident-ai/projects
-    name: CreateProjectInvitationsRequest
-  references: []
-  kind: object
-  fields:
-  - wire: emails
-    python: emails
-    typescript: emails
-    type:
-      python: List[str]
-      typescript: string[]
-    required: true
-    description: The email addresses to invite, between 1 and 50 of them. Each is
-      trimmed and lowercased, and must be a company address — free and disposable
-      domains are refused.
-    example:
-    - jane@acme.com
-    references: []
-  - wire: projectRoleId
-    python: project_role_id
-    typescript: projectRoleId
-    type:
-      python: Optional[str]
-      typescript: string
-    required: false
-    description: The id of the project role every invitee lands on when they accept.
-      Omit it to give them the default `Member` role. The `Owner` role cannot be
-      handed out this way.
-    example: <PROJECT-ROLE-ID>
-    references: []
-- name: CreateProjectRequest
+- name: CreateProjectInput
   description: The project to create in your organization. How many projects you
     may hold depends on your plan, so this call can be refused on entitlement grounds
     even when the name is free.
   example: null
   python:
     module: confident_ai.projects
-    name: CreateProjectRequest
+    name: CreateProjectInput
   typescript:
     module: confident-ai/projects
-    name: CreateProjectRequest
+    name: CreateProjectInput
   references: []
   kind: object
   fields:
@@ -36490,6 +36429,44 @@ types:
       Omit it and the project has no member: it is reachable through its API key
       and to organization admins only.'
     example: jane@acme.com
+    references: []
+- name: CreateProjectInvitationsInput
+  description: Who to invite into the project, and the role they should hold in it
+    once they accept.
+  example: null
+  python:
+    module: confident_ai.projects
+    name: CreateProjectInvitationsInput
+  typescript:
+    module: confident-ai/projects
+    name: CreateProjectInvitationsInput
+  references: []
+  kind: object
+  fields:
+  - wire: emails
+    python: emails
+    typescript: emails
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: The email addresses to invite, between 1 and 50 of them. Each is
+      trimmed and lowercased, and must be a company address — free and disposable
+      domains are refused.
+    example:
+    - jane@acme.com
+    references: []
+  - wire: projectRoleId
+    python: project_role_id
+    typescript: projectRoleId
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: The id of the project role every invitee lands on when they accept.
+      Omit it to give them the default `Member` role. The `Owner` role cannot be
+      handed out this way.
+    example: <PROJECT-ROLE-ID>
     references: []
 - name: CreateProjectResult
   description: The created project and the API key provisioned with it. The key's
@@ -36529,15 +36506,15 @@ types:
     example: null
     references:
     - ProjectDefaultApiKey
-- name: CreatePromptBranchRequest
+- name: CreatePromptBranchInput
   description: null
   example: null
   python:
     module: confident_ai.prompts
-    name: CreatePromptBranchRequest
+    name: CreatePromptBranchInput
   typescript:
     module: confident-ai/prompts
-    name: CreatePromptBranchRequest
+    name: CreatePromptBranchInput
   references: []
   kind: object
   fields:
@@ -36552,15 +36529,15 @@ types:
       of `main`.
     example: experiment
     references: []
-- name: CreatePromptVersionRequest
+- name: CreatePromptVersionInput
   description: null
   example: null
   python:
     module: confident_ai.prompts
-    name: CreatePromptVersionRequest
+    name: CreatePromptVersionInput
   typescript:
     module: confident-ai/prompts
-    name: CreatePromptVersionRequest
+    name: CreatePromptVersionInput
   references: []
   kind: object
   fields:
@@ -36610,16 +36587,16 @@ types:
       passed, or the head of `main` when you omitted it.
     example: bab04ce
     references: []
-- name: CreateQueueIngestionTaskRequest
+- name: CreateQueueIngestionTaskInput
   description: 'A rule that keeps the queue filled from your production data: it
     matches items against `filters` and queues the share named by `sampleRate`.'
   example: null
   python:
     module: confident_ai.annotation_queues
-    name: CreateQueueIngestionTaskRequest
+    name: CreateQueueIngestionTaskInput
   typescript:
     module: confident-ai/annotation-queues
-    name: CreateQueueIngestionTaskRequest
+    name: CreateQueueIngestionTaskInput
   references:
   - IngestionDataModel
   - FilterSet
@@ -36731,16 +36708,16 @@ types:
     example:
     - jane@acme.com
     references: []
-- name: CreateRTFrameworkRequest
+- name: CreateRTFrameworkInput
   description: A red teaming framework to add to this project. A framework groups
     risk categories, and running one starts a risk assessment.
   example: null
   python:
     module: confident_ai.rt_frameworks
-    name: CreateRTFrameworkRequest
+    name: CreateRTFrameworkInput
   typescript:
     module: confident-ai/rt-frameworks
-    name: CreateRTFrameworkRequest
+    name: CreateRTFrameworkInput
   references: []
   kind: object
   fields:
@@ -36776,17 +36753,17 @@ types:
       Omit it for an empty framework.
     example: EU Artificial Intelligence Act
     references: []
-- name: CreateReportRequest
+- name: CreateReportInput
   description: A report to write into your project, stored and rendered exactly as
     supplied. `status` defaults to `COMPLETED`, which makes the report immediately
     readable; send `IN_PROGRESS` to fill it in over several requests.
   example: null
   python:
     module: confident_ai.reports
-    name: CreateReportRequest
+    name: CreateReportInput
   typescript:
     module: confident-ai/reports
-    name: CreateReportRequest
+    name: CreateReportInput
   references:
   - ReportStatus
   - ReportMetadataInput
@@ -36847,17 +36824,17 @@ types:
     example: null
     references:
     - ReportSectionInput
-- name: CreateReportTemplateRequest
+- name: CreateReportTemplateInput
   description: The report template to create. A template with no cadence of its own
     repeats every 1 day, and an `INTERVAL` cadence must carry both `repeatEvery`
     and `repeatUnit`.
   example: null
   python:
     module: confident_ai.report_templates
-    name: CreateReportTemplateRequest
+    name: CreateReportTemplateInput
   typescript:
     module: confident-ai/report-templates
-    name: CreateReportTemplateRequest
+    name: CreateReportTemplateInput
   references:
   - ReportTemplateSectionInput
   - ScheduleRecurrenceType
@@ -36977,16 +36954,16 @@ types:
       to leave it open-ended.
     example: '2025-12-31T23:59:59+00:00'
     references: []
-- name: CreateRiskCategoryRequest
+- name: CreateRiskCategoryInput
   description: A risk category to add to the framework. Selecting vulnerability types
     and attack methods now saves a second call to update it.
   example: null
   python:
     module: confident_ai.rt_frameworks
-    name: CreateRiskCategoryRequest
+    name: CreateRiskCategoryInput
   typescript:
     module: confident-ai/rt-frameworks
-    name: CreateRiskCategoryRequest
+    name: CreateRiskCategoryInput
   references: []
   kind: object
   fields:
@@ -37046,7 +37023,7 @@ types:
     example:
       <VULNERABILITY-ID>: 2
     references: []
-- name: CreateScheduledAlertRequest
+- name: CreateScheduledAlertInput
   description: 'An alert that runs on a schedule. A `THRESHOLD` alert re-runs an
     aggregate query and notifies when the result crosses the threshold; `repeatEvery`
     and `repeatUnit` also set its measurement window, so an alert repeating every
@@ -37070,10 +37047,10 @@ types:
     enabled: true
   python:
     module: confident_ai.scheduled_alerts
-    name: CreateScheduledAlertRequest
+    name: CreateScheduledAlertInput
   typescript:
     module: confident-ai/scheduled-alerts
-    name: CreateScheduledAlertRequest
+    name: CreateScheduledAlertInput
   references:
   - ScheduleRecurrenceType
   - ScheduleIntervalUnit
@@ -37082,7 +37059,7 @@ types:
   - ScheduledAlertType
   - AlertDataModel
   - AlertThresholdSettings
-  - ScheduledAlertDetectionSettings
+  - ScheduledAlertDetectionSettingsInput
   kind: object
   fields:
   - wire: recurrence
@@ -37271,13 +37248,13 @@ types:
     python: detection_settings
     typescript: detectionSettings
     type:
-      python: Optional[ScheduledAlertDetectionSettings]
-      typescript: ScheduledAlertDetectionSettings
+      python: Optional[ScheduledAlertDetectionSettingsInput]
+      typescript: ScheduledAlertDetectionSettingsInput
     required: false
     description: null
     example: null
     references:
-    - ScheduledAlertDetectionSettings
+    - ScheduledAlertDetectionSettingsInput
   - wire: enabled
     python: enabled
     typescript: enabled
@@ -37288,16 +37265,16 @@ types:
     description: Whether the schedule runs. Defaults to `true`.
     example: true
     references: []
-- name: CreateTestRunRequest
+- name: CreateTestRunInput
   description: A test run to open for trace ingestion. Both fields are optional;
     without `metricCollection` the ingested traces are recorded but not evaluated.
   example: null
   python:
     module: confident_ai.test_runs
-    name: CreateTestRunRequest
+    name: CreateTestRunInput
   typescript:
     module: confident-ai/test-runs
-    name: CreateTestRunRequest
+    name: CreateTestRunInput
   references: []
   kind: object
   fields:
@@ -37323,15 +37300,15 @@ types:
       the Confident AI platform.
     example: run-399-102
     references: []
-- name: CreateToolRequest
+- name: CreateToolInput
   description: A tool to create in the project, starting at version 00.00.01.
   example: null
   python:
     module: confident_ai.tools
-    name: CreateToolRequest
+    name: CreateToolInput
   typescript:
     module: confident-ai/tools
-    name: CreateToolRequest
+    name: CreateToolInput
   references:
   - ToolMode
   kind: object
@@ -37395,26 +37372,26 @@ types:
       required:
       - customerId
     references: []
-- name: CreateTraceRequest
+- name: CreateTraceInput
   description: A trace to record, with the spans it contains. Send `metricCollection`
     to evaluate it online, `threadId` to group it into a conversation, and `testRunId`
     with `metricCollection` to record it as a test case of an in-progress test run.
   example: null
   python:
     module: confident_ai.traces
-    name: CreateTraceRequest
+    name: CreateTraceInput
   typescript:
     module: confident-ai/traces
-    name: CreateTraceRequest
+    name: CreateTraceInput
   references:
   - TraceSpanStatus
   - ThreadInput
-  - User
-  - Customer
+  - UserInput
+  - CustomerInput
   - ToolCall
   - SpanInput
   - MetricDataInput
-  - TraceAttachment
+  - TraceAttachmentInput
   kind: object
   fields:
   - wire: uuid
@@ -37562,13 +37539,13 @@ types:
     python: user
     typescript: user
     type:
-      python: Optional[User]
-      typescript: User
+      python: Optional[UserInput]
+      typescript: UserInput
     required: false
     description: null
     example: null
     references:
-    - User
+    - UserInput
   - wire: customerId
     python: customer_id
     typescript: customerId
@@ -37584,13 +37561,13 @@ types:
     python: customer
     typescript: customer
     type:
-      python: Optional[Customer]
-      typescript: Customer
+      python: Optional[CustomerInput]
+      typescript: CustomerInput
     required: false
     description: null
     example: null
     references:
-    - Customer
+    - CustomerInput
   - wire: metricCollection
     python: metric_collection
     typescript: metricCollection
@@ -37732,8 +37709,8 @@ types:
     python: attachments
     typescript: attachments
     type:
-      python: Optional[Dict[str, TraceAttachment]]
-      typescript: Record<string, TraceAttachment>
+      python: Optional[Dict[str, TraceAttachmentInput]]
+      typescript: Record<string, TraceAttachmentInput>
     required: false
     description: Map of attachment ids to payloads for all `[DEEPEVAL:IMAGE:…]` and
       `[DEEPEVAL:PDF:…]` markers in this trace. Define attachments at the trace level
@@ -37743,17 +37720,17 @@ types:
         mimeType: application/pdf
         dataBase64: JVBERi0xLjQK
     references:
-    - TraceAttachment
-- name: CreateTransformerRequest
+    - TraceAttachmentInput
+- name: CreateTransformerInput
   description: A transformer to add to this project. Confident AI runs its code wherever
     the transformer is attached, so send the code with it.
   example: null
   python:
     module: confident_ai.transformers
-    name: CreateTransformerRequest
+    name: CreateTransformerInput
   typescript:
     module: confident-ai/transformers
-    name: CreateTransformerRequest
+    name: CreateTransformerInput
   references:
   - TransformerCodeDefinition
   kind: object
@@ -37789,15 +37766,15 @@ types:
     example: null
     references:
     - TransformerCodeDefinition
-- name: CreateVoiceConnectionRequest
+- name: CreateVoiceConnectionInput
   description: The voice connection to create.
   example: null
   python:
     module: confident_ai.voice_connections
-    name: CreateVoiceConnectionRequest
+    name: CreateVoiceConnectionInput
   typescript:
     module: confident-ai/voice-connections
-    name: CreateVoiceConnectionRequest
+    name: CreateVoiceConnectionInput
   references:
   - VoiceTransportConfig
   - VoiceCallSettingsInput
@@ -37835,16 +37812,16 @@ types:
     example: null
     references:
     - VoiceCallSettingsInput
-- name: CreateVulnerabilityRequest
+- name: CreateVulnerabilityInput
   description: A vulnerability to add to this project. Its name cannot match one
     Confident AI ships — customise that one instead.
   example: null
   python:
     module: confident_ai.vulnerabilities
-    name: CreateVulnerabilityRequest
+    name: CreateVulnerabilityInput
   typescript:
     module: confident-ai/vulnerabilities
-    name: CreateVulnerabilityRequest
+    name: CreateVulnerabilityInput
   references:
   - VulnerabilityEvaluationExample
   kind: object
@@ -38023,7 +38000,7 @@ types:
       first time the key authenticates a request.
     example: null
     references: []
-- name: Customer
+- name: CustomerInput
   description: Customer-level fields applied to the customer record. `id` is an alternate
     way to specify the customer and must match top-level `customerId` if both are
     provided. `name` only takes effect when a customer id is resolvable; successive
@@ -38031,10 +38008,10 @@ types:
   example: null
   python:
     module: confident_ai.traces
-    name: Customer
+    name: CustomerInput
   typescript:
     module: confident-ai/traces
-    name: Customer
+    name: CustomerInput
   references: []
   kind: object
   fields:
@@ -38211,16 +38188,16 @@ types:
     description: The number of dashboards per page.
     example: 25
     references: []
-- name: DashboardQueryRequest
+- name: DashboardQueryInput
   description: Which widgets to compute and over what range. Send `{}` to compute
     every widget over its own saved range.
   example: null
   python:
     module: confident_ai.dashboards
-    name: DashboardQueryRequest
+    name: DashboardQueryInput
   typescript:
     module: confident-ai/dashboards
-    name: DashboardQueryRequest
+    name: DashboardQueryInput
   references:
   - WidgetGranularity
   kind: object
@@ -39088,16 +39065,16 @@ types:
     example: null
     references:
     - DatasetVersion
-- name: DecisionProjectModel
+- name: DecisionProjectModelInput
   description: The project-scoped decision model used by `JEVAL` metrics. Concurrency
     and input-token limits are not accepted.
   example: null
   python:
     module: confident_ai.projects
-    name: DecisionProjectModel
+    name: DecisionProjectModelInput
   typescript:
     module: confident-ai/projects
-    name: DecisionProjectModel
+    name: DecisionProjectModelInput
   references:
   - ModelProvider
   kind: object
@@ -39135,16 +39112,16 @@ types:
       the provider with. Omit it or send null to use the provider's default credential.
     example: <MODEL-CREDENTIAL-ID>
     references: []
-- name: DeleteGovernancePolicyControlsRequest
+- name: DeleteGovernancePolicyControlsInput
   description: The controls to stop applying through this governance policy. The
     controls themselves are not deleted and stay available to other policies.
   example: null
   python:
     module: confident_ai.organization
-    name: DeleteGovernancePolicyControlsRequest
+    name: DeleteGovernancePolicyControlsInput
   typescript:
     module: confident-ai/organization
-    name: DeleteGovernancePolicyControlsRequest
+    name: DeleteGovernancePolicyControlsInput
   references: []
   kind: object
   fields:
@@ -39278,18 +39255,18 @@ types:
   - name: DECISION
     value: DECISION
   references: []
-- name: EvaluateRequest
+- name: EvaluateInput
   description: null
   example: null
   python:
     module: confident_ai.evaluate
-    name: EvaluateRequest
+    name: EvaluateInput
   typescript:
     module: confident-ai/evaluate
-    name: EvaluateRequest
+    name: EvaluateInput
   references:
-  - TestCase
-  - HyperparameterValue
+  - TestCaseInput
+  - HyperparameterValueInput
   kind: object
   fields:
   - wire: metricCollection
@@ -39306,27 +39283,27 @@ types:
     python: test_cases
     typescript: testCases
     type:
-      python: List[TestCase]
-      typescript: TestCase[]
+      python: List[TestCaseInput]
+      typescript: TestCaseInput[]
     required: true
     description: This is the list of test cases to evaluate. Every test case in one
       request must be of the same kind — all single-turn, or all multi-turn.
     example: null
     references:
-    - TestCase
+    - TestCaseInput
   - wire: hyperparameters
     python: hyperparameters
     typescript: hyperparameters
     type:
-      python: Optional[Dict[str, HyperparameterValue]]
-      typescript: Record<string, HyperparameterValue>
+      python: Optional[Dict[str, HyperparameterValueInput]]
+      typescript: Record<string, HyperparameterValueInput>
     required: false
     description: This is any hyperparameters like model or prompt you wish to associate
       with the test run.
     example:
       model: gpt-4o-mini
     references:
-    - HyperparameterValue
+    - HyperparameterValueInput
   - wire: identifier
     python: identifier
     typescript: identifier
@@ -39361,15 +39338,15 @@ types:
       user.
     example: <TEST-RUN-ID>
     references: []
-- name: EvaluateSpanRequest
+- name: EvaluateSpanInput
   description: The metric collection to evaluate a span against.
   example: null
   python:
     module: confident_ai.evaluate
-    name: EvaluateSpanRequest
+    name: EvaluateSpanInput
   typescript:
     module: confident-ai/evaluate
-    name: EvaluateSpanRequest
+    name: EvaluateSpanInput
   references: []
   kind: object
   fields:
@@ -39418,16 +39395,16 @@ types:
     description: This is the uuid of the span the evaluation was queued for.
     example: <SPAN-UUID>
     references: []
-- name: EvaluateThreadRequest
+- name: EvaluateThreadInput
   description: The metric collection to evaluate a thread against, and the role its
     chatbot was playing.
   example: null
   python:
     module: confident_ai.evaluate
-    name: EvaluateThreadRequest
+    name: EvaluateThreadInput
   typescript:
     module: confident-ai/evaluate
-    name: EvaluateThreadRequest
+    name: EvaluateThreadInput
   references: []
   kind: object
   fields:
@@ -39487,15 +39464,15 @@ types:
     description: This is the id of the thread the evaluation was queued for.
     example: thread-42
     references: []
-- name: EvaluateTraceRequest
+- name: EvaluateTraceInput
   description: The metric collection to evaluate a trace against.
   example: null
   python:
     module: confident_ai.evaluate
-    name: EvaluateTraceRequest
+    name: EvaluateTraceInput
   typescript:
     module: confident-ai/evaluate
-    name: EvaluateTraceRequest
+    name: EvaluateTraceInput
   references: []
   kind: object
   fields:
@@ -39567,16 +39544,16 @@ types:
   - name: INTERNAL_ERROR
     value: INTERNAL_ERROR
   references: []
-- name: EvaluationProjectModel
+- name: EvaluationProjectModelInput
   description: The model to run as the project's evaluation model. It takes no `maxInputTokens`,
     which is rejected on this path.
   example: null
   python:
     module: confident_ai.projects
-    name: EvaluationProjectModel
+    name: EvaluationProjectModelInput
   typescript:
     module: confident-ai/projects
-    name: EvaluationProjectModel
+    name: EvaluationProjectModelInput
   references:
   - ModelProvider
   kind: object
@@ -42424,7 +42401,7 @@ types:
   - name: THREAD
     value: THREAD
   references: []
-- name: GovernanceControlPreDeploymentConfig
+- name: GovernanceControlPreDeploymentConfigInput
   description: 'The rule a `PRE_DEPLOYMENT_EVALS` or `PRE_DEPLOYMENT_RED_TEAMING`
     control evaluates, read as one sentence: find the project''s newest completed
     run whose identifier is `identifier` within the last `window.days` days, and
@@ -42438,10 +42415,10 @@ types:
   example: null
   python:
     module: confident_ai.organization
-    name: GovernanceControlPreDeploymentConfig
+    name: GovernanceControlPreDeploymentConfigInput
   typescript:
     module: confident-ai/organization
-    name: GovernanceControlPreDeploymentConfig
+    name: GovernanceControlPreDeploymentConfigInput
   references:
   - GovernanceControlPreDeploymentWindow
   - FilterSet
@@ -42650,7 +42627,7 @@ types:
     description: The id of the governance control.
     example: <GOVERNANCE-CONTROL-ID>
     references: []
-- name: GovernanceControlRuntimeConfig
+- name: GovernanceControlRuntimeConfigInput
   description: 'The rule a `RUNTIME` control evaluates, read as one sentence: aggregate
     `aggregation` over `dataModel` for the trailing 24 hours, restricted to `filters`,
     and fail when the result sits on the `direction` side of the threshold. Aggregating
@@ -42661,14 +42638,14 @@ types:
   example: null
   python:
     module: confident_ai.organization
-    name: GovernanceControlRuntimeConfig
+    name: GovernanceControlRuntimeConfigInput
   typescript:
     module: confident-ai/organization
-    name: GovernanceControlRuntimeConfig
+    name: GovernanceControlRuntimeConfigInput
   references:
   - GovernanceControlDataModel
   - GovernanceControlAggregation
-  - GovernanceControlThresholdSettings
+  - GovernanceControlThresholdSettingsInput
   - GovernanceControlExtraQueryParams
   - FilterSet
   - GovernanceControlSeverity
@@ -42702,14 +42679,14 @@ types:
     python: threshold_settings
     typescript: thresholdSettings
     type:
-      python: Optional[GovernanceControlThresholdSettings]
-      typescript: GovernanceControlThresholdSettings | null
+      python: Optional[GovernanceControlThresholdSettingsInput]
+      typescript: GovernanceControlThresholdSettingsInput | null
     required: true
     description: The threshold the aggregated value is compared against. Send `null`
       to leave the control unconfigured.
     example: null
     references:
-    - GovernanceControlThresholdSettings
+    - GovernanceControlThresholdSettingsInput
   - wire: extraQueryParams
     python: extra_query_params
     typescript: extraQueryParams
@@ -42993,16 +42970,16 @@ types:
   - name: BELOW
     value: below
   references: []
-- name: GovernanceControlThresholdSettings
+- name: GovernanceControlThresholdSettingsInput
   description: The comparison that turns a runtime control's measured value into
     a verdict.
   example: null
   python:
     module: confident_ai.organization
-    name: GovernanceControlThresholdSettings
+    name: GovernanceControlThresholdSettingsInput
   typescript:
     module: confident-ai/organization
-    name: GovernanceControlThresholdSettings
+    name: GovernanceControlThresholdSettingsInput
   references:
   - GovernanceControlThresholdDirection
   kind: object
@@ -43230,15 +43207,15 @@ types:
     module: confident-ai/organization
     name: GovernanceControlVersionInput
   references:
-  - GovernanceControlRuntimeConfig
-  - GovernanceControlPreDeploymentConfig
+  - GovernanceControlRuntimeConfigInput
+  - GovernanceControlPreDeploymentConfigInput
   kind: union
   branches:
-  - GovernanceControlRuntimeConfig
-  - GovernanceControlPreDeploymentConfig
+  - GovernanceControlRuntimeConfigInput
+  - GovernanceControlPreDeploymentConfigInput
   type:
-    python: Union[GovernanceControlRuntimeConfig, GovernanceControlPreDeploymentConfig]
-    typescript: GovernanceControlRuntimeConfig | GovernanceControlPreDeploymentConfig
+    python: Union[GovernanceControlRuntimeConfigInput, GovernanceControlPreDeploymentConfigInput]
+    typescript: GovernanceControlRuntimeConfigInput | GovernanceControlPreDeploymentConfigInput
 - name: GovernanceControlVersionList
   description: One page of a control's definition history, with the total across
     all pages.
@@ -44100,17 +44077,17 @@ types:
     description: The number of projects per page.
     example: 25
     references: []
-- name: GovernancePolicyProjectsRequest
+- name: GovernancePolicyProjectsInput
   description: The projects to enroll in, or remove from, a governance policy. A
     project belongs to at most one policy, so assigning one that is already on another
     policy moves it.
   example: null
   python:
     module: confident_ai.organization
-    name: GovernancePolicyProjectsRequest
+    name: GovernancePolicyProjectsInput
   typescript:
     module: confident-ai/organization
-    name: GovernancePolicyProjectsRequest
+    name: GovernancePolicyProjectsInput
   references: []
   kind: object
   fields:
@@ -44924,24 +44901,24 @@ types:
     example: null
     references:
     - GovernanceProjectHealth
-- name: HyperparameterValue
+- name: HyperparameterValueInput
   description: A plain value such as a model name, or a reference to the prompt the
     run used.
   example: null
   python:
     module: confident_ai.evaluate
-    name: HyperparameterValue
+    name: HyperparameterValueInput
   typescript:
     module: confident-ai/evaluate
-    name: HyperparameterValue
+    name: HyperparameterValueInput
   references:
-  - PromptHyperparameter
+  - PromptHyperparameterInput
   kind: union
   branches:
-  - PromptHyperparameter
+  - PromptHyperparameterInput
   type:
-    python: Union[str, PromptHyperparameter]
-    typescript: string | PromptHyperparameter
+    python: Union[str, PromptHyperparameterInput]
+    typescript: string | PromptHyperparameterInput
 - name: ImmediatelyRotatedApiKey
   description: 'The result of rotating without a grace period: `value` has already
     been replaced and the previous value stopped authenticating the moment this response
@@ -45329,16 +45306,16 @@ types:
   - name: HIGH
     value: HIGH
   references: []
-- name: LlmSpan
+- name: LlmSpanInput
   description: A span recording a call to a language model, with its model, token
     counts, costs and the prompt it used.
   example: null
   python:
     module: confident_ai.traces
-    name: LlmSpan
+    name: LlmSpanInput
   typescript:
     module: confident-ai/traces
-    name: LlmSpan
+    name: LlmSpanInput
   references:
   - TraceSpanStatus
   - ToolCall
@@ -45661,16 +45638,16 @@ types:
     description: This is the hash of the current prompt being logged in the llm span.
     example: bab04ce
     references: []
-- name: MLLMImage
+- name: MLLMImageInput
   description: An image referenced from a text field by a `[DEEPEVAL:IMAGE:<key>]`
     marker. Send either a public `url` or the bytes in `base64`.
   example: null
   python:
     module: confident_ai.common
-    name: MLLMImage
+    name: MLLMImageInput
   typescript:
     module: confident-ai/common
-    name: MLLMImage
+    name: MLLMImageInput
   references: []
   kind: object
   fields:
@@ -45886,7 +45863,7 @@ types:
     example: null
     references:
     - McpServerTool
-- name: McpServerAuthConfig
+- name: McpServerAuthConfigInput
   description: Credentials for a non-`HEADERS` auth type. Unlike `headers`, these
     fields merge into what is stored, so send only the ones you are changing. Unknown
     keys are ignored, which is what lets you send back an object you read from the
@@ -45894,10 +45871,10 @@ types:
   example: null
   python:
     module: confident_ai.mcp_servers
-    name: McpServerAuthConfig
+    name: McpServerAuthConfigInput
   typescript:
     module: confident-ai/mcp-servers
-    name: McpServerAuthConfig
+    name: McpServerAuthConfigInput
   references: []
   kind: object
   fields:
@@ -46532,7 +46509,7 @@ types:
   - ModelSettings
   - PromptOutputType
   - ToolInput
-  - MLLMImage
+  - MLLMImageInput
   kind: object
   fields:
   - wire: messages
@@ -46645,8 +46622,8 @@ types:
     python: images_mapping
     typescript: imagesMapping
     type:
-      python: Optional[Dict[str, MLLMImage]]
-      typescript: Record<string, MLLMImage>
+      python: Optional[Dict[str, MLLMImageInput]]
+      typescript: Record<string, MLLMImageInput>
     required: false
     description: Images placed in the prompt's text or message contents with `[CONFIDENT:IMAGE:<key>]`
       markers, keyed by each marker's `<key>`. When you send it, Confident AI stores
@@ -46654,7 +46631,7 @@ types:
       stored as sent.
     example: null
     references:
-    - MLLMImage
+    - MLLMImageInput
 - name: Metric
   description: 'A custom metric: how it scores, and which test case fields it needs.'
   example: null
@@ -47670,15 +47647,15 @@ types:
     example: null
     references:
     - Metric
-- name: MetricRef
+- name: MetricRefInput
   description: A metric referenced by its name.
   example: null
   python:
     module: confident_ai.metric_collections
-    name: MetricRef
+    name: MetricRefInput
   typescript:
     module: confident-ai/metric-collections
-    name: MetricRef
+    name: MetricRefInput
   references: []
   kind: object
   fields:
@@ -47931,7 +47908,7 @@ types:
     module: confident-ai/metric-collections
     name: MetricSettingInput
   references:
-  - MetricRef
+  - MetricRefInput
   - ModelProvider
   - EvalMode
   kind: object
@@ -47940,13 +47917,13 @@ types:
     python: metric
     typescript: metric
     type:
-      python: MetricRef
-      typescript: MetricRef
+      python: MetricRefInput
+      typescript: MetricRefInput
     required: true
     description: null
     example: null
     references:
-    - MetricRef
+    - MetricRefInput
   - wire: activated
     python: activated
     typescript: activated
@@ -49230,7 +49207,7 @@ types:
   references:
   - Turn
   - Expectations
-  - MLLMImage
+  - MLLMImageInput
   kind: object
   fields:
   - wire: scenario
@@ -49397,8 +49374,8 @@ types:
     python: images_mapping
     typescript: imagesMapping
     type:
-      python: Optional[Dict[str, MLLMImage]]
-      typescript: Record<string, MLLMImage>
+      python: Optional[Dict[str, MLLMImageInput]]
+      typescript: Record<string, MLLMImageInput>
     required: false
     description: The media this golden refers to, keyed by the id inside each placeholder.
       Put `[DEEPEVAL:IMAGE:<id>]` or `[DEEPEVAL:PDF:<id>]` in a text field where
@@ -49408,19 +49385,19 @@ types:
         url: https://example.com/paris.png
         local: false
     references:
-    - MLLMImage
-- name: MultiTurnTestCase
+    - MLLMImageInput
+- name: MultiTurnTestCaseInput
   description: A test case for a conversation with your LLM application.
   example: null
   python:
     module: confident_ai.evaluate
-    name: MultiTurnTestCase
+    name: MultiTurnTestCaseInput
   typescript:
     module: confident-ai/evaluate
-    name: MultiTurnTestCase
+    name: MultiTurnTestCaseInput
   references:
   - Turn
-  - MLLMImage
+  - MLLMImageInput
   kind: object
   fields:
   - wire: turns
@@ -49546,8 +49523,8 @@ types:
     python: images_mapping
     typescript: imagesMapping
     type:
-      python: Optional[Dict[str, MLLMImage]]
-      typescript: Record<string, MLLMImage>
+      python: Optional[Dict[str, MLLMImageInput]]
+      typescript: Record<string, MLLMImageInput>
     required: false
     description: This is the mapping of image placeholders in your test case to the
       images they refer to.
@@ -49556,7 +49533,7 @@ types:
         url: https://example.com/everest.png
         local: false
     references:
-    - MLLMImage
+    - MLLMImageInput
   - wire: additionalMetadata
     python: additional_metadata
     typescript: additionalMetadata
@@ -50463,16 +50440,16 @@ types:
       Leave it empty to use the default.'
     example: '+14155550199'
     references: []
-- name: PingAIConnectionRequest
+- name: PingAIConnectionInput
   description: How to test the connection. Send `{}` to make a single call with a
     sample test case.
   example: null
   python:
     module: confident_ai.ai_connections
-    name: PingAIConnectionRequest
+    name: PingAIConnectionInput
   typescript:
     module: confident-ai/ai-connections
-    name: PingAIConnectionRequest
+    name: PingAIConnectionInput
   references: []
   kind: object
   fields:
@@ -50487,15 +50464,15 @@ types:
       instead of a single call. Defaults to `false`.
     example: false
     references: []
-- name: PlatformProjectModel
+- name: PlatformProjectModelInput
   description: The model to run for platform, simulation, or speech model types.
   example: null
   python:
     module: confident_ai.projects
-    name: PlatformProjectModel
+    name: PlatformProjectModelInput
   typescript:
     module: confident-ai/projects
-    name: PlatformProjectModel
+    name: PlatformProjectModelInput
   references:
   - ModelProvider
   kind: object
@@ -51229,17 +51206,17 @@ types:
     module: confident-ai/projects
     name: ProjectModelInput
   references:
-  - EvaluationProjectModel
-  - DecisionProjectModel
-  - PlatformProjectModel
+  - EvaluationProjectModelInput
+  - DecisionProjectModelInput
+  - PlatformProjectModelInput
   kind: union
   branches:
-  - EvaluationProjectModel
-  - DecisionProjectModel
-  - PlatformProjectModel
+  - EvaluationProjectModelInput
+  - DecisionProjectModelInput
+  - PlatformProjectModelInput
   type:
-    python: Union[EvaluationProjectModel, DecisionProjectModel, PlatformProjectModel]
-    typescript: EvaluationProjectModel | DecisionProjectModel | PlatformProjectModel
+    python: Union[EvaluationProjectModelInput, DecisionProjectModelInput, PlatformProjectModelInput]
+    typescript: EvaluationProjectModelInput | DecisionProjectModelInput | PlatformProjectModelInput
 - name: ProjectRef
   description: Confirmation that the project was deleted.
   example: null
@@ -51587,15 +51564,15 @@ types:
     example: null
     references:
     - PromptCommit
-- name: PromptHyperparameter
+- name: PromptHyperparameterInput
   description: A reference to the prompt version the run used.
   example: null
   python:
     module: confident_ai.evaluate
-    name: PromptHyperparameter
+    name: PromptHyperparameterInput
   typescript:
     module: confident-ai/evaluate
-    name: PromptHyperparameter
+    name: PromptHyperparameterInput
   references:
   - PromptType
   kind: object
@@ -52082,7 +52059,7 @@ types:
     example: null
     references:
     - PromptType
-- name: PushDatasetRequest
+- name: PushDatasetInput
   description: Goldens to write to the dataset with the given `alias`, creating the
     dataset first when it does not exist. Goldens carrying an `id` are updated in
     place, so a pulled dataset can be edited and pushed back without duplicating
@@ -52090,10 +52067,10 @@ types:
   example: null
   python:
     module: confident_ai.datasets
-    name: PushDatasetRequest
+    name: PushDatasetInput
   typescript:
     module: confident-ai/datasets
-    name: PushDatasetRequest
+    name: PushDatasetInput
   references:
   - Golden
   kind: object
@@ -52181,15 +52158,15 @@ types:
       with a version number.
     example: bab04ce
     references: []
-- name: QueueDatasetGoldensRequest
+- name: QueueDatasetGoldensInput
   description: null
   example: null
   python:
     module: confident_ai.datasets
-    name: QueueDatasetGoldensRequest
+    name: QueueDatasetGoldensInput
   typescript:
     module: confident-ai/datasets
-    name: QueueDatasetGoldensRequest
+    name: QueueDatasetGoldensInput
   references:
   - Golden
   kind: object
@@ -52463,18 +52440,18 @@ types:
     example: null
     references:
     - IngestionDataModel
-- name: QueueItemAnnotation
+- name: QueueItemAnnotationInput
   description: One rating, as an annotator would leave it on the item. `fieldType`
     defaults to `THUMBS_RATING`.
   example: null
   python:
     module: confident_ai.annotation_queues
-    name: QueueItemAnnotation
+    name: QueueItemAnnotationInput
   typescript:
     module: confident-ai/annotation-queues
-    name: QueueItemAnnotation
+    name: QueueItemAnnotationInput
   references:
-  - MLLMImage
+  - MLLMImageInput
   kind: object
   fields:
   - wire: fieldType
@@ -52545,23 +52522,23 @@ types:
     python: images_mapping
     typescript: imagesMapping
     type:
-      python: Optional[Dict[str, MLLMImage]]
-      typescript: Record<string, MLLMImage>
+      python: Optional[Dict[str, MLLMImageInput]]
+      typescript: Record<string, MLLMImageInput>
     required: false
     description: Images referenced by `[DEEPEVAL:IMAGE:<key>]` markers in the text
       fields, keyed by that marker's key.
     example: null
     references:
-    - MLLMImage
-- name: QueueItemFormResponse
+    - MLLMImageInput
+- name: QueueItemFormResponseInput
   description: One annotation on a field of the queue's annotation form.
   example: null
   python:
     module: confident_ai.annotation_queues
-    name: QueueItemFormResponse
+    name: QueueItemFormResponseInput
   typescript:
     module: confident-ai/annotation-queues
-    name: QueueItemFormResponse
+    name: QueueItemFormResponseInput
   references: []
   kind: object
   fields:
@@ -52610,7 +52587,7 @@ types:
   - name: COMPLETED
     value: COMPLETED
   references: []
-- name: QueueItems
+- name: QueueItemsInput
   description: The production data to add to the queue. Send the list that matches
     the queue's `type` — `traceUuids` for a `TRACE` queue, `spanUuids` for a `SPAN`
     queue, `threadIds` for a `THREAD` queue — and every id must already exist in
@@ -52618,22 +52595,22 @@ types:
   example: null
   python:
     module: confident_ai.annotation_queues
-    name: QueueItems
+    name: QueueItemsInput
   typescript:
     module: confident-ai/annotation-queues
-    name: QueueItems
+    name: QueueItemsInput
   references:
-  - TraceQueueItems
-  - SpanQueueItems
-  - ThreadQueueItems
+  - TraceQueueItemsInput
+  - SpanQueueItemsInput
+  - ThreadQueueItemsInput
   kind: union
   branches:
-  - TraceQueueItems
-  - SpanQueueItems
-  - ThreadQueueItems
+  - TraceQueueItemsInput
+  - SpanQueueItemsInput
+  - ThreadQueueItemsInput
   type:
-    python: Union[TraceQueueItems, SpanQueueItems, ThreadQueueItems]
-    typescript: TraceQueueItems | SpanQueueItems | ThreadQueueItems
+    python: Union[TraceQueueItemsInput, SpanQueueItemsInput, ThreadQueueItemsInput]
+    typescript: TraceQueueItemsInput | SpanQueueItemsInput | ThreadQueueItemsInput
 - name: RTFramework
   description: 'A red teaming framework: the risk categories a risk assessment runs,
     resolved to everything the run needs.'
@@ -54992,16 +54969,16 @@ types:
   - name: EXECUTIVE_REPORT
     value: EXECUTIVE_REPORT
   references: []
-- name: RetrieverSpan
+- name: RetrieverSpanInput
   description: A span recording a knowledge-base lookup, with the embedder and retrieval
     settings it used.
   example: null
   python:
     module: confident_ai.traces
-    name: RetrieverSpan
+    name: RetrieverSpanInput
   typescript:
     module: confident-ai/traces
-    name: RetrieverSpan
+    name: RetrieverSpanInput
   references:
   - TraceSpanStatus
   - ToolCall
@@ -55634,16 +55611,16 @@ types:
     description: The id of the role that was deleted.
     example: <ROLE-ID>
     references: []
-- name: RotateApiKeyRequest
+- name: RotateApiKeyInput
   description: How to rotate the key. Every field is optional; an empty body rotates
     the value immediately and leaves the expiry alone.
   example: null
   python:
     module: confident_ai.common
-    name: RotateApiKeyRequest
+    name: RotateApiKeyInput
   typescript:
     module: confident-ai/common
-    name: RotateApiKeyRequest
+    name: RotateApiKeyInput
   references: []
   kind: object
   fields:
@@ -55729,17 +55706,17 @@ types:
     description: What a response scoring in this range looks like.
     example: The answer is factually correct and complete.
     references: []
-- name: RunDatasetEvaluationRequest
+- name: RunDatasetEvaluationInput
   description: How to evaluate the dataset. By default the goldens' stored actual
     outputs are evaluated; supply one of `aiConnectionId`, `promptAlias` or `voiceConnectionId`
     to generate them first.
   example: null
   python:
     module: confident_ai.datasets
-    name: RunDatasetEvaluationRequest
+    name: RunDatasetEvaluationInput
   typescript:
     module: confident-ai/datasets
-    name: RunDatasetEvaluationRequest
+    name: RunDatasetEvaluationInput
   references:
   - GenerationMode
   kind: object
@@ -55941,20 +55918,20 @@ types:
     description: The number of test cases the evaluation was started with.
     example: 42
     references: []
-- name: RunRTFrameworkRequest
+- name: RunRTFrameworkInput
   description: What to attack and how far to go. Provide exactly one target — an
     AI connection or a prompt — and the risk categories to run.
   example: null
   python:
     module: confident_ai.rt_frameworks
-    name: RunRTFrameworkRequest
+    name: RunRTFrameworkInput
   typescript:
     module: confident-ai/rt-frameworks
-    name: RunRTFrameworkRequest
+    name: RunRTFrameworkInput
   references:
   - Level
   - GenerationMode
-  - AttackEngine
+  - AttackEngineInput
   kind: object
   fields:
   - wire: identifier
@@ -56039,13 +56016,13 @@ types:
     python: attack_engine
     typescript: attackEngine
     type:
-      python: Optional[AttackEngine]
-      typescript: AttackEngine
+      python: Optional[AttackEngineInput]
+      typescript: AttackEngineInput
     required: false
     description: null
     example: null
     references:
-    - AttackEngine
+    - AttackEngineInput
 - name: SchedulableExportType
   kind: enum
   description: 'What each run of the schedule exports. Only project-scoped export
@@ -56256,7 +56233,7 @@ types:
     example: null
     references:
     - ScheduledAlertScheduleSettings
-- name: ScheduledAlertDetectionSettings
+- name: ScheduledAlertDetectionSettingsInput
   description: Which detections notify, for `REGRESSION`, `ANOMALY` and `SIGNAL_SPIKE`
     alerts. Regressions and anomalies take an optional `traceName` (omit for every
     trace), optional `metrics` (omit for all of `avg_score`, `error_rate`, `avg_latency`,
@@ -56270,10 +56247,10 @@ types:
     minAffectedCount: 20
   python:
     module: confident_ai.scheduled_alerts
-    name: ScheduledAlertDetectionSettings
+    name: ScheduledAlertDetectionSettingsInput
   typescript:
     module: confident-ai/scheduled-alerts
-    name: ScheduledAlertDetectionSettings
+    name: ScheduledAlertDetectionSettingsInput
   references:
   - RegressionDetectionSettings
   - AnomalyDetectionSettings
@@ -56561,16 +56538,16 @@ types:
   - name: SIGNAL_SPIKE
     value: SIGNAL_SPIKE
   references: []
-- name: SetGovernancePolicyControlsRequest
+- name: SetGovernancePolicyControlsInput
   description: The controls a governance policy should apply. This replaces the policy's
     own attachments outright rather than adding to them.
   example: null
   python:
     module: confident_ai.organization
-    name: SetGovernancePolicyControlsRequest
+    name: SetGovernancePolicyControlsInput
   typescript:
     module: confident-ai/organization
-    name: SetGovernancePolicyControlsRequest
+    name: SetGovernancePolicyControlsInput
   references: []
   kind: object
   fields:
@@ -56665,7 +56642,7 @@ types:
   references:
   - ToolCall
   - Expectations
-  - MLLMImage
+  - MLLMImageInput
   kind: object
   fields:
   - wire: input
@@ -56880,8 +56857,8 @@ types:
     python: images_mapping
     typescript: imagesMapping
     type:
-      python: Optional[Dict[str, MLLMImage]]
-      typescript: Record<string, MLLMImage>
+      python: Optional[Dict[str, MLLMImageInput]]
+      typescript: Record<string, MLLMImageInput>
     required: false
     description: The media this golden refers to, keyed by the id inside each placeholder.
       Put `[DEEPEVAL:IMAGE:<id>]` or `[DEEPEVAL:PDF:<id>]` in a text field where
@@ -56891,19 +56868,19 @@ types:
         url: https://example.com/paris.png
         local: false
     references:
-    - MLLMImage
-- name: SingleTurnTestCase
+    - MLLMImageInput
+- name: SingleTurnTestCaseInput
   description: A test case for a single exchange with your LLM application.
   example: null
   python:
     module: confident_ai.evaluate
-    name: SingleTurnTestCase
+    name: SingleTurnTestCaseInput
   typescript:
     module: confident-ai/evaluate
-    name: SingleTurnTestCase
+    name: SingleTurnTestCaseInput
   references:
   - ToolCall
-  - MLLMImage
+  - MLLMImageInput
   kind: object
   fields:
   - wire: input
@@ -57037,8 +57014,8 @@ types:
     python: images_mapping
     typescript: imagesMapping
     type:
-      python: Optional[Dict[str, MLLMImage]]
-      typescript: Record<string, MLLMImage>
+      python: Optional[Dict[str, MLLMImageInput]]
+      typescript: Record<string, MLLMImageInput>
     required: false
     description: This is the mapping of image placeholders in your test case to the
       images they refer to.
@@ -57047,7 +57024,7 @@ types:
         url: https://example.com/everest.png
         local: false
     references:
-    - MLLMImage
+    - MLLMImageInput
   - wire: additionalMetadata
     python: additional_metadata
     typescript: additionalMetadata
@@ -57192,16 +57169,16 @@ types:
     example: null
     references:
     - VoiceHeader
-- name: SnowflakeExportDestinationConfig
+- name: SnowflakeExportDestinationConfigInput
   description: How Confident AI signs in to Snowflake with key-pair authentication,
     and where it creates the export tables.
   example: null
   python:
     module: confident_ai.export_destinations
-    name: SnowflakeExportDestinationConfig
+    name: SnowflakeExportDestinationConfigInput
   typescript:
     module: confident-ai/export-destinations
-    name: SnowflakeExportDestinationConfig
+    name: SnowflakeExportDestinationConfigInput
   references: []
   kind: object
   fields:
@@ -57296,16 +57273,16 @@ types:
       for an unencrypted key.
     example: correct-horse-battery-staple
     references: []
-- name: SnowflakeExportDestinationConfigUpdate
+- name: SnowflakeExportDestinationConfigUpdateInput
   description: The Snowflake settings to change. Omitted fields keep their stored
     values.
   example: null
   python:
     module: confident_ai.export_destinations
-    name: SnowflakeExportDestinationConfigUpdate
+    name: SnowflakeExportDestinationConfigUpdateInput
   typescript:
     module: confident-ai/export-destinations
-    name: SnowflakeExportDestinationConfigUpdate
+    name: SnowflakeExportDestinationConfigUpdateInput
   references: []
   kind: object
   fields:
@@ -57951,19 +57928,19 @@ types:
     example: null
     references:
     - AnnotationSummary
-- name: SpanAnnotation
+- name: SpanAnnotationInput
   description: An annotation left on a span.
   example: null
   python:
     module: confident_ai.annotations
-    name: SpanAnnotation
+    name: SpanAnnotationInput
   typescript:
     module: confident-ai/annotations
-    name: SpanAnnotation
+    name: SpanAnnotationInput
   references:
   - AnnotationFieldType
-  - AnnotationValue
-  - MLLMImage
+  - AnnotationValueInput
+  - MLLMImageInput
   kind: object
   fields:
   - wire: spanUuid
@@ -58001,13 +57978,13 @@ types:
     python: value
     typescript: value
     type:
-      python: AnnotationValue
-      typescript: AnnotationValue
+      python: AnnotationValueInput
+      typescript: AnnotationValueInput
     required: true
     description: null
     example: null
     references:
-    - AnnotationValue
+    - AnnotationValueInput
   - wire: name
     python: name
     typescript: name
@@ -58044,14 +58021,14 @@ types:
     python: images_mapping
     typescript: imagesMapping
     type:
-      python: Optional[Dict[str, MLLMImage]]
-      typescript: Record<string, MLLMImage>
+      python: Optional[Dict[str, MLLMImageInput]]
+      typescript: Record<string, MLLMImageInput>
     required: false
     description: Images referenced by `[DEEPEVAL:IMAGE:<key>]` markers in the text
       fields, keyed by that marker's key.
     example: null
     references:
-    - MLLMImage
+    - MLLMImageInput
 - name: SpanInput
   description: 'A span to record inside the trace. Its `type` selects the variant:
     omit it or send `SPAN` for a plain span, `LLM` for a model call, `RETRIEVER`
@@ -58065,21 +58042,23 @@ types:
     module: confident-ai/traces
     name: SpanInput
   references:
-  - BaseSpan
-  - LlmSpan
-  - RetrieverSpan
-  - ToolSpan
-  - AgentSpan
+  - BaseSpanInput
+  - LlmSpanInput
+  - RetrieverSpanInput
+  - ToolSpanInput
+  - AgentSpanInput
   kind: union
   branches:
-  - BaseSpan
-  - LlmSpan
-  - RetrieverSpan
-  - ToolSpan
-  - AgentSpan
+  - BaseSpanInput
+  - LlmSpanInput
+  - RetrieverSpanInput
+  - ToolSpanInput
+  - AgentSpanInput
   type:
-    python: Union[BaseSpan, LlmSpan, RetrieverSpan, ToolSpan, AgentSpan]
-    typescript: BaseSpan | LlmSpan | RetrieverSpan | ToolSpan | AgentSpan
+    python: Union[BaseSpanInput, LlmSpanInput, RetrieverSpanInput, ToolSpanInput,
+      AgentSpanInput]
+    typescript: BaseSpanInput | LlmSpanInput | RetrieverSpanInput | ToolSpanInput
+      | AgentSpanInput
 - name: SpanList
   description: null
   example: null
@@ -58126,15 +58105,15 @@ types:
       this is the last page.
     example: null
     references: []
-- name: SpanQueueItems
+- name: SpanQueueItemsInput
   description: Spans to add to a `SPAN` queue.
   example: null
   python:
     module: confident_ai.annotation_queues
-    name: SpanQueueItems
+    name: SpanQueueItemsInput
   typescript:
     module: confident-ai/annotation-queues
-    name: SpanQueueItems
+    name: SpanQueueItemsInput
   references: []
   kind: object
   fields:
@@ -58566,7 +58545,7 @@ types:
   - name: LLM
     value: LLM
   references: []
-- name: SubmitTestCaseResultRequest
+- name: SubmitTestCaseResultInput
   description: The result your agent produced for one dispatched test case. `actualOutput`
     is required; any other field you omit keeps the value Confident AI already holds
     for the golden. When your agent could not produce an output, send `error` with
@@ -58574,10 +58553,10 @@ types:
   example: null
   python:
     module: confident_ai.test_runs
-    name: SubmitTestCaseResultRequest
+    name: SubmitTestCaseResultInput
   typescript:
     module: confident-ai/test-runs
-    name: SubmitTestCaseResultRequest
+    name: SubmitTestCaseResultInput
   references:
   - ToolCall
   kind: object
@@ -58792,27 +58771,27 @@ types:
       1.
     example: 0.9
     references: []
-- name: TestCase
+- name: TestCaseInput
   description: 'One test case to evaluate: single-turn when it carries `input`, multi-turn
     when it carries `turns`. A test case cannot be both, and one request cannot mix
     the two kinds.'
   example: null
   python:
     module: confident_ai.evaluate
-    name: TestCase
+    name: TestCaseInput
   typescript:
     module: confident-ai/evaluate
-    name: TestCase
+    name: TestCaseInput
   references:
-  - SingleTurnTestCase
-  - MultiTurnTestCase
+  - SingleTurnTestCaseInput
+  - MultiTurnTestCaseInput
   kind: union
   branches:
-  - SingleTurnTestCase
-  - MultiTurnTestCase
+  - SingleTurnTestCaseInput
+  - MultiTurnTestCaseInput
   type:
-    python: Union[SingleTurnTestCase, MultiTurnTestCase]
-    typescript: SingleTurnTestCase | MultiTurnTestCase
+    python: Union[SingleTurnTestCaseInput, MultiTurnTestCaseInput]
+    typescript: SingleTurnTestCaseInput | MultiTurnTestCaseInput
 - name: TestCaseMetricData
   description: The result of evaluating one metric against a test case.
   example: null
@@ -60177,16 +60156,16 @@ types:
     example: null
     references:
     - ExpectationsData
-- name: TestTransformerCodeRequest
+- name: TestTransformerCodeInput
   description: A sample value to run the transformer's stored code against, so you
     can see what it returns before attaching it to anything.
   example: null
   python:
     module: confident_ai.transformers
-    name: TestTransformerCodeRequest
+    name: TestTransformerCodeInput
   typescript:
     module: confident-ai/transformers
-    name: TestTransformerCodeRequest
+    name: TestTransformerCodeInput
   references: []
   kind: object
   fields:
@@ -60375,7 +60354,7 @@ types:
   - ModelSettings
   - PromptOutputType
   - ToolInput
-  - MLLMImage
+  - MLLMImageInput
   kind: object
   fields:
   - wire: text
@@ -60483,8 +60462,8 @@ types:
     python: images_mapping
     typescript: imagesMapping
     type:
-      python: Optional[Dict[str, MLLMImage]]
-      typescript: Record<string, MLLMImage>
+      python: Optional[Dict[str, MLLMImageInput]]
+      typescript: Record<string, MLLMImageInput>
     required: false
     description: Images placed in the prompt's text or message contents with `[CONFIDENT:IMAGE:<key>]`
       markers, keyed by each marker's `<key>`. When you send it, Confident AI stores
@@ -60492,7 +60471,7 @@ types:
       stored as sent.
     example: null
     references:
-    - MLLMImage
+    - MLLMImageInput
 - name: Thread
   description: A thread with its evaluation results, annotations and the traces that
     make up the conversation.
@@ -60634,19 +60613,19 @@ types:
     example: null
     references:
     - Trace
-- name: ThreadAnnotation
+- name: ThreadAnnotationInput
   description: An annotation left on a thread.
   example: null
   python:
     module: confident_ai.annotations
-    name: ThreadAnnotation
+    name: ThreadAnnotationInput
   typescript:
     module: confident-ai/annotations
-    name: ThreadAnnotation
+    name: ThreadAnnotationInput
   references:
   - AnnotationFieldType
-  - AnnotationValue
-  - MLLMImage
+  - AnnotationValueInput
+  - MLLMImageInput
   kind: object
   fields:
   - wire: threadId
@@ -60684,13 +60663,13 @@ types:
     python: value
     typescript: value
     type:
-      python: AnnotationValue
-      typescript: AnnotationValue
+      python: AnnotationValueInput
+      typescript: AnnotationValueInput
     required: true
     description: null
     example: null
     references:
-    - AnnotationValue
+    - AnnotationValueInput
   - wire: name
     python: name
     typescript: name
@@ -60727,14 +60706,14 @@ types:
     python: images_mapping
     typescript: imagesMapping
     type:
-      python: Optional[Dict[str, MLLMImage]]
-      typescript: Record<string, MLLMImage>
+      python: Optional[Dict[str, MLLMImageInput]]
+      typescript: Record<string, MLLMImageInput>
     required: false
     description: Images referenced by `[DEEPEVAL:IMAGE:<key>]` markers in the text
       fields, keyed by that marker's key.
     example: null
     references:
-    - MLLMImage
+    - MLLMImageInput
 - name: ThreadInput
   description: Thread-level fields applied to the thread record. `id` is an alternate
     way to specify the thread and must match top-level `threadId` if both are provided.
@@ -60832,15 +60811,15 @@ types:
       this is the last page.
     example: null
     references: []
-- name: ThreadQueueItems
+- name: ThreadQueueItemsInput
   description: Threads to add to a `THREAD` queue.
   example: null
   python:
     module: confident_ai.annotation_queues
-    name: ThreadQueueItems
+    name: ThreadQueueItemsInput
   typescript:
     module: confident-ai/annotation-queues
-    name: ThreadQueueItems
+    name: ThreadQueueItemsInput
   references: []
   kind: object
   fields:
@@ -61343,15 +61322,15 @@ types:
     description: The id of the tool, generated by Confident AI.
     example: <TOOL-ID>
     references: []
-- name: ToolSpan
+- name: ToolSpanInput
   description: A span recording a tool call.
   example: null
   python:
     module: confident_ai.traces
-    name: ToolSpan
+    name: ToolSpanInput
   typescript:
     module: confident-ai/traces
-    name: ToolSpan
+    name: ToolSpanInput
   references:
   - TraceSpanStatus
   - ToolCall
@@ -62095,19 +62074,19 @@ types:
     example: null
     references:
     - AnnotationSummary
-- name: TraceAnnotation
+- name: TraceAnnotationInput
   description: An annotation left on a trace.
   example: null
   python:
     module: confident_ai.annotations
-    name: TraceAnnotation
+    name: TraceAnnotationInput
   typescript:
     module: confident-ai/annotations
-    name: TraceAnnotation
+    name: TraceAnnotationInput
   references:
   - AnnotationFieldType
-  - AnnotationValue
-  - MLLMImage
+  - AnnotationValueInput
+  - MLLMImageInput
   kind: object
   fields:
   - wire: traceUuid
@@ -62145,13 +62124,13 @@ types:
     python: value
     typescript: value
     type:
-      python: AnnotationValue
-      typescript: AnnotationValue
+      python: AnnotationValueInput
+      typescript: AnnotationValueInput
     required: true
     description: null
     example: null
     references:
-    - AnnotationValue
+    - AnnotationValueInput
   - wire: name
     python: name
     typescript: name
@@ -62188,24 +62167,24 @@ types:
     python: images_mapping
     typescript: imagesMapping
     type:
-      python: Optional[Dict[str, MLLMImage]]
-      typescript: Record<string, MLLMImage>
+      python: Optional[Dict[str, MLLMImageInput]]
+      typescript: Record<string, MLLMImageInput>
     required: false
     description: Images referenced by `[DEEPEVAL:IMAGE:<key>]` markers in the text
       fields, keyed by that marker's key.
     example: null
     references:
-    - MLLMImage
-- name: TraceAttachment
+    - MLLMImageInput
+- name: TraceAttachmentInput
   description: Payload for a multimodal attachment referenced by id in `[DEEPEVAL:IMAGE:…]`
     or `[DEEPEVAL:PDF:…]` markers. Provide either a `url`, or `dataBase64` with `mimeType`.
   example: null
   python:
     module: confident_ai.traces
-    name: TraceAttachment
+    name: TraceAttachmentInput
   typescript:
     module: confident-ai/traces
-    name: TraceAttachment
+    name: TraceAttachmentInput
   references: []
   kind: object
   fields:
@@ -62286,15 +62265,15 @@ types:
       this is the last page.
     example: null
     references: []
-- name: TraceQueueItems
+- name: TraceQueueItemsInput
   description: Traces to add to a `TRACE` queue.
   example: null
   python:
     module: confident_ai.annotation_queues
-    name: TraceQueueItems
+    name: TraceQueueItemsInput
   typescript:
     module: confident-ai/annotation-queues
-    name: TraceQueueItems
+    name: TraceQueueItemsInput
   references: []
   kind: object
   fields:
@@ -63030,17 +63009,17 @@ types:
   - name: ASSISTANT
     value: assistant
   references: []
-- name: UpdateAIConnectionRequest
+- name: UpdateAIConnectionInput
   description: The fields of the AI connection to change. Send at least one. A field
     you omit is left alone and a field you send `null` is cleared, while `headers`,
     `queryParams` and `prompts` each replace the stored collection outright.
   example: null
   python:
     module: confident_ai.ai_connections
-    name: UpdateAIConnectionRequest
+    name: UpdateAIConnectionInput
   typescript:
     module: confident-ai/ai-connections
-    name: UpdateAIConnectionRequest
+    name: UpdateAIConnectionInput
   references:
   - AIConnectionType
   - AIConnectionResponseMode
@@ -63216,10 +63195,10 @@ types:
       typescript: Record<string, unknown> | null
     required: false
     description: 'The authentication configuration Confident AI applies when calling
-      your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD` or `OAUTH2_CLIENT_CREDENTIALS`
-      and put that scheme''s settings in the matching object: `auth0Config`, `hmacConfig`,
-      `azureAdConfig` or `oauth2Config`. A value that does not match that shape is
-      rejected. Send `null` to clear it.'
+      your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS`
+      or `CUSTOM_TOKEN_REQUEST` and put that scheme''s settings in the matching object:
+      `auth0Config`, `hmacConfig`, `azureAdConfig`, `oauth2Config` or `customTokenRequestConfig`.
+      A value that does not match that shape is rejected. Send `null` to clear it.'
     example:
       authType: HMAC
       hmacConfig:
@@ -63555,16 +63534,98 @@ types:
         label: production
     references:
     - AIConnectionPromptRef
-- name: UpdateAnnotationQueueRequest
+- name: UpdateAnnotationInput
+  description: The fields of the annotation to change. A field you omit keeps its
+    stored value, and the target the annotation was left on cannot be changed.
+  example: null
+  python:
+    module: confident_ai.annotations
+    name: UpdateAnnotationInput
+  typescript:
+    module: confident-ai/annotations
+    name: UpdateAnnotationInput
+  references:
+  - AnnotationFieldType
+  - AnnotationValueInput
+  - MLLMImageInput
+  kind: object
+  fields:
+  - wire: fieldType
+    python: field_type
+    typescript: fieldType
+    type:
+      python: Optional[AnnotationFieldType]
+      typescript: AnnotationFieldType
+    required: false
+    description: null
+    example: null
+    references:
+    - AnnotationFieldType
+  - wire: value
+    python: value
+    typescript: value
+    type:
+      python: Optional[AnnotationValueInput]
+      typescript: AnnotationValueInput
+    required: false
+    description: null
+    example: null
+    references:
+    - AnnotationValueInput
+  - wire: explanation
+    python: explanation
+    typescript: explanation
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: Why the annotation was given.
+    example: On reflection the answer omitted the source.
+    references: []
+  - wire: expectedOutput
+    python: expected_output
+    typescript: expectedOutput
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: The output the target should have produced. Only for an annotation
+      left on a trace or span.
+    example: Mount Everest is 8,848 metres tall.
+    references: []
+  - wire: expectedOutcome
+    python: expected_outcome
+    typescript: expectedOutcome
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: The outcome the conversation should have reached. Only for an annotation
+      left on a thread.
+    example: The user learns how tall Mount Everest is.
+    references: []
+  - wire: imagesMapping
+    python: images_mapping
+    typescript: imagesMapping
+    type:
+      python: Optional[Dict[str, MLLMImageInput]]
+      typescript: Record<string, MLLMImageInput>
+    required: false
+    description: Images referenced by `[DEEPEVAL:IMAGE:<key>]` markers in the text
+      fields, keyed by that marker's key.
+    example: null
+    references:
+    - MLLMImageInput
+- name: UpdateAnnotationQueueInput
   description: The parts of the queue to change. Send at least one; a queue's `type`
     cannot be changed after it is created.
   example: null
   python:
     module: confident_ai.annotation_queues
-    name: UpdateAnnotationQueueRequest
+    name: UpdateAnnotationQueueInput
   typescript:
     module: confident-ai/annotation-queues
-    name: UpdateAnnotationQueueRequest
+    name: UpdateAnnotationQueueInput
   references: []
   kind: object
   fields:
@@ -63603,98 +63664,16 @@ types:
     - geography
     - week-13
     references: []
-- name: UpdateAnnotationRequest
-  description: The fields of the annotation to change. A field you omit keeps its
-    stored value, and the target the annotation was left on cannot be changed.
-  example: null
-  python:
-    module: confident_ai.annotations
-    name: UpdateAnnotationRequest
-  typescript:
-    module: confident-ai/annotations
-    name: UpdateAnnotationRequest
-  references:
-  - AnnotationFieldType
-  - AnnotationValue
-  - MLLMImage
-  kind: object
-  fields:
-  - wire: fieldType
-    python: field_type
-    typescript: fieldType
-    type:
-      python: Optional[AnnotationFieldType]
-      typescript: AnnotationFieldType
-    required: false
-    description: null
-    example: null
-    references:
-    - AnnotationFieldType
-  - wire: value
-    python: value
-    typescript: value
-    type:
-      python: Optional[AnnotationValue]
-      typescript: AnnotationValue
-    required: false
-    description: null
-    example: null
-    references:
-    - AnnotationValue
-  - wire: explanation
-    python: explanation
-    typescript: explanation
-    type:
-      python: Optional[str]
-      typescript: string
-    required: false
-    description: Why the annotation was given.
-    example: On reflection the answer omitted the source.
-    references: []
-  - wire: expectedOutput
-    python: expected_output
-    typescript: expectedOutput
-    type:
-      python: Optional[str]
-      typescript: string
-    required: false
-    description: The output the target should have produced. Only for an annotation
-      left on a trace or span.
-    example: Mount Everest is 8,848 metres tall.
-    references: []
-  - wire: expectedOutcome
-    python: expected_outcome
-    typescript: expectedOutcome
-    type:
-      python: Optional[str]
-      typescript: string
-    required: false
-    description: The outcome the conversation should have reached. Only for an annotation
-      left on a thread.
-    example: The user learns how tall Mount Everest is.
-    references: []
-  - wire: imagesMapping
-    python: images_mapping
-    typescript: imagesMapping
-    type:
-      python: Optional[Dict[str, MLLMImage]]
-      typescript: Record<string, MLLMImage>
-    required: false
-    description: Images referenced by `[DEEPEVAL:IMAGE:<key>]` markers in the text
-      fields, keyed by that marker's key.
-    example: null
-    references:
-    - MLLMImage
-- name: UpdateApiKeyRequest
+- name: UpdateApiKeyInput
   description: Whether the key should authenticate. This is the only field of a key
     that can be changed; its value changes only by rotating it.
   example: null
   python:
     module: confident_ai.common
-    name: UpdateApiKeyRequest
+    name: UpdateApiKeyInput
   typescript:
     module: confident-ai/common
-    name: UpdateApiKeyRequest
+    name: UpdateApiKeyInput
   references: []
   kind: object
   fields:
@@ -63709,16 +63688,16 @@ types:
       key is rejected on every request, and deactivating one takes effect immediately.
     example: false
     references: []
-- name: UpdateAttackMethodRequest
+- name: UpdateAttackMethodInput
   description: The parameter values this project runs the attack method with. Only
     a method whose `configurable` is `true` accepts them.
   example: null
   python:
     module: confident_ai.attack_methods
-    name: UpdateAttackMethodRequest
+    name: UpdateAttackMethodInput
   typescript:
     module: confident-ai/attack-methods
-    name: UpdateAttackMethodRequest
+    name: UpdateAttackMethodInput
   references: []
   kind: object
   fields:
@@ -63735,86 +63714,17 @@ types:
     example:
       persona: urgent
     references: []
-- name: UpdateClassifierLabelRequest
-  description: The fields of the label to change. Send at least one. Promoting a
-    generated suggestion is an update to status `ACTIVE`, which also enables the
-    label, so sending `enabled` `false` alongside it is rejected.
-  example: null
-  python:
-    module: confident_ai.classifiers
-    name: UpdateClassifierLabelRequest
-  typescript:
-    module: confident-ai/classifiers
-    name: UpdateClassifierLabelRequest
-  references:
-  - ClassifierLabelStatus
-  - SignalPolarity
-  kind: object
-  fields:
-  - wire: name
-    python: name
-    typescript: name
-    type:
-      python: Optional[str]
-      typescript: string
-    required: false
-    description: The name of the label, unique within the classifier.
-    example: Positive
-    references: []
-  - wire: description
-    python: description
-    typescript: description
-    type:
-      python: Optional[str]
-      typescript: string
-    required: false
-    description: When this label applies. It cannot be cleared.
-    example: User expresses satisfaction, gratitude, or positive sentiment.
-    references: []
-  - wire: enabled
-    python: enabled
-    typescript: enabled
-    type:
-      python: Optional[bool]
-      typescript: boolean
-    required: false
-    description: Whether the label can be applied. Defaults to `true` on create;
-      omit it on an update to leave it unchanged.
-    example: true
-    references: []
-  - wire: status
-    python: status
-    typescript: status
-    type:
-      python: Optional[ClassifierLabelStatus]
-      typescript: ClassifierLabelStatus
-    required: false
-    description: null
-    example: null
-    references:
-    - ClassifierLabelStatus
-  - wire: polarity
-    python: polarity
-    typescript: polarity
-    type:
-      python: Optional[SignalPolarity]
-      typescript: SignalPolarity
-    required: false
-    description: null
-    example: null
-    references:
-    - SignalPolarity
-- name: UpdateClassifierRequest
+- name: UpdateClassifierInput
   description: The fields of the classifier to change. Send at least one. `dataModel`
     is fixed at creation and a preset can only be applied when creating one; labels
     are managed through their own endpoints.
   example: null
   python:
     module: confident_ai.classifiers
-    name: UpdateClassifierRequest
+    name: UpdateClassifierInput
   typescript:
     module: confident-ai/classifiers
-    name: UpdateClassifierRequest
+    name: UpdateClassifierInput
   references:
   - FilterSet
   - ClassifierAutoGenerationConfig
@@ -63905,21 +63815,90 @@ types:
       python: Optional[ClassifierAutoGenerationConfig]
       typescript: ClassifierAutoGenerationConfig | null
     required: false
-    description: How a generation run samples and clusters your traffic to discover
-      labels. Send `null` to clear it.
+    description: How a generation run samples your traffic to generate labels. Send
+      `null` to clear it.
     example: null
     references:
     - ClassifierAutoGenerationConfig
-- name: UpdateDashboardRequest
+- name: UpdateClassifierLabelInput
+  description: The fields of the label to change. Send at least one. Promoting a
+    generated suggestion is an update to status `ACTIVE`, which also enables the
+    label, so sending `enabled` `false` alongside it is rejected.
+  example: null
+  python:
+    module: confident_ai.classifiers
+    name: UpdateClassifierLabelInput
+  typescript:
+    module: confident-ai/classifiers
+    name: UpdateClassifierLabelInput
+  references:
+  - ClassifierLabelStatus
+  - SignalPolarity
+  kind: object
+  fields:
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: The name of the label, unique within the classifier.
+    example: Positive
+    references: []
+  - wire: description
+    python: description
+    typescript: description
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: When this label applies. It cannot be cleared.
+    example: User expresses satisfaction, gratitude, or positive sentiment.
+    references: []
+  - wire: enabled
+    python: enabled
+    typescript: enabled
+    type:
+      python: Optional[bool]
+      typescript: boolean
+    required: false
+    description: Whether the label can be applied. Defaults to `true` on create;
+      omit it on an update to leave it unchanged.
+    example: true
+    references: []
+  - wire: status
+    python: status
+    typescript: status
+    type:
+      python: Optional[ClassifierLabelStatus]
+      typescript: ClassifierLabelStatus
+    required: false
+    description: null
+    example: null
+    references:
+    - ClassifierLabelStatus
+  - wire: polarity
+    python: polarity
+    typescript: polarity
+    type:
+      python: Optional[SignalPolarity]
+      typescript: SignalPolarity
+    required: false
+    description: null
+    example: null
+    references:
+    - SignalPolarity
+- name: UpdateDashboardInput
   description: The fields of the dashboard to change. Send at least one; its widgets
     are managed through their own endpoints.
   example: null
   python:
     module: confident_ai.dashboards
-    name: UpdateDashboardRequest
+    name: UpdateDashboardInput
   typescript:
     module: confident-ai/dashboards
-    name: UpdateDashboardRequest
+    name: UpdateDashboardInput
   references: []
   kind: object
   fields:
@@ -63953,16 +63932,16 @@ types:
     description: Whether the dashboard is visible only to its creator.
     example: false
     references: []
-- name: UpdateDatasetIngestionTaskRequest
+- name: UpdateDatasetIngestionTaskInput
   description: A partial update to an ingestion task. Only the fields you send are
     changed, and at least one is required. Send `null` to clear a nullable field.
   example: null
   python:
     module: confident_ai.datasets
-    name: UpdateDatasetIngestionTaskRequest
+    name: UpdateDatasetIngestionTaskInput
   typescript:
     module: confident-ai/datasets
-    name: UpdateDatasetIngestionTaskRequest
+    name: UpdateDatasetIngestionTaskInput
   references:
   - IngestionDataModel
   - FilterSet
@@ -64145,17 +64124,17 @@ types:
     description: Populate the golden's `expectedTools` from the harvested item.
     example: false
     references: []
-- name: UpdateEvaluationRuleRequest
+- name: UpdateEvaluationRuleInput
   description: The fields of an evaluation rule to change. Send at least one; every
     field you omit keeps its stored value, and the constraints are re-checked against
     the rule the update produces rather than against the fields you sent.
   example: null
   python:
     module: confident_ai.evaluation_rules
-    name: UpdateEvaluationRuleRequest
+    name: UpdateEvaluationRuleInput
   typescript:
     module: confident-ai/evaluation-rules
-    name: UpdateEvaluationRuleRequest
+    name: UpdateEvaluationRuleInput
   references:
   - EvaluationRuleDataModel
   - SpanType
@@ -64281,7 +64260,7 @@ types:
       to leave it unchanged.
     example: false
     references: []
-- name: UpdateExportDestinationRequest
+- name: UpdateExportDestinationInput
   description: The fields of the destination to change. Send at least one. `type`
     can't change, and bucket fields are rejected for `SNOWFLAKE` destinations, as
     `snowflakeConfig` is for `S3` ones. Omitting a credential is how you leave the
@@ -64290,13 +64269,13 @@ types:
   example: null
   python:
     module: confident_ai.export_destinations
-    name: UpdateExportDestinationRequest
+    name: UpdateExportDestinationInput
   typescript:
     module: confident-ai/export-destinations
-    name: UpdateExportDestinationRequest
+    name: UpdateExportDestinationInput
   references:
   - ExportDestinationType
-  - SnowflakeExportDestinationConfigUpdate
+  - SnowflakeExportDestinationConfigUpdateInput
   kind: object
   fields:
   - wire: name
@@ -64381,13 +64360,13 @@ types:
     python: snowflake_config
     typescript: snowflakeConfig
     type:
-      python: Optional[SnowflakeExportDestinationConfigUpdate]
-      typescript: SnowflakeExportDestinationConfigUpdate
+      python: Optional[SnowflakeExportDestinationConfigUpdateInput]
+      typescript: SnowflakeExportDestinationConfigUpdateInput
     required: false
     description: null
     example: null
     references:
-    - SnowflakeExportDestinationConfigUpdate
+    - SnowflakeExportDestinationConfigUpdateInput
   - wire: enabled
     python: enabled
     typescript: enabled
@@ -64399,16 +64378,16 @@ types:
       to `false` to stop uploads without deleting the destination.
     example: true
     references: []
-- name: UpdateExportScheduleRequest
+- name: UpdateExportScheduleInput
   description: The fields of the export schedule to change. Send at least one; `exportType`
     is fixed at creation, because changing it would re-target every future run.
   example: null
   python:
     module: confident_ai.export_schedules
-    name: UpdateExportScheduleRequest
+    name: UpdateExportScheduleInput
   typescript:
     module: confident-ai/export-schedules
-    name: UpdateExportScheduleRequest
+    name: UpdateExportScheduleInput
   references:
   - ScheduleRecurrenceType
   - ScheduleIntervalUnit
@@ -64567,17 +64546,17 @@ types:
       it.
     example: true
     references: []
-- name: UpdateForwardingConnectorRequest
+- name: UpdateForwardingConnectorInput
   description: The fields of the connector to change. Send at least one. Every omitted
     field is left as stored, which is how you leave a stored header value alone without
     knowing it.
   example: null
   python:
     module: confident_ai.forwarding_connectors
-    name: UpdateForwardingConnectorRequest
+    name: UpdateForwardingConnectorInput
   typescript:
     module: confident-ai/forwarding-connectors
-    name: UpdateForwardingConnectorRequest
+    name: UpdateForwardingConnectorInput
   references:
   - ForwardingConnectorHeaderInput
   kind: object
@@ -64645,17 +64624,17 @@ types:
       omit it on an update to leave it unchanged.
     example: true
     references: []
-- name: UpdateGovernanceControlRequest
+- name: UpdateGovernanceControlInput
   description: The fields of the control to change. Send at least one. Both live
     on the control rather than on a version, so an update never snapshots a new version
     and never changes what the control checks.
   example: null
   python:
     module: confident_ai.organization
-    name: UpdateGovernanceControlRequest
+    name: UpdateGovernanceControlInput
   typescript:
     module: confident-ai/organization
-    name: UpdateGovernanceControlRequest
+    name: UpdateGovernanceControlInput
   references: []
   kind: object
   fields:
@@ -64680,17 +64659,17 @@ types:
     example: Traces must error on fewer than 1% of production requests over the last
       day.
     references: []
-- name: UpdateGovernancePolicyRequest
+- name: UpdateGovernancePolicyInput
   description: The fields of the governance policy to change. Send at least one;
     anything you omit is left as stored. Its controls, projects and agent skill are
     managed through their own endpoints.
   example: null
   python:
     module: confident_ai.organization
-    name: UpdateGovernancePolicyRequest
+    name: UpdateGovernancePolicyInput
   typescript:
     module: confident-ai/organization
-    name: UpdateGovernancePolicyRequest
+    name: UpdateGovernancePolicyInput
   references: []
   kind: object
   fields:
@@ -64740,17 +64719,17 @@ types:
     example:
     - <GOVERNANCE-POLICY-ID>
     references: []
-- name: UpdateGovernancePolicySkillRequest
+- name: UpdateGovernancePolicySkillInput
   description: The Agent Skill to serve to coding agents working on the projects
     this policy governs. Both fields are required, so this replaces the stored skill
     outright rather than patching it.
   example: null
   python:
     module: confident_ai.organization
-    name: UpdateGovernancePolicySkillRequest
+    name: UpdateGovernancePolicySkillInput
   typescript:
     module: confident-ai/organization
-    name: UpdateGovernancePolicySkillRequest
+    name: UpdateGovernancePolicySkillInput
   references: []
   kind: object
   fields:
@@ -64783,7 +64762,7 @@ types:
 
       '
     references: []
-- name: UpdateMcpServerRequest
+- name: UpdateMcpServerInput
   description: The fields of the MCP server to change. Send at least one; anything
     you omit keeps its stored value, including the OAuth `clientSecret`. The merged
     result is validated as a whole, so switching `transport` or `authType` must supply
@@ -64793,14 +64772,14 @@ types:
   example: null
   python:
     module: confident_ai.mcp_servers
-    name: UpdateMcpServerRequest
+    name: UpdateMcpServerInput
   typescript:
     module: confident-ai/mcp-servers
-    name: UpdateMcpServerRequest
+    name: UpdateMcpServerInput
   references:
   - McpServerTransport
   - McpServerAuthType
-  - McpServerAuthConfig
+  - McpServerAuthConfigInput
   kind: object
   fields:
   - wire: name
@@ -64873,14 +64852,14 @@ types:
     python: auth_config
     typescript: authConfig
     type:
-      python: Optional[McpServerAuthConfig]
-      typescript: McpServerAuthConfig | null
+      python: Optional[McpServerAuthConfigInput]
+      typescript: McpServerAuthConfigInput | null
     required: false
     description: The credentials for a non-`HEADERS` auth type. Send `null` to clear
       them.
     example: null
     references:
-    - McpServerAuthConfig
+    - McpServerAuthConfigInput
   - wire: command
     python: command
     typescript: command
@@ -64905,16 +64884,16 @@ types:
     - -y
     - '@modelcontextprotocol/server-filesystem'
     references: []
-- name: UpdateMemberRoleRequest
+- name: UpdateMemberRoleInput
   description: The role to move a member onto. Sending the `Owner` role transfers
     ownership of the organization or project.
   example: null
   python:
     module: confident_ai.common
-    name: UpdateMemberRoleRequest
+    name: UpdateMemberRoleInput
   typescript:
     module: confident-ai/common
-    name: UpdateMemberRoleRequest
+    name: UpdateMemberRoleInput
   references: []
   kind: object
   fields:
@@ -64929,17 +64908,17 @@ types:
       role or one of the roles the organization or project owns.
     example: <ROLE-ID>
     references: []
-- name: UpdateMetricCollectionRequest
+- name: UpdateMetricCollectionInput
   description: A partial update to a metric collection. Only the fields you send
     are changed, and at least one is required. `multiTurn` cannot be changed; create
     a new collection instead.
   example: null
   python:
     module: confident_ai.metric_collections
-    name: UpdateMetricCollectionRequest
+    name: UpdateMetricCollectionInput
   typescript:
     module: confident-ai/metric-collections
-    name: UpdateMetricCollectionRequest
+    name: UpdateMetricCollectionInput
   references:
   - MetricSettingInput
   kind: object
@@ -65002,16 +64981,16 @@ types:
       Send `null` to unset it.
     example: null
     references: []
-- name: UpdateMetricRequest
+- name: UpdateMetricInput
   description: A partial update to a metric. Only the fields you send are changed,
     and at least one is required.
   example: null
   python:
     module: confident_ai.metrics
-    name: UpdateMetricRequest
+    name: UpdateMetricInput
   typescript:
     module: confident-ai/metrics
-    name: UpdateMetricRequest
+    name: UpdateMetricInput
   references:
   - MetricEvaluationParam
   - Rubric
@@ -65091,17 +65070,17 @@ types:
     example: null
     references:
     - PromptMetricConfig
-- name: UpdateModelCostRequest
+- name: UpdateModelCostInput
   description: The model cost as it should read afterwards. This replaces the stored
     record rather than merging into it, so a field you omit is cleared; send at least
     one of `inputCostPerMillionTokens` and `outputCostPerMillionTokens`.
   example: null
   python:
     module: confident_ai.model_costs
-    name: UpdateModelCostRequest
+    name: UpdateModelCostInput
   typescript:
     module: confident-ai/model-costs
-    name: UpdateModelCostRequest
+    name: UpdateModelCostInput
   references: []
   kind: object
   fields:
@@ -65151,7 +65130,7 @@ types:
       only the input rate is priced; output tokens are then costed at zero.
     example: 10
     references: []
-- name: UpdateModelCredentialsRequest
+- name: UpdateModelCredentialsInput
   description: 'The credential to store for one provider. Send exactly one of `apiKey`
     or `modelConfig`, whichever that provider takes: `OPEN_AI`, `ANTHROPIC`, `GEMINI`,
     `X_AI`, `DEEPSEEK`, `MISTRAL`, `PERPLEXITY`, `Z_AI`, and `TYPE_SAFE` authenticate
@@ -65162,10 +65141,10 @@ types:
   example: null
   python:
     module: confident_ai.common
-    name: UpdateModelCredentialsRequest
+    name: UpdateModelCredentialsInput
   typescript:
     module: confident-ai/common
-    name: UpdateModelCredentialsRequest
+    name: UpdateModelCredentialsInput
   references:
   - ModelProvider
   kind: object
@@ -65222,7 +65201,31 @@ types:
       azureApiVersion: '2024-06-01'
       azureApiKey: b7f3c9d1e5a24f8090c6d4b2a1e8f37c
     references: []
-- name: UpdateOrganizationModelRequest
+- name: UpdateOrganizationInput
+  description: The fields of the organization to change. The name is the only field
+    the API can set; the plan is changed through billing, not here.
+  example: null
+  python:
+    module: confident_ai.organization
+    name: UpdateOrganizationInput
+  typescript:
+    module: confident-ai/organization
+    name: UpdateOrganizationInput
+  references: []
+  kind: object
+  fields:
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The name of the organization, as it appears throughout the Confident
+      AI platform.
+    example: Acme
+    references: []
+- name: UpdateOrganizationModelInput
   description: 'The model to run for the type named in the path. This replaces the
     whole configuration rather than patching it, so a field you omit is stored as
     `null`. `CUSTOM` is rejected: a custom model can only be configured on the Confident
@@ -65230,10 +65233,10 @@ types:
   example: null
   python:
     module: confident_ai.organization
-    name: UpdateOrganizationModelRequest
+    name: UpdateOrganizationModelInput
   typescript:
     module: confident-ai/organization
-    name: UpdateOrganizationModelRequest
+    name: UpdateOrganizationModelInput
   references:
   - ModelProvider
   kind: object
@@ -65295,31 +65298,7 @@ types:
       the provider with. Omit it or send null to use the provider's default credential.
     example: <MODEL-CREDENTIAL-ID>
     references: []
-- name: UpdateOrganizationRequest
-  description: The fields of the organization to change. The name is the only field
-    the API can set; the plan is changed through billing, not here.
-  example: null
-  python:
-    module: confident_ai.organization
-    name: UpdateOrganizationRequest
-  typescript:
-    module: confident-ai/organization
-    name: UpdateOrganizationRequest
-  references: []
-  kind: object
-  fields:
-  - wire: name
-    python: name
-    typescript: name
-    type:
-      python: str
-      typescript: string
-    required: true
-    description: The name of the organization, as it appears throughout the Confident
-      AI platform.
-    example: Acme
-    references: []
-- name: UpdatePersonaRequest
+- name: UpdatePersonaInput
   description: The fields of the persona to change. Send at least one; whatever you
     omit is left as it was. Goldens already pointing at this persona pick up the
     change on their next simulation, so an edit rewrites how future conversations
@@ -65327,10 +65306,10 @@ types:
   example: null
   python:
     module: confident_ai.personas
-    name: UpdatePersonaRequest
+    name: UpdatePersonaInput
   typescript:
     module: confident-ai/personas
-    name: UpdatePersonaRequest
+    name: UpdatePersonaInput
   references: []
   kind: object
   fields:
@@ -65374,6 +65353,41 @@ types:
       accountId: acc_123
       plan: pro
     references: []
+- name: UpdateProjectInput
+  description: The fields of the project to change. Send at least one; a field you
+    omit is left as it is. The project's members, API keys and governance enrollment
+    are managed through their own endpoints.
+  example: null
+  python:
+    module: confident_ai.projects
+    name: UpdateProjectInput
+  typescript:
+    module: confident-ai/projects
+    name: UpdateProjectInput
+  references: []
+  kind: object
+  fields:
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: The name of the project, which must not already be taken by another
+      project in the organization.
+    example: Customer Support Agent
+    references: []
+  - wire: description
+    python: description
+    typescript: description
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: What the project covers.
+    example: The support chatbot serving acme.com.
+    references: []
 - name: UpdateProjectModelResult
   description: The project's model as it now stands. `source` is returned for the
     platform and simulation models, where the write creates a project override and
@@ -65413,50 +65427,15 @@ types:
     example: null
     references:
     - ModelSource
-- name: UpdateProjectRequest
-  description: The fields of the project to change. Send at least one; a field you
-    omit is left as it is. The project's members, API keys and governance enrollment
-    are managed through their own endpoints.
-  example: null
-  python:
-    module: confident_ai.projects
-    name: UpdateProjectRequest
-  typescript:
-    module: confident-ai/projects
-    name: UpdateProjectRequest
-  references: []
-  kind: object
-  fields:
-  - wire: name
-    python: name
-    typescript: name
-    type:
-      python: Optional[str]
-      typescript: string
-    required: false
-    description: The name of the project, which must not already be taken by another
-      project in the organization.
-    example: Customer Support Agent
-    references: []
-  - wire: description
-    python: description
-    typescript: description
-    type:
-      python: Optional[str]
-      typescript: string
-    required: false
-    description: What the project covers.
-    example: The support chatbot serving acme.com.
-    references: []
-- name: UpdatePromptBranchRequest
+- name: UpdatePromptBranchInput
   description: null
   example: null
   python:
     module: confident_ai.prompts
-    name: UpdatePromptBranchRequest
+    name: UpdatePromptBranchInput
   typescript:
     module: confident-ai/prompts
-    name: UpdatePromptBranchRequest
+    name: UpdatePromptBranchInput
   references: []
   kind: object
   fields:
@@ -65470,16 +65449,16 @@ types:
     description: The new name of the branch. The `main` branch cannot be renamed.
     example: experiment-v2
     references: []
-- name: UpdateQueueIngestionTaskRequest
+- name: UpdateQueueIngestionTaskInput
   description: The fields of the task to change. A field you omit keeps its stored
     value.
   example: null
   python:
     module: confident_ai.annotation_queues
-    name: UpdateQueueIngestionTaskRequest
+    name: UpdateQueueIngestionTaskInput
   typescript:
     module: confident-ai/annotation-queues
-    name: UpdateQueueIngestionTaskRequest
+    name: UpdateQueueIngestionTaskInput
   references:
   - IngestionDataModel
   - FilterSet
@@ -65604,16 +65583,16 @@ types:
     example:
     - jane@acme.com
     references: []
-- name: UpdateRTFrameworkRequest
+- name: UpdateRTFrameworkInput
   description: The fields of the framework to change. Send at least one; its risk
     categories are managed through their own endpoints.
   example: null
   python:
     module: confident_ai.rt_frameworks
-    name: UpdateRTFrameworkRequest
+    name: UpdateRTFrameworkInput
   typescript:
     module: confident-ai/rt-frameworks
-    name: UpdateRTFrameworkRequest
+    name: UpdateRTFrameworkInput
   references: []
   kind: object
   fields:
@@ -65637,17 +65616,17 @@ types:
     description: What the framework covers. Send `null` to clear it.
     example: Our baseline coverage before each release.
     references: []
-- name: UpdateReportRequest
+- name: UpdateReportInput
   description: The fields of the report to change. Send at least one. `metadata`
     is merged onto the report's stored header, so a field you leave out keeps its
     stored value.
   example: null
   python:
     module: confident_ai.reports
-    name: UpdateReportRequest
+    name: UpdateReportInput
   typescript:
     module: confident-ai/reports
-    name: UpdateReportRequest
+    name: UpdateReportInput
   references:
   - ReportStatus
   - ReportMetadataInput
@@ -65699,7 +65678,7 @@ types:
     example: null
     references:
     - ReportSectionInput
-- name: UpdateReportTemplateRequest
+- name: UpdateReportTemplateInput
   description: The fields of the report template to change. Send at least one. `templateSections`
     replaces the whole list, so a section you leave out is removed, and an `INTERVAL`
     cadence must end up with both `repeatEvery` and `repeatUnit` set, whether from
@@ -65707,10 +65686,10 @@ types:
   example: null
   python:
     module: confident_ai.report_templates
-    name: UpdateReportTemplateRequest
+    name: UpdateReportTemplateInput
   typescript:
     module: confident-ai/report-templates
-    name: UpdateReportTemplateRequest
+    name: UpdateReportTemplateInput
   references:
   - ReportTemplateSectionInput
   - ScheduleRecurrenceType
@@ -65830,16 +65809,16 @@ types:
       to leave it open-ended.
     example: '2025-12-31T23:59:59+00:00'
     references: []
-- name: UpdateRiskCategoryRequest
+- name: UpdateRiskCategoryInput
   description: The fields of the risk category to change. Send at least one; each
     list you send replaces the stored selection rather than adding to it.
   example: null
   python:
     module: confident_ai.rt_frameworks
-    name: UpdateRiskCategoryRequest
+    name: UpdateRiskCategoryInput
   typescript:
     module: confident-ai/rt-frameworks
-    name: UpdateRiskCategoryRequest
+    name: UpdateRiskCategoryInput
   references: []
   kind: object
   fields:
@@ -65899,7 +65878,7 @@ types:
     example:
       <VULNERABILITY-ID>: 2
     references: []
-- name: UpdateScheduledAlertRequest
+- name: UpdateScheduledAlertInput
   description: The fields of the alert to change. Send at least one; omitting a field
     leaves it untouched and sending `null` clears it. Each `dataModel` accepts a
     different set of aggregations, so send `aggregation` alongside `dataModel` when
@@ -65908,10 +65887,10 @@ types:
   example: null
   python:
     module: confident_ai.scheduled_alerts
-    name: UpdateScheduledAlertRequest
+    name: UpdateScheduledAlertInput
   typescript:
     module: confident-ai/scheduled-alerts
-    name: UpdateScheduledAlertRequest
+    name: UpdateScheduledAlertInput
   references:
   - ScheduleRecurrenceType
   - ScheduleIntervalUnit
@@ -65920,7 +65899,7 @@ types:
   - ScheduledAlertType
   - AlertDataModel
   - AlertThresholdSettings
-  - ScheduledAlertDetectionSettings
+  - ScheduledAlertDetectionSettingsInput
   kind: object
   fields:
   - wire: recurrence
@@ -66108,13 +66087,13 @@ types:
     python: detection_settings
     typescript: detectionSettings
     type:
-      python: Optional[ScheduledAlertDetectionSettings]
-      typescript: ScheduledAlertDetectionSettings
+      python: Optional[ScheduledAlertDetectionSettingsInput]
+      typescript: ScheduledAlertDetectionSettingsInput
     required: false
     description: null
     example: null
     references:
-    - ScheduledAlertDetectionSettings
+    - ScheduledAlertDetectionSettingsInput
   - wire: enabled
     python: enabled
     typescript: enabled
@@ -66126,16 +66105,16 @@ types:
       has passed cannot be re-enabled without also moving `maxRuns` or `endAt`.
     example: false
     references: []
-- name: UpdateToolRequest
+- name: UpdateToolInput
   description: The fields of the tool to change. Send at least one; whatever you
     omit is left as it was. A changed `mode` or `schema` creates a new version.
   example: null
   python:
     module: confident_ai.tools
-    name: UpdateToolRequest
+    name: UpdateToolInput
   typescript:
     module: confident-ai/tools
-    name: UpdateToolRequest
+    name: UpdateToolInput
   references:
   - ToolMode
   kind: object
@@ -66200,16 +66179,16 @@ types:
       required:
       - customerId
     references: []
-- name: UpdateTransformerRequest
+- name: UpdateTransformerInput
   description: The fields of the transformer to change. Send at least one; `codeDefinition`
     replaces the stored code outright, so send both its fields together.
   example: null
   python:
     module: confident_ai.transformers
-    name: UpdateTransformerRequest
+    name: UpdateTransformerInput
   typescript:
     module: confident-ai/transformers
-    name: UpdateTransformerRequest
+    name: UpdateTransformerInput
   references:
   - TransformerCodeDefinition
   kind: object
@@ -66245,15 +66224,15 @@ types:
     example: null
     references:
     - TransformerCodeDefinition
-- name: UpdateVoiceConnectionRequest
+- name: UpdateVoiceConnectionInput
   description: The parts of the voice connection to change.
   example: null
   python:
     module: confident_ai.voice_connections
-    name: UpdateVoiceConnectionRequest
+    name: UpdateVoiceConnectionInput
   typescript:
     module: confident-ai/voice-connections
-    name: UpdateVoiceConnectionRequest
+    name: UpdateVoiceConnectionInput
   references:
   - VoiceTransportConfig
   - VoiceCallSettingsInput
@@ -66291,7 +66270,7 @@ types:
     example: null
     references:
     - VoiceCallSettingsInput
-- name: UpdateVulnerabilityRequest
+- name: UpdateVulnerabilityInput
   description: The fields of the vulnerability to change. Send at least one; updating
     a vulnerability Confident AI ships makes this project its own copy, leaving other
     projects untouched. A built-in cannot be renamed, because risk assessment results
@@ -66299,10 +66278,10 @@ types:
   example: null
   python:
     module: confident_ai.vulnerabilities
-    name: UpdateVulnerabilityRequest
+    name: UpdateVulnerabilityInput
   typescript:
     module: confident-ai/vulnerabilities
-    name: UpdateVulnerabilityRequest
+    name: UpdateVulnerabilityInput
   references:
   - VulnerabilityEvaluationExample
   kind: object
@@ -66372,7 +66351,7 @@ types:
     example: null
     references:
     - VulnerabilityEvaluationExample
-- name: UpdateWidgetRequest
+- name: UpdateWidgetInput
   description: 'The widget''s replacement configuration. This is a full replacement:
     every field you leave out is cleared, apart from `layout` and `lines`, which
     keep what is stored until you send them. Sending `lines` replaces the widget''s
@@ -66380,10 +66359,10 @@ types:
   example: null
   python:
     module: confident_ai.dashboards
-    name: UpdateWidgetRequest
+    name: UpdateWidgetInput
   typescript:
     module: confident-ai/dashboards
-    name: UpdateWidgetRequest
+    name: UpdateWidgetInput
   references:
   - WidgetType
   - WidgetUnit
@@ -66529,7 +66508,7 @@ types:
     example: null
     references:
     - WidgetLineInput
-- name: User
+- name: UserInput
   description: End-user-level fields applied to the end-user record. `id` is an alternate
     way to specify the end user and must match top-level `userId` if both are provided.
     `name` only takes effect when an end-user id is resolvable; successive ingestions
@@ -66537,10 +66516,10 @@ types:
   example: null
   python:
     module: confident_ai.traces
-    name: User
+    name: UserInput
   typescript:
     module: confident-ai/traces
-    name: User
+    name: UserInput
   references: []
   kind: object
   fields:
@@ -68716,16 +68695,16 @@ types:
     description: A human-readable explanation of the failure.
     example: Failed to query widget data.
     references: []
-- name: WidgetQueryRequest
+- name: WidgetQueryInput
   description: The range to compute the widget over. Send `{}` to use the widget's
     own saved range.
   example: null
   python:
     module: confident_ai.dashboards
-    name: WidgetQueryRequest
+    name: WidgetQueryInput
   typescript:
     module: confident-ai/dashboards
-    name: WidgetQueryRequest
+    name: WidgetQueryInput
   references:
   - WidgetGranularity
   kind: object

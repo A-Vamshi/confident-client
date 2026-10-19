@@ -4,19 +4,19 @@
 # and regenerate.
 
 from confident_ai.personas.types import (
-    CreatePersonaRequest,
+    CreatePersonaInput,
     Persona,
     PersonaList,
     PersonaRef,
     PersonaSummary,
-    UpdatePersonaRequest,
+    UpdatePersonaInput,
 )
 
 __all__ = [
-    "CreatePersonaRequest",
+    "CreatePersonaInput",
     "Persona",
     "PersonaList",
     "PersonaRef",
     "PersonaSummary",
-    "UpdatePersonaRequest",
+    "UpdatePersonaInput",
 ]

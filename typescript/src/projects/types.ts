@@ -20,15 +20,15 @@ export interface ClearProjectModelResult {
   source: ModelSource;
 }
 
-export interface CreateProjectInvitationsRequest {
-  emails: string[];
-  projectRoleId?: string;
-}
-
-export interface CreateProjectRequest {
+export interface CreateProjectInput {
   name: string;
   description?: string;
   email?: string;
+}
+
+export interface CreateProjectInvitationsInput {
+  emails: string[];
+  projectRoleId?: string;
 }
 
 export interface ProjectSummary {
@@ -56,20 +56,20 @@ export interface CreateProjectResult {
   apiKey: ProjectDefaultApiKey | null;
 }
 
-export interface DecisionProjectModel {
+export interface DecisionProjectModelInput {
   provider: ModelProvider;
   name?: string;
   modelCredentialId?: string | null;
 }
 
-export interface EvaluationProjectModel {
+export interface EvaluationProjectModelInput {
   provider: ModelProvider;
   name?: string;
   maxConcurrency?: number | null;
   modelCredentialId?: string | null;
 }
 
-export interface PlatformProjectModel {
+export interface PlatformProjectModelInput {
   provider: ModelProvider;
   name?: string;
   maxConcurrency?: number | null;
@@ -144,15 +144,17 @@ export interface ProjectRoleList {
   roles: ProjectRole[];
 }
 
+export interface UpdateProjectInput {
+  name?: string;
+  description?: string;
+}
+
 export interface UpdateProjectModelResult {
   model: Model;
   source?: ModelSource;
 }
 
-export interface UpdateProjectRequest {
-  name?: string;
-  description?: string;
-}
-
 export type ProjectModelInput =
-  EvaluationProjectModel | DecisionProjectModel | PlatformProjectModel;
+  | EvaluationProjectModelInput
+  | DecisionProjectModelInput
+  | PlatformProjectModelInput;

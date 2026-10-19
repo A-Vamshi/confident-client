@@ -4,8 +4,8 @@
 # and regenerate.
 
 from confident_ai.prompts.types import (
-    CreatePromptBranchRequest,
-    CreatePromptVersionRequest,
+    CreatePromptBranchInput,
+    CreatePromptVersionInput,
     CreatePromptVersionResult,
     MessagesPrompt,
     MessagesPromptInput,
@@ -31,13 +31,13 @@ from confident_ai.prompts.types import (
     TextPrompt,
     TextPromptInput,
     ToolInput,
-    UpdatePromptBranchRequest,
+    UpdatePromptBranchInput,
     Verbosity,
 )
 
 __all__ = [
-    "CreatePromptBranchRequest",
-    "CreatePromptVersionRequest",
+    "CreatePromptBranchInput",
+    "CreatePromptVersionInput",
     "CreatePromptVersionResult",
     "MessagesPrompt",
     "MessagesPromptInput",
@@ -63,6 +63,6 @@ __all__ = [
     "TextPrompt",
     "TextPromptInput",
     "ToolInput",
-    "UpdatePromptBranchRequest",
+    "UpdatePromptBranchInput",
     "Verbosity",
 ]

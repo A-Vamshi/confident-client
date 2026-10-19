@@ -37,8 +37,6 @@ class SignalPolarity(Enum):
 
 
 class ClassifierAutoGenerationConfig(ConfidentBaseModel):
-    summary_prompt: str = Field(alias="summaryPrompt")
-    n_clusters: int = Field(alias="nClusters")
     sample_size: Optional[int] = Field(default=None, alias="sampleSize")
 
 
@@ -131,15 +129,7 @@ class ClassifierVersionList(ConfidentBaseModel):
     page_size: int = Field(alias="pageSize")
 
 
-class CreateClassifierLabelRequest(ConfidentBaseModel):
-    name: str
-    description: str
-    enabled: Optional[bool] = None
-    status: Optional[ClassifierLabelStatus] = None
-    polarity: Optional[SignalPolarity] = None
-
-
-class CreateClassifierRequest(ConfidentBaseModel):
+class CreateClassifierInput(ConfidentBaseModel):
     name: str
     data_model: ClassifierDataModel = Field(alias="dataModel")
     preset: Optional[ClassifierPreset] = None
@@ -154,15 +144,15 @@ class CreateClassifierRequest(ConfidentBaseModel):
     )
 
 
-class UpdateClassifierLabelRequest(ConfidentBaseModel):
-    name: Optional[str] = None
-    description: Optional[str] = None
+class CreateClassifierLabelInput(ConfidentBaseModel):
+    name: str
+    description: str
     enabled: Optional[bool] = None
     status: Optional[ClassifierLabelStatus] = None
     polarity: Optional[SignalPolarity] = None
 
 
-class UpdateClassifierRequest(ConfidentBaseModel):
+class UpdateClassifierInput(ConfidentBaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     enabled: Optional[bool] = None
@@ -173,3 +163,11 @@ class UpdateClassifierRequest(ConfidentBaseModel):
         default=None,
         alias="autoGenerationConfig",
     )
+
+
+class UpdateClassifierLabelInput(ConfidentBaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    enabled: Optional[bool] = None
+    status: Optional[ClassifierLabelStatus] = None
+    polarity: Optional[SignalPolarity] = None

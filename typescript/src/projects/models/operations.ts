@@ -61,8 +61,8 @@ export class ModelsOperations extends MembersOperations {
    *   provider and name, `evaluation` also accepts max concurrency, and
    *   platform, simulation, and speech models also accept max input tokens.
    *   This replaces the whole configuration rather than patching it. `CUSTOM`
-   *   is rejected. Pass one of EvaluationProjectModel, DecisionProjectModel,
-   *   PlatformProjectModel.
+   *   is rejected. Pass one of EvaluationProjectModelInput,
+   *   DecisionProjectModelInput, PlatformProjectModelInput.
    */
   async updateModel(
     projectId: string,

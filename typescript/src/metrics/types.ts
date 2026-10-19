@@ -53,7 +53,7 @@ export interface MetricVersionList {
   pageSize: number;
 }
 
-export interface UpdateMetricRequest {
+export interface UpdateMetricInput {
   criteria?: string | null;
   evaluationSteps?: string[] | null;
   evaluationParams?: MetricEvaluationParam[];

@@ -8,7 +8,7 @@ from typing import List
 from confident_ai.api import Api, HttpMethods
 from confident_ai.common.types import MetricInput, MetricList
 from confident_ai.endpoints import Endpoints
-from confident_ai.metrics_batch.types import CreateMetricsBatchRequest
+from confident_ai.metrics_batch.types import CreateMetricsBatchInput
 
 
 class MetricsBatchClient:
@@ -31,7 +31,7 @@ class MetricsBatchClient:
             HttpMethods.POST,
             Endpoints.METRICS_BATCH_ENDPOINT,
             response_schema=MetricList,
-            request_schema=CreateMetricsBatchRequest,
+            request_schema=CreateMetricsBatchInput,
             body={"metrics": metrics},
         )
 
@@ -51,6 +51,6 @@ class MetricsBatchClient:
             HttpMethods.POST,
             Endpoints.METRICS_BATCH_ENDPOINT,
             response_schema=MetricList,
-            request_schema=CreateMetricsBatchRequest,
+            request_schema=CreateMetricsBatchInput,
             body={"metrics": metrics},
         )

@@ -12,7 +12,7 @@ from confident_ai.utils.prompt_cache import (
     a_pull_prompt,
     pull_prompt,
 )
-from confident_ai.common.types import MLLMImage, PromptType, Tool
+from confident_ai.common.types import MLLMImageInput, PromptType, Tool
 from confident_ai.prompts.types import (
     CreatePromptVersionResult,
     MessagesPromptInput,
@@ -62,7 +62,7 @@ class Prompt:
         self.output_schema: Optional[Dict[str, Any]] = None
         self.tools: Optional[List[Tool]] = None
         self.messages: Optional[List[PromptMessage]] = None
-        self.images_mapping: Optional[Dict[str, MLLMImage]] = None
+        self.images_mapping: Optional[Dict[str, MLLMImageInput]] = None
 
     def __repr__(self) -> str:
         return f"Prompt(prompt_id={self.prompt_id!r}, alias={self.alias!r})"

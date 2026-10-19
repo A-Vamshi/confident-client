@@ -17,7 +17,7 @@ from confident_ai.common.types import (
 from confident_ai.types import ConfidentBaseModel
 
 
-class AdHocWidgetQueryRequest(ConfidentBaseModel):
+class AdHocWidgetQueryInput(ConfidentBaseModel):
     widget: WidgetInput
     start_time: Optional[str] = Field(default=None, alias="startTime")
     end_time: Optional[str] = Field(default=None, alias="endTime")

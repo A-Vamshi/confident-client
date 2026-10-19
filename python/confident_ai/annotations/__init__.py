@@ -9,11 +9,11 @@ from confident_ai.annotations.types import (
     AnnotationList,
     AnnotationRef,
     AnnotationSortBy,
-    AnnotationValue,
-    SpanAnnotation,
-    ThreadAnnotation,
-    TraceAnnotation,
-    UpdateAnnotationRequest,
+    AnnotationValueInput,
+    SpanAnnotationInput,
+    ThreadAnnotationInput,
+    TraceAnnotationInput,
+    UpdateAnnotationInput,
 )
 
 __all__ = [
@@ -22,9 +22,9 @@ __all__ = [
     "AnnotationList",
     "AnnotationRef",
     "AnnotationSortBy",
-    "AnnotationValue",
-    "SpanAnnotation",
-    "ThreadAnnotation",
-    "TraceAnnotation",
-    "UpdateAnnotationRequest",
+    "AnnotationValueInput",
+    "SpanAnnotationInput",
+    "ThreadAnnotationInput",
+    "TraceAnnotationInput",
+    "UpdateAnnotationInput",
 ]

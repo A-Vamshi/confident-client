@@ -8,14 +8,14 @@ from typing import Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.export_destinations.types import (
-    CreateExportDestinationRequest,
+    CreateExportDestinationInput,
     ExportDestination,
     ExportDestinationList,
     ExportDestinationRef,
     ExportDestinationType,
-    SnowflakeExportDestinationConfig,
-    SnowflakeExportDestinationConfigUpdate,
-    UpdateExportDestinationRequest,
+    SnowflakeExportDestinationConfigInput,
+    SnowflakeExportDestinationConfigUpdateInput,
+    UpdateExportDestinationInput,
 )
 
 
@@ -75,7 +75,9 @@ class ExportDestinationsClient:
         access_key_id: Optional[str] = None,
         secret_access_key: Optional[str] = None,
         path_prefix: Optional[str] = None,
-        snowflake_config: Optional[SnowflakeExportDestinationConfig] = None,
+        snowflake_config: Optional[
+            SnowflakeExportDestinationConfigInput
+        ] = None,
         enabled: Optional[bool] = None
     ) -> ExportDestinationRef:
         """Create Export Destination
@@ -109,7 +111,7 @@ class ExportDestinationsClient:
             HttpMethods.POST,
             Endpoints.EXPORT_DESTINATIONS_ENDPOINT,
             response_schema=ExportDestinationRef,
-            request_schema=CreateExportDestinationRequest,
+            request_schema=CreateExportDestinationInput,
             body={
                 "name": name,
                 "type": type,
@@ -133,7 +135,9 @@ class ExportDestinationsClient:
         access_key_id: Optional[str] = None,
         secret_access_key: Optional[str] = None,
         path_prefix: Optional[str] = None,
-        snowflake_config: Optional[SnowflakeExportDestinationConfig] = None,
+        snowflake_config: Optional[
+            SnowflakeExportDestinationConfigInput
+        ] = None,
         enabled: Optional[bool] = None
     ) -> ExportDestinationRef:
         """Create Export Destination
@@ -167,7 +171,7 @@ class ExportDestinationsClient:
             HttpMethods.POST,
             Endpoints.EXPORT_DESTINATIONS_ENDPOINT,
             response_schema=ExportDestinationRef,
-            request_schema=CreateExportDestinationRequest,
+            request_schema=CreateExportDestinationInput,
             body={
                 "name": name,
                 "type": type,
@@ -229,7 +233,7 @@ class ExportDestinationsClient:
         secret_access_key: Optional[str] = None,
         path_prefix: Optional[str] = None,
         snowflake_config: Optional[
-            SnowflakeExportDestinationConfigUpdate
+            SnowflakeExportDestinationConfigUpdateInput
         ] = None,
         enabled: Optional[bool] = None
     ) -> ExportDestination:
@@ -266,7 +270,7 @@ class ExportDestinationsClient:
             HttpMethods.PUT,
             Endpoints.EXPORT_DESTINATION_ENDPOINT,
             response_schema=ExportDestination,
-            request_schema=UpdateExportDestinationRequest,
+            request_schema=UpdateExportDestinationInput,
             body={
                 "name": name,
                 "type": type,
@@ -293,7 +297,7 @@ class ExportDestinationsClient:
         secret_access_key: Optional[str] = None,
         path_prefix: Optional[str] = None,
         snowflake_config: Optional[
-            SnowflakeExportDestinationConfigUpdate
+            SnowflakeExportDestinationConfigUpdateInput
         ] = None,
         enabled: Optional[bool] = None
     ) -> ExportDestination:
@@ -330,7 +334,7 @@ class ExportDestinationsClient:
             HttpMethods.PUT,
             Endpoints.EXPORT_DESTINATION_ENDPOINT,
             response_schema=ExportDestination,
-            request_schema=UpdateExportDestinationRequest,
+            request_schema=UpdateExportDestinationInput,
             body={
                 "name": name,
                 "type": type,

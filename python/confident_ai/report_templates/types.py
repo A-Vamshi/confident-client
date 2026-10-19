@@ -53,7 +53,7 @@ class ReportTemplateSectionInput(ConfidentBaseModel):
     )
 
 
-class CreateReportTemplateRequest(ConfidentBaseModel):
+class CreateReportTemplateInput(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     template_sections: Optional[List[ReportTemplateSectionInput]] = Field(
@@ -129,7 +129,7 @@ class ReportTemplateRef(ConfidentBaseModel):
     id: str
 
 
-class UpdateReportTemplateRequest(ConfidentBaseModel):
+class UpdateReportTemplateInput(ConfidentBaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     template_sections: Optional[List[ReportTemplateSectionInput]] = Field(

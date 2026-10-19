@@ -10,10 +10,10 @@ import {
   AddedQueueItems,
   AnnotateQueueItemResult,
   AnnotationQueueItemList,
-  QueueItemAnnotation,
-  QueueItemFormResponse,
+  QueueItemAnnotationInput,
+  QueueItemFormResponseInput,
   QueueItemStatus,
-  QueueItems,
+  QueueItemsInput,
 } from "../types";
 
 export class ItemsOperations extends AnnotationQueuesOperations {
@@ -59,12 +59,12 @@ export class ItemsOperations extends AnnotationQueuesOperations {
    *   matches the queue's `type` — `traceUuids` for a `TRACE` queue,
    *   `spanUuids` for a `SPAN` queue, `threadIds` for a `THREAD` queue — and
    *   every id must already exist in your project. Items already in the queue
-   *   are skipped. Pass one of TraceQueueItems, SpanQueueItems,
-   *   ThreadQueueItems.
+   *   are skipped. Pass one of TraceQueueItemsInput, SpanQueueItemsInput,
+   *   ThreadQueueItemsInput.
    */
   async addItems(
     annotationQueueId: string,
-    items: QueueItems,
+    items: QueueItemsInput,
   ): Promise<AddedQueueItems> {
     return this.api.sendRequest<AddedQueueItems>(
       HttpMethods.POST,
@@ -99,8 +99,8 @@ export class ItemsOperations extends AnnotationQueuesOperations {
     annotationQueueId: string,
     queueItemId: string,
     options: {
-      annotations?: QueueItemAnnotation[];
-      formResponses?: QueueItemFormResponse[];
+      annotations?: QueueItemAnnotationInput[];
+      formResponses?: QueueItemFormResponseInput[];
       annotatorEmail?: string;
       flagged?: boolean;
       markAsCompleted?: boolean;

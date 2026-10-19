@@ -30,8 +30,6 @@ export enum SignalPolarity {
 }
 
 export interface ClassifierAutoGenerationConfig {
-  summaryPrompt: string;
-  nClusters: number;
   sampleSize?: number;
 }
 
@@ -122,15 +120,7 @@ export interface ClassifierVersionList {
   pageSize: number;
 }
 
-export interface CreateClassifierLabelRequest {
-  name: string;
-  description: string;
-  enabled?: boolean;
-  status?: ClassifierLabelStatus;
-  polarity?: SignalPolarity;
-}
-
-export interface CreateClassifierRequest {
+export interface CreateClassifierInput {
   name: string;
   dataModel: ClassifierDataModel;
   preset?: ClassifierPreset;
@@ -142,15 +132,15 @@ export interface CreateClassifierRequest {
   autoGenerationConfig?: ClassifierAutoGenerationConfig | null;
 }
 
-export interface UpdateClassifierLabelRequest {
-  name?: string;
-  description?: string;
+export interface CreateClassifierLabelInput {
+  name: string;
+  description: string;
   enabled?: boolean;
   status?: ClassifierLabelStatus;
   polarity?: SignalPolarity;
 }
 
-export interface UpdateClassifierRequest {
+export interface UpdateClassifierInput {
   name?: string;
   description?: string | null;
   enabled?: boolean;
@@ -158,4 +148,12 @@ export interface UpdateClassifierRequest {
   includeAudio?: boolean;
   filters?: FilterSet | null;
   autoGenerationConfig?: ClassifierAutoGenerationConfig | null;
+}
+
+export interface UpdateClassifierLabelInput {
+  name?: string;
+  description?: string;
+  enabled?: boolean;
+  status?: ClassifierLabelStatus;
+  polarity?: SignalPolarity;
 }

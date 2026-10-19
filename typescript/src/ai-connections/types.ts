@@ -141,7 +141,7 @@ export interface AIConnectionRef {
   id: string;
 }
 
-export interface CreateAIConnectionRequest {
+export interface CreateAIConnectionInput {
   name: string;
   type?: AIConnectionType;
   endpoint?: string | null;
@@ -183,11 +183,11 @@ export interface CreateAIConnectionRequest {
   prompts?: Record<string, AIConnectionPromptRef> | null;
 }
 
-export interface PingAIConnectionRequest {
+export interface PingAIConnectionInput {
   multiturn?: boolean;
 }
 
-export interface UpdateAIConnectionRequest {
+export interface UpdateAIConnectionInput {
   name?: string;
   type?: AIConnectionType;
   endpoint?: string | null;

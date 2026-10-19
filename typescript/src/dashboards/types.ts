@@ -23,7 +23,7 @@ import {
   WidgetUnit,
 } from "../common/types";
 
-export interface CreateDashboardRequest {
+export interface CreateDashboardInput {
   name: string;
   description?: string | null;
   private?: boolean;
@@ -85,7 +85,7 @@ export interface DashboardList {
   pageSize: number;
 }
 
-export interface DashboardQueryRequest {
+export interface DashboardQueryInput {
   startTime?: string;
   endTime?: string;
   granularity?: WidgetGranularity;
@@ -122,13 +122,13 @@ export interface DashboardRef {
   id: string;
 }
 
-export interface UpdateDashboardRequest {
+export interface UpdateDashboardInput {
   name?: string;
   description?: string | null;
   private?: boolean;
 }
 
-export interface UpdateWidgetRequest {
+export interface UpdateWidgetInput {
   name: string;
   description?: string | null;
   type?: WidgetType | null;
@@ -143,7 +143,7 @@ export interface UpdateWidgetRequest {
   lines?: WidgetLineInput[] | null;
 }
 
-export interface WidgetQueryRequest {
+export interface WidgetQueryInput {
   startTime?: string;
   endTime?: string;
   granularity?: WidgetGranularity;

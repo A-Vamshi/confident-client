@@ -5,17 +5,17 @@
 
 import { GenerationMode, Level } from "../common/types";
 
-export interface AttackEngine {
+export interface AttackEngineInput {
   generationGuidelines?: string[];
 }
 
-export interface CreateRTFrameworkRequest {
+export interface CreateRTFrameworkInput {
   name: string;
   description?: string | null;
   template?: string;
 }
 
-export interface CreateRiskCategoryRequest {
+export interface CreateRiskCategoryInput {
   name: string;
   description?: string | null;
   vulnerabilityTypeIds?: string[];
@@ -128,7 +128,7 @@ export interface RiskCategoryRef {
   id: string;
 }
 
-export interface RunRTFrameworkRequest {
+export interface RunRTFrameworkInput {
   identifier?: string;
   riskCategories: string[];
   exposure: Level;
@@ -136,15 +136,15 @@ export interface RunRTFrameworkRequest {
   promptAlias?: string;
   promptCommit?: string;
   generationMode?: GenerationMode;
-  attackEngine?: AttackEngine;
+  attackEngine?: AttackEngineInput;
 }
 
-export interface UpdateRTFrameworkRequest {
+export interface UpdateRTFrameworkInput {
   name?: string;
   description?: string | null;
 }
 
-export interface UpdateRiskCategoryRequest {
+export interface UpdateRiskCategoryInput {
   name?: string;
   description?: string | null;
   vulnerabilityTypeIds?: string[];

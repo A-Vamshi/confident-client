@@ -4,7 +4,7 @@
 # and regenerate.
 
 from confident_ai.reports.types import (
-    CreateReportRequest,
+    CreateReportInput,
     Report,
     ReportAdmonitionContent,
     ReportAdmonitionSectionInput,
@@ -32,11 +32,11 @@ from confident_ai.reports.types import (
     ReportSummary,
     ReportTableContent,
     ReportTableSectionInput,
-    UpdateReportRequest,
+    UpdateReportInput,
 )
 
 __all__ = [
-    "CreateReportRequest",
+    "CreateReportInput",
     "Report",
     "ReportAdmonitionContent",
     "ReportAdmonitionSectionInput",
@@ -64,5 +64,5 @@ __all__ = [
     "ReportSummary",
     "ReportTableContent",
     "ReportTableSectionInput",
-    "UpdateReportRequest",
+    "UpdateReportInput",
 ]

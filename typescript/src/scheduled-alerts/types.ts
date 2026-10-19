@@ -77,12 +77,12 @@ export interface SignalSpikeDetectionSettings {
   minAffectedCount: number;
 }
 
-export type ScheduledAlertDetectionSettings =
+export type ScheduledAlertDetectionSettingsInput =
   | RegressionDetectionSettings
   | AnomalyDetectionSettings
   | SignalSpikeDetectionSettings;
 
-export interface CreateScheduledAlertRequest {
+export interface CreateScheduledAlertInput {
   recurrence?: ScheduleRecurrenceType;
   repeatEvery?: number | null;
   repeatUnit?: ScheduleIntervalUnit | null;
@@ -97,7 +97,7 @@ export interface CreateScheduledAlertRequest {
   dataModel: AlertDataModel;
   aggregation?: string;
   thresholdSettings?: AlertThresholdSettings;
-  detectionSettings?: ScheduledAlertDetectionSettings;
+  detectionSettings?: ScheduledAlertDetectionSettingsInput;
   enabled?: boolean;
 }
 
@@ -150,7 +150,7 @@ export interface ScheduledAlertRef {
   id: string;
 }
 
-export interface UpdateScheduledAlertRequest {
+export interface UpdateScheduledAlertInput {
   recurrence?: ScheduleRecurrenceType;
   repeatEvery?: number | null;
   repeatUnit?: ScheduleIntervalUnit | null;
@@ -165,6 +165,6 @@ export interface UpdateScheduledAlertRequest {
   dataModel?: AlertDataModel;
   aggregation?: string;
   thresholdSettings?: AlertThresholdSettings;
-  detectionSettings?: ScheduledAlertDetectionSettings;
+  detectionSettings?: ScheduledAlertDetectionSettingsInput;
   enabled?: boolean;
 }

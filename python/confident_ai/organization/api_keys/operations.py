@@ -10,11 +10,11 @@ from confident_ai.common.types import (
     ApiKey,
     ApiKeyList,
     ApiKeyRef,
-    CreateApiKeyRequest,
+    CreateApiKeyInput,
     CreatedApiKey,
-    RotateApiKeyRequest,
+    RotateApiKeyInput,
     RotatedApiKey,
-    UpdateApiKeyRequest,
+    UpdateApiKeyInput,
 )
 from confident_ai.endpoints import Endpoints
 
@@ -72,7 +72,7 @@ class ApiKeysOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_API_KEYS_ENDPOINT,
             response_schema=CreatedApiKey,
-            request_schema=CreateApiKeyRequest,
+            request_schema=CreateApiKeyInput,
             body={"name": name, "expiresInDays": expires_in_days},
         )
 
@@ -96,7 +96,7 @@ class ApiKeysOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_API_KEYS_ENDPOINT,
             response_schema=CreatedApiKey,
-            request_schema=CreateApiKeyRequest,
+            request_schema=CreateApiKeyInput,
             body={"name": name, "expiresInDays": expires_in_days},
         )
 
@@ -154,7 +154,7 @@ class ApiKeysOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_API_KEY_ENDPOINT,
             response_schema=ApiKey,
-            request_schema=UpdateApiKeyRequest,
+            request_schema=UpdateApiKeyInput,
             body={"valid": valid},
             path={"apiKeyId": api_key_id},
         )
@@ -177,7 +177,7 @@ class ApiKeysOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_API_KEY_ENDPOINT,
             response_schema=ApiKey,
-            request_schema=UpdateApiKeyRequest,
+            request_schema=UpdateApiKeyInput,
             body={"valid": valid},
             path={"apiKeyId": api_key_id},
         )
@@ -248,7 +248,7 @@ class ApiKeysOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_API_KEY_ROTATE_ENDPOINT,
             response_schema=RotatedApiKey,
-            request_schema=RotateApiKeyRequest,
+            request_schema=RotateApiKeyInput,
             body={
                 "gracePeriodInHours": grace_period_in_hours,
                 "expiresInDays": expires_in_days,
@@ -288,7 +288,7 @@ class ApiKeysOperations:
             HttpMethods.POST,
             Endpoints.ORGANIZATION_API_KEY_ROTATE_ENDPOINT,
             response_schema=RotatedApiKey,
-            request_schema=RotateApiKeyRequest,
+            request_schema=RotateApiKeyInput,
             body={
                 "gracePeriodInHours": grace_period_in_hours,
                 "expiresInDays": expires_in_days,

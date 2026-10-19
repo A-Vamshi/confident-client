@@ -6,7 +6,7 @@
 from typing import Optional
 
 from confident_ai.api import Api, HttpMethods
-from confident_ai.datasets.types import CreateGoldenRequest, Golden, GoldenRef
+from confident_ai.datasets.types import CreateGoldenInput, Golden, GoldenRef
 from confident_ai.endpoints import Endpoints
 
 
@@ -31,7 +31,7 @@ class GoldensOperations:
             HttpMethods.POST,
             Endpoints.DATASET_GOLDENS_ENDPOINT,
             response_schema=GoldenRef,
-            request_schema=CreateGoldenRequest,
+            request_schema=CreateGoldenInput,
             body={"golden": golden, "version": version},
             media_holders=["$.golden"],
             path={"datasetId": dataset_id},
@@ -55,7 +55,7 @@ class GoldensOperations:
             HttpMethods.POST,
             Endpoints.DATASET_GOLDENS_ENDPOINT,
             response_schema=GoldenRef,
-            request_schema=CreateGoldenRequest,
+            request_schema=CreateGoldenInput,
             body={"golden": golden, "version": version},
             media_holders=["$.golden"],
             path={"datasetId": dataset_id},

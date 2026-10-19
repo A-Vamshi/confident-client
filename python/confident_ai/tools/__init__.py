@@ -4,21 +4,21 @@
 # and regenerate.
 
 from confident_ai.tools.types import (
-    CreateToolRequest,
+    CreateToolInput,
     ToolList,
     ToolRef,
     ToolSummary,
     ToolVersion,
     ToolVersionList,
-    UpdateToolRequest,
+    UpdateToolInput,
 )
 
 __all__ = [
-    "CreateToolRequest",
+    "CreateToolInput",
     "ToolList",
     "ToolRef",
     "ToolSummary",
     "ToolVersion",
     "ToolVersionList",
-    "UpdateToolRequest",
+    "UpdateToolInput",
 ]

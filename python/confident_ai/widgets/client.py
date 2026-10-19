@@ -9,7 +9,7 @@ from confident_ai.api import Api, HttpMethods
 from confident_ai.common.types import WidgetGranularity, WidgetInput
 from confident_ai.endpoints import Endpoints
 from confident_ai.widgets.types import (
-    AdHocWidgetQueryRequest,
+    AdHocWidgetQueryInput,
     AdHocWidgetQueryResult,
 )
 
@@ -46,7 +46,7 @@ class WidgetsClient:
             HttpMethods.POST,
             Endpoints.WIDGETS_QUERY_ENDPOINT,
             response_schema=AdHocWidgetQueryResult,
-            request_schema=AdHocWidgetQueryRequest,
+            request_schema=AdHocWidgetQueryInput,
             body={
                 "widget": widget,
                 "startTime": start_time,
@@ -83,7 +83,7 @@ class WidgetsClient:
             HttpMethods.POST,
             Endpoints.WIDGETS_QUERY_ENDPOINT,
             response_schema=AdHocWidgetQueryResult,
-            request_schema=AdHocWidgetQueryRequest,
+            request_schema=AdHocWidgetQueryInput,
             body={
                 "widget": widget,
                 "startTime": start_time,

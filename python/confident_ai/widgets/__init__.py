@@ -4,11 +4,11 @@
 # and regenerate.
 
 from confident_ai.widgets.types import (
-    AdHocWidgetQueryRequest,
+    AdHocWidgetQueryInput,
     AdHocWidgetQueryResult,
 )
 
 __all__ = [
-    "AdHocWidgetQueryRequest",
+    "AdHocWidgetQueryInput",
     "AdHocWidgetQueryResult",
 ]

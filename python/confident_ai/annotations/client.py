@@ -11,11 +11,11 @@ from confident_ai.annotations.types import (
     AnnotationList,
     AnnotationRef,
     AnnotationSortBy,
-    AnnotationValue,
-    UpdateAnnotationRequest,
+    AnnotationValueInput,
+    UpdateAnnotationInput,
 )
 from confident_ai.api import Api, HttpMethods
-from confident_ai.common.types import AnnotationFieldType, MLLMImage
+from confident_ai.common.types import AnnotationFieldType, MLLMImageInput
 from confident_ai.endpoints import Endpoints
 
 
@@ -148,8 +148,8 @@ class AnnotationsClient:
                 `traceUuid`, `spanUuid` or `threadId` — never more than one —
                 and the field that goes with it: `expectedOutput` for a trace or
                 span, `expectedOutcome` for a thread. `fieldType` defaults to
-                `THUMBS_RATING`. Pass one of TraceAnnotation, SpanAnnotation,
-                ThreadAnnotation.
+                `THUMBS_RATING`. Pass one of TraceAnnotationInput,
+                SpanAnnotationInput, ThreadAnnotationInput.
         """
         return self._api.request(
             HttpMethods.POST,
@@ -173,8 +173,8 @@ class AnnotationsClient:
                 `traceUuid`, `spanUuid` or `threadId` — never more than one —
                 and the field that goes with it: `expectedOutput` for a trace or
                 span, `expectedOutcome` for a thread. `fieldType` defaults to
-                `THUMBS_RATING`. Pass one of TraceAnnotation, SpanAnnotation,
-                ThreadAnnotation.
+                `THUMBS_RATING`. Pass one of TraceAnnotationInput,
+                SpanAnnotationInput, ThreadAnnotationInput.
         """
         return await self._api.a_request(
             HttpMethods.POST,
@@ -224,11 +224,11 @@ class AnnotationsClient:
         annotation_id: str,
         *,
         field_type: Optional[AnnotationFieldType] = None,
-        value: Optional[AnnotationValue] = None,
+        value: Optional[AnnotationValueInput] = None,
         explanation: Optional[str] = None,
         expected_output: Optional[str] = None,
         expected_outcome: Optional[str] = None,
-        images_mapping: Optional[Dict[str, MLLMImage]] = None
+        images_mapping: Optional[Dict[str, MLLMImageInput]] = None
     ) -> AnnotationRef:
         """Update Annotation
 
@@ -251,7 +251,7 @@ class AnnotationsClient:
             HttpMethods.PUT,
             Endpoints.ANNOTATION_ENDPOINT,
             response_schema=AnnotationRef,
-            request_schema=UpdateAnnotationRequest,
+            request_schema=UpdateAnnotationInput,
             body={
                 "fieldType": field_type,
                 "value": value,
@@ -269,11 +269,11 @@ class AnnotationsClient:
         annotation_id: str,
         *,
         field_type: Optional[AnnotationFieldType] = None,
-        value: Optional[AnnotationValue] = None,
+        value: Optional[AnnotationValueInput] = None,
         explanation: Optional[str] = None,
         expected_output: Optional[str] = None,
         expected_outcome: Optional[str] = None,
-        images_mapping: Optional[Dict[str, MLLMImage]] = None
+        images_mapping: Optional[Dict[str, MLLMImageInput]] = None
     ) -> AnnotationRef:
         """Update Annotation
 
@@ -296,7 +296,7 @@ class AnnotationsClient:
             HttpMethods.PUT,
             Endpoints.ANNOTATION_ENDPOINT,
             response_schema=AnnotationRef,
-            request_schema=UpdateAnnotationRequest,
+            request_schema=UpdateAnnotationInput,
             body={
                 "fieldType": field_type,
                 "value": value,

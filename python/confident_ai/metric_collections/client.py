@@ -8,12 +8,12 @@ from typing import List, Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.metric_collections.types import (
-    CreateMetricCollectionRequest,
+    CreateMetricCollectionInput,
     MetricCollection,
     MetricCollectionList,
     MetricCollectionRef,
     MetricSettingInput,
-    UpdateMetricCollectionRequest,
+    UpdateMetricCollectionInput,
 )
 
 
@@ -82,7 +82,7 @@ class MetricCollectionsClient:
             HttpMethods.POST,
             Endpoints.METRIC_COLLECTIONS_ENDPOINT,
             response_schema=MetricCollection,
-            request_schema=CreateMetricCollectionRequest,
+            request_schema=CreateMetricCollectionInput,
             body={
                 "name": name,
                 "multiTurn": multi_turn,
@@ -130,7 +130,7 @@ class MetricCollectionsClient:
             HttpMethods.POST,
             Endpoints.METRIC_COLLECTIONS_ENDPOINT,
             response_schema=MetricCollection,
-            request_schema=CreateMetricCollectionRequest,
+            request_schema=CreateMetricCollectionInput,
             body={
                 "name": name,
                 "multiTurn": multi_turn,
@@ -209,7 +209,7 @@ class MetricCollectionsClient:
             HttpMethods.PUT,
             Endpoints.METRIC_COLLECTION_ENDPOINT,
             response_schema=MetricCollection,
-            request_schema=UpdateMetricCollectionRequest,
+            request_schema=UpdateMetricCollectionInput,
             body={
                 "name": name,
                 "metricsSettings": metrics_settings,
@@ -256,7 +256,7 @@ class MetricCollectionsClient:
             HttpMethods.PUT,
             Endpoints.METRIC_COLLECTION_ENDPOINT,
             response_schema=MetricCollection,
-            request_schema=UpdateMetricCollectionRequest,
+            request_schema=UpdateMetricCollectionInput,
             body={
                 "name": name,
                 "metricsSettings": metrics_settings,

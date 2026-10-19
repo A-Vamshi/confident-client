@@ -4,7 +4,7 @@
 // and regenerate.
 
 import {
-  MLLMImage,
+  MLLMImageInput,
   ModelProvider,
   PromptType,
   Tool,
@@ -38,11 +38,11 @@ export enum Verbosity {
   HIGH = "HIGH",
 }
 
-export interface CreatePromptBranchRequest {
+export interface CreatePromptBranchInput {
   name: string;
 }
 
-export interface CreatePromptVersionRequest {
+export interface CreatePromptVersionInput {
   hash?: string;
 }
 
@@ -116,7 +116,7 @@ export interface MessagesPromptInput {
   outputSchema?: Record<string, unknown>;
   tools?: ToolInput[];
   branch?: string;
-  imagesMapping?: Record<string, MLLMImage>;
+  imagesMapping?: Record<string, MLLMImageInput>;
 }
 
 export interface PromptBranch {
@@ -191,10 +191,10 @@ export interface TextPromptInput {
   outputSchema?: Record<string, unknown>;
   tools?: ToolInput[];
   branch?: string;
-  imagesMapping?: Record<string, MLLMImage>;
+  imagesMapping?: Record<string, MLLMImageInput>;
 }
 
-export interface UpdatePromptBranchRequest {
+export interface UpdatePromptBranchInput {
   name: string;
 }
 

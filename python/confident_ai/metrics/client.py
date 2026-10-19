@@ -18,7 +18,7 @@ from confident_ai.common.types import (
     Rubric,
 )
 from confident_ai.endpoints import Endpoints
-from confident_ai.metrics.types import MetricVersionList, UpdateMetricRequest
+from confident_ai.metrics.types import MetricVersionList, UpdateMetricInput
 
 
 class MetricsClient:
@@ -225,7 +225,7 @@ class MetricsClient:
             HttpMethods.PUT,
             Endpoints.METRIC_ENDPOINT,
             response_schema=Metric,
-            request_schema=UpdateMetricRequest,
+            request_schema=UpdateMetricInput,
             body={
                 "criteria": criteria,
                 "evaluationSteps": evaluation_steps,
@@ -271,7 +271,7 @@ class MetricsClient:
             HttpMethods.PUT,
             Endpoints.METRIC_ENDPOINT,
             response_schema=Metric,
-            request_schema=UpdateMetricRequest,
+            request_schema=UpdateMetricInput,
             body={
                 "criteria": criteria,
                 "evaluationSteps": evaluation_steps,

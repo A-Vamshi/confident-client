@@ -18,9 +18,9 @@ from confident_ai.ai_connections.types import (
     AIConnectionResponseMode,
     AIConnectionSummary,
     AIConnectionType,
-    CreateAIConnectionRequest,
-    PingAIConnectionRequest,
-    UpdateAIConnectionRequest,
+    CreateAIConnectionInput,
+    PingAIConnectionInput,
+    UpdateAIConnectionInput,
 )
 
 __all__ = [
@@ -38,7 +38,7 @@ __all__ = [
     "AIConnectionResponseMode",
     "AIConnectionSummary",
     "AIConnectionType",
-    "CreateAIConnectionRequest",
-    "PingAIConnectionRequest",
-    "UpdateAIConnectionRequest",
+    "CreateAIConnectionInput",
+    "PingAIConnectionInput",
+    "UpdateAIConnectionInput",
 ]

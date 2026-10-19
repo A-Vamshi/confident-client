@@ -9,5 +9,5 @@ from confident_ai.common.types import MetricInput
 from confident_ai.types import ConfidentBaseModel
 
 
-class CreateMetricsBatchRequest(ConfidentBaseModel):
+class CreateMetricsBatchInput(ConfidentBaseModel):
     metrics: List[MetricInput]

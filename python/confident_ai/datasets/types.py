@@ -11,14 +11,14 @@ from confident_ai.common.types import (
     FilterSet,
     GenerationMode,
     IngestionDataModel,
-    MLLMImage,
+    MLLMImageInput,
     ToolCall,
     Turn,
 )
 from confident_ai.types import ConfidentBaseModel
 
 
-class CreateDatasetIngestionTaskRequest(ConfidentBaseModel):
+class CreateDatasetIngestionTaskInput(ConfidentBaseModel):
     name: str
     data_model: IngestionDataModel = Field(alias="dataModel")
     description: Optional[str] = None
@@ -112,7 +112,7 @@ class SingleTurnGolden(ConfidentBaseModel):
         alias="customColumnKeyValues",
     )
     tags: Optional[List[str]] = None
-    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
+    images_mapping: Optional[Dict[str, MLLMImageInput]] = Field(
         default=None,
         alias="imagesMapping",
     )
@@ -145,7 +145,7 @@ class MultiTurnGolden(ConfidentBaseModel):
         alias="customColumnKeyValues",
     )
     tags: Optional[List[str]] = None
-    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
+    images_mapping: Optional[Dict[str, MLLMImageInput]] = Field(
         default=None,
         alias="imagesMapping",
     )
@@ -154,7 +154,7 @@ class MultiTurnGolden(ConfidentBaseModel):
 Golden = Union[SingleTurnGolden, MultiTurnGolden]
 
 
-class CreateGoldenRequest(ConfidentBaseModel):
+class CreateGoldenInput(ConfidentBaseModel):
     golden: Golden
     version: Optional[str] = None
 
@@ -234,18 +234,18 @@ class GoldenRef(ConfidentBaseModel):
     id: str
 
 
-class PushDatasetRequest(ConfidentBaseModel):
+class PushDatasetInput(ConfidentBaseModel):
     alias: str
     finalized: Optional[bool] = None
     version: Optional[str] = None
     goldens: List[Golden]
 
 
-class QueueDatasetGoldensRequest(ConfidentBaseModel):
+class QueueDatasetGoldensInput(ConfidentBaseModel):
     goldens: List[Golden]
 
 
-class RunDatasetEvaluationRequest(ConfidentBaseModel):
+class RunDatasetEvaluationInput(ConfidentBaseModel):
     metric_collection: str = Field(alias="metricCollection")
     identifier: Optional[str] = None
     version: Optional[str] = None
@@ -291,7 +291,7 @@ class RunDatasetEvaluationResult(ConfidentBaseModel):
     test_case_count: int = Field(alias="testCaseCount")
 
 
-class UpdateDatasetIngestionTaskRequest(ConfidentBaseModel):
+class UpdateDatasetIngestionTaskInput(ConfidentBaseModel):
     name: Optional[str] = None
     data_model: Optional[IngestionDataModel] = Field(
         default=None,

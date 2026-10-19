@@ -7,12 +7,12 @@ import {
   FilterSet,
   GenerationMode,
   IngestionDataModel,
-  MLLMImage,
+  MLLMImageInput,
   ToolCall,
   Turn,
 } from "../common/types";
 
-export interface CreateDatasetIngestionTaskRequest {
+export interface CreateDatasetIngestionTaskInput {
   name: string;
   dataModel: IngestionDataModel;
   description?: string | null;
@@ -61,7 +61,7 @@ export interface SingleTurnGolden {
   finalized?: boolean;
   customColumnKeyValues?: Record<string, string>;
   tags?: string[];
-  imagesMapping?: Record<string, MLLMImage>;
+  imagesMapping?: Record<string, MLLMImageInput>;
 }
 
 export interface MultiTurnGolden {
@@ -79,12 +79,12 @@ export interface MultiTurnGolden {
   finalized?: boolean;
   customColumnKeyValues?: Record<string, string>;
   tags?: string[];
-  imagesMapping?: Record<string, MLLMImage>;
+  imagesMapping?: Record<string, MLLMImageInput>;
 }
 
 export type Golden = SingleTurnGolden | MultiTurnGolden;
 
-export interface CreateGoldenRequest {
+export interface CreateGoldenInput {
   golden: Golden;
   version?: string;
 }
@@ -162,18 +162,18 @@ export interface GoldenRef {
   id: string;
 }
 
-export interface PushDatasetRequest {
+export interface PushDatasetInput {
   alias: string;
   finalized?: boolean;
   version?: string;
   goldens: Golden[];
 }
 
-export interface QueueDatasetGoldensRequest {
+export interface QueueDatasetGoldensInput {
   goldens: Golden[];
 }
 
-export interface RunDatasetEvaluationRequest {
+export interface RunDatasetEvaluationInput {
   metricCollection: string;
   identifier?: string;
   version?: string;
@@ -195,7 +195,7 @@ export interface RunDatasetEvaluationResult {
   testCaseCount: number;
 }
 
-export interface UpdateDatasetIngestionTaskRequest {
+export interface UpdateDatasetIngestionTaskInput {
   name?: string;
   dataModel?: IngestionDataModel;
   description?: string | null;

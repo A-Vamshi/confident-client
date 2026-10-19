@@ -7,12 +7,12 @@ from confident_ai.metrics.types import (
     MetricCodeDefinition,
     MetricVersion,
     MetricVersionList,
-    UpdateMetricRequest,
+    UpdateMetricInput,
 )
 
 __all__ = [
     "MetricCodeDefinition",
     "MetricVersion",
     "MetricVersionList",
-    "UpdateMetricRequest",
+    "UpdateMetricInput",
 ]

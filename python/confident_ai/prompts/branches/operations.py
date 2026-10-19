@@ -6,11 +6,11 @@
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.prompts.types import (
-    CreatePromptBranchRequest,
+    CreatePromptBranchInput,
     PromptBranch,
     PromptBranchList,
     PromptBranchRef,
-    UpdatePromptBranchRequest,
+    UpdatePromptBranchInput,
 )
 
 
@@ -61,7 +61,7 @@ class BranchesOperations:
             HttpMethods.POST,
             Endpoints.PROMPT_BRANCHES_ENDPOINT,
             response_schema=PromptBranch,
-            request_schema=CreatePromptBranchRequest,
+            request_schema=CreatePromptBranchInput,
             body={"name": name},
             path={"promptId": prompt_id},
         )
@@ -80,7 +80,7 @@ class BranchesOperations:
             HttpMethods.POST,
             Endpoints.PROMPT_BRANCHES_ENDPOINT,
             response_schema=PromptBranch,
-            request_schema=CreatePromptBranchRequest,
+            request_schema=CreatePromptBranchInput,
             body={"name": name},
             path={"promptId": prompt_id},
         )
@@ -102,7 +102,7 @@ class BranchesOperations:
             HttpMethods.PUT,
             Endpoints.PROMPT_BRANCH_ENDPOINT,
             response_schema=PromptBranchRef,
-            request_schema=UpdatePromptBranchRequest,
+            request_schema=UpdatePromptBranchInput,
             body={"name": name},
             path={"promptId": prompt_id, "branchId": branch_id},
         )
@@ -124,7 +124,7 @@ class BranchesOperations:
             HttpMethods.PUT,
             Endpoints.PROMPT_BRANCH_ENDPOINT,
             response_schema=PromptBranchRef,
-            request_schema=UpdatePromptBranchRequest,
+            request_schema=UpdatePromptBranchInput,
             body={"name": name},
             path={"promptId": prompt_id, "branchId": branch_id},
         )

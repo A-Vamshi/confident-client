@@ -9,7 +9,7 @@ from typing import Any, Dict, List, Literal, Optional, Union
 from pydantic import Field
 
 from confident_ai.common.types import (
-    MLLMImage,
+    MLLMImageInput,
     ModelProvider,
     PromptType,
     Tool,
@@ -45,11 +45,11 @@ class Verbosity(Enum):
     HIGH = "HIGH"
 
 
-class CreatePromptBranchRequest(ConfidentBaseModel):
+class CreatePromptBranchInput(ConfidentBaseModel):
     name: str
 
 
-class CreatePromptVersionRequest(ConfidentBaseModel):
+class CreatePromptVersionInput(ConfidentBaseModel):
     hash: Optional[str] = None
 
 
@@ -155,7 +155,7 @@ class MessagesPromptInput(ConfidentBaseModel):
     )
     tools: Optional[List[ToolInput]] = None
     branch: Optional[str] = None
-    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
+    images_mapping: Optional[Dict[str, MLLMImageInput]] = Field(
         default=None,
         alias="imagesMapping",
     )
@@ -253,13 +253,13 @@ class TextPromptInput(ConfidentBaseModel):
     )
     tools: Optional[List[ToolInput]] = None
     branch: Optional[str] = None
-    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
+    images_mapping: Optional[Dict[str, MLLMImageInput]] = Field(
         default=None,
         alias="imagesMapping",
     )
 
 
-class UpdatePromptBranchRequest(ConfidentBaseModel):
+class UpdatePromptBranchInput(ConfidentBaseModel):
     name: str
 
 

@@ -11,12 +11,12 @@ export enum EvalMode {
   DECISION = "DECISION",
 }
 
-export interface MetricRef {
+export interface MetricRefInput {
   name: string;
 }
 
 export interface MetricSettingInput {
-  metric: MetricRef;
+  metric: MetricRefInput;
   activated?: boolean;
   threshold?: number;
   includeReason?: boolean;
@@ -30,7 +30,7 @@ export interface MetricSettingInput {
   evalMode?: EvalMode | null;
 }
 
-export interface CreateMetricCollectionRequest {
+export interface CreateMetricCollectionInput {
   name: string;
   multiTurn?: boolean;
   metricsSettings?: MetricSettingInput[];
@@ -77,7 +77,7 @@ export interface MetricCollectionRef {
   id: string;
 }
 
-export interface UpdateMetricCollectionRequest {
+export interface UpdateMetricCollectionInput {
   name?: string;
   metricsSettings?: MetricSettingInput[];
   sampleRate?: number;

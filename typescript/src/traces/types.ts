@@ -29,7 +29,7 @@ export interface MetricDataInput {
   verboseLogs?: string | null;
 }
 
-export interface AgentSpan {
+export interface AgentSpanInput {
   type: "AGENT";
   uuid: string;
   name: string;
@@ -53,7 +53,7 @@ export interface AgentSpan {
   agentHandoffs: string[];
 }
 
-export interface BaseSpan {
+export interface BaseSpanInput {
   type?: "SPAN";
   uuid: string;
   name: string;
@@ -81,17 +81,17 @@ export interface ThreadInput {
   tags?: string[] | null;
 }
 
-export interface User {
+export interface UserInput {
   id?: string;
   name?: string | null;
 }
 
-export interface Customer {
+export interface CustomerInput {
   id?: string;
   name?: string | null;
 }
 
-export interface LlmSpan {
+export interface LlmSpanInput {
   type: "LLM";
   uuid: string;
   name: string;
@@ -124,7 +124,7 @@ export interface LlmSpan {
   promptCommitHash?: string;
 }
 
-export interface RetrieverSpan {
+export interface RetrieverSpanInput {
   type: "RETRIEVER";
   uuid: string;
   name: string;
@@ -149,7 +149,7 @@ export interface RetrieverSpan {
   chunkSize?: number;
 }
 
-export interface ToolSpan {
+export interface ToolSpanInput {
   type: "TOOL";
   uuid: string;
   name: string;
@@ -173,15 +173,19 @@ export interface ToolSpan {
 }
 
 export type SpanInput =
-  BaseSpan | LlmSpan | RetrieverSpan | ToolSpan | AgentSpan;
+  | BaseSpanInput
+  | LlmSpanInput
+  | RetrieverSpanInput
+  | ToolSpanInput
+  | AgentSpanInput;
 
-export interface TraceAttachment {
+export interface TraceAttachmentInput {
   url?: string;
   dataBase64?: string;
   mimeType?: string;
 }
 
-export interface CreateTraceRequest {
+export interface CreateTraceInput {
   uuid: string;
   name?: string;
   input?: unknown;
@@ -195,9 +199,9 @@ export interface CreateTraceRequest {
   threadId?: string;
   thread?: ThreadInput;
   userId?: string;
-  user?: User;
+  user?: UserInput;
   customerId?: string;
-  customer?: Customer;
+  customer?: CustomerInput;
   metricCollection?: string;
   testRunId?: string;
   testCaseId?: string;
@@ -209,7 +213,7 @@ export interface CreateTraceRequest {
   expectedTools?: ToolCall[];
   spans?: SpanInput[];
   metricsData?: MetricDataInput[];
-  attachments?: Record<string, TraceAttachment>;
+  attachments?: Record<string, TraceAttachmentInput>;
 }
 
 export interface TraceSummary {

@@ -7,11 +7,11 @@ from typing import List, Optional
 
 from confident_ai.annotation_queues.types import (
     AssignmentStrategy,
-    CreateQueueIngestionTaskRequest,
+    CreateQueueIngestionTaskInput,
     QueueIngestionTask,
     QueueIngestionTaskList,
     QueueIngestionTaskRef,
-    UpdateQueueIngestionTaskRequest,
+    UpdateQueueIngestionTaskInput,
 )
 from confident_ai.api import Api, HttpMethods
 from confident_ai.common.types import FilterSet, IngestionDataModel
@@ -111,7 +111,7 @@ class QueueIngestionTasksOperations:
             HttpMethods.POST,
             Endpoints.ANNOTATION_QUEUE_QUEUE_INGESTION_TASKS_ENDPOINT,
             response_schema=QueueIngestionTaskRef,
-            request_schema=CreateQueueIngestionTaskRequest,
+            request_schema=CreateQueueIngestionTaskInput,
             body={
                 "name": name,
                 "dataModel": data_model,
@@ -166,7 +166,7 @@ class QueueIngestionTasksOperations:
             HttpMethods.POST,
             Endpoints.ANNOTATION_QUEUE_QUEUE_INGESTION_TASKS_ENDPOINT,
             response_schema=QueueIngestionTaskRef,
-            request_schema=CreateQueueIngestionTaskRequest,
+            request_schema=CreateQueueIngestionTaskInput,
             body={
                 "name": name,
                 "dataModel": data_model,
@@ -273,7 +273,7 @@ class QueueIngestionTasksOperations:
             HttpMethods.PUT,
             Endpoints.ANNOTATION_QUEUE_QUEUE_INGESTION_TASK_ENDPOINT,
             response_schema=QueueIngestionTask,
-            request_schema=UpdateQueueIngestionTaskRequest,
+            request_schema=UpdateQueueIngestionTaskInput,
             body={
                 "name": name,
                 "dataModel": data_model,
@@ -340,7 +340,7 @@ class QueueIngestionTasksOperations:
             HttpMethods.PUT,
             Endpoints.ANNOTATION_QUEUE_QUEUE_INGESTION_TASK_ENDPOINT,
             response_schema=QueueIngestionTask,
-            request_schema=UpdateQueueIngestionTaskRequest,
+            request_schema=UpdateQueueIngestionTaskInput,
             body={
                 "name": name,
                 "dataModel": data_model,

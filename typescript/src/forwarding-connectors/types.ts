@@ -8,7 +8,7 @@ export interface ForwardingConnectorHeaderInput {
   value: string;
 }
 
-export interface CreateForwardingConnectorRequest {
+export interface CreateForwardingConnectorInput {
   name: string;
   endpoint: string;
   headers?: ForwardingConnectorHeaderInput[];
@@ -54,7 +54,7 @@ export interface ForwardingConnectorRef {
   id: string;
 }
 
-export interface UpdateForwardingConnectorRequest {
+export interface UpdateForwardingConnectorInput {
   name?: string;
   endpoint?: string;
   headers?: ForwardingConnectorHeaderInput[];

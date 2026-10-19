@@ -10,8 +10,8 @@ import {
   ExportDestinationList,
   ExportDestinationRef,
   ExportDestinationType,
-  SnowflakeExportDestinationConfig,
-  SnowflakeExportDestinationConfigUpdate,
+  SnowflakeExportDestinationConfigInput,
+  SnowflakeExportDestinationConfigUpdateInput,
 } from "./types";
 
 export class ExportDestinationsClient {
@@ -72,7 +72,7 @@ export class ExportDestinationsClient {
       accessKeyId?: string;
       secretAccessKey?: string;
       pathPrefix?: string | null;
-      snowflakeConfig?: SnowflakeExportDestinationConfig;
+      snowflakeConfig?: SnowflakeExportDestinationConfigInput;
       enabled?: boolean;
     } = {},
   ): Promise<ExportDestinationRef> {
@@ -158,7 +158,7 @@ export class ExportDestinationsClient {
       accessKeyId?: string;
       secretAccessKey?: string;
       pathPrefix?: string | null;
-      snowflakeConfig?: SnowflakeExportDestinationConfigUpdate;
+      snowflakeConfig?: SnowflakeExportDestinationConfigUpdateInput;
       enabled?: boolean;
     } = {},
   ): Promise<ExportDestination> {

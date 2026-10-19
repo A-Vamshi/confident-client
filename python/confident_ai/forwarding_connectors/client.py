@@ -8,12 +8,12 @@ from typing import List, Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.forwarding_connectors.types import (
-    CreateForwardingConnectorRequest,
+    CreateForwardingConnectorInput,
     ForwardingConnector,
     ForwardingConnectorHeaderInput,
     ForwardingConnectorList,
     ForwardingConnectorRef,
-    UpdateForwardingConnectorRequest,
+    UpdateForwardingConnectorInput,
 )
 
 
@@ -103,7 +103,7 @@ class ForwardingConnectorsClient:
             HttpMethods.POST,
             Endpoints.FORWARDING_CONNECTORS_ENDPOINT,
             response_schema=ForwardingConnectorRef,
-            request_schema=CreateForwardingConnectorRequest,
+            request_schema=CreateForwardingConnectorInput,
             body={
                 "name": name,
                 "endpoint": endpoint,
@@ -153,7 +153,7 @@ class ForwardingConnectorsClient:
             HttpMethods.POST,
             Endpoints.FORWARDING_CONNECTORS_ENDPOINT,
             response_schema=ForwardingConnectorRef,
-            request_schema=CreateForwardingConnectorRequest,
+            request_schema=CreateForwardingConnectorInput,
             body={
                 "name": name,
                 "endpoint": endpoint,
@@ -235,7 +235,7 @@ class ForwardingConnectorsClient:
             HttpMethods.PUT,
             Endpoints.FORWARDING_CONNECTOR_ENDPOINT,
             response_schema=ForwardingConnector,
-            request_schema=UpdateForwardingConnectorRequest,
+            request_schema=UpdateForwardingConnectorInput,
             body={
                 "name": name,
                 "endpoint": endpoint,
@@ -284,7 +284,7 @@ class ForwardingConnectorsClient:
             HttpMethods.PUT,
             Endpoints.FORWARDING_CONNECTOR_ENDPOINT,
             response_schema=ForwardingConnector,
-            request_schema=UpdateForwardingConnectorRequest,
+            request_schema=UpdateForwardingConnectorInput,
             body={
                 "name": name,
                 "endpoint": endpoint,

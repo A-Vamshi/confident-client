@@ -91,7 +91,7 @@ class VoiceCallSettingsInput(ConfidentBaseModel):
     record_calls: Optional[bool] = Field(default=None, alias="recordCalls")
 
 
-class CreateVoiceConnectionRequest(ConfidentBaseModel):
+class CreateVoiceConnectionInput(ConfidentBaseModel):
     name: str
     config: VoiceTransportConfig
     call_settings: Optional[VoiceCallSettingsInput] = Field(
@@ -100,7 +100,7 @@ class CreateVoiceConnectionRequest(ConfidentBaseModel):
     )
 
 
-class UpdateVoiceConnectionRequest(ConfidentBaseModel):
+class UpdateVoiceConnectionInput(ConfidentBaseModel):
     name: Optional[str] = None
     config: Optional[VoiceTransportConfig] = None
     call_settings: Optional[VoiceCallSettingsInput] = Field(

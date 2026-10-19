@@ -15,8 +15,8 @@ from confident_ai.classifiers.types import (
     ClassifierPreset,
     ClassifierRef,
     ClassifierVersionList,
-    CreateClassifierRequest,
-    UpdateClassifierRequest,
+    CreateClassifierInput,
+    UpdateClassifierInput,
 )
 from confident_ai.common.types import FilterSet
 from confident_ai.endpoints import Endpoints
@@ -126,14 +126,14 @@ class ClassifiersOperations:
                 groups are stored, so the set's top-level operator is dropped
                 and the groups are combined by the platform. Send `null` to
                 clear the filters and classify everything of this data model.
-            auto_generation_config: How a generation run samples and clusters
-                your traffic to discover labels. Send `null` to clear it.
+            auto_generation_config: How a generation run samples your traffic to
+                generate labels. Send `null` to clear it.
         """
         return self._api.request(
             HttpMethods.POST,
             Endpoints.CLASSIFIERS_ENDPOINT,
             response_schema=ClassifierRef,
-            request_schema=CreateClassifierRequest,
+            request_schema=CreateClassifierInput,
             body={
                 "name": name,
                 "dataModel": data_model,
@@ -188,14 +188,14 @@ class ClassifiersOperations:
                 groups are stored, so the set's top-level operator is dropped
                 and the groups are combined by the platform. Send `null` to
                 clear the filters and classify everything of this data model.
-            auto_generation_config: How a generation run samples and clusters
-                your traffic to discover labels. Send `null` to clear it.
+            auto_generation_config: How a generation run samples your traffic to
+                generate labels. Send `null` to clear it.
         """
         return await self._api.a_request(
             HttpMethods.POST,
             Endpoints.CLASSIFIERS_ENDPOINT,
             response_schema=ClassifierRef,
-            request_schema=CreateClassifierRequest,
+            request_schema=CreateClassifierInput,
             body={
                 "name": name,
                 "dataModel": data_model,
@@ -284,14 +284,14 @@ class ClassifiersOperations:
                 groups are stored, so the set's top-level operator is dropped
                 and the groups are combined by the platform. Send `null` to
                 clear the filters and classify everything of this data model.
-            auto_generation_config: How a generation run samples and clusters
-                your traffic to discover labels. Send `null` to clear it.
+            auto_generation_config: How a generation run samples your traffic to
+                generate labels. Send `null` to clear it.
         """
         return self._api.request(
             HttpMethods.PUT,
             Endpoints.CLASSIFIER_ENDPOINT,
             response_schema=Classifier,
-            request_schema=UpdateClassifierRequest,
+            request_schema=UpdateClassifierInput,
             body={
                 "name": name,
                 "description": description,
@@ -345,14 +345,14 @@ class ClassifiersOperations:
                 groups are stored, so the set's top-level operator is dropped
                 and the groups are combined by the platform. Send `null` to
                 clear the filters and classify everything of this data model.
-            auto_generation_config: How a generation run samples and clusters
-                your traffic to discover labels. Send `null` to clear it.
+            auto_generation_config: How a generation run samples your traffic to
+                generate labels. Send `null` to clear it.
         """
         return await self._api.a_request(
             HttpMethods.PUT,
             Endpoints.CLASSIFIER_ENDPOINT,
             response_schema=Classifier,
-            request_schema=UpdateClassifierRequest,
+            request_schema=UpdateClassifierInput,
             body={
                 "name": name,
                 "description": description,
@@ -404,16 +404,14 @@ class ClassifiersOperations:
     def generate_labels(self, classifier_id: str) -> ClassifierLabelGeneration:
         """Generate Classifier Labels
 
-        Discovers labels for a classifier from your project's real traffic: it
-        samples recent traces or threads, clusters them with the classifier's
-        `autoGenerationConfig`, and writes the themes it finds back as
-        `RECOMMENDED` labels for a human to review. The run is asynchronous, so
-        poll the labels endpoint for results. Each run first deletes every
-        existing `RECOMMENDED` label, while labels already promoted to `ACTIVE`
-        are kept and passed to the generator so it does not propose them again.
-        `autoGenerationConfig` must already have `summaryPrompt` and `nClusters`
-        set. Reading traffic and running the model consumes usage. Requires the
-        Starter plan or above.
+        Generates labels for a classifier from your project's real traffic: it
+        samples recent traces or threads and runs them through the classifier's
+        normal auto-classification pipeline. Repeated proposals are merged and
+        written back as `RECOMMENDED` labels for a human to review. The run is
+        asynchronous, so poll the labels endpoint for results. Existing labels
+        are retained, and the sampled entities receive ordinary classification
+        results. Auto Classify must be enabled. Reading traffic and running the
+        model consumes usage. Requires the Starter plan or above.
 
         Args:
             classifier_id: The id of the classifier.
@@ -430,16 +428,14 @@ class ClassifiersOperations:
     ) -> ClassifierLabelGeneration:
         """Generate Classifier Labels
 
-        Discovers labels for a classifier from your project's real traffic: it
-        samples recent traces or threads, clusters them with the classifier's
-        `autoGenerationConfig`, and writes the themes it finds back as
-        `RECOMMENDED` labels for a human to review. The run is asynchronous, so
-        poll the labels endpoint for results. Each run first deletes every
-        existing `RECOMMENDED` label, while labels already promoted to `ACTIVE`
-        are kept and passed to the generator so it does not propose them again.
-        `autoGenerationConfig` must already have `summaryPrompt` and `nClusters`
-        set. Reading traffic and running the model consumes usage. Requires the
-        Starter plan or above.
+        Generates labels for a classifier from your project's real traffic: it
+        samples recent traces or threads and runs them through the classifier's
+        normal auto-classification pipeline. Repeated proposals are merged and
+        written back as `RECOMMENDED` labels for a human to review. The run is
+        asynchronous, so poll the labels endpoint for results. Existing labels
+        are retained, and the sampled entities receive ordinary classification
+        results. Auto Classify must be enabled. Reading traffic and running the
+        model consumes usage. Requires the Starter plan or above.
 
         Args:
             classifier_id: The id of the classifier.

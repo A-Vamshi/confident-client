@@ -8,9 +8,9 @@ from typing import List
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.organization.types import (
-    DeleteGovernancePolicyControlsRequest,
+    DeleteGovernancePolicyControlsInput,
     GovernancePolicyControlList,
-    SetGovernancePolicyControlsRequest,
+    SetGovernancePolicyControlsInput,
 )
 
 
@@ -85,7 +85,7 @@ class GovernancePoliciesControlsOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_GOVERNANCE_POLICY_CONTROLS_ENDPOINT,
             response_schema=GovernancePolicyControlList,
-            request_schema=SetGovernancePolicyControlsRequest,
+            request_schema=SetGovernancePolicyControlsInput,
             body={"controlIds": control_ids},
             path={"policyId": policy_id},
         )
@@ -114,7 +114,7 @@ class GovernancePoliciesControlsOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_GOVERNANCE_POLICY_CONTROLS_ENDPOINT,
             response_schema=GovernancePolicyControlList,
-            request_schema=SetGovernancePolicyControlsRequest,
+            request_schema=SetGovernancePolicyControlsInput,
             body={"controlIds": control_ids},
             path={"policyId": policy_id},
         )
@@ -140,7 +140,7 @@ class GovernancePoliciesControlsOperations:
             HttpMethods.DELETE,
             Endpoints.ORGANIZATION_GOVERNANCE_POLICY_CONTROLS_ENDPOINT,
             response_schema=GovernancePolicyControlList,
-            request_schema=DeleteGovernancePolicyControlsRequest,
+            request_schema=DeleteGovernancePolicyControlsInput,
             body={"controlIds": control_ids},
             path={"policyId": policy_id},
         )
@@ -166,7 +166,7 @@ class GovernancePoliciesControlsOperations:
             HttpMethods.DELETE,
             Endpoints.ORGANIZATION_GOVERNANCE_POLICY_CONTROLS_ENDPOINT,
             response_schema=GovernancePolicyControlList,
-            request_schema=DeleteGovernancePolicyControlsRequest,
+            request_schema=DeleteGovernancePolicyControlsInput,
             body={"controlIds": control_ids},
             path={"policyId": policy_id},
         )

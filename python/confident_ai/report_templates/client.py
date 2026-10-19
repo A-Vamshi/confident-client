@@ -12,12 +12,12 @@ from confident_ai.common.types import (
 )
 from confident_ai.endpoints import Endpoints
 from confident_ai.report_templates.types import (
-    CreateReportTemplateRequest,
+    CreateReportTemplateInput,
     ReportTemplate,
     ReportTemplateList,
     ReportTemplateRef,
     ReportTemplateSectionInput,
-    UpdateReportTemplateRequest,
+    UpdateReportTemplateInput,
 )
 
 
@@ -114,7 +114,7 @@ class ReportTemplatesClient:
             HttpMethods.POST,
             Endpoints.REPORT_TEMPLATES_ENDPOINT,
             response_schema=ReportTemplateRef,
-            request_schema=CreateReportTemplateRequest,
+            request_schema=CreateReportTemplateInput,
             body={
                 "name": name,
                 "description": description,
@@ -176,7 +176,7 @@ class ReportTemplatesClient:
             HttpMethods.POST,
             Endpoints.REPORT_TEMPLATES_ENDPOINT,
             response_schema=ReportTemplateRef,
-            request_schema=CreateReportTemplateRequest,
+            request_schema=CreateReportTemplateInput,
             body={
                 "name": name,
                 "description": description,
@@ -271,7 +271,7 @@ class ReportTemplatesClient:
             HttpMethods.PUT,
             Endpoints.REPORT_TEMPLATE_ENDPOINT,
             response_schema=ReportTemplate,
-            request_schema=UpdateReportTemplateRequest,
+            request_schema=UpdateReportTemplateInput,
             body={
                 "name": name,
                 "description": description,
@@ -335,7 +335,7 @@ class ReportTemplatesClient:
             HttpMethods.PUT,
             Endpoints.REPORT_TEMPLATE_ENDPOINT,
             response_schema=ReportTemplate,
-            request_schema=UpdateReportTemplateRequest,
+            request_schema=UpdateReportTemplateInput,
             body={
                 "name": name,
                 "description": description,

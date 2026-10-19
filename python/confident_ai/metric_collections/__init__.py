@@ -4,27 +4,27 @@
 # and regenerate.
 
 from confident_ai.metric_collections.types import (
-    CreateMetricCollectionRequest,
+    CreateMetricCollectionInput,
     EvalMode,
     MetricCollection,
     MetricCollectionList,
     MetricCollectionRef,
-    MetricRef,
+    MetricRefInput,
     MetricSetting,
     MetricSettingInput,
     MetricSummary,
-    UpdateMetricCollectionRequest,
+    UpdateMetricCollectionInput,
 )
 
 __all__ = [
-    "CreateMetricCollectionRequest",
+    "CreateMetricCollectionInput",
     "EvalMode",
     "MetricCollection",
     "MetricCollectionList",
     "MetricCollectionRef",
-    "MetricRef",
+    "MetricRefInput",
     "MetricSetting",
     "MetricSettingInput",
     "MetricSummary",
-    "UpdateMetricCollectionRequest",
+    "UpdateMetricCollectionInput",
 ]

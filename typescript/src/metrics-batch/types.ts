@@ -5,6 +5,6 @@
 
 import { MetricInput } from "../common/types";
 
-export interface CreateMetricsBatchRequest {
+export interface CreateMetricsBatchInput {
   metrics: MetricInput[];
 }

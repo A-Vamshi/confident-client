@@ -90,7 +90,7 @@ ORGANIZATION_KEY_RESOURCES = frozenset({"organization", "projects"})
 # body becomes a single parameter. This names that parameter, per schema. A
 # union body with no entry here stops the generator.
 UNION_BODY_PARAMETERS = {
-    "QueueItems": "items",
+    "QueueItemsInput": "items",
     "AnnotationInput": "annotation",
     "GovernanceControlVersionInput": "control_config",
     "Golden": "golden",

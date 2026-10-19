@@ -4,8 +4,8 @@
 # and regenerate.
 
 from confident_ai.transformers.types import (
-    CreateTransformerRequest,
-    TestTransformerCodeRequest,
+    CreateTransformerInput,
+    TestTransformerCodeInput,
     Transformer,
     TransformerCodeDefinition,
     TransformerCodeRunFailure,
@@ -15,12 +15,12 @@ from confident_ai.transformers.types import (
     TransformerList,
     TransformerRef,
     TransformerSummary,
-    UpdateTransformerRequest,
+    UpdateTransformerInput,
 )
 
 __all__ = [
-    "CreateTransformerRequest",
-    "TestTransformerCodeRequest",
+    "CreateTransformerInput",
+    "TestTransformerCodeInput",
     "Transformer",
     "TransformerCodeDefinition",
     "TransformerCodeRunFailure",
@@ -30,5 +30,5 @@ __all__ = [
     "TransformerList",
     "TransformerRef",
     "TransformerSummary",
-    "UpdateTransformerRequest",
+    "UpdateTransformerInput",
 ]

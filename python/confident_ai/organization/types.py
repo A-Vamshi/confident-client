@@ -120,7 +120,7 @@ class AssessGovernanceControlResult(ConfidentBaseModel):
     status_counts: Dict[str, int] = Field(alias="statusCounts")
 
 
-class GovernanceControlThresholdSettings(ConfidentBaseModel):
+class GovernanceControlThresholdSettingsInput(ConfidentBaseModel):
     value: float
     direction: GovernanceControlThresholdDirection
 
@@ -129,11 +129,13 @@ class GovernanceControlExtraQueryParams(ConfidentBaseModel):
     category: Optional[GovernanceControlMetricDataCategory] = None
 
 
-class GovernanceControlRuntimeConfig(ConfidentBaseModel):
+class GovernanceControlRuntimeConfigInput(ConfidentBaseModel):
     data_model: Optional[GovernanceControlDataModel] = Field(alias="dataModel")
     aggregation: Optional[GovernanceControlAggregation]
-    threshold_settings: Optional[GovernanceControlThresholdSettings] = Field(
-        alias="thresholdSettings",
+    threshold_settings: Optional[GovernanceControlThresholdSettingsInput] = (
+        Field(
+            alias="thresholdSettings",
+        )
     )
     extra_query_params: Optional[GovernanceControlExtraQueryParams] = Field(
         default=None,
@@ -147,7 +149,7 @@ class GovernanceControlPreDeploymentWindow(ConfidentBaseModel):
     days: int
 
 
-class GovernanceControlPreDeploymentConfig(ConfidentBaseModel):
+class GovernanceControlPreDeploymentConfigInput(ConfidentBaseModel):
     identifier: str
     window: GovernanceControlPreDeploymentWindow
     official_only: Optional[bool] = Field(default=None, alias="officialOnly")
@@ -155,19 +157,19 @@ class GovernanceControlPreDeploymentConfig(ConfidentBaseModel):
     severity: Optional[GovernanceControlSeverity]
 
 
-class CreateGovernanceControlRequest(ConfidentBaseModel):
+class CreateGovernanceControlInput(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     type: CreatableGovernanceControlType
-    runtime_config: Optional[GovernanceControlRuntimeConfig] = Field(
+    runtime_config: Optional[GovernanceControlRuntimeConfigInput] = Field(
         default=None,
         alias="runtimeConfig",
     )
-    pre_deployment_config: Optional[GovernanceControlPreDeploymentConfig] = (
-        Field(
-            default=None,
-            alias="preDeploymentConfig",
-        )
+    pre_deployment_config: Optional[
+        GovernanceControlPreDeploymentConfigInput
+    ] = Field(
+        default=None,
+        alias="preDeploymentConfig",
     )
     governance_policy_id: Optional[str] = Field(
         default=None,
@@ -175,7 +177,7 @@ class CreateGovernanceControlRequest(ConfidentBaseModel):
     )
 
 
-class CreateGovernancePolicyRequest(ConfidentBaseModel):
+class CreateGovernancePolicyInput(ConfidentBaseModel):
     name: str
     description: Optional[str] = None
     base_policy_ids: Optional[List[str]] = Field(
@@ -184,7 +186,7 @@ class CreateGovernancePolicyRequest(ConfidentBaseModel):
     )
 
 
-class CreateOrganizationInvitationsRequest(ConfidentBaseModel):
+class CreateOrganizationInvitationsInput(ConfidentBaseModel):
     emails: List[str]
     organization_role_id: Optional[str] = Field(
         default=None,
@@ -192,7 +194,7 @@ class CreateOrganizationInvitationsRequest(ConfidentBaseModel):
     )
 
 
-class DeleteGovernancePolicyControlsRequest(ConfidentBaseModel):
+class DeleteGovernancePolicyControlsInput(ConfidentBaseModel):
     control_ids: List[str] = Field(alias="controlIds")
 
 
@@ -463,7 +465,7 @@ class GovernancePolicyProjectList(ConfidentBaseModel):
     page_size: int = Field(alias="pageSize")
 
 
-class GovernancePolicyProjectsRequest(ConfidentBaseModel):
+class GovernancePolicyProjectsInput(ConfidentBaseModel):
     project_ids: List[str] = Field(alias="projectIds")
 
 
@@ -596,16 +598,16 @@ class OrganizationRoleList(ConfidentBaseModel):
     roles: List[OrganizationRole]
 
 
-class SetGovernancePolicyControlsRequest(ConfidentBaseModel):
+class SetGovernancePolicyControlsInput(ConfidentBaseModel):
     control_ids: List[str] = Field(alias="controlIds")
 
 
-class UpdateGovernanceControlRequest(ConfidentBaseModel):
+class UpdateGovernanceControlInput(ConfidentBaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
 
 
-class UpdateGovernancePolicyRequest(ConfidentBaseModel):
+class UpdateGovernancePolicyInput(ConfidentBaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     owner_email: Optional[str] = Field(default=None, alias="ownerEmail")
@@ -615,12 +617,16 @@ class UpdateGovernancePolicyRequest(ConfidentBaseModel):
     )
 
 
-class UpdateGovernancePolicySkillRequest(ConfidentBaseModel):
+class UpdateGovernancePolicySkillInput(ConfidentBaseModel):
     description: str
     body: str
 
 
-class UpdateOrganizationModelRequest(ConfidentBaseModel):
+class UpdateOrganizationInput(ConfidentBaseModel):
+    name: str
+
+
+class UpdateOrganizationModelInput(ConfidentBaseModel):
     provider: ModelProvider
     name: Optional[str] = None
     max_concurrency: Optional[int] = Field(default=None, alias="maxConcurrency")
@@ -634,10 +640,7 @@ class UpdateOrganizationModelRequest(ConfidentBaseModel):
     )
 
 
-class UpdateOrganizationRequest(ConfidentBaseModel):
-    name: str
-
-
 GovernanceControlVersionInput = Union[
-    GovernanceControlRuntimeConfig, GovernanceControlPreDeploymentConfig
+    GovernanceControlRuntimeConfigInput,
+    GovernanceControlPreDeploymentConfigInput,
 ]

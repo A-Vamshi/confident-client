@@ -8,8 +8,8 @@ from typing import Optional
 from confident_ai.api import Api, HttpMethods
 from confident_ai.endpoints import Endpoints
 from confident_ai.voice_connections.types import (
-    CreateVoiceConnectionRequest,
-    UpdateVoiceConnectionRequest,
+    CreateVoiceConnectionInput,
+    UpdateVoiceConnectionInput,
     VoiceCallSettingsInput,
     VoiceConnection,
     VoiceConnectionList,
@@ -84,7 +84,7 @@ class VoiceConnectionsClient:
             HttpMethods.POST,
             Endpoints.VOICE_CONNECTIONS_ENDPOINT,
             response_schema=VoiceConnection,
-            request_schema=CreateVoiceConnectionRequest,
+            request_schema=CreateVoiceConnectionInput,
             body={
                 "name": name,
                 "config": config,
@@ -112,7 +112,7 @@ class VoiceConnectionsClient:
             HttpMethods.POST,
             Endpoints.VOICE_CONNECTIONS_ENDPOINT,
             response_schema=VoiceConnection,
-            request_schema=CreateVoiceConnectionRequest,
+            request_schema=CreateVoiceConnectionInput,
             body={
                 "name": name,
                 "config": config,
@@ -176,7 +176,7 @@ class VoiceConnectionsClient:
             HttpMethods.PUT,
             Endpoints.VOICE_CONNECTION_ENDPOINT,
             response_schema=VoiceConnection,
-            request_schema=UpdateVoiceConnectionRequest,
+            request_schema=UpdateVoiceConnectionInput,
             body={
                 "name": name,
                 "config": config,
@@ -207,7 +207,7 @@ class VoiceConnectionsClient:
             HttpMethods.PUT,
             Endpoints.VOICE_CONNECTION_ENDPOINT,
             response_schema=VoiceConnection,
-            request_schema=UpdateVoiceConnectionRequest,
+            request_schema=UpdateVoiceConnectionInput,
             body={
                 "name": name,
                 "config": config,

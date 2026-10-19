@@ -4,27 +4,27 @@
 # and regenerate.
 
 from confident_ai.export_destinations.types import (
-    CreateExportDestinationRequest,
+    CreateExportDestinationInput,
     ExportDestination,
     ExportDestinationList,
     ExportDestinationRef,
     ExportDestinationSummary,
     ExportDestinationType,
-    SnowflakeExportDestinationConfig,
-    SnowflakeExportDestinationConfigUpdate,
+    SnowflakeExportDestinationConfigInput,
+    SnowflakeExportDestinationConfigUpdateInput,
     SnowflakeExportDestinationMaskedConfig,
-    UpdateExportDestinationRequest,
+    UpdateExportDestinationInput,
 )
 
 __all__ = [
-    "CreateExportDestinationRequest",
+    "CreateExportDestinationInput",
     "ExportDestination",
     "ExportDestinationList",
     "ExportDestinationRef",
     "ExportDestinationSummary",
     "ExportDestinationType",
-    "SnowflakeExportDestinationConfig",
-    "SnowflakeExportDestinationConfigUpdate",
+    "SnowflakeExportDestinationConfigInput",
+    "SnowflakeExportDestinationConfigUpdateInput",
     "SnowflakeExportDestinationMaskedConfig",
-    "UpdateExportDestinationRequest",
+    "UpdateExportDestinationInput",
 ]

@@ -19,9 +19,9 @@ from confident_ai.common.types import (
     WidgetUnit,
 )
 from confident_ai.dashboards.types import (
-    UpdateWidgetRequest,
+    UpdateWidgetInput,
     Widget,
-    WidgetQueryRequest,
+    WidgetQueryInput,
     WidgetQueryResult,
     WidgetRef,
 )
@@ -221,7 +221,7 @@ class WidgetsOperations:
             HttpMethods.PUT,
             Endpoints.DASHBOARD_WIDGET_ENDPOINT,
             response_schema=Widget,
-            request_schema=UpdateWidgetRequest,
+            request_schema=UpdateWidgetInput,
             body={
                 "name": name,
                 "description": description,
@@ -293,7 +293,7 @@ class WidgetsOperations:
             HttpMethods.PUT,
             Endpoints.DASHBOARD_WIDGET_ENDPOINT,
             response_schema=Widget,
-            request_schema=UpdateWidgetRequest,
+            request_schema=UpdateWidgetInput,
             body={
                 "name": name,
                 "description": description,
@@ -379,7 +379,7 @@ class WidgetsOperations:
             HttpMethods.POST,
             Endpoints.DASHBOARD_WIDGET_QUERY_ENDPOINT,
             response_schema=WidgetQueryResult,
-            request_schema=WidgetQueryRequest,
+            request_schema=WidgetQueryInput,
             body={
                 "startTime": start_time,
                 "endTime": end_time,
@@ -418,7 +418,7 @@ class WidgetsOperations:
             HttpMethods.POST,
             Endpoints.DASHBOARD_WIDGET_QUERY_ENDPOINT,
             response_schema=WidgetQueryResult,
-            request_schema=WidgetQueryRequest,
+            request_schema=WidgetQueryInput,
             body={
                 "startTime": start_time,
                 "endTime": end_time,

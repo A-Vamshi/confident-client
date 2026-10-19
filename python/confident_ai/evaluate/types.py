@@ -7,11 +7,11 @@ from typing import Any, Dict, List, Optional, Union
 
 from pydantic import Field
 
-from confident_ai.common.types import MLLMImage, PromptType, ToolCall, Turn
+from confident_ai.common.types import MLLMImageInput, PromptType, ToolCall, Turn
 from confident_ai.types import ConfidentBaseModel
 
 
-class SingleTurnTestCase(ConfidentBaseModel):
+class SingleTurnTestCaseInput(ConfidentBaseModel):
     input: str
     actual_output: Optional[str] = Field(default=None, alias="actualOutput")
     expected_output: Optional[str] = Field(default=None, alias="expectedOutput")
@@ -39,7 +39,7 @@ class SingleTurnTestCase(ConfidentBaseModel):
     )
     name: Optional[str] = None
     flaky: Optional[bool] = None
-    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
+    images_mapping: Optional[Dict[str, MLLMImageInput]] = Field(
         default=None,
         alias="imagesMapping",
     )
@@ -54,7 +54,7 @@ class SingleTurnTestCase(ConfidentBaseModel):
     tags: Optional[List[str]] = None
 
 
-class MultiTurnTestCase(ConfidentBaseModel):
+class MultiTurnTestCaseInput(ConfidentBaseModel):
     turns: List[Turn]
     scenario: Optional[str] = None
     expected_outcome: Optional[str] = Field(
@@ -78,7 +78,7 @@ class MultiTurnTestCase(ConfidentBaseModel):
     )
     name: Optional[str] = None
     flaky: Optional[bool] = None
-    images_mapping: Optional[Dict[str, MLLMImage]] = Field(
+    images_mapping: Optional[Dict[str, MLLMImageInput]] = Field(
         default=None,
         alias="imagesMapping",
     )
@@ -93,21 +93,21 @@ class MultiTurnTestCase(ConfidentBaseModel):
     tags: Optional[List[str]] = None
 
 
-TestCase = Union[SingleTurnTestCase, MultiTurnTestCase]
+TestCaseInput = Union[SingleTurnTestCaseInput, MultiTurnTestCaseInput]
 
 
-class PromptHyperparameter(ConfidentBaseModel):
+class PromptHyperparameterInput(ConfidentBaseModel):
     id: str
     type: PromptType
 
 
-HyperparameterValue = Union[str, PromptHyperparameter]
+HyperparameterValueInput = Union[str, PromptHyperparameterInput]
 
 
-class EvaluateRequest(ConfidentBaseModel):
+class EvaluateInput(ConfidentBaseModel):
     metric_collection: str = Field(alias="metricCollection")
-    test_cases: List[TestCase] = Field(alias="testCases")
-    hyperparameters: Optional[Dict[str, HyperparameterValue]] = None
+    test_cases: List[TestCaseInput] = Field(alias="testCases")
+    hyperparameters: Optional[Dict[str, HyperparameterValueInput]] = None
     identifier: Optional[str] = None
 
 
@@ -115,7 +115,7 @@ class EvaluateResult(ConfidentBaseModel):
     id: str
 
 
-class EvaluateSpanRequest(ConfidentBaseModel):
+class EvaluateSpanInput(ConfidentBaseModel):
     metric_collection: str = Field(alias="metricCollection")
     overwrite_metrics: Optional[bool] = Field(
         default=None,
@@ -127,7 +127,7 @@ class EvaluateSpanResult(ConfidentBaseModel):
     id: str
 
 
-class EvaluateThreadRequest(ConfidentBaseModel):
+class EvaluateThreadInput(ConfidentBaseModel):
     metric_collection: str = Field(alias="metricCollection")
     chatbot_role: Optional[str] = Field(default=None, alias="chatbotRole")
     overwrite_metrics: Optional[bool] = Field(
@@ -140,7 +140,7 @@ class EvaluateThreadResult(ConfidentBaseModel):
     id: str
 
 
-class EvaluateTraceRequest(ConfidentBaseModel):
+class EvaluateTraceInput(ConfidentBaseModel):
     metric_collection: str = Field(alias="metricCollection")
     overwrite_metrics: Optional[bool] = Field(
         default=None,

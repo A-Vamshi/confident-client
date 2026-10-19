@@ -68,13 +68,13 @@ export interface VoiceCallSettingsInput {
   recordCalls?: boolean;
 }
 
-export interface CreateVoiceConnectionRequest {
+export interface CreateVoiceConnectionInput {
   name: string;
   config: VoiceTransportConfig;
   callSettings?: VoiceCallSettingsInput;
 }
 
-export interface UpdateVoiceConnectionRequest {
+export interface UpdateVoiceConnectionInput {
   name?: string;
   config?: VoiceTransportConfig;
   callSettings?: VoiceCallSettingsInput;

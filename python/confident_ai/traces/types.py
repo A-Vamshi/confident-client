@@ -45,7 +45,7 @@ class MetricDataInput(ConfidentBaseModel):
     verbose_logs: Optional[str] = Field(default=None, alias="verboseLogs")
 
 
-class AgentSpan(ConfidentBaseModel):
+class AgentSpanInput(ConfidentBaseModel):
     type: Literal["AGENT"]
     uuid: str
     name: str
@@ -84,7 +84,7 @@ class AgentSpan(ConfidentBaseModel):
     agent_handoffs: List[str] = Field(alias="agentHandoffs")
 
 
-class BaseSpan(ConfidentBaseModel):
+class BaseSpanInput(ConfidentBaseModel):
     type: Optional[Literal["SPAN"]] = None
     uuid: str
     name: str
@@ -127,17 +127,17 @@ class ThreadInput(ConfidentBaseModel):
     tags: Optional[List[str]] = None
 
 
-class User(ConfidentBaseModel):
+class UserInput(ConfidentBaseModel):
     id: Optional[str] = None
     name: Optional[str] = None
 
 
-class Customer(ConfidentBaseModel):
+class CustomerInput(ConfidentBaseModel):
     id: Optional[str] = None
     name: Optional[str] = None
 
 
-class LlmSpan(ConfidentBaseModel):
+class LlmSpanInput(ConfidentBaseModel):
     type: Literal["LLM"]
     uuid: str
     name: str
@@ -200,7 +200,7 @@ class LlmSpan(ConfidentBaseModel):
     )
 
 
-class RetrieverSpan(ConfidentBaseModel):
+class RetrieverSpanInput(ConfidentBaseModel):
     type: Literal["RETRIEVER"]
     uuid: str
     name: str
@@ -240,7 +240,7 @@ class RetrieverSpan(ConfidentBaseModel):
     chunk_size: Optional[int] = Field(default=None, alias="chunkSize")
 
 
-class ToolSpan(ConfidentBaseModel):
+class ToolSpanInput(ConfidentBaseModel):
     type: Literal["TOOL"]
     uuid: str
     name: str
@@ -278,16 +278,22 @@ class ToolSpan(ConfidentBaseModel):
     description: Optional[str] = None
 
 
-SpanInput = Union[BaseSpan, LlmSpan, RetrieverSpan, ToolSpan, AgentSpan]
+SpanInput = Union[
+    BaseSpanInput,
+    LlmSpanInput,
+    RetrieverSpanInput,
+    ToolSpanInput,
+    AgentSpanInput,
+]
 
 
-class TraceAttachment(ConfidentBaseModel):
+class TraceAttachmentInput(ConfidentBaseModel):
     url: Optional[str] = None
     data_base64: Optional[str] = Field(default=None, alias="dataBase64")
     mime_type: Optional[str] = Field(default=None, alias="mimeType")
 
 
-class CreateTraceRequest(ConfidentBaseModel):
+class CreateTraceInput(ConfidentBaseModel):
     uuid: str
     name: Optional[str] = None
     input: Optional[Any] = None
@@ -301,9 +307,9 @@ class CreateTraceRequest(ConfidentBaseModel):
     thread_id: Optional[str] = Field(default=None, alias="threadId")
     thread: Optional[ThreadInput] = None
     user_id: Optional[str] = Field(default=None, alias="userId")
-    user: Optional[User] = None
+    user: Optional[UserInput] = None
     customer_id: Optional[str] = Field(default=None, alias="customerId")
-    customer: Optional[Customer] = None
+    customer: Optional[CustomerInput] = None
     metric_collection: Optional[str] = Field(
         default=None,
         alias="metricCollection",
@@ -330,7 +336,7 @@ class CreateTraceRequest(ConfidentBaseModel):
         default=None,
         alias="metricsData",
     )
-    attachments: Optional[Dict[str, TraceAttachment]] = None
+    attachments: Optional[Dict[str, TraceAttachmentInput]] = None
 
 
 class TraceSummary(ConfidentBaseModel):

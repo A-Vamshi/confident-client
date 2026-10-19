@@ -10,12 +10,12 @@ from confident_ai.common.types import (
     ModelCredentials,
     ModelProvider,
     PermissionList,
-    UpdateModelCredentialsRequest,
+    UpdateModelCredentialsInput,
 )
 from confident_ai.endpoints import Endpoints
 from confident_ai.organization.types import (
     Organization,
-    UpdateOrganizationRequest,
+    UpdateOrganizationInput,
 )
 
 
@@ -65,7 +65,7 @@ class OrganizationOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_ENDPOINT,
             response_schema=Organization,
-            request_schema=UpdateOrganizationRequest,
+            request_schema=UpdateOrganizationInput,
             body={"name": name},
         )
 
@@ -84,7 +84,7 @@ class OrganizationOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_ENDPOINT,
             response_schema=Organization,
-            request_schema=UpdateOrganizationRequest,
+            request_schema=UpdateOrganizationInput,
             body={"name": name},
         )
 
@@ -136,7 +136,7 @@ class OrganizationOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_MODEL_CREDENTIALS_ENDPOINT,
             response_schema=ModelCredentials,
-            request_schema=UpdateModelCredentialsRequest,
+            request_schema=UpdateModelCredentialsInput,
             body={
                 "provider": provider,
                 "apiKey": api_key,
@@ -192,7 +192,7 @@ class OrganizationOperations:
             HttpMethods.PUT,
             Endpoints.ORGANIZATION_MODEL_CREDENTIALS_ENDPOINT,
             response_schema=ModelCredentials,
-            request_schema=UpdateModelCredentialsRequest,
+            request_schema=UpdateModelCredentialsInput,
             body={
                 "provider": provider,
                 "apiKey": api_key,

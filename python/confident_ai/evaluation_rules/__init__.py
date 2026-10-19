@@ -4,21 +4,21 @@
 # and regenerate.
 
 from confident_ai.evaluation_rules.types import (
-    CreateEvaluationRuleRequest,
+    CreateEvaluationRuleInput,
     EvaluationRule,
     EvaluationRuleDataModel,
     EvaluationRuleList,
     EvaluationRuleRef,
     EvaluationRuleSummary,
-    UpdateEvaluationRuleRequest,
+    UpdateEvaluationRuleInput,
 )
 
 __all__ = [
-    "CreateEvaluationRuleRequest",
+    "CreateEvaluationRuleInput",
     "EvaluationRule",
     "EvaluationRuleDataModel",
     "EvaluationRuleList",
     "EvaluationRuleRef",
     "EvaluationRuleSummary",
-    "UpdateEvaluationRuleRequest",
+    "UpdateEvaluationRuleInput",
 ]

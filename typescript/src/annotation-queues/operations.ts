@@ -10,7 +10,7 @@ import {
   AnnotationQueueList,
   AnnotationQueueRef,
   AnnotationQueueType,
-  BatchAnnotateItem,
+  BatchAnnotateItemInput,
   BatchAnnotateResult,
 } from "./types";
 
@@ -150,7 +150,7 @@ export class AnnotationQueuesOperations {
    */
   async batchAnnotateItems(
     annotationQueueId: string,
-    items: BatchAnnotateItem[],
+    items: BatchAnnotateItemInput[],
     annotatorEmail?: string,
     markAsCompleted?: boolean,
   ): Promise<BatchAnnotateResult> {
