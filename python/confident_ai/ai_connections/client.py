@@ -34,7 +34,7 @@ class AIConnectionsClient:
         Lists the AI connections in your Confident AI project one page at a
         time, ordered by name. Each connection is returned with just its
         endpoint and whether it is active; retrieve one by id for its full
-        configuration. Requires the Starter plan or above.
+        configuration.
 
         Args:
             page: The page to return. Defaults to 1.
@@ -56,7 +56,7 @@ class AIConnectionsClient:
         Lists the AI connections in your Confident AI project one page at a
         time, ordered by name. Each connection is returned with just its
         endpoint and whether it is active; retrieve one by id for its full
-        configuration. Requires the Starter plan or above.
+        configuration.
 
         Args:
             page: The page to return. Defaults to 1.
@@ -118,7 +118,7 @@ class AIConnectionsClient:
         Registers your LLM application with Confident AI and returns the id of
         the connection. The endpoint is called once as the connection is created
         to work out whether it is `active`, which you read back by retrieving
-        the connection or pinging it. Requires the Starter plan or above.
+        the connection or pinging it.
 
         Args:
             name: The name of the AI connection, unique within the project.
@@ -355,7 +355,7 @@ class AIConnectionsClient:
         Registers your LLM application with Confident AI and returns the id of
         the connection. The endpoint is called once as the connection is created
         to work out whether it is `active`, which you read back by retrieving
-        the connection or pinging it. Requires the Starter plan or above.
+        the connection or pinging it.
 
         Args:
             name: The name of the AI connection, unique within the project.
