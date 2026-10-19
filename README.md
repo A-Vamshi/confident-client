@@ -106,6 +106,18 @@ The base URL resolves from `CONFIDENT_BASE_URL`, else `CONFIDENT_REGION`
 * **TypeScript** mirrors `deepeval.ts`: `tsc` build, `axios`, interface-based
   types, and Jest with `jest.mock("axios")`.
 
+## Agent skills
+
+The `confident-client` skill teaches coding agents to call the Confident AI
+API with these SDKs. It lives in
+[`confident-ai/confident-skills`](https://github.com/confident-ai/confident-skills),
+packaged as the `confident-client` plugin for Claude Code, Cursor, and Codex:
+
+```
+/plugin marketplace add confident-ai/confident-skills
+/plugin install confident-client@confident-skills
+```
+
 ## Development
 
 ```bash
