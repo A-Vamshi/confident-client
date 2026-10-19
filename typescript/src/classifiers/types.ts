@@ -30,8 +30,6 @@ export enum SignalPolarity {
 }
 
 export interface ClassifierAutoGenerationConfig {
-  summaryPrompt: string;
-  nClusters: number;
   sampleSize?: number;
 }
 

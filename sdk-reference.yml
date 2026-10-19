@@ -315,11 +315,11 @@ resources:
         keyword: true
         default: None
         description: 'The authentication configuration Confident AI applies when
-          calling your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`
-          or `OAUTH2_CLIENT_CREDENTIALS` and put that scheme''s settings in the matching
-          object: `auth0Config`, `hmacConfig`, `azureAdConfig` or `oauth2Config`.
-          A value that does not match that shape is rejected. Send `null` to clear
-          it.'
+          calling your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`,
+          `OAUTH2_CLIENT_CREDENTIALS` or `CUSTOM_TOKEN_REQUEST` and put that scheme''s
+          settings in the matching object: `auth0Config`, `hmacConfig`, `azureAdConfig`,
+          `oauth2Config` or `customTokenRequestConfig`. A value that does not match
+          that shape is rejected. Send `null` to clear it.'
         example:
           authType: HMAC
           hmacConfig:
@@ -1099,11 +1099,11 @@ resources:
         keyword: true
         default: None
         description: 'The authentication configuration Confident AI applies when
-          calling your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`
-          or `OAUTH2_CLIENT_CREDENTIALS` and put that scheme''s settings in the matching
-          object: `auth0Config`, `hmacConfig`, `azureAdConfig` or `oauth2Config`.
-          A value that does not match that shape is rejected. Send `null` to clear
-          it.'
+          calling your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`,
+          `OAUTH2_CLIENT_CREDENTIALS` or `CUSTOM_TOKEN_REQUEST` and put that scheme''s
+          settings in the matching object: `auth0Config`, `hmacConfig`, `azureAdConfig`,
+          `oauth2Config` or `customTokenRequestConfig`. A value that does not match
+          that shape is rejected. Send `null` to clear it.'
         example:
           authType: HMAC
           hmacConfig:
@@ -3829,8 +3829,8 @@ resources:
         required: false
         keyword: true
         default: None
-        description: How a generation run samples and clusters your traffic to discover
-          labels. Send `null` to clear it.
+        description: How a generation run samples your traffic to generate labels.
+          Send `null` to clear it.
         example: null
         references:
         - ClassifierAutoGenerationConfig
@@ -4032,8 +4032,8 @@ resources:
         required: false
         keyword: true
         default: None
-        description: How a generation run samples and clusters your traffic to discover
-          labels. Send `null` to clear it.
+        description: How a generation run samples your traffic to generate labels.
+          Send `null` to clear it.
         example: null
         references:
         - ClassifierAutoGenerationConfig
@@ -4097,15 +4097,14 @@ resources:
         pythonAsync: a_generate_labels
         typescript: generateLabels
       summary: Generate Classifier Labels
-      description: 'Discovers labels for a classifier from your project''s real traffic:
-        it samples recent traces or threads, clusters them with the classifier''s
-        `autoGenerationConfig`, and writes the themes it finds back as `RECOMMENDED`
-        labels for a human to review. The run is asynchronous, so poll the labels
-        endpoint for results. Each run first deletes every existing `RECOMMENDED`
-        label, while labels already promoted to `ACTIVE` are kept and passed to the
-        generator so it does not propose them again. `autoGenerationConfig` must
-        already have `summaryPrompt` and `nClusters` set. Reading traffic and running
-        the model consumes usage. Requires the Starter plan or above.'
+      description: 'Generates labels for a classifier from your project''s real traffic:
+        it samples recent traces or threads and runs them through the classifier''s
+        normal auto-classification pipeline. Repeated proposals are merged and written
+        back as `RECOMMENDED` labels for a human to review. The run is asynchronous,
+        so poll the labels endpoint for results. Existing labels are retained, and
+        the sampled entities receive ordinary classification results. Auto Classify
+        must be enabled. Reading traffic and running the model consumes usage. Requires
+        the Starter plan or above.'
       operations:
       - id: generateClassifierLabels
         method: POST
@@ -31028,7 +31027,7 @@ types:
     example: The user asks for the capital city of a country.
     references: []
 - name: Classifier
-  description: 'A classifier: what it runs on, how it discovers labels, and the labels
+  description: 'A classifier: what it runs on, how it generates labels, and the labels
     it can apply.'
   example: null
   python:
@@ -31134,8 +31133,8 @@ types:
       python: Optional[ClassifierAutoGenerationConfig]
       typescript: ClassifierAutoGenerationConfig | null
     required: true
-    description: How a generation run samples and clusters your traffic, or `null`
-      when the classifier has no generation config.
+    description: How a generation run samples your traffic, or `null` when the classifier
+      has no generation config.
     example: null
     references:
     - ClassifierAutoGenerationConfig
@@ -31151,8 +31150,7 @@ types:
     references:
     - ClassifierLabel
 - name: ClassifierAutoGenerationConfig
-  description: How a generation run samples and clusters your traffic. Both `summaryPrompt`
-    and `nClusters` must be set before the generate endpoint will run.
+  description: How many recent traces or threads a generation run samples and classifies.
   example: null
   python:
     module: confident_ai.classifiers
@@ -31163,27 +31161,6 @@ types:
   references: []
   kind: object
   fields:
-  - wire: summaryPrompt
-    python: summary_prompt
-    typescript: summaryPrompt
-    type:
-      python: str
-      typescript: string
-    required: true
-    description: What the model should look for when clustering sampled traffic into
-      themes.
-    example: Analyze the user's input to determine the emotional tone they express.
-    references: []
-  - wire: nClusters
-    python: n_clusters
-    typescript: nClusters
-    type:
-      python: int
-      typescript: number
-    required: true
-    description: Roughly how many themes to cluster the sample into.
-    example: 3
-    references: []
   - wire: sampleSize
     python: sample_size
     typescript: sampleSize
@@ -31332,7 +31309,7 @@ types:
     required: true
     description: A human-readable explanation of the outcome.
     example: Label generation started. Generated labels appear with status RECOMMENDED
-      when the run completes.
+      as the sampled data is classified.
     references: []
 - name: ClassifierLabelList
   description: One page of labels, with the total across all pages.
@@ -32073,10 +32050,10 @@ types:
       typescript: Record<string, unknown> | null
     required: false
     description: 'The authentication configuration Confident AI applies when calling
-      your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD` or `OAUTH2_CLIENT_CREDENTIALS`
-      and put that scheme''s settings in the matching object: `auth0Config`, `hmacConfig`,
-      `azureAdConfig` or `oauth2Config`. A value that does not match that shape is
-      rejected. Send `null` to clear it.'
+      your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS`
+      or `CUSTOM_TOKEN_REQUEST` and put that scheme''s settings in the matching object:
+      `auth0Config`, `hmacConfig`, `azureAdConfig`, `oauth2Config` or `customTokenRequestConfig`.
+      A value that does not match that shape is rejected. Send `null` to clear it.'
     example:
       authType: HMAC
       hmacConfig:
@@ -32773,8 +32750,8 @@ types:
       python: Optional[ClassifierAutoGenerationConfig]
       typescript: ClassifierAutoGenerationConfig | null
     required: false
-    description: How a generation run samples and clusters your traffic to discover
-      labels. Send `null` to clear it.
+    description: How a generation run samples your traffic to generate labels. Send
+      `null` to clear it.
     example: null
     references:
     - ClassifierAutoGenerationConfig
@@ -61879,10 +61856,10 @@ types:
       typescript: Record<string, unknown> | null
     required: false
     description: 'The authentication configuration Confident AI applies when calling
-      your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD` or `OAUTH2_CLIENT_CREDENTIALS`
-      and put that scheme''s settings in the matching object: `auth0Config`, `hmacConfig`,
-      `azureAdConfig` or `oauth2Config`. A value that does not match that shape is
-      rejected. Send `null` to clear it.'
+      your application. Set `authType` to `AUTH0`, `HMAC`, `AZURE_AD`, `OAUTH2_CLIENT_CREDENTIALS`
+      or `CUSTOM_TOKEN_REQUEST` and put that scheme''s settings in the matching object:
+      `auth0Config`, `hmacConfig`, `azureAdConfig`, `oauth2Config` or `customTokenRequestConfig`.
+      A value that does not match that shape is rejected. Send `null` to clear it.'
     example:
       authType: HMAC
       hmacConfig:
@@ -62568,8 +62545,8 @@ types:
       python: Optional[ClassifierAutoGenerationConfig]
       typescript: ClassifierAutoGenerationConfig | null
     required: false
-    description: How a generation run samples and clusters your traffic to discover
-      labels. Send `null` to clear it.
+    description: How a generation run samples your traffic to generate labels. Send
+      `null` to clear it.
     example: null
     references:
     - ClassifierAutoGenerationConfig

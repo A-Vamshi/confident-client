@@ -74,8 +74,8 @@ export class ClassifiersOperations {
    *   stored, so the set's top-level operator is dropped and the groups are
    *   combined by the platform. Send `null` to clear the filters and classify
    *   everything of this data model.
-   * @param autoGenerationConfig How a generation run samples and clusters your
-   *   traffic to discover labels. Send `null` to clear it.
+   * @param autoGenerationConfig How a generation run samples your traffic to
+   *   generate labels. Send `null` to clear it.
    */
   async create(
     name: string,
@@ -163,8 +163,8 @@ export class ClassifiersOperations {
    *   stored, so the set's top-level operator is dropped and the groups are
    *   combined by the platform. Send `null` to clear the filters and classify
    *   everything of this data model.
-   * @param autoGenerationConfig How a generation run samples and clusters your
-   *   traffic to discover labels. Send `null` to clear it.
+   * @param autoGenerationConfig How a generation run samples your traffic to
+   *   generate labels. Send `null` to clear it.
    */
   async update(
     classifierId: string,
@@ -225,16 +225,14 @@ export class ClassifiersOperations {
   /**
    * Generate Classifier Labels
    *
-   * Discovers labels for a classifier from your project's real traffic: it
-   * samples recent traces or threads, clusters them with the classifier's
-   * `autoGenerationConfig`, and writes the themes it finds back as
-   * `RECOMMENDED` labels for a human to review. The run is asynchronous, so
-   * poll the labels endpoint for results. Each run first deletes every existing
-   * `RECOMMENDED` label, while labels already promoted to `ACTIVE` are kept and
-   * passed to the generator so it does not propose them again.
-   * `autoGenerationConfig` must already have `summaryPrompt` and `nClusters`
-   * set. Reading traffic and running the model consumes usage. Requires the
-   * Starter plan or above.
+   * Generates labels for a classifier from your project's real traffic: it
+   * samples recent traces or threads and runs them through the classifier's
+   * normal auto-classification pipeline. Repeated proposals are merged and
+   * written back as `RECOMMENDED` labels for a human to review. The run is
+   * asynchronous, so poll the labels endpoint for results. Existing labels are
+   * retained, and the sampled entities receive ordinary classification results.
+   * Auto Classify must be enabled. Reading traffic and running the model
+   * consumes usage. Requires the Starter plan or above.
    *
    * @param classifierId The id of the classifier.
    */

@@ -37,8 +37,6 @@ class SignalPolarity(Enum):
 
 
 class ClassifierAutoGenerationConfig(ConfidentBaseModel):
-    summary_prompt: str = Field(alias="summaryPrompt")
-    n_clusters: int = Field(alias="nClusters")
     sample_size: Optional[int] = Field(default=None, alias="sampleSize")
 
 
