@@ -5,9 +5,9 @@ import re
 import pytest
 
 from confident_ai import ConfidentAI, Media, parse_multimodal
-from confident_ai.common import MLLMImage, Turn, TurnRole
+from confident_ai.common import MLLMImageInput, Turn, TurnRole
 from confident_ai.datasets import MultiTurnGolden, SingleTurnGolden
-from confident_ai.evaluate import SingleTurnTestCase
+from confident_ai.evaluate import SingleTurnTestCaseInput
 
 PNG = b"\x89PNG\r\n\x1a\n"
 LOCAL_MARKER = re.compile(r"^\[CONFIDENT:IMAGE:[0-9a-f]{32}\]$")
@@ -195,7 +195,9 @@ def test_unknown_markers_are_left_to_the_server(http, project):
 
 def test_a_supplied_images_mapping_wins(http, project):
     text = f"{Media.from_bytes(PNG, 'image/png')}"
-    supplied = MLLMImage(url="https://cdn.example.com/cat.png", local=False)
+    supplied = MLLMImageInput(
+        url="https://cdn.example.com/cat.png", local=False
+    )
     golden = SingleTurnGolden(
         input=text, images_mapping={key_of(text): supplied}
     )
@@ -231,7 +233,9 @@ def test_run_evals_maps_media_per_test_case(http, project):
     asyncio.run(
         project.evaluate.a_run_evals(
             metric_collection="Vision",
-            test_cases=[SingleTurnTestCase(input=text, actual_output="A cat")],
+            test_cases=[
+                SingleTurnTestCaseInput(input=text, actual_output="A cat")
+            ],
         )
     )
 
