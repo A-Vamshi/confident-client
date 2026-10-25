@@ -40362,7 +40362,6 @@ types:
       only be reached through it.'
     example:
     - <JOURNEY-STATE-ID>
-    - <JOURNEY-STATE-ID>
     references: []
 - name: ErrorResponse
   description: null
@@ -46915,8 +46914,6 @@ types:
       root state.
     example:
     - <JOURNEY-STATE-ID>
-    - <JOURNEY-STATE-ID>
-    - <JOURNEY-STATE-ID>
     references: []
   - wire: goldenCount
     python: golden_count
@@ -47006,8 +47003,6 @@ types:
       paths is skipped.
     example:
     - <JOURNEY-STATE-ID>
-    - <JOURNEY-STATE-ID>
-    - <JOURNEY-STATE-ID>
     references: []
   - wire: count
     python: count
@@ -47043,8 +47038,6 @@ types:
     description: The path these results are for, as state ids in order from the root
       state.
     example:
-    - <JOURNEY-STATE-ID>
-    - <JOURNEY-STATE-ID>
     - <JOURNEY-STATE-ID>
     references: []
   - wire: name
@@ -47183,8 +47176,6 @@ types:
       in order from the root state.
     example:
     - <JOURNEY-STATE-ID>
-    - <JOURNEY-STATE-ID>
-    - <JOURNEY-STATE-ID>
     references: []
   - wire: journeyPath
     python: journey_path
@@ -47198,8 +47189,6 @@ types:
       `journeyStateIds` to see where the conversation left the intended path. `[]`
       when it was not recorded.
     example:
-    - <JOURNEY-STATE-ID>
-    - <JOURNEY-STATE-ID>
     - <JOURNEY-STATE-ID>
     references: []
   - wire: status
