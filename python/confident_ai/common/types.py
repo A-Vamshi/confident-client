@@ -873,6 +873,7 @@ class Span(ConfidentBaseModel):
     context: Optional[List[str]]
     tools_called: Optional[List[ToolCall]] = Field(alias="toolsCalled")
     expected_tools: Optional[List[ToolCall]] = Field(alias="expectedTools")
+    labels: Dict[str, Classification]
     metrics_data: List[MetricData] = Field(alias="metricsData")
     annotations: List[AnnotationSummary]
 

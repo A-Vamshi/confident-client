@@ -17,6 +17,7 @@ import { ExportDestinationsClient } from "../export-destinations/client";
 import { ExportSchedulesClient } from "../export-schedules/client";
 import { ForwardingConnectorsClient } from "../forwarding-connectors/client";
 import { GovernanceClient } from "../governance/client";
+import { JourneysClient } from "../journeys/client";
 import { McpServersClient } from "../mcp-servers/client";
 import { MetricCollectionsClient } from "../metric-collections/client";
 import { MetricsClient } from "../metrics/client";
@@ -94,6 +95,10 @@ export abstract class StatelessClients {
 
   get governance(): GovernanceClient {
     return new GovernanceClient(this.api(ApiKeyKind.PROJECT));
+  }
+
+  get journeys(): JourneysClient {
+    return new JourneysClient(this.api(ApiKeyKind.PROJECT));
   }
 
   get mcpServers(): McpServersClient {

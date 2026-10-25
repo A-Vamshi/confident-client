@@ -7,6 +7,7 @@ import { FilterSet, UserReference } from "../common/types";
 
 export enum ClassifierDataModel {
   TRACE = "TRACE",
+  SPAN = "SPAN",
   THREAD = "THREAD",
 }
 

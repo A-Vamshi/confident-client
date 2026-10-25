@@ -31,6 +31,12 @@ class PhoneVoiceConfig(ConfidentBaseModel):
         alias="trunkCredentials",
     )
     caller_id: str = Field(alias="callerId")
+    media_encryption: Optional[Literal["DISABLED", "ALLOWED", "REQUIRED"]] = (
+        Field(
+            default=None,
+            alias="mediaEncryption",
+        )
+    )
 
 
 class VoiceHeader(ConfidentBaseModel):
@@ -47,6 +53,12 @@ class SipVoiceConfig(ConfidentBaseModel):
     credentials: Optional[SipCredentials]
     caller_id: str = Field(alias="callerId")
     headers: List[VoiceHeader]
+    media_encryption: Optional[Literal["DISABLED", "ALLOWED", "REQUIRED"]] = (
+        Field(
+            default=None,
+            alias="mediaEncryption",
+        )
+    )
 
 
 class WebRTCVoiceConfigLivekit(ConfidentBaseModel):

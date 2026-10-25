@@ -26,7 +26,6 @@ export class ClassifiersOperations {
    * Lists the classifiers in your Confident AI project one page at a time,
    * ordered by name. Each is returned as a summary row — enough to pick one;
    * retrieve a classifier by id for its filters, generation config, and labels.
-   * Requires the Starter plan or above.
    *
    * @param page The page to return. Defaults to 1.
    * @param pageSize The number of results per page, at most 100. Defaults to
@@ -50,11 +49,10 @@ export class ClassifiersOperations {
   /**
    * Create Classifier
    *
-   * Creates a classifier that tags incoming traces or threads with labels, and
-   * returns its id. Sending a `preset` seeds it with a description, a
-   * generation config, and a starting set of labels; any field you send
-   * explicitly overrides what the preset would have set. Requires the Starter
-   * plan or above.
+   * Creates a classifier that tags incoming traces, spans or threads with
+   * labels, and returns its id. Sending a `preset` seeds it with a description,
+   * a generation config, and a starting set of labels; any field you send
+   * explicitly overrides what the preset would have set.
    *
    * @param name The name of the classifier, unique per data model within the
    *   project.
@@ -69,11 +67,11 @@ export class ClassifiersOperations {
    *   can catch issues that only show in the audio or in a mismatch between the
    *   audio and its transcript. Needs an audio-capable platform model. Defaults
    *   to `false` on create; omit it on an update to leave it unchanged.
-   * @param filters Narrows which traces or threads the classifier runs on, so
-   *   it can watch one route rather than the whole project. Only the groups are
-   *   stored, so the set's top-level operator is dropped and the groups are
-   *   combined by the platform. Send `null` to clear the filters and classify
-   *   everything of this data model.
+   * @param filters Narrows which traces, spans or threads the classifier runs
+   *   on, so it can watch one route rather than the whole project. Only the
+   *   groups are stored, so the set's top-level operator is dropped and the
+   *   groups are combined by the platform. Send `null` to clear the filters and
+   *   classify everything of this data model.
    * @param autoGenerationConfig How a generation run samples your traffic to
    *   generate labels. Send `null` to clear it.
    */
@@ -122,8 +120,7 @@ export class ClassifiersOperations {
    * Get Classifier
    *
    * Retrieves a classifier by id, with the filters that scope what it runs on,
-   * its generation config, and every label it can apply. Requires the Starter
-   * plan or above.
+   * its generation config, and every label it can apply.
    *
    * @param classifierId The id of the classifier.
    */
@@ -142,7 +139,6 @@ export class ClassifiersOperations {
    * omitting a field leaves it untouched, and sending `null` clears it.
    * `dataModel` cannot be changed after creation and a preset can only be
    * applied when creating one; labels are managed through their own endpoints.
-   * Requires the Starter plan or above.
    *
    * @param classifierId The id of the classifier.
    * @param name The name of the classifier, unique per data model within the
@@ -158,11 +154,11 @@ export class ClassifiersOperations {
    *   can catch issues that only show in the audio or in a mismatch between the
    *   audio and its transcript. Needs an audio-capable platform model. Defaults
    *   to `false` on create; omit it on an update to leave it unchanged.
-   * @param filters Narrows which traces or threads the classifier runs on, so
-   *   it can watch one route rather than the whole project. Only the groups are
-   *   stored, so the set's top-level operator is dropped and the groups are
-   *   combined by the platform. Send `null` to clear the filters and classify
-   *   everything of this data model.
+   * @param filters Narrows which traces, spans or threads the classifier runs
+   *   on, so it can watch one route rather than the whole project. Only the
+   *   groups are stored, so the set's top-level operator is dropped and the
+   *   groups are combined by the platform. Send `null` to clear the filters and
+   *   classify everything of this data model.
    * @param autoGenerationConfig How a generation run samples your traffic to
    *   generate labels. Send `null` to clear it.
    */
@@ -209,8 +205,8 @@ export class ClassifiersOperations {
    * Delete Classifier
    *
    * Permanently deletes a classifier and all of its labels, and returns its id.
-   * Classifications already applied to traces or threads are not removed. This
-   * action cannot be undone. Requires the Starter plan or above.
+   * Classifications already applied to traces, spans or threads are not
+   * removed. This action cannot be undone.
    *
    * @param classifierId The id of the classifier.
    */
@@ -226,13 +222,13 @@ export class ClassifiersOperations {
    * Generate Classifier Labels
    *
    * Generates labels for a classifier from your project's real traffic: it
-   * samples recent traces or threads and runs them through the classifier's
-   * normal auto-classification pipeline. Repeated proposals are merged and
-   * written back as `RECOMMENDED` labels for a human to review. The run is
-   * asynchronous, so poll the labels endpoint for results. Existing labels are
-   * retained, and the sampled entities receive ordinary classification results.
-   * Auto Classify must be enabled. Reading traffic and running the model
-   * consumes usage. Requires the Starter plan or above.
+   * samples recent traces, spans or threads and runs them through the
+   * classifier's normal auto-classification pipeline. Repeated proposals are
+   * merged and written back as `RECOMMENDED` labels for a human to review. The
+   * run is asynchronous, so poll the labels endpoint for results. Existing
+   * labels are retained, and the sampled entities receive ordinary
+   * classification results. Auto Classify must be enabled. Reading traffic and
+   * running the model consumes usage.
    *
    * @param classifierId The id of the classifier.
    */
@@ -254,8 +250,7 @@ export class ClassifiersOperations {
    * the description or the set of labels the model can apply changes, which
    * includes RECOMMENDED labels added by a generation run or by the model
    * itself while the classifier classifies automatically. A version can be
-   * restored in the app, not through this API. Requires the Starter plan or
-   * above.
+   * restored in the app, not through this API.
    *
    * @param classifierId The id of the classifier.
    * @param page The page to return. Defaults to 1.

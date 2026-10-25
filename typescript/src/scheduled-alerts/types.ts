@@ -73,6 +73,7 @@ export interface RegressionDetectionSettings {
 
 export interface SignalSpikeDetectionSettings {
   classifierIds: string[];
+  classifierCollectionId?: string;
   direction: "WORSENED" | "ANY";
   minAffectedCount: number;
 }

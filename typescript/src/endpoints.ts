@@ -78,6 +78,16 @@ export enum Endpoints {
   // governance
   GOVERNANCE_ASSESS_ENDPOINT = "/v2/governance/assess",
 
+  // journeys
+  JOURNEYS_ENDPOINT = "/v2/journeys",
+  JOURNEY_ENDPOINT = "/v2/journeys/:journeyId",
+  JOURNEY_EDGES_ENDPOINT = "/v2/journeys/:journeyId/edges",
+  JOURNEY_EDGE_ENDPOINT = "/v2/journeys/:journeyId/edges/:edgeId",
+  JOURNEY_GOLDENS_ENDPOINT = "/v2/journeys/:journeyId/goldens",
+  JOURNEY_PATHS_ENDPOINT = "/v2/journeys/:journeyId/paths",
+  JOURNEY_STATES_ENDPOINT = "/v2/journeys/:journeyId/states",
+  JOURNEY_STATE_ENDPOINT = "/v2/journeys/:journeyId/states/:stateId",
+
   // mcp-servers
   MCP_SERVERS_ENDPOINT = "/v2/mcp-servers",
   MCP_SERVER_ENDPOINT = "/v2/mcp-servers/:mcpServerId",
