@@ -3953,7 +3953,7 @@ resources:
       description: Lists the classifiers in your Confident AI project one page at
         a time, ordered by name. Each is returned as a summary row — enough to pick
         one; retrieve a classifier by id for its filters, generation config, and
-        labels. Requires the Starter plan or above.
+        labels.
       operations:
       - id: listClassifiers
         method: GET
@@ -4024,10 +4024,10 @@ resources:
         pythonAsync: a_create
         typescript: create
       summary: Create Classifier
-      description: Creates a classifier that tags incoming traces or threads with
-        labels, and returns its id. Sending a `preset` seeds it with a description,
+      description: Creates a classifier that tags incoming traces, spans or threads
+        with labels, and returns its id. Sending a `preset` seeds it with a description,
         a generation config, and a starting set of labels; any field you send explicitly
-        overrides what the preset would have set. Requires the Starter plan or above.
+        overrides what the preset would have set.
       operations:
       - id: createClassifier
         method: POST
@@ -4165,11 +4165,11 @@ resources:
           python: true
           typescript: true
         default: None
-        description: Narrows which traces or threads the classifier runs on, so it
-          can watch one route rather than the whole project. Only the groups are
-          stored, so the set's top-level operator is dropped and the groups are combined
-          by the platform. Send `null` to clear the filters and classify everything
-          of this data model.
+        description: Narrows which traces, spans or threads the classifier runs on,
+          so it can watch one route rather than the whole project. Only the groups
+          are stored, so the set's top-level operator is dropped and the groups are
+          combined by the platform. Send `null` to clear the filters and classify
+          everything of this data model.
         example:
           operator: AND
           groups:
@@ -4224,8 +4224,7 @@ resources:
         typescript: get
       summary: Get Classifier
       description: Retrieves a classifier by id, with the filters that scope what
-        it runs on, its generation config, and every label it can apply. Requires
-        the Starter plan or above.
+        it runs on, its generation config, and every label it can apply.
       operations:
       - id: getClassifier
         method: GET
@@ -4264,8 +4263,7 @@ resources:
       description: 'Updates a classifier and returns it. Only the fields you send
         are changed: omitting a field leaves it untouched, and sending `null` clears
         it. `dataModel` cannot be changed after creation and a preset can only be
-        applied when creating one; labels are managed through their own endpoints.
-        Requires the Starter plan or above.'
+        applied when creating one; labels are managed through their own endpoints.'
       operations:
       - id: updateClassifier
         method: PUT
@@ -4386,11 +4384,11 @@ resources:
           python: true
           typescript: true
         default: None
-        description: Narrows which traces or threads the classifier runs on, so it
-          can watch one route rather than the whole project. Only the groups are
-          stored, so the set's top-level operator is dropped and the groups are combined
-          by the platform. Send `null` to clear the filters and classify everything
-          of this data model.
+        description: Narrows which traces, spans or threads the classifier runs on,
+          so it can watch one route rather than the whole project. Only the groups
+          are stored, so the set's top-level operator is dropped and the groups are
+          combined by the platform. Send `null` to clear the filters and classify
+          everything of this data model.
         example:
           operator: AND
           groups:
@@ -4443,8 +4441,8 @@ resources:
         typescript: delete
       summary: Delete Classifier
       description: Permanently deletes a classifier and all of its labels, and returns
-        its id. Classifications already applied to traces or threads are not removed.
-        This action cannot be undone. Requires the Starter plan or above.
+        its id. Classifications already applied to traces, spans or threads are not
+        removed. This action cannot be undone.
       operations:
       - id: deleteClassifier
         method: DELETE
@@ -4481,13 +4479,12 @@ resources:
         typescript: generateLabels
       summary: Generate Classifier Labels
       description: 'Generates labels for a classifier from your project''s real traffic:
-        it samples recent traces or threads and runs them through the classifier''s
+        it samples recent traces, spans or threads and runs them through the classifier''s
         normal auto-classification pipeline. Repeated proposals are merged and written
         back as `RECOMMENDED` labels for a human to review. The run is asynchronous,
         so poll the labels endpoint for results. Existing labels are retained, and
         the sampled entities receive ordinary classification results. Auto Classify
-        must be enabled. Reading traffic and running the model consumes usage. Requires
-        the Starter plan or above.'
+        must be enabled. Reading traffic and running the model consumes usage.'
       operations:
       - id: generateClassifierLabels
         method: POST
@@ -4528,7 +4525,7 @@ resources:
         whenever the description or the set of labels the model can apply changes,
         which includes RECOMMENDED labels added by a generation run or by the model
         itself while the classifier classifies automatically. A version can be restored
-        in the app, not through this API. Requires the Starter plan or above.
+        in the app, not through this API.
       operations:
       - id: listClassifierVersions
         method: GET
@@ -4610,8 +4607,7 @@ resources:
       description: Lists a classifier's labels one page at a time, ordered by name.
         This is also how you read the results of a generation run — generated suggestions
         arrive with status `RECOMMENDED`. Each label is returned as a summary row;
-        retrieve one by id for its description and polarity. Requires the Starter
-        plan or above.
+        retrieve one by id for its description and polarity.
       operations:
       - id: listClassifierLabels
         method: GET
@@ -4684,7 +4680,7 @@ resources:
       description: Adds a label to a classifier and returns its id. The `description`
         is what the classifying model matches against, so write it as a clear statement
         of when the label applies rather than a restatement of the name. Label names
-        are unique within a classifier. Requires the Starter plan or above.
+        are unique within a classifier.
       operations:
       - id: createClassifierLabel
         method: POST
@@ -4811,7 +4807,6 @@ resources:
       summary: Get Classifier Label
       description: Retrieves a single label on a classifier, with the description
         the classifying model matches against and the polarity trend reporting uses.
-        Requires the Starter plan or above.
       operations:
       - id: getClassifierLabel
         method: GET
@@ -4866,7 +4861,7 @@ resources:
       summary: Update Classifier Label
       description: Updates a label on a classifier and returns it. Only the fields
         you send are changed. Promoting a generated suggestion is an update to status
-        `ACTIVE`, which also enables the label. Requires the Starter plan or above.
+        `ACTIVE`, which also enables the label.
       operations:
       - id: updateClassifierLabel
         method: PUT
@@ -5009,7 +5004,7 @@ resources:
       summary: Delete Classifier Label
       description: Permanently deletes a label from a classifier and returns its
         id. Classifications already applied with it are not removed. This action
-        cannot be undone. Requires the Starter plan or above.
+        cannot be undone.
       operations:
       - id: deleteClassifierLabel
         method: DELETE
@@ -6823,7 +6818,7 @@ resources:
         typescript: listIngestionTasks
       summary: List Dataset Ingestion Tasks
       description: Lists the ingestion tasks on the dataset as summary rows. Retrieve
-        one by id for its full configuration. Requires the Starter plan or above.
+        one by id for its full configuration.
       operations:
       - id: listDatasetIngestionTasks
         method: GET
@@ -6880,8 +6875,7 @@ resources:
       description: 'Creates a standing rule that harvests matching production traces,
         spans or threads into the dataset as goldens, starting immediately unless
         `enabled` is `false`, and returns its id. `dataModel` must match the dataset:
-        `THREAD` for multi-turn, `TRACE` or `SPAN` for single-turn. Requires the
-        Starter plan or above.'
+        `THREAD` for multi-turn, `TRACE` or `SPAN` for single-turn.'
       operations:
       - id: createDatasetIngestionTask
         method: POST
@@ -9175,7 +9169,7 @@ resources:
         typescript: list
       summary: List Evaluation Rules
       description: Lists the evaluation rules in your Confident AI project one page
-        at a time, newest first, as summary rows. Requires the Starter plan or above.
+        at a time, newest first, as summary rows.
       operations:
       - id: listEvaluationRules
         method: GET
@@ -9251,7 +9245,7 @@ resources:
         its id. Running metrics consumes LLM usage. The collection's turn type must
         match the rule — `THREAD` rules need a multi-turn collection, `TRACE` and
         `SPAN` rules a single-turn one — and only one enabled `THREAD` rule may target
-        a given collection. Requires the Starter plan or above.
+        a given collection.
       operations:
       - id: createEvaluationRule
         method: POST
@@ -11485,6 +11479,1011 @@ resources:
       order:
         python: []
         typescript: []
+  handle: null
+- name: journeys
+  keyKind: project
+  client:
+    python: client.journeys
+    typescript: client.journeys
+  modules:
+  - segments: []
+    python:
+      module: python/confident_ai/journeys/operations.py
+      class: JourneysOperations
+    typescript:
+      module: typescript/src/journeys/operations.ts
+      class: JourneysOperations
+    methods:
+    - name:
+        python: list
+        pythonAsync: a_list
+        typescript: list
+      summary: List Journeys
+      description: Lists the journeys in your Confident AI project one page at a
+        time, newest first. Each journey is returned with its id, name, and how many
+        states and goldens it has; retrieve one by id to read its states, edges and
+        paths.
+      operations:
+      - id: listJourneys
+        method: GET
+        path: /v2/journeys
+      returns:
+        python: JourneyList
+        typescript: Promise<JourneyList>
+        type: JourneyList
+      body: null
+      parameters:
+      - python: page
+        typescript: page
+        wire: page
+        in: query
+        type:
+          python: Optional[int]
+          typescript: number
+        required: false
+        keyword:
+          python: true
+          typescript: false
+        default: None
+        description: The page to return. Defaults to 1.
+        example: 1
+        references: []
+      - python: page_size
+        typescript: pageSize
+        wire: pageSize
+        in: query
+        type:
+          python: Optional[int]
+          typescript: number
+        required: false
+        keyword:
+          python: true
+          typescript: false
+        default: None
+        description: The number of journeys per page, at most 100. Defaults to 25.
+        example: 25
+        references: []
+      order:
+        python:
+        - page
+        - page_size
+        typescript:
+        - page
+        - pageSize
+    - name:
+        python: create
+        pythonAsync: a_create
+        typescript: create
+      summary: Create Journey
+      description: Creates a journey with a root `Start` state and returns its id.
+        Build it out by adding states and edges, or send `graphSource` as `ai` to
+        have Confident AI draft them for you in the background. Names are unique
+        within a project; reusing one returns a 409.
+      operations:
+      - id: createJourney
+        method: POST
+        path: /v2/journeys
+      returns:
+        python: JourneyRef
+        typescript: Promise<JourneyRef>
+        type: JourneyRef
+      body: CreateJourneyInput
+      parameters:
+      - python: name
+        typescript: name
+        wire: name
+        in: body
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The name of the journey, unique within the project.
+        example: Refund request
+        references: []
+      - python: description
+        typescript: description
+        wire: description
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string | null
+        required: false
+        keyword:
+          python: true
+          typescript: false
+        default: None
+        description: What the user is trying to get done on this journey. When `graphSource`
+          is `ai`, the draft is written from this and the name, so say how the conversation
+          can end.
+        example: A customer asks for a refund on a recent order. The agent verifies
+          who they are, then either issues the refund or hands the conversation to
+          a human.
+        references: []
+      - python: graph_source
+        typescript: graphSource
+        wire: graphSource
+        in: body
+        type:
+          python: Optional[JourneyGraphSource]
+          typescript: JourneyGraphSource
+        required: false
+        keyword:
+          python: true
+          typescript: false
+        default: None
+        description: Send `ai` to have Confident AI draft the journey's states and
+          edges in the background with your project's platform model. Omit it to
+          start with only the root `Start` state. The draft lands shortly after the
+          response, so retrieve the journey to see it; if drafting fails, the journey
+          keeps only its `Start` state.
+        example: ai
+        references:
+        - JourneyGraphSource
+      order:
+        python:
+        - name
+        - description
+        - graph_source
+        typescript:
+        - name
+        - description
+        - graphSource
+    - name:
+        python: get
+        pythonAsync: a_get
+        typescript: get
+      summary: Get Journey
+      description: 'Retrieves a journey by id with its whole graph: every state and
+        edge, each path from the root state to an end, and how many goldens have
+        been generated for each path and in which datasets. Paths with no goldens
+        are the branches of the conversation your tests do not cover yet.'
+      operations:
+      - id: getJourney
+        method: GET
+        path: /v2/journeys/{journeyId}
+      returns:
+        python: Journey
+        typescript: Promise<Journey>
+        type: Journey
+      body: null
+      parameters:
+      - python: journey_id
+        typescript: journeyId
+        wire: journeyId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the journey.
+        example: <JOURNEY-ID>
+        references: []
+      order:
+        python:
+        - journey_id
+        typescript:
+        - journeyId
+    - name:
+        python: update
+        pythonAsync: a_update
+        typescript: update
+      summary: Update Journey
+      description: Renames a journey or rewrites its description, and returns it
+        with its whole graph. Names are unique within a project; taking another journey's
+        name returns a 409.
+      operations:
+      - id: updateJourney
+        method: PUT
+        path: /v2/journeys/{journeyId}
+      returns:
+        python: Journey
+        typescript: Promise<Journey>
+        type: Journey
+      body: UpdateJourneyInput
+      parameters:
+      - python: journey_id
+        typescript: journeyId
+        wire: journeyId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the journey.
+        example: <JOURNEY-ID>
+        references: []
+      - python: name
+        typescript: name
+        wire: name
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string
+        required: false
+        keyword:
+          python: true
+          typescript: false
+        default: None
+        description: The name of the journey, unique within the project. Omit it
+          to keep the current name.
+        example: Refund request
+        references: []
+      - python: description
+        typescript: description
+        wire: description
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string | null
+        required: false
+        keyword:
+          python: true
+          typescript: false
+        default: None
+        description: What the user is trying to get done on this journey. Send `null`
+          to clear it, or omit it to keep the current one.
+        example: A customer asks for a refund on a recent order. The agent verifies
+          who they are, then either issues the refund or hands the conversation to
+          a human.
+        references: []
+      order:
+        python:
+        - journey_id
+        - name
+        - description
+        typescript:
+        - journeyId
+        - name
+        - description
+    - name:
+        python: delete
+        pythonAsync: a_delete
+        typescript: delete
+      summary: Delete Journey
+      description: Permanently deletes a journey with all of its states and edges.
+        Goldens generated from it are kept in their datasets but no longer belong
+        to a journey. This action cannot be undone.
+      operations:
+      - id: deleteJourney
+        method: DELETE
+        path: /v2/journeys/{journeyId}
+      returns:
+        python: JourneyRef
+        typescript: Promise<JourneyRef>
+        type: JourneyRef
+      body: null
+      parameters:
+      - python: journey_id
+        typescript: journeyId
+        wire: journeyId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the journey.
+        example: <JOURNEY-ID>
+        references: []
+      order:
+        python:
+        - journey_id
+        typescript:
+        - journeyId
+    - name:
+        python: generate_goldens
+        pythonAsync: a_generate_goldens
+        typescript: generateGoldens
+      summary: Generate Journey Goldens
+      description: Generates multi-turn goldens for the chosen paths of a journey
+        and adds them to a multi-turn dataset. Your project's platform model writes
+        one scenario and expected outcome per path from its states' instructions
+        and edge conditions, so this consumes usage; if no platform model is configured,
+        or writing one fails, the scenario is the path's instructions joined in order.
+        Each golden remembers its path, so the journey reports coverage and path
+        results for it.
+      operations:
+      - id: generateJourneyGoldens
+        method: POST
+        path: /v2/journeys/{journeyId}/goldens
+      returns:
+        python: GenerateJourneyGoldensResult
+        typescript: Promise<GenerateJourneyGoldensResult>
+        type: GenerateJourneyGoldensResult
+      body: GenerateJourneyGoldensInput
+      parameters:
+      - python: journey_id
+        typescript: journeyId
+        wire: journeyId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the journey.
+        example: <JOURNEY-ID>
+        references: []
+      - python: dataset_id
+        typescript: datasetId
+        wire: datasetId
+        in: body
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the dataset to add the goldens to. It must be a multi-turn
+          dataset in this project.
+        example: <DATASET-ID>
+        references: []
+      - python: paths
+        typescript: paths
+        wire: paths
+        in: body
+        type:
+          python: List[JourneyPathGoldenCountInput]
+          typescript: JourneyPathGoldenCountInput[]
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The paths to generate goldens for, and how many for each. A
+          path listed twice uses its last count.
+        example: null
+        references:
+        - JourneyPathGoldenCountInput
+      - python: persona_id
+        typescript: personaId
+        wire: personaId
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string | null
+        required: false
+        keyword:
+          python: true
+          typescript: false
+        default: None
+        description: The id of a persona to attach to every golden, so the simulated
+          user is played in its voice and the scenarios are written for it. Send
+          `null` or omit it for no persona.
+        example: <PERSONA-ID>
+        references: []
+      order:
+        python:
+        - journey_id
+        - dataset_id
+        - paths
+        - persona_id
+        typescript:
+        - journeyId
+        - datasetId
+        - paths
+        - personaId
+    - name:
+        python: get_path_results
+        pythonAsync: a_get_path_results
+        typescript: getPathResults
+      summary: Get Journey Path Results
+      description: 'Retrieves how the test cases simulated from a journey''s goldens
+        went: for each test case, the path it was generated for and the path the
+        conversation actually took, plus each metric''s results per path. Use it
+        to find the branches where your LLM app strays from the journey or fails
+        its metrics.'
+      operations:
+      - id: getJourneyPathResults
+        method: GET
+        path: /v2/journeys/{journeyId}/paths
+      returns:
+        python: JourneyPathResults
+        typescript: Promise<JourneyPathResults>
+        type: JourneyPathResults
+      body: null
+      parameters:
+      - python: journey_id
+        typescript: journeyId
+        wire: journeyId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the journey.
+        example: <JOURNEY-ID>
+        references: []
+      - python: start
+        typescript: start
+        wire: start
+        in: query
+        type:
+          python: Optional[str]
+          typescript: string
+        required: false
+        keyword:
+          python: true
+          typescript: false
+        default: None
+        description: Only include test cases last updated at or after this time,
+          in ISO 8601 format. Send it with `end`, or omit both to include every test
+          case.
+        example: '2025-01-01T00:00:00+00:00'
+        references: []
+      - python: end
+        typescript: end
+        wire: end
+        in: query
+        type:
+          python: Optional[str]
+          typescript: string
+        required: false
+        keyword:
+          python: true
+          typescript: false
+        default: None
+        description: Only include test cases last updated at or before this time,
+          in ISO 8601 format. Send it with `start`; it must be later than `start`.
+        example: '2025-01-31T23:59:59+00:00'
+        references: []
+      order:
+        python:
+        - journey_id
+        - start
+        - end
+        typescript:
+        - journeyId
+        - start
+        - end
+  - segments:
+    - edges
+    python:
+      module: python/confident_ai/journeys/edges/operations.py
+      class: EdgesOperations
+    typescript:
+      module: typescript/src/journeys/edges/operations.ts
+      class: EdgesOperations
+    methods:
+    - name:
+        python: create_edge
+        pythonAsync: a_create_edge
+        typescript: createEdge
+      summary: Create Journey Edge
+      description: Adds an edge between two states of a journey and returns its id.
+        A state cannot lead to itself, and only one edge may run from one state to
+        another; a second returns a 409.
+      operations:
+      - id: createJourneyEdge
+        method: POST
+        path: /v2/journeys/{journeyId}/edges
+      returns:
+        python: JourneyEdgeRef
+        typescript: Promise<JourneyEdgeRef>
+        type: JourneyEdgeRef
+      body: CreateJourneyEdgeInput
+      parameters:
+      - python: journey_id
+        typescript: journeyId
+        wire: journeyId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the journey.
+        example: <JOURNEY-ID>
+        references: []
+      - python: from_state_id
+        typescript: fromStateId
+        wire: fromStateId
+        in: body
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the state the edge leaves from.
+        example: <JOURNEY-STATE-ID>
+        references: []
+      - python: to_state_id
+        typescript: toStateId
+        wire: toStateId
+        in: body
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the state the edge leads to. It must differ from `fromStateId`,
+          and both must be in this journey.
+        example: <JOURNEY-STATE-ID>
+        references: []
+      - python: when
+        typescript: when
+        wire: when
+        in: body
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The condition under which the conversation moves along this
+          edge, in plain language. An empty condition keeps the edge out of the journey's
+          paths until it is given one.
+        example: The customer has given an order number and the email on the account,
+          and they match.
+        references: []
+      order:
+        python:
+        - journey_id
+        - from_state_id
+        - to_state_id
+        - when
+        typescript:
+        - journeyId
+        - fromStateId
+        - toStateId
+        - when
+    - name:
+        python: update_edge
+        pythonAsync: a_update_edge
+        typescript: updateEdge
+      summary: Update Journey Edge
+      description: Rewrites an edge's condition or points it at a different state,
+        and returns it. Pointing it at a state another edge from the same state already
+        leads to returns a 409.
+      operations:
+      - id: updateJourneyEdge
+        method: PUT
+        path: /v2/journeys/{journeyId}/edges/{edgeId}
+      returns:
+        python: JourneyEdge
+        typescript: Promise<JourneyEdge>
+        type: JourneyEdge
+      body: UpdateJourneyEdgeInput
+      parameters:
+      - python: journey_id
+        typescript: journeyId
+        wire: journeyId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the journey the edge belongs to.
+        example: <JOURNEY-ID>
+        references: []
+      - python: edge_id
+        typescript: edgeId
+        wire: edgeId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the edge.
+        example: <JOURNEY-EDGE-ID>
+        references: []
+      - python: when
+        typescript: when
+        wire: when
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string
+        required: false
+        keyword:
+          python: true
+          typescript: false
+        default: None
+        description: The condition under which the conversation moves along this
+          edge. Omit it to keep the current condition.
+        example: The customer has given an order number and the email on the account,
+          and they match.
+        references: []
+      - python: to_state_id
+        typescript: toStateId
+        wire: toStateId
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string
+        required: false
+        keyword:
+          python: true
+          typescript: false
+        default: None
+        description: The id of the state the edge should lead to instead, in this
+          journey. Goldens generated for a path through the old edge are kept but
+          no longer belong to any path. Omit it to keep the current target.
+        example: <JOURNEY-STATE-ID>
+        references: []
+      order:
+        python:
+        - journey_id
+        - edge_id
+        - when
+        - to_state_id
+        typescript:
+        - journeyId
+        - edgeId
+        - when
+        - toStateId
+    - name:
+        python: delete_edge
+        pythonAsync: a_delete_edge
+        typescript: deleteEdge
+      summary: Delete Journey Edge
+      description: Permanently deletes an edge, along with every state that could
+        only be reached through it, and returns the ids of the states removed. Goldens
+        generated for a path through the edge or those states are kept but no longer
+        belong to any path.
+      operations:
+      - id: deleteJourneyEdge
+        method: DELETE
+        path: /v2/journeys/{journeyId}/edges/{edgeId}
+      returns:
+        python: DeleteJourneyEdgeResult
+        typescript: Promise<DeleteJourneyEdgeResult>
+        type: DeleteJourneyEdgeResult
+      body: null
+      parameters:
+      - python: journey_id
+        typescript: journeyId
+        wire: journeyId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the journey the edge belongs to.
+        example: <JOURNEY-ID>
+        references: []
+      - python: edge_id
+        typescript: edgeId
+        wire: edgeId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the edge.
+        example: <JOURNEY-EDGE-ID>
+        references: []
+      order:
+        python:
+        - journey_id
+        - edge_id
+        typescript:
+        - journeyId
+        - edgeId
+  - segments:
+    - states
+    python:
+      module: python/confident_ai/journeys/states/operations.py
+      class: StatesOperations
+    typescript:
+      module: typescript/src/journeys/states/operations.ts
+      class: StatesOperations
+    methods:
+    - name:
+        python: create_state
+        pythonAsync: a_create_state
+        typescript: createState
+      summary: Create Journey State
+      description: Adds a state to a journey and returns its id. Send `fromStateId`
+        and `when` to connect it from an existing state in the same call; retrieve
+        the journey to read the edge that creates. State names are unique within
+        a journey; reusing one returns a 409.
+      operations:
+      - id: createJourneyState
+        method: POST
+        path: /v2/journeys/{journeyId}/states
+      returns:
+        python: JourneyStateRef
+        typescript: Promise<JourneyStateRef>
+        type: JourneyStateRef
+      body: CreateJourneyStateInput
+      parameters:
+      - python: journey_id
+        typescript: journeyId
+        wire: journeyId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the journey.
+        example: <JOURNEY-ID>
+        references: []
+      - python: name
+        typescript: name
+        wire: name
+        in: body
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The name of the state, unique within the journey.
+        example: Verify identity
+        references: []
+      - python: instructions
+        typescript: instructions
+        wire: instructions
+        in: body
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: What happens at this step of the conversation. When goldens
+          are generated for a path, the instructions of its states, in order, are
+          what the scenario is written from. May be empty.
+        example: The agent asks for the order number and the email on the account,
+          and checks they match before going further.
+        references: []
+      - python: from_state_id
+        typescript: fromStateId
+        wire: fromStateId
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string
+        required: false
+        keyword:
+          python: true
+          typescript: false
+        default: None
+        description: The id of an existing state in this journey to connect the new
+          state from. An edge from that state to the new one is created alongside
+          it, and `when` is then required. Omit it to add an unconnected state.
+        example: <JOURNEY-STATE-ID>
+        references: []
+      - python: when
+        typescript: when
+        wire: when
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string
+        required: false
+        keyword:
+          python: true
+          typescript: false
+        default: None
+        description: The condition for the edge from `fromStateId`, in plain language.
+          Required with `fromStateId` and ignored without it. An empty condition
+          keeps the edge out of the journey's paths until it is given one.
+        example: The customer asks for their money back on an order.
+        references: []
+      order:
+        python:
+        - journey_id
+        - name
+        - instructions
+        - from_state_id
+        - when
+        typescript:
+        - journeyId
+        - name
+        - instructions
+        - fromStateId
+        - when
+    - name:
+        python: update_state
+        pythonAsync: a_update_state
+        typescript: updateState
+      summary: Update Journey State
+      description: Renames a state or rewrites its instructions, and returns it.
+        State names are unique within a journey; taking another state's name returns
+        a 409.
+      operations:
+      - id: updateJourneyState
+        method: PUT
+        path: /v2/journeys/{journeyId}/states/{stateId}
+      returns:
+        python: JourneyState
+        typescript: Promise<JourneyState>
+        type: JourneyState
+      body: UpdateJourneyStateInput
+      parameters:
+      - python: journey_id
+        typescript: journeyId
+        wire: journeyId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the journey the state belongs to.
+        example: <JOURNEY-ID>
+        references: []
+      - python: state_id
+        typescript: stateId
+        wire: stateId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the state.
+        example: <JOURNEY-STATE-ID>
+        references: []
+      - python: name
+        typescript: name
+        wire: name
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string
+        required: false
+        keyword:
+          python: true
+          typescript: false
+        default: None
+        description: The name of the state, unique within the journey. Omit it to
+          keep the current name.
+        example: Verify identity
+        references: []
+      - python: instructions
+        typescript: instructions
+        wire: instructions
+        in: body
+        type:
+          python: Optional[str]
+          typescript: string
+        required: false
+        keyword:
+          python: true
+          typescript: false
+        default: None
+        description: What happens at this step of the conversation. The text replaces
+          the stored one outright, so send the whole of it. Omit it to keep the current
+          instructions.
+        example: The agent asks for the order number and the email on the account,
+          and checks they match before going further.
+        references: []
+      order:
+        python:
+        - journey_id
+        - state_id
+        - name
+        - instructions
+        typescript:
+        - journeyId
+        - stateId
+        - name
+        - instructions
+    - name:
+        python: delete_state
+        pythonAsync: a_delete_state
+        typescript: deleteState
+      summary: Delete Journey State
+      description: Permanently deletes a state and its edges, along with every state
+        that could only be reached through it, and returns the ids of all the states
+        removed. Goldens generated for a path through any of them are kept but no
+        longer belong to any path. The root state cannot be deleted; trying returns
+        a 400.
+      operations:
+      - id: deleteJourneyState
+        method: DELETE
+        path: /v2/journeys/{journeyId}/states/{stateId}
+      returns:
+        python: DeleteJourneyStateResult
+        typescript: Promise<DeleteJourneyStateResult>
+        type: DeleteJourneyStateResult
+      body: null
+      parameters:
+      - python: journey_id
+        typescript: journeyId
+        wire: journeyId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the journey the state belongs to.
+        example: <JOURNEY-ID>
+        references: []
+      - python: state_id
+        typescript: stateId
+        wire: stateId
+        in: path
+        type:
+          python: str
+          typescript: string
+        required: true
+        keyword:
+          python: false
+          typescript: false
+        default: null
+        description: The id of the state.
+        example: <JOURNEY-STATE-ID>
+        references: []
+      order:
+        python:
+        - journey_id
+        - state_id
+        typescript:
+        - journeyId
+        - stateId
   handle: null
 - name: mcp-servers
   keyKind: project
@@ -33340,7 +34339,8 @@ types:
     references:
     - ClassifierLabel
 - name: ClassifierAutoGenerationConfig
-  description: How many recent traces or threads a generation run samples and classifies.
+  description: How many recent traces, spans or threads a generation run samples
+    and classifies.
   example: null
   python:
     module: confident_ai.classifiers
@@ -33358,14 +34358,14 @@ types:
       python: Optional[int]
       typescript: number
     required: false
-    description: How many traces or threads to sample. Defaults to 200.
+    description: How many traces, spans or threads to sample. Defaults to 200.
     example: 200
     references: []
 - name: ClassifierDataModel
   kind: enum
   description: 'What kind of production item a classifier labels: `TRACE` labels
-    individual traces, `THREAD` labels whole conversations. It is fixed when the
-    classifier is created.'
+    individual traces, `SPAN` labels a span together with the spans under it, `THREAD`
+    labels whole conversations. It is fixed when the classifier is created.'
   python:
     module: confident_ai.classifiers
     name: ClassifierDataModel
@@ -33375,6 +34375,8 @@ types:
   members:
   - name: TRACE
     value: TRACE
+  - name: SPAN
+    value: SPAN
   - name: THREAD
     value: THREAD
   references: []
@@ -34722,8 +35724,8 @@ types:
     example: jane@acme.com
     references: []
 - name: CreateClassifierInput
-  description: A classifier to add to this project, which tags incoming traces or
-    threads with labels. Sending a `preset` seeds the description, the generation
+  description: A classifier to add to this project, which tags incoming traces, spans
+    or threads with labels. Sending a `preset` seeds the description, the generation
     config, and a starting set of labels; any field you send explicitly overrides
     what the preset would have set.
   example: null
@@ -34825,8 +35827,8 @@ types:
       python: Optional[FilterSet]
       typescript: FilterSet | null
     required: false
-    description: Narrows which traces or threads the classifier runs on, so it can
-      watch one route rather than the whole project. Only the groups are stored,
+    description: Narrows which traces, spans or threads the classifier runs on, so
+      it can watch one route rather than the whole project. Only the groups are stored,
       so the set's top-level operator is dropped and the groups are combined by the
       platform. Send `null` to clear the filters and classify everything of this
       data model.
@@ -35888,6 +36890,165 @@ types:
       deep, so every id here must name a policy that extends nothing itself.
     example:
     - <GOVERNANCE-POLICY-ID>
+    references: []
+- name: CreateJourneyEdgeInput
+  description: An edge to add between two states of a journey. Only one edge may
+    run from one state to another; adding a second returns a 409.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: CreateJourneyEdgeInput
+  typescript:
+    module: confident-ai/journeys
+    name: CreateJourneyEdgeInput
+  references: []
+  kind: object
+  fields:
+  - wire: fromStateId
+    python: from_state_id
+    typescript: fromStateId
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the state the edge leaves from.
+    example: <JOURNEY-STATE-ID>
+    references: []
+  - wire: toStateId
+    python: to_state_id
+    typescript: toStateId
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the state the edge leads to. It must differ from `fromStateId`,
+      and both must be in this journey.
+    example: <JOURNEY-STATE-ID>
+    references: []
+  - wire: when
+    python: when
+    typescript: when
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The condition under which the conversation moves along this edge,
+      in plain language. An empty condition keeps the edge out of the journey's paths
+      until it is given one.
+    example: The customer has given an order number and the email on the account,
+      and they match.
+    references: []
+- name: CreateJourneyInput
+  description: A journey to add to this project. It is created with a root `Start`
+    state, which every path through the journey begins at.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: CreateJourneyInput
+  typescript:
+    module: confident-ai/journeys
+    name: CreateJourneyInput
+  references:
+  - JourneyGraphSource
+  kind: object
+  fields:
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The name of the journey, unique within the project.
+    example: Refund request
+    references: []
+  - wire: description
+    python: description
+    typescript: description
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: What the user is trying to get done on this journey. When `graphSource`
+      is `ai`, the draft is written from this and the name, so say how the conversation
+      can end.
+    example: A customer asks for a refund on a recent order. The agent verifies who
+      they are, then either issues the refund or hands the conversation to a human.
+    references: []
+  - wire: graphSource
+    python: graph_source
+    typescript: graphSource
+    type:
+      python: Optional[JourneyGraphSource]
+      typescript: JourneyGraphSource
+    required: false
+    description: Send `ai` to have Confident AI draft the journey's states and edges
+      in the background with your project's platform model. Omit it to start with
+      only the root `Start` state. The draft lands shortly after the response, so
+      retrieve the journey to see it; if drafting fails, the journey keeps only its
+      `Start` state.
+    example: ai
+    references:
+    - JourneyGraphSource
+- name: CreateJourneyStateInput
+  description: A state to add to a journey, optionally connected from an existing
+    state in the same call.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: CreateJourneyStateInput
+  typescript:
+    module: confident-ai/journeys
+    name: CreateJourneyStateInput
+  references: []
+  kind: object
+  fields:
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The name of the state, unique within the journey.
+    example: Verify identity
+    references: []
+  - wire: instructions
+    python: instructions
+    typescript: instructions
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: What happens at this step of the conversation. When goldens are
+      generated for a path, the instructions of its states, in order, are what the
+      scenario is written from. May be empty.
+    example: The agent asks for the order number and the email on the account, and
+      checks they match before going further.
+    references: []
+  - wire: fromStateId
+    python: from_state_id
+    typescript: fromStateId
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: The id of an existing state in this journey to connect the new state
+      from. An edge from that state to the new one is created alongside it, and `when`
+      is then required. Omit it to add an unconnected state.
+    example: <JOURNEY-STATE-ID>
+    references: []
+  - wire: when
+    python: when
+    typescript: when
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: The condition for the edge from `fromStateId`, in plain language.
+      Required with `fromStateId` and ignored without it. An empty condition keeps
+      the edge out of the journey's paths until it is given one.
+    example: The customer asks for their money back on an order.
     references: []
 - name: CreateMcpServerInput
   description: One of your MCP servers to register with the project. An `HTTP` server
@@ -39135,6 +40296,74 @@ types:
     example:
     - <GOVERNANCE-CONTROL-ID>
     references: []
+- name: DeleteJourneyEdgeResult
+  description: The states removed by deleting an edge from a journey.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: DeleteJourneyEdgeResult
+  typescript:
+    module: confident-ai/journeys
+    name: DeleteJourneyEdgeResult
+  references: []
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the edge you deleted.
+    example: <JOURNEY-EDGE-ID>
+    references: []
+  - wire: deletedStateIds
+    python: deleted_state_ids
+    typescript: deletedStateIds
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: The states that could only be reached through this edge, removed
+      with it. `[]` when every state is still reachable.
+    example: []
+    references: []
+- name: DeleteJourneyStateResult
+  description: The states removed by deleting a state from a journey.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: DeleteJourneyStateResult
+  typescript:
+    module: confident-ai/journeys
+    name: DeleteJourneyStateResult
+  references: []
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the state you deleted.
+    example: <JOURNEY-STATE-ID>
+    references: []
+  - wire: deletedStateIds
+    python: deleted_state_ids
+    typescript: deletedStateIds
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: 'Every state removed: the one you deleted, then any state that could
+      only be reached through it.'
+    example:
+    - <JOURNEY-STATE-ID>
+    - <JOURNEY-STATE-ID>
+    references: []
 - name: ErrorResponse
   description: null
   example: null
@@ -41665,6 +42894,77 @@ types:
     required: true
     description: null
     example: null
+    references: []
+- name: GenerateJourneyGoldensInput
+  description: Which of a journey's paths to turn into multi-turn goldens, and where
+    to put them.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: GenerateJourneyGoldensInput
+  typescript:
+    module: confident-ai/journeys
+    name: GenerateJourneyGoldensInput
+  references:
+  - JourneyPathGoldenCountInput
+  kind: object
+  fields:
+  - wire: datasetId
+    python: dataset_id
+    typescript: datasetId
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the dataset to add the goldens to. It must be a multi-turn
+      dataset in this project.
+    example: <DATASET-ID>
+    references: []
+  - wire: personaId
+    python: persona_id
+    typescript: personaId
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: The id of a persona to attach to every golden, so the simulated
+      user is played in its voice and the scenarios are written for it. Send `null`
+      or omit it for no persona.
+    example: <PERSONA-ID>
+    references: []
+  - wire: paths
+    python: paths
+    typescript: paths
+    type:
+      python: List[JourneyPathGoldenCountInput]
+      typescript: JourneyPathGoldenCountInput[]
+    required: true
+    description: The paths to generate goldens for, and how many for each. A path
+      listed twice uses its last count.
+    example: null
+    references:
+    - JourneyPathGoldenCountInput
+- name: GenerateJourneyGoldensResult
+  description: How many goldens were generated from a journey's paths.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: GenerateJourneyGoldensResult
+  typescript:
+    module: confident-ai/journeys
+    name: GenerateJourneyGoldensResult
+  references: []
+  kind: object
+  fields:
+  - wire: goldenCount
+    python: golden_count
+    typescript: goldenCount
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of goldens created.
+    example: 9
     references: []
 - name: GenerationMode
   kind: enum
@@ -45284,6 +46584,828 @@ types:
     required: true
     description: Between 2 and 10 ordered levels, worst first.
     example: null
+    references: []
+- name: Journey
+  description: A map of the ways a conversation with your LLM app can go. States
+    are the steps, edges are the conditions that move the conversation between them,
+    and each route from the root state to an end is a path you can generate multi-turn
+    goldens for, so every branch gets tested.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: Journey
+  typescript:
+    module: confident-ai/journeys
+    name: Journey
+  references:
+  - JourneyState
+  - JourneyEdge
+  - JourneyPath
+  - JourneyPathDataset
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the journey, generated by Confident AI.
+    example: <JOURNEY-ID>
+    references: []
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The name of the journey, unique within the project.
+    example: Refund request
+    references: []
+  - wire: description
+    python: description
+    typescript: description
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: What the user is trying to get done on this journey, or `null` when
+      none was given.
+    example: A customer asks for a refund on a recent order. The agent verifies who
+      they are, then either issues the refund or hands the conversation to a human.
+    references: []
+  - wire: rootStateId
+    python: root_state_id
+    typescript: rootStateId
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: The id of the root `Start` state, which every path begins at. It
+      cannot be deleted.
+    example: <JOURNEY-STATE-ID>
+    references: []
+  - wire: states
+    python: states
+    typescript: states
+    type:
+      python: List[JourneyState]
+      typescript: JourneyState[]
+    required: true
+    description: Every state in the journey, oldest first.
+    example: null
+    references:
+    - JourneyState
+  - wire: edges
+    python: edges
+    typescript: edges
+    type:
+      python: List[JourneyEdge]
+      typescript: JourneyEdge[]
+    required: true
+    description: Every edge in the journey, oldest first.
+    example: null
+    references:
+    - JourneyEdge
+  - wire: paths
+    python: paths
+    typescript: paths
+    type:
+      python: List[JourneyPath]
+      typescript: JourneyPath[]
+    required: true
+    description: Every route from the root state to a state with no further edges,
+      following only edges with a non-empty `when` and never visiting a state twice.
+      At most 50 are listed.
+    example: null
+    references:
+    - JourneyPath
+  - wire: pathsTruncated
+    python: paths_truncated
+    typescript: pathsTruncated
+    type:
+      python: bool
+      typescript: boolean
+    required: true
+    description: '`true` when the journey has more than 50 paths, so `paths` lists
+      only the first 50.'
+    example: false
+    references: []
+  - wire: datasets
+    python: datasets
+    typescript: datasets
+    type:
+      python: List[JourneyPathDataset]
+      typescript: JourneyPathDataset[]
+    required: true
+    description: The datasets holding goldens generated from this journey.
+    example: null
+    references:
+    - JourneyPathDataset
+  - wire: createdAt
+    python: created_at
+    typescript: createdAt
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The time the journey was created, as an ISO 8601 datetime.
+    example: '2025-01-15T10:30:00+00:00'
+    references: []
+  - wire: updatedAt
+    python: updated_at
+    typescript: updatedAt
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The time the journey's name or description was last changed, as
+      an ISO 8601 datetime.
+    example: '2025-01-16T09:12:00+00:00'
+    references: []
+- name: JourneyEdge
+  description: A transition from one state of a journey to another, taken when its
+    condition holds.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: JourneyEdge
+  typescript:
+    module: confident-ai/journeys
+    name: JourneyEdge
+  references: []
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the edge, generated by Confident AI.
+    example: <JOURNEY-EDGE-ID>
+    references: []
+  - wire: fromStateId
+    python: from_state_id
+    typescript: fromStateId
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the state the edge leaves from.
+    example: <JOURNEY-STATE-ID>
+    references: []
+  - wire: toStateId
+    python: to_state_id
+    typescript: toStateId
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the state the edge leads to.
+    example: <JOURNEY-STATE-ID>
+    references: []
+  - wire: when
+    python: when
+    typescript: when
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The condition under which the conversation moves along this edge.
+      Empty when none has been given, which keeps the edge out of the journey's paths.
+    example: The customer has given an order number and the email on the account,
+      and they match.
+    references: []
+  - wire: createdAt
+    python: created_at
+    typescript: createdAt
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The time the edge was created, as an ISO 8601 datetime.
+    example: '2025-01-15T10:30:00+00:00'
+    references: []
+  - wire: updatedAt
+    python: updated_at
+    typescript: updatedAt
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The time the edge was last changed, as an ISO 8601 datetime.
+    example: '2025-01-16T09:12:00+00:00'
+    references: []
+- name: JourneyEdgeRef
+  description: A reference to a journey edge by its id.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: JourneyEdgeRef
+  typescript:
+    module: confident-ai/journeys
+    name: JourneyEdgeRef
+  references: []
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the edge, generated by Confident AI.
+    example: <JOURNEY-EDGE-ID>
+    references: []
+- name: JourneyGraphSource
+  kind: enum
+  description: Where a new journey's first states and edges come from. `ai` has Confident
+    AI draft them from the journey's name and description.
+  python:
+    module: confident_ai.journeys
+    name: JourneyGraphSource
+  typescript:
+    module: confident-ai/journeys
+    name: JourneyGraphSource
+  members:
+  - name: AI
+    value: ai
+  references: []
+- name: JourneyList
+  description: One page of journeys, with the total across all pages.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: JourneyList
+  typescript:
+    module: confident-ai/journeys
+    name: JourneyList
+  references:
+  - JourneySummary
+  kind: object
+  fields:
+  - wire: journeys
+    python: journeys
+    typescript: journeys
+    type:
+      python: List[JourneySummary]
+      typescript: JourneySummary[]
+    required: true
+    description: The journeys for the current page, newest first.
+    example: null
+    references:
+    - JourneySummary
+  - wire: totalJourneys
+    python: total_journeys
+    typescript: totalJourneys
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The total number of journeys in this project.
+    example: 3
+    references: []
+  - wire: page
+    python: page
+    typescript: page
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The page this response covers.
+    example: 1
+    references: []
+  - wire: pageSize
+    python: page_size
+    typescript: pageSize
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of journeys per page.
+    example: 25
+    references: []
+- name: JourneyPath
+  description: One route through a journey, from the root state to a state with no
+    further edges, and the goldens generated for it.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: JourneyPath
+  typescript:
+    module: confident-ai/journeys
+    name: JourneyPath
+  references:
+  - JourneyPathDataset
+  kind: object
+  fields:
+  - wire: stateIds
+    python: state_ids
+    typescript: stateIds
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: The ids of the states along the path, in order, starting with the
+      root state.
+    example:
+    - <JOURNEY-STATE-ID>
+    - <JOURNEY-STATE-ID>
+    - <JOURNEY-STATE-ID>
+    references: []
+  - wire: goldenCount
+    python: golden_count
+    typescript: goldenCount
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of goldens generated for exactly this path.
+    example: 4
+    references: []
+  - wire: datasets
+    python: datasets
+    typescript: datasets
+    type:
+      python: List[JourneyPathDataset]
+      typescript: JourneyPathDataset[]
+    required: true
+    description: The datasets holding this path's goldens.
+    example: null
+    references:
+    - JourneyPathDataset
+- name: JourneyPathDataset
+  description: A dataset holding goldens generated from a journey, and how many of
+    them it holds.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: JourneyPathDataset
+  typescript:
+    module: confident-ai/journeys
+    name: JourneyPathDataset
+  references: []
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the dataset.
+    example: <DATASET-ID>
+    references: []
+  - wire: alias
+    python: alias
+    typescript: alias
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The alias of the dataset, unique within your project.
+    example: refund-conversations
+    references: []
+  - wire: goldenCount
+    python: golden_count
+    typescript: goldenCount
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of the journey's goldens this dataset holds.
+    example: 6
+    references: []
+- name: JourneyPathGoldenCountInput
+  description: A path of a journey and how many goldens to generate for it.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: JourneyPathGoldenCountInput
+  typescript:
+    module: confident-ai/journeys
+    name: JourneyPathGoldenCountInput
+  references: []
+  kind: object
+  fields:
+  - wire: stateIds
+    python: state_ids
+    typescript: stateIds
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: The ids of the path's states, in order from the root state, exactly
+      as the journey lists them under `paths`. A path that is not one of the journey's
+      paths is skipped.
+    example:
+    - <JOURNEY-STATE-ID>
+    - <JOURNEY-STATE-ID>
+    - <JOURNEY-STATE-ID>
+    references: []
+  - wire: count
+    python: count
+    typescript: count
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: How many goldens to generate for the path. They all share one scenario,
+      and differ only in how each simulated conversation plays out.
+    example: 3
+    references: []
+- name: JourneyPathMetricStat
+  description: How one metric did across the test cases generated for one path of
+    a journey.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: JourneyPathMetricStat
+  typescript:
+    module: confident-ai/journeys
+    name: JourneyPathMetricStat
+  references: []
+  kind: object
+  fields:
+  - wire: journeyStateIds
+    python: journey_state_ids
+    typescript: journeyStateIds
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: The path these results are for, as state ids in order from the root
+      state.
+    example:
+    - <JOURNEY-STATE-ID>
+    - <JOURNEY-STATE-ID>
+    - <JOURNEY-STATE-ID>
+    references: []
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The name of the metric.
+    example: Conversation Completeness
+    references: []
+  - wire: avgScore
+    python: avg_score
+    typescript: avgScore
+    type:
+      python: Optional[float]
+      typescript: number | null
+    required: true
+    description: The metric's average score across the path's test cases, or `null`
+      when none was scored.
+    example: 0.82
+    references: []
+  - wire: passed
+    python: passed
+    typescript: passed
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of the path's test cases that passed the metric.
+    example: 7
+    references: []
+  - wire: failed
+    python: failed
+    typescript: failed
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of the path's test cases that failed the metric. Results
+      that errored count as neither passed nor failed.
+    example: 2
+    references: []
+- name: JourneyPathResults
+  description: 'How the test cases generated from a journey''s paths actually went:
+    which path each conversation took, and how each path did on each metric.'
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: JourneyPathResults
+  typescript:
+    module: confident-ai/journeys
+    name: JourneyPathResults
+  references:
+  - JourneyPathTestCase
+  - JourneyPathMetricStat
+  kind: object
+  fields:
+  - wire: testCases
+    python: test_cases
+    typescript: testCases
+    type:
+      python: List[JourneyPathTestCase]
+      typescript: JourneyPathTestCase[]
+    required: true
+    description: Every test case simulated from this journey's goldens in the time
+      window, in no particular order.
+    example: null
+    references:
+    - JourneyPathTestCase
+  - wire: metrics
+    python: metrics
+    typescript: metrics
+    type:
+      python: List[JourneyPathMetricStat]
+      typescript: JourneyPathMetricStat[]
+    required: true
+    description: Metric results for the same test cases, one entry per path and metric.
+      Skipped and flaky metric results are left out.
+    example: null
+    references:
+    - JourneyPathMetricStat
+- name: JourneyPathTestCase
+  description: A test case simulated from one of a journey's goldens, with the path
+    it was meant to follow and the one it took.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: JourneyPathTestCase
+  typescript:
+    module: confident-ai/journeys
+    name: JourneyPathTestCase
+  references:
+  - TestCaseStatus
+  kind: object
+  fields:
+  - wire: testCaseId
+    python: test_case_id
+    typescript: testCaseId
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the test case.
+    example: <TEST-CASE-ID>
+    references: []
+  - wire: testRunId
+    python: test_run_id
+    typescript: testRunId
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the test run the test case belongs to.
+    example: <TEST-RUN-ID>
+    references: []
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The name of the test case.
+    example: Refund request, verified
+    references: []
+  - wire: journeyStateIds
+    python: journey_state_ids
+    typescript: journeyStateIds
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: The path the test case's golden was generated for, as state ids
+      in order from the root state.
+    example:
+    - <JOURNEY-STATE-ID>
+    - <JOURNEY-STATE-ID>
+    - <JOURNEY-STATE-ID>
+    references: []
+  - wire: journeyPath
+    python: journey_path
+    typescript: journeyPath
+    type:
+      python: List[str]
+      typescript: string[]
+    required: true
+    description: The state the simulated conversation was in on each user turn, in
+      order, so a state repeats while the conversation stays in it. Compare it with
+      `journeyStateIds` to see where the conversation left the intended path. `[]`
+      when it was not recorded.
+    example:
+    - <JOURNEY-STATE-ID>
+    - <JOURNEY-STATE-ID>
+    - <JOURNEY-STATE-ID>
+    references: []
+  - wire: status
+    python: status
+    typescript: status
+    type:
+      python: Optional[TestCaseStatus]
+      typescript: TestCaseStatus | null
+    required: true
+    description: Where the test case is in its run, or `null` when it was not recorded.
+    example: COMPLETED
+    references:
+    - TestCaseStatus
+  - wire: success
+    python: success
+    typescript: success
+    type:
+      python: Optional[bool]
+      typescript: boolean | null
+    required: true
+    description: Whether the test case passed its metrics, or `null` when it has
+      no verdict yet.
+    example: true
+    references: []
+  - wire: completionTime
+    python: completion_time
+    typescript: completionTime
+    type:
+      python: Optional[float]
+      typescript: number | null
+    required: true
+    description: How long the test case took to run, in seconds, or `null` when it
+      was not recorded.
+    example: 12.4
+    references: []
+- name: JourneyRef
+  description: A reference to a journey by its id.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: JourneyRef
+  typescript:
+    module: confident-ai/journeys
+    name: JourneyRef
+  references: []
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the journey, generated by Confident AI.
+    example: <JOURNEY-ID>
+    references: []
+- name: JourneyState
+  description: 'One step of a journey: a point the conversation can reach, with instructions
+    for what happens there.'
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: JourneyState
+  typescript:
+    module: confident-ai/journeys
+    name: JourneyState
+  references: []
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the state, generated by Confident AI.
+    example: <JOURNEY-STATE-ID>
+    references: []
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The name of the state, unique within the journey.
+    example: Verify identity
+    references: []
+  - wire: instructions
+    python: instructions
+    typescript: instructions
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: What happens at this step of the conversation, as golden generation
+      reads it.
+    example: The agent asks for the order number and the email on the account, and
+      checks they match before going further.
+    references: []
+  - wire: goldenCount
+    python: golden_count
+    typescript: goldenCount
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of goldens generated for a path through this state.
+    example: 10
+    references: []
+  - wire: createdAt
+    python: created_at
+    typescript: createdAt
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The time the state was created, as an ISO 8601 datetime.
+    example: '2025-01-15T10:30:00+00:00'
+    references: []
+  - wire: updatedAt
+    python: updated_at
+    typescript: updatedAt
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The time the state was last changed, as an ISO 8601 datetime.
+    example: '2025-01-16T09:12:00+00:00'
+    references: []
+- name: JourneyStateRef
+  description: A reference to a journey state by its id.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: JourneyStateRef
+  typescript:
+    module: confident-ai/journeys
+    name: JourneyStateRef
+  references: []
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the state, generated by Confident AI.
+    example: <JOURNEY-STATE-ID>
+    references: []
+- name: JourneySummary
+  description: 'A journey as it appears in a list: enough to recognise it and pick
+    its id. Retrieve one by id to read its states, edges and paths.'
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: JourneySummary
+  typescript:
+    module: confident-ai/journeys
+    name: JourneySummary
+  references: []
+  kind: object
+  fields:
+  - wire: id
+    python: id
+    typescript: id
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The id of the journey, generated by Confident AI.
+    example: <JOURNEY-ID>
+    references: []
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: str
+      typescript: string
+    required: true
+    description: The name of the journey.
+    example: Refund request
+    references: []
+  - wire: stateCount
+    python: state_count
+    typescript: stateCount
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of states in the journey, including its root.
+    example: 4
+    references: []
+  - wire: goldenCount
+    python: golden_count
+    typescript: goldenCount
+    type:
+      python: int
+      typescript: number
+    required: true
+    description: The number of goldens generated from the journey.
+    example: 10
     references: []
 - name: Level
   kind: enum
@@ -50436,6 +52558,18 @@ types:
     description: 'The number or sip: address presented to your agent as the caller.
       Leave it empty to use the default.'
     example: '+14155550199'
+    references: []
+  - wire: mediaEncryption
+    python: media_encryption
+    typescript: mediaEncryption
+    type:
+      python: Optional[Literal["DISABLED", "ALLOWED", "REQUIRED"]]
+      typescript: '"DISABLED" | "ALLOWED" | "REQUIRED"'
+    required: false
+    description: Whether call audio is encrypted with SRTP. `DISABLED` sends plain
+      RTP, `ALLOWED` offers SRTP and falls back to plain RTP, and `REQUIRED` fails
+      calls that can't be encrypted.
+    example: null
     references: []
 - name: PingAIConnectionInput
   description: How to test the connection. Send `{}` to make a single call with a
@@ -56236,8 +58370,9 @@ types:
     trace), optional `metrics` (omit for all of `avg_score`, `error_rate`, `avg_latency`,
     `avg_cost`, `negative_label_rate`), `direction` (`WORSENED` or `ANY`) and `minAffectedCount`,
     the fewest affected traces a detection needs; regressions also take `significantOnly`.
-    Signal spikes take `classifierIds`, `direction` and `minAffectedCount`, counted
-    in threads when `dataModel` is `THREAD`.
+    Signal spikes take `classifierIds` or `classifierCollectionId`, `direction` and
+    `minAffectedCount`, counted in spans when `dataModel` is `SPAN` and in threads
+    when `dataModel` is `THREAD`.
   example:
     direction: WORSENED
     significantOnly: true
@@ -56580,10 +58715,11 @@ types:
     value: NEUTRAL
   references: []
 - name: SignalSpikeDetectionSettings
-  description: Which classifier label spikes notify. `classifierIds` are the classifiers
-    to watch, `direction` decides whether only worsened counts count, and `minAffectedCount`
-    is the fewest affected traces a detection needs, counted in threads when `dataModel`
-    is `THREAD`.
+  description: Which classifier label spikes notify. `classifierIds` or `classifierCollectionId`
+    pick the classifiers to watch, `direction` decides whether only worsened counts
+    count, and `minAffectedCount` is the fewest affected traces a detection needs,
+    counted in spans when `dataModel` is `SPAN` and in threads when `dataModel` is
+    `THREAD`.
   example: null
   python:
     module: confident_ai.scheduled_alerts
@@ -56602,7 +58738,19 @@ types:
       typescript: string[]
     required: true
     description: The ids of the classifiers whose label counts this alert watches
-      for a spike.
+      for a spike. Leave empty when `classifierCollectionId` is set.
+    example: null
+    references: []
+  - wire: classifierCollectionId
+    python: classifier_collection_id
+    typescript: classifierCollectionId
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: A classifier collection to watch instead of `classifierIds`. The
+      alert follows the collection's current classifiers, so editing the collection
+      changes what it watches.
     example: null
     references: []
   - wire: direction
@@ -56624,7 +58772,8 @@ types:
       typescript: number
     required: true
     description: The fewest affected traces a spike needs before the alert notifies,
-      counted in threads when `dataModel` is `THREAD`.
+      counted in spans when `dataModel` is `SPAN` and in threads when `dataModel`
+      is `THREAD`.
     example: null
     references: []
 - name: SingleTurnGolden
@@ -57166,6 +59315,18 @@ types:
     example: null
     references:
     - VoiceHeader
+  - wire: mediaEncryption
+    python: media_encryption
+    typescript: mediaEncryption
+    type:
+      python: Optional[Literal["DISABLED", "ALLOWED", "REQUIRED"]]
+      typescript: '"DISABLED" | "ALLOWED" | "REQUIRED"'
+    required: false
+    description: Whether call audio is encrypted with SRTP. `DISABLED` sends plain
+      RTP, `ALLOWED` offers SRTP and falls back to plain RTP, and `REQUIRED` fails
+      calls that can't be encrypted.
+    example: null
+    references: []
 - name: SnowflakeExportDestinationConfigInput
   description: How Confident AI signs in to Snowflake with key-pair authentication,
     and where it creates the export tables.
@@ -57475,8 +59636,8 @@ types:
     example: '***************'
     references: []
 - name: Span
-  description: A span with its full input and output, evaluation fields, results
-    and annotations.
+  description: A span with its full input and output, evaluation fields, classifier
+    labels, results and annotations.
   example: null
   python:
     module: confident_ai.common
@@ -57488,6 +59649,7 @@ types:
   - SpanType
   - TraceSpanStatus
   - ToolCall
+  - Classification
   - MetricData
   - AnnotationSummary
   kind: object
@@ -57903,6 +60065,21 @@ types:
     example: null
     references:
     - ToolCall
+  - wire: labels
+    python: labels
+    typescript: labels
+    type:
+      python: Dict[str, Classification]
+      typescript: Record<string, Classification>
+    required: true
+    description: The labels your project's classifiers assigned to the span, keyed
+      by classifier name.
+    example:
+      tool outcome:
+        label: succeeded
+        reason: The tool returned the requested rows without error.
+    references:
+    - Classification
   - wire: metricsData
     python: metrics_data
     typescript: metricsData
@@ -58995,6 +61172,29 @@ types:
     value: accepted
   - name: ALREADY_RECEIVED
     value: already_received
+  references: []
+- name: TestCaseStatus
+  kind: enum
+  description: 'Where a test case is in its run: `GENERATING` its output, `EVALUATING`
+    its metrics, `COMPLETED`, or `ERRORED`. `WAITING` means an asynchronous result
+    has not arrived yet.'
+  python:
+    module: confident_ai.journeys
+    name: TestCaseStatus
+  typescript:
+    module: confident-ai/journeys
+    name: TestCaseStatus
+  members:
+  - name: GENERATING
+    value: GENERATING
+  - name: EVALUATING
+    value: EVALUATING
+  - name: ERRORED
+    value: ERRORED
+  - name: COMPLETED
+    value: COMPLETED
+  - name: WAITING
+    value: WAITING
   references: []
 - name: TestCaseTrace
   description: The trace a component-level test case was formed from, without its
@@ -63789,8 +65989,8 @@ types:
       python: Optional[FilterSet]
       typescript: FilterSet | null
     required: false
-    description: Narrows which traces or threads the classifier runs on, so it can
-      watch one route rather than the whole project. Only the groups are stored,
+    description: Narrows which traces, spans or threads the classifier runs on, so
+      it can watch one route rather than the whole project. Only the groups are stored,
       so the set's top-level operator is dropped and the groups are combined by the
       platform. Send `null` to clear the filters and classify everything of this
       data model.
@@ -64757,6 +66957,118 @@ types:
       - Never disable a governance control to make a build pass.
 
       '
+    references: []
+- name: UpdateJourneyEdgeInput
+  description: The fields of the edge to change. Send at least one; whatever you
+    omit is left as it was. The state an edge leaves from cannot be changed; delete
+    it and add a new one instead.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: UpdateJourneyEdgeInput
+  typescript:
+    module: confident-ai/journeys
+    name: UpdateJourneyEdgeInput
+  references: []
+  kind: object
+  fields:
+  - wire: when
+    python: when
+    typescript: when
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: The condition under which the conversation moves along this edge.
+      Omit it to keep the current condition.
+    example: The customer has given an order number and the email on the account,
+      and they match.
+    references: []
+  - wire: toStateId
+    python: to_state_id
+    typescript: toStateId
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: The id of the state the edge should lead to instead, in this journey.
+      Goldens generated for a path through the old edge are kept but no longer belong
+      to any path. Omit it to keep the current target.
+    example: <JOURNEY-STATE-ID>
+    references: []
+- name: UpdateJourneyInput
+  description: The fields of the journey to change. Send at least one; whatever you
+    omit is left as it was. Its states and edges are changed through their own endpoints.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: UpdateJourneyInput
+  typescript:
+    module: confident-ai/journeys
+    name: UpdateJourneyInput
+  references: []
+  kind: object
+  fields:
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: The name of the journey, unique within the project. Omit it to keep
+      the current name.
+    example: Refund request
+    references: []
+  - wire: description
+    python: description
+    typescript: description
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: What the user is trying to get done on this journey. Send `null`
+      to clear it, or omit it to keep the current one.
+    example: A customer asks for a refund on a recent order. The agent verifies who
+      they are, then either issues the refund or hands the conversation to a human.
+    references: []
+- name: UpdateJourneyStateInput
+  description: The fields of the state to change. Send at least one; whatever you
+    omit is left as it was. Goldens already generated keep the scenario they were
+    written with.
+  example: null
+  python:
+    module: confident_ai.journeys
+    name: UpdateJourneyStateInput
+  typescript:
+    module: confident-ai/journeys
+    name: UpdateJourneyStateInput
+  references: []
+  kind: object
+  fields:
+  - wire: name
+    python: name
+    typescript: name
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: The name of the state, unique within the journey. Omit it to keep
+      the current name.
+    example: Verify identity
+    references: []
+  - wire: instructions
+    python: instructions
+    typescript: instructions
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: What happens at this step of the conversation. The text replaces
+      the stored one outright, so send the whole of it. Omit it to keep the current
+      instructions.
+    example: The agent asks for the order number and the email on the account, and
+      checks they match before going further.
     references: []
 - name: UpdateMcpServerInput
   description: The fields of the MCP server to change. Send at least one; anything
