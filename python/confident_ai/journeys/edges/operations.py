@@ -101,9 +101,10 @@ class EdgesOperations:
             when: The condition under which the conversation moves along this
                 edge. Omit it to keep the current condition.
             to_state_id: The id of the state the edge should lead to instead, in
-                this journey. Goldens generated for a path through the old edge
-                are kept but no longer belong to any path. Omit it to keep the
-                current target.
+                this journey. It cannot be the state the edge leaves from.
+                Goldens generated for a path through the old edge are kept but
+                no longer belong to any path. Omit it to keep the current
+                target.
         """
         return self._api.request(
             HttpMethods.PUT,
@@ -134,9 +135,10 @@ class EdgesOperations:
             when: The condition under which the conversation moves along this
                 edge. Omit it to keep the current condition.
             to_state_id: The id of the state the edge should lead to instead, in
-                this journey. Goldens generated for a path through the old edge
-                are kept but no longer belong to any path. Omit it to keep the
-                current target.
+                this journey. It cannot be the state the edge leaves from.
+                Goldens generated for a path through the old edge are kept but
+                no longer belong to any path. Omit it to keep the current
+                target.
         """
         return await self._api.a_request(
             HttpMethods.PUT,

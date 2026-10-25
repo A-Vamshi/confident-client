@@ -141,8 +141,9 @@ export class JourneysOperations {
    * @param journeyId The id of the journey.
    * @param datasetId The id of the dataset to add the goldens to. It must be a
    *   multi-turn dataset in this project.
-   * @param paths The paths to generate goldens for, and how many for each. A
-   *   path listed twice uses its last count.
+   * @param paths The paths to generate goldens for, and how many for each. At
+   *   most 50, the most paths a journey lists. A path listed twice uses its
+   *   last count.
    * @param personaId The id of a persona to attach to every golden, so the
    *   simulated user is played in its voice and the scenarios are written for
    *   it. Send `null` or omit it for no persona.

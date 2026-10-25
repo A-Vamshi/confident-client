@@ -11850,8 +11850,9 @@ resources:
           python: false
           typescript: false
         default: null
-        description: The paths to generate goldens for, and how many for each. A
-          path listed twice uses its last count.
+        description: The paths to generate goldens for, and how many for each. At
+          most 50, the most paths a journey lists. A path listed twice uses its last
+          count.
         example: null
         references:
         - JourneyPathGoldenCountInput
@@ -12140,8 +12141,9 @@ resources:
           typescript: false
         default: None
         description: The id of the state the edge should lead to instead, in this
-          journey. Goldens generated for a path through the old edge are kept but
-          no longer belong to any path. Omit it to keep the current target.
+          journey. It cannot be the state the edge leaves from. Goldens generated
+          for a path through the old edge are kept but no longer belong to any path.
+          Omit it to keep the current target.
         example: <JOURNEY-STATE-ID>
         references: []
       order:
@@ -42938,8 +42940,8 @@ types:
       python: List[JourneyPathGoldenCountInput]
       typescript: JourneyPathGoldenCountInput[]
     required: true
-    description: The paths to generate goldens for, and how many for each. A path
-      listed twice uses its last count.
+    description: The paths to generate goldens for, and how many for each. At most
+      50, the most paths a journey lists. A path listed twice uses its last count.
     example: null
     references:
     - JourneyPathGoldenCountInput
@@ -47011,8 +47013,9 @@ types:
       python: int
       typescript: number
     required: true
-    description: How many goldens to generate for the path. They all share one scenario,
-      and differ only in how each simulated conversation plays out.
+    description: How many goldens to generate for the path, at most 100. They all
+      share one scenario, and differ only in how each simulated conversation plays
+      out.
     example: 3
     references: []
 - name: JourneyPathMetricStat
@@ -66981,8 +66984,9 @@ types:
       typescript: string
     required: false
     description: The id of the state the edge should lead to instead, in this journey.
-      Goldens generated for a path through the old edge are kept but no longer belong
-      to any path. Omit it to keep the current target.
+      It cannot be the state the edge leaves from. Goldens generated for a path through
+      the old edge are kept but no longer belong to any path. Omit it to keep the
+      current target.
     example: <JOURNEY-STATE-ID>
     references: []
 - name: UpdateJourneyInput

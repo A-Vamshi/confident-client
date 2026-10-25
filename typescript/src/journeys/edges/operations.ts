@@ -49,8 +49,9 @@ export class EdgesOperations extends JourneysOperations {
    * @param when The condition under which the conversation moves along this
    *   edge. Omit it to keep the current condition.
    * @param toStateId The id of the state the edge should lead to instead, in
-   *   this journey. Goldens generated for a path through the old edge are kept
-   *   but no longer belong to any path. Omit it to keep the current target.
+   *   this journey. It cannot be the state the edge leaves from. Goldens
+   *   generated for a path through the old edge are kept but no longer belong
+   *   to any path. Omit it to keep the current target.
    */
   async updateEdge(
     journeyId: string,

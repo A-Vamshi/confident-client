@@ -294,8 +294,9 @@ class JourneysOperations:
             journey_id: The id of the journey.
             dataset_id: The id of the dataset to add the goldens to. It must be
                 a multi-turn dataset in this project.
-            paths: The paths to generate goldens for, and how many for each. A
-                path listed twice uses its last count.
+            paths: The paths to generate goldens for, and how many for each. At
+                most 50, the most paths a journey lists. A path listed twice
+                uses its last count.
             persona_id: The id of a persona to attach to every golden, so the
                 simulated user is played in its voice and the scenarios are
                 written for it. Send `null` or omit it for no persona.
@@ -335,8 +336,9 @@ class JourneysOperations:
             journey_id: The id of the journey.
             dataset_id: The id of the dataset to add the goldens to. It must be
                 a multi-turn dataset in this project.
-            paths: The paths to generate goldens for, and how many for each. A
-                path listed twice uses its last count.
+            paths: The paths to generate goldens for, and how many for each. At
+                most 50, the most paths a journey lists. A path listed twice
+                uses its last count.
             persona_id: The id of a persona to attach to every golden, so the
                 simulated user is played in its voice and the scenarios are
                 written for it. Send `null` or omit it for no persona.
