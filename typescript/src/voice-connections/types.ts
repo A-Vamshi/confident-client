@@ -21,6 +21,7 @@ export interface PhoneVoiceConfig {
   trunkUri: string;
   trunkCredentials: SipCredentials | null;
   callerId: string;
+  mediaEncryption?: "DISABLED" | "ALLOWED" | "REQUIRED";
 }
 
 export interface VoiceHeader {
@@ -35,6 +36,7 @@ export interface SipVoiceConfig {
   credentials: SipCredentials | null;
   callerId: string;
   headers: VoiceHeader[];
+  mediaEncryption?: "DISABLED" | "ALLOWED" | "REQUIRED";
 }
 
 export interface WebRTCVoiceConfigLivekit {

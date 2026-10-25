@@ -14,6 +14,7 @@ from confident_ai.types import ConfidentBaseModel
 
 class ClassifierDataModel(Enum):
     TRACE = "TRACE"
+    SPAN = "SPAN"
     THREAD = "THREAD"
 
 

@@ -88,6 +88,10 @@ class RegressionDetectionSettings(ConfidentBaseModel):
 
 class SignalSpikeDetectionSettings(ConfidentBaseModel):
     classifier_ids: List[str] = Field(alias="classifierIds")
+    classifier_collection_id: Optional[str] = Field(
+        default=None,
+        alias="classifierCollectionId",
+    )
     direction: Literal["WORSENED", "ANY"]
     min_affected_count: int = Field(alias="minAffectedCount")
 

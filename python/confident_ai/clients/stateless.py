@@ -23,6 +23,7 @@ if TYPE_CHECKING:
         ForwardingConnectorsClient,
     )
     from confident_ai.governance.client import GovernanceClient
+    from confident_ai.journeys.client import JourneysClient
     from confident_ai.mcp_servers.client import McpServersClient
     from confident_ai.metric_collections.client import MetricCollectionsClient
     from confident_ai.metrics.client import MetricsClient
@@ -133,6 +134,12 @@ class StatelessClients:
         from confident_ai.governance.client import GovernanceClient
 
         return GovernanceClient(self._api(ApiKeyKind.PROJECT))
+
+    @property
+    def journeys(self) -> "JourneysClient":
+        from confident_ai.journeys.client import JourneysClient
+
+        return JourneysClient(self._api(ApiKeyKind.PROJECT))
 
     @property
     def mcp_servers(self) -> "McpServersClient":

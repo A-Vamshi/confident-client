@@ -34,7 +34,6 @@ class LabelsOperations:
         also how you read the results of a generation run — generated
         suggestions arrive with status `RECOMMENDED`. Each label is returned as
         a summary row; retrieve one by id for its description and polarity.
-        Requires the Starter plan or above.
 
         Args:
             classifier_id: The id of the classifier.
@@ -63,7 +62,6 @@ class LabelsOperations:
         also how you read the results of a generation run — generated
         suggestions arrive with status `RECOMMENDED`. Each label is returned as
         a summary row; retrieve one by id for its description and polarity.
-        Requires the Starter plan or above.
 
         Args:
             classifier_id: The id of the classifier.
@@ -94,8 +92,7 @@ class LabelsOperations:
         Adds a label to a classifier and returns its id. The `description` is
         what the classifying model matches against, so write it as a clear
         statement of when the label applies rather than a restatement of the
-        name. Label names are unique within a classifier. Requires the Starter
-        plan or above.
+        name. Label names are unique within a classifier.
 
         Args:
             classifier_id: The id of the classifier.
@@ -136,8 +133,7 @@ class LabelsOperations:
         Adds a label to a classifier and returns its id. The `description` is
         what the classifying model matches against, so write it as a clear
         statement of when the label applies rather than a restatement of the
-        name. Label names are unique within a classifier. Requires the Starter
-        plan or above.
+        name. Label names are unique within a classifier.
 
         Args:
             classifier_id: The id of the classifier.
@@ -168,7 +164,6 @@ class LabelsOperations:
 
         Retrieves a single label on a classifier, with the description the
         classifying model matches against and the polarity trend reporting uses.
-        Requires the Starter plan or above.
 
         Args:
             classifier_id: The id of the classifier the label belongs to.
@@ -188,7 +183,6 @@ class LabelsOperations:
 
         Retrieves a single label on a classifier, with the description the
         classifying model matches against and the polarity trend reporting uses.
-        Requires the Starter plan or above.
 
         Args:
             classifier_id: The id of the classifier the label belongs to.
@@ -216,8 +210,7 @@ class LabelsOperations:
 
         Updates a label on a classifier and returns it. Only the fields you send
         are changed. Promoting a generated suggestion is an update to status
-        `ACTIVE`, which also enables the label. Requires the Starter plan or
-        above.
+        `ACTIVE`, which also enables the label.
 
         Args:
             classifier_id: The id of the classifier the label belongs to.
@@ -257,8 +250,7 @@ class LabelsOperations:
 
         Updates a label on a classifier and returns it. Only the fields you send
         are changed. Promoting a generated suggestion is an update to status
-        `ACTIVE`, which also enables the label. Requires the Starter plan or
-        above.
+        `ACTIVE`, which also enables the label.
 
         Args:
             classifier_id: The id of the classifier the label belongs to.
@@ -290,7 +282,7 @@ class LabelsOperations:
 
         Permanently deletes a label from a classifier and returns its id.
         Classifications already applied with it are not removed. This action
-        cannot be undone. Requires the Starter plan or above.
+        cannot be undone.
 
         Args:
             classifier_id: The id of the classifier the label belongs to.
@@ -310,7 +302,7 @@ class LabelsOperations:
 
         Permanently deletes a label from a classifier and returns its id.
         Classifications already applied with it are not removed. This action
-        cannot be undone. Requires the Starter plan or above.
+        cannot be undone.
 
         Args:
             classifier_id: The id of the classifier the label belongs to.

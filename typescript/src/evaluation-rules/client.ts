@@ -20,7 +20,7 @@ export class EvaluationRulesClient {
    * List Evaluation Rules
    *
    * Lists the evaluation rules in your Confident AI project one page at a time,
-   * newest first, as summary rows. Requires the Starter plan or above.
+   * newest first, as summary rows.
    *
    * @param page The page to return. Defaults to 1.
    * @param pageSize The number of results per page, at most 100. Defaults to
@@ -49,7 +49,7 @@ export class EvaluationRulesClient {
    * Running metrics consumes LLM usage. The collection's turn type must match
    * the rule — `THREAD` rules need a multi-turn collection, `TRACE` and `SPAN`
    * rules a single-turn one — and only one enabled `THREAD` rule may target a
-   * given collection. Requires the Starter plan or above.
+   * given collection.
    *
    * @param name A name for the rule, unique within the project.
    * @param metricCollectionId The id of the metric collection to run. It must

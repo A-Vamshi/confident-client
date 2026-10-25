@@ -825,6 +825,7 @@ export interface Span {
   context: string[] | null;
   toolsCalled: ToolCall[] | null;
   expectedTools: ToolCall[] | null;
+  labels: Record<string, Classification>;
   metricsData: MetricData[];
   annotations: AnnotationSummary[];
 }

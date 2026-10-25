@@ -21,8 +21,7 @@ export class LabelsOperations extends ClassifiersOperations {
    * Lists a classifier's labels one page at a time, ordered by name. This is
    * also how you read the results of a generation run — generated suggestions
    * arrive with status `RECOMMENDED`. Each label is returned as a summary row;
-   * retrieve one by id for its description and polarity. Requires the Starter
-   * plan or above.
+   * retrieve one by id for its description and polarity.
    *
    * @param classifierId The id of the classifier.
    * @param page The page to return. Defaults to 1.
@@ -47,7 +46,7 @@ export class LabelsOperations extends ClassifiersOperations {
    * Adds a label to a classifier and returns its id. The `description` is what
    * the classifying model matches against, so write it as a clear statement of
    * when the label applies rather than a restatement of the name. Label names
-   * are unique within a classifier. Requires the Starter plan or above.
+   * are unique within a classifier.
    *
    * @param classifierId The id of the classifier.
    * @param name The name of the label, unique within the classifier.
@@ -83,7 +82,6 @@ export class LabelsOperations extends ClassifiersOperations {
    *
    * Retrieves a single label on a classifier, with the description the
    * classifying model matches against and the polarity trend reporting uses.
-   * Requires the Starter plan or above.
    *
    * @param classifierId The id of the classifier the label belongs to.
    * @param labelId The id of the label.
@@ -104,7 +102,7 @@ export class LabelsOperations extends ClassifiersOperations {
    *
    * Updates a label on a classifier and returns it. Only the fields you send
    * are changed. Promoting a generated suggestion is an update to status
-   * `ACTIVE`, which also enables the label. Requires the Starter plan or above.
+   * `ACTIVE`, which also enables the label.
    *
    * @param classifierId The id of the classifier the label belongs to.
    * @param labelId The id of the label.
@@ -140,7 +138,7 @@ export class LabelsOperations extends ClassifiersOperations {
    *
    * Permanently deletes a label from a classifier and returns its id.
    * Classifications already applied with it are not removed. This action cannot
-   * be undone. Requires the Starter plan or above.
+   * be undone.
    *
    * @param classifierId The id of the classifier the label belongs to.
    * @param labelId The id of the label.

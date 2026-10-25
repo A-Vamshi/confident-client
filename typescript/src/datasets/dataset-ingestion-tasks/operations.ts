@@ -18,7 +18,7 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
    * List Dataset Ingestion Tasks
    *
    * Lists the ingestion tasks on the dataset as summary rows. Retrieve one by
-   * id for its full configuration. Requires the Starter plan or above.
+   * id for its full configuration.
    *
    * @param datasetId The unique id of the dataset.
    * @param dataModel Only return tasks harvesting this kind of item. Omit it to
@@ -41,8 +41,7 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
    * Creates a standing rule that harvests matching production traces, spans or
    * threads into the dataset as goldens, starting immediately unless `enabled`
    * is `false`, and returns its id. `dataModel` must match the dataset:
-   * `THREAD` for multi-turn, `TRACE` or `SPAN` for single-turn. Requires the
-   * Starter plan or above.
+   * `THREAD` for multi-turn, `TRACE` or `SPAN` for single-turn.
    *
    * @param datasetId The unique id of the dataset.
    * @param name A name for the task, unique within the dataset.

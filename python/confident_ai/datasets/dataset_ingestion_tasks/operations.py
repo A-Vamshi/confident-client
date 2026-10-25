@@ -29,7 +29,7 @@ class DatasetIngestionTasksOperations:
         """List Dataset Ingestion Tasks
 
         Lists the ingestion tasks on the dataset as summary rows. Retrieve one
-        by id for its full configuration. Requires the Starter plan or above.
+        by id for its full configuration.
 
         Args:
             dataset_id: The unique id of the dataset.
@@ -53,7 +53,7 @@ class DatasetIngestionTasksOperations:
         """List Dataset Ingestion Tasks
 
         Lists the ingestion tasks on the dataset as summary rows. Retrieve one
-        by id for its full configuration. Requires the Starter plan or above.
+        by id for its full configuration.
 
         Args:
             dataset_id: The unique id of the dataset.
@@ -95,7 +95,6 @@ class DatasetIngestionTasksOperations:
         or threads into the dataset as goldens, starting immediately unless
         `enabled` is `false`, and returns its id. `dataModel` must match the
         dataset: `THREAD` for multi-turn, `TRACE` or `SPAN` for single-turn.
-        Requires the Starter plan or above.
 
         Args:
             dataset_id: The unique id of the dataset.
@@ -185,7 +184,6 @@ class DatasetIngestionTasksOperations:
         or threads into the dataset as goldens, starting immediately unless
         `enabled` is `false`, and returns its id. `dataModel` must match the
         dataset: `THREAD` for multi-turn, `TRACE` or `SPAN` for single-turn.
-        Requires the Starter plan or above.
 
         Args:
             dataset_id: The unique id of the dataset.

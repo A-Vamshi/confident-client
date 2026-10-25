@@ -32,7 +32,7 @@ class EvaluationRulesClient:
         """List Evaluation Rules
 
         Lists the evaluation rules in your Confident AI project one page at a
-        time, newest first, as summary rows. Requires the Starter plan or above.
+        time, newest first, as summary rows.
 
         Args:
             page: The page to return. Defaults to 1.
@@ -60,7 +60,7 @@ class EvaluationRulesClient:
         """List Evaluation Rules
 
         Lists the evaluation rules in your Confident AI project one page at a
-        time, newest first, as summary rows. Requires the Starter plan or above.
+        time, newest first, as summary rows.
 
         Args:
             page: The page to return. Defaults to 1.
@@ -99,7 +99,7 @@ class EvaluationRulesClient:
         Running metrics consumes LLM usage. The collection's turn type must
         match the rule — `THREAD` rules need a multi-turn collection, `TRACE`
         and `SPAN` rules a single-turn one — and only one enabled `THREAD` rule
-        may target a given collection. Requires the Starter plan or above.
+        may target a given collection.
 
         Args:
             name: A name for the rule, unique within the project.
@@ -167,7 +167,7 @@ class EvaluationRulesClient:
         Running metrics consumes LLM usage. The collection's turn type must
         match the rule — `THREAD` rules need a multi-turn collection, `TRACE`
         and `SPAN` rules a single-turn one — and only one enabled `THREAD` rule
-        may target a given collection. Requires the Starter plan or above.
+        may target a given collection.
 
         Args:
             name: A name for the rule, unique within the project.
