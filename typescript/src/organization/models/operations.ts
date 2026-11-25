@@ -18,9 +18,7 @@ export class ModelsOperations extends MembersOperations {
    * project models endpoint. Reading never creates configuration, so this
    * answers with `null` until the organization sets one.
    *
-   * @param type Which of the organization's models to read. The organization
-   *   has no evaluation model of its own; that one is always configured per
-   *   project.
+   * @param type Which of the organization's models to read.
    */
   async getModel(type: "PLATFORM" | "SIMULATION"): Promise<Model | null> {
     return this.api.sendRequest<Model | null>(

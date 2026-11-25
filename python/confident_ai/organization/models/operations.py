@@ -26,9 +26,7 @@ class ModelsOperations:
         so this answers with `null` until the organization sets one.
 
         Args:
-            type: Which of the organization's models to read. The organization
-                has no evaluation model of its own; that one is always
-                configured per project.
+            type: Which of the organization's models to read.
         """
         return self._api.request(
             HttpMethods.GET,
@@ -49,9 +47,7 @@ class ModelsOperations:
         so this answers with `null` until the organization sets one.
 
         Args:
-            type: Which of the organization's models to read. The organization
-                has no evaluation model of its own; that one is always
-                configured per project.
+            type: Which of the organization's models to read.
         """
         return await self._api.a_request(
             HttpMethods.GET,

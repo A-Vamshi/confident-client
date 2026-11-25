@@ -226,6 +226,7 @@ export enum WidgetDimension {
   TRACE_NAME = "trace_name",
   SPAN_NAME = "span_name",
   MODEL = "model",
+  PROVIDER = "provider",
   TYPE = "type",
   THREAD_ID = "thread_id",
   TEST_CASE_ID = "test_case_id",
@@ -466,6 +467,7 @@ export interface FilterSetGroupFilter {
     | "Test File"
     | "Status"
     | "AI connection"
+    | "Voice connection"
     | "Official"
     | "Evals Mode"
     | "Tests Passed"
@@ -821,6 +823,7 @@ export interface ToolCall {
   inputParameters?: Record<string, unknown> | null;
   output?: unknown;
   reasoning?: string;
+  turn?: number | null;
 }
 
 export interface Span {

@@ -400,4 +400,5 @@ class TraceList(ConfidentBaseModel):
 
 
 class TraceRef(ConfidentBaseModel):
-    uuid: str
+    uuid: Optional[str]
+    message: Optional[str] = None

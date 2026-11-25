@@ -15,12 +15,6 @@ import {
   UserReference,
 } from "../common/types";
 
-export enum InterruptionFrequency {
-  RARE = "RARE",
-  NORMAL = "NORMAL",
-  FREQUENT = "FREQUENT",
-}
-
 export enum InterruptionOverlap {
   YIELD = "YIELD",
   ADAPTIVE = "ADAPTIVE",
@@ -51,7 +45,8 @@ export interface CreateDatasetIngestionTaskInput {
   userDescription?: string | null;
   personaId?: string | null;
   journeyId?: string | null;
-  interruptionFrequency?: InterruptionFrequency | null;
+  interruptionMinTurns?: number | null;
+  interruptionMaxTurns?: number | null;
   interruptionOverlap?: InterruptionOverlap | null;
   tags?: string[];
   metadata?: Record<string, unknown> | null;
@@ -95,6 +90,7 @@ export interface SingleTurnGolden {
 export interface MultiTurnGolden {
   scenario: string;
   expectedOutcome?: string | null;
+  expectedTools?: ToolCall[] | null;
   userDescription?: string | null;
   turns?: Turn[] | null;
   context?: string[] | null;
@@ -150,7 +146,8 @@ export interface DatasetIngestionTask {
   userDescription: string | null;
   personaId: string | null;
   journeyId: string | null;
-  interruptionFrequency: InterruptionFrequency | null;
+  interruptionMinTurns: number | null;
+  interruptionMaxTurns: number | null;
   interruptionOverlap: InterruptionOverlap | null;
   tags: string[];
   metadata: Record<string, unknown> | null;
@@ -261,7 +258,8 @@ export interface UpdateDatasetIngestionTaskInput {
   userDescription?: string | null;
   personaId?: string | null;
   journeyId?: string | null;
-  interruptionFrequency?: InterruptionFrequency | null;
+  interruptionMinTurns?: number | null;
+  interruptionMaxTurns?: number | null;
   interruptionOverlap?: InterruptionOverlap | null;
   tags?: string[];
   metadata?: Record<string, unknown> | null;

@@ -16,7 +16,6 @@ import {
   DatasetIngestionTask,
   DatasetIngestionTaskList,
   DatasetIngestionTaskRef,
-  InterruptionFrequency,
   InterruptionOverlap,
 } from "../types";
 
@@ -102,13 +101,17 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
    *   it. Ignored for single-turn datasets.
    * @param journeyId The id of a journey to assign every multi-turn golden to.
    *   Send `null` to clear it. Ignored for single-turn datasets.
-   * @param interruptionFrequency How often the simulated user interrupts on
-   *   every multi-turn golden. Send `null` to turn interruptions off. Ignored
-   *   for single-turn datasets.
+   * @param interruptionMinTurns On every multi-turn golden, the simulated user
+   *   interrupts once every `interruptionMinTurns` to `interruptionMaxTurns`
+   *   agent turns, picked at random each time. Send both together, equal for a
+   *   fixed cadence, or both `null` to turn interruptions off. Ignored for
+   *   single-turn datasets.
+   * @param interruptionMaxTurns The most agent turns between interruptions. See
+   *   `interruptionMinTurns`.
    * @param interruptionOverlap What the simulated user does when both sides
    *   talk at once on every multi-turn golden. Only used with
-   *   `interruptionFrequency`, and `ADAPTIVE` when `null`. Ignored for single-
-   *   turn datasets.
+   *   `interruptionMinTurns` and `interruptionMaxTurns`, and `ADAPTIVE` when
+   *   `null`. Ignored for single-turn datasets.
    * @param tags Tags added to every golden the task creates. Replaces the
    *   stored tags: send `[]` to clear them, or omit to keep them.
    * @param metadata Key-value pairs merged into every golden's
@@ -143,7 +146,8 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
       userDescription?: string | null;
       personaId?: string | null;
       journeyId?: string | null;
-      interruptionFrequency?: InterruptionFrequency | null;
+      interruptionMinTurns?: number | null;
+      interruptionMaxTurns?: number | null;
       interruptionOverlap?: InterruptionOverlap | null;
       tags?: string[];
       metadata?: Record<string, unknown> | null;
@@ -173,7 +177,8 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
       userDescription,
       personaId,
       journeyId,
-      interruptionFrequency,
+      interruptionMinTurns,
+      interruptionMaxTurns,
       interruptionOverlap,
       tags,
       metadata,
@@ -208,7 +213,8 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
           userDescription,
           personaId,
           journeyId,
-          interruptionFrequency,
+          interruptionMinTurns,
+          interruptionMaxTurns,
           interruptionOverlap,
           tags,
           metadata,
@@ -300,13 +306,17 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
    *   it. Ignored for single-turn datasets.
    * @param journeyId The id of a journey to assign every multi-turn golden to.
    *   Send `null` to clear it. Ignored for single-turn datasets.
-   * @param interruptionFrequency How often the simulated user interrupts on
-   *   every multi-turn golden. Send `null` to turn interruptions off. Ignored
-   *   for single-turn datasets.
+   * @param interruptionMinTurns On every multi-turn golden, the simulated user
+   *   interrupts once every `interruptionMinTurns` to `interruptionMaxTurns`
+   *   agent turns, picked at random each time. Send both together, equal for a
+   *   fixed cadence, or both `null` to turn interruptions off. Ignored for
+   *   single-turn datasets.
+   * @param interruptionMaxTurns The most agent turns between interruptions. See
+   *   `interruptionMinTurns`.
    * @param interruptionOverlap What the simulated user does when both sides
    *   talk at once on every multi-turn golden. Only used with
-   *   `interruptionFrequency`, and `ADAPTIVE` when `null`. Ignored for single-
-   *   turn datasets.
+   *   `interruptionMinTurns` and `interruptionMaxTurns`, and `ADAPTIVE` when
+   *   `null`. Ignored for single-turn datasets.
    * @param tags Tags added to every golden the task creates. Replaces the
    *   stored tags: send `[]` to clear them, or omit to keep them.
    * @param metadata Key-value pairs merged into every golden's
@@ -342,7 +352,8 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
       userDescription?: string | null;
       personaId?: string | null;
       journeyId?: string | null;
-      interruptionFrequency?: InterruptionFrequency | null;
+      interruptionMinTurns?: number | null;
+      interruptionMaxTurns?: number | null;
       interruptionOverlap?: InterruptionOverlap | null;
       tags?: string[];
       metadata?: Record<string, unknown> | null;
@@ -374,7 +385,8 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
       userDescription,
       personaId,
       journeyId,
-      interruptionFrequency,
+      interruptionMinTurns,
+      interruptionMaxTurns,
       interruptionOverlap,
       tags,
       metadata,
@@ -409,7 +421,8 @@ export class DatasetIngestionTasksOperations extends DatasetsOperations {
           userDescription,
           personaId,
           journeyId,
-          interruptionFrequency,
+          interruptionMinTurns,
+          interruptionMaxTurns,
           interruptionOverlap,
           tags,
           metadata,

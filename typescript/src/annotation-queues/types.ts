@@ -210,14 +210,17 @@ export interface QueueIngestionTaskRef {
 
 export interface SpanQueueItemsInput {
   spanUuids: string[];
+  assignedToEmail?: string | null;
 }
 
 export interface ThreadQueueItemsInput {
   threadIds: string[];
+  assignedToEmail?: string | null;
 }
 
 export interface TraceQueueItemsInput {
   traceUuids: string[];
+  assignedToEmail?: string | null;
 }
 
 export interface UpdateAnnotationQueueInput {

@@ -253,14 +253,26 @@ class QueueIngestionTaskRef(ConfidentBaseModel):
 
 class SpanQueueItemsInput(ConfidentBaseModel):
     span_uuids: List[str] = Field(alias="spanUuids")
+    assigned_to_email: Optional[str] = Field(
+        default=None,
+        alias="assignedToEmail",
+    )
 
 
 class ThreadQueueItemsInput(ConfidentBaseModel):
     thread_ids: List[str] = Field(alias="threadIds")
+    assigned_to_email: Optional[str] = Field(
+        default=None,
+        alias="assignedToEmail",
+    )
 
 
 class TraceQueueItemsInput(ConfidentBaseModel):
     trace_uuids: List[str] = Field(alias="traceUuids")
+    assigned_to_email: Optional[str] = Field(
+        default=None,
+        alias="assignedToEmail",
+    )
 
 
 class UpdateAnnotationQueueInput(ConfidentBaseModel):

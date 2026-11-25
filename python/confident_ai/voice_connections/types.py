@@ -59,6 +59,10 @@ class SipVoiceConfig(ConfidentBaseModel):
             alias="mediaEncryption",
         )
     )
+    handle_transfers: Optional[bool] = Field(
+        default=None,
+        alias="handleTransfers",
+    )
 
 
 class WebRTCVoiceConfigLivekit(ConfidentBaseModel):
@@ -182,11 +186,13 @@ class VoiceConnectionLog(ConfidentBaseModel):
             "SILENCE_TIMEOUT",
             "MAX_DURATION",
             "NO_AGENT_SPEECH",
+            "TRANSFERRED",
             "ERROR",
         ]
     ] = Field(
         alias="endReason",
     )
+    transfer_target: Optional[str] = Field(alias="transferTarget")
     audio_url: Optional[str] = Field(alias="audioUrl")
 
 

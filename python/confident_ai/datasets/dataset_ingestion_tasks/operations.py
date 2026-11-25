@@ -17,7 +17,6 @@ from confident_ai.datasets.types import (
     DatasetIngestionTask,
     DatasetIngestionTaskList,
     DatasetIngestionTaskRef,
-    InterruptionFrequency,
     InterruptionOverlap,
     UpdateDatasetIngestionTaskInput,
 )
@@ -102,7 +101,8 @@ class DatasetIngestionTasksOperations:
         user_description: Optional[str] = None,
         persona_id: Optional[str] = None,
         journey_id: Optional[str] = None,
-        interruption_frequency: Optional[InterruptionFrequency] = None,
+        interruption_min_turns: Optional[int] = None,
+        interruption_max_turns: Optional[int] = None,
         interruption_overlap: Optional[InterruptionOverlap] = None,
         tags: Optional[List[str]] = None,
         metadata: Optional[Dict[str, Any]] = None,
@@ -171,13 +171,17 @@ class DatasetIngestionTasksOperations:
                 Send `null` to clear it. Ignored for single-turn datasets.
             journey_id: The id of a journey to assign every multi-turn golden
                 to. Send `null` to clear it. Ignored for single-turn datasets.
-            interruption_frequency: How often the simulated user interrupts on
-                every multi-turn golden. Send `null` to turn interruptions off.
-                Ignored for single-turn datasets.
+            interruption_min_turns: On every multi-turn golden, the simulated
+                user interrupts once every `interruptionMinTurns` to
+                `interruptionMaxTurns` agent turns, picked at random each time.
+                Send both together, equal for a fixed cadence, or both `null` to
+                turn interruptions off. Ignored for single-turn datasets.
+            interruption_max_turns: The most agent turns between interruptions.
+                See `interruptionMinTurns`.
             interruption_overlap: What the simulated user does when both sides
                 talk at once on every multi-turn golden. Only used with
-                `interruptionFrequency`, and `ADAPTIVE` when `null`. Ignored for
-                single-turn datasets.
+                `interruptionMinTurns` and `interruptionMaxTurns`, and
+                `ADAPTIVE` when `null`. Ignored for single-turn datasets.
             tags: Tags added to every golden the task creates. Replaces the
                 stored tags: send `[]` to clear them, or omit to keep them.
             metadata: Key-value pairs merged into every golden's
@@ -215,7 +219,8 @@ class DatasetIngestionTasksOperations:
                 "userDescription": user_description,
                 "personaId": persona_id,
                 "journeyId": journey_id,
-                "interruptionFrequency": interruption_frequency,
+                "interruptionMinTurns": interruption_min_turns,
+                "interruptionMaxTurns": interruption_max_turns,
                 "interruptionOverlap": interruption_overlap,
                 "tags": tags,
                 "metadata": metadata,
@@ -252,7 +257,8 @@ class DatasetIngestionTasksOperations:
         user_description: Optional[str] = None,
         persona_id: Optional[str] = None,
         journey_id: Optional[str] = None,
-        interruption_frequency: Optional[InterruptionFrequency] = None,
+        interruption_min_turns: Optional[int] = None,
+        interruption_max_turns: Optional[int] = None,
         interruption_overlap: Optional[InterruptionOverlap] = None,
         tags: Optional[List[str]] = None,
         metadata: Optional[Dict[str, Any]] = None,
@@ -321,13 +327,17 @@ class DatasetIngestionTasksOperations:
                 Send `null` to clear it. Ignored for single-turn datasets.
             journey_id: The id of a journey to assign every multi-turn golden
                 to. Send `null` to clear it. Ignored for single-turn datasets.
-            interruption_frequency: How often the simulated user interrupts on
-                every multi-turn golden. Send `null` to turn interruptions off.
-                Ignored for single-turn datasets.
+            interruption_min_turns: On every multi-turn golden, the simulated
+                user interrupts once every `interruptionMinTurns` to
+                `interruptionMaxTurns` agent turns, picked at random each time.
+                Send both together, equal for a fixed cadence, or both `null` to
+                turn interruptions off. Ignored for single-turn datasets.
+            interruption_max_turns: The most agent turns between interruptions.
+                See `interruptionMinTurns`.
             interruption_overlap: What the simulated user does when both sides
                 talk at once on every multi-turn golden. Only used with
-                `interruptionFrequency`, and `ADAPTIVE` when `null`. Ignored for
-                single-turn datasets.
+                `interruptionMinTurns` and `interruptionMaxTurns`, and
+                `ADAPTIVE` when `null`. Ignored for single-turn datasets.
             tags: Tags added to every golden the task creates. Replaces the
                 stored tags: send `[]` to clear them, or omit to keep them.
             metadata: Key-value pairs merged into every golden's
@@ -365,7 +375,8 @@ class DatasetIngestionTasksOperations:
                 "userDescription": user_description,
                 "personaId": persona_id,
                 "journeyId": journey_id,
-                "interruptionFrequency": interruption_frequency,
+                "interruptionMinTurns": interruption_min_turns,
+                "interruptionMaxTurns": interruption_max_turns,
                 "interruptionOverlap": interruption_overlap,
                 "tags": tags,
                 "metadata": metadata,
@@ -447,7 +458,8 @@ class DatasetIngestionTasksOperations:
         user_description: Optional[str] = None,
         persona_id: Optional[str] = None,
         journey_id: Optional[str] = None,
-        interruption_frequency: Optional[InterruptionFrequency] = None,
+        interruption_min_turns: Optional[int] = None,
+        interruption_max_turns: Optional[int] = None,
         interruption_overlap: Optional[InterruptionOverlap] = None,
         tags: Optional[List[str]] = None,
         metadata: Optional[Dict[str, Any]] = None,
@@ -516,13 +528,17 @@ class DatasetIngestionTasksOperations:
                 Send `null` to clear it. Ignored for single-turn datasets.
             journey_id: The id of a journey to assign every multi-turn golden
                 to. Send `null` to clear it. Ignored for single-turn datasets.
-            interruption_frequency: How often the simulated user interrupts on
-                every multi-turn golden. Send `null` to turn interruptions off.
-                Ignored for single-turn datasets.
+            interruption_min_turns: On every multi-turn golden, the simulated
+                user interrupts once every `interruptionMinTurns` to
+                `interruptionMaxTurns` agent turns, picked at random each time.
+                Send both together, equal for a fixed cadence, or both `null` to
+                turn interruptions off. Ignored for single-turn datasets.
+            interruption_max_turns: The most agent turns between interruptions.
+                See `interruptionMinTurns`.
             interruption_overlap: What the simulated user does when both sides
                 talk at once on every multi-turn golden. Only used with
-                `interruptionFrequency`, and `ADAPTIVE` when `null`. Ignored for
-                single-turn datasets.
+                `interruptionMinTurns` and `interruptionMaxTurns`, and
+                `ADAPTIVE` when `null`. Ignored for single-turn datasets.
             tags: Tags added to every golden the task creates. Replaces the
                 stored tags: send `[]` to clear them, or omit to keep them.
             metadata: Key-value pairs merged into every golden's
@@ -560,7 +576,8 @@ class DatasetIngestionTasksOperations:
                 "userDescription": user_description,
                 "personaId": persona_id,
                 "journeyId": journey_id,
-                "interruptionFrequency": interruption_frequency,
+                "interruptionMinTurns": interruption_min_turns,
+                "interruptionMaxTurns": interruption_max_turns,
                 "interruptionOverlap": interruption_overlap,
                 "tags": tags,
                 "metadata": metadata,
@@ -601,7 +618,8 @@ class DatasetIngestionTasksOperations:
         user_description: Optional[str] = None,
         persona_id: Optional[str] = None,
         journey_id: Optional[str] = None,
-        interruption_frequency: Optional[InterruptionFrequency] = None,
+        interruption_min_turns: Optional[int] = None,
+        interruption_max_turns: Optional[int] = None,
         interruption_overlap: Optional[InterruptionOverlap] = None,
         tags: Optional[List[str]] = None,
         metadata: Optional[Dict[str, Any]] = None,
@@ -670,13 +688,17 @@ class DatasetIngestionTasksOperations:
                 Send `null` to clear it. Ignored for single-turn datasets.
             journey_id: The id of a journey to assign every multi-turn golden
                 to. Send `null` to clear it. Ignored for single-turn datasets.
-            interruption_frequency: How often the simulated user interrupts on
-                every multi-turn golden. Send `null` to turn interruptions off.
-                Ignored for single-turn datasets.
+            interruption_min_turns: On every multi-turn golden, the simulated
+                user interrupts once every `interruptionMinTurns` to
+                `interruptionMaxTurns` agent turns, picked at random each time.
+                Send both together, equal for a fixed cadence, or both `null` to
+                turn interruptions off. Ignored for single-turn datasets.
+            interruption_max_turns: The most agent turns between interruptions.
+                See `interruptionMinTurns`.
             interruption_overlap: What the simulated user does when both sides
                 talk at once on every multi-turn golden. Only used with
-                `interruptionFrequency`, and `ADAPTIVE` when `null`. Ignored for
-                single-turn datasets.
+                `interruptionMinTurns` and `interruptionMaxTurns`, and
+                `ADAPTIVE` when `null`. Ignored for single-turn datasets.
             tags: Tags added to every golden the task creates. Replaces the
                 stored tags: send `[]` to clear them, or omit to keep them.
             metadata: Key-value pairs merged into every golden's
@@ -714,7 +736,8 @@ class DatasetIngestionTasksOperations:
                 "userDescription": user_description,
                 "personaId": persona_id,
                 "journeyId": journey_id,
-                "interruptionFrequency": interruption_frequency,
+                "interruptionMinTurns": interruption_min_turns,
+                "interruptionMaxTurns": interruption_max_turns,
                 "interruptionOverlap": interruption_overlap,
                 "tags": tags,
                 "metadata": metadata,

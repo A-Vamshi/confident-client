@@ -22,12 +22,6 @@ from confident_ai.common.types import (
 from confident_ai.types import ConfidentBaseModel
 
 
-class InterruptionFrequency(Enum):
-    RARE = "RARE"
-    NORMAL = "NORMAL"
-    FREQUENT = "FREQUENT"
-
-
 class InterruptionOverlap(Enum):
     YIELD = "YIELD"
     ADAPTIVE = "ADAPTIVE"
@@ -91,9 +85,13 @@ class CreateDatasetIngestionTaskInput(ConfidentBaseModel):
     )
     persona_id: Optional[str] = Field(default=None, alias="personaId")
     journey_id: Optional[str] = Field(default=None, alias="journeyId")
-    interruption_frequency: Optional[InterruptionFrequency] = Field(
+    interruption_min_turns: Optional[int] = Field(
         default=None,
-        alias="interruptionFrequency",
+        alias="interruptionMinTurns",
+    )
+    interruption_max_turns: Optional[int] = Field(
+        default=None,
+        alias="interruptionMaxTurns",
     )
     interruption_overlap: Optional[InterruptionOverlap] = Field(
         default=None,
@@ -174,6 +172,10 @@ class MultiTurnGolden(ConfidentBaseModel):
         default=None,
         alias="expectedOutcome",
     )
+    expected_tools: Optional[List[ToolCall]] = Field(
+        default=None,
+        alias="expectedTools",
+    )
     user_description: Optional[str] = Field(
         default=None,
         alias="userDescription",
@@ -242,9 +244,8 @@ class DatasetIngestionTask(ConfidentBaseModel):
     user_description: Optional[str] = Field(alias="userDescription")
     persona_id: Optional[str] = Field(alias="personaId")
     journey_id: Optional[str] = Field(alias="journeyId")
-    interruption_frequency: Optional[InterruptionFrequency] = Field(
-        alias="interruptionFrequency",
-    )
+    interruption_min_turns: Optional[int] = Field(alias="interruptionMinTurns")
+    interruption_max_turns: Optional[int] = Field(alias="interruptionMaxTurns")
     interruption_overlap: Optional[InterruptionOverlap] = Field(
         alias="interruptionOverlap",
     )
@@ -425,9 +426,13 @@ class UpdateDatasetIngestionTaskInput(ConfidentBaseModel):
     )
     persona_id: Optional[str] = Field(default=None, alias="personaId")
     journey_id: Optional[str] = Field(default=None, alias="journeyId")
-    interruption_frequency: Optional[InterruptionFrequency] = Field(
+    interruption_min_turns: Optional[int] = Field(
         default=None,
-        alias="interruptionFrequency",
+        alias="interruptionMinTurns",
+    )
+    interruption_max_turns: Optional[int] = Field(
+        default=None,
+        alias="interruptionMaxTurns",
     )
     interruption_overlap: Optional[InterruptionOverlap] = Field(
         default=None,

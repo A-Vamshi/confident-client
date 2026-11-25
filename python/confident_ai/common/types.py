@@ -234,6 +234,7 @@ class WidgetDimension(Enum):
     TRACE_NAME = "trace_name"
     SPAN_NAME = "span_name"
     MODEL = "model"
+    PROVIDER = "provider"
     TYPE = "type"
     THREAD_ID = "thread_id"
     TEST_CASE_ID = "test_case_id"
@@ -477,6 +478,7 @@ class FilterSetGroupFilter(ConfidentBaseModel):
         "Test File",
         "Status",
         "AI connection",
+        "Voice connection",
         "Official",
         "Evals Mode",
         "Tests Passed",
@@ -873,6 +875,7 @@ class ToolCall(ConfidentBaseModel):
     )
     output: Optional[Any] = None
     reasoning: Optional[str] = None
+    turn: Optional[int] = None
 
 
 class Span(ConfidentBaseModel):

@@ -37,6 +37,7 @@ export interface SipVoiceConfig {
   callerId: string;
   headers: VoiceHeader[];
   mediaEncryption?: "DISABLED" | "ALLOWED" | "REQUIRED";
+  handleTransfers?: boolean;
 }
 
 export interface WebRTCVoiceConfigLivekit {
@@ -136,8 +137,10 @@ export interface VoiceConnectionLog {
     | "SILENCE_TIMEOUT"
     | "MAX_DURATION"
     | "NO_AGENT_SPEECH"
+    | "TRANSFERRED"
     | "ERROR"
     | null;
+  transferTarget: string | null;
   audioUrl: string | null;
 }
 

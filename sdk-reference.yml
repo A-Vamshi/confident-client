@@ -8132,24 +8132,39 @@ resources:
           `null` to clear it. Ignored for single-turn datasets.
         example: null
         references: []
-      - python: interruption_frequency
-        typescript: interruptionFrequency
-        wire: interruptionFrequency
+      - python: interruption_min_turns
+        typescript: interruptionMinTurns
+        wire: interruptionMinTurns
         in: body
         type:
-          python: Optional[InterruptionFrequency]
-          typescript: InterruptionFrequency | null
+          python: Optional[int]
+          typescript: number | null
         required: false
         keyword:
           python: true
           typescript: true
         default: None
-        description: How often the simulated user interrupts on every multi-turn
-          golden. Send `null` to turn interruptions off. Ignored for single-turn
-          datasets.
-        example: NORMAL
-        references:
-        - InterruptionFrequency
+        description: On every multi-turn golden, the simulated user interrupts once
+          every `interruptionMinTurns` to `interruptionMaxTurns` agent turns, picked
+          at random each time. Send both together, equal for a fixed cadence, or
+          both `null` to turn interruptions off. Ignored for single-turn datasets.
+        example: 2
+        references: []
+      - python: interruption_max_turns
+        typescript: interruptionMaxTurns
+        wire: interruptionMaxTurns
+        in: body
+        type:
+          python: Optional[int]
+          typescript: number | null
+        required: false
+        keyword:
+          python: true
+          typescript: true
+        default: None
+        description: The most agent turns between interruptions. See `interruptionMinTurns`.
+        example: 3
+        references: []
       - python: interruption_overlap
         typescript: interruptionOverlap
         wire: interruptionOverlap
@@ -8163,8 +8178,8 @@ resources:
           typescript: true
         default: None
         description: What the simulated user does when both sides talk at once on
-          every multi-turn golden. Only used with `interruptionFrequency`, and `ADAPTIVE`
-          when `null`. Ignored for single-turn datasets.
+          every multi-turn golden. Only used with `interruptionMinTurns` and `interruptionMaxTurns`,
+          and `ADAPTIVE` when `null`. Ignored for single-turn datasets.
         example: ADAPTIVE
         references:
         - InterruptionOverlap
@@ -8261,7 +8276,8 @@ resources:
         - user_description
         - persona_id
         - journey_id
-        - interruption_frequency
+        - interruption_min_turns
+        - interruption_max_turns
         - interruption_overlap
         - tags
         - metadata
@@ -8292,7 +8308,8 @@ resources:
         - userDescription
         - personaId
         - journeyId
-        - interruptionFrequency
+        - interruptionMinTurns
+        - interruptionMaxTurns
         - interruptionOverlap
         - tags
         - metadata
@@ -8776,24 +8793,39 @@ resources:
           `null` to clear it. Ignored for single-turn datasets.
         example: null
         references: []
-      - python: interruption_frequency
-        typescript: interruptionFrequency
-        wire: interruptionFrequency
+      - python: interruption_min_turns
+        typescript: interruptionMinTurns
+        wire: interruptionMinTurns
         in: body
         type:
-          python: Optional[InterruptionFrequency]
-          typescript: InterruptionFrequency | null
+          python: Optional[int]
+          typescript: number | null
         required: false
         keyword:
           python: true
           typescript: true
         default: None
-        description: How often the simulated user interrupts on every multi-turn
-          golden. Send `null` to turn interruptions off. Ignored for single-turn
-          datasets.
-        example: NORMAL
-        references:
-        - InterruptionFrequency
+        description: On every multi-turn golden, the simulated user interrupts once
+          every `interruptionMinTurns` to `interruptionMaxTurns` agent turns, picked
+          at random each time. Send both together, equal for a fixed cadence, or
+          both `null` to turn interruptions off. Ignored for single-turn datasets.
+        example: 2
+        references: []
+      - python: interruption_max_turns
+        typescript: interruptionMaxTurns
+        wire: interruptionMaxTurns
+        in: body
+        type:
+          python: Optional[int]
+          typescript: number | null
+        required: false
+        keyword:
+          python: true
+          typescript: true
+        default: None
+        description: The most agent turns between interruptions. See `interruptionMinTurns`.
+        example: 3
+        references: []
       - python: interruption_overlap
         typescript: interruptionOverlap
         wire: interruptionOverlap
@@ -8807,8 +8839,8 @@ resources:
           typescript: true
         default: None
         description: What the simulated user does when both sides talk at once on
-          every multi-turn golden. Only used with `interruptionFrequency`, and `ADAPTIVE`
-          when `null`. Ignored for single-turn datasets.
+          every multi-turn golden. Only used with `interruptionMinTurns` and `interruptionMaxTurns`,
+          and `ADAPTIVE` when `null`. Ignored for single-turn datasets.
         example: ADAPTIVE
         references:
         - InterruptionOverlap
@@ -8906,7 +8938,8 @@ resources:
         - user_description
         - persona_id
         - journey_id
-        - interruption_frequency
+        - interruption_min_turns
+        - interruption_max_turns
         - interruption_overlap
         - tags
         - metadata
@@ -8938,7 +8971,8 @@ resources:
         - userDescription
         - personaId
         - journeyId
-        - interruptionFrequency
+        - interruptionMinTurns
+        - interruptionMaxTurns
         - interruptionOverlap
         - tags
         - metadata
@@ -18617,8 +18651,7 @@ resources:
           python: true
           typescript: false
         default: null
-        description: Which of the organization's models to read. The organization
-          has no evaluation model of its own; that one is always configured per project.
+        description: Which of the organization's models to read.
         example: PLATFORM
         references: []
       order:
@@ -38367,7 +38400,6 @@ types:
   - IngestionDataModel
   - FilterSet
   - SpanType
-  - InterruptionFrequency
   - InterruptionOverlap
   - AssignmentStrategy
   kind: object
@@ -38631,18 +38663,29 @@ types:
       to clear it. Ignored for single-turn datasets.
     example: null
     references: []
-  - wire: interruptionFrequency
-    python: interruption_frequency
-    typescript: interruptionFrequency
+  - wire: interruptionMinTurns
+    python: interruption_min_turns
+    typescript: interruptionMinTurns
     type:
-      python: Optional[InterruptionFrequency]
-      typescript: InterruptionFrequency | null
+      python: Optional[int]
+      typescript: number | null
     required: false
-    description: How often the simulated user interrupts on every multi-turn golden.
-      Send `null` to turn interruptions off. Ignored for single-turn datasets.
-    example: NORMAL
-    references:
-    - InterruptionFrequency
+    description: On every multi-turn golden, the simulated user interrupts once every
+      `interruptionMinTurns` to `interruptionMaxTurns` agent turns, picked at random
+      each time. Send both together, equal for a fixed cadence, or both `null` to
+      turn interruptions off. Ignored for single-turn datasets.
+    example: 2
+    references: []
+  - wire: interruptionMaxTurns
+    python: interruption_max_turns
+    typescript: interruptionMaxTurns
+    type:
+      python: Optional[int]
+      typescript: number | null
+    required: false
+    description: The most agent turns between interruptions. See `interruptionMinTurns`.
+    example: 3
+    references: []
   - wire: interruptionOverlap
     python: interruption_overlap
     typescript: interruptionOverlap
@@ -38651,8 +38694,8 @@ types:
       typescript: InterruptionOverlap | null
     required: false
     description: What the simulated user does when both sides talk at once on every
-      multi-turn golden. Only used with `interruptionFrequency`, and `ADAPTIVE` when
-      `null`. Ignored for single-turn datasets.
+      multi-turn golden. Only used with `interruptionMinTurns` and `interruptionMaxTurns`,
+      and `ADAPTIVE` when `null`. Ignored for single-turn datasets.
     example: ADAPTIVE
     references:
     - InterruptionOverlap
@@ -42330,7 +42373,6 @@ types:
   - IngestionDataModel
   - FilterSet
   - SpanType
-  - InterruptionFrequency
   - InterruptionOverlap
   - AssignmentStrategy
   - UserReference
@@ -42594,18 +42636,28 @@ types:
       `null`.
     example: null
     references: []
-  - wire: interruptionFrequency
-    python: interruption_frequency
-    typescript: interruptionFrequency
+  - wire: interruptionMinTurns
+    python: interruption_min_turns
+    typescript: interruptionMinTurns
     type:
-      python: Optional[InterruptionFrequency]
-      typescript: InterruptionFrequency | null
+      python: Optional[int]
+      typescript: number | null
     required: true
-    description: How often the simulated user interrupts on every multi-turn golden,
+    description: The fewest agent turns between interruptions on every multi-turn
+      golden, or `null` when interruptions are off.
+    example: 2
+    references: []
+  - wire: interruptionMaxTurns
+    python: interruption_max_turns
+    typescript: interruptionMaxTurns
+    type:
+      python: Optional[int]
+      typescript: number | null
+    required: true
+    description: The most agent turns between interruptions on every multi-turn golden,
       or `null` when interruptions are off.
-    example: NORMAL
-    references:
-    - InterruptionFrequency
+    example: 3
+    references: []
   - wire: interruptionOverlap
     python: interruption_overlap
     typescript: interruptionOverlap
@@ -44923,21 +44975,21 @@ types:
         "Cache write tokens", "Reasoning tokens", "Image tokens", "Input argument",
         "Embedder", "Chunk Size", "Top-K", "Hyperparameter", "Dataset", "Dataset
         Name", "Test Run ID", "Identifier", "Test File", "Status", "AI connection",
-        "Official", "Evals Mode", "Tests Passed", "Tests Failed", "Pass Rate", "Fail
-        Rate", "Star Rating", "Thumbs Rating", "Explanation", "Expected Output",
-        "Expected Outcome", "Annotator", "End User", "Annotation Type", "Annotation
-        Name", "Annotation Date", "Annotation Rating", "Annotation Thumbs", "Annotation
-        Choice", "Annotation Yes / No", "Annotation Text", "Metric Score", "Metric
-        Status", "Metric Version", "Metadata", "Classifier", "Classifier Version",
-        "Metric", "Metric Name", "Trace Count", "Call Duration", "Call Audio", "Test
-        Case ID", "Requested review from", "Assigned to", "Queue Item Status", "Added
-        at", "Tags", "Labels", "Tools Called", "Finalized", "Golden ID", "Ingestion
-        Task", "Latency", "Environment", "Review flag", "Annotation Queue", "Vulnerability",
-        "Vulnerability Type", "Attack Method", "Risk Category", "Framework", "Assessment
-        ID", "Prompt Alias", "Prompt Version", "Prompt Label", "Prompt Commit Hash",
-        "Prompt", "Annotations", "Failure Mode", "Recommended", "Source Queue", "Sub-mode
-        Name", "Sub-mode Recommended", "Sub-mode Certainty", "Status Code", "Actor
-        Type"]
+        "Voice connection", "Official", "Evals Mode", "Tests Passed", "Tests Failed",
+        "Pass Rate", "Fail Rate", "Star Rating", "Thumbs Rating", "Explanation",
+        "Expected Output", "Expected Outcome", "Annotator", "End User", "Annotation
+        Type", "Annotation Name", "Annotation Date", "Annotation Rating", "Annotation
+        Thumbs", "Annotation Choice", "Annotation Yes / No", "Annotation Text", "Metric
+        Score", "Metric Status", "Metric Version", "Metadata", "Classifier", "Classifier
+        Version", "Metric", "Metric Name", "Trace Count", "Call Duration", "Call
+        Audio", "Test Case ID", "Requested review from", "Assigned to", "Queue Item
+        Status", "Added at", "Tags", "Labels", "Tools Called", "Finalized", "Golden
+        ID", "Ingestion Task", "Latency", "Environment", "Review flag", "Annotation
+        Queue", "Vulnerability", "Vulnerability Type", "Attack Method", "Risk Category",
+        "Framework", "Assessment ID", "Prompt Alias", "Prompt Version", "Prompt Label",
+        "Prompt Commit Hash", "Prompt", "Annotations", "Failure Mode", "Recommended",
+        "Source Queue", "Sub-mode Name", "Sub-mode Recommended", "Sub-mode Certainty",
+        "Status Code", "Actor Type"]
       typescript: '"User Id" | "Customer Id" | "Customer Name" | "Thread Id" | "Trace
         UUID" | "Trace Name" | "Trace Version" | "Trace Status" | "Trace Tags" |
         "Trace" | "Span UUID" | "Name" | "Span Name" | "Span Type" | "Span Status"
@@ -44948,22 +45000,22 @@ types:
         token" | "Cache read tokens" | "Cache write tokens" | "Reasoning tokens"
         | "Image tokens" | "Input argument" | "Embedder" | "Chunk Size" | "Top-K"
         | "Hyperparameter" | "Dataset" | "Dataset Name" | "Test Run ID" | "Identifier"
-        | "Test File" | "Status" | "AI connection" | "Official" | "Evals Mode" |
-        "Tests Passed" | "Tests Failed" | "Pass Rate" | "Fail Rate" | "Star Rating"
-        | "Thumbs Rating" | "Explanation" | "Expected Output" | "Expected Outcome"
-        | "Annotator" | "End User" | "Annotation Type" | "Annotation Name" | "Annotation
-        Date" | "Annotation Rating" | "Annotation Thumbs" | "Annotation Choice" |
-        "Annotation Yes / No" | "Annotation Text" | "Metric Score" | "Metric Status"
-        | "Metric Version" | "Metadata" | "Classifier" | "Classifier Version" | "Metric"
-        | "Metric Name" | "Trace Count" | "Call Duration" | "Call Audio" | "Test
-        Case ID" | "Requested review from" | "Assigned to" | "Queue Item Status"
-        | "Added at" | "Tags" | "Labels" | "Tools Called" | "Finalized" | "Golden
-        ID" | "Ingestion Task" | "Latency" | "Environment" | "Review flag" | "Annotation
-        Queue" | "Vulnerability" | "Vulnerability Type" | "Attack Method" | "Risk
-        Category" | "Framework" | "Assessment ID" | "Prompt Alias" | "Prompt Version"
-        | "Prompt Label" | "Prompt Commit Hash" | "Prompt" | "Annotations" | "Failure
-        Mode" | "Recommended" | "Source Queue" | "Sub-mode Name" | "Sub-mode Recommended"
-        | "Sub-mode Certainty" | "Status Code" | "Actor Type"'
+        | "Test File" | "Status" | "AI connection" | "Voice connection" | "Official"
+        | "Evals Mode" | "Tests Passed" | "Tests Failed" | "Pass Rate" | "Fail Rate"
+        | "Star Rating" | "Thumbs Rating" | "Explanation" | "Expected Output" | "Expected
+        Outcome" | "Annotator" | "End User" | "Annotation Type" | "Annotation Name"
+        | "Annotation Date" | "Annotation Rating" | "Annotation Thumbs" | "Annotation
+        Choice" | "Annotation Yes / No" | "Annotation Text" | "Metric Score" | "Metric
+        Status" | "Metric Version" | "Metadata" | "Classifier" | "Classifier Version"
+        | "Metric" | "Metric Name" | "Trace Count" | "Call Duration" | "Call Audio"
+        | "Test Case ID" | "Requested review from" | "Assigned to" | "Queue Item
+        Status" | "Added at" | "Tags" | "Labels" | "Tools Called" | "Finalized" |
+        "Golden ID" | "Ingestion Task" | "Latency" | "Environment" | "Review flag"
+        | "Annotation Queue" | "Vulnerability" | "Vulnerability Type" | "Attack Method"
+        | "Risk Category" | "Framework" | "Assessment ID" | "Prompt Alias" | "Prompt
+        Version" | "Prompt Label" | "Prompt Commit Hash" | "Prompt" | "Annotations"
+        | "Failure Mode" | "Recommended" | "Source Queue" | "Sub-mode Name" | "Sub-mode
+        Recommended" | "Sub-mode Certainty" | "Status Code" | "Actor Type"'
     required: true
     description: null
     example: null
@@ -49100,24 +49152,6 @@ types:
     value: SPAN
   - name: THREAD
     value: THREAD
-  references: []
-- name: InterruptionFrequency
-  kind: enum
-  description: 'How often the simulated user talks over the agent on voice calls:
-    `RARE`, `NORMAL`, or `FREQUENT`.'
-  python:
-    module: confident_ai.datasets
-    name: InterruptionFrequency
-  typescript:
-    module: confident-ai/datasets
-    name: InterruptionFrequency
-  members:
-  - name: RARE
-    value: RARE
-  - name: NORMAL
-    value: NORMAL
-  - name: FREQUENT
-    value: FREQUENT
   references: []
 - name: InterruptionOverlap
   kind: enum
@@ -54289,6 +54323,7 @@ types:
     module: confident-ai/datasets
     name: MultiTurnGolden
   references:
+  - ToolCall
   - Turn
   - Expectations
   - MLLMImageInput
@@ -54315,6 +54350,17 @@ types:
       of the conversation.
     example: The assistant confirms a reservation near the Louvre.
     references: []
+  - wire: expectedTools
+    python: expected_tools
+    typescript: expectedTools
+    type:
+      python: Optional[List[ToolCall]]
+      typescript: ToolCall[] | null
+    required: false
+    description: This is the tools the assistant is expected to call during the conversation.
+    example: null
+    references:
+    - ToolCall
   - wire: userDescription
     python: user_description
     typescript: userDescription
@@ -62320,6 +62366,18 @@ types:
       calls that can't be encrypted.
     example: null
     references: []
+  - wire: handleTransfers
+    python: handle_transfers
+    typescript: handleTransfers
+    type:
+      python: Optional[bool]
+      typescript: boolean
+    required: false
+    description: Whether to accept call transfers (SIP REFER) from your agent. When
+      on, the call is routed through Confident AI's transfer relay, and a transfer
+      ends the call and is recorded on the call log.
+    example: null
+    references: []
 - name: SnowflakeExportDestinationConfigInput
   description: How Confident AI signs in to Snowflake with key-pair authentication,
     and where it creates the export tables.
@@ -63439,6 +63497,19 @@ types:
     description: The uuids of the spans to add.
     example:
     - 9d2c6f7e-1a3b-4c5d-8e9f-0a1b2c3d4e5f
+    references: []
+  - wire: assignedToEmail
+    python: assigned_to_email
+    typescript: assignedToEmail
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: The email address of the project member to assign every added item
+      to, who is notified of the assignment. Omit it or send `null` to leave the
+      items open to anyone. Items already in the queue are skipped and keep their
+      current assignee.
+    example: jane@acme.com
     references: []
 - name: SpanSortBy
   kind: enum
@@ -66325,6 +66396,19 @@ types:
     example:
     - thread-42
     references: []
+  - wire: assignedToEmail
+    python: assigned_to_email
+    typescript: assignedToEmail
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: The email address of the project member to assign every added item
+      to, who is notified of the assignment. Omit it or send `null` to leave the
+      items open to anyone. Items already in the queue are skipped and keep their
+      current assignee.
+    example: jane@acme.com
+    references: []
 - name: ThreadSortBy
   kind: enum
   description: 'The thread field to sort by: `lastActivity` orders by the time of
@@ -66611,6 +66695,17 @@ types:
     required: false
     description: This is the reasoning your LLM provided for the tool call.
     example: The user asked for the height of a mountain.
+    references: []
+  - wire: turn
+    python: turn
+    typescript: turn
+    type:
+      python: Optional[int]
+      typescript: number | null
+    required: false
+    description: 'For a multi-turn golden''s expected tools: the index in turns of
+      the assistant turn that should make this call.'
+    example: 3
     references: []
 - name: ToolCallType
   kind: enum
@@ -67779,6 +67874,19 @@ types:
     example:
     - 3f9c2a1e-5b7d-4c8e-9f01-2a3b4c5d6e7f
     references: []
+  - wire: assignedToEmail
+    python: assigned_to_email
+    typescript: assignedToEmail
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: false
+    description: The email address of the project member to assign every added item
+      to, who is notified of the assignment. Omit it or send `null` to leave the
+      items open to anyone. Items already in the queue are skipped and keep their
+      current assignee.
+    example: jane@acme.com
+    references: []
 - name: TraceRef
   description: null
   example: null
@@ -67795,12 +67903,24 @@ types:
     python: uuid
     typescript: uuid
     type:
-      python: str
-      typescript: string
+      python: Optional[str]
+      typescript: string | null
     required: true
     description: This is the uuid of the trace. It is the uuid you sent, or its UUID
-      hash when the value you sent was not a UUID.
+      hash when the value you sent was not a UUID. It is `null` when the trace was
+      not stored.
     example: <TRACE-UUID>
+    references: []
+  - wire: message
+    python: message
+    typescript: message
+    type:
+      python: Optional[str]
+      typescript: string
+    required: false
+    description: This is only present when the trace was not stored, and explains
+      why.
+    example: null
     references: []
 - name: TraceSortBy
   kind: enum
@@ -69702,7 +69822,6 @@ types:
   - IngestionDataModel
   - FilterSet
   - SpanType
-  - InterruptionFrequency
   - InterruptionOverlap
   - AssignmentStrategy
   kind: object
@@ -69966,18 +70085,29 @@ types:
       to clear it. Ignored for single-turn datasets.
     example: null
     references: []
-  - wire: interruptionFrequency
-    python: interruption_frequency
-    typescript: interruptionFrequency
+  - wire: interruptionMinTurns
+    python: interruption_min_turns
+    typescript: interruptionMinTurns
     type:
-      python: Optional[InterruptionFrequency]
-      typescript: InterruptionFrequency | null
+      python: Optional[int]
+      typescript: number | null
     required: false
-    description: How often the simulated user interrupts on every multi-turn golden.
-      Send `null` to turn interruptions off. Ignored for single-turn datasets.
-    example: NORMAL
-    references:
-    - InterruptionFrequency
+    description: On every multi-turn golden, the simulated user interrupts once every
+      `interruptionMinTurns` to `interruptionMaxTurns` agent turns, picked at random
+      each time. Send both together, equal for a fixed cadence, or both `null` to
+      turn interruptions off. Ignored for single-turn datasets.
+    example: 2
+    references: []
+  - wire: interruptionMaxTurns
+    python: interruption_max_turns
+    typescript: interruptionMaxTurns
+    type:
+      python: Optional[int]
+      typescript: number | null
+    required: false
+    description: The most agent turns between interruptions. See `interruptionMinTurns`.
+    example: 3
+    references: []
   - wire: interruptionOverlap
     python: interruption_overlap
     typescript: interruptionOverlap
@@ -69986,8 +70116,8 @@ types:
       typescript: InterruptionOverlap | null
     required: false
     description: What the simulated user does when both sides talk at once on every
-      multi-turn golden. Only used with `interruptionFrequency`, and `ADAPTIVE` when
-      `null`. Ignored for single-turn datasets.
+      multi-turn golden. Only used with `interruptionMinTurns` and `interruptionMaxTurns`,
+      and `ADAPTIVE` when `null`. Ignored for single-turn datasets.
     example: ADAPTIVE
     references:
     - InterruptionOverlap
@@ -73138,16 +73268,28 @@ types:
     typescript: endReason
     type:
       python: Optional[Literal["COMPLETED", "MAX_TURNS", "AGENT_HUNG_UP", "SILENCE_TIMEOUT",
-        "MAX_DURATION", "NO_AGENT_SPEECH", "ERROR"]]
+        "MAX_DURATION", "NO_AGENT_SPEECH", "TRANSFERRED", "ERROR"]]
       typescript: '"COMPLETED" | "MAX_TURNS" | "AGENT_HUNG_UP" | "SILENCE_TIMEOUT"
-        | "MAX_DURATION" | "NO_AGENT_SPEECH" | "ERROR" | null'
+        | "MAX_DURATION" | "NO_AGENT_SPEECH" | "TRANSFERRED" | "ERROR" | null'
     required: true
     description: 'Why an evaluation call ended: `COMPLETED` when the simulation finished
       the conversation, `MAX_TURNS` when it reached the turn limit, `AGENT_HUNG_UP`
       when your agent ended the call, `SILENCE_TIMEOUT` or `MAX_DURATION` when a
       call limit hung up, `NO_AGENT_SPEECH` when your agent stayed silent for the
-      greeting timeout, `ERROR` when the call failed. Null for test calls.'
+      greeting timeout, `TRANSFERRED` when your agent transferred the call, `ERROR`
+      when the call failed. Null for test calls.'
     example: COMPLETED
+    references: []
+  - wire: transferTarget
+    python: transfer_target
+    typescript: transferTarget
+    type:
+      python: Optional[str]
+      typescript: string | null
+    required: true
+    description: Where your agent tried to transfer the call (the SIP REFER target).
+      Null when the call was not transferred.
+    example: null
     references: []
   - wire: audioUrl
     python: audio_url
@@ -74230,6 +74372,8 @@ types:
     value: span_name
   - name: MODEL
     value: model
+  - name: PROVIDER
+    value: provider
   - name: TYPE
     value: type
   - name: THREAD_ID

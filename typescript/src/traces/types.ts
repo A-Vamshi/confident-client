@@ -256,5 +256,6 @@ export interface TraceList {
 }
 
 export interface TraceRef {
-  uuid: string;
+  uuid: string | null;
+  message?: string;
 }
